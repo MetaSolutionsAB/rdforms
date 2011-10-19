@@ -1,0 +1,162 @@
+.rformsTopLevel {
+	background: #E6E6E6;
+ 	padding: 0.3em;
+ 	margin-top: 0em;
+}
+.rformsLabel {
+/*	font-style: italic;*/
+	color: black;
+	font-weight:bold;
+}
+
+.rformsPresenter th span:hover,
+.rformsEditor th span:hover,
+.rformsLabel.hasInfo:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.rformsItemInfo .rformsPropertyLabel,
+.rformsItemInfo .rformsDescriptionLabel {
+	/*font-style: italic;*/
+}
+
+.rformsGroup {
+	margin-left: 1em;
+ }
+ 
+.rformsField {
+	margin-left: 2em;
+}
+
+.rformsPresenter .rformsRepeatedValue {
+ 	border-top: 1px solid #E6E6E6;
+}
+ 
+.rformsPpresenter .rformsField {
+	background: white;
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+}
+
+.rformsPresenter th,
+.rformsEditor th {
+	font-weight: normal;
+}
+
+
+
+.rformsPresenter table.rformsGroup td,
+.rformsEditor table.rformsGroup td {
+	border: 1px solid #E6E6E6;
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+}
+.rformsPresenter table.rformsGroup,
+.rformsEditor table.rformsGroup {
+	border-collapse: collapse;
+}
+.rformsEditor table.rformsGroup tr{
+	background-color: white;
+}
+.rformsPresenter table.rformsGgroup th,
+.rformsEditor table.rformsGroup th {
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+	border: 1px solid white;			
+}
+.rformsPresenter .rformsLanguage {
+ 	float: right;
+	border-left: 1px solid #E6E6E6;
+	padding-left: 0.3em;
+ }
+ .rformsEditor .rformsLanguage {
+ 	position: absolute;
+	float:left;
+	padding-left: 0.3em;
+ }
+ .rformsEditor .rformsField {
+ 	padding-right: 4em;
+	position: relative;
+ }
+ 
+ .rformsEditor .rformsField .rformsChoiceLabel {
+ 	margin-left: 0.2em;
+ 	margin-right: 1em;
+ }
+ .rformsEditor .rformsLangcontrolledfield {
+ 	padding-right: 15em;
+	padding-left: 1em;
+ }	
+ .rformsEditor .rformsFieldControl {
+	position: absolute;
+	width: 3.8em;
+	padding-right: 0.1em;
+	right: 0;
+	overflow-x: hidden;
+	padding-right: 0.1em;
+ }
+ .rformsEditor .rformsLangFieldControl {
+	width: 14em;
+ }
+.rformsEditor .rformsLangFieldControl .dijitTextBox {
+	width: 9em;
+}
+.rformsEditor .rformsFieldControl .dijitButton {
+ 	font-size: xx-small;
+	float:right;
+}
+.rformsEditor .rformsLabelRow .dijitButton,
+.rformsEditor .rformsField .dijitButton {
+ 	font-size: xx-small;
+	margin-left: 0.7em;
+}
+.rformsEditor .rformsTableControl .dijitButton {
+ 	font-size: xx-small;
+	margin-left: 1em;
+}
+.rformsEditor .rformsField textarea {
+	font: inherit;
+}
+
+.rformsEditor .langFieldControl .dijitButton {
+ 	font-size: xx-small;
+	margin-left: 0.2em;
+}
+ 
+ .rformsEditor .rformsFieldInput {
+ 	width: 100%;
+ }
+ 
+ .rformsEditor .rformsChoiceValue {
+ 	display: inline-block;
+	zoom:1;
+	display: inline;
+	background: whitesmoke;
+	min-height: 1em;
+	padding: 2px;
+	padding-left: 4px;
+	padding-right: 4px;
+	width: 20em;
+	border: 1px solid lightgrey;
+ }
+
+.chooser.rforms label {
+	font-weight:bold;
+	margin-left:5px;
+	margin-top:5px;
+	font-size:15px;
+	display: block;
+}
+
+.chooser.rforms .uriNode,
+.chooser.rforms .labelNode,
+.chooser.rforms .descriptionNode {
+	margin-left:20px;
+	font-size:15px;	
+}
+
+.chooser.rforms h2 {
+	text-align: center;
+	font-weight:bold;
+}

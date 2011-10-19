@@ -1,0 +1,115 @@
+{
+	"label":{"en":"Europeana forms"},
+	"auxilliary":[
+		{
+			"id":"Europeana",
+			"type":"group",
+			"label":{"en":"Europeana"},
+			"description":{"en":""},
+			"cardinality": {"min": 1, "pref": 1, "max": 1},
+			"content":[
+				{"id": "http://purl.org/dc/elements/1.1/title"},
+				{"id": "http://purl.org/dc/elements/1.1/description"},
+				{"id": "http://purl.org/dc/elements/1.1/subject"},
+				{"id": "http://purl.org/dc/elements/1.1/language"},
+				{"id": "http://purl.org/dc/elements/1.1/date"},
+				{"id": "http://purl.org/dc/elements/1.1/creator"},
+				{"id": "http://purl.org/dc/elements/1.1/contributor"},
+				{"id": "http://www.europeana.eu/schemas/edm/type"},
+				{"id": "http://purl.org/dc/elements/1.1/format"},
+				{"id": "http://purl.org/dc/terms/isPartOf"}
+			]
+		},
+  		{
+	  		"id": "http://purl.org/dc/elements/1.1/title", 
+	  		"property": "http://purl.org/dc/elements/1.1/title", 
+	  		"label": {
+	  			"en": "Title"
+	  		},
+	  		"type": "text",
+			"nodetype": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/dc/elements/1.1/subject", 
+	  		"property": "http://purl.org/dc/elements/1.1/subject", 
+	  		"label": {
+	  			"en": "Keyword"
+	  		},
+	  		"type": "text",
+			"nodetype": "LITERAL"
+  		},
+	  	{
+	  		"id": "http://purl.org/dc/elements/1.1/description", 
+	  		"property": "http://purl.org/dc/elements/1.1/description", 
+			"cls": ["multiline"],
+	  		"label": {
+	  			"en": "Description"
+	  		}, 
+	  		"type": "text", 
+			"nodetype": "LITERAL"
+  		},
+  		{
+	  		"id": "http://www.europeana.eu/schemas/edm/type", 
+	  		"property": "http://www.europeana.eu/schemas/edm/type", 
+	  		"label": {
+	  			"en": "Type"
+	  		}, 
+	  		"type": "text", 
+			"nodetype": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/dc/elements/1.1/format", 
+	  		"property": "http://purl.org/dc/elements/1.1/format", 
+	  		"label": {
+	  			"en": "Format"
+	  		}, 
+	  		"type": "text", 
+			"nodetype": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/dc/elements/1.1/contributor", 
+	  		"property": "http://purl.org/dc/elements/1.1/contributor", 
+	  		"label": {
+	  			"en": "Contributor"
+	  		}, 
+	  		"type": "text", 
+			"nodetype": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/dc/terms/isPartOf", 
+	  		"property": "http://purl.org/dc/terms/isPartOf", 
+	  		"label": {
+	  			"en": "Part of"
+	  		}, 
+	  		"type": "text", 
+			"nodetype": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/dc/elements/1.1/date", 
+	  		"property": "http://purl.org/dc/elements/1.1/date", 
+	  		"label": {
+	  			"en": "Date"
+	  		}, 
+	  		"type": "text", 
+			"nodetype": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/dc/elements/1.1/language", 
+	  		"property": "http://purl.org/dc/elements/1.1/language", 
+	  		"label": {
+	  			"en": "Language"
+	  		}, 
+	  		"type": "text", 
+			"nodetype": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/dc/elements/1.1/creator", 
+	  		"property": "http://purl.org/dc/elements/1.1/creator", 
+	  		"label": {
+	  			"en": "Creator"
+	  		}, 
+	  		"type": "text", 
+			"nodetype": "LITERAL"
+  		}
+  ]
+}

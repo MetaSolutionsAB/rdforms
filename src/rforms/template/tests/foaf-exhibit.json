@@ -1,0 +1,912 @@
+{
+  "items": [
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "label": "Friend of a Friend (FOAF) vocabulary",
+      "type": "Ontology",
+      "description": "The Friend of a Friend (FOAF) RDF vocabulary, described using W3C RDF Schema and the Web Ontology Language."
+    },
+    {
+      "id": "http:\/\/xmlns.com\/wot\/0.1\/assurance",
+      "label": "http:\/\/xmlns.com\/wot\/0.1\/assurance",
+      "type": "AnnotationProperty"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/wot\/0.1\/src_assurance",
+      "label": "http:\/\/xmlns.com\/wot\/0.1\/src_assurance",
+      "type": "AnnotationProperty"
+    },
+    {
+      "id": "http:\/\/www.w3.org\/2003\/06\/sw-vocab-status\/ns#term_status",
+      "label": "http:\/\/www.w3.org\/2003\/06\/sw-vocab-status\/ns#term_status",
+      "type": "AnnotationProperty"
+    },
+    {
+      "id": "http:\/\/purl.org\/dc\/elements\/1.1\/description",
+      "label": "http:\/\/purl.org\/dc\/elements\/1.1\/description",
+      "type": "AnnotationProperty"
+    },
+    {
+      "id": "http:\/\/purl.org\/dc\/elements\/1.1\/title",
+      "label": "http:\/\/purl.org\/dc\/elements\/1.1\/title",
+      "type": "AnnotationProperty"
+    },
+    {
+      "id": "http:\/\/purl.org\/dc\/elements\/1.1\/date",
+      "label": "http:\/\/purl.org\/dc\/elements\/1.1\/date",
+      "type": "AnnotationProperty"
+    },
+    {
+      "id": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Class",
+      "label": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Class",
+      "type": "Class"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/LabelProperty",
+      "label": "Label Property",
+      "type": "Class",
+      "term_status": "unstable",
+      "comment": "A foaf:LabelProperty is any RDF property with texual values that serve as labels.",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "label": "Person",
+      "type": "Class",
+      "comment": "A person.",
+      "term_status": "stable",
+      "subClassOf": [
+        "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+        "http:\/\/www.w3.org\/2000\/10\/swap\/pim\/contact#Person",
+        "http:\/\/www.w3.org\/2003\/01\/geo\/wgs84_pos#SpatialThing"
+      ],
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "disjointWith": [
+        "http:\/\/xmlns.com\/foaf\/0.1\/Organization",
+        "http:\/\/xmlns.com\/foaf\/0.1\/Project"
+      ]
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "label": "Agent",
+      "type": "Class",
+      "term_status": "stable",
+      "comment": "An agent (eg. person, group, software or physical artifact).",
+      "equivalentClass": "http:\/\/purl.org\/dc\/terms\/Agent"
+    },
+    {
+      "id": "http:\/\/www.w3.org\/2000\/10\/swap\/pim\/contact#Person",
+      "label": "Person",
+      "type": "Class"
+    },
+    {
+      "id": "http:\/\/www.w3.org\/2003\/01\/geo\/wgs84_pos#SpatialThing",
+      "label": "Spatial Thing",
+      "type": "Class"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "label": "Document",
+      "type": "Class",
+      "comment": "A document.",
+      "term_status": "testing",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "disjointWith": [
+        "http:\/\/xmlns.com\/foaf\/0.1\/Organization",
+        "http:\/\/xmlns.com\/foaf\/0.1\/Project"
+      ]
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/Organization",
+      "label": "Organization",
+      "type": "Class",
+      "comment": "An organization.",
+      "term_status": "stable",
+      "subClassOf": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "disjointWith": [
+        "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+        "http:\/\/xmlns.com\/foaf\/0.1\/Document"
+      ]
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/Group",
+      "label": "Group",
+      "type": "Class",
+      "term_status": "stable",
+      "comment": "A class of Agents.",
+      "subClassOf": "http:\/\/xmlns.com\/foaf\/0.1\/Agent"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/Project",
+      "label": "Project",
+      "type": "Class",
+      "term_status": "testing",
+      "comment": "A project (a collective endeavour of some kind).",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "disjointWith": [
+        "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+        "http:\/\/xmlns.com\/foaf\/0.1\/Document"
+      ]
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/Image",
+      "label": "Image",
+      "type": "Class",
+      "term_status": "testing",
+      "comment": "An image.",
+      "subClassOf": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/PersonalProfileDocument",
+      "label": "PersonalProfileDocument",
+      "type": "Class",
+      "comment": "A personal profile RDF document.",
+      "term_status": "testing",
+      "subClassOf": "http:\/\/xmlns.com\/foaf\/0.1\/Document"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/OnlineAccount",
+      "label": "Online Account",
+      "type": "Class",
+      "term_status": "testing",
+      "comment": "An online account.",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "subClassOf": "http:\/\/www.w3.org\/2002\/07\/owl#Thing"
+    },
+    {
+      "id": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "label": "Thing",
+      "type": "item"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/OnlineGamingAccount",
+      "label": "Online Gaming Account",
+      "type": "Class",
+      "term_status": "unstable",
+      "comment": "An online gaming account.",
+      "subClassOf": "http:\/\/xmlns.com\/foaf\/0.1\/OnlineAccount",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/OnlineEcommerceAccount",
+      "label": "Online E-commerce Account",
+      "type": "Class",
+      "term_status": "unstable",
+      "comment": "An online e-commerce account.",
+      "subClassOf": "http:\/\/xmlns.com\/foaf\/0.1\/OnlineAccount",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/OnlineChatAccount",
+      "label": "Online Chat Account",
+      "type": "Class",
+      "term_status": "unstable",
+      "comment": "An online chat account.",
+      "subClassOf": "http:\/\/xmlns.com\/foaf\/0.1\/OnlineAccount",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/mbox",
+      "label": "personal mailbox",
+      "type": "Property",
+      "term_status": "stable",
+      "comment": "A  personal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a 'static inverse functional property', in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/mbox_sha1sum",
+      "label": "sha1sum of a personal mailbox URI name",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "The sha1sum of the URI of an Internet mailbox associated with exactly one owner, the  first owner of the mailbox.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/gender",
+      "label": "gender",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "The gender of this Agent (typically but not necessarily 'male' or 'female').",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/geekcode",
+      "label": "geekcode",
+      "type": "Property",
+      "term_status": "archaic",
+      "comment": "A textual geekcode for this person, see http:\/\/www.geekcode.com\/geek.html",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/dnaChecksum",
+      "label": "DNA checksum",
+      "type": "Property",
+      "term_status": "archaic",
+      "comment": "A checksum for the DNA of some thing. Joke.",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/sha1",
+      "label": "sha1sum (hex)",
+      "type": "Property",
+      "term_status": "unstable",
+      "comment": "A sha1sum hash, in hex.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/based_near",
+      "label": "based near",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A location that something is based near, for some broadly human notion of near.",
+      "domain": "http:\/\/www.w3.org\/2003\/01\/geo\/wgs84_pos#SpatialThing",
+      "range": "http:\/\/www.w3.org\/2003\/01\/geo\/wgs84_pos#SpatialThing",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/title",
+      "label": "title",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "Title (Mr, Mrs, Ms, Dr. etc)",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/nick",
+      "label": "nickname",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A short informal nickname characterising an agent (includes login identifiers, IRC and other chat nicknames).",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/jabberID",
+      "label": "jabber ID",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A jabber ID for something.",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/aimChatID",
+      "label": "AIM chat ID",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "An AIM chat ID",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "subPropertyOf": "http:\/\/xmlns.com\/foaf\/0.1\/nick",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/skypeID",
+      "label": "Skype ID",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A Skype ID",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "subPropertyOf": "http:\/\/xmlns.com\/foaf\/0.1\/nick",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/icqChatID",
+      "label": "ICQ chat ID",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "An ICQ chat ID",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "subPropertyOf": "http:\/\/xmlns.com\/foaf\/0.1\/nick",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/yahooChatID",
+      "label": "Yahoo chat ID",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A Yahoo chat ID",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "subPropertyOf": "http:\/\/xmlns.com\/foaf\/0.1\/nick",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/msnChatID",
+      "label": "MSN chat ID",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "An MSN chat ID",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "subPropertyOf": "http:\/\/xmlns.com\/foaf\/0.1\/nick",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/name",
+      "label": "name",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A name for some thing.",
+      "domain": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "subPropertyOf": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#label"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/firstName",
+      "label": "firstName",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "The first name of a person.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/lastName",
+      "label": "lastName",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "The last name of a person.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/givenName",
+      "label": "Given name",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "The given name of some person.",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/givenname",
+      "label": "Given name",
+      "type": "Property",
+      "term_status": "archaic",
+      "comment": "The given name of some person.",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/surname",
+      "label": "Surname",
+      "type": "Property",
+      "term_status": "archaic",
+      "comment": "The surname of some person.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/family_name",
+      "label": "family_name",
+      "type": "Property",
+      "term_status": "archaic",
+      "comment": "The family name of some person.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/familyName",
+      "label": "familyName",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "The family name of some person.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/phone",
+      "label": "phone",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A phone,  specified using fully qualified tel: URI scheme (refs: http:\/\/www.w3.org\/Addressing\/schemes.html#tel).",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/homepage",
+      "label": "homepage",
+      "type": "Property",
+      "term_status": "stable",
+      "comment": "A homepage for some thing.",
+      "subPropertyOf": [
+        "http:\/\/xmlns.com\/foaf\/0.1\/page",
+        "http:\/\/xmlns.com\/foaf\/0.1\/isPrimaryTopicOf"
+      ],
+      "domain": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/weblog",
+      "label": "weblog",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A weblog of some thing (whether person, group, company etc.).",
+      "subPropertyOf": "http:\/\/xmlns.com\/foaf\/0.1\/page",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/openid",
+      "label": "openid",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "An OpenID for an Agent.",
+      "subPropertyOf": "http:\/\/xmlns.com\/foaf\/0.1\/isPrimaryTopicOf",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/tipjar",
+      "label": "tipjar",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A tipjar document for this agent, describing means for payment and reward.",
+      "subPropertyOf": "http:\/\/xmlns.com\/foaf\/0.1\/page",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/plan",
+      "label": "plan",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A .plan comment, in the tradition of finger and '.plan' files.",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/made",
+      "label": "made",
+      "type": "Property",
+      "term_status": "stable",
+      "comment": "Something that was made by this agent.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "inverseOf": "http:\/\/xmlns.com\/foaf\/0.1\/maker"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/maker",
+      "label": "maker",
+      "type": "Property",
+      "term_status": "stable",
+      "comment": "An agent that  made this thing.",
+      "equivalentProperty": "http:\/\/purl.org\/dc\/terms\/creator",
+      "domain": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "inverseOf": "http:\/\/xmlns.com\/foaf\/0.1\/made"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/img",
+      "label": "image",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "An image that can be used to represent some thing (ie. those depictions which are particularly representative of something, eg. one's photo on a homepage).",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Image",
+      "subPropertyOf": "http:\/\/xmlns.com\/foaf\/0.1\/depiction",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/depiction",
+      "label": "depiction",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A depiction of some thing.",
+      "domain": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Image",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "inverseOf": "http:\/\/xmlns.com\/foaf\/0.1\/depicts"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/depicts",
+      "label": "depicts",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A thing depicted in this representation.",
+      "range": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Image",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "inverseOf": "http:\/\/xmlns.com\/foaf\/0.1\/depiction"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/thumbnail",
+      "label": "thumbnail",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A derived thumbnail image.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Image",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Image",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/myersBriggs",
+      "label": "myersBriggs",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A Myers Briggs (MBTI) personality classification.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/workplaceHomepage",
+      "label": "workplace homepage",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A workplace homepage of some person; the homepage of an organization they work for.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/workInfoHomepage",
+      "label": "work info homepage",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A work info homepage of some person; a page about their work for some organization.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/schoolHomepage",
+      "label": "schoolHomepage",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A homepage of a school attended by the person.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/knows",
+      "label": "knows",
+      "type": "Property",
+      "term_status": "stable",
+      "comment": "A person known by this person (indicating some level of reciprocated interaction between the parties).",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/interest",
+      "label": "interest",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A page about a topic of interest to this person.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/topic_interest",
+      "label": "topic_interest",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A thing of interest to this person.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/publications",
+      "label": "publications",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A link to the publications of this person.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/currentProject",
+      "label": "current project",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A current project this person works on.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/pastProject",
+      "label": "past project",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A project this person has previously worked on.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Person",
+      "range": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/fundedBy",
+      "label": "funded by",
+      "type": "Property",
+      "term_status": "archaic",
+      "comment": "An organization funding a project or person.",
+      "domain": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "range": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/logo",
+      "label": "logo",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A logo representing some thing.",
+      "domain": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "range": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/topic",
+      "label": "topic",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A topic of some page or document.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "range": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "inverseOf": "http:\/\/xmlns.com\/foaf\/0.1\/page",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/primaryTopic",
+      "label": "primary topic",
+      "type": "Property",
+      "term_status": "stable",
+      "comment": "The primary topic of some page or document.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "range": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "inverseOf": "http:\/\/xmlns.com\/foaf\/0.1\/isPrimaryTopicOf",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/focus",
+      "label": "focus",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "The underlying or 'focal' entity associated with some SKOS-described concept.",
+      "domain": "http:\/\/www.w3.org\/2004\/02\/skos\/core#Concept",
+      "range": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/www.w3.org\/2004\/02\/skos\/core#Concept",
+      "label": "Concept",
+      "type": "item"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/isPrimaryTopicOf",
+      "label": "is primary topic of",
+      "type": "Property",
+      "term_status": "stable",
+      "comment": "A document that this thing is the primary topic of.",
+      "subPropertyOf": "http:\/\/xmlns.com\/foaf\/0.1\/page",
+      "inverseOf": "http:\/\/xmlns.com\/foaf\/0.1\/primaryTopic",
+      "domain": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/page",
+      "label": "page",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "A page or document about this thing.",
+      "domain": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/",
+      "inverseOf": "http:\/\/xmlns.com\/foaf\/0.1\/topic"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/theme",
+      "label": "theme",
+      "type": "Property",
+      "term_status": "archaic",
+      "comment": "A theme.",
+      "domain": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "range": "http:\/\/www.w3.org\/2002\/07\/owl#Thing",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/account",
+      "label": "account",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "Indicates an account held by this agent.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/OnlineAccount",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/holdsAccount",
+      "label": "account",
+      "type": "Property",
+      "term_status": "archaic",
+      "comment": "Indicates an account held by this agent.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/OnlineAccount",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/accountServiceHomepage",
+      "label": "account service homepage",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "Indicates a homepage of the service provide for this online account.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/OnlineAccount",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Document",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/accountName",
+      "label": "account name",
+      "type": "Property",
+      "term_status": "testing",
+      "comment": "Indicates the name (identifier) associated with this online account.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/OnlineAccount",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/member",
+      "label": "member",
+      "type": "Property",
+      "term_status": "stable",
+      "comment": "Indicates a member of a Group",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Group",
+      "range": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/membershipClass",
+      "label": "membershipClass",
+      "type": "Property",
+      "term_status": "unstable",
+      "comment": "Indicates the class of individuals that are a member of a Group",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/birthday",
+      "label": "birthday",
+      "type": "Property",
+      "term_status": "unstable",
+      "comment": "The birthday of this Agent, represented in mm-dd string form, eg. '12-31'.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/age",
+      "label": "age",
+      "type": "Property",
+      "term_status": "unstable",
+      "comment": "The age in years of some agent.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    },
+    {
+      "id": "http:\/\/xmlns.com\/foaf\/0.1\/status",
+      "label": "status",
+      "type": "Property",
+      "term_status": "unstable",
+      "comment": "A string expressing what the user is happy for the general public (normally) to know about their current activity.",
+      "domain": "http:\/\/xmlns.com\/foaf\/0.1\/Agent",
+      "range": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#Literal",
+      "isDefinedBy": "http:\/\/xmlns.com\/foaf\/0.1\/"
+    }
+  ],
+  "properties": {
+    "label": {
+      "uri": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#label"
+    },
+    "description": {
+      "uri": "http:\/\/purl.org\/dc\/elements\/1.1\/description",
+      "label": "Description",
+      "valueType": "text"
+    },
+    "term_status": {
+      "uri": "http:\/\/www.w3.org\/2003\/06\/sw-vocab-status\/ns#term_status",
+      "label": "Term Status",
+      "valueType": "text"
+    },
+    "comment": {
+      "uri": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#comment",
+      "label": "Comment",
+      "valueType": "text"
+    },
+    "isDefinedBy": {
+      "uri": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#isDefinedBy",
+      "label": "Is Defined By",
+      "valueType": "item"
+    },
+    "subClassOf": {
+      "uri": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#subClassOf",
+      "label": "Sub Class Of",
+      "valueType": "item"
+    },
+    "disjointWith": {
+      "uri": "http:\/\/www.w3.org\/2002\/07\/owl#disjointWith",
+      "label": "Disjoint With",
+      "valueType": "item"
+    },
+    "equivalentClass": {
+      "uri": "http:\/\/www.w3.org\/2002\/07\/owl#equivalentClass",
+      "label": "Equivalent Class",
+      "valueType": "url"
+    },
+    "domain": {
+      "uri": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#domain",
+      "label": "Domain",
+      "valueType": "item"
+    },
+    "range": {
+      "uri": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#range",
+      "label": "Range",
+      "valueType": "url"
+    },
+    "subPropertyOf": {
+      "uri": "http:\/\/www.w3.org\/2000\/01\/rdf-schema#subPropertyOf",
+      "label": "Sub Property Of",
+      "valueType": "item"
+    },
+    "inverseOf": {
+      "uri": "http:\/\/www.w3.org\/2002\/07\/owl#inverseOf",
+      "label": "Inverse Of",
+      "valueType": "item"
+    },
+    "equivalentProperty": {
+      "uri": "http:\/\/www.w3.org\/2002\/07\/owl#equivalentProperty",
+      "label": "Equivalent Property",
+      "valueType": "url"
+    }
+  },
+  "types": {
+    "item": {
+      "label": "Item",
+      "pluralLabel": "Items"
+    },
+    "Ontology": {
+      "label": "Ontology"
+    },
+    "AnnotationProperty": {
+      "label": "Annotation Property"
+    },
+    "Class": {
+      "label": "Class"
+    },
+    "_empty_": {
+      "label": ""
+    },
+    "Property": {
+      "label": "Property"
+    }
+  }
+}

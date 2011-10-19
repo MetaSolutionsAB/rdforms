@@ -1,0 +1,46 @@
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body class="tundra">
+	<script type="text/javascript" src="../../../../lib/dojo/dojo/dojo.js.uncompressed.js"
+		djConfig="isDebug: true, debugAtAllCosts: true, parseOnLoad: false, usePlainJson: true"></script>
+	<style>
+		@import "../../../../lib/dojo/dijit/themes/tundra/tundra.css"; /* required when dijit */	
+		@import "rforms.css";
+	</style>
+	<script type="text/javascript">
+		dojo.registerModulePath("rforms","../../../src/rforms");
+		dojo.registerModulePath("rdfjson","../../../src/rdfjson");
+		dojo.require("rforms.template.ItemStore");
+		dojo.require("rforms.template.tests.data");
+		dojo.require("rdfjson.Graph");
+		dojo.require("rdfjson.tests.data");
+		dojo.require("rforms.model.Engine");
+		dojo.require("rforms.view.Editor");
+		dojo.require("rforms.template.Converter");
+
+		dojo.addOnLoad(function() {
+/*			dojo.xhrGet({
+				url: "http://convert.test.talis.com/?data-uri[]=http://dublincore.org/2010/10/11/dcterms.rdf&input=&output=exhibit-json&callback=",
+				handleAs: "json-comment-optional",
+				load: function(data) {
+					
+				}
+
+			})*/
+			var itemStore = new rforms.template.ItemStore();
+			itemStore.setPriorities({"http:\/\/xmlns.com\/foaf\/0.1\/firstName": 1000, "http:\/\/xmlns.com\/foaf\/0.1\/surname": 999});
+			var converter = new rforms.template.Converter(itemStore);
+			//itemStore.createTemplate(rforms.template.tests.template1);
+	 		converter.convertExhibit(dojo.moduleUrl("rforms.template.tests", "foaf-exhibit.json"), function(results) {	
+				var graph = new rdfjson.Graph(rdfjson.tests.graph2);
+				var template = itemStore.createTemplateFromChildren(["http:\/\/xmlns.com\/foaf\/0.1\/Person"]);
+				var binding = rforms.model.match(graph, "http://example.org/about", template);
+				new rforms.view.Editor({template: template, binding: binding}, "compactView");
+			});
+		});
+	</script>
+	<div id="compactView"></div>
+  </body>
+</html>

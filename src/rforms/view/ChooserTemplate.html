@@ -1,0 +1,24 @@
+<div>
+	<div dojoType="dijit.Dialog" autofocus="true" dojoAttachPoint="dialog">
+		<div dojoType="dijit.layout.BorderContainer" design="sidebar" dojoAttachPoint="bc" gutters="false" class="chooser rforms">
+			<div dojoType="dijit.layout.ContentPane" dojoAttachPoint="cpLeft" region="left" splitter="true" style="width: 60%">
+				<div dojoAttachPoint="selectionNode"></div>
+			</div>
+			<div dojoType="dijit.layout.ContentPane" region="center">
+				<h2>Information about selected item</h2>
+				<label>Web-identifier:</label>
+				<div dojoAttachPoint="uriNode" class="uriNode"></div>
+				<label>Item label:</label>
+				<div dojoAttachPoint="labelNode" class="labelNode"></div>
+				<label>Item description:</label>
+				<div dojoAttachPoint="descriptionNode"  class="descriptionNode"></div>
+			</div>
+			<div dojoType="dijit.layout.ContentPane" dojoAttachPoint="cpBottom" region="bottom">
+				<div class="buttonRow">
+					<div dojoType="dijit.form.Button" dojoAttachPoint="cancelButton" dojoAttachEvent="onClick: _cancelClicked" label="cancel"></div>
+					<div dojoType="dijit.form.Button" dojoAttachPoint="doneButton" disabled="true" dojoAttachEvent="onClick: _doneClicked" label="done"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

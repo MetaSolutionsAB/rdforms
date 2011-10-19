@@ -1,0 +1,18 @@
+<div>
+	<div dojoType="dijit.layout.BorderContainer" dojoAttachPoint="_bcDijit" style="height: 100%">
+		<div dojoType="dijit.layout.ContentPane" region="left" splitter="true">
+			<div dojoAttachPoint="_listNode" style="height: 100%;overflow-y: auto"></div>
+		</div>
+		<div dojoType="dijit.layout.TabContainer" region="center" splitter="true">
+			<div dojoType="dijit.layout.ContentPane" title="syntax">
+				<textarea dojoAttachPoint="_contentsNode" style="width: 100%; height: 100%"></textarea>
+			</div>
+			<div dojoType="dijit.layout.ContentPane" title="editor">
+				<div dojoAttachPoint="_editorNode" style="width: 100%; height: 100%"></div>
+			</div>
+		</div>
+		<div dojoType="dijit.layout.ContentPane" region="right" splitter="true" style="width: 500px;">
+			<div dojoAttachPoint="_previewNode" style="height:100%;overflow-y:auto;"></div>
+		</div>
+	</div>
+</div>

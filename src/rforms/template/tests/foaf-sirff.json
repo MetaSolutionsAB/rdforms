@@ -1,0 +1,1724 @@
+{
+	"label":{"en":"FOAF forms", "sv":"FOAF formulär"},
+	"auxilliary":[
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/mbox", 
+  		"property": "http://xmlns.com/foaf/0.1/mbox", 
+  		"label": {
+  			"en": "personal mailbox"
+  		}, 
+  		"description": {
+  			"en": "A  personal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a 'static inverse functional property', in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/mbox_sha1sum", 
+  		"property": "http://xmlns.com/foaf/0.1/mbox_sha1sum", 
+  		"label": {
+  			"en": "sha1sum of a personal mailbox URI name"
+  		}, 
+  		"description": {
+  			"en": "The sha1sum of the URI of an Internet mailbox associated with exactly one owner, the  first owner of the mailbox."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/gender", 
+  		"property": "http://xmlns.com/foaf/0.1/gender", 
+  		"label": {
+  			"en": "gender"
+  		}, 
+  		"description": {
+  			"en": "The gender of this Agent (typically but not necessarily 'male' or 'female')."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/geekcode", 
+  		"property": "http://xmlns.com/foaf/0.1/geekcode", 
+  		"label": {
+  			"en": "geekcode"
+  		}, 
+  		"description": {
+  			"en": "A textual geekcode for this person, see http://www.geekcode.com/geek.html"
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/dnaChecksum", 
+  		"property": "http://xmlns.com/foaf/0.1/dnaChecksum", 
+  		"label": {
+  			"en": "DNA checksum"
+  		}, 
+  		"description": {
+  			"en": "A checksum for the DNA of some thing. Joke."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/sha1", 
+  		"property": "http://xmlns.com/foaf/0.1/sha1", 
+  		"label": {
+  			"en": "sha1sum (hex)"
+  		}, 
+  		"description": {
+  			"en": "A sha1sum hash, in hex."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/based_near", 
+  		"property": "http://xmlns.com/foaf/0.1/based_near", 
+  		"label": {
+  			"en": "based near"
+  		}, 
+  		"description": {
+  			"en": "A location that something is based near, for some broadly human notion of near."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/based_near"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/title", 
+  		"property": "http://xmlns.com/foaf/0.1/title", 
+  		"label": {
+  			"en": "title"
+  		}, 
+  		"description": {
+  			"en": "Title (Mr, Mrs, Ms, Dr. etc)"
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/nick", 
+  		"property": "http://xmlns.com/foaf/0.1/nick", 
+  		"label": {
+  			"en": "nickname"
+  		}, 
+  		"description": {
+  			"en": "A short informal nickname characterising an agent (includes login identifiers, IRC and other chat nicknames)."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/jabberID", 
+  		"property": "http://xmlns.com/foaf/0.1/jabberID", 
+  		"label": {
+  			"en": "jabber ID"
+  		}, 
+  		"description": {
+  			"en": "A jabber ID for something."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/aimChatID", 
+  		"property": "http://xmlns.com/foaf/0.1/aimChatID", 
+  		"label": {
+  			"en": "AIM chat ID"
+  		}, 
+  		"description": {
+  			"en": "An AIM chat ID"
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/skypeID", 
+  		"property": "http://xmlns.com/foaf/0.1/skypeID", 
+  		"label": {
+  			"en": "Skype ID"
+  		}, 
+  		"description": {
+  			"en": "A Skype ID"
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/icqChatID", 
+  		"property": "http://xmlns.com/foaf/0.1/icqChatID", 
+  		"label": {
+  			"en": "ICQ chat ID"
+  		}, 
+  		"description": {
+  			"en": "An ICQ chat ID"
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/yahooChatID", 
+  		"property": "http://xmlns.com/foaf/0.1/yahooChatID", 
+  		"label": {
+  			"en": "Yahoo chat ID"
+  		}, 
+  		"description": {
+  			"en": "A Yahoo chat ID"
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/msnChatID", 
+  		"property": "http://xmlns.com/foaf/0.1/msnChatID", 
+  		"label": {
+  			"en": "MSN chat ID"
+  		}, 
+  		"description": {
+  			"en": "An MSN chat ID"
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/name", 
+  		"property": "http://xmlns.com/foaf/0.1/name", 
+  		"label": {
+  			"en": "name"
+  		}, 
+  		"description": {
+  			"en": "A name for some thing."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/firstName", 
+  		"property": "http://xmlns.com/foaf/0.1/firstName", 
+  		"label": {
+  			"en": "firstName"
+  		}, 
+  		"description": {
+  			"en": "The first name of a person."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/lastName", 
+  		"property": "http://xmlns.com/foaf/0.1/lastName", 
+  		"label": {
+  			"en": "lastName"
+  		}, 
+  		"description": {
+  			"en": "The last name of a person."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/givenName", 
+  		"property": "http://xmlns.com/foaf/0.1/givenName", 
+  		"label": {
+  			"en": "Given name"
+  		}, 
+  		"description": {
+  			"en": "The given name of some person."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/givenname", 
+  		"property": "http://xmlns.com/foaf/0.1/givenname", 
+  		"label": {
+  			"en": "Given name"
+  		}, 
+  		"description": {
+  			"en": "The given name of some person."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/surname", 
+  		"property": "http://xmlns.com/foaf/0.1/surname", 
+  		"label": {
+  			"en": "Surname"
+  		}, 
+  		"description": {
+  			"en": "The surname of some person."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/family_name", 
+  		"property": "http://xmlns.com/foaf/0.1/family_name", 
+  		"label": {
+  			"en": "family_name"
+  		}, 
+  		"description": {
+  			"en": "The family name of some person."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/familyName", 
+  		"property": "http://xmlns.com/foaf/0.1/familyName", 
+  		"label": {
+  			"en": "familyName"
+  		}, 
+  		"description": {
+  			"en": "The family name of some person."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/phone", 
+  		"property": "http://xmlns.com/foaf/0.1/phone", 
+  		"label": {
+  			"en": "phone"
+  		}, 
+  		"description": {
+  			"en": "A phone,  specified using fully qualified tel: URI scheme (refs: http://www.w3.org/Addressing/schemes.html#tel)."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/homepage", 
+  		"property": "http://xmlns.com/foaf/0.1/homepage", 
+  		"label": {
+  			"en": "homepage"
+  		}, 
+  		"description": {
+  			"en": "A homepage for some thing."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/weblog", 
+  		"property": "http://xmlns.com/foaf/0.1/weblog", 
+  		"label": {
+  			"en": "weblog"
+  		}, 
+  		"description": {
+  			"en": "A weblog of some thing (whether person, group, company etc.)."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/openid", 
+  		"property": "http://xmlns.com/foaf/0.1/openid", 
+  		"label": {
+  			"en": "openid"
+  		}, 
+  		"description": {
+  			"en": "An OpenID for an Agent."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/tipjar", 
+  		"property": "http://xmlns.com/foaf/0.1/tipjar", 
+  		"label": {
+  			"en": "tipjar"
+  		}, 
+  		"description": {
+  			"en": "A tipjar document for this agent, describing means for payment and reward."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/plan", 
+  		"property": "http://xmlns.com/foaf/0.1/plan", 
+  		"label": {
+  			"en": "plan"
+  		}, 
+  		"description": {
+  			"en": "A .plan comment, in the tradition of finger and '.plan' files."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/made", 
+  		"property": "http://xmlns.com/foaf/0.1/made", 
+  		"label": {
+  			"en": "made"
+  		}, 
+  		"description": {
+  			"en": "Something that was made by this agent."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/maker", 
+  		"property": "http://xmlns.com/foaf/0.1/maker", 
+  		"label": {
+  			"en": "maker"
+  		}, 
+  		"description": {
+  			"en": "An agent that  made this thing."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/mbox"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/mbox_sha1sum"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/gender"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/jabberID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/aimChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/skypeID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/icqChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/yahooChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/msnChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/weblog"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/openid"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/tipjar"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/made"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/interest"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic_interest"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/account"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/holdsAccount"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/birthday"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/age"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/status"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/img", 
+  		"property": "http://xmlns.com/foaf/0.1/img", 
+  		"label": {
+  			"en": "image"
+  		}, 
+  		"description": {
+  			"en": "An image that can be used to represent some thing (ie. those depictions which are particularly representative of something, eg. one's photo on a homepage)."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/depicts"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/thumbnail"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/depiction", 
+  		"property": "http://xmlns.com/foaf/0.1/depiction", 
+  		"label": {
+  			"en": "depiction"
+  		}, 
+  		"description": {
+  			"en": "A depiction of some thing."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/depicts"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/thumbnail"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/depicts", 
+  		"property": "http://xmlns.com/foaf/0.1/depicts", 
+  		"label": {
+  			"en": "depicts"
+  		}, 
+  		"description": {
+  			"en": "A thing depicted in this representation."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/thumbnail", 
+  		"property": "http://xmlns.com/foaf/0.1/thumbnail", 
+  		"label": {
+  			"en": "thumbnail"
+  		}, 
+  		"description": {
+  			"en": "A derived thumbnail image."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/depicts"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/thumbnail"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/myersBriggs", 
+  		"property": "http://xmlns.com/foaf/0.1/myersBriggs", 
+  		"label": {
+  			"en": "myersBriggs"
+  		}, 
+  		"description": {
+  			"en": "A Myers Briggs (MBTI) personality classification."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/workplaceHomepage", 
+  		"property": "http://xmlns.com/foaf/0.1/workplaceHomepage", 
+  		"label": {
+  			"en": "workplace homepage"
+  		}, 
+  		"description": {
+  			"en": "A workplace homepage of some person; the homepage of an organization they work for."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/workInfoHomepage", 
+  		"property": "http://xmlns.com/foaf/0.1/workInfoHomepage", 
+  		"label": {
+  			"en": "work info homepage"
+  		}, 
+  		"description": {
+  			"en": "A work info homepage of some person; a page about their work for some organization."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/schoolHomepage", 
+  		"property": "http://xmlns.com/foaf/0.1/schoolHomepage", 
+  		"label": {
+  			"en": "schoolHomepage"
+  		}, 
+  		"description": {
+  			"en": "A homepage of a school attended by the person."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/knows", 
+  		"property": "http://xmlns.com/foaf/0.1/knows", 
+  		"label": {
+  			"en": "knows"
+  		}, 
+  		"description": {
+  			"en": "A person known by this person (indicating some level of reciprocated interaction between the parties)."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/geekcode"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/firstName"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/lastName"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/surname"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/family_name"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/familyName"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/plan"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/img"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/myersBriggs"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/workplaceHomepage"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/workInfoHomepage"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/schoolHomepage"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/knows"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/publications"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/currentProject"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/pastProject"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/mbox"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/mbox_sha1sum"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/gender"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/jabberID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/aimChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/skypeID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/icqChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/yahooChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/msnChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/weblog"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/openid"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/tipjar"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/made"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/interest"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic_interest"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/account"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/holdsAccount"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/birthday"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/age"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/status"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/based_near"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/interest", 
+  		"property": "http://xmlns.com/foaf/0.1/interest", 
+  		"label": {
+  			"en": "interest"
+  		}, 
+  		"description": {
+  			"en": "A page about a topic of interest to this person."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/topic_interest", 
+  		"property": "http://xmlns.com/foaf/0.1/topic_interest", 
+  		"label": {
+  			"en": "topic_interest"
+  		}, 
+  		"description": {
+  			"en": "A thing of interest to this person."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/publications", 
+  		"property": "http://xmlns.com/foaf/0.1/publications", 
+  		"label": {
+  			"en": "publications"
+  		}, 
+  		"description": {
+  			"en": "A link to the publications of this person."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/currentProject", 
+  		"property": "http://xmlns.com/foaf/0.1/currentProject", 
+  		"label": {
+  			"en": "current project"
+  		}, 
+  		"description": {
+  			"en": "A current project this person works on."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/pastProject", 
+  		"property": "http://xmlns.com/foaf/0.1/pastProject", 
+  		"label": {
+  			"en": "past project"
+  		}, 
+  		"description": {
+  			"en": "A project this person has previously worked on."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/fundedBy", 
+  		"property": "http://xmlns.com/foaf/0.1/fundedBy", 
+  		"label": {
+  			"en": "funded by"
+  		}, 
+  		"description": {
+  			"en": "An organization funding a project or person."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/logo", 
+  		"property": "http://xmlns.com/foaf/0.1/logo", 
+  		"label": {
+  			"en": "logo"
+  		}, 
+  		"description": {
+  			"en": "A logo representing some thing."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/topic", 
+  		"property": "http://xmlns.com/foaf/0.1/topic", 
+  		"label": {
+  			"en": "topic"
+  		}, 
+  		"description": {
+  			"en": "A topic of some page or document."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/primaryTopic", 
+  		"property": "http://xmlns.com/foaf/0.1/primaryTopic", 
+  		"label": {
+  			"en": "primary topic"
+  		}, 
+  		"description": {
+  			"en": "The primary topic of some page or document."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/focus", 
+  		"property": "http://xmlns.com/foaf/0.1/focus", 
+  		"label": {
+  			"en": "focus"
+  		}, 
+  		"description": {
+  			"en": "The underlying or 'focal' entity associated with some SKOS-described concept."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/isPrimaryTopicOf", 
+  		"property": "http://xmlns.com/foaf/0.1/isPrimaryTopicOf", 
+  		"label": {
+  			"en": "is primary topic of"
+  		}, 
+  		"description": {
+  			"en": "A document that this thing is the primary topic of."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/page", 
+  		"property": "http://xmlns.com/foaf/0.1/page", 
+  		"label": {
+  			"en": "page"
+  		}, 
+  		"description": {
+  			"en": "A page or document about this thing."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/theme", 
+  		"property": "http://xmlns.com/foaf/0.1/theme", 
+  		"label": {
+  			"en": "theme"
+  		}, 
+  		"description": {
+  			"en": "A theme."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/account", 
+  		"property": "http://xmlns.com/foaf/0.1/account", 
+  		"label": {
+  			"en": "account"
+  		}, 
+  		"description": {
+  			"en": "Indicates an account held by this agent."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/accountServiceHomepage"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/accountName"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/holdsAccount", 
+  		"property": "http://xmlns.com/foaf/0.1/holdsAccount", 
+  		"label": {
+  			"en": "account"
+  		}, 
+  		"description": {
+  			"en": "Indicates an account held by this agent."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/accountServiceHomepage"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/accountName"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/accountServiceHomepage", 
+  		"property": "http://xmlns.com/foaf/0.1/accountServiceHomepage", 
+  		"label": {
+  			"en": "account service homepage"
+  		}, 
+  		"description": {
+  			"en": "Indicates a homepage of the service provide for this online account."
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/accountName", 
+  		"property": "http://xmlns.com/foaf/0.1/accountName", 
+  		"label": {
+  			"en": "account name"
+  		}, 
+  		"description": {
+  			"en": "Indicates the name (identifier) associated with this online account."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/member", 
+  		"property": "http://xmlns.com/foaf/0.1/member", 
+  		"label": {
+  			"en": "member"
+  		}, 
+  		"description": {
+  			"en": "Indicates a member of a Group"
+  		}, 
+  		"type": "group", 
+  		"automatic": true, 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/mbox"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/mbox_sha1sum"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/gender"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/jabberID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/aimChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/skypeID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/icqChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/yahooChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/msnChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/weblog"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/openid"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/tipjar"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/made"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/interest"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic_interest"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/account"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/holdsAccount"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/birthday"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/age"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/status"
+  			}
+  		]
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/membershipClass", 
+  		"property": "http://xmlns.com/foaf/0.1/membershipClass", 
+  		"label": {
+  			"en": "membershipClass"
+  		}, 
+  		"description": {
+  			"en": "Indicates the class of individuals that are a member of a Group"
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/birthday", 
+  		"property": "http://xmlns.com/foaf/0.1/birthday", 
+  		"label": {
+  			"en": "birthday"
+  		}, 
+  		"description": {
+  			"en": "The birthday of this Agent, represented in mm-dd string form, eg. '12-31'."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/age", 
+  		"property": "http://xmlns.com/foaf/0.1/age", 
+  		"label": {
+  			"en": "age"
+  		}, 
+  		"description": {
+  			"en": "The age in years of some agent."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/status", 
+  		"property": "http://xmlns.com/foaf/0.1/status", 
+  		"label": {
+  			"en": "status"
+  		}, 
+  		"description": {
+  			"en": "A string expressing what the user is happy for the general public (normally) to know about their current activity."
+  		}, 
+  		"type": "text", 
+  		"nodetype": "LANGUAGE_LITERAL"
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/Person", 
+  		"label": {
+  			"en": "Person"
+  		}, 
+  		"description": {
+  			"en": "A person."
+  		}, 
+  		"type": "group", 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/geekcode"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/firstName"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/lastName"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/surname"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/family_name"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/familyName"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/plan"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/img"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/myersBriggs"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/workplaceHomepage"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/workInfoHomepage"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/schoolHomepage"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/knows"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/publications"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/currentProject"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/pastProject"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/mbox"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/mbox_sha1sum"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/gender"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/jabberID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/aimChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/skypeID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/icqChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/yahooChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/msnChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/weblog"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/openid"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/tipjar"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/made"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/interest"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic_interest"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/account"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/holdsAccount"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/birthday"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/age"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/status"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/based_near"
+  			}
+  		], 
+  		"automatic": true
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/Agent", 
+  		"label": {
+  			"en": "Agent"
+  		}, 
+  		"description": {
+  			"en": "An agent (eg. person, group, software or physical artifact)."
+  		}, 
+  		"type": "group", 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/mbox"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/mbox_sha1sum"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/gender"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/jabberID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/aimChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/skypeID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/icqChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/yahooChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/msnChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/weblog"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/openid"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/tipjar"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/made"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/interest"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic_interest"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/account"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/holdsAccount"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/birthday"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/age"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/status"
+  			}
+  		], 
+  		"automatic": true
+  	}, 
+  	{
+  		"id": "http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing", 
+  		"label": {
+  			"en": "Spatial Thing"
+  		}, 
+  		"description": {
+  			"en": undefined
+  		}, 
+  		"type": "group", 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/based_near"
+  			}
+  		], 
+  		"automatic": true
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/Document", 
+  		"label": {
+  			"en": "Document"
+  		}, 
+  		"description": {
+  			"en": "A document."
+  		}, 
+  		"type": "group", 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		], 
+  		"automatic": true
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/Organization", 
+  		"label": {
+  			"en": "Organization"
+  		}, 
+  		"description": {
+  			"en": "An organization."
+  		}, 
+  		"type": "group", 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/mbox"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/mbox_sha1sum"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/gender"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/jabberID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/aimChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/skypeID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/icqChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/yahooChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/msnChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/weblog"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/openid"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/tipjar"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/made"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/interest"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic_interest"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/account"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/holdsAccount"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/birthday"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/age"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/status"
+  			}
+  		], 
+  		"automatic": true
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/Group", 
+  		"label": {
+  			"en": "Group"
+  		}, 
+  		"description": {
+  			"en": "A class of Agents."
+  		}, 
+  		"type": "group", 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/member"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/mbox"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/mbox_sha1sum"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/gender"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/jabberID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/aimChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/skypeID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/icqChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/yahooChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/msnChatID"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/weblog"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/openid"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/tipjar"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/made"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/interest"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic_interest"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/account"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/holdsAccount"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/birthday"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/age"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/status"
+  			}
+  		], 
+  		"automatic": true
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/Image", 
+  		"label": {
+  			"en": "Image"
+  		}, 
+  		"description": {
+  			"en": "An image."
+  		}, 
+  		"type": "group", 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/depicts"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/thumbnail"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		], 
+  		"automatic": true
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/PersonalProfileDocument", 
+  		"label": {
+  			"en": "PersonalProfileDocument"
+  		}, 
+  		"description": {
+  			"en": "A personal profile RDF document."
+  		}, 
+  		"type": "group", 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/sha1"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/topic"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/primaryTopic"
+  			}
+  		], 
+  		"automatic": true
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/OnlineAccount", 
+  		"label": {
+  			"en": "Online Account"
+  		}, 
+  		"description": {
+  			"en": "An online account."
+  		}, 
+  		"type": "group", 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/accountServiceHomepage"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/accountName"
+  			}
+  		], 
+  		"automatic": true
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/OnlineGamingAccount", 
+  		"label": {
+  			"en": "Online Gaming Account"
+  		}, 
+  		"description": {
+  			"en": "An online gaming account."
+  		}, 
+  		"type": "group", 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/accountServiceHomepage"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/accountName"
+  			}
+  		], 
+  		"automatic": true
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/OnlineEcommerceAccount", 
+  		"label": {
+  			"en": "Online E-commerce Account"
+  		}, 
+  		"description": {
+  			"en": "An online e-commerce account."
+  		}, 
+  		"type": "group", 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/accountServiceHomepage"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/accountName"
+  			}
+  		], 
+  		"automatic": true
+  	}, 
+  	{
+  		"id": "http://xmlns.com/foaf/0.1/OnlineChatAccount", 
+  		"label": {
+  			"en": "Online Chat Account"
+  		}, 
+  		"description": {
+  			"en": "An online chat account."
+  		}, 
+  		"type": "group", 
+  		"content": [
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/accountServiceHomepage"
+  			}, 
+  			{
+  				"id": "http://xmlns.com/foaf/0.1/accountName"
+  			}
+  		], 
+  		"automatic": true
+  	}
+  ]
+}

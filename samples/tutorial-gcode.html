@@ -1,0 +1,161 @@
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body class="tundra">
+  	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.js" 
+		djConfig="parseOnLoad: true" type="text/javascript"></script>
+	<script type="text/javascript" src="http://rforms.googlecode.com/files/rforms_ROOT.js"></script>
+	<script type="text/javascript" src="http://rforms.googlecode.com/files/rforms.js"></script>
+	<style>
+		@import "http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dijit/themes/tundra/tundra.css";
+		@import "http://rforms.googlecode.com/files/rforms.css";
+	</style>
+	<script>		
+		//A simple template showing a title and an creator in the form of a foaf:Person with a firstname and lastname.
+		//The person being shown in a table format.
+		templateSrc = {
+			"root":{
+				"type":"group",
+				"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://xmlns.com/foaf/0.1/Document"},
+				"nodetype":"RESOURCE",
+				"content":[
+					{
+						"type":"text",
+						"nodetype":"LANGUAGE_LITERAL",
+						"label":{"en":"Title"},
+						"property":"http://purl.org/dc/terms/title",
+						"cardinality": {"min": 2, "pref": "4", "max": 5}
+					},
+					{
+						"type":"group",
+						"nodetype":"RESOURCE",
+						"label":{"en":"Author"},
+						"description":{"en":"The author of the book"},
+						"property":"http://purl.org/dc/terms/creator",
+						"cardinality": {"min": 0, "max": 5},
+						"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://xmlns.com/foaf/0.1/Person"},
+						"cls": ["rformsTable"],
+						"content":[
+							{
+								"type":"text",
+								"nodetype":"ONLY_LITERAL",
+								"property":"http://xmlns.com/foaf/0.1/firstName",
+								"label":{"en":"First name"}
+							},{
+								"type":"text",
+								"nodetype":"ONLY_LITERAL",
+								"property":"http://xmlns.com/foaf/0.1/surname",
+								"label":{"en":"Surname"}
+							}
+						]
+					}
+				]
+			}
+		};
+		
+		//Simple rdfjson data, all triples are matched into the template.
+		rdf = {
+				"http://example.org/about" : {
+			        "http://purl.org/dc/terms/title"   : [ { "value" : "Anna's Homepage", "type" : "literal", "lang" : "en" } ] ,
+			        "http://purl.org/dc/terms/creator" : [ { "value" : "_:person", "type" : "bnode" } ]
+			    } ,
+			 
+			    "_:person" : {
+					"http://www.w3.org/TR/rdf-schema/type"	  : [ { "value" : "http://xmlns.com/foaf/0.1/Person", "type" : "uri"}],
+			        "http://xmlns.com/foaf/0.1/firstName"     : [ { "value" : "Anna", "type" : "literal" } ] ,
+			        "http://xmlns.com/foaf/0.1/surname"       : [ { "value" : "Wilder", "type" : "literal" } ]
+			    }
+			};
+
+		dojo.require("rforms.template.ItemStore");		
+		dojo.require("rdfjson.Graph");
+		dojo.require("rforms.model.Engine");
+		dojo.require("rforms.view.Editor");
+		dojo.require("rforms.view.Presenter");
+		dojo.require("dijit.layout.TabContainer");
+		dojo.require("dijit.layout.ContentPane");
+		dojo.require("dijit.form.SimpleTextarea");
+		dojo.addOnLoad(function() {
+			var editingUsingRForms;
+			var tc = dijit.byId("tabContainer");
+			var editorTab = dijit.byId("editorTab");
+			var rdfTab = dijit.byId("rdfTab");
+			var templateTab = dijit.byId("templateTab");
+			var presenterTab = dijit.byId("presenterTab");
+			var rdfView = dijit.byId("rdfView");
+			var templateView = dijit.byId("templateView");
+			
+			var itemStore = new rforms.template.ItemStore();
+			templateView.set("value", dojo.toJson(templateSrc, 1));
+			var template = itemStore.createTemplate(templateSrc);
+			var templateInvalid = false;
+			var updateTemplate = function() {
+				if (templateInvalid) {
+					try {
+						template = itemStore.createTemplate(dojo.fromJson(templateView.get("value")));
+						templateInvalid = false;
+					} catch (e) {
+						alert("Error in template.");
+					}
+				}
+			};
+			
+			var graph = new rdfjson.Graph(rdf);
+			var graphInvalid = false;
+			var updateGraph = function() {
+				if (graphInvalid) {
+					try {
+						graph = new rdfjson.Graph(dojo.fromJson(rdfView.get("value")));
+						graphInvalid = false;
+					} catch (e) {
+						alert("Error in rdf.");
+						return;
+					}
+				}
+			}
+			
+			var initEditor = function() {
+				var binding = rforms.model.match(graph, "http://example.org/about", template);
+				var node = dojo.create("div");
+				editorTab.set("content", node);
+				new rforms.view.Editor({template: template, binding: binding}, node);
+			}
+			
+			var initPresenter = function() {
+				var binding = rforms.model.match(graph, "http://example.org/about", template);
+				var node = dojo.create("div");
+				presenterTab.set("content", node);
+				new rforms.view.Presenter({template: template, binding: binding}, node);
+			};
+			
+			var initRDF = function() {
+				rdfView.set("value", dojo.toJson(graph.exportRDFJSON(), 1));
+			};
+			
+			
+			dojo.connect(tc, "selectChild", function(child){
+				updateGraph();
+				updateTemplate();
+				if(child === rdfTab) {
+					initRDF();
+					graphInvalid = true;
+				} else if(child === templateTab) {
+					templateInvalid = true;
+				} else if (child === editorTab) {
+					initEditor();
+				} else if (child === presenterTab) {
+					initPresenter();
+				}
+			});
+			initEditor();
+		});
+	</script>
+	<div dojoType="dijit.layout.TabContainer" id="tabContainer" style="height: 100%">
+		<div dojoType="dijit.layout.ContentPane" title="Editor" selected="true" id="editorTab"></div>
+		<div dojoType="dijit.layout.ContentPane" title="Presenter" id="presenterTab"></div>
+		<div dojoType="dijit.layout.ContentPane" title="Template" id="templateTab"><div dojoType="dijit.form.SimpleTextarea" id="templateView" style="padding: 0px; margin: 0px;height: 100%; width: 100%; overflow:auto;"></div></div>
+		<div dojoType="dijit.layout.ContentPane" title="RDF data" id="rdfTab"><div dojoType="dijit.form.SimpleTextarea" id="rdfView" style="padding: 0px; margin: 0px;height: 100%; width: 100%; overflow:auto;"></div></div>
+	</div>
+  </body>
+</html>

@@ -11,7 +11,15 @@
 		@import "http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dijit/themes/tundra/tundra.css";
 		@import "http://rforms.googlecode.com/files/rforms.css";
 	</style>
-	<script>		
+	<script type="text/javascript">
+		dojo.require("rforms.template.ItemStore");		
+		dojo.require("rdfjson.Graph");
+		dojo.require("rforms.model.Engine");
+		dojo.require("rforms.view.Editor");
+		dojo.require("rforms.view.Presenter");
+		dojo.require("dijit.layout.TabContainer");
+		dojo.require("dijit.layout.ContentPane");
+		dojo.require("dijit.form.SimpleTextarea");
 		//A simple template showing a title and an creator in the form of a foaf:Person with a firstname and lastname.
 		//The person being shown in a table format.
 		templateSrc = {
@@ -68,14 +76,6 @@
 			    }
 			};
 
-		dojo.require("rforms.template.ItemStore");		
-		dojo.require("rdfjson.Graph");
-		dojo.require("rforms.model.Engine");
-		dojo.require("rforms.view.Editor");
-		dojo.require("rforms.view.Presenter");
-		dojo.require("dijit.layout.TabContainer");
-		dojo.require("dijit.layout.ContentPane");
-		dojo.require("dijit.form.SimpleTextarea");
 		dojo.addOnLoad(function() {
 			var editingUsingRForms;
 			var tc = dijit.byId("tabContainer");

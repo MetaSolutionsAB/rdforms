@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
   <ModulePrefs title="Gadget Wrapper" author_email="mpalmer@gmail.com" description="Shows whatever url in an iframe that is provided in the url user preference." height="500">
-	<Require feature="opensocial-0.9" />
   </ModulePrefs>
-	<UserPref name="url" datatype="string" 
-               default_value="http://rforms.googlecode.com/svn/trunk/samples/editorView-gcode.html"/>
   <Content type="html"><![CDATA[
-	<iframe id="content" src="" width="100%" height="100%"></iframe>
-	<script type="text/javascript">
-		gadgets.util.registerOnLoadHandler(function(){
-			var prefs = new gadgets.Prefs();
-			var url = prefs.getString("url");
-			document.getElementById("content").src = url;
-		});
-	</script>
+	<iframe id="content" src="http://rforms.googlecode.com/svn/trunk/samples/editorView-gcode.html" width="100%" height="100%"></iframe>
   ]]></Content>
 </Module>

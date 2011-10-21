@@ -25,21 +25,18 @@
 		templateSrc = {
 			"root":{
 				"type":"group",
-				"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://xmlns.com/foaf/0.1/Document"},
-				"nodetype":"RESOURCE",
 				"content":[
 					{
 						"type":"text",
 						"nodetype":"LANGUAGE_LITERAL",
-						"label":{"en":"Title"},
 						"property":"http://purl.org/dc/terms/title",
-						"cardinality": {"min": 2, "pref": "4", "max": 5}
-					},
-					{
+						"cardinality": {"min": 2, "pref": "4", "max": 5},
+						"label":{"en":"Title"},
+						"description":{"en":"A short title of the resource"}
+	    			}, {
 						"type":"group",
 						"nodetype":"RESOURCE",
-						"label":{"en":"Author"},
-						"description":{"en":"The author of the book"},
+						"label":{"en":"Creator"},
 						"property":"http://purl.org/dc/terms/creator",
 						"cardinality": {"min": 0, "max": 5},
 						"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://xmlns.com/foaf/0.1/Person"},

@@ -117,7 +117,7 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 		if (binding.getItem().hasClass("rformsNoneditable")) {
 			return this.inherited("addGroup", arguments);
 		}
-		if (binding.getItem().hasClass("expandable")) {
+		if (binding.getItem().hasClass("rformsexpandable")) {
 			var titlePane = new dijit.TitlePane({}, fieldDiv);
 			var node = dojo.create("div");
 			titlePane.set("content", node);
@@ -167,7 +167,7 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 		else {
 			var itemToUse = binding.getItem();
 			//TODO: Sort out if the textarea should be multiline using style or class...
-			if (itemToUse.hasClass("multiline") || itemToUse.hasStyle("multiLine")) {
+			if (itemToUse.hasClass("rformsmultiline") || itemToUse.hasStyle("multiline")) {
 				tb = new dijit.form.Textarea({
 					value: binding.getValue(),
 					onChange: function(){
@@ -224,11 +224,11 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 			var divToUse =  dojo.create("div", null, fieldDiv);
 			var hierarchy = item.getParentProperty() && item.getHierarchyProperty();
 			//Check if radiobuttons can be created, i.e. when few choices and max-cardinality == 1 
-			if (!hierarchy && (!item.hasClass("dropdown") && (choices.length < 5 || item.hasStyle("verticalRadioButtons") || item.hasStyle("horizontalRadioButtons"))) && item.getCardinality().max === 1) {
+			if (!hierarchy && (!item.hasClass("dropdown") && (choices.length < 5 || item.hasStyle("rformsverticalRadioButtons") || item.hasStyle("rformshorizontalRadioButtons"))) && item.getCardinality().max === 1) {
 				for (var ind=0;ind<choices.length;ind++) {
 					var inputToUse = dojo.create("input", null, divToUse);
 					dojo.create("span", { "class": "rformsChoiceLabel", innerHTML: item._getLocalizedValue(choices[ind].label).value }, divToUse);
-					if (item.hasStyle("verticalRadioButtons")) {
+					if (item.hasStyle("rformsverticalRadioButtons")) {
 						dojo.create("br", null, divToUse);
 					}
 					var rb = new dijit.form.RadioButton({

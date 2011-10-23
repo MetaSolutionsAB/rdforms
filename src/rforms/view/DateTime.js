@@ -72,7 +72,7 @@ dojo.declare("rforms.view.DateTime", [dijit._Widget], {
 			}
 		});
 		this._formatChooser = new dijit.form.Select({
-				style: {"font-size": "x-small"},
+//				style: {"font-size": "x-small"},
 				options: options,
 				onChange: dojo.hitch(this, function(item) {
 					this["_show"+item]();

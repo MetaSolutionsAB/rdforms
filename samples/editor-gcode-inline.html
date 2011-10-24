@@ -83,22 +83,17 @@
 			var graph = new rdfjson.Graph(testdata.rdfSrc);
 			var binding = rforms.model.match(graph, "http://example.org/about", template);
 			new rforms.view.Editor({template: template, binding: binding}, "compactView");
-			var save = dijit.byId("save");
-			new dijit.form.Button(
-				{
-					label: "Save",
-					onClick: function() {
-						var data = dojo.toJson(graph.exportRDFJSON(), 1);
-						alert(data);
-					}
-				}, 
-				"save");
+			
+			document.getElementById("rforms_form").onsubmit = function() {
+				var data = dojo.toJson(graph.exportRDFJSON(), 1);
+				document.getElementById("rdfjson").value = data;				
+			};
 		});
 	</script>
 	<div id="compactView"></div>
-	<div style="float:right;"><div id="save"></div></div>
-	<form id="data">
-		
+	<form id="rforms_form" name="rforms" method="POST">
+		<input name="rdfjson" id="rdfjson" style="display:none;">
+		<input style="float:right;" id="save" type="submit" name="save" value="Save">
 	</form>
   </body>
 </html>

@@ -3556,7 +3556,7 @@
     "description": {"en": "Possible values:\n1) Are commercial uses of this resource allowed? (Yes/No)\n    Are modifications of this resource by other people allowed? (Yes/No)\n2) Free-text description of the rights\n\n\nDescription of restrictions and copyrights that may refer to the use of this resource"},
     "content": [
      {
-      "styles": ["ChoiceFormItem","verticalRadioButtons"],
+      "styles": ["ChoiceFormItem","rformsverticalRadioButtons"],
       "nodetype": "URI",
       "cardinality": {
        "min": 0,

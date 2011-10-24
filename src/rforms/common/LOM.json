@@ -4,6 +4,43 @@
   "en": "Default Base formlet in compound formlets",
   "sv": "Default formulet bas i sammansatta formuletter"
  },
+ "root": {
+      "id": "LOM",
+      "type": "group",
+      "content": [
+          {"id": "LOM-Title"},
+          {"id": "LOM-Description"},
+          {"id": "LOM-Identifier"},
+	  {"id": "LOM-AggregationLevel"},
+	  {"id": "LOM-Annotation"},
+	  {"id": "LOM-Context"},
+	  {"id": "LOM-Contribution"},
+	  {"id": "LOM-CopyrightAndOtherRestrictions"},
+	  {"id": "LOM-CopyrightDescription"},
+	  {"id": "LOM-Cost"},
+	  {"id": "LOM-Coverage"},
+	  {"id": "LOM-Difficulty"},
+	  {"id": "LOM-Duration"},
+	  {"id": "LOM-EducationalDescription"},
+	  {"id": "LOM-EducationalLanguage"},
+	  {"id": "LOM-Format"},
+	  {"id": "LOM-InstallationsRemarks"},
+	  {"id": "LOM-IntendedEndUserRole"},
+	  {"id": "LOM-InteractivityLevel"},
+	  {"id": "LOM-InteractivityType"},
+	  {"id": "LOM-Keyword"},
+	  {"id": "LOM-Language"},
+	  {"id": "LOM-OtherPlatformRequirements"},
+	  {"id": "LOM-Requirement"},
+	  {"id": "LOM-ResourceType"},
+	  {"id": "LOM-SemanticDensity"},
+	  {"id": "LOM-Status"},
+	  {"id": "LOM-Structure"},
+	  {"id": "LOM-TypicalAgeRange"},
+	  {"id": "LOM-TypicalLearningTime"},
+	  {"id": "LOM-Version"}
+      ]
+ },
  "cachedChoices": {"http://localhost:8080/ontologies/Model0.rdf": [
   {
    "choices": [
@@ -4497,43 +4534,6 @@
      ]
     }],
     "constraints": {"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/LinguisticSystem"}
-   },
-   {
-      "id": "LOM",
-      "type": "group",
-      "content": [
-          {"id": "LOM-Title"},
-          {"id": "LOM-Description"},
-          {"id": "LOM-Identifier"},
-	  {"id": "LOM-AggregationLevel"},
-	  {"id": "LOM-Annotation"},
-	  {"id": "LOM-Context"},
-	  {"id": "LOM-Contribution"},
-	  {"id": "LOM-CopyrightAndOtherRestrictions"},
-	  {"id": "LOM-CopyrightDescription"},
-	  {"id": "LOM-Cost"},
-	  {"id": "LOM-Coverage"},
-	  {"id": "LOM-Difficulty"},
-	  {"id": "LOM-Duration"},
-	  {"id": "LOM-EducationalDescription"},
-	  {"id": "LOM-EducationalLanguage"},
-	  {"id": "LOM-Format"},
-	  {"id": "LOM-InstallationsRemarks"},
-	  {"id": "LOM-IntendedEndUserRole"},
-	  {"id": "LOM-InteractivityLevel"},
-	  {"id": "LOM-InteractivityType"},
-	  {"id": "LOM-Keyword"},
-	  {"id": "LOM-Language"},
-	  {"id": "LOM-OtherPlatformRequirements"},
-	  {"id": "LOM-Requirement"},
-	  {"id": "LOM-ResourceType"},
-	  {"id": "LOM-SemanticDensity"},
-	  {"id": "LOM-Status"},
-	  {"id": "LOM-Structure"},
-	  {"id": "LOM-TypicalAgeRange"},
-	  {"id": "LOM-TypicalLearningTime"},
-	  {"id": "LOM-Version"}
-      ]
    }
   ]
 }

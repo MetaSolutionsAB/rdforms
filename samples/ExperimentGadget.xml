@@ -34,7 +34,7 @@
 				var params = {};
 				params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
 				gadgets.io.makeRequest(templateSrc, function(response) {
-					var e = new rforms.apps.Experiment({templateObj: dojo.fromJson(response.data), graphObj: {}, hideTemplate: true}, "container");
+					var e = new rforms.apps.Experiment({templateObj: dojo.fromJson(response.data), graphObj: {}}, "container");
 					e.startup();
 				});
 			});

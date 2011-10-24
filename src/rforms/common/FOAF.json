@@ -29,36 +29,7 @@
   				{"id": "http://xmlns.com/foaf/0.1/weblog"}, 
   				{"id": "http://xmlns.com/foaf/0.1/knows"}
 			]}
-  		],
-		"content2": [
-  			{"id": "http://xmlns.com/foaf/0.1/based_near"},
-  			{"id": "http://xmlns.com/foaf/0.1/interest"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/age"},			 
-  			{"id": "http://xmlns.com/foaf/0.1/geekcode"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/surname"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/family_name"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/familyName"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/myersBriggs"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/workplaceHomepage"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/workInfoHomepage"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/schoolHomepage"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/publications"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/currentProject"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/pastProject"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/mbox_sha1sum"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/jabberID"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/aimChatID"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/skypeID"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/icqChatID"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/yahooChatID"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/msnChatID"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/openid"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/tipjar"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/made"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/topic_interest"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/account"}, 
-  			{"id": "http://xmlns.com/foaf/0.1/holdsAccount"}
-		]
+  		]
   	},
 	"auxilliary":[
   	{
@@ -90,6 +61,7 @@
   	{
   		"id": "http://xmlns.com/foaf/0.1/lastName", 
   		"property": "http://xmlns.com/foaf/0.1/lastName", 
+  		"cardinality": {"pref": 1},
   		"label": {
   			"en": "LastName"
   		}, 
@@ -140,6 +112,7 @@
   		"id": "http://xmlns.com/foaf/0.1/mbox", 
   		"property": "http://xmlns.com/foaf/0.1/mbox",
 		"nodetype": "URI",
+  		"cardinality": {"pref": 1},
   		"label": {
   			"en": "Email"
   		}, 
@@ -188,6 +161,7 @@
   		"id": "http://xmlns.com/foaf/0.1/img", 
   		"property": "http://xmlns.com/foaf/0.1/img",
 		"nodetype": "URI",
+  		"cardinality": {"pref": 1},
   		"type": "text", 
   		"label": {
   			"en": "Image"
@@ -199,6 +173,7 @@
   	{
   		"id": "http://xmlns.com/foaf/0.1/plan", 
   		"property": "http://xmlns.com/foaf/0.1/plan", 
+  		"cardinality": {"pref": 1},
   		"label": {
   			"en": "Plan"
   		}, 

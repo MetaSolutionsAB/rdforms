@@ -8,7 +8,7 @@
                default_value=""/>
   <Content type="html"><![CDATA[
   	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.js" 
-		djConfig="parseOnLoad: true" type="text/javascript"></script>
+		djConfig="parseOnLoad: true, locale: 'ROOT'" type="text/javascript"></script>
 	<script type="text/javascript" src="http://rforms.googlecode.com/files/rforms_ROOT.js"></script>
 	<script type="text/javascript" src="http://rforms.googlecode.com/files/rforms.js"></script>
 	<style>

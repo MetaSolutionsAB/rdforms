@@ -103,11 +103,17 @@ dojo.declare("rforms.view.Presenter", rforms.view.View, {
 	},
 	addChoice: function(fieldDiv, binding) {
 		var choice = binding.getChoice();
-		var span = dojo.create("span", {"innerHTML": rforms.template.getLocalizedValue(choice.label).value}, fieldDiv);
-		if (choice.load != null) {
-			choice.load(function() {
-				dojo.attr(span, "innerHTML", rforms.template.getLocalizedValue(choice.label).value);
-			});
+		if (binding.getItem().hasStyle("rformsstars") && parseInt(choice.getValue()) != NaN) {
+			for (var i=parseInt(choice.getValue())) {
+				dojo.create("span", {"class": "rformsStar"}, fieldDiv);
+			}
+		} else {
+			var span = dojo.create("span", {"innerHTML": rforms.template.getLocalizedValue(choice.label).value}, fieldDiv);
+			if (choice.load != null) {
+				choice.load(function() {
+					dojo.attr(span, "innerHTML", rforms.template.getLocalizedValue(choice.label).value);
+				});
+			}			
 		}
 	}
 });

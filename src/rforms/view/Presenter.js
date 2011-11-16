@@ -21,7 +21,7 @@ dojo.declare("rforms.view.Presenter", rforms.view.View, {
 	 * @param {Object} bindings
 	 */
 	showNow: function(item, bindings) {
-		return bindings.length > 0;
+		return bindings.length > 0 && !item.hasStyle("invisible");
 	},
 	
 	/**
@@ -103,8 +103,8 @@ dojo.declare("rforms.view.Presenter", rforms.view.View, {
 	},
 	addChoice: function(fieldDiv, binding) {
 		var choice = binding.getChoice();
-		if (binding.getItem().hasStyle("rformsstars") && parseInt(choice.getValue()) != NaN) {
-			for (var i=parseInt(choice.getValue());i>0;i--) {
+		if (binding.getItem().hasStyle("rformsstars") && parseInt(choice.value) != NaN) {
+			for (var i=parseInt(choice.value);i>0;i--) {
 				dojo.create("span", {"class": "rformsStar"}, fieldDiv);
 			}
 		} else {

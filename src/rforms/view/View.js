@@ -10,6 +10,7 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 	binding: null,
 	template: null,
 	topLevel: true,
+	compact: false,
 	styleCls: "",
 
 	//===================================================
@@ -85,6 +86,9 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 		this.domNode = this.srcNodeRef;
 		dojo.addClass(this.domNode, "rforms");
 		dojo.addClass(this.domNode, this.styleCls);
+		if (this.compact) {
+			dojo.addClass(this.domNode, "compact");			
+		}
 
 		for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
 			bindings = groupedBindingsArr[groupIndex];
@@ -139,10 +143,11 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 		//Taking care of dom node structure plus label.
 		if (includeLabel || (includeLabel == null && binding instanceof rforms.model.GroupBinding)) {
 			newRow = this.addLabelClean(lastRow, binding, item);
-			fieldDiv = dojo.create("div", null, newRow);
+			fieldDiv = dojo.create("div", null, dojo.create("div", {"class": "rformsFields"}, newRow));
 		} else {
 			//No new rowDiv since we have a repeated value under the same label.
-			fieldDiv = dojo.create("div", null, lastRow);
+			var rformsFields = dojo.query(".rformsFields", lastRow)[0];
+			fieldDiv = dojo.create("div", null, rformsFields);
 			dojo.addClass(fieldDiv, "rformsRepeatedValue");
 		}
 		this.addComponent(fieldDiv, binding);
@@ -163,6 +168,17 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 		if (this.topLevel) {
 			dojo.addClass(newRow, "rformsTopLevel");
 		}
+		dojo.addClass(newRow, "rformsRow");
+
+		dojo.forEach(item.getClasses(), function(cls) {
+			if (cls.indexOf("rforms") == -1) {
+				dojo.addClass(newRow, cls);
+			}
+		});
+		if (item instanceof rforms.template.Group) {
+			dojo.addClass(newRow, "notCompact");			
+		}
+
 		this.addLabel(newRow, dojo.create("div", null, newRow), binding, item);
 		return newRow;
 	},

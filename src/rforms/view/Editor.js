@@ -38,6 +38,9 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 	 * @param {Object} bindings
 	 */
 	showNow: function(item, bindings) {
+		if (item.hasStyle("invisible")) {
+			return false;
+		}
 		if (bindings.length > 0) {
 			return true;
 		}
@@ -103,7 +106,7 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 			return;
 		}
 		var card = item.getCardinality();
-		if (card.max != null && card.max == card.min) {
+		if (card.max != null && (card.max == card.min || card.max === 1)) {
 			return;
 		}
 		if (isGroup) {
@@ -130,8 +133,7 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 		if (binding.getItem().hasClass("rformsNoneditable")) {
 			return this.inherited("addText", arguments);
 		}
-		var controlDiv = dojo.create("div", null, fieldDiv);
-		dojo.addClass(controlDiv, "rformsFieldControl");
+		var controlDiv = dojo.create("div", {"class": "rformsFieldControl"}, fieldDiv);
 		var item = binding.getItem();
 		var nodeType = item.getNodetype();
 		var datatype = item.getDatatype();
@@ -216,15 +218,18 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 			return this.inherited("addChoice", arguments);
 		}
 
+		var controlDiv = dojo.create("div", {"class": "rformsFieldControl"}, fieldDiv);
 		var item = binding.getItem();
 		if (item.hasChoices()) {
 			var choices = item.getChoices();
 //			var controlDiv = dojo.create("div", null, fieldDiv);
 //			dojo.addClass(controlDiv, "rformsFieldControl");
 			var divToUse =  dojo.create("div", null, fieldDiv);
+
 			var hierarchy = item.getParentProperty() && item.getHierarchyProperty();
 			//Check if radiobuttons can be created, i.e. when few choices and max-cardinality == 1 
 			if (!hierarchy && (!item.hasClass("dropdown") && (choices.length < 5 || item.hasStyle("rformsverticalRadioButtons") || item.hasStyle("rformshorizontalRadioButtons"))) && item.getCardinality().max === 1) {
+				var buts = [];
 				for (var ind=0;ind<choices.length;ind++) {
 					var inputToUse = dojo.create("input", null, divToUse);
 					dojo.create("span", { "class": "rformsChoiceLabel", innerHTML: item._getLocalizedValue(choices[ind].label).value }, divToUse);
@@ -242,9 +247,20 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 							binding.setValue(val);
 						}
 					}, rb));
+					buts.push(rb);
 				}
 				rforms.template.uniqueRadioButtonNameNr++;
 				
+				/*Code below is to correctly remove items in the form and their
+				 * values
+				 */
+				if (noCardinalityButtons !== true) {
+					this._addRemoveButton(fieldDiv, binding, controlDiv, function() {
+						dojo.forEach(buts, function(but) {
+							but.set("value", false);
+						});
+					});
+				}				
 			} else {
 				var fSelect, cNode, dialog;
 				//Check if a tree-hierarchy should be created
@@ -287,7 +303,7 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 				 * values
 				 */
 				if (noCardinalityButtons !== true) {
-					this._addRemoveButton(fieldDiv, binding, divToUse, function() {
+					this._addRemoveButton(fieldDiv, binding, controlDiv, function() {
 						fSelect && fSelect.set("value", "");
 						cNode && dojo.attr(cNode, "innerHTML", "");
 					});
@@ -319,7 +335,7 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 			 * values
 			*/
 			if (noCardinalityButtons !== true) {
-				this._addRemoveButton(fieldDiv, binding, divToUse, function() {
+				this._addRemoveButton(fieldDiv, binding, controlDiv, function() {
 					binding.setValue("");
 					cNode && dojo.attr(cNode, "innerHTML", "");
 				});

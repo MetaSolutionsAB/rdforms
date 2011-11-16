@@ -49,6 +49,8 @@
 .rformsPresenter th,
 .rformsEditor th {
 	font-weight: normal;
+	padding-left: 0.3em;
+	padding-right: 0.3em;
 }
 
 
@@ -58,6 +60,7 @@
 	border: 1px solid #E6E6E6;
 	padding-left: 0.3em;
 	padding-right: 0.3em;
+	font-weight: bold;
 }
 .rformsPresenter table.rformsGroup,
 .rformsEditor table.rformsGroup {

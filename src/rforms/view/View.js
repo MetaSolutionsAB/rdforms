@@ -207,23 +207,50 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 	// Private methods
 	//===================================================	
 	_showInfo:function(item, aroundNode) {
-		var ttd = new dijit.TooltipDialog({});
+		if (rforms.__currentDomNode === aroundNode) {
+			return;
+		}
+		rforms.__currentDomNode = aroundNode;
+		
+		//Prepare the TooltipDialog.
+		var tooltipDialog = new dijit.TooltipDialog({});
+		tooltipDialog._onBlur = function() {
+			dijit.popup.close(tooltipDialog);
+		};
+		
+		tooltipDialog.openPopup = function() {
+			dijit.popup.open({
+				popup: tooltipDialog,
+				around: aroundNode,
+				onClose: dojo.hitch(null, function() {
+					tooltipDialog.destroy();
+					setTimeout(function() {delete rforms.__currentDomNode;}, 500);
+				})
+			});
+		};
+		
+		var node = dojo.create("div", {"class": "rforms itemInfo"});
+		tooltipDialog.setContent(node);
+
+		//Now init the content of the dialog
 		var property = item.getProperty();
 		var description = item.getDescription();
-		var message;
-		if (property != null && description != null) {
-			message = "<div><span class='propertyLabel'>Property:&nbsp;</span><span class='propertyValue'>"+item.getProperty()+"</span></div><div><span class='descriptionLabel'>Description:&nbsp;</span><span class='descriptionValue'>"+item.getDescription()+"</span></div>";
-		} else if (property != null) {
-			message = "<span class='propertyLabel'>Property:&nbsp;</span><span class='propertyValue'>"+item.getProperty()+"</span>";
-		} else {
-			message = "<span class='descriptionLabel'>Description:&nbsp;</span><span class='descriptionValue'>"+item.getDescription()+"</span>";
+		var message = "<div class='itemInfoTable'>";
+		var label = item.getLabel() || "";
+		if (label !== "") {
+			message += "<div><label class='propertyLabel'>Label:&nbsp;</label><span class='propertyValue'>"+label+"</span></div>";
 		}
-		var node = dojo.create("div", {"innerHTML": message, "class": "rforms itemInfo"});
-		ttd.set("content", node);
-		dijit.popup.open({popup: ttd, around: aroundNode});
-		ttd._onBlur = function() {
-				dijit.popup.close(ttd);
-				ttd.destroy();
-		};
+		if (property != null) {
+			message += "<div><label class='propertyLabel'>Property:&nbsp;</label><span class='propertyValue'>"+item.getProperty()+"</span></div>";
+		}
+		if (description != null) {
+			message += "<div><label class='descriptionLabel'>Description:&nbsp;</label><span class='descriptionValue'>"+item.getDescription()+"</span></div>";
+		}
+		message +="</div>";
+		dojo.attr(node, "innerHTML", message);
+		dijit.focus(node);
+		
+		//Launch the dialog.
+		tooltipDialog.openPopup();
 	}
 });

@@ -14,19 +14,35 @@
 	color: black;
 }
 
-.rformsTopLevel>.rformsLabelRow,
-.rformsTopLevel>.rformsLabel {
+.compact.rformsPresenter .rformsTopLevel>.rformsLabel {
 	font-style: normal;
 	width: 8em !important;
 }
 
+.compact.rformsEditor .rformsTopLevel>.rformsLabelRow {
+	width: 11.4em !important;
+	border-right: 1px solid white;
+}
+.rformsEditor .rformsTopLevel>.rformsLabelRow>.rformsLabel {
+	max-width: 8em;
+	width: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+	zoom:1;
+	*display: inline;
+}
+
+/* compact anyway for first level*/
 .compact .rformsTopLevel.rformsRow.notCompact {
 	display: table;
 	width: 100%;
 }
-
 .compact .rformsTopLevel.rformsRow.notCompact>div {
 	display: table-cell;
+}
+.compact .rformsTopLevel.rformsRow.notCompact>.rformsFields>.rformsGroup {
+	margin-left: 0px;
 }
 
 

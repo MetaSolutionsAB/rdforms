@@ -76,7 +76,11 @@ dojo.declare("rforms.view.Presenter", rforms.view.View, {
 			trEl = dojo.create("tr", null, table);
 			
 			for (colInd = 0; colInd< childBindingsGroups.length;colInd++) {
-				dojo.create("td", {innerHTML: childBindingsGroups[colInd].length > 0 ? childBindingsGroups[colInd][0].getValue() : ""}, trEl);
+				if (childBindingsGroups[colInd].length > 0) {
+					this.addComponent(dojo.create("td", null, trEl), childBindingsGroups[colInd][0], true);
+				} else {
+					dojo.create("td", null, trEl);					
+				}
 			}
 		}
 	},

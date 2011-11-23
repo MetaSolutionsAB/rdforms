@@ -25,7 +25,7 @@
 			"type":"group",
 			"label":{"en":"CORDIS"},
 			"cardinality": {"min": 1, "pref": 1, "max": 1},
-			"cls": ["expandable"],
+			"cls": ["rformsexpandable"],
 			"content":[
 				{"id": "http://purl.org/telmap/cordis/title"},
 				{"id": "http://purl.org/telmap/cordis/abbreviation"},

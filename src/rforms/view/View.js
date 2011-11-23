@@ -147,8 +147,11 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 		} else {
 			//No new rowDiv since we have a repeated value under the same label.
 			var rformsFields = dojo.query(".rformsFields", lastRow)[0];
-			fieldDiv = dojo.create("div", null, rformsFields);
-			dojo.addClass(fieldDiv, "rformsRepeatedValue");
+			if (rformsFields != null) {
+				fieldDiv = dojo.create("div", {"class": "rformsRepeatedValue"}, rformsFields);				
+			} else { //Unless we have an non-expanded row.
+				fieldDiv = dojo.create("div", null, dojo.create("div", {"class": "rformsFields"}, lastRow));				
+			}
 		}
 		this.addComponent(fieldDiv, binding);
 		return newRow || lastRow;

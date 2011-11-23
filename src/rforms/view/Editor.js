@@ -66,6 +66,8 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 			target = card.pref;
 		} else if (card.min > 0) {
 			target = card.min;
+		} else if (item instanceof rforms.template.PropertyGroup) {
+			target = 0;
 		} else if (item instanceof rforms.template.Group) {
 			if (item.getProperty() == null) {
 				target = 1;
@@ -120,7 +122,7 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 		if (binding.getItem().hasClass("rformsNoneditable")) {
 			return this.inherited("addGroup", arguments);
 		}
-		if (binding.getItem().hasClass("rformsexpandable")) {
+		if (binding.getItem().hasClass("rformsexpandable") || binding.getItem().hasClass("expandable")) { //Backwardscompatible.
 			var titlePane = new dijit.TitlePane({}, fieldDiv);
 			var node = dojo.create("div");
 			titlePane.set("content", node);
@@ -196,7 +198,7 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 					store: langStore,
 					searchAttr: "label"
 				}, langSpan);
-			languageSelector.set("value", binding.getLanguage());
+			languageSelector.set("value", binding.getLanguage() || "");
 			dojo.connect(languageSelector, "onChange", dojo.hitch(this, function(){
 					binding.setLanguage(languageSelector.getValue());
 				}));
@@ -266,16 +268,17 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 				//Check if a tree-hierarchy should be created
 				if(hierarchy){
 					cNode = dojo.create("div", {"class": "rformsChoiceValue"}, divToUse);
-					dojo.attr(cNode, "innerHTML", this._getLabelForChoice(binding) || "");				
+					dojo.attr(cNode, "innerHTML", this._getLabelForChoice(binding) || "&nbsp");				
 					var oc;
-					var ddButton = new dijit.form.Button({label:  "Browse", onClick: dojo.hitch(this, function() {
+					var ddButton = dojo.create("span", {"class": "action editSearch", "title": "Browse"}, divToUse);
+					dojo.connect(ddButton, "onclick", dojo.hitch(this, function() {
 						if (oc == null) {
 							oc = new rforms.view.TreeOntologyChooser({binding: binding, done: dojo.hitch(this, function() {
-								dojo.attr(cNode, "innerHTML", this._getLabelForChoice(binding));
+								dojo.attr(cNode, "innerHTML", this._getLabelForChoice(binding) || "&nbsp;");
 							})});
 						}
 						oc.show();
-					})}, dojo.create("span", null, divToUse));
+					}));
 				
 				//Last option is the normal listing in a dropdown-menu
 				} else {
@@ -323,14 +326,15 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 				}
 			}
 
-			var ddButton = new dijit.form.Button({label:  "Browse", onClick: dojo.hitch(this, function() {
+			var ddButton = 	dojo.create("span", {"class": "action editSearch", "title": "Browse"}, divToUse);
+			dojo.connect(ddButton, "onclick", dojo.hitch(this, function() {
 				rforms.openSystemChoiceSelector(binding, function(choice) {
 					binding.setChoice(choice);
 					if (choice) {
-						dojo.attr(cNode, "innerHTML", rforms.template.getLocalizedValue(choice.label).value || "");				
+						dojo.attr(cNode, "innerHTML", rforms.template.getLocalizedValue(choice.label).value || "&nbsp;");				
 					}
 				});
-			})}, dojo.create("span", null, divToUse));
+			}));
 			/*Code below is to correctly remove items in the form and their
 			 * values
 			*/
@@ -363,14 +367,16 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 			var addTh = dojo.create("th", {"class": "rformsTableControl"}, tHeadRow);
 			var parentBinding = firstBinding.getParent();
 		
-			var add = new dijit.form.Button({label: "add", onClick: dojo.hitch(this, function() {
-						var nBinding = rforms.model.create(parentBinding, item);
-						this._addTableRow(table, nBinding);
-					})
-				}, dojo.create("span", null, addTh));
+			var add = dojo.create("span", {"class": "action editAdd", "title": "Add"}, addTh);
 			var cardTr = firstBinding.getCardinalityTracker();
+			dojo.connect(add, "onclick", dojo.hitch(this, function() {
+						if (!cardTr.isMax()) {
+							var nBinding = rforms.model.create(parentBinding, item);
+							this._addTableRow(table, nBinding);
+						}
+					}));
 			dojo.connect(cardTr, "cardinalityChanged", function() {
-				add.attr("disabled", cardTr.isMax());
+				dojo.toggleClass(add, "disabled", cardTr.isMax());
 			});
 		}
 		return table;
@@ -443,75 +449,83 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 		return nb;
 	},
 	_addCreateChildButton: function(rowDiv, labelDiv, binding) {
-		var parentBinding = binding.getParent(), item = binding.getItem();
-		var add = new dijit.form.Button({label: "add", onClick: dojo.hitch(this, function() {
-					var nBinding = rforms.model.create(parentBinding, item); 
-					this.addRow(rowDiv, nBinding); //not the first binding...			
-				})
-			}, dojo.create("span", null, labelDiv));
-		var cardTr = binding.getCardinalityTracker();
+		var parentBinding = binding.getParent(), item = binding.getItem(), cardTr = binding.getCardinalityTracker();
+		var add = dojo.create("span", {"class": "action editAdd", "title": "add"}, labelDiv);
+		dojo.connect(add, "onclick", dojo.hitch(this, function() {
+			if (!cardTr.isMax()) {
+				var nBinding = rforms.model.create(parentBinding, item); 
+				this.addRow(rowDiv, nBinding); //not the first binding...
+			}
+		}));
 		var cardMaxCon = dojo.connect(cardTr, "cardinalityChanged", function() {
-			add.attr("disabled", cardTr.isMax());
+			dojo.toggleClass(add, "disabled", cardTr.isMax());
 		});		
 	},
 	_addGroupButtons: function(rowDiv, labelDiv, binding) {
 		var parentBinding = binding.getParent(), item = binding.getItem();
-		var add = new dijit.form.Button({label: "add"}, dojo.create("span", null, labelDiv));
-		var remove = new dijit.form.Button({label: "remove"}, dojo.create("span", null, labelDiv));
+		var add = dojo.create("span", {"class": "action editAdd", "title": "add"}, labelDiv);
+		var remove = dojo.create("span", {"class": "action editDelete", "title": "remove"}, labelDiv);
 
 		var cardTr = binding.getCardinalityTracker();
 		var con = dojo.connect(cardTr, "cardinalityChanged", function() {
-			add.attr("disabled", cardTr.isMax());
-			remove.attr("disabled", cardTr.isMin());
+			dojo.toggleClass(add, "disabled", cardTr.isMax());
+			dojo.toggleClass(remove, "disabled", cardTr.isMin());
 		});
 		
-		var addCon = dojo.connect(add, "onClick", this, function() {
-			var nBinding = rforms.model.create(parentBinding, item); 
-			this.addRow(rowDiv, nBinding); //not the first binding...
+		var addCon = dojo.connect(add, "onclick", this, function() {
+			if (!cardTr.isMax()) {
+				var nBinding = rforms.model.create(parentBinding, item); 
+				this.addRow(rowDiv, nBinding); //not the first binding...
+			}
 		});
 		
-		var removeCon = dojo.connect(remove, "onClick", function() {
-			if (cardTr.getCardinality() === 1) {
-				//Clear somehow.
-//				binding.setValue(null);
-	//			tb.attr("value", "");
-			} else {
-				dojo.disconnect(con);
-				dojo.disconnect(addCon);
-				dojo.disconnect(removeCon);
-				//Remove somehow.
-				binding.remove();
-				dojo.destroy(rowDiv);
+		var removeCon = dojo.connect(remove, "onclick", function() {
+			if (!cardTr.isMin()) {
+				if (cardTr.getCardinality() === 1) {
+					//Clear somehow.
+	//				binding.setValue(null);
+		//			tb.attr("value", "");
+				} else {
+					dojo.disconnect(con);
+					dojo.disconnect(addCon);
+					dojo.disconnect(removeCon);
+					//Remove somehow.
+					binding.remove();
+					dojo.destroy(rowDiv);
+				}
 			}
 		});
 	},
 	_addRemoveButton: function(fieldDiv, binding, containerDiv, onReset) {
-		var remove = new dijit.form.Button({label: "remove"}, dojo.create("div", null, containerDiv));
+		var remove = dojo.create("span", {"class": "action editDelete", "title": "remove"}, containerDiv);
+			//new dijit.form.Button({label: "remove"}, dojo.create("div", null, containerDiv));
 		var cardTr = binding.getCardinalityTracker();
 		var con = dojo.connect(cardTr, "cardinalityChanged", function() {
-			remove.attr("disabled", cardTr.isMin());
+			dojo.toggleClass(remove, "disabled", cardTr.isMin());
 		});
 		
-		var removeConnect = dojo.connect(remove, "onClick", function() {
-			if (cardTr.getCardinality() === 1) {
-				if (binding.getItem() instanceof rforms.template.Choice) {
-					binding.setChoice(null);					
+		var removeConnect = dojo.connect(remove, "onclick", function() {
+			if (!cardTr.isMin()) {
+				if (cardTr.getCardinality() === 1) {
+					if (binding.getItem() instanceof rforms.template.Choice) {
+						binding.setChoice(null);					
+					} else {
+						binding.setValue(null);					
+					}
+					onReset();
 				} else {
-					binding.setValue(null);					
+					dojo.disconnect(con);
+					dojo.disconnect(removeConnect);
+					binding.remove();
+					dojo.destroy(fieldDiv);
 				}
-				onReset();
-			} else {
-				dojo.disconnect(con);
-				dojo.disconnect(removeConnect);
-				binding.remove();
-				dojo.destroy(fieldDiv);
 			}
 		});
 	},
 
 	_addExpandButton: function(rowDiv, labelDiv, item) {
-		var expand = new dijit.form.Button({label: "expand"}, dojo.create("span", null, labelDiv));
-		var expandCon = dojo.connect(expand, "onClick", this, function() {
+		var expand = dojo.create("span", {"class": "action editExpand", "title": "Expand"}, labelDiv);
+		var expandCon = dojo.connect(expand, "onclick", this, function() {
 			var nBinding = rforms.model.create(this.binding, item);
 			if (this.showAsTable(item)) {
 				var table = this.addTable(rowDiv, nBinding, item);
@@ -520,8 +534,8 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 				this.addRow(rowDiv, nBinding, false); //not the first binding...
 				this._addGroupButtons(rowDiv, labelDiv, nBinding);					
 			}
-			expand.destroy();
-			dojo.disconnect(expandCon);				
+			dojo.destroy(expand);
+			dojo.disconnect(expandCon);	
 		});
 	},
 
@@ -542,21 +556,23 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 		
 		if (!binding.getItem().hasClass("rformsFirstcolumnfixedtable")) {
 			var lastTd = dojo.create("td", {"class": "rformsTableControl"}, trEl);
-			var remove = new dijit.form.Button({label: "remove"}, dojo.create("span", null, lastTd));	
+			var remove = dojo.create("span", {"class": "action editDelete", "title": "Remove"}, lastTd);
 			var cardTr = binding.getCardinalityTracker();
 			var cardConnect1 = dojo.connect(cardTr, "cardinalityChanged", function() {
-				remove.attr("disabled", cardTr.isMin());
+				dojo.toggleClass(remove, "disabled", cardTr.isMin());
 			});	
-			var removeConnect = dojo.connect(remove, "onClick", this, function() {
-				if (cardTr.getCardinality() === 1) {
-					var parentBinding = binding.getParent(), item = binding.getItem();
-					var nBinding = rforms.model.create(parentBinding, item);
-					this._addTableRow(table, nBinding);
-				} 
-				dojo.disconnect(cardConnect1);
-				dojo.disconnect(removeConnect);
-				binding.remove();
-				dojo.destroy(trEl);
+			var removeConnect = dojo.connect(remove, "onclick", this, function() {
+				if (!cardTr.isMin()) {
+					if (cardTr.getCardinality() === 1) {
+						var parentBinding = binding.getParent(), item = binding.getItem();
+						var nBinding = rforms.model.create(parentBinding, item);
+						this._addTableRow(table, nBinding);
+					} 
+					dojo.disconnect(cardConnect1);
+					dojo.disconnect(removeConnect);
+					binding.remove();
+					dojo.destroy(trEl);
+				}
 			});
 		}
 	},

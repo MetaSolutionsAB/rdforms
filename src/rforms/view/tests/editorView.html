@@ -21,9 +21,9 @@
 		dojo.addOnLoad(function() {
 			var itemStore = new rforms.template.ItemStore();
 	 		var template = itemStore.createTemplate(rforms.template.tests.template1);
-			var graph = new rdfjson.Graph(rdfjson.tests.graph2);
+			var graph = new rdfjson.Graph({});
 			var binding = rforms.model.match(graph, "http://example.org/about", template);
-			new rforms.view.Editor({template: template, binding: binding}, "compactView");
+			new rforms.view.Editor({template: template, binding: binding, includeLevel: "optional", compact: true}, "compactView");
 		});
 	</script>
 	<div id="compactView"></div>

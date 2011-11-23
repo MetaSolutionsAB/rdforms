@@ -8,7 +8,6 @@
 }
 
 .rformsLabel {
-	font-style: italic;
 	font-weight:bold;
 	color: black;
 }
@@ -57,10 +56,20 @@
 	cursor: pointer;
 }
 
-.rformsItemInfo .rformsPropertyLabel,
-.rformsItemInfo .rformsDescriptionLabel {
-	/*font-style: italic;*/
+.rforms .itemInfoTable {
+	display: table;
+	width: 100%;
 }
+.rforms .itemInfoTable>* {
+	display: table-row;
+}
+.rforms .itemInfoTable>*>* {
+	display: table-cell;
+}
+.rforms label {
+	font-weight: bold;
+}
+
 
 .rformsGroup {
 	margin-left: 1em;

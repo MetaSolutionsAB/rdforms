@@ -3,11 +3,33 @@
  	padding: 0.3em;
  	margin-top: 0em;
 }
+
+.rformsPresenter .rformsTopLevel {
+	background: white;
+}
+
 .rformsLabel {
-/*	font-style: italic;
-	font-weight:bold;*/
+	font-style: italic;
+	font-weight:bold;
 	color: black;
 }
+
+.rformsTopLevel>.rformsLabelRow,
+.rformsTopLevel>.rformsLabel {
+	font-style: normal;
+	width: 8em !important;
+}
+
+.compact .rformsTopLevel.rformsRow.notCompact {
+	display: table;
+	width: 100%;
+}
+
+.compact .rformsTopLevel.rformsRow.notCompact>div {
+	display: table-cell;
+}
+
+
 .rformsLabel:hover {
 	text-decoration: underline;
 	cursor: pointer;
@@ -31,7 +53,6 @@
  
 .rformsField {
 	margin-left: 2em;
-	font-weight:bold;
 /*	background: white;*/
 	padding-left: 0.5em;
 }
@@ -48,20 +69,30 @@
 
 .rformsPresenter th,
 .rformsEditor th {
-	font-weight: normal;
-	padding-left: 0.3em;
-	padding-right: 0.3em;
-}
-
-
-
-.rformsPresenter table.rformsGroup td,
-.rformsEditor table.rformsGroup td {
-	border: 1px solid #E6E6E6;
-	padding-left: 0.3em;
-	padding-right: 0.3em;
 	font-weight: bold;
+	font-style: italic;
+	padding-left: 0.3em;
+	padding-right: 0.3em;
 }
+
+.rformsPresenter table.rformsGroup td {
+	border: 1px solid #E6E6E6;
+}
+.rformsEditor table.rformsGroup th {
+	border-bottom: 1px solid #E6E6E6;
+}		
+
+.rformsEditor table.rformsGroup td {
+	padding-left: 0em;
+	padding-right: 0.6em;
+}
+
+.rformsEditor table.rformsGroup td.rformsTableControl,
+.rformsPresenter table.rformsGroup td {
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+}
+
 .rformsPresenter table.rformsGroup,
 .rformsEditor table.rformsGroup {
 	border-collapse: collapse;
@@ -73,7 +104,6 @@
 .rformsEditor table.rformsGroup th {
 	padding-left: 0.3em;
 	padding-right: 0.3em;
-	border: 1px solid white;			
 }
 .rformsPresenter .rformsLanguage {
  	float: right;
@@ -189,6 +219,9 @@
 	display: table;
 	width: 100%;
 }
+.compact .rformsRow>div {
+	display: table-cell;
+}
 
 .compact .rformsRow.notCompact {
 	display: block;
@@ -198,9 +231,7 @@
 .compact .rformsRow.notCompact>div {
 	display: inherit;
 }
-.compact .rformsRow>div {
-	display: table-cell;
-}
+
 .compact .rformsRow>.rformsLabelRow {
 	width: 1px;
 	white-space: nowrap;

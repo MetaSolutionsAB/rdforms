@@ -23,7 +23,7 @@
 	 		var template = itemStore.createTemplate(rforms.template.tests.template1);
 			var graph = new rdfjson.Graph(rdfjson.tests.graph2);
 			var binding = rforms.model.match(graph, "http://example.org/about", template);
-			new rforms.view.Presenter({template: template, binding: binding}, "compactView");
+			new rforms.view.Presenter({template: template, binding: binding, compact: true}, "compactView");
 		});
 	</script>
 	<div id="compactView"></div>

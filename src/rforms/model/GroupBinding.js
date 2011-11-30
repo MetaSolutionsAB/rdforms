@@ -129,6 +129,35 @@ dojo.declare("rforms.model.GroupBinding", rforms.model.Binding, {
 		return this._statement.getPredicate();
 	},
 	
+	report: function(report) {
+		if (report == null) {
+			report = {errors: [], warnings: []};
+		}
+		
+		var childrenItems = this.getItem().getChildren();
+		var subject = this.getChildrenRootUri()
+		dojo.forEach(this.getItemGroupedChildBindings(), function(bindings, index) {
+			var item = childrenItems[index];
+			if (item.getProperty() != null) {
+				var card = item.getCardinality();
+				if (card.min != null && card.min > bindings.length) {
+					report.errors.push({p: item.getProperty(), s: subject, message: "To few values"})
+				} else if (card.pref != null && card.pref > bindings.length) {
+					report.warnings.push({p: item.getProperty(), s: subject, message: "To few values"})
+				}
+				if (card.max != null && card.max < bindings.length) {
+					report.errors.push({p: item.getProperty(), s: subject, message: "To many values"})
+				}
+			}
+			if (item instanceof rforms.model.GroupBinding){
+				dojo.forEach(bindings, function(binding) {
+					binding.report(report);
+				});
+			}
+		}, this);
+		return report;
+	},
+	
 	//===================================================
 	// Inherited methods
 	//===================================================

@@ -3,6 +3,7 @@ testdata = {};
 //A simple template showing a title and an creator in the form of a foaf:Person with a firstname and lastname.
 //The person being shown in a table format.
 testdata.templateSrc = {
+	"id": "testTemplate",
 	"root":{
 		"type":"group",
 		"content":[
@@ -18,7 +19,7 @@ testdata.templateSrc = {
 				"nodetype":"RESOURCE",
 				"label":{"en":"Creator"},
 				"property":"http://purl.org/dc/terms/creator",
-				"cardinality": {"min": 0, "max": 5},
+				"cardinality": {"min": 0, "pref": 1, "max": 5},
 				"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://xmlns.com/foaf/0.1/Person"},
 				"content":[
 					{
@@ -43,6 +44,7 @@ testdata.templateSrc = {
 //Simple rdfjson data, all triples are matched into the template.
 testdata.rdfSrc = {
 	"http://example.org/about" : {
+		"http://www.w3.org/TR/rdf-schema/type"	  : [ { "value" : "http://xmlns.com/foaf/0.1/Document", "type" : "uri"}],
         "http://purl.org/dc/terms/title"   : [ { "value" : "Anna's Homepage", "type" : "literal", "lang" : "en" } ] ,
         "http://purl.org/dc/terms/creator" : [ { "value" : "_:person", "type" : "bnode" } ]
     } ,
@@ -51,5 +53,8 @@ testdata.rdfSrc = {
 		"http://www.w3.org/TR/rdf-schema/type"	  : [ { "value" : "http://xmlns.com/foaf/0.1/Person", "type" : "uri"}],
         "http://xmlns.com/foaf/0.1/firstName"     : [ { "value" : "Anna", "type" : "literal" } ] ,
         "http://xmlns.com/foaf/0.1/surname"       : [ { "value" : "Wilder", "type" : "literal" } ]
+    },
+	"http://example.org/about2" : {
+		"http://www.w3.org/TR/rdf-schema/type"	  : [ { "value" : "http://xmlns.com/foaf/0.1/Document", "type" : "uri"}]
     }
 };

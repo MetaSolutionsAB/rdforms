@@ -97,7 +97,7 @@ dojo.declare("rforms.apps.Experiment", [dijit._Widget, dijit.layout._LayoutWidge
 		this._binding = rforms.model.match(this._graph, "http://example.org/about", this._template);
 		var node = dojo.create("div");
 		this._editorTab.set("content", node);
-		new rforms.view.Editor({template: this._template, binding: this._binding}, node);
+		new rforms.view.Editor({template: this._template, binding: this._binding, includeLevel: "optional"}, node);
 	},
 		
 	_initPresenter: function() {

@@ -221,6 +221,16 @@ dojo.declare("rdfjson.Graph", null, {
 		return predicates;
 	},
 	
+	/**
+	 * Validates the graph, if errors are detected an exception is thrown.
+	 */
+	validate: function() {
+		this.report = this._validate();
+		if (!this.report.valid) {
+			throw(this.report);
+		}
+	},
+
 	//===================================================
 	// Inherited methods
 	//===================================================
@@ -230,9 +240,12 @@ dojo.declare("rdfjson.Graph", null, {
 	 * 
 	 * @param {Object} graph a pure RDF JSON object according to the specification.
 	 */
-	constructor: function(graph) {
+	constructor: function(graph, validate) {
 		this._graph = graph || {};
 		this._bnodes = {};
+		if (validate !== false) {
+			this.validate();			
+		}
 	},
 
 
@@ -386,6 +399,50 @@ dojo.declare("rdfjson.Graph", null, {
 				}
 			}
 		}
+	},
+	
+	_validate: function() {
+		var s, p, oindex, graph = this._graph, objArr, report = {valid: true, errors: [], nr: 0};
+		for (s in graph) {
+			if (graph.hasOwnProperty(s)) {
+				if (!dojo.isObject(graph[s])) {
+					report.errors.push({s: s, message: "Subject must point to an object."});
+					report.valid = false;
+					continue;
+				}
+				for (p in graph[s]) {
+					if (graph[s].hasOwnProperty(p)) {
+						objArr = graph[s][p];
+						if (!dojo.isArray(objArr)) {
+							report.errors.push({s: s, p: p, message: "Predicate must point to an array of objects."});
+							report.valid = false;
+							continue;
+						}
+						
+						for (oindex = objArr.length-1;oindex>=0;oindex--) {
+							var o = objArr[oindex];
+							if (!dojo.isObject(o)) {
+								report.errors.push({s: s, p: p, oindex: (oindex+1), message: "Element "+(oindex+1)+" in object array is not an object."});
+								report.valid = false;
+								continue;
+							}
+							if (o.type == null) {
+								report.errors.push({s: s, p: p, oindex: (oindex+1), message: "Object "+(oindex+1)+" in object array lacks the attribute type, must be either 'literal', 'resource' or 'bnode'."});
+								report.valid = false;
+								continue;
+							}
+							if (!dojo.isString(o.value)) {
+								report.errors.push({s: s, p: p, oindex: (oindex+1), message: "Object "+(oindex+1)+" in object array must have the 'value' attribute pointing to a string."});
+								report.valid = false;
+								continue;
+							}
+							report.nr++;
+						}
+					}
+				}
+			}
+		}
+		return report;
 	},
 	
 	/**

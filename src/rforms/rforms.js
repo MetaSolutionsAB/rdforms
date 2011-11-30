@@ -27,3 +27,4 @@ dojo.require("rforms.view.Presenter");
 dojo.require("rforms.template.Converter");
 dojo.require("rforms.formulator.StoreManager");
 dojo.require("rforms.apps.Experiment");
+dojo.require("rforms.apps.Validator");

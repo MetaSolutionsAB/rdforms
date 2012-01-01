@@ -1,6 +1,9 @@
 .rformsTopLevel {
- 	padding: 0.3em;
- 	margin-top: 0em;
+ 	padding-left: 1%;
+ 	padding-right: 1%;
+ 	padding-bottom: 0.3em;
+ 	width: 98% !important;
+	margin-top: 0em;
 }
 
 .rformsEditor .rformsTopLevel {

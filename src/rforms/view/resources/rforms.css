@@ -1,9 +1,13 @@
-.rformsTopLevel {
+.rformsRow.rformsTopLevel {
  	padding-left: 1%;
  	padding-right: 1%;
  	padding-bottom: 0.3em;
  	width: 98% !important;
 	margin-top: 0em;
+}
+
+.compact .rformsRow.rformsTopLevel .rformsRow {
+	padding-left: 0.7em;
 }
 
 .rformsEditor .rformsTopLevel {
@@ -252,11 +256,11 @@
 	width: 1px;
 }
 
-.compact .rformsRow {
+.compact .rformsRow.rformsTopLevel {
 	display: table;
 	width: 100%;
 }
-.compact .rformsRow>div {
+.compact .rformsRow.rformsTopLevel>div {
 	display: table-cell;
 }
 
@@ -273,6 +277,11 @@
 	width: 1px;
 	white-space: nowrap;
 }
+
+.compact .rformsTopLevel.rformsRow>.rformsLabelRow .action {
+	vertical-align: baseline;
+}
+
 .compact .rformsField {
 	margin-left: 0.6em;
 }

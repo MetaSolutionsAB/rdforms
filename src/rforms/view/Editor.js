@@ -146,13 +146,13 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 			
 			//Special editing support implemented for integer, data and duration
 			
-			if (datatype === "http://www.w3.org/2001/XMLSchema.xsd#date" || datatype === "http://purl.org/dc/terms/W3CDTF") {
+			if (datatype === "http://www.w3.org/2001/XMLSchema#date" || datatype === "http://purl.org/dc/terms/W3CDTF") {
 				tb = new rforms.view.DateTime({binding: binding, item: item}, dojo.create("div", null, fieldDiv));				
-			} else if (datatype === "http://www.w3.org/2001/XMLSchema.xsd#duration") {
+			} else if (datatype === "http://www.w3.org/2001/XMLSchema#duration") {
 				tb = new rforms.view.Duration({disabled: !item.isEnabled(), onChange: function(){
 					binding.setValue(tb.attr("value"));
 				}}, dojo.create("div", null, fieldDiv));
-			} else if (datatype === "http://www.w3.org/2001/XMLSchema.xsd#integer") {
+			} else if (datatype === "http://www.w3.org/2001/XMLSchema#integer") {
 				tb = new dijit.form.ValidationTextBox({
 					value: binding.getValue(),
 					disabled: !item.isEnabled(),

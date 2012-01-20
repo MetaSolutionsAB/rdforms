@@ -261,6 +261,7 @@ rforms.model._matchPropertyGroupItem = function(pb, item) {
 		dojo.forEach(stmts, function(stmt) {
 			if (rforms.model._isNodeTypeMatch(oItem, stmt)) {
 				pChoice = rforms.model._findChoice(pItem, stmt.getPredicate());
+				oChoice = rforms.model._findChoice(oItem, stmt.getValue());;
 				
 				if (pChoice !== undefined) {
 					binding = null;
@@ -270,7 +271,7 @@ rforms.model._matchPropertyGroupItem = function(pb, item) {
 							binding = new rforms.model.PropertyGroupBinding({item: item, statement: stmt, constraints: constStmts});
 							rforms.model._matchGroupItemChildren(binding.getObjectBinding()); //Recursive call
 						}
-					} else if (oItem instanceof rforms.model.Choice) {
+					} else if (oItem instanceof rforms.model.ChoiceBinding) {
 						oChoice = rforms.model._findChoice(oItem, stmt.getValue());
 						if (oChoice !== undefined) {
 							binding = new rforms.model.PropertyGroupBinding({item: item, statement: stmt});
@@ -282,6 +283,7 @@ rforms.model._matchPropertyGroupItem = function(pb, item) {
 					
 					if (binding !== null) {
 						binding.getPredicateBinding().setChoice(pChoice);
+						binding.getObjectBinding().setChoice(oChoice);
 						bindings.push(binding);
 					}
 				}

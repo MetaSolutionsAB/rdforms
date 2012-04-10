@@ -52,7 +52,7 @@
 /* compact anyway for first level*/
 .compact .rformsTopLevel.rformsRow.notCompact {
 	display: table;
-	width: 100%;
+	width: 98%;
 }
 .compact .rformsTopLevel.rformsRow.notCompact>div {
 	display: table-cell;
@@ -260,7 +260,7 @@
 
 .compact .rformsRow.rformsTopLevel {
 	display: table;
-	width: 100%;
+	width: 98%;
 }
 .compact .rformsRow.rformsTopLevel>div {
 	display: table-cell;

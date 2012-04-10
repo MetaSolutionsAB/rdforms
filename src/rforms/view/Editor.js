@@ -270,6 +270,7 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 					var spanToUse = dojo.create("span", null, divToUse);
 					fSelect = new dijit.form.FilteringSelect({
 						store: store,
+						query: {selectable: true},
 						searchAttr: "label"
 					}, spanToUse);
 					
@@ -611,17 +612,20 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 	},
 	_getCopiedLabeledChoices: function(objects, item) {
 		var itemsArray = [];
-		for (var i in objects){
-			var currentLabel = item._getLocalizedValue(objects[i].label);
-			var obj = {value: objects[i].value, label: currentLabel.value};
-			if (objects[i].top === true) {
+		for (var i=0;i<objects.length;i++){
+			var o = objects[i];
+			var currentLabel = item._getLocalizedValue(o.label);
+			var obj = {value: o.value, label: currentLabel.value || "no label found"};
+			if (o.top === true) {
 				obj.top = true;
 			}
-			if (objects[i].children != null) {
-				obj.children = dojo.clone(objects[i].children);
+			if (o.children != null) {
+				obj.children = dojo.clone(o.children);
 			}
-			if (objects[i].selectable === false) {
+			if (o.selectable === false) {
 				obj.selectable = false;				
+			} else {
+				obj.selectable = true;
 			}
 			itemsArray.push(obj);
 		}

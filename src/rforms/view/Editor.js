@@ -264,24 +264,7 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 					});
 				}				
 			} else {
-				var fSelect, cNode, dialog;
-				//Check if a tree-hierarchy should be created
-				if(hierarchy){
-					cNode = dojo.create("div", {"class": "rformsChoiceValue"}, divToUse);
-					dojo.attr(cNode, "innerHTML", this._getLabelForChoice(binding) || "&nbsp");				
-					var oc;
-					var ddButton = dojo.create("span", {"class": "action editSearch", "title": "Browse"}, divToUse);
-					dojo.connect(ddButton, "onclick", dojo.hitch(this, function() {
-						if (oc == null) {
-							oc = new rforms.view.TreeOntologyChooser({binding: binding, done: dojo.hitch(this, function() {
-								dojo.attr(cNode, "innerHTML", this._getLabelForChoice(binding) || "&nbsp;");
-							})});
-						}
-						oc.show();
-					}));
-				
-				//Last option is the normal listing in a dropdown-menu
-				} else {
+				var fSelect, dialog;
 					//Create an ItemFileReadStore with the correct language to use
 					var store = this._createChoiceStore(item);
 					var spanToUse = dojo.create("span", null, divToUse);
@@ -300,7 +283,20 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 					fSelect.onChange = dojo.hitch(this, function (newvalue) {
 							binding.setValue(newvalue);
 					});
-				}
+					//Check if a tree-hierarchy should be created
+					if (hierarchy) {
+						var oc;
+						var ddButton = dojo.create("span", {"class": "action editSearch", "title": "Browse"}, divToUse);
+						dojo.connect(ddButton, "onclick", dojo.hitch(this, function() {
+							if (oc == null) {
+								oc = new rforms.view.TreeOntologyChooser({binding: binding, done: dojo.hitch(this, function() {
+									fSelect.set("value", binding.getValue());
+								})});
+							}
+							oc.show();
+						}));
+					}
+				//}
 				
 				/*Code below is to correctly remove items in the form and their
 				 * values
@@ -308,14 +304,12 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 				if (noCardinalityButtons !== true) {
 					this._addRemoveButton(fieldDiv, binding, controlDiv, function() {
 						fSelect && fSelect.set("value", "");
-						cNode && dojo.attr(cNode, "innerHTML", "");
 					});
 				}
 			}
 		} else if (rforms.getSystemChoice != null) {   //Depends on rforms.getSystemChoice and rforms.openSystemChoiceSelector methods being available
 			var divToUse =  dojo.create("div", null, fieldDiv);
-
-			cNode = dojo.create("div", {"class": "rformsChoiceValue"}, divToUse);
+			var cNode = dojo.create("div", {"class": "rformsChoiceValue"}, divToUse);
 			var choice = binding.getChoice();//rforms.getSystemChoice(item, binding.getValue());
 			if (choice) {
 				dojo.attr(cNode, "innerHTML", rforms.template.getLocalizedValue(choice.label).value || "");

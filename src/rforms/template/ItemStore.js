@@ -29,6 +29,16 @@ dojo.declare("rforms.template.ItemStore", null, {
 	getTemplate: function(id) {
 		return this._tRegistry[id];
 	},
+	getChildren: function(group) {
+		var children = [];
+		var ext = group._source["extends"];
+		if (ext) {
+			ext = this.getItem(ext);
+			children = children.concat(this.getChildren(ext));
+		}
+		children = children.concat(this._createItems(group._source.content || group._source.items || [], group._forceChildrenClones));
+		return children;
+	},
 	getItem: function(id) {
 		return this._registry[id];
 	},
@@ -140,7 +150,7 @@ dojo.declare("rforms.template.ItemStore", null, {
 			return this._createItem(child, forceClone);
 		}, this);
 	},
-	_createItem: function(source, forceClone) {
+	_createItem: function(source, forceClone, skipRegistration) {
 		var item, id = source.id || source["@id"], type = source["type"] || source["@type"];
 		if (type != null) {
 			switch(type) {
@@ -157,14 +167,16 @@ dojo.declare("rforms.template.ItemStore", null, {
 				item = new rforms.template.PropertyGroup(source, null, this); //Lazy loading of children.
 				break;
 			}
-			if (source.property != null) {
-				this._registryByProperty[source.property] = item;
-				if (this.priorities && this.priorities[source.property] != null) {
-					item.priority = this.priorities[source.property];
+			if (skipRegistration !== true) {
+				if (source.property != null) {
+					this._registryByProperty[source.property] = item;
+					if (this.priorities && this.priorities[source.property] != null) {
+						item.priority = this.priorities[source.property];
+					}
 				}
-			}
-			if (id != null && this._registry[id] == null) {
-				this._registry[id] = item;
+				if (id != null && this._registry[id] == null) {
+					this._registry[id] = item;
+				}
 			}
 			return item;
 		} else {
@@ -174,8 +186,16 @@ dojo.declare("rforms.template.ItemStore", null, {
 			if (this._registry[id] === undefined) {
 				throw "Cannot find referenced subitem using identifier: "+id;
 			}
+			//Check if there are any overlay properties, if so force clone mode.
+			for (var key in source) {
+				if (source.hasOwnProperty(key) && (key !== "id" || key !== "@id")) {
+					forceClone = true;
+					break;
+				}
+			}
 			if (forceClone === true) {
-				return this._createItem(dojo.clone(this._registry[id]._source));
+				var newSource = dojo.mixin(dojo.clone(this._registry[id]._source), source);
+				return this._createItem(newSource, false, true);
 			} else {
 				return this._registry[id];
 			}

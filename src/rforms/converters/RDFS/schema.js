@@ -5,6 +5,10 @@ var label = "http://www.w3.org/2000/01/rdf-schema#label";
 var comment = "http://www.w3.org/2000/01/rdf-schema#comment";
 var description = "http://purl.org/dc/terms/description";
 
+var isArray = function(v) {
+	return Object.prototype.toString.call(v) === "[object Array]";
+}
+
 var getValue = function(subject, propArr) {
 	var value = {};
 	var nonEmpty = false;
@@ -27,24 +31,30 @@ var getValue = function(subject, propArr) {
 	}
 	if (nonEmpty) {
 		return value;
-	} 
+	}
 };
 
-exports.load = function(infile, callback) {
+var getFallbackValue = function(uri) {
+	var slashIndex = uri.lastIndexOf("/");
+	var hashIndex = uri.lastIndexOf("#");
+	if (hashIndex > slashIndex) {
+		return {en: uri.substring(hashIndex+1)};
+	} else {
+		return {en: uri.substring(slashIndex+1)};
+	}	
+};
+
+var load = function(infile, callback) {
 	fs.readFile(infile, function(err, data) {
 		var schema = JSON.parse(data);
 		callback({
-			getLabel: function(uri) {
+			getLabel: function(uri, nofallback) {
 				var obj = getValue(schema[uri], [label]);
 				if (obj) {
 					return obj;
 				}
-				var slashIndex = uri.lastIndexOf("/");
-				var hashIndex = uri.lastIndexOf("#");
-				if (hashIndex > slashIndex) {
-					return {en: uri.substring(hashIndex+1)};
-				} else {
-					return {en: uri.substring(slashIndex+1)};
+				if (nofallback !== true) {
+					return getFallbackValue(uri);
 				}
 			},
 			getDescription: function(uri) {
@@ -55,4 +65,46 @@ exports.load = function(infile, callback) {
 			}
 		});
 	});
+};
+
+exports.load = function(infile, callback) {
+	if (isArray(infile)) {
+		schemaArr = [];
+		count = infile.length;
+		var schemaAgg = {
+			getLabel: function(uri) {
+				var label;
+				for (var s=0;s<schemaArr.length;s++) {
+					label = schemaArr[s].getLabel(uri);
+					if (label) {
+						return label;
+					}
+				}
+			},
+			getDescription: function(uri) {
+				var desc;
+				for (var s=0;s<schemaArr.length;s++) {
+					desc = schemaArr[s].getDescription(uri);
+					if (desc) {
+						return desc;
+					}
+				}
+			}
+		};
+		var f = function(index) {
+			load(infile[index], function(schema) {
+				schemaArr[index] = schema;
+				count--;
+				if (count === 0) {
+					callback(schemaAgg);
+				}
+			});
+		};
+		
+		for (var i=0;i<infile.length;i++) {
+			f(i);
+		}
+	} else {
+		load(infile, callback);
+	}
 };

@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+var dsp = require("../dspConverter.js");
+var rdfs = require("../../RDFS/schema.js");
+
+var stub = {
+		"cachedChoices": {
+			"http://example.com/DCOntology": [{
+				constraints: {"http://www.w3.org/2000/01/rdf-schema#subPropertyOf": "http://purl.org/dc/terms/contributor"},
+				choices: [
+					{"value": "http://purl.org/dc/terms/contributor", "label": {"sv": "Medarbetare", "en":"Contributor"}}
+				]
+			}]
+		}
+};
+
+rdfs.load(["dcterms-schema.rdfjson", "foaf-schema.rdfjson"], function(schema) {
+	dsp.convert({
+			infile: "VOA3R.dsp",
+			outfile: "VOA3R.json",
+			schema: schema,
+			stub: stub
+		});
+});
+
+

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var dsp = require("../dspConverter.js");
+var rdfs = require("../../RDFS/schema.js");
 
 var stub = {
 		"cachedChoices": {
@@ -10,10 +11,16 @@ var stub = {
 					{"value": "http://purl.org/dc/terms/contributor", "label": {"sv": "Medarbetare", "en":"Contributor"}}
 				]
 			}]
-		},
-		cachedLabels: {
-			"http://purl.org/dc/terms/title": {"en": "Title", "sv": "Titel"}
 		}
 };
 
-dsp.convert("VOA3R.dsp", stub, "VOA3R.json");
+rdfs.load("dcterms-schema.rdfjson", function(dcterms) {
+	dsp.convert({
+			infile: "VOA3R.dsp",
+			outfile: "VOA3R.json",
+			schema: dcterms,
+			stub: stub
+		});
+});
+
+

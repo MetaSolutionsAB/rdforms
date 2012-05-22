@@ -35,7 +35,6 @@
 			};
 			var req = dojo.xhrGet(xhrArgs);
 			req.addCallback(function(source) {
-				debugger;
 				itemStore.createTemplate(source)
 				var storeManager = new rforms.formulator.StoreManager({itemStore: itemStore}, "_node");
 				storeManager.startup();

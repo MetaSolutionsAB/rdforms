@@ -25,7 +25,7 @@ var buildDT = function(dt) {
 	return {id: id, type: "group", label: {en: id}, content: children, cardinality: occurence(dt)};
 };
 
-var buildST = function(rforms, st) {
+var buildST = function(rforms, schema, st) {
 	var result = {cardinality: occurence(st), id: getId(st)};
 	if (st.LiteralConstraint || (st["@"] && st["@"].type === "literal")) {
 		result.type = "text";
@@ -83,7 +83,11 @@ var buildST = function(rforms, st) {
 	
 	if (st.Property) {
 		result.property = st.Property;
-		result.label = getLabel(rforms, st.Property);
+		result.label = schema.getLabel(st.Property);
+		var desc = schema.getDescription(st.Property);
+		if (desc) {
+			result.description = desc;
+		}
 	} else { //subPropertyOf
 		for (var ontologyUrl in rforms.cachedChoices) {
 			if (rforms.cachedChoices.hasOwnProperty(ontologyUrl)) {
@@ -97,22 +101,13 @@ var buildST = function(rforms, st) {
 			};
 		var id = result.id;
 		delete result.id;
-		result = {id: id, type: "propertygroup", "content": [choice, result], label: getLabel(rforms, st.SubPropertyOf)}
+		result = {id: id, type: "propertygroup", "content": [choice, result], label: schema.getLabel(st.SubPropertyOf)}
+		var desc = schema.getDescription(st.SubPropertyOf);
+		if (desc) {
+			result.description = desc;
+		}
 	}
 	rforms.auxilliary.push(result);
-};
-
-var getLabel = function(rforms, property) {
-	if (rforms.cachedLabels && rforms.cachedLabels[property]) {
-		return rforms.cachedLabels[property];
-	}
-	var slashIndex = property.lastIndexOf("/");
-	var hashIndex = property.lastIndexOf("#");
-	if (hashIndex > slashIndex) {
-		return {en: property.substring(hashIndex+1)};
-	} else {
-		return {en: property.substring(slashIndex+1)};
-	}
 };
 
 var getId = (function() {
@@ -133,7 +128,7 @@ var getId = (function() {
 	}
 })();
 
-var buildRForms = function(dsps, stub) {
+var buildRForms = function(dsps, schema, stub) {
 	stub.auxilliary = stub.auxilliary || [];
 	stub.cachedChoices = stub.cachedChoices || {};
 	//Generate all StatementTemplate ids
@@ -156,16 +151,17 @@ var buildRForms = function(dsps, stub) {
 		var dsp = dsps[key];
 		var sts = dsp.StatementTemplate;
 		for(var i=0;i<sts.length;i++) {
-			buildST(stub, sts[i]);
+			buildST(stub, schema, sts[i]);
 		}
 	}
 	return stub;
 };
 
-debugger;
-
-exports.convert = function(infile, stub, outfile) {
-	fs.readFile(infile, function(err, data) {
+/**
+ * @param params must contain infile, outfile, a stub and a schema.
+ */
+exports.convert = function(params) {
+	fs.readFile(params.infile, function(err, data) {
 		var parser = new xml2js.Parser();
 		parser.parseString(data, function(err, src) {
 			var dsparr = src.DescriptionTemplate;
@@ -173,8 +169,9 @@ exports.convert = function(infile, stub, outfile) {
 			for (var i=0;i<dsparr.length;i++) {
 				dsps[dsparr[i]["@"].ID] = dsparr[i];
 			}
-			var rforms = buildRForms(dsps, stub);
-			var fd = fs.openSync(outfile, "w");
+			var rforms = buildRForms(dsps, params.schema, params.stub);
+			//Throw away labels not used:
+			var fd = fs.openSync(params.outfile, "w");
 			fs.writeSync(fd, JSON.stringify(rforms, true, 1), 0, "utf8");
 
 		});

@@ -17,12 +17,6 @@
    }
   ]
  },
- "cachedLabels": {
-  "http://purl.org/dc/terms/title": {
-   "en": "Title",
-   "sv": "Titel"
-  }
- },
  "auxilliary": [
   {
    "id": "AgResResource",
@@ -224,8 +218,10 @@
    "nodetype": "LANGUAGE_LITERAL",
    "property": "http://purl.org/dc/terms/title",
    "label": {
-    "en": "Title",
-    "sv": "Titel"
+    "en-US": "Title"
+   },
+   "description": {
+    "en-US": "A name given to the resource."
    }
   },
   {
@@ -235,7 +231,10 @@
    "nodetype": "LANGUAGE_LITERAL",
    "property": "http://purl.org/dc/terms/alternative",
    "label": {
-    "en": "alternative"
+    "en-US": "Alternative Title"
+   },
+   "description": {
+    "en-US": "An alternative name for the resource.\nThe distinction between titles and alternative titles is application-specific."
    }
   },
   {
@@ -244,7 +243,10 @@
    "extends": "agent",
    "property": "http://purl.org/dc/terms/creator",
    "label": {
-    "en": "creator"
+    "en-US": "Creator"
+   },
+   "description": {
+    "en-US": "An entity primarily responsible for making the resource.\nExamples of a Creator include a person, an organization, or a service."
    }
   },
   {
@@ -267,7 +269,10 @@
     }
    ],
    "label": {
-    "en": "contributor"
+    "en-US": "Contributor"
+   },
+   "description": {
+    "en-US": "An entity responsible for making contributions to the resource.\nExamples of a Contributor include a person, an organization, or a service."
    }
   },
   {
@@ -276,7 +281,10 @@
    "extends": "agent",
    "property": "http://purl.org/dc/terms/publisher",
    "label": {
-    "en": "publisher"
+    "en-US": "Publisher"
+   },
+   "description": {
+    "en-US": "An entity responsible for making the resource available.\nExamples of a Publisher include a person, an organization, or a service."
    }
   },
   {
@@ -287,7 +295,10 @@
    "datatype": "http://purl.org/dc/terms/W3CDTF",
    "property": "http://purl.org/dc/terms/date",
    "label": {
-    "en": "date"
+    "en-US": "Date"
+   },
+   "description": {
+    "en-US": "A point or period of time associated with an event in the lifecycle of the resource.\nDate may be used to express temporal information at any level of granularity.  Recommended best practice is to use an encoding scheme, such as the W3CDTF profile of ISO 8601 [W3CDTF]."
    }
   },
   {
@@ -313,7 +324,10 @@
    ],
    "property": "http://purl.org/dc/terms/language",
    "label": {
-    "en": "language"
+    "en-US": "Language"
+   },
+   "description": {
+    "en-US": "A language of the resource.\nRecommended best practice is to use a controlled vocabulary such as RFC 4646 [RFC4646]."
    }
   },
   {
@@ -337,7 +351,10 @@
    ],
    "property": "http://purl.org/dc/terms/identifier",
    "label": {
-    "en": "identifier"
+    "en-US": "Identifier"
+   },
+   "description": {
+    "en-US": "An unambiguous reference to the resource within a given context.\nRecommended best practice is to identify the resource by means of a string conforming to a formal identification system. "
    }
   },
   {
@@ -363,7 +380,10 @@
    ],
    "property": "http://purl.org/dc/terms/format",
    "label": {
-    "en": "format"
+    "en-US": "Format"
+   },
+   "description": {
+    "en-US": "The file format, physical medium, or dimensions of the resource.\nExamples of dimensions include size and duration. Recommended best practice is to use a controlled vocabulary such as the list of Internet Media Types [MIME]."
    }
   },
   {
@@ -433,7 +453,10 @@
    ],
    "property": "http://purl.org/dc/terms/subject",
    "label": {
-    "en": "subject"
+    "en-US": "Subject"
+   },
+   "description": {
+    "en-US": "The topic of the resource.\nTypically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary. To describe the spatial or temporal topic of the resource, use the Coverage element."
    }
   },
   {
@@ -443,7 +466,10 @@
    "nodetype": "LITERAL",
    "property": "http://purl.org/dc/terms/description",
    "label": {
-    "en": "description"
+    "en-US": "Description"
+   },
+   "description": {
+    "en-US": "An account of the resource.\nDescription may include but is not limited to: an abstract, a table of contents, a graphical representation, or a free-text account of the resource."
    }
   },
   {
@@ -453,7 +479,10 @@
    "nodetype": "LITERAL",
    "property": "http://purl.org/dc/terms/abstract",
    "label": {
-    "en": "abstract"
+    "en-US": "Abstract"
+   },
+   "description": {
+    "en-US": "A summary of the resource."
    }
   },
   {
@@ -480,7 +509,10 @@
    ],
    "property": "http://purl.org/dc/terms/bibliographicCitation",
    "label": {
-    "en": "bibliographicCitation"
+    "en-US": "Bibliographic Citation"
+   },
+   "description": {
+    "en-US": "A bibliographic reference for the resource.\nRecommended practice is to include sufficient bibliographic detail to identify the resource as unambiguously as possible."
    }
   },
   {
@@ -506,7 +538,10 @@
    ],
    "property": "http://purl.org/dc/terms/type",
    "label": {
-    "en": "type"
+    "en-US": "Type"
+   },
+   "description": {
+    "en-US": "The nature or genre of the resource.\nRecommended best practice is to use a controlled vocabulary such as the DCMI Type Vocabulary [DCMITYPE]. To describe the file format, physical medium, or dimensions of the resource, use the Format element."
    }
   },
   {
@@ -516,7 +551,10 @@
    "nodetype": "LITERAL",
    "property": "http://purl.org/dc/terms/rights",
    "label": {
-    "en": "rights"
+    "en-US": "Rights"
+   },
+   "description": {
+    "en-US": "Information about rights held in and over the resource.\nTypically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights."
    }
   },
   {
@@ -542,7 +580,10 @@
    ],
    "property": "http://purl.org/dc/terms/accessRights",
    "label": {
-    "en": "accessRights"
+    "en-US": "Access Rights"
+   },
+   "description": {
+    "en-US": "Information about who can access the resource or an indication of its security status.\nAccess Rights may include information regarding access or restrictions based on privacy, security, or other policies."
    }
   },
   {
@@ -552,7 +593,10 @@
    "nodetype": "LITERAL",
    "property": "http://purl.org/dc/terms/license",
    "label": {
-    "en": "license"
+    "en-US": "License"
+   },
+   "description": {
+    "en-US": "A legal document giving official permission to do something with the resource."
    }
   },
   {
@@ -614,7 +658,10 @@
    "nodetype": "URI",
    "property": "http://purl.org/dc/terms/relation",
    "label": {
-    "en": "relation"
+    "en-US": "Relation"
+   },
+   "description": {
+    "en-US": "A related resource.\nRecommended best practice is to identify the related resource by means of a string conforming to a formal identification system. "
    }
   },
   {
@@ -624,7 +671,10 @@
    "nodetype": "URI",
    "property": "http://purl.org/dc/terms/conformsTo",
    "label": {
-    "en": "conformsTo"
+    "en-US": "Conforms To"
+   },
+   "description": {
+    "en-US": "An established standard to which the described resource conforms."
    }
   },
   {
@@ -634,7 +684,10 @@
    "nodetype": "URI",
    "property": "http://purl.org/dc/terms/conformsTo",
    "label": {
-    "en": "conformsTo"
+    "en-US": "Conforms To"
+   },
+   "description": {
+    "en-US": "An established standard to which the described resource conforms."
    }
   },
   {
@@ -644,7 +697,10 @@
    "nodetype": "URI",
    "property": "http://purl.org/dc/terms/references",
    "label": {
-    "en": "references"
+    "en-US": "References"
+   },
+   "description": {
+    "en-US": "A related resource that is referenced, cited, or otherwise pointed to by the described resource."
    }
   },
   {
@@ -654,7 +710,10 @@
    "nodetype": "URI",
    "property": "http://purl.org/dc/terms/isReferencedBy",
    "label": {
-    "en": "isReferencedBy"
+    "en-US": "Is Referenced By"
+   },
+   "description": {
+    "en-US": "A related resource that references, cites, or otherwise points to the described resource."
    }
   },
   {
@@ -664,7 +723,10 @@
    "nodetype": "URI",
    "property": "http://purl.org/dc/terms/hasPart",
    "label": {
-    "en": "hasPart"
+    "en-US": "Has Part"
+   },
+   "description": {
+    "en-US": "A related resource that is included either physically or logically in the described resource."
    }
   },
   {
@@ -674,7 +736,10 @@
    "nodetype": "URI",
    "property": "http://purl.org/dc/terms/isPartOf",
    "label": {
-    "en": "isPartOf"
+    "en-US": "Is Part Of"
+   },
+   "description": {
+    "en-US": "A related resource in which the described resource is physically or logically included."
    }
   },
   {
@@ -684,7 +749,10 @@
    "nodetype": "URI",
    "property": "http://purl.org/dc/terms/hasVersion",
    "label": {
-    "en": "hasVersion"
+    "en-US": "Has Version"
+   },
+   "description": {
+    "en-US": "A related resource that is a version, edition, or adaptation of the described resource."
    }
   },
   {
@@ -694,7 +762,10 @@
    "nodetype": "URI",
    "property": "http://purl.org/dc/terms/isVersionOf",
    "label": {
-    "en": "isVersionOf"
+    "en-US": "Is Version Of"
+   },
+   "description": {
+    "en-US": "A related resource of which the described resource is a version, edition, or adaptation.\nChanges in version imply substantive changes in content rather than differences in format."
    }
   },
   {
@@ -815,7 +886,10 @@
    "nodetype": "URI",
    "property": "http://purl.org/dc/terms/identifier",
    "label": {
-    "en": "identifier"
+    "en-US": "Identifier"
+   },
+   "description": {
+    "en-US": "An unambiguous reference to the resource within a given context.\nRecommended best practice is to identify the resource by means of a string conforming to a formal identification system. "
    }
   },
   {
@@ -825,7 +899,10 @@
    "nodetype": "URI",
    "property": "http://purl.org/dc/terms/type",
    "label": {
-    "en": "type"
+    "en-US": "Type"
+   },
+   "description": {
+    "en-US": "The nature or genre of the resource.\nRecommended best practice is to use a controlled vocabulary such as the DCMI Type Vocabulary [DCMITYPE]. To describe the file format, physical medium, or dimensions of the resource, use the Format element."
    }
   },
   {
@@ -851,7 +928,10 @@
    ],
    "property": "http://purl.org/dc/terms/language",
    "label": {
-    "en": "language"
+    "en-US": "Language"
+   },
+   "description": {
+    "en-US": "A language of the resource.\nRecommended best practice is to use a controlled vocabulary such as RFC 4646 [RFC4646]."
    }
   },
   {
@@ -862,7 +942,10 @@
    "datatype": "http://purl.org/dc/terms/W3CDTF",
    "property": "http://purl.org/dc/terms/date",
    "label": {
-    "en": "date"
+    "en-US": "Date"
+   },
+   "description": {
+    "en-US": "A point or period of time associated with an event in the lifecycle of the resource.\nDate may be used to express temporal information at any level of granularity.  Recommended best practice is to use an encoding scheme, such as the W3CDTF profile of ISO 8601 [W3CDTF]."
    }
   },
   {
@@ -885,7 +968,10 @@
     }
    ],
    "label": {
-    "en": "contributor"
+    "en-US": "Contributor"
+   },
+   "description": {
+    "en-US": "An entity responsible for making contributions to the resource.\nExamples of a Contributor include a person, an organization, or a service."
    }
   },
   {

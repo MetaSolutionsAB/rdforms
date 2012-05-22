@@ -167,7 +167,11 @@ dojo.declare("rdfjson.Graph", null, {
 			return new rdfjson.Statement(this, s, p, o, false);	
 		}
 	},
-	
+
+	registerBNode: function(bNodeId) {
+		this._bnodes[bNodeId] = true;
+	},
+
 	/**
 	 * @return a plain RDF JSON object without the additional artifacts created by this graph class.
 	 * The returned object is suitable for serilazation and communicated with other systems.

@@ -4,17 +4,17 @@
 			<div dojoType="dijit.layout.TabContainer" region="center" splitter="true">
 				<div dojoType="dijit.layout.BorderContainer" title="RForms-template editor">
 					<div dojoType="dijit.layout.ContentPane" region="left" style="width: 40%" splitter="true">
-						<div dojoAttachPoint="_dijitItemTreeNode"></div>
+						<div dojoAttachPoint="_dijitItemTreeNode" style="height: 100%;overflow-y: auto"></div>
 					</div>
 					<div dojoType="dijit.layout.ContentPane" region="center">
-						<div dojoAttachPoint="_editorNode" style="width: 100%; height: 100%"></div>
+						<div dojoAttachPoint="_editorNode"></div>
 					</div>
 				</div>
 				<div dojoType="dijit.layout.ContentPane" title="RForms-template source">
 					<textarea dojoAttachPoint="_contentsNode" style="width: 100%; height: 100%"></textarea>
 				</div>
 			</div>
-			<div dojoType="dijit.layout.ContentPane" region="right" splitter="true" style="width: 30%;">
+			<div dojoType="dijit.layout.ContentPane" region="left" splitter="true" style="width: 30%;">
 				<div dojoAttachPoint="_listNode" style="height: 100%;overflow-y: auto"></div>
 			</div>
 		</div>

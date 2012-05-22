@@ -80,9 +80,15 @@ dojo.declare("rforms.formulator.StoreManager", [dijit.layout._LayoutWidget, diji
 			if (this.tree) {
 				this.tree.destroy();
 			}
+			var root = item;
+			if (item.getChildren == null) {
+				var root = new rforms.template.Group({});
+				root._internalId = "_root";
+				root.getChildren = function() {return [item]};			
+			}
 			this.tree = new dijit.Tree({
-					showRoot:true, 
-					model: new rforms.formulator.TreeModel(item),
+					showRoot: item.getChildren != null,
+					model: new rforms.formulator.TreeModel(root),
 					onClick: dojo.hitch(this, function(item) {
 						if (this._editor !=null) {
 							this._editor.destroy();
@@ -90,7 +96,7 @@ dojo.declare("rforms.formulator.StoreManager", [dijit.layout._LayoutWidget, diji
 						this._editor = new rforms.formulator.GroupEditor({item: item}, dojo.create("div", null, this._editorNode));						
 					})
 				}, dojo.create("div", null, this._dijitItemTreeNode));
-			this.tree.startup();
+			this.tree.startup();				
 		}
 	},
 	_showContent: function(item) {

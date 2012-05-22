@@ -12,11 +12,13 @@ dojo.require("dijit.layout._LayoutWidget");
 
 dojo.declare("rforms.apps.Experiment", [dijit._Widget, dijit.layout._LayoutWidget, dijit._Templated], {
 	//===================================================
-	// Inherited attributes
+	// Public attributes
 	//===================================================
 	templateObj: "",
 	graphObj: "",
 	itemStore: null,
+	template: null,
+	hideTemplate: false,
 
 	//===================================================
 	// Inherited attributes
@@ -36,11 +38,13 @@ dojo.declare("rforms.apps.Experiment", [dijit._Widget, dijit.layout._LayoutWidge
 	startup: function() {
 		this.inherited("startup", arguments);
 		this._itemStore = this.itemStore || new rforms.template.ItemStore();
-		this._templateView.set("value", dojo.toJson(this.templateObj, 1));
-		this._template = this._itemStore.createTemplate(this.templateObj);
+		if (this.showTemplateSource) {}
+		this._template = this.template || this._itemStore.createTemplate(this.templateObj);
 		this._templateInvalid = false;
 		if (this.hideTemplate) {
 			this._tabContainer.removeChild(this._templateTab);
+		} else {
+			this._templateView.set("value", dojo.toJson(this.templateObj, 1));
 		}
 		
 		this._graph = new rdfjson.Graph(this.graphObj);
@@ -97,7 +101,7 @@ dojo.declare("rforms.apps.Experiment", [dijit._Widget, dijit.layout._LayoutWidge
 		this._binding = rforms.model.match(this._graph, "http://example.org/about", this._template);
 		var node = dojo.create("div");
 		this._editorTab.set("content", node);
-		new rforms.view.Editor({template: this._template, binding: this._binding, includeLevel: "optional"}, node);
+		new rforms.view.Editor({template: this._template, binding: this._binding, includeLevel: "optional", compact: true}, node);
 	},
 		
 	_initPresenter: function() {

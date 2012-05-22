@@ -244,7 +244,7 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 			message += "<div><label class='propertyLabel'>Property:&nbsp;</label><span class='propertyValue'>"+item.getProperty()+"</span></div>";
 		}
 		if (description != null) {
-			message += "<div><label class='descriptionLabel'>Description:&nbsp;</label><span class='descriptionValue'>"+item.getDescription()+"</span></div>";
+			message += "<div><label class='descriptionLabel'>Description:&nbsp;</label><span class='descriptionValue'>"+description.replace(/(\r\n|\r|\n)/g, "<br/>")+"</span></div>";
 		}
 		message +="</div>";
 		dojo.attr(node, "innerHTML", message);

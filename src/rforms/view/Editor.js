@@ -166,6 +166,14 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 						}
 					}
 				}, dojo.create("div", null, fieldDiv));
+			} else {
+				tb = new dijit.form.TextBox({
+						value: binding.getValue(),
+						onChange: function(){
+							binding.setValue(this.attr("value"));
+						}
+					}, dojo.create("div", null, fieldDiv));
+				dojo.addClass(tb.domNode, "rformsFieldInput");
 			}
 		}
 		else {

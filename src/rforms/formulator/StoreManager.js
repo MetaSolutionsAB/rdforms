@@ -3,10 +3,13 @@ dojo.require("dijit.layout._LayoutWidget");
 dojo.require("dijit.layout.ContentPane");
 dojo.require("dijit.layout.TabContainer");
 dojo.require("dijit.layout.BorderContainer");
+dojo.require("dijit.Tree");
 dojo.require("rdfjson.Graph");
 dojo.require("rforms.view.Editor");
 dojo.require("rforms.model.Engine");
 dojo.require("rforms.formulator.GroupEditor");
+dojo.require("rforms.apps.Experiment");
+dojo.require("rforms.formulator.TreeModel");
 
 dojo.declare("rforms.formulator.StoreManager", [dijit.layout._LayoutWidget, dijit._Templated], {	
 	//===================================================
@@ -74,17 +77,36 @@ dojo.declare("rforms.formulator.StoreManager", [dijit.layout._LayoutWidget, diji
 		}
 		if (item != null) {
 			this._editor = new rforms.formulator.GroupEditor({item: item}, dojo.create("div", null, this._editorNode));
+			if (this.tree) {
+				this.tree.destroy();
+			}
+			this.tree = new dijit.Tree({
+					showRoot:true, 
+					model: new rforms.formulator.TreeModel(item),
+					onClick: dojo.hitch(this, function(item) {
+						if (this._editor !=null) {
+							this._editor.destroy();
+						}
+						this._editor = new rforms.formulator.GroupEditor({item: item}, dojo.create("div", null, this._editorNode));						
+					})
+				}, dojo.create("div", null, this._dijitItemTreeNode));
+			this.tree.startup();
 		}
 	},
 	_showContent: function(item) {
 		dojo.attr(this._contentsNode, "value", dojo.toJson(item._source, true, "  "));
-		var graph = new rdfjson.Graph(this.data || {});
-		var template = this.itemStore.createTemplateFromChildren([item]);
-		var binding = rforms.model.match(graph, this.resourceUri, template);
+		var template;
+		if (item.getChildren) {
+			template = this.itemStore.createTemplateFromChildren(item.getChildren());
+		} else {
+			template = this.itemStore.createTemplateFromChildren([item]);
+		}
 		if (this._editorDijit != null) {
 			this._editorDijit.destroy();
 		}
-		this._editorDijit = new rforms.view.Editor({template: template, binding: binding, includeLevel: "optional"}, dojo.create("div", null, this._previewNode));
+		this._editorDijit = new rforms.apps.Experiment({hideTemplate: true, template: template, graphObj: this.data}, dojo.create("div", null, this._previewNode));
+		this._editorDijit.startup();
+		this._bcDijit.resize();
 	},
 	_showAll: function() {
 		var arr = [];

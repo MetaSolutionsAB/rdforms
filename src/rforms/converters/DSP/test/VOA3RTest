@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+
+var dsp = require("../dspConverter.js");
+
+var stub = {
+		"cachedChoices": {
+			"http://example.com/DCOntology": [{
+				constraints: {"http://www.w3.org/2000/01/rdf-schema#subPropertyOf": "http://purl.org/dc/terms/contributor"},
+				choices: [
+					{"value": "http://purl.org/dc/terms/contributor", "label": {"sv": "Medarbetare", "en":"Contributor"}}
+				]
+			}]
+		},
+		cachedLabels: {
+			"http://purl.org/dc/terms/title": {"en": "Title", "sv": "Titel"}
+		}
+};
+
+dsp.convert("VOA3R.dsp", stub, "VOA3R.json");

@@ -152,7 +152,14 @@ dojo.declare("rforms.template.ItemStore", null, {
 	},
 	_createItem: function(source, forceClone, skipRegistration) {
 		var item, id = source.id || source["@id"], type = source["type"] || source["@type"];
-		if (type != null) {
+		if (source["extends"]) { //Explicit extends
+			if (this._registry[source["extends"]] === undefined) {
+				throw "Cannot find item to extend with id: "+source["extends"];
+			}
+			var newSource = dojo.mixin(dojo.clone(this._registry[source["extends"]]._source), source);
+			newSource["extends"] = null; //Ugly hackt to avoid infinite recursion.
+			return this._createItem(newSource, false, false);
+		} else if (type != null && source["extends"] == null) {
 			switch(type) {
 			case "text":
 				item = new rforms.template.Text(source);
@@ -193,6 +200,7 @@ dojo.declare("rforms.template.ItemStore", null, {
 					break;
 				}
 			}
+			
 			if (forceClone === true) {
 				var newSource = dojo.mixin(dojo.clone(this._registry[id]._source), source);
 				return this._createItem(newSource, false, true);

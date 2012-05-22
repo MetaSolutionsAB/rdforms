@@ -56,9 +56,9 @@ dojo.declare("rforms.view.Presenter", rforms.view.View, {
 	addTable: function(newRow, firstBinding) {
 		var item = firstBinding.getItem(), childItems = item.getChildren();
 		var table = dojo.create("table", {"class": "rformsGroup"}, newRow);
-		tHead = dojo.create("thead", null, table);
-		tHeadRow = dojo.create("tr", null, table);
-		for (colInd = 0;colInd < childItems.length;colInd++) {
+		var tHead = dojo.create("thead", null, table);
+		var tHeadRow = dojo.create("tr", null, table);
+		for (var colInd = 0;colInd < childItems.length;colInd++) {
 			var th = dojo.create("th", null, tHeadRow);
 			this.showInfo(item, dojo.create("span", {innerHTML: childItems[colInd].getLabel()}, th));
 		}

@@ -24,6 +24,8 @@ rforms.template.getLocalizedValue = function(hash) {
 		}
 	}
 };
+
+rforms.template.itemCount = 0;
 /**
  * Common functionality of subclasses Item and Template.
  * (If it where not for the Template class, this functionality would be merged with Item.)
@@ -39,6 +41,32 @@ dojo.declare("rforms.template._BaseItem", null, {
 	//===================================================
 	getId: function() {
 		return this._source.id || this._source["@id"];
+	},
+	setId: function(id) {
+		this._source.id = id;
+		delete this._source["@id"];
+	},
+	getLabelMap: function() {
+		return this._source.label;
+	},
+	setLabel: function(value, lang) {
+		this._source.label = this.setLangHash(this._source.label, value, lang);
+	},
+	setDescription: function(value, lang) {
+		this._source.label = this.setLangHash(this._source.label, value, lang);
+	},
+	_setLangHash: function(hash, value, lang) {
+		hash = hash || {};
+		if (dojo.isString(value)) {
+			if (dojo.isString(lang)) {
+				hash[lang] = value;
+			} else {
+				hash[""] = value;
+			}
+		} else if (dojo.isObject(value)){
+			return value;
+		}
+		return hash;
 	},
 	getLabel: function(returnDetails) {
 		return returnDetails ? this._getLocalizedValue(this._source.label) : this._getLocalizedValue(this._source.label).value;
@@ -76,6 +104,7 @@ dojo.declare("rforms.template._BaseItem", null, {
 	//===================================================	
 	constructor: function(source) {
 		this._source = source;
+		this._internalId = rforms.template.itemCount++;
 	},
 	
 	//===================================================

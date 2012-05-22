@@ -1,0 +1,952 @@
+{
+ "cachedChoices": {
+  "http://example.com/DCOntology": [
+   {
+    "constraints": {
+     "http://www.w3.org/2000/01/rdf-schema#subPropertyOf": "http://purl.org/dc/terms/contributor"
+    },
+    "choices": [
+     {
+      "value": "http://purl.org/dc/terms/contributor",
+      "label": {
+       "sv": "Medarbetare",
+       "en": "Contributor"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "cachedLabels": {
+  "http://purl.org/dc/terms/title": {
+   "en": "Title",
+   "sv": "Titel"
+  }
+ },
+ "auxilliary": [
+  {
+   "id": "AgResResource",
+   "type": "group",
+   "label": {
+    "en": "AgResResource"
+   },
+   "content": [
+    {
+     "id": "http://purl.org/dc/terms/title"
+    },
+    {
+     "id": "http://purl.org/dc/terms/alternative"
+    },
+    {
+     "id": "http://purl.org/dc/terms/creator"
+    },
+    {
+     "id": "http://purl.org/dc/terms/contributor"
+    },
+    {
+     "id": "http://purl.org/dc/terms/publisher"
+    },
+    {
+     "id": "http://purl.org/dc/terms/date"
+    },
+    {
+     "id": "http://purl.org/dc/terms/language"
+    },
+    {
+     "id": "http://purl.org/dc/terms/identifier"
+    },
+    {
+     "id": "http://purl.org/dc/terms/format"
+    },
+    {
+     "id": "http://www.europeana.eu/schemas/ese/isShownBy"
+    },
+    {
+     "id": "http://www.europeana.eu/schemas/ese/isShownAt"
+    },
+    {
+     "id": "http://purl.org/dc/terms/subject"
+    },
+    {
+     "id": "http://purl.org/dc/terms/description"
+    },
+    {
+     "id": "http://purl.org/dc/terms/abstract"
+    },
+    {
+     "id": "http://purl.org/dc/terms/bibliographicCitation"
+    },
+    {
+     "id": "http://purl.org/dc/terms/type"
+    },
+    {
+     "id": "http://purl.org/dc/terms/rights"
+    },
+    {
+     "id": "http://purl.org/dc/terms/accessRights"
+    },
+    {
+     "id": "http://purl.org/dc/terms/license"
+    },
+    {
+     "id": "http://voa3r.eu/terms/reviewStatus"
+    },
+    {
+     "id": "http://voa3r.eu/terms/publicationStatus"
+    },
+    {
+     "id": "http://purl.org/dc/terms/relation"
+    },
+    {
+     "id": "http://purl.org/dc/terms/conformsTo"
+    },
+    {
+     "id": "http://purl.org/dc/terms/conformsTo2"
+    },
+    {
+     "id": "http://purl.org/dc/terms/references"
+    },
+    {
+     "id": "http://purl.org/dc/terms/isReferencedBy"
+    },
+    {
+     "id": "http://purl.org/dc/terms/hasPart"
+    },
+    {
+     "id": "http://purl.org/dc/terms/isPartOf"
+    },
+    {
+     "id": "http://purl.org/dc/terms/hasVersion"
+    },
+    {
+     "id": "http://purl.org/dc/terms/isVersionOf"
+    },
+    {
+     "id": "http://voa3r.eu/terms/hasTranslation"
+    },
+    {
+     "id": "http://voa3r.eu/terms/isTranslationOf"
+    },
+    {
+     "id": "http://voa3r.eu/terms/hasMetametadata"
+    },
+    {
+     "id": "http://voa3r.eu/terms/hasResearch"
+    }
+   ],
+   "cardinality": {}
+  },
+  {
+   "id": "agent",
+   "type": "group",
+   "label": {
+    "en": "agent"
+   },
+   "content": [
+    {
+     "id": "http://xmlns.com/foaf/0.1/name"
+    },
+    {
+     "id": "http://xmlns.com/foaf/0.1/givenName"
+    },
+    {
+     "id": "http://xmlns.com/foaf/0.1/familyName"
+    },
+    {
+     "id": "http://xmlns.com/foaf/0.1/firstName"
+    },
+    {
+     "id": "http://xmlns.com/foaf/0.1/lastName"
+    },
+    {
+     "id": "http://xmlns.com/foaf/0.1/mbox"
+    }
+   ],
+   "cardinality": {}
+  },
+  {
+   "id": "metametadata",
+   "type": "group",
+   "label": {
+    "en": "metametadata"
+   },
+   "content": [
+    {
+     "id": "http://purl.org/dc/terms/identifier2"
+    },
+    {
+     "id": "http://purl.org/dc/terms/type2"
+    },
+    {
+     "id": "http://purl.org/dc/terms/language2"
+    },
+    {
+     "id": "http://purl.org/dc/terms/date2"
+    },
+    {
+     "id": "http://purl.org/dc/terms/contributor2"
+    }
+   ],
+   "cardinality": {}
+  },
+  {
+   "id": "research",
+   "type": "group",
+   "label": {
+    "en": "research"
+   },
+   "content": [
+    {
+     "id": "http://voa3r.eu/terms/objectOfInterest"
+    },
+    {
+     "id": "http://voa3r.eu/terms/measuresVariable"
+    },
+    {
+     "id": "http://voa3r.eu/terms/usesMethod"
+    },
+    {
+     "id": "http://voa3r.eu/terms/usesProtocol"
+    },
+    {
+     "id": "http://voa3r.eu/terms/usesInstrument"
+    },
+    {
+     "id": "http://voa3r.eu/terms/usesTechnique"
+    }
+   ],
+   "cardinality": {}
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/title",
+   "type": "text",
+   "nodetype": "LANGUAGE_LITERAL",
+   "property": "http://purl.org/dc/terms/title",
+   "label": {
+    "en": "Title",
+    "sv": "Titel"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/alternative",
+   "type": "text",
+   "nodetype": "LANGUAGE_LITERAL",
+   "property": "http://purl.org/dc/terms/alternative",
+   "label": {
+    "en": "alternative"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/creator",
+   "extends": "agent",
+   "property": "http://purl.org/dc/terms/creator",
+   "label": {
+    "en": "creator"
+   }
+  },
+  {
+   "id": "http://purl.org/dc/terms/contributor",
+   "type": "propertygroup",
+   "content": [
+    {
+     "type": "choice",
+     "label": {
+      "en": "Choose predicate"
+     },
+     "constraints": {
+      "http://www.w3.org/2000/01/rdf-schema#subPropertyOf": "http://purl.org/dc/terms/contributor"
+     },
+     "ontologyUrl": "http://example.com/DCOntology"
+    },
+    {
+     "cardinality": {},
+     "extends": "agent"
+    }
+   ],
+   "label": {
+    "en": "contributor"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/publisher",
+   "extends": "agent",
+   "property": "http://purl.org/dc/terms/publisher",
+   "label": {
+    "en": "publisher"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/date",
+   "type": "text",
+   "nodetype": "DATATYPED_LITERAL",
+   "datatype": "http://purl.org/dc/terms/W3CDTF",
+   "property": "http://purl.org/dc/terms/date",
+   "label": {
+    "en": "date"
+   }
+  },
+  {
+   "cardinality": {
+    "pref": 1
+   },
+   "id": "http://purl.org/dc/terms/language",
+   "nodeType": "BLANK",
+   "type": "group",
+   "constraint": {
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/ISO639-2"
+   },
+   "content": [
+    {
+     "type": "text",
+     "nodetype": "LITERAL",
+     "cardinality": {
+      "min": 1,
+      "max": 1,
+      "pref": 1
+     }
+    }
+   ],
+   "property": "http://purl.org/dc/terms/language",
+   "label": {
+    "en": "language"
+   }
+  },
+  {
+   "cardinality": {
+    "pref": 1
+   },
+   "id": "http://purl.org/dc/terms/identifier",
+   "nodeType": "BLANK",
+   "type": "group",
+   "content": [
+    {
+     "type": "text",
+     "nodetype": "DATATYPE_LITERAL",
+     "cardinality": {
+      "min": 1,
+      "max": 1,
+      "pref": 1
+     },
+     "datatype": "http://voa3r.eu/terms/EncodedSchema"
+    }
+   ],
+   "property": "http://purl.org/dc/terms/identifier",
+   "label": {
+    "en": "identifier"
+   }
+  },
+  {
+   "cardinality": {
+    "pref": 1
+   },
+   "id": "http://purl.org/dc/terms/format",
+   "nodeType": "BLANK",
+   "type": "group",
+   "constraint": {
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/IMT"
+   },
+   "content": [
+    {
+     "type": "text",
+     "nodetype": "LITERAL",
+     "cardinality": {
+      "min": 1,
+      "max": 1,
+      "pref": 1
+     }
+    }
+   ],
+   "property": "http://purl.org/dc/terms/format",
+   "label": {
+    "en": "format"
+   }
+  },
+  {
+   "cardinality": {
+    "pref": 1
+   },
+   "id": "http://www.europeana.eu/schemas/ese/isShownBy",
+   "nodeType": "BLANK",
+   "type": "group",
+   "content": [
+    {
+     "type": "text",
+     "nodetype": "LITERAL",
+     "cardinality": {
+      "min": 1,
+      "max": 1,
+      "pref": 1
+     }
+    }
+   ],
+   "property": "http://www.europeana.eu/schemas/ese/isShownBy",
+   "label": {
+    "en": "isShownBy"
+   }
+  },
+  {
+   "cardinality": {
+    "pref": 1
+   },
+   "id": "http://www.europeana.eu/schemas/ese/isShownAt",
+   "nodeType": "BLANK",
+   "type": "group",
+   "content": [
+    {
+     "type": "text",
+     "nodetype": "LITERAL",
+     "cardinality": {
+      "min": 1,
+      "max": 1,
+      "pref": 1
+     }
+    }
+   ],
+   "property": "http://www.europeana.eu/schemas/ese/isShownAt",
+   "label": {
+    "en": "isShownAt"
+   }
+  },
+  {
+   "cardinality": {
+    "pref": 1
+   },
+   "id": "http://purl.org/dc/terms/subject",
+   "nodeType": "BLANK",
+   "type": "group",
+   "content": [
+    {
+     "type": "text",
+     "nodetype": "DATATYPE_LITERAL",
+     "cardinality": {
+      "min": 1,
+      "max": 1,
+      "pref": 1
+     },
+     "datatype": "http://voa3r.eu/terms/EncodedSchema"
+    }
+   ],
+   "property": "http://purl.org/dc/terms/subject",
+   "label": {
+    "en": "subject"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/description",
+   "type": "text",
+   "nodetype": "LITERAL",
+   "property": "http://purl.org/dc/terms/description",
+   "label": {
+    "en": "description"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/abstract",
+   "type": "text",
+   "nodetype": "LITERAL",
+   "property": "http://purl.org/dc/terms/abstract",
+   "label": {
+    "en": "abstract"
+   }
+  },
+  {
+   "cardinality": {
+    "pref": 1
+   },
+   "id": "http://purl.org/dc/terms/bibliographicCitation",
+   "nodeType": "BLANK",
+   "type": "group",
+   "constraint": {
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.openurl.info/registry/"
+   },
+   "content": [
+    {
+     "type": "text",
+     "nodetype": "DATATYPE_LITERAL",
+     "cardinality": {
+      "min": 1,
+      "max": 1,
+      "pref": 1
+     },
+     "datatype": "http://voa3r.eu/terms/EncodedSchema"
+    }
+   ],
+   "property": "http://purl.org/dc/terms/bibliographicCitation",
+   "label": {
+    "en": "bibliographicCitation"
+   }
+  },
+  {
+   "cardinality": {
+    "pref": 1
+   },
+   "id": "http://purl.org/dc/terms/type",
+   "nodeType": "BLANK",
+   "type": "group",
+   "constraint": {
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://voa3r.eu/terms/ResourceType"
+   },
+   "content": [
+    {
+     "type": "text",
+     "nodetype": "LITERAL",
+     "cardinality": {
+      "min": 1,
+      "max": 1,
+      "pref": 1
+     }
+    }
+   ],
+   "property": "http://purl.org/dc/terms/type",
+   "label": {
+    "en": "type"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/rights",
+   "type": "text",
+   "nodetype": "LITERAL",
+   "property": "http://purl.org/dc/terms/rights",
+   "label": {
+    "en": "rights"
+   }
+  },
+  {
+   "cardinality": {
+    "pref": 1
+   },
+   "id": "http://purl.org/dc/terms/accessRights",
+   "nodeType": "BLANK",
+   "type": "group",
+   "constraint": {
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/eprint/accessRights/"
+   },
+   "content": [
+    {
+     "type": "text",
+     "nodetype": "LITERAL",
+     "cardinality": {
+      "min": 1,
+      "max": 1,
+      "pref": 1
+     }
+    }
+   ],
+   "property": "http://purl.org/dc/terms/accessRights",
+   "label": {
+    "en": "accessRights"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/license",
+   "type": "text",
+   "nodetype": "LITERAL",
+   "property": "http://purl.org/dc/terms/license",
+   "label": {
+    "en": "license"
+   }
+  },
+  {
+   "cardinality": {
+    "pref": 1
+   },
+   "id": "http://voa3r.eu/terms/reviewStatus",
+   "nodeType": "BLANK",
+   "type": "group",
+   "constraint": {
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://voa3r.eu/terms/ReviewStatus"
+   },
+   "content": [
+    {
+     "type": "text",
+     "nodetype": "LITERAL",
+     "cardinality": {
+      "min": 1,
+      "max": 1,
+      "pref": 1
+     }
+    }
+   ],
+   "property": "http://voa3r.eu/terms/reviewStatus",
+   "label": {
+    "en": "reviewStatus"
+   }
+  },
+  {
+   "cardinality": {
+    "pref": 1
+   },
+   "id": "http://voa3r.eu/terms/publicationStatus",
+   "nodeType": "BLANK",
+   "type": "group",
+   "constraint": {
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://voa3r.eu/terms/PublicationStatus"
+   },
+   "content": [
+    {
+     "type": "text",
+     "nodetype": "LITERAL",
+     "cardinality": {
+      "min": 1,
+      "max": 1,
+      "pref": 1
+     }
+    }
+   ],
+   "property": "http://voa3r.eu/terms/publicationStatus",
+   "label": {
+    "en": "publicationStatus"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/relation",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://purl.org/dc/terms/relation",
+   "label": {
+    "en": "relation"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/conformsTo",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://purl.org/dc/terms/conformsTo",
+   "label": {
+    "en": "conformsTo"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/conformsTo2",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://purl.org/dc/terms/conformsTo",
+   "label": {
+    "en": "conformsTo"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/references",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://purl.org/dc/terms/references",
+   "label": {
+    "en": "references"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/isReferencedBy",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://purl.org/dc/terms/isReferencedBy",
+   "label": {
+    "en": "isReferencedBy"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/hasPart",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://purl.org/dc/terms/hasPart",
+   "label": {
+    "en": "hasPart"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/isPartOf",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://purl.org/dc/terms/isPartOf",
+   "label": {
+    "en": "isPartOf"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/hasVersion",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://purl.org/dc/terms/hasVersion",
+   "label": {
+    "en": "hasVersion"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/isVersionOf",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://purl.org/dc/terms/isVersionOf",
+   "label": {
+    "en": "isVersionOf"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://voa3r.eu/terms/hasTranslation",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://voa3r.eu/terms/hasTranslation",
+   "label": {
+    "en": "hasTranslation"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://voa3r.eu/terms/isTranslationOf",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://voa3r.eu/terms/isTranslationOf",
+   "label": {
+    "en": "isTranslationOf"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://voa3r.eu/terms/hasMetametadata",
+   "extends": "metametadata",
+   "property": "http://voa3r.eu/terms/hasMetametadata",
+   "label": {
+    "en": "hasMetametadata"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://voa3r.eu/terms/hasResearch",
+   "extends": "research",
+   "property": "http://voa3r.eu/terms/hasResearch",
+   "label": {
+    "en": "hasResearch"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://xmlns.com/foaf/0.1/name",
+   "type": "text",
+   "nodetype": "LITERAL",
+   "property": "http://xmlns.com/foaf/0.1/name",
+   "label": {
+    "en": "name"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://xmlns.com/foaf/0.1/givenName",
+   "type": "text",
+   "nodetype": "LITERAL",
+   "property": "http://xmlns.com/foaf/0.1/givenName",
+   "label": {
+    "en": "givenName"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://xmlns.com/foaf/0.1/familyName",
+   "type": "text",
+   "nodetype": "LITERAL",
+   "property": "http://xmlns.com/foaf/0.1/familyName",
+   "label": {
+    "en": "familyName"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://xmlns.com/foaf/0.1/firstName",
+   "type": "text",
+   "nodetype": "LITERAL",
+   "property": "http://xmlns.com/foaf/0.1/firstName",
+   "label": {
+    "en": "firstName"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://xmlns.com/foaf/0.1/lastName",
+   "type": "text",
+   "nodetype": "LITERAL",
+   "property": "http://xmlns.com/foaf/0.1/lastName",
+   "label": {
+    "en": "lastName"
+   }
+  },
+  {
+   "cardinality": {
+    "pref": 1
+   },
+   "id": "http://xmlns.com/foaf/0.1/mbox",
+   "nodeType": "BLANK",
+   "type": "group",
+   "content": [
+    {
+     "type": "text",
+     "nodetype": "LITERAL",
+     "cardinality": {
+      "min": 1,
+      "max": 1,
+      "pref": 1
+     }
+    }
+   ],
+   "property": "http://xmlns.com/foaf/0.1/mbox",
+   "label": {
+    "en": "mbox"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/identifier2",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://purl.org/dc/terms/identifier",
+   "label": {
+    "en": "identifier"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/type2",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://purl.org/dc/terms/type",
+   "label": {
+    "en": "type"
+   }
+  },
+  {
+   "cardinality": {
+    "pref": 1
+   },
+   "id": "http://purl.org/dc/terms/language2",
+   "nodeType": "BLANK",
+   "type": "group",
+   "constraint": {
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/ISO639-2"
+   },
+   "content": [
+    {
+     "type": "text",
+     "nodetype": "LITERAL",
+     "cardinality": {
+      "min": 1,
+      "max": 1,
+      "pref": 1
+     }
+    }
+   ],
+   "property": "http://purl.org/dc/terms/language",
+   "label": {
+    "en": "language"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://purl.org/dc/terms/date2",
+   "type": "text",
+   "nodetype": "DATATYPED_LITERAL",
+   "datatype": "http://purl.org/dc/terms/W3CDTF",
+   "property": "http://purl.org/dc/terms/date",
+   "label": {
+    "en": "date"
+   }
+  },
+  {
+   "id": "http://purl.org/dc/terms/contributor2",
+   "type": "propertygroup",
+   "content": [
+    {
+     "type": "choice",
+     "label": {
+      "en": "Choose predicate"
+     },
+     "constraints": {
+      "http://www.w3.org/2000/01/rdf-schema#subPropertyOf": "http://purl.org/dc/terms/contributor"
+     },
+     "ontologyUrl": "http://example.com/DCOntology"
+    },
+    {
+     "cardinality": {},
+     "extends": "agent"
+    }
+   ],
+   "label": {
+    "en": "contributor"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://voa3r.eu/terms/objectOfInterest",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://voa3r.eu/terms/objectOfInterest",
+   "label": {
+    "en": "objectOfInterest"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://voa3r.eu/terms/measuresVariable",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://voa3r.eu/terms/measuresVariable",
+   "label": {
+    "en": "measuresVariable"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://voa3r.eu/terms/usesMethod",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://voa3r.eu/terms/usesMethod",
+   "label": {
+    "en": "usesMethod"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://voa3r.eu/terms/usesProtocol",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://voa3r.eu/terms/usesProtocol",
+   "label": {
+    "en": "usesProtocol"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://voa3r.eu/terms/usesInstrument",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://voa3r.eu/terms/usesInstrument",
+   "label": {
+    "en": "usesInstrument"
+   }
+  },
+  {
+   "cardinality": {},
+   "id": "http://voa3r.eu/terms/usesTechnique",
+   "type": "text",
+   "nodetype": "URI",
+   "property": "http://voa3r.eu/terms/usesTechnique",
+   "label": {
+    "en": "usesTechnique"
+   }
+  }
+ ]
+}

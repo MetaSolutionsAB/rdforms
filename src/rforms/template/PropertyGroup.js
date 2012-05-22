@@ -10,27 +10,24 @@ dojo.require("rforms.template.Group");
  * Text, Choice or Group item depending on the kind of object envisioned in the triple.  
  */
 dojo.declare("rforms.template.PropertyGroup", rforms.template.Group, {
-	
-	//===================================================
-	// Inherited attributes
-	//===================================================
-	_forceChildrenClones: true,
-
 	//===================================================
 	// Public API
 	//===================================================
+	getChildren: function() {
+		if (this._delegatedChildren == null) {
+			var override = {getCardinality: function() {
+				return {"min": 1, "max": 1, "pref": 1};
+			}};
+			this._delegatedChildren = dojo.map(this.inherited("getChildren", arguments), function(child) {
+				return dojo.delegate(child, override);
+			});
+		}
+		return this._delegatedChildren;
+	},
 	getPropertyItem: function() {
 		return this.getChildren()[0];
 	},
 	getObjectItem: function() {
 		return this.getChildren()[1];
-	},
-	
-	//===================================================
-	// Inherited methods
-	//===================================================
-	constructor: function(source, children, itemStore) {
-		this.getPropertyItem()._source.cardinality = {"min": 1, "max": 1, "pref": 1};
-		this.getObjectItem()._source.cardinality = {"min": 1, "max": 1, "pref": 1};
 	}
 });

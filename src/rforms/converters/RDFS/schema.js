@@ -48,12 +48,12 @@ var load = function(infile, callback) {
 	fs.readFile(infile, function(err, data) {
 		var schema = JSON.parse(data);
 		callback({
-			getLabel: function(uri, nofallback) {
+			getLabel: function(uri, fallback) {
 				var obj = getValue(schema[uri], [label]);
 				if (obj) {
 					return obj;
 				}
-				if (nofallback !== true) {
+				if (fallback !== false) {
 					return getFallbackValue(uri);
 				}
 			},
@@ -75,11 +75,12 @@ exports.load = function(infile, callback) {
 			getLabel: function(uri) {
 				var label;
 				for (var s=0;s<schemaArr.length;s++) {
-					label = schemaArr[s].getLabel(uri);
+					label = schemaArr[s].getLabel(uri, false);
 					if (label) {
 						return label;
 					}
 				}
+				return getFallbackValue(uri);
 			},
 			getDescription: function(uri) {
 				var desc;

@@ -837,7 +837,7 @@
    "nodetype": "LITERAL",
    "property": "http://xmlns.com/foaf/0.1/givenName",
    "label": {
-    "en": "givenName"
+    "en": "Given name"
    },
    "description": {
     "en": "The given name of some person."
@@ -903,7 +903,7 @@
    ],
    "property": "http://xmlns.com/foaf/0.1/mbox",
    "label": {
-    "en": "mbox"
+    "en": "personal mailbox"
    },
    "description": {
     "en": "A  personal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a 'static inverse functional property', in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox."

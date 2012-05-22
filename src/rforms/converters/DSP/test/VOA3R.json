@@ -315,6 +315,7 @@
     {
      "type": "text",
      "nodetype": "LITERAL",
+     "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
      "cardinality": {
       "min": 1,
       "max": 1,
@@ -341,6 +342,7 @@
     {
      "type": "text",
      "nodetype": "DATATYPE_LITERAL",
+     "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
      "cardinality": {
       "min": 1,
       "max": 1,
@@ -371,6 +373,7 @@
     {
      "type": "text",
      "nodetype": "LITERAL",
+     "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
      "cardinality": {
       "min": 1,
       "max": 1,
@@ -397,6 +400,7 @@
     {
      "type": "text",
      "nodetype": "LITERAL",
+     "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
      "cardinality": {
       "min": 1,
       "max": 1,
@@ -420,6 +424,7 @@
     {
      "type": "text",
      "nodetype": "LITERAL",
+     "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
      "cardinality": {
       "min": 1,
       "max": 1,
@@ -443,6 +448,7 @@
     {
      "type": "text",
      "nodetype": "DATATYPE_LITERAL",
+     "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
      "cardinality": {
       "min": 1,
       "max": 1,
@@ -499,6 +505,7 @@
     {
      "type": "text",
      "nodetype": "DATATYPE_LITERAL",
+     "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
      "cardinality": {
       "min": 1,
       "max": 1,
@@ -529,6 +536,7 @@
     {
      "type": "text",
      "nodetype": "LITERAL",
+     "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
      "cardinality": {
       "min": 1,
       "max": 1,
@@ -571,6 +579,7 @@
     {
      "type": "text",
      "nodetype": "LITERAL",
+     "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
      "cardinality": {
       "min": 1,
       "max": 1,
@@ -613,6 +622,7 @@
     {
      "type": "text",
      "nodetype": "LITERAL",
+     "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
      "cardinality": {
       "min": 1,
       "max": 1,
@@ -639,6 +649,7 @@
     {
      "type": "text",
      "nodetype": "LITERAL",
+     "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
      "cardinality": {
       "min": 1,
       "max": 1,
@@ -867,6 +878,7 @@
     {
      "type": "text",
      "nodetype": "LITERAL",
+     "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
      "cardinality": {
       "min": 1,
       "max": 1,
@@ -919,6 +931,7 @@
     {
      "type": "text",
      "nodetype": "LITERAL",
+     "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
      "cardinality": {
       "min": 1,
       "max": 1,

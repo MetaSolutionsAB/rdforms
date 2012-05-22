@@ -70,7 +70,7 @@ var buildST = function(rforms, schema, st) {
 					}
 					result.constraint = {"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": ves};
 				}
-				var blank = {type: "text", nodetype: "LITERAL", cardinality: {min: 1, max: 1, pref: 1}};
+				var blank = {type: "text", nodetype: "LITERAL", property: "http://www.w3.org/1999/02/22-rdf-syntax-ns#value", cardinality: {min: 1, max: 1, pref: 1}};
 				result.cardinality.pref = 1;
 				if (nonLit.ValueStringConstraint && nonLit.ValueStringConstraint.SyntaxEncodingScheme) {
 					blank.nodetype = "DATATYPE_LITERAL";

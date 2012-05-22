@@ -409,3 +409,64 @@ rforms.model._findChoice = function(item, obj) {
 		return rforms.getSystemChoice(item, obj);
 	}
 };
+
+/**
+ * Finds the first value binding in a binding tree, depth first.
+ * If multiple value bindings are found with nodeType LANGUAGE_LITERAL 
+ * on the same level, the binding with the most appropriate language is chosen.
+ * Most appropriate means checking for:
+ * 1) exact current language (e.g. en_US), 
+ * 2) current language (e.g. matches en even if locale is en_US)
+ * 3) default language (currently set to en)
+ * 4) any literal with a language set found
+ * 5) the first literal found
+ * 
+ * @return {rforms.model.ValueBinding}   
+ */
+rforms.model.findFirstValueBinding = function(binding, createIfMissing) {
+	if (binding instanceof rforms.model.ValueBinding) {
+		return binding;
+	}
+	var cbs = binding.getItemGroupedChildBindings();
+	if (cbs.length > 0) {
+		var childItem = binding.getItem().getChildren()[0];
+		var vbs = cbs[0];
+		if (vbs.length !== 0) {
+			if (!childItem instanceof rforms.template.Text) {
+				return rforms.model.findFirstValueBinding(vbs[0]);					
+			} else if (childItem.getNodetype() === "LANGUAGE_LITERAL") {
+				var result = {firstValue: vbs[0]};
+				for (var i=0;i<vbs.length;i++) {
+					var lang = vbs[i].getLanguage();
+					if (lang == null) {
+							result.emptyLanguageValue = vbs[i];
+						} else {
+							if (lang === dojo.locale) {
+								result.perfectLocaleLanguageValue = vbs[i];
+							} else if (lang.substring(0, 1) === dojo.locale.substring(0, 1)) {
+								result.localeLanguageValue = vbs[i];
+							} else if (lang.indexOf("en") !== -1) {
+								result.defaultLanguageValue = vbs[i];
+							} else {
+								result.anyLanguageValue = vbs[i];
+							}
+						}
+					}
+					return result.perfectLocaleLanguageValue || 
+						result.localeLanguageValue || 
+						result.defaultLanguageValue ||
+						result.anyLanguageValue ||
+						result.firstValue;
+			} else {
+				return vbs[0];
+			}
+		} else if (createIfMissing){
+			var b = rforms.model.create(binding, childItem, {});
+			if (b instanceof rforms.model.ValueBinding) {
+				b.setLanguage(dojo.locale);
+				return b;
+			}
+			return rforms.model.findFirstValueBinding(b, true);
+		}
+	}
+};

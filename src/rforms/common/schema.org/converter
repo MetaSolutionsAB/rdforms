@@ -1,0 +1,216 @@
+#!/usr/bin/env node
+
+var sys = require("util");
+var fs = require("fs");
+var ns = "http://schema.rdfs.org/";
+
+var source;
+
+//External types
+var _standaloneTypes = {};
+var conf;
+var isType = function(candidate, type) {
+	if (candidate.id === type) {
+		return true;
+	}
+	for (var i = 0;i<candidate.ancestors.length;i++) {
+		if (candidate.ancestors[i] === type) {
+			return true;
+		}
+	}
+};
+var isStandalone = function(type) {
+	for (var i=0;i<conf.standalone.length;i++) {
+		if (isType(type, conf.standalone[i])) {
+			return true;
+		}		
+	}
+	return false;
+};
+
+var getPropsConf = function(type) {
+	var props = {};
+	var addPrefPropsForType = function(t) {
+		if (conf.type2property[t]) {
+			var propConfs = conf.type2property[t];
+			for (var key in propConfs) {
+				props[key] = propConfs[key];
+			}
+		}
+	};
+	addPrefPropsForType(type.id);
+	for (var j=0;j<type.ancestors.length;j++) {
+		addPrefPropsForType(type.ancestors[j]);
+	}
+	return props;
+}
+
+var detectRange = function(prop) {
+	return prop.ranges[0]; //For the time being.
+};
+
+/**
+ * @return {String} if the range is not a primitive type, that is, if the formlet will need to be a group.
+ */
+var defineRange = function(prop, formlet) {
+	var range = detectRange(prop);
+	switch(range) {
+	case "URL":
+		formlet.nodeType = "URI";
+		formlet.type = "text";
+		return;
+	case "Text":
+		formlet.nodeType = "LITERAL";
+		formlet.type = "text";
+		return;
+	case "Date":
+		formlet.nodeType = "DATATYPE_LITERAL";
+		formlet.type = "text";
+		formlet.datatype = "http://www.w3.org/2001/XMLSchema#date";
+		return;
+	case "Integer":
+	case "Number":
+		formlet.nodeType = "DATATYPE_LITERAL";
+		formlet.type = "text";
+		formlet.datatype = "http://www.w3.org/2001/XMLSchema#integer";
+		return;
+	case "Boolean":
+		formlet.nodeType = "DATATYPE_LITERAL";
+		formlet.type = "text";
+		formlet.datatype = "http://www.w3.org/2001/XMLSchema#boolean";
+		return;
+	case "Float":
+		formlet.nodeType = "DATATYPE_LITERAL";
+		formlet.type = "text";
+		formlet.datatype = "http://www.w3.org/2001/XMLSchema#float";
+		return;
+	}
+	if (source.types[range]) {
+		formlet.constraints = {"http://www.w3.org/TR/rdf-schema/type": ns+range};
+		if (_standaloneTypes[range]) {
+			formlet.type = "choice";
+			formlet.nodeType = "RESOURCE";
+		} else {
+			var typeO = source.types[range];
+			formlet.type = "group";
+			formlet.nodeType = "BLANK";
+			formlet.content = [];
+			var prefProps = getPropsConf(typeO);
+			for (var i=0;i<typeO.properties.length;i++) {
+				formlet.content[i] = {id: ns+typeO.properties[i]};
+				mixinPrefProps(formlet.content[i], typeO.properties[i], prefProps[typeO.properties[i]]);
+			}
+		}
+	}
+	return range;
+};
+
+var mixinPrefProps = function(formlet, prop, prefs) {
+	if (!prefs) {
+		return;
+	}
+	if (prefs.pref) {
+		formlet.cardinality = {"pref": prefs.pref};
+	}
+	if (prefs.priority) {
+		formlet.priority = prefs.priority;
+	}
+};
+var mixinGlobalPrefs = function(formlet, prop) {
+	var globalPropPref = conf.propertyPrefs[prop];
+	if (globalPropPref) {
+		if (globalPropPref.cls) {
+			formlet.cls = globalPropPref.cls;
+		}
+		if (globalPropPref.nodeType) {
+			formlet.nodeType = globalPropPref.nodeType;
+		}
+		if (globalPropPref.styles) {
+			formlet.styles = globalPropPref.styles;
+		}		
+	}
+};
+
+var buildPropertyFormlet = function(prop) {
+	var ret = {"automatic": true};
+	ret.property = ns + prop.id;
+	ret.id = ns+prop.id;
+	ret.label = {"en": prop.label};
+	ret.description = {"en": prop.comment_plain};
+	defineRange(prop, ret);
+	mixinGlobalPrefs(ret, prop.id);
+ 	sys.puts("Building property "+prop.id);
+	return ret;
+};
+
+var buildTypeFormlet = function(type) {
+	var ret = {"automatic": true};
+	ret.id = ns+type.id;
+	if (type.ancestors.length > 0) {
+		ret["extends"] = ns+type.ancestors[type.ancestors.length-1];
+	}
+	ret.label = {"en": type.label};
+	ret.description = {"en": type.comment_plain};
+	ret.constraints = {"http://www.w3.org/TR/rdf-schema/type": ns+type.id};
+	ret.nodeType = "URI";
+	ret.type = "group";
+	ret.content = [];
+	var prefProps = getPropsConf(type);
+	for (var i=0;i<type.specific_properties.length;i++) {
+		ret.content[i] = {id: ns+type.specific_properties[i]};
+		mixinPrefProps(ret.content[i], type.specific_properties[i], prefProps[type.specific_properties[i]]);
+	}
+ 	sys.puts("Building type "+ns+type.id);
+	return ret;
+};
+
+var buildRFormsTemplates = function() {
+	var props = source.properties;
+	var formlets = [], ind=0;
+	var types = source.types;
+	for (var prop in props) {
+		if (props.hasOwnProperty(prop)) {
+			formlets[ind]=buildPropertyFormlet(props[prop]);
+			ind++;
+		}
+	}
+	for (var key in types) {
+		if (types.hasOwnProperty(key)) {
+			formlets[ind] = buildTypeFormlet(types[key]);
+			ind++;
+		}
+	}
+	return formlets;
+}
+
+fs.readFile("conf.json", function(err, confdata) {
+	conf = JSON.parse(confdata);
+	fs.readFile("schema-org.json", function(err, data) {
+	  source = JSON.parse(data);
+	  var type, types = source.types;
+	  for (var key in types) {
+	  	type = types[key];
+	  	if (isStandalone(type)) {
+	  		_standaloneTypes[key] = true;
+	  	}
+	  }
+	  var rformsT = buildRFormsTemplates();
+	  var template = {
+				"label":{"en":"schema.org"},
+				"description":{"en":"Conversion of schema.rdfs.org to RForms-templates."},
+				"auxilliary": rformsT
+	  };
+	  var fd = fs.openSync("formlets.json", "w");
+	  fs.writeSync(fd, JSON.stringify(template, true, 1), 0, "utf8");
+	
+	  var irTypes = {};
+	  for (key in _standaloneTypes) {
+		if (_standaloneTypes.hasOwnProperty(key)) {
+			var t = types[key];
+			irTypes[ns+key] = {en: t.label};
+		}
+	  }
+	  var fd = fs.openSync("types.json", "w");
+	  fs.writeSync(fd, JSON.stringify(irTypes), 0, "utf8");
+	});
+});

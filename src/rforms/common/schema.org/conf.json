@@ -1,0 +1,14 @@
+{
+	"standalone": ["CreativeWork", "Event", "Organization", "Person", "Place", "Product"],
+	"type2property": {
+			"Thing": {
+				"name": {"pref": 1, "priority": 100},
+				"description": {"pref": 1, "priority": 99}
+			}
+		},
+	"propertyPrefs": {
+		"description": {"cls": ["rformsmultiline"], "nodeType": "LANGUAGE_LITERAL"},
+		"name": {"nodeType": "LANGUAGE_LITERAL"},
+		"url": {"styles": ["invisible"]}
+	}
+}

@@ -1,0 +1,5 @@
+This is a Schema.org to RForms-templates converter.
+
+The converter relies on you having nodejs installed locally as well as the nodejs package manager, npm.
+Both are available as packages on recent linux distros.
+

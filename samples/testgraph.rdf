@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:ns0="http://www.w3.org/TR/rdf-schema/"
+  xmlns:terms="http://purl.org/dc/terms/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/">
+
+  <rdf:Description rdf:about="http://example.org/about">
+    <ns0:type rdf:resource="http://xmlns.com/foaf/0.1/Document"/>
+    <terms:title xml:lang="en">Anna's Homepage</terms:title>
+    <terms:creator rdf:nodeID="person"/>
+  </rdf:Description>
+
+  <rdf:Description rdf:nodeID="person">
+
+    <ns0:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    <foaf:firstName>Anna</foaf:firstName>
+    <foaf:surname>Wilder</foaf:surname>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://example.org/about2">
+    <ns0:type rdf:resource="http://xmlns.com/foaf/0.1/Document"/>
+  </rdf:Description>
+
+</rdf:RDF>

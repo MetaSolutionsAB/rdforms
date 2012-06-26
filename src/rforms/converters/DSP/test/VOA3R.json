@@ -252,7 +252,8 @@
   },
   {
    "cardinality": {
-    "min": 0
+    "min": 0,
+    "pref": 1
    },
    "id": "http://purl.org/dc/terms/creator",
    "extends": "agent",
@@ -280,7 +281,8 @@
     },
     {
      "cardinality": {
-      "min": 0
+      "min": 0,
+      "pref": 1
      },
      "extends": "agent"
     }
@@ -294,7 +296,8 @@
   },
   {
    "cardinality": {
-    "min": 0
+    "min": 0,
+    "pref": 1
    },
    "id": "http://purl.org/dc/terms/publisher",
    "extends": "agent",
@@ -370,7 +373,7 @@
      }
     }
    ],
-   "nodeType": "BLANK",
+   "nodetype": "BLANK",
    "type": "group",
    "property": "http://purl.org/dc/terms/language",
    "label": {
@@ -401,7 +404,7 @@
      "datatype": "http://voa3r.eu/terms/EncodedSchema"
     }
    ],
-   "nodeType": "BLANK",
+   "nodetype": "BLANK",
    "type": "group",
    "property": "http://purl.org/dc/terms/identifier",
    "label": {
@@ -435,7 +438,7 @@
      }
     }
    ],
-   "nodeType": "BLANK",
+   "nodetype": "BLANK",
    "type": "group",
    "property": "http://purl.org/dc/terms/format",
    "label": {
@@ -448,10 +451,11 @@
   {
    "cardinality": {
     "min": 0,
-    "max": 1
+    "max": 1,
+    "pref": 1
    },
    "id": "http://www.europeana.eu/schemas/ese/isShownBy",
-   "nodeType": "URI",
+   "nodetype": "URI",
    "type": "text",
    "property": "http://www.europeana.eu/schemas/ese/isShownBy",
    "label": {
@@ -461,10 +465,11 @@
   {
    "cardinality": {
     "min": 0,
-    "max": 1
+    "max": 1,
+    "pref": 1
    },
    "id": "http://www.europeana.eu/schemas/ese/isShownAt",
-   "nodeType": "URI",
+   "nodetype": "URI",
    "type": "text",
    "property": "http://www.europeana.eu/schemas/ese/isShownAt",
    "label": {
@@ -492,7 +497,7 @@
      "datatype": "http://voa3r.eu/terms/EncodedSchema"
     }
    ],
-   "nodeType": "BLANK",
+   "nodetype": "BLANK",
    "type": "group",
    "property": "http://purl.org/dc/terms/subject",
    "label": {
@@ -504,11 +509,15 @@
   },
   {
    "cardinality": {
-    "min": 0
+    "min": 0,
+    "pref": 1
    },
    "id": "http://purl.org/dc/terms/description",
    "type": "text",
-   "nodetype": "LITERAL",
+   "nodetype": "LANGUAGE_LITERAL",
+   "cls": [
+    "rformsmultiline"
+   ],
    "property": "http://purl.org/dc/terms/description",
    "label": {
     "en-US": "Description"
@@ -523,7 +532,10 @@
    },
    "id": "http://purl.org/dc/terms/abstract",
    "type": "text",
-   "nodetype": "LITERAL",
+   "nodetype": "LANGUAGE_LITERAL",
+   "cls": [
+    "rformsmultiline"
+   ],
    "property": "http://purl.org/dc/terms/abstract",
    "label": {
     "en-US": "Abstract"
@@ -553,11 +565,17 @@
       "min": 1,
       "max": 1
      },
+     "cls": [
+      "rformsmultiline"
+     ],
      "datatype": "http://voa3r.eu/terms/EncodedSchema"
     }
    ],
-   "nodeType": "BLANK",
+   "nodetype": "BLANK",
    "type": "group",
+   "cls": [
+    "rformsmultiline"
+   ],
    "property": "http://purl.org/dc/terms/bibliographicCitation",
    "label": {
     "en-US": "Bibliographic Citation"
@@ -589,7 +607,7 @@
      }
     }
    ],
-   "nodeType": "BLANK",
+   "nodetype": "BLANK",
    "type": "group",
    "property": "http://purl.org/dc/terms/type",
    "label": {
@@ -601,7 +619,8 @@
   },
   {
    "cardinality": {
-    "min": 0
+    "min": 0,
+    "pref": 1
    },
    "id": "http://purl.org/dc/terms/rights",
    "type": "text",
@@ -616,13 +635,14 @@
   },
   {
    "cardinality": {
-    "min": 0
+    "min": 0,
+    "pref": 1
    },
    "id": "http://purl.org/dc/terms/accessRights",
    "constraints": {
     "http://purl.org/dc/dcam/memberOf": "http://purl.org/eprint/accessRights/"
    },
-   "nodeType": "URI",
+   "nodetype": "URI",
    "type": "choice",
    "property": "http://purl.org/dc/terms/accessRights",
    "label": {
@@ -634,7 +654,8 @@
   },
   {
    "cardinality": {
-    "min": 0
+    "min": 0,
+    "pref": 1
    },
    "id": "http://purl.org/dc/terms/license",
    "type": "text",
@@ -670,7 +691,7 @@
      }
     }
    ],
-   "nodeType": "BLANK",
+   "nodetype": "BLANK",
    "type": "group",
    "property": "http://voa3r.eu/terms/reviewStatus",
    "label": {
@@ -700,7 +721,7 @@
      }
     }
    ],
-   "nodeType": "BLANK",
+   "nodetype": "BLANK",
    "type": "group",
    "property": "http://voa3r.eu/terms/publicationStatus",
    "label": {
@@ -868,7 +889,8 @@
   },
   {
    "cardinality": {
-    "min": 0
+    "min": 0,
+    "pref": 1
    },
    "id": "http://voa3r.eu/terms/hasMetametadata",
    "extends": "metametadata",
@@ -968,7 +990,7 @@
     "min": 0
    },
    "id": "http://xmlns.com/foaf/0.1/mbox",
-   "nodeType": "URI",
+   "nodetype": "URI",
    "type": "text",
    "property": "http://xmlns.com/foaf/0.1/mbox",
    "label": {
@@ -980,7 +1002,8 @@
   },
   {
    "cardinality": {
-    "min": 0
+    "min": 0,
+    "pref": 1
    },
    "id": "http://purl.org/dc/terms/identifier2",
    "type": "text",
@@ -1055,7 +1078,7 @@
      }
     }
    ],
-   "nodeType": "BLANK",
+   "nodetype": "BLANK",
    "type": "group",
    "property": "http://purl.org/dc/terms/language",
    "label": {
@@ -1098,7 +1121,8 @@
     },
     {
      "cardinality": {
-      "min": 0
+      "min": 0,
+      "pref": 1
      },
      "extends": "agent"
     }

@@ -1,0 +1,293 @@
+#!/usr/bin/env node
+
+var http = require('http');
+var URL = require('url');
+var ontologyCache = {};
+var responseCache = {};
+
+http.createServer(function (req, res) {
+  
+  if(req.method !== 'GET'){ //For now we only support GET-requests
+    res.writeHead(405, {'Content-Type': 'text/plain'});
+    res.end('Method not Allowed');
+  }
+  
+  handleGETRequest(req, res);
+
+}).listen(1337, '127.0.0.1');
+  
+var handleGETRequest = function(req, res){
+  //console.log(encodeURIComponent("[{\"predicate\":"http://www.w3.org/TR/rdf-schema/type", "object":"http://xmlns.com/foaf/0.1/Document"}]"));
+  //For now the "path" of the URL is not used and is therefore ignored in the code
+  //Query-part of the URI is extracted and then put into a JS-Object (var queryObject)
+  var query = URL.parse(req.url).query;
+  var queryObject = createQueryObject(query);
+  
+  //Check that the constraint and ontology is specified (otherwise return an error)
+  if(queryContainsConstraintAndOntologyURL(queryObject)){
+    
+    var ontologyURL = queryObject.ontology;
+    var constraint = JSON.parse(queryObject.constraint);
+    
+    //Try to fetch from cache first
+    var ontologyToUse = getOntologyFromCache(ontologyURL);
+    var responseToSend = getResponseFromCache(ontologyURL, constraint.predicate, constraint.object);
+    
+    //If ontology not in cache, get the ontology and calculate the choices
+    if(!ontologyToUse){
+      requestOntology(queryObject.ontology, 0, 
+        function(response, contentType){ //Success callback
+          if(contentType == "application/rdf+xml"){
+            ontologyToUse = convertOntologyRDFXML2JSONRDF(response);
+          }// else if, continue check if other formats (N3, turtle, etc...)
+          else {
+            //Assume it is RDF expressed in XML
+            ontologyToUse = convertOntologyRDFXML2JSONRDF(response);
+            //TODO: Send an error-message if the content-type is not supported!
+          }
+          addOntologyToCache(queryObject.ontology, ontologyToUse);
+          responseToSend = createChoices(ontologyToUse, queryObject);
+          var hierarchy = createHierachyTree(ontologyToUse, responseToSend, queryObject);//returns an empty array if no hierarchy requested
+          responseToSend.concat(hierarchy);
+          res.writeHead(200, {'Content-Type': 'application/json'});
+          res.end(JSON.stringify(responseToSend));
+        }, 
+        function(error, statuscode) { /error
+          res.writeHead(statuscode, {'Content-Type': 'text/plain'});
+          res.end('Could not fetch ontology from remote server...!'+error);
+        });
+    } else {
+      if(!responseToSend){//Ontology cached, response not cached
+        responseToSend = createChoices(ontologyToUse, queryObject);
+      }
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.end(responseToSend);
+    }
+  } else { 
+    res.writeHead(404, {'Content-Type': 'text/plain'});
+    res.end('Query-part of the request needs to include the parameters \"ontology\" and \"constraint\" \n');
+  }
+};
+
+/*
+ * Creates a javascriptobject out of the query in a URL
+ */
+var createQueryObject = function(queryString){
+  var queryArray = queryString.split('&');
+  var resultObj = {}
+  for (var i in queryArray){
+    var keyAndElement = queryArray[i].split('=');
+    resultObj[keyAndElement[0]] = decodeURIComponent(keyAndElement[1]);//All parameter values should be sent encoded!
+  }
+  return resultObj;
+};
+/*
+ * Check that the object contains the keys "constraint" and "ontology"
+ */
+var queryContainsConstraintAndOntologyURL = function(queryObject){
+  return (queryObject.constraint && queryObject.constraint != undefined &&
+          queryObject.ontology && queryObject.ontology != undefined );
+};
+/* 
+ *This method sends a request to load the ontology specified in the input-variable ontologyURL.
+ *Redirects can occur and a maximum of 5 redirects is allowed, input-variable nrOfRedirects is used for keeping check. 
+ *The function is asynchronous function and the result of the (successful) request is passed to the callback function
+ *In case of an error in the request the result is passed to the errback-function
+ *Note: The method does not look for the ontology in the local cache.
+ */
+var requestOntology = function(ontologyURL, nrOfRedirects, callback, errback){
+  //Setting the info and headers for the request
+  ontologyURLObj = URL.parse(ontologyURL);
+  var reqHeaders={Accept:'application/rdf+json, application/rdf+xml'}; //TODO: A preferred serialisation order is needed!
+  var URLObj= {
+    hostname: ontologyURLObj.hostname,
+    path: ontologyURLObj.path,
+    port: ontologyURLObj.port,
+    headers: reqHeaders,
+    method: 'GET'
+  };
+  
+  var req = http.request(URLObj, function(res) {
+    if(res.statusCode >= 300 && res.statusCode < 400){ //Assume redirect
+      addRedirectToOntologyCache(ontologyURL, res.headers.location);
+      requestOntology(res.headers.location, nrOfRedirects++, callback, errback); //recursive call
+    } else if(res.statusCode == 200) {
+      if(res.headers['content-encoding']){
+        res.setEncoding(res.headers['content-encoding']);
+      } else {
+        res.setEncoding('utf8'); //'utf-8' is default
+      }
+      var receivedData = "";
+      res.on('data', function (chunk) {
+        receivedData += chunk;  
+      });
+      res.on('end', function() {
+        callback(receivedData, res.headers['content-type']); 
+      });
+    }  
+  });
+  req.on('error', function(e) {
+    errback(e, e.statusCode);
+    console.log('problem with request: ' + e.message);
+  });
+  req.end();
+};
+var createChoices = function(ontologyToUse, predicate, object, includeInferred){
+  var foundChoices = findDirectChoices(ontologyToUse, predicate, object);
+  if(includeInferred) {
+    foundChoices.concat(findInferredChoices(ontologyToUse, predicate, object));
+  }
+  return foundChoices;
+};
+var findDirectChoices = function(ontologyToUse, predicate, object){
+  return [];
+  
+  //TODO: Include the code below when the Graph-API can be utilized!
+  var stmts = ontologyToUse.find(null, predicate, object);
+  var returnArray = [stmts.length];
+  for (var i in stmts){
+    returnArray[i] = {}; 
+    returnArray[i].value = stmts[i].subject;
+    //TODO: Also add the labels!
+  }
+  return returnArray;
+};
+/*
+ * Method looks up the inferred choices by using rdfs:subClassOf or rdfs:subPropertyOf (and currently no other)
+ */
+var findInferredChoices = function(ontologyToUse, predicate, object){
+  return [];
+  //TODO: Include the code below when the Graph-API can be utilized!
+  
+  //First find out if rdfs:subPropertyOf, or rdfs:subClassOf is used
+  var subProperty = 'http://www.w3.org/2000/01/rdf-schema#subClassOf';
+  var currentSubClass = object;
+  var foundSubClasses = graph.find(null, subProperty, currentSubClass); 
+  if(foundSubClasses.length <= 0){
+    //I.e. if not rdfs:subClassOf
+    subProperty = 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf';
+    foundSubClasses = graph.find(null, subProperty, currentSubClass);		
+  }
+  var inferenceMatches = [];
+  var i=0;
+  while(i<foundSubClasses.length){ //Note: Does not detect loops...
+    currentSubClass = foundSubClasses[i].getSubject();
+    inferenceMatches.concat(graph.find(null, predicate, currentSubClass));
+    //Add subClasses found from current SubClass
+    foundSubClasses.concat(graph.find(null, subProperty, currentSubClass));
+    i++;
+  }
+  var returnArray = [inferenceMatches.length];
+  for (var i in inferenceMatches){
+    returnArray[i] = {}
+    returnArray[i].value = inferenceMatches[i].subject;
+    //TODO: Also include label!
+  }
+  return returnArray;
+};
+var createHierachyTree = function(ontologyGraph, responseToSend, hierarchyInfo){
+  if(!hierarchyInfo.pp && !hierarchyInfo.hp){
+    return [];
+  }
+  var parents = _findHierarchyObjects(ontologyGraph, responseToSend, hierarchyInfo.pp, hierarchyInfo.ppinverted, false);
+  var hierarchy = _findHierarchyObjects(ontologyGraph, parents, hierarchyInfo.hp, hierarchyInfo.hpinverted, true);
+};
+
+var _findHierarchyObjects = function(ontologyGraph, instances, property, isPropertyInverted, searchRecursively) {
+  var itemsFound = {};
+  var currentStatements;
+  for(var i in instances) {
+    if(!isPropertyInverted){
+      currentStatements = ontologyGraph.find(instances[i].value, property, null);
+      for (var ii in tmp) {
+        if(!itemsFound[currentStatements[ii].getValue()]){
+          itemsFound[currentStatements[ii].getValue()] = {};
+          itemsFound[currentStatements[ii].getValue()].children = [];
+          itemsFound[currentStatements[ii].getValue()].value = currentStatements[ii].getValue();
+        }
+        parentsFound[currentStatements[ii].getValue()].children.push(responseToSend[i].value);
+      }
+    } else {
+      currentStatements = ontologyGraph.find(null, hierarchyInfo.pp, responseToSend[i].value);
+      for (var ii in tmp) {
+        if(!itemsFound[currentStatements[ii].getSubject()]){
+          itemsFound[currentStatements[ii].getSubject()] = {};
+          itemsFound[currentStatements[ii].getSubject()].children = [];
+          itemsFound[currentStatements[ii].getSubject()].value = currentStatements[ii].getSubject();
+        }
+        itemsFound[currentStatements[ii].getSubject()].children.push(responseToSend[i].value);
+      }
+    }
+  }
+  itemsFound = _object2Array(itemsFound);
+  if(searchRecursively && itemsFound && itemsFound.length>0) {
+    return _findHierarchyObjects(ontologyGraph, itemsFound, property, isPropertyInverted, true);
+  }
+  return itemsFound;
+};
+var _object2Array = function(jsObject){
+  var innerArray;
+  for (prop in jsObject){
+    innerArray.push(jsObject[prop]);
+  }
+  return innerArray;
+};
+var convertOntologyRDFXML2JSONRDF = function(RDFXMLString){
+  return RDFXMLString;
+  //return rdfjson.ajar.importRDFXML(RDFXMLString);
+};
+var fetchLabel = function(ontologyGraph, subject){
+  //TODO: Implement!
+  //Include dcterms:title, dc:title, rdfs:label, any other? skos?
+};
+/*
+ *Below the caching-functions are located
+ */
+var getOntologyFromCache = function(ontologyURL){
+  if(ontologyCache[ontologyURL]){
+    if(ontologyCache[ontologyURL].content && ontologyCache[ontologyURL].content != undefined){
+      return ontologyCache[ontologyURL].content;
+    } else if (ontologyCache[ontologyURL].redirect && ontologyCache[ontologyURL].redirect != undefined){
+      return getOntologyFromCache(ontologyCache[ontologyURL].redirect);
+    }
+  }
+  return;
+};
+var getResponseFromCache = function(ontologyURL, predicate, object) {
+  if(responseCache[ontologyURL] && responseCache[ontologyURL][predicate] &&
+     responseCache[ontologyURL][predicate][object]){
+    return responseCache[ontologyURL][predicate][object];
+  } 
+  return;
+};
+var addResponseToCache = function(ontologyURL, predicate, object, response){
+  if(!responseCache[ontologyURL]){
+    responseCache[ontologyURL]={};
+    responseCache[ontologyURL][predicate]={};
+    responseCache[ontologyURL][predicate][object]={}
+    responseCache[ontologyURL][predicate][object].content=response;
+    responseCache[ontologyURL][predicate][object].date=new Date();;
+  }else if(!responseCache[ontologyURL][predicate]){
+    responseCache[ontologyURL][predicate]={};
+    responseCache[ontologyURL][predicate][object]={}
+    responseCache[ontologyURL][predicate][object].content=response;
+    responseCache[ontologyURL][predicate][object].date=new Date();
+  }else if(!responseCache[ontologyURL][predicate][object]){
+    responseCache[ontologyURL][predicate][object]={}
+    responseCache[ontologyURL][predicate][object].content=response;
+    responseCache[ontologyURL][predicate][object].date=new Date();
+  }else {
+    responseCache[ontologyURL][predicate][object].content=response;
+    responseCache[ontologyURL][predicate][object].date=new Date();
+  }
+};
+var addOntologyToCache = function(ontologyURL, ontology){
+  ontologyCache[ontologyURL] = {};
+  ontologyCache[ontologyURL].content = ontology;
+  ontologyCache[ontologyURL].dateFetched = new Date();
+};
+var addRedirectToOntologyCache = function(ontologyURL, redirectURL){
+  ontologyCache[ontologyURL] = {};
+  ontologyCache[ontologyURL].redirect = redirectURL;
+  ontologyCache[ontologyURL].dateFetched = new Date();
+};

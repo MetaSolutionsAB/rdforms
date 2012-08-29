@@ -1,0 +1,36 @@
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body class="tundra">
+	<script type="text/javascript" src="../lib/dojo/dojo/dojo.js.uncompressed.js"
+		djconfig="async:false, isDebug: true, debugAtAllCosts: true, parseOnLoad: true, usePlainJson: true"></script>
+	<script type="text/javascript" src="testdata.js"></script>
+	<script type="text/javascript" src="testdata.js"></script>
+	
+	<style>
+		@import "../lib/dojo/dijit/themes/tundra/tundra.css"; /* required when dijit */	
+		@import "../src/rforms/view/resources/rforms.css";
+	</style>
+
+	<script type="text/javascript">
+		dojo.registerModulePath("rdfjson","../../../src/rdfjson");
+		dojo.require("rdfjson.ajar.serializer");
+		dojo.require("dijit.form.SimpleTextarea");
+
+		dojo.addOnLoad(function() {
+				dijit.byId("source").set("value", dojo.toJson(testdata.rdfSrc, 1));
+				var str = rdfjson.ajar.exportRDFXMLString(testdata.rdfSrc);
+				dijit.byId("destination").set("value", str);
+		});
+	</script>
+	<div style="width:50%;height:100%;float:left;">
+		<h1>RDF/XML loaded from testgraph.rdf</h1>
+		<div dojoType="dijit.form.SimpleTextarea" style="width: 99%;height:500px;" id="source"></div>
+	</div>
+	<div style="width:50%;height:100%;float:left;">
+		<h1>Converted to RDF/JSON</h1>
+		<div dojoType="dijit.form.SimpleTextarea" style="width:99%;height:500px;" id="destination"></div>
+	</div>
+  </body>
+</html>

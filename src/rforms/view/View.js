@@ -82,6 +82,7 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 			groupedItemsArr = this.binding.getItem().getChildren(), 
 			groupedBindingsArr = this.binding.getItemGroupedChildBindings(), 
 			bindings, item;
+		this._binding2node = {};
 
 		this.domNode = this.srcNodeRef;
 		dojo.addClass(this.domNode, "rforms");
@@ -153,6 +154,7 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 				fieldDiv = dojo.create("div", null, dojo.create("div", {"class": "rformsFields"}, lastRow));				
 			}
 		}
+		this._binding2node[binding.getHash()] = fieldDiv;
 		this.addComponent(fieldDiv, binding);
 		return newRow || lastRow;
 	},

@@ -24,8 +24,6 @@ dojo.declare("rforms.model.CardinalityTracker", null, {
 	},
 	minReached: function() {
 	},
-	justFine: function() {	
-	},
 	cardinalityChanged: function() {
 	},
 	
@@ -67,15 +65,18 @@ dojo.declare("rforms.model.CardinalityTracker", null, {
 	// Private methods
 	//===================================================
 	_checkCounter: function() {
-		if (this._limits.max != null && this._counter >= this._limits.max) {
+		if (this._limits.max != null && this._counter === this._limits.max) {
+			this._fine = true;
+			this.maxReached();
+		} else if (this._limits.max != null && this._counter > this._limits.max) {
 			this._fine = false;
 			this.maxReached();
-		} else if (this._limits.min != null && this._counter <= this._limits.min) {
+		} else if (this._limits.min != null && this._counter === this._limits.min) {
+			this._fine = true;
+			this.minReached();
+		} else if (this._limits.min != null && this._counter < this._limits.min) {
 			this._fine = false;
 			this.minReached();
-		} else if (this._fine === false) {
-			this._fine = true;
-			this.justFine();
 		}
 		this.cardinalityChanged();
 	}

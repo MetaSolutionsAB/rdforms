@@ -27,9 +27,44 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 	ontologyPopupWidget: null,
 	includeLevel: "recommended",
 
+	
+	//===================================================
+	// Public methods
+	//===================================================
+	report: function(report) {
+		if (!report) {
+			report = this.binding.report();
+		}
+		for (var key in this._binding2node) {
+			dojo.removeClass(this._binding2node[key], "errorReport");
+		}
+		for (var j=0;j<report.errors.length;j++) {
+			if (report.errors[j].parentBinding === this.binding) {
+				var item = report.errors[j].item;
+				var bindings = this.binding.getChildBindingsFor(item);
+				var counter = item.getCardinality().min;
+				for (var k=0;k<bindings.length && counter > 0;k++) {
+					counter--;
+					if (!bindings[k].isValid()) {
+						dojo.addClass(this._binding2node[bindings[k].getHash()], "errorReport");
+					}
+				}
+			}
+		}
+		
+		for (var i=0;i<this._subEditors.length;i++) {
+			this._subEditors[i].report(report);
+		}
+	},
+	
 	//===================================================
 	// Inherited methods
-	//===================================================	
+	//===================================================
+	buildRendering: function() {
+		this._subEditors = [];
+		this.inherited("buildRendering", arguments);
+	},
+	
 	/**
 	 * Will only show something for the given item if there is anything to show, or if the includeLevel indicates 
 	 * to show it anyhow (for example min cardinality > 0 or includeLevel is optional or recommended at the same
@@ -122,14 +157,16 @@ dojo.declare("rforms.view.Editor", rforms.view.Presenter, {
 		if (binding.getItem().hasClass("rformsNoneditable")) {
 			return this.inherited("addGroup", arguments);
 		}
+		var subView;
 		if (binding.getItem().hasClass("rformsexpandable") || binding.getItem().hasClass("expandable")) { //Backwardscompatible.
 			var titlePane = new dijit.TitlePane({}, fieldDiv);
 			var node = dojo.create("div");
 			titlePane.set("content", node);
-			var subView = new rforms.view.Editor({languages: this.languages, binding: binding, template: this.template, topLevel: false, includeLevel: this.includeLevel}, node);
+			subView = new rforms.view.Editor({languages: this.languages, binding: binding, template: this.template, topLevel: false, includeLevel: this.includeLevel}, node);
 		} else {
-			var subView = new rforms.view.Editor({languages: this.languages, binding: binding, template: this.template, topLevel: false, includeLevel: this.includeLevel}, fieldDiv);
+			subView = new rforms.view.Editor({languages: this.languages, binding: binding, template: this.template, topLevel: false, includeLevel: this.includeLevel}, fieldDiv);
 		}
+		this._subEditors.push(subView);
 	},
 	addText: function(fieldDiv, binding, noCardinalityButtons) {
 		if (binding.getItem().hasClass("rformsNoneditable")) {

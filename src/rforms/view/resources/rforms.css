@@ -18,6 +18,10 @@
 	font-weight:bold;
 	color: black;
 }
+.rforms .rformsField.errorReport,
+.rforms .rformsGroup.errorReport {
+	border-left: 2px dotted red;
+}
 
 .rforms .rformsField.error,
 .rforms .rformsGroup.error {

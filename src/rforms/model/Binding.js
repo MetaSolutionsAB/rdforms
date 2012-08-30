@@ -6,6 +6,8 @@ dojo.require("rforms.template.Item");
 dojo.require("rdfjson.Graph");
 dojo.require("rdfjson.Statement");
 
+var counter = 0;
+
 /**
  * A binding is a pairing between an item and various RDF statement 
  * (a single statement unless the binding is a group with constraints).
@@ -21,6 +23,7 @@ dojo.declare("rforms.model.Binding", null, {
 	_statement: null,
 	_ancestorValid: true,
 	_cardinalityTracker: null,
+	_hash: "",
 
 	//===================================================
 	// Public API
@@ -79,6 +82,10 @@ dojo.declare("rforms.model.Binding", null, {
 	updateAssertions: function() {
 		//Override
 	},
+	
+	getHash: function() {
+		return this._hash;
+	},
 
 	//===================================================
 	// Inherited methods
@@ -89,6 +96,8 @@ dojo.declare("rforms.model.Binding", null, {
 		if (args.graph) {
 			this._graph = args.graph;
 		}
+		this._hash = "b_"+counter;
+		counter++;
 	},
 
 	//===================================================

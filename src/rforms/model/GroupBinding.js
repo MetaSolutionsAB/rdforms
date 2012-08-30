@@ -94,6 +94,14 @@ dojo.declare("rforms.model.GroupBinding", rforms.model.Binding, {
 		}
 		this.oneChildValidityChanged();
 	},
+	getChildBindingsFor: function(item) {
+		var children = this._item.getChildren();
+		for (var i=children.length;i>=0;i--) {
+			if (item === children[i]) {
+				return this._childBindings[i];
+			}
+		}
+	},
 	getItemGroupedChildBindings: function() {
 		return this._childBindings;
 	},
@@ -135,18 +143,27 @@ dojo.declare("rforms.model.GroupBinding", rforms.model.Binding, {
 		}
 		
 		var childrenItems = this.getItem().getChildren();
-		var subject = this.getChildrenRootUri()
+		var countValidBindings = function(bindings) {
+			var counter = 0;
+			for (var i=0;i<bindings.length;i++) {
+				if (bindings[i].isValid()) {
+					counter++;
+				}
+			}
+			return counter;
+		};
 		dojo.forEach(this.getItemGroupedChildBindings(), function(bindings, index) {
 			var item = childrenItems[index];
 			if (item.getProperty() != null) {
+				var nrOfValid = countValidBindings(bindings);
 				var card = item.getCardinality();
-				if (card.min != null && card.min > bindings.length) {
-					report.errors.push({p: item.getProperty(), s: subject, message: "To few values"})
-				} else if (card.pref != null && card.pref > bindings.length) {
-					report.warnings.push({p: item.getProperty(), s: subject, message: "To few values"})
+				if (card.min != null && card.min > nrOfValid) {
+					report.errors.push({parentBinding: this, item: item, message: "To few valid values"})
+				} else if (card.pref != null && card.pref > nrOfValid) {
+					report.warnings.push({parentBinding: this, item: item, message: "To few valid values"})
 				}
-				if (card.max != null && card.max < bindings.length) {
-					report.errors.push({p: item.getProperty(), s: subject, message: "To many values"})
+				if (card.max != null && card.max < nrOfValid) {
+					report.errors.push({parentBinding: this, item: item, message: "To many values"})
 				}
 			}
 			if (item instanceof rforms.model.GroupBinding){
@@ -207,6 +224,7 @@ dojo.declare("rforms.model.GroupBinding", rforms.model.Binding, {
 			constraintStmt.setAsserted(assert);
 		});
 	},
+
 	//===================================================
 	// Private methods
 	//===================================================

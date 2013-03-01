@@ -1,10 +1,7 @@
-/*global dojo, rforms, dijit*/
-dojo.provide("rforms.view.ValidationPresenter");
-dojo.require("rforms.view.Presenter");
-dojo.require("dijit._Widget");
+/*global define*/
+define(["dojo/_base/declare", "dojo/dom-class", "dojo/dom-construct", "rforms/template/Group", "rforms/template/PropertyGroup", "rforms/model/Engine", "./Presenter"], function(declare, domClass, construct, Group, PropertyGroup, Engine, Presenter) {
 
-
-dojo.declare("rforms.view.ValidationPresenter", rforms.view.Presenter, {
+    var ValidationPresenter = declare(Presenter, {
 	//===================================================
 	// Public attributes
 	//===================================================
@@ -52,9 +49,9 @@ dojo.declare("rforms.view.ValidationPresenter", rforms.view.Presenter, {
 			target = card.pref;
 		} else if (card.min > 0) {
 			target = card.min;
-		} else if (item instanceof rforms.template.PropertyGroup) {
+		} else if (item instanceof PropertyGroup) {
 			target = 0;
-		} else if (item instanceof rforms.template.Group) {
+		} else if (item instanceof Group) {
 			if (item.getProperty() == null) {
 				target = 1;
 			} else {
@@ -66,7 +63,7 @@ dojo.declare("rforms.view.ValidationPresenter", rforms.view.Presenter, {
 		if (target > bindings.length) {
 			bindings = bindings.concat([]);
 			while(target > bindings.length) {
-				var binding = rforms.model.create(this.binding, item);
+				var binding = Engine.create(this.binding, item);
 				if (bindings.length < min) {
 					binding.error = true;
 				} else if (bindings.length < pref){
@@ -86,12 +83,12 @@ dojo.declare("rforms.view.ValidationPresenter", rforms.view.Presenter, {
 		var card = binding.getItem().getCardinality();
 		var min = card.min != null ? card.min : 0, pref = card.pref != null ? card.pref : 0;
 		if (binding.error) {
-			dojo.addClass(fieldDiv, "error");
-			dojo.create("div", {"innerHTML": ""+min+" value"+(min === 1? "": "s")+" is required"}, fieldDiv);
+			domClass.add(fieldDiv, "error");
+			construct.create("div", {"innerHTML": ""+min+" value"+(min === 1? "": "s")+" is required"}, fieldDiv);
 			return true;
 		} else if (binding.warning){
-			dojo.addClass(fieldDiv, "warning");
-			dojo.create("div", {"innerHTML": ""+pref+" value"+(pref === 1? "": "s")+" is recommended."}, fieldDiv);
+			domClass.add(fieldDiv, "warning");
+			construct.create("div", {"innerHTML": ""+pref+" value"+(pref === 1? "": "s")+" is recommended."}, fieldDiv);
 			return true;
 		} else {
 			return false;
@@ -100,7 +97,7 @@ dojo.declare("rforms.view.ValidationPresenter", rforms.view.Presenter, {
 	
 	addGroup: function(fieldDiv, binding) {
 		if (!this.addValidationMarker(fieldDiv, binding)) {
-			new rforms.view.ValidationPresenter({binding: binding, template: this.template, topLevel: false}, fieldDiv);	
+			new ValidationPresenter({binding: binding, template: this.template, topLevel: false}, fieldDiv);	
 		}
 	},
 
@@ -114,4 +111,6 @@ dojo.declare("rforms.view.ValidationPresenter", rforms.view.Presenter, {
 			this.inherited("addChoice", arguments);
 		}
 	}
+    });
+    return ValidationPresenter;
 });

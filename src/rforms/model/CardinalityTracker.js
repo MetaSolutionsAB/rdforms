@@ -1,15 +1,15 @@
-/*global dojo, rforms*/
-dojo.provide("rforms.model.CardinalityTracker");
+/*global define*/
+define(["dojo/_base/declare"], function(declare) {
 
-/**
- * A counter paired with a item with cardinality restrictions.
- * To update the counter use the increment and decrement methods.
- * If the counter passes a cardinality restriction the 
- * corresponding hook is called, that is, maxReached, minReached,
- * and justFine when the counter moved within the acceptable
- * cardinality restrictions.
- */
-dojo.declare("rforms.model.CardinalityTracker", null, {
+    /**
+     * A counter paired with a item with cardinality restrictions.
+     * To update the counter use the increment and decrement methods.
+     * If the counter passes a cardinality restriction the 
+     * corresponding hook is called, that is, maxReached, minReached,
+     * and justFine when the counter moved within the acceptable
+     * cardinality restrictions.
+     */
+    return declare(null, {
 	//===================================================
 	// Private attributes
 	//===================================================
@@ -80,4 +80,5 @@ dojo.declare("rforms.model.CardinalityTracker", null, {
 		}
 		this.cardinalityChanged();
 	}
-}); 
+    });
+});

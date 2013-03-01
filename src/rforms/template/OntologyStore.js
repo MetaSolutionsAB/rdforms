@@ -1,11 +1,10 @@
-/*global dojo, rforms*/
-dojo.provide("rforms.template.OntologyStore");
-dojo.require("rforms.template.Choice");
+/*global define*/
+define(["dojo/_base/declare"], function(declare) {
 
-/**
- * Simple store of ontologies to allow reuse across templates and items. 
- */
-dojo.declare("rforms.template.OntologyStore", null, {
+    /**
+     * Simple store of ontologies to allow reuse across templates and items. 
+     */
+    return declare(null, {
 	//===================================================
 	// Private attributes
 	//===================================================
@@ -96,4 +95,5 @@ dojo.declare("rforms.template.OntologyStore", null, {
 		}
 		return choiceItem.getOntologyUrl()+"?"+params.join("&");
 	}
+    });
 });

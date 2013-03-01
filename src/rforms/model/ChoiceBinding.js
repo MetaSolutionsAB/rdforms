@@ -1,12 +1,11 @@
-/*global dojo, rforms*/
-dojo.provide("rforms.model.ChoiceBinding");
-dojo.require("rforms.model.ValueBinding");
+/*global define*/
+define(["dojo/_base/declare", "./ValueBinding"], function(declare, ValueBinding) {
 
-/**
- * A ValueBinding that only accepts uris from a controlled vocabulary encoded as choices.
- * @see rforms.template.Choice#getChoices
- */	
-dojo.declare("rforms.model.ChoiceBinding", rforms.model.ValueBinding, {
+    /**
+     * A ValueBinding that only accepts uris from a controlled vocabulary encoded as choices.
+     * @see rforms.template.Choice#getChoices
+     */	
+    return declare(ValueBinding, {
 	//===================================================
 	// Private attributes
 	//===================================================
@@ -40,4 +39,5 @@ dojo.declare("rforms.model.ChoiceBinding", rforms.model.ValueBinding, {
 		//this._parent.removeChildBinding(this);
 		this.inherited("remove", arguments);
 	}
+    });
 });

@@ -1,36 +1,12 @@
-/*global dojo, rforms*/
-dojo.provide("rforms.template._BaseItem");
+/*global define*/
+define(["dojo/_base/declare", "../utils"], function(declare, utils) {
+    var itemCount = 0;
 
-rforms.template.getLocalizedValue = function(hash) {
-	if (hash == null) {
-		return {precision: "none"};
-	} else if (dojo.isString(hash)) {
-		return {value: hash, precision: "nolang", lang: ""};
-	} else if (hash.hasOwnProperty(dojo.locale)) {
-		return {value: hash[dojo.locale], precision: "exact", lang: dojo.locale};
-	} else {
-		var pos = dojo.locale.indexOf("_");
-		if (pos > -1 && hash.hasOwnProperty(dojo.locale.substr(0,2))) {
-			return {value: hash[dojo.locale.substr(0,2)], precision: "coarsen", lang: dojo.locale.substr(0,2)};
-		} else if (hash.hasOwnProperty("en")) {
-			return {value: hash["en"], precision: "default", lang: "en"};
-		} else if (hash.hasOwnProperty("")) {
-			return {value: hash[""], precision: "nolang", lang: ""};
-		} else {
-			for (var prop in hash) {
-				return {value: hash[prop], precision: "any", lang: prop};
-			}
-			return {precision: "none"};
-		}
-	}
-};
-
-rforms.template.itemCount = 0;
-/**
- * Common functionality of subclasses Item and Template.
- * (If it where not for the Template class, this functionality would be merged with Item.)
- */
-dojo.declare("rforms.template._BaseItem", null, {
+    /**
+     * Common functionality of subclasses Item and Template.
+     * (If it where not for the Template class, this functionality would be merged with Item.)
+     */
+    return declare(null, {
 	//===================================================
 	// Private attributes
 	//===================================================
@@ -104,11 +80,12 @@ dojo.declare("rforms.template._BaseItem", null, {
 	//===================================================	
 	constructor: function(source) {
 		this._source = source;
-		this._internalId = rforms.template.itemCount++;
+		this._internalId = itemCount++;
 	},
 	
 	//===================================================
 	// Private methods
 	//===================================================	
-	_getLocalizedValue: rforms.template.getLocalizedValue
+	_getLocalizedValue: utils.getLocalizedValue
+    });
 });

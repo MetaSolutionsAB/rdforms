@@ -1,10 +1,15 @@
-/*global dojo, rforms, dijit*/
-dojo.provide("rforms.view.Presenter");
-dojo.require("rforms.view.View");
-dojo.require("dijit._Widget");
+/*global define*/
+define(["dojo/_base/declare", 
+	"dojo/_base/kernel", 
+	"dojo/dom-class", 
+	"dojo/dom-construct", 
+	"dojo/dom-attr", 
+	"./View",
+	"rforms/template/Group",
+	"rforms/utils"
+], function(declare, kernel, domClass, construct, attr, View, Group, utils) {
 
-
-dojo.declare("rforms.view.Presenter", rforms.view.View, {
+    var Presenter = declare(View, {
 	//===================================================
 	// Public attributes
 	//===================================================
@@ -41,9 +46,9 @@ dojo.declare("rforms.view.Presenter", rforms.view.View, {
 			var lang = bindings[index].getLanguage();
 			if (lang === "" || lang === undefined) {
 				alts.noLanguage = bindings[index];
-			} else if (lang === dojo.locale) {
+			} else if (lang === kernel.locale) {
 				alts.best = bindings[index];
-			} else if (lang.indexOf(dojo.locale) !== -1 || dojo.locale.indexOf(lang) !== -1) {
+			} else if (lang.indexOf(kernel.locale) !== -1 || kernel.locale.indexOf(lang) !== -1) {
 				alts.close = bindings[index];				
 			} else if (lang.indexOf(this.defaultLanguage) === 0) {
 				alts.defaultLanguage = bindings[index];
@@ -55,12 +60,12 @@ dojo.declare("rforms.view.Presenter", rforms.view.View, {
 	
 	addTable: function(newRow, firstBinding) {
 		var item = firstBinding.getItem(), childItems = item.getChildren();
-		var table = dojo.create("table", {"class": "rformsGroup"}, newRow);
-		var tHead = dojo.create("thead", null, table);
-		var tHeadRow = dojo.create("tr", null, table);
+		var table = construct.create("table", {"class": "rformsGroup"}, newRow);
+		var tHead = construct.create("thead", null, table);
+		var tHeadRow = construct.create("tr", null, table);
 		for (var colInd = 0;colInd < childItems.length;colInd++) {
-			var th = dojo.create("th", null, tHeadRow);
-			this.showInfo(item, dojo.create("span", {innerHTML: childItems[colInd].getLabel()}, th));
+			var th = construct.create("th", null, tHeadRow);
+			this.showInfo(item, construct.create("span", {innerHTML: childItems[colInd].getLabel()}, th));
 		}
 		return table;
 	},
@@ -73,51 +78,53 @@ dojo.declare("rforms.view.Presenter", rforms.view.View, {
 		
 		for (rowInd = 0; rowInd < bindings.length;rowInd++) {
 			childBindingsGroups = bindings[rowInd].getItemGroupedChildBindings();
-			trEl = dojo.create("tr", null, table);
+			trEl = construct.create("tr", null, table);
 			
 			for (colInd = 0; colInd< childBindingsGroups.length;colInd++) {
 				if (childBindingsGroups[colInd].length > 0) {
-					this.addComponent(dojo.create("td", null, trEl), childBindingsGroups[colInd][0], true);
+					this.addComponent(construct.create("td", null, trEl), childBindingsGroups[colInd][0], true);
 				} else {
-					dojo.create("td", null, trEl);					
+					construct.create("td", null, trEl);					
 				}
 			}
 		}
 	},
 	skipBinding: function(binding) {
-		return binding.getItem() instanceof rforms.template.Group && binding.getChildBindings().length === 0;
+		return binding.getItem() instanceof Group && binding.getChildBindings().length === 0;
 	},
 
 	addLabel: function(rowDiv, labelDiv, binding) {
 		var item = binding.getItem();
-		var isGroup = item instanceof rforms.template.Group;
-		dojo.attr(labelDiv, "innerHTML", item.getLabel() || "");
-		dojo.addClass(labelDiv, "rformsLabel");
+		var isGroup = item instanceof Group;
+		attr.set(labelDiv, "innerHTML", item.getLabel() || "");
+		domClass.add(labelDiv, "rformsLabel");
 		this.showInfo(binding.getItem(), labelDiv);
 	},
 	addGroup: function(fieldDiv, binding) {
-		var subView = new rforms.view.Presenter({binding: binding, template: this.template, topLevel: false}, fieldDiv);
+		var subView = new Presenter({binding: binding, template: this.template, topLevel: false}, fieldDiv);
 	},
 	addText: function(fieldDiv, binding) {
 		if (this.showLanguage && binding.getLanguage()) {
-			var lang = dojo.create("div", {"innerHTML": binding.getLanguage()}, fieldDiv);
-			dojo.addClass(lang, "rformsLanguage");
+			var lang = construct.create("div", {"innerHTML": binding.getLanguage()}, fieldDiv);
+			domClass.add(lang, "rformsLanguage");
 		}
-		dojo.create("div", {"innerHTML": binding.getValue().replace(/(\r\n|\r|\n)/g, "<br/>")}, fieldDiv);
+		construct.create("div", {"innerHTML": binding.getValue().replace(/(\r\n|\r|\n)/g, "<br/>")}, fieldDiv);
 	},
 	addChoice: function(fieldDiv, binding) {
 		var choice = binding.getChoice();
 		if (binding.getItem().hasStyle("rformsstars") && parseInt(choice.value) != NaN) {
 			for (var i=parseInt(choice.value);i>0;i--) {
-				dojo.create("span", {"class": "rformsStar"}, fieldDiv);
+				construct.create("span", {"class": "rformsStar"}, fieldDiv);
 			}
 		} else {
-			var span = dojo.create("span", {"innerHTML": rforms.template.getLocalizedValue(choice.label).value}, fieldDiv);
+			var span = construct.create("span", {"innerHTML": utils.getLocalizedValue(choice.label).value}, fieldDiv);
 			if (choice.load != null) {
 				choice.load(function() {
-					dojo.attr(span, "innerHTML", rforms.template.getLocalizedValue(choice.label).value);
+					attr.add(span, "innerHTML", utils.getLocalizedValue(choice.label).value);
 				});
 			}			
 		}
 	}
+    });
+    return Presenter;
 });

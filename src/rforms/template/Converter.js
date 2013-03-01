@@ -1,14 +1,13 @@
-/*global dojo, rforms*/
-dojo.provide("rforms.template.Converter");
-dojo.require("rforms.template.ItemStore");
+/*global define*/
+define(["dojo/_base/declare"], function(declare) {
 
-/**
- * Keeps a registry of templates and reusable items.
- * Use the createTemplate method to create templates from a source
- * json structure, if the structure contains reusable items they are
- * created and stored separately as well. 
- */
-dojo.declare("rforms.template.Converter", null, {
+    /**
+     * Keeps a registry of templates and reusable items.
+     * Use the createTemplate method to create templates from a source
+     * json structure, if the structure contains reusable items they are
+     * created and stored separately as well. 
+     */
+    return declare(null, {
 	//===================================================
 	// Private Attributes
 	//===================================================
@@ -187,4 +186,5 @@ dojo.declare("rforms.template.Converter", null, {
 			this._getPropertiesForClassesRecursive(exhibit, exhibit.classIndex[cls.subClassOf], props, parentClasses);
 		}
 	}
+    });
 });

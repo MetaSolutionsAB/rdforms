@@ -1,11 +1,10 @@
-/*global dojo, rforms*/
-dojo.provide("rforms.template.Item");
-dojo.require("rforms.template._BaseItem");
+/*global define*/
+define(["dojo/_base/declare", "./_BaseItem"], function(declare, _BaseItem) {
 
-/**
- * Base functionality of Text, Group and Choice item classes.
- */
-dojo.declare("rforms.template.Item", rforms.template._BaseItem, {
+    /**
+     * Base functionality of Text, Group and Choice item classes.
+     */
+    return declare(_BaseItem, {
 	//===================================================
 	// Public API
 	//===================================================
@@ -57,4 +56,5 @@ dojo.declare("rforms.template.Item", rforms.template._BaseItem, {
 	isEnabled: function() {
 		return this._source.enabled === undefined ? true : this._source.enabled;
 	}
+    });
 });

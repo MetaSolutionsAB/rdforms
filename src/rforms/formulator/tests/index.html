@@ -3,8 +3,25 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
   </head>
   <body class="tundra">
-	<script type="text/javascript" src="../../../../lib/dojo/dojo/dojo.js.uncompressed.js"
-		djConfig="isDebug: true, debugAtAllCosts: true, parseOnLoad: false, usePlainJson: true"></script>
+    <script>
+    var dojoConfig = {
+	async:false,
+	packages: [
+	    {
+		name: "rforms",
+		location: "../../../src/rforms"
+	    },
+	    {
+		name: "rdfjson",
+		location: "../../../src/rdfjson"
+	    }
+	]
+    };
+</script>
+    <script src="../../../../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
+
+	<!--script type="text/javascript" src="../../../../lib/dojo/dojo/dojo.js.uncompressed.js"
+		djConfig="isDebug: true, debugAtAllCosts: true, parseOnLoad: false, usePlainJson: true"></script-->
 	<style>
 		@import "../../../../lib/dojo/dijit/themes/tundra/tundra.css"; /* required when dijit */	
 		@import "../../view/resources/rforms.css";
@@ -16,24 +33,23 @@
 		}
 	</style>
 	<script type="text/javascript">
-		dojo.registerModulePath("rforms","../../../src/rforms");
-		dojo.registerModulePath("rdfjson","../../../src/rdfjson");
-		dojo.require("rforms.template.ItemStore");
-		dojo.require("rforms.template.Converter");
-		dojo.require("rforms.template.tests.data");
-		dojo.require("rforms.formulator.StoreManager");
-		dojo.require("rdfjson.Graph");
-		dojo.require("rdfjson.tests.data");
-		dojo.require("rforms.model.Engine");
-		dojo.require("rforms.view.Editor");
-		dojo.addOnLoad(function() {
-			var itemStore = new rforms.template.ItemStore();
-			var converter = new rforms.template.Converter(itemStore);
+	  require(['rforms/template/ItemStore',
+	           'rforms/template/Converter',
+                   'rforms/template/tests/data', 
+	           'rforms/formulator/StoreManager',
+	           'rdfjson/Graph', 
+                   'rdfjson/tests/data', 
+                   'rforms/model/Engine', 
+	           'rforms/view/Editor',
+		   'dojo/domReady!'], 
+		   function(ItemStore, ExhibitConverter, testtemplate, StoreManager, Graph, testrdf, Engine, Editor) {
+		       var itemStore = new ItemStore();
+		       var converter = new ExhibitConverter(itemStore);
 	 		converter.convertExhibit(dojo.moduleUrl("rforms.template.tests", "foaf-exhibit.json"), function(results) {
-				var storeManager = new rforms.formulator.StoreManager({itemStore: itemStore}, "_node");
+				var storeManager = new StoreManager({itemStore: itemStore}, "_node");
 				storeManager.startup();
 			});
-		});
+		   });
 	</script>
 	<div id="_node"></div>
   </body>

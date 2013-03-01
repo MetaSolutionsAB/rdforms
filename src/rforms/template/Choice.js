@@ -1,16 +1,33 @@
-/*global dojo, rforms*/
-dojo.provide("rforms.template.Choice");
-dojo.require("rforms.template.Item");
+/*global define*/
+define(["dojo/_base/declare", "../utils", "./Item"], function(declare, utils, Item) {
 
-/**
- * A choice item type indicates that the value should be one of a range of predefined choices,
- * these predefined choices can be defined manually in the template or extracted from an external
- * ontlogy (indicated by the ontologyUrl) by means of a query that can be constructed from the constraints.
- * 
- * TODO:
- * The choices can also be organized into a hierarchy using the parent and hierarchy properties.
- */
-dojo.declare("rforms.template.Choice", rforms.template.Item, {
+    var sortChoices = function(choices) {
+	if (choices == null) {
+		return;
+	}
+	choices.sort(function(c1, c2) {
+		var lab1 = rforms.utils.getLocalizedValue(c1.label).value || c1.value;
+		var lab2 = rforms.utils.getLocalizedValue(c2.label).value || c2.value;
+		if (lab1 > lab2) {
+			return 1;
+		} else if (lab1 < lab2) {
+			return -1;
+		} else {
+			return 0;
+		}
+	});
+    };
+
+
+    /**
+     * A choice item type indicates that the value should be one of a range of predefined choices,
+     * these predefined choices can be defined manually in the template or extracted from an external
+     * ontlogy (indicated by the ontologyUrl) by means of a query that can be constructed from the constraints.
+     * 
+     * TODO:
+     * The choices can also be organized into a hierarchy using the parent and hierarchy properties.
+     */
+    return declare(Item, {
 	//===================================================
 	// Private attributes
 	//===================================================	
@@ -45,7 +62,7 @@ dojo.declare("rforms.template.Choice", rforms.template.Item, {
 	 */
 	getStaticChoices: function() {
 		if (this._source.choices && !this._staticIsSorted) {
-			rforms.template.sortChoices(this._source.choices);
+			sortChoices(this._source.choices);
 			this._staticIsSorted = true;
 		}
 		return this._source.choices;
@@ -60,11 +77,11 @@ dojo.declare("rforms.template.Choice", rforms.template.Item, {
 		if (this._dynamicChoices == null) {
 			if (callback == null) {
 				this._dynamicChoices = this._ontologyStore.getChoices(this);
-				rforms.template.sortChoices(this._dynamicChoices);
+				sortChoices(this._dynamicChoices);
 				return this._dynamicChoices;
 			} else {
 				this._ontologyStore.getChoices(this, dojo.hitch(this, function(choices) {
-					rforms.template.sortChoices(choices);
+					sortChoices(choices);
 					if (this._dynamicChoices == null) {
 						console.log("Failed lookup of choices for "+this.getLabel());
 						console.log("  OntologyUrl is: "+this._source.ontologyUrl);
@@ -103,21 +120,5 @@ dojo.declare("rforms.template.Choice", rforms.template.Item, {
 	constructor: function(source, ontologyStore) {
 		this._ontologyStore = ontologyStore;
 	}
+    });
 });
-
-rforms.template.sortChoices = function(choices) {
-	if (choices == null) {
-		return;
-	}
-	choices.sort(function(c1, c2) {
-		var lab1 = rforms.template.getLocalizedValue(c1.label).value || c1.value;
-		var lab2 = rforms.template.getLocalizedValue(c2.label).value || c2.value;
-		if (lab1 > lab2) {
-			return 1;
-		} else if (lab1 < lab2) {
-			return -1;
-		} else {
-			return 0;
-		}
-	});
-};

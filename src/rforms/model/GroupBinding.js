@@ -1,18 +1,17 @@
-/*global dojo, rforms*/
-dojo.provide("rforms.model.GroupBinding");
-dojo.require("rforms.model.Binding");
+/*global define*/
+define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(declare, Binding, CardinalityTracker) {
 
-/**
- * Corresponds to a binding for a Group item type.
- * Handles sub-bindings grouped by item.
- * Validity of a group is determined by at least one of the sub-bindings being valid.
- * All sub-bindings must notify when their validity changed so that the validity of
- * the parent group can be checked and possibly updated.
- * Potential statement and constraints are asserted when both parents are valid and this GroupBinding is valid.
- * 
- * @see rforms.template.Group
- */
-dojo.declare("rforms.model.GroupBinding", rforms.model.Binding, {
+    /**
+     * Corresponds to a binding for a Group item type.
+     * Handles sub-bindings grouped by item.
+     * Validity of a group is determined by at least one of the sub-bindings being valid.
+     * All sub-bindings must notify when their validity changed so that the validity of
+     * the parent group can be checked and possibly updated.
+     * Potential statement and constraints are asserted when both parents are valid and this GroupBinding is valid.
+     * 
+     * @see rforms.template.Group
+     */
+    var GroupBinding = declare(Binding, {
 	//===================================================
 	// Private attributes
 	//===================================================
@@ -70,7 +69,7 @@ dojo.declare("rforms.model.GroupBinding", rforms.model.Binding, {
 			if (item === children[i]) {
 				var cardTracker = this._childBindings[i].length > 0 ? 
 						this._childBindings[i][0].getCardinalityTracker() :
-						new rforms.model.CardinalityTracker(item);
+						new CardinalityTracker(item);
 				this._childBindings[i] = this._childBindings[i].concat(bindings);
 				dojo.forEach(bindings, function(binding) {
 					binding.setParent(this);
@@ -166,7 +165,7 @@ dojo.declare("rforms.model.GroupBinding", rforms.model.Binding, {
 					report.errors.push({parentBinding: this, item: item, message: "To many values"})
 				}
 			}
-			if (item instanceof rforms.model.GroupBinding){
+			if (item instanceof GroupBinding){
 				dojo.forEach(bindings, function(binding) {
 					binding.report(report);
 				});
@@ -246,4 +245,6 @@ dojo.declare("rforms.model.GroupBinding", rforms.model.Binding, {
 			});
 		}
 	}
+    });
+    return GroupBinding;
 });

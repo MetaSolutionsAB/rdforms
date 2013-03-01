@@ -1,21 +1,25 @@
-dojo.provide("rforms.formulator.GroupEditor");
-dojo.require("dijit._Widget");
-dojo.require("dijit.form.TextBox");
-dojo.require("dijit.form.NumberTextBox");
-dojo.require("dijit.form.Textarea");
-dojo.require("dijit.layout.ContentPane");
+/*global define*/
+define(["dojo/_base/declare", 
+	"dijit/_WidgetBase", 
+	"dijit/_TemplatedMixin",
+	"dijit/_WidgetsInTemplateMixin",
+	"dijit/form/TextBox", //For template
+	"dijit/form/NumberTextBox", //For template
+	"dijit/form/Textarea", //For template
+	"dojo/text!./GroupEditorTemplate.html"
+], function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, TextBox, NumberTextBox, Textarea, template) {
 
-dojo.declare("rforms.formulator.GroupEditor", [dijit._Widget, dijit._Templated], {
+
+    return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 	//===================================================
 	// Public attributes
 	//===================================================
 	itemStore: null,
-
+	
 	//===================================================
 	// Inherited attributes
 	//===================================================
-	templatePath: dojo.moduleUrl("rforms.formulator", "GroupEditorTemplate.html"),
-	widgetsInTemplate: true,
+	templateString: template,
 	
 	//===================================================
 	// Inherited methods
@@ -35,4 +39,5 @@ dojo.declare("rforms.formulator.GroupEditor", [dijit._Widget, dijit._Templated],
 	// Private methods
 	//===================================================
 	
+    });
 });

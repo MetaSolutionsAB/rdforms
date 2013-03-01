@@ -1,11 +1,10 @@
-/*global dojo, rforms*/
-dojo.provide("rforms.template.Template");
-dojo.require("rforms.template.Group");
+/*global define*/
+define(["dojo/_base/declare", "rforms/template/_BaseItem"], function(declare, _BaseItem) {
 
-/**
- * A template contains a root (a groupItem) and a list of ontologies.  
- */
-dojo.declare("rforms.template.Template", rforms.template._BaseItem, {
+    /**
+     * A template contains a root (a groupItem) and a list of ontologies.  
+     */
+    return declare(_BaseItem, {
 	//===================================================
 	// Private attributes
 	//===================================================
@@ -33,4 +32,5 @@ dojo.declare("rforms.template.Template", rforms.template._BaseItem, {
 		this._ontologies = source.ontologies;
 		this._root = root;
 	}
+    });
 });

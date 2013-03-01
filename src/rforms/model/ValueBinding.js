@@ -1,16 +1,17 @@
-/*global dojo, rforms*/
-dojo.provide("rforms.model.ValueBinding");
-dojo.require("rforms.model.Binding");
+/*global define*/
+define(["dojo/_base/declare", 
+	"./Binding"
+], function(declare, Binding) {
 
-/**
- * Corresponds to a binding for a Text item type, captures literals, literals with 
- * language, datatyped literals, or non blank resources, that is, URI's.
- * Validity is determined by a valid predicate and object.
- * The statement is asserted when the parents are valid and this ValueBinding is valid.
- * 
- * @see rforms.template.Text
- */
-dojo.declare("rforms.model.ValueBinding", rforms.model.Binding, {
+    /**
+     * Corresponds to a binding for a Text item type, captures literals, literals with 
+     * language, datatyped literals, or non blank resources, that is, URI's.
+     * Validity is determined by a valid predicate and object.
+     * The statement is asserted when the parents are valid and this ValueBinding is valid.
+     * 
+     * @see rforms.template.Text
+     */
+    return declare(Binding, {
 	//===================================================
 	// Private attributes
 	//===================================================
@@ -123,4 +124,5 @@ dojo.declare("rforms.model.ValueBinding", rforms.model.Binding, {
 	isValid: function() {
 		return this._validObject && this._validPredicate && !this._excludeFromTreeValidityCheck;
 	}
+    });
 });

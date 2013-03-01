@@ -1,5 +1,9 @@
-You have to install xml2js for the converter to work.
-npm install xml2js
+This is a DSP to RForms-template converter.
+The converter relies on you having nodejs installed locally as well as the nodejs package manager, npm.
+Both are available as packages on recent linux distros.
 
-Please, if you get a local installation, that is a node_modules catalog, do not commit it to SVN.
+The converter is dependent upon the packages requirejs, amdefine, and xml2js.
+
+To launch the converter use the nodejs script, require the dspconverter and call the convert method.
+See the test/VOA3RConverter example for details.
 

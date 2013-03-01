@@ -1,24 +1,24 @@
 <div>
-	<div dojoType="dijit.Dialog" autofocus="true" dojoAttachPoint="dialog">
-		<div dojoType="dijit.layout.BorderContainer" design="sidebar" dojoAttachPoint="bc" gutters="false" class="chooser rforms">
-			<div dojoType="dijit.layout.ContentPane" dojoAttachPoint="cpLeft" region="left" splitter="true" style="width: 60%">
-				<div dojoAttachPoint="selectionNode"></div>
-			</div>
-			<div dojoType="dijit.layout.ContentPane" region="center">
-				<h2>Information about selected item</h2>
-				<label>Web-identifier:</label>
-				<div dojoAttachPoint="uriNode" class="uriNode"></div>
-				<label>Item label:</label>
-				<div dojoAttachPoint="labelNode" class="labelNode"></div>
-				<label>Item description:</label>
-				<div dojoAttachPoint="descriptionNode"  class="descriptionNode"></div>
-			</div>
-			<div dojoType="dijit.layout.ContentPane" dojoAttachPoint="cpBottom" region="bottom">
-				<div class="buttonRow">
-					<div dojoType="dijit.form.Button" dojoAttachPoint="cancelButton" dojoAttachEvent="onClick: _cancelClicked" label="cancel"></div>
-					<div dojoType="dijit.form.Button" dojoAttachPoint="doneButton" disabled="true" dojoAttachEvent="onClick: _doneClicked" label="done"></div>
-				</div>
-			</div>
-		</div>
+  <div data-dojo-type="dijit.Dialog" autofocus="true" data-dojo-attach-point="dialog">
+    <div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'sidebar',gutters: 'false'" data-dojo-attach-point="bc" class="chooser rforms">
+      <div data-dojo-type="dijit/layout/ContentPane" data-dojo-attach-point="cpLeft" data-dojo-props="region='left',splitter:'true'" style="width: 60%">
+	<div data-dojo-attach-point="selectionNode"></div>
+      </div>
+      <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
+	<h2>Information about selected item</h2>
+	<label>Web-identifier:</label>
+	<div data-dojo-attach-point="uriNode" class="uriNode"></div>
+	<label>Item label:</label>
+	<div data-dojo-attach-point="labelNode" class="labelNode"></div>
+	<label>Item description:</label>
+	<div data-dojo-attach-point="descriptionNode"  class="descriptionNode"></div>
+      </div>
+      <div data-dojo-type="dijit/layout/ContentPane" data-dojo-attach-point="cpBottom" data-dojo-props="region:'bottom'">
+	<div class="buttonRow">
+	  <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="cancelButton" data-dojo-attach-event="onClick: _cancelClicked" label="cancel"></div>
+	  <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="doneButton" disabled="true" data-dojo-attach-event="onClick: _doneClicked" label="done"></div>
 	</div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,12 +1,11 @@
-/*global dojo, rforms*/
-dojo.provide("rforms.model.PropertyChoiceBinding");
-dojo.require("rforms.model.ChoiceBinding");
+/*global define*/
+define(["dojo/_base/declare", "./ChoiceBinding"], function(declare, ChoiceBinding) {
 
-/**
- * Are only used as the first child of a PropertyGroupBinding to capture
- * a variable predicate.
- */	
-dojo.declare("rforms.model.PropertyChoiceBinding", rforms.model.ChoiceBinding, {
+    /**
+     * Are only used as the first child of a PropertyGroupBinding to capture
+     * a variable predicate.
+     */	
+    return declare(ChoiceBinding, {
 	//===================================================
 	// Private attributes
 	//===================================================
@@ -51,4 +50,5 @@ dojo.declare("rforms.model.PropertyChoiceBinding", rforms.model.ChoiceBinding, {
 	 */
 	updateAssertions: function() {
 	}
+    });
 });

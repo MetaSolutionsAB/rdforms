@@ -1,10 +1,10 @@
-dojo.provide("rforms.template.Group");
-dojo.require("rforms.template.Item");
+/*global define*/
+define(["dojo/_base/declare", "./Item"], function(declare, Item) {
 
-/**
- * Group extends an Item by having children.
- */
-dojo.declare("rforms.template.Group", rforms.template.Item, {
+    /**
+     * Group extends an Item by having children.
+     */
+    return declare(Item, {
 	//===================================================
 	// Private attributes
 	//===================================================	
@@ -57,4 +57,5 @@ dojo.declare("rforms.template.Group", rforms.template.Item, {
 	getNodetype: function() {
 		return this.inherited("getNodetype", arguments) || "RESOURCE"; //Ugly fix because it is often wrong written in SIRFF.
 	}
+    });
 });

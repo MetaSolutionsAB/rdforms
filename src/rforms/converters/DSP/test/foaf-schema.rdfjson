@@ -1,0 +1,1872 @@
+{
+	"http://xmlns.com/foaf/0.1/": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2002/07/owl#Ontology", "type": "uri" }
+		],
+		"http://purl.org/dc/elements/1.1/title": [
+			{ "value": "Friend of a Friend (FOAF) vocabulary", "type": "literal" }
+		],
+		"http://purl.org/dc/elements/1.1/description": [
+			{ "value": "The Friend of a Friend (FOAF) RDF vocabulary, described using W3C RDF Schema and the Web Ontology Language.", "type": "literal" }
+		]
+	},
+	"http://xmlns.com/wot/0.1/assurance": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2002/07/owl#AnnotationProperty", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/wot/0.1/src_assurance": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2002/07/owl#AnnotationProperty", "type": "uri" }
+		]
+	},
+	"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2002/07/owl#AnnotationProperty", "type": "uri" }
+		]
+	},
+	"http://purl.org/dc/elements/1.1/description": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2002/07/owl#AnnotationProperty", "type": "uri" }
+		]
+	},
+	"http://purl.org/dc/elements/1.1/title": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2002/07/owl#AnnotationProperty", "type": "uri" }
+		]
+	},
+	"http://purl.org/dc/elements/1.1/date": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2002/07/owl#AnnotationProperty", "type": "uri" }
+		]
+	},
+	"http://www.w3.org/2000/01/rdf-schema#Class": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/LabelProperty": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Class", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "unstable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Label Property", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A foaf:LabelProperty is any RDF property with texual values that serve as labels.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/Person": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Class", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Person", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A person.", "type": "literal" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "stable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" },
+			{ "value": "http://www.w3.org/2000/10/swap/pim/contact#Person", "type": "uri" },
+			{ "value": "http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2002/07/owl#disjointWith": [
+			{ "value": "http://xmlns.com/foaf/0.1/Organization", "type": "uri" },
+			{ "value": "http://xmlns.com/foaf/0.1/Project", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/Agent": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" },
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "stable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Agent", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "An agent (eg. person, group, software or physical artifact).", "type": "literal" }
+		],
+		"http://www.w3.org/2002/07/owl#equivalentClass": [
+			{ "value": "http://purl.org/dc/terms/Agent", "type": "uri" }
+		]
+	},
+	"http://www.w3.org/2000/10/swap/pim/contact#Person": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Person", "type": "literal" }
+		]
+	},
+	"http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Spatial Thing", "type": "literal" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/Document": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Class", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Document", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A document.", "type": "literal" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2002/07/owl#disjointWith": [
+			{ "value": "http://xmlns.com/foaf/0.1/Organization", "type": "uri" },
+			{ "value": "http://xmlns.com/foaf/0.1/Project", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/Organization": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Class", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Organization", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "An organization.", "type": "literal" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "stable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2002/07/owl#disjointWith": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" },
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/Group": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Class", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "stable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Group", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A class of Agents.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/Project": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Class", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Project", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A project (a collective endeavour of some kind).", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2002/07/owl#disjointWith": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" },
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/Image": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Class", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Image", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "An image.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/PersonalProfileDocument": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Class", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "PersonalProfileDocument", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A personal profile RDF document.", "type": "literal" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/OnlineAccount": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Class", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Online Account", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "An online account.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		]
+	},
+	"http://www.w3.org/2002/07/owl#Thing": {
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Thing", "type": "literal" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/OnlineGamingAccount": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Class", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "unstable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Online Gaming Account", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "An online gaming account.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/OnlineAccount", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/OnlineEcommerceAccount": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Class", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "unstable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Online E-commerce Account", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "An online e-commerce account.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/OnlineAccount", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/OnlineChatAccount": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Class", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#Class", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "unstable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Online Chat Account", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "An online chat account.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/OnlineAccount", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/mbox": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#InverseFunctionalProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "stable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "personal mailbox", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A  personal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a 'static inverse functional property', in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/mbox_sha1sum": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#InverseFunctionalProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "sha1sum of a personal mailbox URI name", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "The sha1sum of the URI of an Internet mailbox associated with exactly one owner, the  first owner of the mailbox.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/gender": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#FunctionalProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "gender", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "The gender of this Agent (typically but not necessarily 'male' or 'female').", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/geekcode": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "archaic", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "geekcode", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A textual geekcode for this person, see http://www.geekcode.com/geek.html", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/dnaChecksum": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "archaic", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "DNA checksum", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A checksum for the DNA of some thing. Joke.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/sha1": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "unstable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "sha1sum (hex)", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A sha1sum hash, in hex.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/based_near": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "based near", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A location that something is based near, for some broadly human notion of near.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/title": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "title", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "Title (Mr, Mrs, Ms, Dr. etc)", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/nick": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "nickname", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A short informal nickname characterising an agent (includes login identifiers, IRC and other chat nicknames).", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/jabberID": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#InverseFunctionalProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "jabber ID", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A jabber ID for something.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/aimChatID": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#InverseFunctionalProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "AIM chat ID", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "An AIM chat ID", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/nick", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/skypeID": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Skype ID", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A Skype ID", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/nick", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/icqChatID": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#InverseFunctionalProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "ICQ chat ID", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "An ICQ chat ID", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/nick", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/yahooChatID": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#InverseFunctionalProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Yahoo chat ID", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A Yahoo chat ID", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/nick", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/msnChatID": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#InverseFunctionalProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "MSN chat ID", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "An MSN chat ID", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/nick", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/name": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "name", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A name for some thing.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#label", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/firstName": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "firstName", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "The first name of a person.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/lastName": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "lastName", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "The last name of a person.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/givenName": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Given name", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "The given name of some person.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/givenname": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "archaic", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Given name", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "The given name of some person.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/surname": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "archaic", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Surname", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "The surname of some person.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/family_name": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "archaic", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "family_name", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "The family name of some person.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/familyName": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "familyName", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "The family name of some person.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/phone": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "phone", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A phone,  specified using fully qualified tel: URI scheme (refs: http://www.w3.org/Addressing/schemes.html#tel).", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/homepage": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#InverseFunctionalProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "stable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "homepage", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A homepage for some thing.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/page", "type": "uri" },
+			{ "value": "http://xmlns.com/foaf/0.1/isPrimaryTopicOf", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/weblog": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#InverseFunctionalProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "weblog", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A weblog of some thing (whether person, group, company etc.).", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/page", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/openid": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#InverseFunctionalProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "openid", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "An OpenID for an Agent.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/isPrimaryTopicOf", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/tipjar": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "tipjar", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A tipjar document for this agent, describing means for payment and reward.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/page", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/plan": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "plan", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A .plan comment, in the tradition of finger and '.plan' files.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/made": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "stable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "made", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "Something that was made by this agent.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2002/07/owl#inverseOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/maker", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/maker": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "stable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "maker", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "An agent that  made this thing.", "type": "literal" }
+		],
+		"http://www.w3.org/2002/07/owl#equivalentProperty": [
+			{ "value": "http://purl.org/dc/terms/creator", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2002/07/owl#inverseOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/made", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/img": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "image", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "An image that can be used to represent some thing (ie. those depictions which are particularly representative of something, eg. one's photo on a homepage).", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Image", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/depiction", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/depiction": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "depiction", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A depiction of some thing.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Image", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2002/07/owl#inverseOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/depicts", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/depicts": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "depicts", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A thing depicted in this representation.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Image", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2002/07/owl#inverseOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/depiction", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/thumbnail": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "thumbnail", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A derived thumbnail image.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Image", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Image", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/myersBriggs": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "myersBriggs", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A Myers Briggs (MBTI) personality classification.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/workplaceHomepage": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "workplace homepage", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A workplace homepage of some person; the homepage of an organization they work for.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/workInfoHomepage": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "work info homepage", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A work info homepage of some person; a page about their work for some organization.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/schoolHomepage": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "schoolHomepage", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A homepage of a school attended by the person.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/knows": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "stable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "knows", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A person known by this person (indicating some level of reciprocated interaction between the parties).", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/interest": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "interest", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A page about a topic of interest to this person.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/topic_interest": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "topic_interest", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A thing of interest to this person.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/publications": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "publications", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A link to the publications of this person.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/currentProject": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "current project", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A current project this person works on.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/pastProject": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "past project", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A project this person has previously worked on.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Person", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/fundedBy": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "archaic", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "funded by", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "An organization funding a project or person.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/logo": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#InverseFunctionalProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "logo", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A logo representing some thing.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/topic": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "topic", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A topic of some page or document.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2002/07/owl#inverseOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/page", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/primaryTopic": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#FunctionalProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "stable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "primary topic", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "The primary topic of some page or document.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2002/07/owl#inverseOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/isPrimaryTopicOf", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/focus": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "focus", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "The underlying or 'focal' entity associated with some SKOS-described concept.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://www.w3.org/2004/02/skos/core#Concept", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://www.w3.org/2004/02/skos/core#Concept": {
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "Concept", "type": "literal" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/isPrimaryTopicOf": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#InverseFunctionalProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "stable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "is primary topic of", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A document that this thing is the primary topic of.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/page", "type": "uri" }
+		],
+		"http://www.w3.org/2002/07/owl#inverseOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/primaryTopic", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/page": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "page", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A page or document about this thing.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		],
+		"http://www.w3.org/2002/07/owl#inverseOf": [
+			{ "value": "http://xmlns.com/foaf/0.1/topic", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/theme": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "archaic", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "theme", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A theme.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2002/07/owl#Thing", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/account": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "account", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "Indicates an account held by this agent.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/OnlineAccount", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/holdsAccount": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "archaic", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "account", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "Indicates an account held by this agent.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/OnlineAccount", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/accountServiceHomepage": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "account service homepage", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "Indicates a homepage of the service provide for this online account.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/OnlineAccount", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Document", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/accountName": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "testing", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "account name", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "Indicates the name (identifier) associated with this online account.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/OnlineAccount", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/member": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#ObjectProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "stable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "member", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "Indicates a member of a Group", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Group", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/membershipClass": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#AnnotationProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "unstable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "membershipClass", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "Indicates the class of individuals that are a member of a Group", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/birthday": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#FunctionalProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "unstable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "birthday", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "The birthday of this Agent, represented in mm-dd string form, eg. '12-31'.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/age": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#FunctionalProperty", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "unstable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "age", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "The age in years of some agent.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	},
+	"http://xmlns.com/foaf/0.1/status": {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+			{ "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property", "type": "uri" },
+			{ "value": "http://www.w3.org/2002/07/owl#DatatypeProperty", "type": "uri" }
+		],
+		"http://www.w3.org/2003/06/sw-vocab-status/ns#term_status": [
+			{ "value": "unstable", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#label": [
+			{ "value": "status", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#comment": [
+			{ "value": "A string expressing what the user is happy for the general public (normally) to know about their current activity.", "type": "literal" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#domain": [
+			{ "value": "http://xmlns.com/foaf/0.1/Agent", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#range": [
+			{ "value": "http://www.w3.org/2000/01/rdf-schema#Literal", "type": "uri" }
+		],
+		"http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+			{ "value": "http://xmlns.com/foaf/0.1/", "type": "uri" }
+		]
+	}
+}

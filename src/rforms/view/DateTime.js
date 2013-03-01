@@ -1,14 +1,20 @@
-dojo.provide("rforms.view.DateTime");
-dojo.require("dijit.form.NumberSpinner");
-dojo.require("dijit.layout.ContentPane");
-dojo.require("dijit.form.Select");
-dojo.require("dijit.form.DateTextBox");
+/*global define*/
+define(["dojo/_base/declare", 
+	"dojo/dom-attr", 
+	"dojo/dom-construct", 
+	"dojo/dom-class", 
+	"dojo/date/stamp", 
+	"dojo/_base/array", 
+	"dijit/_Widget", 
+	"dijit/form/Select",
+	"dijit/form/DateTextBox", 
+	"dijit/form/NumberSpinner"
+], function(declare, attr, construct, domClass, stamp, array, _Widget, Select, DateTextBox, NumberSpinner) {
 
-dojo.declare("rforms.view.DateTime", [dijit._Widget], {
+    return declare(_Widget, {
 	//===================================================
 	// i18n attributes
 	//===================================================
-	widgetsInTemplate: true,
 	yearChoiceLabel: "Year",
 	dateChoiceLabel: "Date",
 //	dateTimeChoiceLabel: "Date and Time",
@@ -30,13 +36,13 @@ dojo.declare("rforms.view.DateTime", [dijit._Widget], {
 	// Inherited methods
 	//===================================================
 	buildRendering: function() {
-		this.domNode = this.srcNodeRef || dojo.create("div");
-		this.editorNode = dojo.create("span", null, this.domNode);
-		this.formatChooserNode = dojo.create("span", null, this.domNode);
+		this.domNode = this.srcNodeRef || construct.create("div");
+		this.editorNode = construct.create("span", null, this.domNode);
+		this.formatChooserNode = construct.create("span", null, this.domNode);
 		var data = this.binding.getValue();
 		this._valid = data != null && data != "";
 		if (this._valid) {
-			this._date = dojo.date.stamp.fromISOString(data);
+			this._date = stamp.fromISOString(data);
 			this._valid = this._date != null;
 		}
 		this._date = this._date || new Date();
@@ -66,29 +72,29 @@ dojo.declare("rforms.view.DateTime", [dijit._Widget], {
 			this._formatChooser.destroy();
 		}
 		var options = [{label: "Year", value: "Year"}, {label: "Date", value: "Date"}, {label: "Date and time", value: "DateTime"}];
-		dojo.forEach(options, function(opt) {
+		array.forEach(options, function(opt) {
 			if (opt.value === option) {
 				opt.selected = true;
 			}
 		});
-		this._formatChooser = new dijit.form.Select({
+		this._formatChooser = new Select({
 //				style: {"font-size": "x-small"},
 				options: options,
-				onChange: dojo.hitch(this, function(item) {
+				onChange: lang.hitch(this, function(item) {
 					this["_show"+item]();
-				})}, dojo.create("div", null, this.formatChooserNode));
+				})}, construct.create("div", null, this.formatChooserNode));
 	},
 	_destroyEditors: function() {
 		this._firstTime = false;
 		var editors = ["cal", "year", "hour", "minute"];
-		dojo.forEach(editors, function(e) {
+		array.forEach(editors, function(e) {
 			var a = "_"+e+"Editor";
 			if (this[a] != null) {
 				this[a].destroy();
 				delete this[a];
 			}
 		}, this);
-		dojo.attr(this.editorNode, "innerHTML", "");
+		attr.set(this.editorNode, "innerHTML", "");
 	},
 
 	_showDate: function() {
@@ -98,26 +104,26 @@ dojo.declare("rforms.view.DateTime", [dijit._Widget], {
 		//Set date.
 		if (this._valid) {
 			d = this._date;
-			var str = dojo.date.stamp.toISOString(this._date);
+			var str = stamp.toISOString(this._date);
 			this.binding.setValue(str.substring(0,str.indexOf('T')));			
 		}
 		
-		this._calEditor = new dijit.form.DateTextBox({
+		this._calEditor = new DateTextBox({
 					style: {width: "10em"},
 					value: d,
 					disabled: !this.item.isEnabled(),
 					invalidMessage: "Proper date format is required, value will not be saved",
-					onChange: dojo.hitch(this, function(v){
+					onChange: lang.hitch(this, function(v){
 						this._valid = this._calEditor.isValid() && v != null;
 						if (this._valid) {
 							this._date.setFullYear(v.getFullYear(), v.getMonth(), v.getDate());
-							var str = dojo.date.stamp.toISOString(v);
+							var str = stamp.toISOString(v);
 							this.binding.setValue(str.substring(0,str.indexOf('T')));
 						} else {
 							this.binding.setValue("");
 						}
 					})
-				}, dojo.create("div", null, this.editorNode));
+				}, construct.create("div", null, this.editorNode));
 	},
 	_showDateTime: function() {
 		this._destroyEditors();
@@ -126,31 +132,31 @@ dojo.declare("rforms.view.DateTime", [dijit._Widget], {
 		//Set datetime.
 		if (this._valid) {
 			d = this._date;
-			this.binding.setValue(dojo.date.stamp.toISOString(this._date));
+			this.binding.setValue(stamp.toISOString(this._date));
 		}
 
-		var update = dojo.hitch(this, function() {
+		var update = lang.hitch(this, function() {
 			var nd = this._calEditor.get("value"), h = this._hourEditor.get("value"), m = this._minuteEditor.get("value");
 			this._valid = this._calEditor.isValid() && nd!=null && this._hourEditor.isValid() && !isNaN(h) && this._minuteEditor.isValid() && !isNaN(m);
 			
 			if (this._valid) {
 				var nd = this._calEditor.get("value");
 				nd.setHours(this._hourEditor.get("value"), this._minuteEditor.get("value"));
-				this.binding.setValue(dojo.date.stamp.toISOString(nd));
+				this.binding.setValue(stamp.toISOString(nd));
 				this._date = nd;
 			} else {
 				this.binding.setValue("");
 			}
 		});
-		this._calEditor = new dijit.form.DateTextBox({
+		this._calEditor = new DateTextBox({
 				style: {width: "10em"},
 				value: d,
 				disabled: !this.item.isEnabled(),
 				invalidMessage: "Proper date format is required, value will not be saved",
 				onChange: update
-			}, dojo.create("div", null, this.editorNode));
-		dojo.create("span", {innerHTML: "&nbsp;H:"}, this.editorNode);
-		this._hourEditor = new dijit.form.NumberSpinner({
+			}, construct.create("div", null, this.editorNode));
+		construct.create("span", {innerHTML: "&nbsp;H:"}, this.editorNode);
+		this._hourEditor = new NumberSpinner({
 				style: {width: "3em"},
 				editOptions: {pattern: "##"},
 				constraints: {pattern: "##", min: 0, max: 23, places: 0},
@@ -158,9 +164,9 @@ dojo.declare("rforms.view.DateTime", [dijit._Widget], {
 				smallDelta: 1,
 				intermediateChanges: true,
 				onChange: update
-			},dojo.create("div", null, this.editorNode));
-		dojo.create("span", {innerHTML: "&nbsp;M:"}, this.editorNode);
-		this._minuteEditor = new dijit.form.NumberSpinner({
+			},construct.create("div", null, this.editorNode));
+		construct.create("span", {innerHTML: "&nbsp;M:"}, this.editorNode);
+		this._minuteEditor = new NumberSpinner({
 				style: {width: "3em"},
 				editOptions: {pattern: "##"},
 				constraints: {pattern: "##", min: 0, max: 59, places: 0},
@@ -168,7 +174,7 @@ dojo.declare("rforms.view.DateTime", [dijit._Widget], {
 				smallDelta: 1,
 				intermediateChanges: true,
 				onChange: update
-			},dojo.create("div", null, this.editorNode));
+			},construct.create("div", null, this.editorNode));
 	},
 	_showYear: function() {
 		this._destroyEditors();
@@ -181,25 +187,26 @@ dojo.declare("rforms.view.DateTime", [dijit._Widget], {
 		}
 
 		this.binding.setValue(""+d.getFullYear());
-		this._yearEditor = new dijit.form.NumberSpinner({
+		this._yearEditor = new NumberSpinner({
 				style: {width: "6em"},
 				editOptions: {pattern: "####"},
 				constraints: {pattern: "####", min: 0, max: 9999, places: 0},
 				value: d.getFullYear(),
 				smallDelta: 1,
 				intermediateChanges: true,
-				onChange: dojo.hitch(this, function(v) {
+				onChange: lang.hitch(this, function(v) {
 					this._valid = this._yearEditor.isValid();
 					if (this._valid) {
-						this.binding.setValue(""+dojo.date.stamp.fromISOString(v).getFullYear());
+						this.binding.setValue(""+stamp.fromISOString(v).getFullYear());
 						this._date.setFullYear(v);
 					} else {
 						this.binding.setValue("");						
 					}
 				})},
-			dojo.create("div", null, this.editorNode));
+			construct.create("div", null, this.editorNode));
 	},
 	_setValueAttr: function(v) {
 		this.binding.setValue(v);
 	}
+    });
 });

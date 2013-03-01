@@ -1,7 +1,7 @@
-dojo.provide("rforms.view.SortedStore");
-dojo.require("dojo.data.ItemFileWriteStore");
+/*global define*/
+define(["dojo/_base/declare", "dojo/data/ItemFileWriteStore"], function(declare, ItemFileWriteStore) {
 
-dojo.declare("rforms.view.SortedStore", dojo.data.ItemFileWriteStore, {
+    return declare(ItemFileWriteStore, {
 	sortBy: "label",
 	constructor: function(params) {
 		if (params.sortBy != null) {
@@ -31,4 +31,5 @@ dojo.declare("rforms.view.SortedStore", dojo.data.ItemFileWriteStore, {
 		}
 		return valueArray;
 	}
+    });
 });

@@ -1,0 +1,22 @@
+.groupEditor .row {
+	margin: 0.5em;
+}
+
+.groupEditor .row>label{
+	width: 5em;
+	display: inline-block;
+}
+
+.groupEditor .cardinality {
+	display: table-row;
+}
+
+.groupEditor .cardinality>div {
+	display: table-cell;
+}
+
+.groupEditor .cardinality>div>div {
+	margin-right: 2em;
+	margin-left: 0.5em;
+	width: 2em;
+}

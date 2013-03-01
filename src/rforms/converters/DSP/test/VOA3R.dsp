@@ -107,11 +107,17 @@ xsi:schemaLocation="http://dublincore.org/xml/dc-dsp/2008/01/14 dcmi-dsp.xsd"
     </StatementTemplate>
 
     <StatementTemplate minOccurs="0" type="literal">
-      <Property>http://purl.org/dc/terms/description</Property>      
+      <Property>http://purl.org/dc/terms/description</Property>
+      <LiteralConstraint>
+        <LanguageOccurrence>mandatory</LanguageOccurrence>
+      </LiteralConstraint>   
     </StatementTemplate>
 
     <StatementTemplate minOccurs="0" type="literal">
       <Property>http://purl.org/dc/terms/abstract</Property>      
+      <LiteralConstraint>
+        <LanguageOccurrence>mandatory</LanguageOccurrence>
+      </LiteralConstraint>   
     </StatementTemplate>
 
     <StatementTemplate minOccurs="0" type="nonliteral">

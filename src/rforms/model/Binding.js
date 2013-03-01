@@ -1,21 +1,16 @@
-/*global dojo, rforms, rdfjson*/
-dojo.provide("rforms.model.Binding");
-dojo.require("rforms.model.CardinalityTracker");
-dojo.require("rforms.template.Template");
-dojo.require("rforms.template.Item");
-dojo.require("rdfjson.Graph");
-dojo.require("rdfjson.Statement");
+/*global define*/
+define(["dojo/_base/declare"], function(declare) {
 
-var counter = 0;
+    var counter = 0;
 
-/**
- * A binding is a pairing between an item and various RDF statement 
- * (a single statement unless the binding is a group with constraints).
- * It keeps track of cardinality and validity.
- * If a binding is valid and all parent bindings are valid, 
- * the statement is asserted, that is, inserted into the RDF graph.
- */
-dojo.declare("rforms.model.Binding", null, {
+    /**
+     * A binding is a pairing between an item and various RDF statement 
+     * (a single statement unless the binding is a group with constraints).
+     * It keeps track of cardinality and validity.
+     * If a binding is valid and all parent bindings are valid, 
+     * the statement is asserted, that is, inserted into the RDF graph.
+     */
+    return declare(null, {
 	//===================================================
 	// Private attributes
 	//===================================================
@@ -106,4 +101,5 @@ dojo.declare("rforms.model.Binding", null, {
 	_isValidValue: function(value) {
 		return value !== undefined && value !== null && value !== "";
 	}
+    });
 });

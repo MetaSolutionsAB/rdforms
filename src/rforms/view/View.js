@@ -1,9 +1,24 @@
-/*global dojo, rforms, dijit*/
-dojo.provide("rforms.view.View");
-dojo.require("dijit._Widget");
-dojo.require("dijit.TooltipDialog");
+/*global define*/
+define(["dojo/_base/declare", 
+	"dojo/_base/lang", 
+	"dojo/dom-class", 
+	"dojo/dom-construct", 
+	"dojo/dom-attr", 
+	"dojo/query", 
+	"dijit/_Widget", 
+	"dijit/focus", 
+	"dijit/TooltipDialog", 
+	"dijit/popup", 
+	"rforms/model/ValueBinding",
+	"rforms/model/GroupBinding", 
+	"rforms/model/ChoiceBinding", 
+	"rforms/model/PropertyChoiceBinding", 
+	"rforms/template/Group"
+], function(declare, lang, domClass, construct, attr, query, _Widget, focus, TooltipDialog, popup, ValueBinding, GroupBinding, ChoiceBinding, PropertyChoiceBinding, Group) {
+    
+    var __currentDomNode;
 
-dojo.declare("rforms.view.View", dijit._Widget, {
+    return declare(_Widget, {
 	//===================================================
 	// Public attributes
 	//===================================================
@@ -66,8 +81,8 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 		if (item == null || (item.getProperty() == null &&item.getDescription() == null)) {
 				return;
 		}
-		this.connect(aroundNode, "onclick", dojo.hitch(this, this._showInfo, item, aroundNode));
-		dojo.addClass(aroundNode, "rformsHasInfo");		
+		this.connect(aroundNode, "onclick", lang.hitch(this, this._showInfo, item, aroundNode));
+		domClass.add(aroundNode, "rformsHasInfo");		
 	},
 	
 	//===================================================
@@ -85,10 +100,10 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 		this._binding2node = {};
 
 		this.domNode = this.srcNodeRef;
-		dojo.addClass(this.domNode, "rforms");
-		dojo.addClass(this.domNode, this.styleCls);
+		domClass.add(this.domNode, "rforms");
+		domClass.add(this.domNode, this.styleCls);
 		if (this.compact) {
-			dojo.addClass(this.domNode, "compact");			
+			domClass.add(this.domNode, "compact");			
 		}
 
 		for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
@@ -111,13 +126,13 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 			
 			//Non table case
 			} else {
-				if (bindings.length > 0) {
-					dojo.forEach(bindings, function(binding, index) {
-						lastRow = this.addRow(lastRow, binding, index === 0);
-					}, this);					
-				} else {
-					lastRow = this.addLabelClean(lastRow, null, item);
+			    if (bindings.length > 0) {
+				for (var i=0;i<bindings.length;i++) {
+				    lastRow = this.addRow(lastRow, bindings[i], i === 0);
 				}
+			    } else {
+				lastRow = this.addLabelClean(lastRow, null, item);
+			    }
 			}
 									
 			//Activates/deactivates buttons at startup if needed
@@ -142,16 +157,16 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 		}
 		
 		//Taking care of dom node structure plus label.
-		if (includeLabel || (includeLabel == null && binding instanceof rforms.model.GroupBinding)) {
+		if (includeLabel || (includeLabel == null && binding instanceof GroupBinding)) {
 			newRow = this.addLabelClean(lastRow, binding, item);
-			fieldDiv = dojo.create("div", null, dojo.create("div", {"class": "rformsFields"}, newRow));
+			fieldDiv = construct.create("div", null, construct.create("div", {"class": "rformsFields"}, newRow));
 		} else {
 			//No new rowDiv since we have a repeated value under the same label.
-			var rformsFields = dojo.query(".rformsFields", lastRow)[0];
+			var rformsFields = query(".rformsFields", lastRow)[0];
 			if (rformsFields != null) {
-				fieldDiv = dojo.create("div", {"class": "rformsRepeatedValue"}, rformsFields);				
+				fieldDiv = construct.create("div", {"class": "rformsRepeatedValue"}, rformsFields);				
 			} else { //Unless we have an non-expanded row.
-				fieldDiv = dojo.create("div", null, dojo.create("div", {"class": "rformsFields"}, lastRow));				
+				fieldDiv = construct.create("div", null, construct.create("div", {"class": "rformsFields"}, lastRow));				
 			}
 		}
 		this._binding2node[binding.getHash()] = fieldDiv;
@@ -166,72 +181,72 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 
 		//New rowDiv since we have a label
 		if (lastRow === undefined) {
-			newRow = dojo.create("div", null, this.domNode);
+			newRow = construct.create("div", null, this.domNode);
 		} else {
-			newRow = dojo.create("div", null, lastRow, "after");
+			newRow = construct.create("div", null, lastRow, "after");
 		}
 		if (this.topLevel) {
-			dojo.addClass(newRow, "rformsTopLevel");
+			domClass.add(newRow, "rformsTopLevel");
 		}
-		dojo.addClass(newRow, "rformsRow");
-
-		dojo.forEach(item.getClasses(), function(cls) {
-			if (cls.indexOf("rforms") == -1) {
-				dojo.addClass(newRow, cls);
-			}
-		});
-		if (item instanceof rforms.template.Group) {
-			dojo.addClass(newRow, "notCompact");			
+		domClass.add(newRow, "rformsRow");
+	    var clss = item.getClasses();
+	    for (var e=0;e<clss.length;e++) {
+		if (clss[e].indexOf("rforms") == -1) {
+		    domClass.add(newRow, cls);
 		}
+	    }
+	    if (item instanceof Group) {
+		domClass.add(newRow, "notCompact");			
+	    }
 
-		this.addLabel(newRow, dojo.create("div", null, newRow), binding, item);
-		return newRow;
+	    this.addLabel(newRow, construct.create("div", null, newRow), binding, item);
+	    return newRow;
 	},
 	addComponent: function(fieldDiv, binding, noCardinalityButtons) {
 		//Taking care of the field, either group, choice or text.
-		if (binding instanceof rforms.model.GroupBinding) {
-			dojo.addClass(fieldDiv, "rformsGroup");
+		if (binding instanceof GroupBinding) {
+			domClass.add(fieldDiv, "rformsGroup");
 			this.addGroup(fieldDiv, binding, noCardinalityButtons);
-		} else if (binding instanceof rforms.model.ChoiceBinding ||
-					binding instanceof rforms.model.PropertyChoiceBinding) {
-			dojo.addClass(fieldDiv, "rformsField");
+		} else if (binding instanceof ChoiceBinding ||
+					binding instanceof PropertyChoiceBinding) {
+			domClass.add(fieldDiv, "rformsField");
 			this.addChoice(fieldDiv, binding, noCardinalityButtons);
-		} else if (binding instanceof rforms.model.ValueBinding) {
-			dojo.addClass(fieldDiv, "rformsField");
+		} else if (binding instanceof ValueBinding) {
+			domClass.add(fieldDiv, "rformsField");
 			this.addText(fieldDiv, binding, noCardinalityButtons);
 		}
 	},
 	showAsTable: function(item) {
-		return item instanceof rforms.template.Group && item.hasClass("rformsTable");
+		return item instanceof Group && item.hasClass("rformsTable");
 	},
 
 	//===================================================
 	// Private methods
 	//===================================================	
 	_showInfo:function(item, aroundNode) {
-		if (rforms.__currentDomNode === aroundNode) {
+		if (__currentDomNode === aroundNode) {
 			return;
 		}
-		rforms.__currentDomNode = aroundNode;
+		__currentDomNode = aroundNode;
 		
 		//Prepare the TooltipDialog.
-		var tooltipDialog = new dijit.TooltipDialog({});
+		var tooltipDialog = new TooltipDialog({});
 		tooltipDialog._onBlur = function() {
-			dijit.popup.close(tooltipDialog);
+			popup.close(tooltipDialog);
 		};
 		
 		tooltipDialog.openPopup = function() {
-			dijit.popup.open({
+			popup.open({
 				popup: tooltipDialog,
 				around: aroundNode,
-				onClose: dojo.hitch(null, function() {
+				onClose: lang.hitch(null, function() {
 					tooltipDialog.destroy();
-					setTimeout(function() {delete rforms.__currentDomNode;}, 500);
+					setTimeout(function() {__currentDomNode = null;}, 500);
 				})
 			});
 		};
 		
-		var node = dojo.create("div", {"class": "rforms itemInfo"});
+		var node = construct.create("div", {"class": "rforms itemInfo"});
 		tooltipDialog.setContent(node);
 
 		//Now init the content of the dialog
@@ -249,10 +264,11 @@ dojo.declare("rforms.view.View", dijit._Widget, {
 			message += "<div><label class='descriptionLabel'>Description:&nbsp;</label><span class='descriptionValue'>"+description.replace(/(\r\n|\r|\n)/g, "<br/>")+"</span></div>";
 		}
 		message +="</div>";
-		dojo.attr(node, "innerHTML", message);
-		dijit.focus(node);
+		attr.set(node, "innerHTML", message);
+		focus.focus(node);
 		
 		//Launch the dialog.
 		tooltipDialog.openPopup();
 	}
+    });
 });

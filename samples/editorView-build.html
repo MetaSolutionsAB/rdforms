@@ -3,29 +3,31 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
   </head>
   <body class="tundra">
-	<script type="text/javascript" src="../target/dojo/dojo.js.uncompressed.js"
-		djConfig="parseOnLoad: false, usePlainJson: true, locale: 'ROOT'"></script>
 
-	<script type="text/javascript" src="../target/rforms/nls/rforms_ROOT.js"></script>
-	<script type="text/javascript" src="../target/rforms/rforms.js.uncompressed.js"></script>
-	<script type="text/javascript" src="testdata.js"></script>
+     <script>
+        var dojoConfig = {
+          async:true,
+          locale: "ROOT"
+        };
+     </script>
+     <script src="../target/dojo/dojo.js.uncompressed.js"></script>
+     <script type="text/javascript" src="testdata.js"></script>
 	<style>
-		@import "../lib/dojo/dijit/themes/tundra/tundra.css";
-		@import "../src/rforms/view/resources/rforms.css";
+		@import "../target/dijit/themes/tundra/tundra.css";
+		@import "../target/rforms/view/resources/rforms.css";
 	</style>
 	<script type="text/javascript">
-		//Before this version works you have to execute trunk/build/build.sh
-		dojo.require("rforms.template.ItemStore");		
-		dojo.require("rdfjson.Graph");
-		dojo.require("rforms.model.Engine");
-		dojo.require("rforms.view.Editor");
-		
-		dojo.addOnLoad(function() {
-			var itemStore = new rforms.template.ItemStore();
+      	  require(['rdfjson/Graph',             //Rdfjson Graph API
+	           'rforms/template/ItemStore', //Stores all the form templates
+	           'rforms/model/Engine',       //The engine for matching RDF to template
+                   'rforms/view/Editor',        //The editor User interface
+                   'dojo/domReady!'             //Wait until the dom is ready.
+	       ], function(Graph, ItemStore, Engine, Editor) {
+	                var graph = new Graph(testdata.rdfSrc);
+			var itemStore = new ItemStore();
 	 		var template = itemStore.createTemplate(testdata.templateSrc);
-			var graph = new rdfjson.Graph(testdata.rdfSrc);
-			var binding = rforms.model.match(graph, "http://example.org/about", template);
-			new rforms.view.Editor({template: template, binding: binding}, "compactView");
+			var binding = Engine.match(graph, "http://example.org/about", template);
+			new Editor({template: template, binding: binding}, "compactView");
 		});
 	</script>
 	<div id="compactView"></div>

@@ -3,17 +3,22 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
   </head>
   <body class="tundra">
-	<script type="text/javascript" src="../lib/dojo/dojo/dojo.js.uncompressed.js"
-		djConfig="isDebug: true, debugAtAllCosts: true, parseOnLoad: false, usePlainJson: true"></script>
+
+        <script>
+          var dojoConfig = {
+            async:true,
+              packages: [
+	         { name: "rforms", location: "../../../src/rforms" },
+	         { name: "rdfjson", location: "../../../src/rdfjson" }]
+          };
+        </script>
+        <script src="../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
 	<style>
 		@import "../lib/dojo/dijit/themes/tundra/tundra.css"; /* required when dijit */	
 		@import "../src/rforms/view/resources/rforms.css";
 	</style>
 	<script type="text/javascript">
-		dojo.registerModulePath("rforms","../../../src/rforms");
-		dojo.registerModulePath("rdfjson","../../../src/rdfjson");
 
-		dojo.require("rforms.apps.Experiment");		
 		//A simple template showing a title and an creator in the form of a foaf:Person with a firstname and lastname.
 		//The person being shown in a table format.
 		templateSrc = {
@@ -67,9 +72,11 @@
 			    }
 			};
 
-		dojo.addOnLoad(function() {
-			var e = new rforms.apps.Experiment({templateObj: templateSrc, graphObj: rdf, hideTemplate: true}, "container");
-			e.startup();
+		require(['rforms/apps/Experiment',    // The Experiment UI. 
+		         'dojo/domReady!'             // Wait until the dom is ready.
+		        ], function(Experiment) {
+		            var e = new Experiment({templateObj: templateSrc, graphObj: rdf, hideTemplate: true}, "container");
+			    e.startup();
 		});
 	</script>
 	<div style="width:100%;height:100%" id="container"></div>

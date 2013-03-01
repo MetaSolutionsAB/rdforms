@@ -1,28 +1,33 @@
 <html>
   <head>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   </head>
   <body class="tundra">
-	<script type="text/javascript" src="../lib/dojo/dojo/dojo.js.uncompressed.js"
-		djConfig="isDebug: true, debugAtAllCosts: true, parseOnLoad: false, usePlainJson: true"></script>
-	<script type="text/javascript" src="testdata.js"></script>
+    <script>
+    var dojoConfig = {
+	async:false,
+	packages: [
+	    { name: "rforms", location: "../../../src/rforms" },
+	    { name: "rdfjson", location: "../../../src/rdfjson" }]
+    };
+   </script>
+    <script src="../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
+    <script type="text/javascript" src="testdata.js"></script>
 		
-	<style>
-		@import "../lib/dojo/dijit/themes/tundra/tundra.css"; /* required when dijit */	
-		@import "../src/rforms/view/resources/rforms.css";
-	</style>
-	<script type="text/javascript">
-		dojo.registerModulePath("rforms","../../../src/rforms");
-		dojo.registerModulePath("rdfjson","../../../src/rdfjson");
-		dojo.require("rforms.template.ItemStore");
-		dojo.require("rforms.apps.Validator");
-		
-		dojo.addOnLoad(function() {
-			var itemStore = new rforms.template.ItemStore();
+    <style>
+       @import "../lib/dojo/dijit/themes/tundra/tundra.css"; /* required when dijit */	
+       @import "../src/rforms/view/resources/rforms.css";
+    </style>
+    <script type="text/javascript">
+	  require(['rforms/template/ItemStore',
+	           'rforms/apps/Validator',
+		   'dojo/domReady!'], 
+		   function(ItemStore, Validator) {
+			var itemStore = new ItemStore();
 	 		itemStore.createTemplate(testdata.templateSrc);
-			new rforms.apps.Validator({itemStore: itemStore, type2template: {"http://xmlns.com/foaf/0.1/Document": "testTemplate"}, rdfjson: testdata.rdfSrc}, "container");
+			new Validator({itemStore: itemStore, type2template: {"http://xmlns.com/foaf/0.1/Document": "testTemplate"}, rdfjson: testdata.rdfSrc}, "container");
 		});
-	</script>
+    </script>
 	<div id="container"></div>
   </body>
 </html>

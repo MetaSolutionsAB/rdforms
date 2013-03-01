@@ -1,14 +1,19 @@
 #!/bin/sh
 
+dojoversion="1.8.3";
+
+dojodir="dojo-release-"$dojoversion"-src"
+dojofile=$dojodir".tar.gz"
+dojourl="http://download.dojotoolkit.org/release-"$dojoversion"/"$dojofile
+
 mkdir tmp
 cd tmp
-# http://download.dojotoolkit.org/release-1.6.1/dojo-release-1.6.1-src.tar.gz
-echo "Fetching dojo from: http://download.dojotoolkit.org/release-1.6.1/dojo-release-1.6.1-src.tar.gz"
-wget http://download.dojotoolkit.org/release-1.6.1/dojo-release-1.6.1-src.tar.gz
+echo "Fetching dojo from: "$dojourl
+wget $dojourl
 echo "Unpacking dojo"
-tar xfz dojo-release-1.6.1-src.tar.gz
+tar xfz $dojofile
 rm -rf ../dojo-src
-mv dojo-release-1.6.1-src ../dojo-src
+mv $dojodir ../dojo-src
 cd ..
 rm -rf tmp
 cd dojo-src/util/buildscripts/

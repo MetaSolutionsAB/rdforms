@@ -1,4 +1,4 @@
-dojo.provide("rdfjson.ajar.rdfparser");
+define(["./uri"], function(URI) {
 
 /**
  * @fileoverview
@@ -63,7 +63,7 @@ dojo.provide("rdfjson.ajar.rdfparser");
  * @constructor
  * @param {RDFStore} store An RDFStore object
  */
-function RDFParser(store) {
+var RDFParser = function(store) {
     /** Standard namespaces that we know how to handle @final
      *  @member RDFParser
      */
@@ -113,7 +113,7 @@ function RDFParser(store) {
 	
 	/** Add a symbol of a certain type to the this frame */
 		'addSymbol': function (type, uri) {
-		    uri = Util.uri.join(uri, this['base'])
+		    uri = URI.join(uri, this['base'])
 		    this['node'] = this['store']['sym'](uri)
 		    this['nodeType'] = type
 		},
@@ -131,7 +131,7 @@ function RDFParser(store) {
 		    }
 		    if (this['parent']['rdfid'] != null) { // reify
 			var triple = this['store']['sym'](
-			    Util.uri.join("#"+this['parent']['rdfid'],
+			    URI.join("#"+this['parent']['rdfid'],
 					  this['base']))
 			this['store']['add'](triple,
 					     this['store']['sym'](
@@ -357,7 +357,7 @@ function RDFParser(store) {
 					     this['store']['sym'](
 						 RDFParser['ns']['RDF']+"type"),
 					     this['store']['sym'](
-						 Util.uri.join(
+						 URI.join(
 						     rdftype['nodeValue'],
 						     frame['base'])),
 					     this['why'])
@@ -467,7 +467,8 @@ function RDFParser(store) {
 		    frame = frame['parent']
 		    dom = frame['element']
 		}
-		var candidate = dom['childNodes'][frame['lastChild']]
+		var ch = dom['childNodes'];
+		var candidate = ch != null ? ch[frame['lastChild']] : null;
 		if (candidate == null || !dig) {
 		    frame['terminateFrame']()
 		    if (!(frame = frame['parent'])) { break } // done
@@ -544,3 +545,5 @@ function RDFParser(store) {
 	return frame
     }
 }
+return RDFParser;
+});

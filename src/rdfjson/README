@@ -1,4 +1,5 @@
-This folder contains the RDF/XML parser from the Tabulator 0.8 code base.
+This folder contains the RDF/XML parser from the Tabulator 0.8 code base
+together with an RDF/JSON API.
 
 More information about the Tabulator project can be found at:
 http://dig.csail.mit.edu/2005/ajar/release/tabulator/0.8/Help.html
@@ -8,8 +9,8 @@ http://dig.csail.mit.edu/2005/ajar/release/tabulator/0.8/uri.js
 http://dig.csail.mit.edu/2005/ajar/release/tabulator/0.8/rdf/term.js
 http://dig.csail.mit.edu/2005/ajar/release/tabulator/0.8/rdf/rdfparser.js
 
-The only modification done to the files is the dojo.require statement provided
-at the top of each file to allow for dojos dependency and build system to work.
+The files have been modified to be compatible with requirejs as well as
+some improvement in code style.
 
 The code from the Tabulator project is bound under the the 
 W3C SOFTWARE LICENSE (below).

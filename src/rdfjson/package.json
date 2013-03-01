@@ -1,0 +1,20 @@
+{
+    "name": "rdfjson",
+    "version": "2.0",
+    "main": "main",
+    "dependencies": {
+	"dojo": "1.8.3",
+	"dijit": "1.8.3",
+	"dojox": "1.8.3",
+	"util": "1.8.3"
+    },
+    "description": "Rdfjson is a library for working with RDF in the RDF/Json format.",
+    "licenses": [
+	{
+	    "type": "BSD",
+	    "url": "http://bugs.dojotoolkit.org/browser/dojo/trunk/LICENSE#L13"
+	}
+    ],
+    "homepage": "https://code.google.com/p/rforms/",
+    "dojoBuild": "package.js"
+}

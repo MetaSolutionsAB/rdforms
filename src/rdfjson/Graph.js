@@ -1,10 +1,144 @@
-/*global dojo, rdfjson*/
-dojo.provide("rdfjson.Graph");
-dojo.require("rdfjson.base");
-dojo.require("rdfjson.Statement");
+/*global define*/
+define(["./rdfjson", "./Statement"], function(rdfjson, Statement) {
+
+
+var zeroOrOne = function(arr) {
+	if (arr.length === 0) {
+		return arr;
+	} else {
+		return [arr[0]];
+	}
+};
+
+var perStatement = function(graph, statements, perSubject) {
+	return {
+		object: function(predicate) {
+			for (var i=0;i<statements.length;i++) {
+				var subj;
+				if (perSubject) {
+					subj = statements[i].getSubject();
+				} else {
+					var t = statements[i].getType();
+					if (t === 'uri' || t === 'bnode') {
+						continue;
+					}
+					subj = statements[i].getValue();
+				}
+				var stmts = graph.find(subj, predicate);
+				if (stmts.length > 0) {
+					perStatement(graph, [stmts[0]]);
+				}
+			}
+			return perStatement(graph, []);
+		},
+		objects: function(predicate) {
+			var nstats = [];
+			if (perSubject === true) {
+				for (var i=0;i<statements.length;i++) {
+					nstats = nstats.concat(graph.find(statements[i].getSubject(), predicate));
+				}
+			} else {
+				for (var i=0;i<statements.length;i++) {
+					var t = statements[i].getType();
+					if (t === 'uri' || t === 'bnode') {
+						nstats = nstats.concat(graph.find(statements[i].getValue(), predicate));
+					}
+				}
+			}
+			return perStatement(graph, nstats);
+		},
+		constr: function(predicate, object) {
+			if (rdfjson.isString(object)) {
+				object = {type: 'uri', value: object};
+			}
+			var nstats = [];
+			for (var i=0;i<statements.length;i++) {
+				var subj = perSubject ? statements[i].getSubject() : statements[i].getValue();
+				if (graph.find(subj, predicate, object).length > 0) {
+					nstats.push(statements[i]);
+				}
+			}
+			return perStatement(graph, nstats, perSubject);
+		},
+		/**
+		 * For each match the callback will be called with a focused iterator.
+		 */
+		each: function(callback, type) {
+			if (perSubject === true) {
+				for (var i=0;i<statements.length;i++) {
+					var subj = statements[i].getSubject();
+					var t = subj.substring(0, 2) === "_:" ? 'bnode' : 'uri';
+					if (type == null || type === t) {
+						callback(perStatement(graph, statement[i], perSubject));
+					}
+				}
+			} else {
+				for (var i=0;i<statements.length;i++) {
+					callback(perStatement(graph, statements[i], perSubject));
+				}
+			}
+		},
+		nodes: function(type) {
+			var res = [];
+			if (perSubject === true) {
+				for (var i=0;i<statements.length;i++) {
+					var subj = statements[i].getSubject();
+					var t = subj.substring(0, 2) === "_:" ? 'bnode' : 'uri';
+					if (type == null || type === t) {
+						res.push({type: t, value: statements[i].getSubject()});
+					}
+				}
+			} else {
+				for (var i=0;i<statements.length;i++) {
+					if (type == null || type === statements[i].getType()) {
+						res.push(statements[i].getObject());
+					}
+				}
+			}
+			return res;
+		},
+		values: function(type) {
+			var res = [];
+			if (perSubject === true) {
+				for (var i=0;i<statements.length;i++) {
+					var subj = statements[i].getSubject();
+					var t = subj.substring(0, 2) === "_:" ? 'bnode' : 'uri';
+					if (type == null || type === t) {
+						res.push(statements[i].getSubject());
+					}
+				}
+			} else {
+				for (var i=0;i<statements.length;i++) {
+					if (type == null || type === statements[i].getType()) {
+						res.push(statements[i].getValue());
+					}
+				}
+			}
+			return res;
+		},
+		firstValue: function(type) {
+			if (perSubject === true) {
+				for (var i=0;i<statements.length;i++) {
+					var subj = statements[i].getSubject();
+					var t = subj.substring(0, 2) === "_:" ? 'bnode' : 'uri';
+					if (type == null || type === t) {
+						return statements[i].getSubject();
+					}
+				}
+			} else {
+				for (var i=0;i<statements.length;i++) {
+					if (type == null || type === statements[i].getType()) {
+						return statements[i].getValue();
+					}
+				}
+			}
+		}
+	}
+};
+
 
 /**
- * Wraps a pure RDF JSON object to make it easy to access and manipulate on the level of rdfjson.Statements.
+ * Graph wraps a pure RDF JSON object to make it easy to access and manipulate on the level of rdfjson.Statements.
  * Note that for efficiency reasons the RDF JSON object will be extended, hence it will contain attributes 
  * that goes beyond the specification. Hence, note that the pure RDF JSON object:
  * <ul><li>can still be inspected independently, it will contain the correct RDF expression.</li>
@@ -16,28 +150,30 @@ dojo.require("rdfjson.Statement");
  * TODO: Graph level operations (set operations), 
  * e.g. joining two graphs, requires careful renaming of bnodes.
  */
-dojo.declare("rdfjson.Graph", null, {
-	
-	//===================================================
-	// Internal Attributes
-	//===================================================
-	/**
-	 * This is the RDF JSON object we will manipulate.
-	 * @param {Object} graph
-	 */
-	_graph: null,
-	
-	/**
-	 * Internal index of bnodes, will never shrink after creation of this graph instance.
-	 * New bnodes will be added but bnodes contained in removed statements will be kept
-	 * in case the statement is only temporarily unasserted.
-	 */
-	_bnodes: null,
-	
-	/**
-	 * If true the graph has been iterated through and all found bnodes have been added to index.
-	 */
-	_bnodesIndexed: false,
+
+/**
+ * The constructor is sheep, no indexes or additional statements
+ * are created until strictly needed.
+ * 
+ * @param {Object} graph a pure RDF JSON object according to the specification that will be manipulated internally.
+ */
+var Graph = function(graph, validate) {
+		this._graph = graph || {};
+		/**
+		 * Internal index of bnodes, will never shrink after creation of this graph instance.
+	 	 * New bnodes will be added but bnodes contained in removed statements will be kept
+	 	 * in case the statement is only temporarily unasserted.
+	 	 */
+		this._bnodes = {};
+		/**
+	 	 * If true the graph has been iterated through and all found bnodes have been added to index.
+		 */
+		this._bnodesIndexed = false;
+
+		if (validate !== false) {
+			this.validate();			
+		}
+};
 	
 	//===================================================
 	// Public API
@@ -49,13 +185,13 @@ dojo.declare("rdfjson.Graph", null, {
 	 * @param {Object} statement
 	 * @see rdfjson.Statement
 	 */
-	add: function(statement) {
+	Graph.prototype.add = function(statement) {
 		this._trackBNodes(statement._s, statement._p, statement._o);
 		return this._get(statement._s, statement._p,
 						 rdfjson.add(this._graph, statement._s, statement._p, 
 									 this._graphObject(statement._o)), 
 						 true);
-	},
+	};
 	/**
 	 * Removes the given statement from the graph.
 	 * If you plan to keep the statement around and assert it later, 
@@ -63,12 +199,12 @@ dojo.declare("rdfjson.Graph", null, {
 	 *  
 	 * @param {Object} statement the statement to remove from the graph.
 	 */
-	remove: function(statement) {
+	Graph.prototype.remove = function(statement) {
 		this._trackBNodes(statement._s, statement._p, statement._o);
 		return this._get(statement._s, statement._p, 
 						 rdfjson.remove(this._graph, statement._s, statement._p, statement._o),
 						 false);
-	},
+	};
 	
 	/**
 	 * Finds all statements that fulfills the given pattern. Any combination of the arguments may be left out.
@@ -78,7 +214,7 @@ dojo.declare("rdfjson.Graph", null, {
 	 * @param {Object} o the object in the statements to be returned, undefined indicates that any object is ok.
 	 * @return {Array} of Statements, may be empty, not undefined.
 	 */
-	find: function(s, p, o) {
+	Graph.prototype.find = function(s, p, o) {
 		// none, s, p, s&p 
 		if (o == null) {
 			// none, s
@@ -120,7 +256,7 @@ dojo.declare("rdfjson.Graph", null, {
 		} else {
 			return [stmt];
 		}
-	},
+	};
 	
 	/**
 	 * Convenience method that returns the value of the first matching statement
@@ -131,12 +267,27 @@ dojo.declare("rdfjson.Graph", null, {
 	 * @return {String} the value, may be a literal or a URI, if undefined no matching statement (and value) could be found.
 	 * @see find
 	 */
-	findFirstValue: function(s, p) {
+	Graph.prototype.findFirstValue = function(s, p) {
 		var arr = this.find(s, p);
 		if (arr.length > 0) {
 			return arr[0].getValue();
 		}
-	},
+	};
+	
+	Graph.prototype.subjects = function(p, o) {
+		return perStatement(this, this.find(null, p, o), true);
+	};
+	Graph.prototype.subject = function(p, o) {
+		return perStatement(this, zeroOrOne(this.find(null, p, o)), true);
+	};
+
+	Graph.prototype.objects = function(s, p) {
+		return perStatement(this, this.find(s, p, null));
+	};	
+
+	Graph.prototype.object = function(s, p) {
+		return perStatement(this, zeroOrOne(this.find(s, p, null)));
+	};	
 		
 	/**
 	 * Creates a new statement and adds it to the graph unless explicitly specified not to via the assert flag. 
@@ -144,10 +295,10 @@ dojo.declare("rdfjson.Graph", null, {
 	 * @param {String} s the subject in the form of a uri, if undefined a new blank node is created.
 	 * @param {String} p the predicate in the form of a uri, if undefined a new blank node is created.
 	 * @param {Object} o the object in the form of an object containing 
-	 *  the attributes: 'type', 'value', 'lconxillaang', and 'datatype'. If undefined a new blank node is created. 
+	 *  the attributes: 'type', 'value', 'lang', and 'datatype'. If undefined a new blank node is created. 
 	 * @param {Boolean} assert indicated if the statement should be added to the graph directly. If not specified true is assumed. 
 	 */
-	create: function(s, p, o, assert) {
+	Graph.prototype.create = function(s, p, o, assert) {
 		if (s == null) {
 			s = this._newBNode();
 		}
@@ -164,19 +315,19 @@ dojo.declare("rdfjson.Graph", null, {
 		if (assert !== false) {
 			return this._get(s, p, rdfjson.add(this._graph, s, p, o), true);			
 		} else {
-			return new rdfjson.Statement(this, s, p, o, false);	
+			return new Statement(this, s, p, o, false);	
 		}
-	},
+	};
 
-	registerBNode: function(bNodeId) {
+	Graph.prototype.registerBNode = function(bNodeId) {
 		this._bnodes[bNodeId] = true;
-	},
+	};
 
 	/**
 	 * @return a plain RDF JSON object without the additional artifacts created by this graph class.
 	 * The returned object is suitable for serilazation and communicated with other systems.
 	 */
-	exportRDFJSON: function() {
+	Graph.prototype.exportRDFJSON = function() {
 		var s, p, oindex, graph = this._graph, ngraph = {}, objArr, nObjArr, o, no;
 		for (s in graph) {
 			if (graph.hasOwnProperty(s)) {
@@ -201,10 +352,10 @@ dojo.declare("rdfjson.Graph", null, {
 			}
 		}
 		return ngraph;
-	},
-	clone: function() {
-		return new rdfjson.Graph(this.exportRDFJSON());
-	},
+	};
+	Graph.prototype.clone = function() {
+		return new Graph(this.exportRDFJSON());
+	};
 	
 	/**
 	 * Finds all properties for a given subject.
@@ -212,7 +363,7 @@ dojo.declare("rdfjson.Graph", null, {
 	 * @param {String} s
 	 * @return {Array} of strings
 	 */
-	findProperties: function(s) {
+	Graph.prototype.findProperties = function(s) {
 		if (this._graph[s] == null) {
 			return [];
 		}
@@ -223,34 +374,17 @@ dojo.declare("rdfjson.Graph", null, {
 			}
 		}
 		return predicates;
-	},
+	};
 	
 	/**
 	 * Validates the graph, if errors are detected an exception is thrown.
 	 */
-	validate: function() {
+	Graph.prototype.validate = function() {
 		this.report = this._validate();
 		if (!this.report.valid) {
 			throw(this.report);
 		}
-	},
-
-	//===================================================
-	// Inherited methods
-	//===================================================
-	/**
-	 * The constructor is sheep, no indexes or additional statements
-	 * are created until strictly needed.
-	 * 
-	 * @param {Object} graph a pure RDF JSON object according to the specification.
-	 */
-	constructor: function(graph, validate) {
-		this._graph = graph || {};
-		this._bnodes = {};
-		if (validate !== false) {
-			this.validate();			
-		}
-	},
+	};
 
 
 	//===================================================
@@ -260,47 +394,49 @@ dojo.declare("rdfjson.Graph", null, {
 	 * If the object already contains a statement that is returned, otherwise a new is created.
 	 * @return {Object} a statement that belongs to this graph.
 	 */
-	_get: function(s, p, o, asserted) {
+	Graph.prototype._get = function(s, p, o, asserted) {
 		if (o == null) {
 			return;
 		}
 		if (o._statement == null) {
-			new rdfjson.Statement(this, s, p, o, asserted);
+			new Statement(this, s, p, o, asserted);
 		}
 		return o._statement;
-	},
+	};
 	
 	/**
 	 * @return {Object} if the object originates from another graph a copy is made.
 	 */
-	_graphObject: function(o) {
+	Graph.prototype._graphObject = function(o) {
 		if (o._statement == null ||
 			o._statement._graph === this) {
 			return o;
 		}
 		return {type: o.type, value: o.value, lang: o.lang, datatype: o.datatype};
-	},
+	};
 
 	/**
 	 * Finds all statements with a given subject and object.
 	 * @param {Object} s
 	 * @param {Object} p
 	 */
-	_findSP: function(s,p) {
+	Graph.prototype._findSP = function(s,p) {
 		if (this._graph[s] == null || this._graph[s][p] == null) {
 			return [];
 		}
-		return dojo.map(this._graph[s][p], dojo.hitch(this, function(sobj) {
-			return this._get(s, p, sobj, true);
-		}));
-	},
+		var arr = [], objs = this._graph[s][p];
+		for (var i=0;i<objs.length;i++) {
+			arr[i] = this._get(s, p, objs[i], true);
+		}
+		return arr;
+	};
 
 	/**
 	 * Finds all statements with a given subject.
 	 * Note: Optimal.
 	 * @param {Object} s
 	 */
-	_findS: function(s) {
+	Graph.prototype._findS = function(s) {
 		if (this._graph[s] == null) {
 			return [];
 		}
@@ -311,77 +447,77 @@ dojo.declare("rdfjson.Graph", null, {
 			}
 		}
 		return Array.prototype.concat.apply([], spArrs);
-	},
+	};
 
 	/**
 	 * Generates statements for the entire graph.
 	 * Note: Optimal.
 	 */
-	_find: function() {
-		var arr = [];
-		this._map(dojo.hitch(this, function(s1, p1, o1) {
-			arr.push(this._get(s1, p1, o1, true));
-		}));
+	Graph.prototype._find = function() {
+		var arr = [], that = this;
+		this._map(function(s1, p1, o1) {
+			arr.push(that._get(s1, p1, o1, true));
+		});
 		return arr;
-	},
+	};
 	
 	/**
 	 * Finds all statements with a given predicate.
 	 * Note: Close to optimal without further indexing, to many checks due to iteration via _map. 
 	 * @param {Object} p
 	 */
-	_findP: function(p) {
-		var arr = [];
-		this._map(dojo.hitch(this, function(s1, p1, o1) {
+	Graph.prototype._findP = function(p) {
+		var arr = [], that=this;
+		this._map(function(s1, p1, o1) {
 			if (p===p1) {
-				arr.push(this._get(s1, p1, o1, true));				
+				arr.push(that._get(s1, p1, o1, true));				
 			}
-		}));
+		});
 		return arr;		
-	},
+	};
 	
 	/**
 	 * Iterates through all statements to find those with specified object.
 	 * Note: Optimal without additional indexing.
 	 * @param {Object} o
 	 */
-	_findO: function(o) {
-		var arr = [];
-		this._map(dojo.hitch(this, function(s1, p1, o1) {
+	Graph.prototype._findO = function(o) {
+		var arr = [], that = this;
+		this._map(function(s1, p1, o1) {
 			if (rdfjson.objectEquals(o, o1)) {
-				arr.push(this._get(s1, p1, o1, true));				
+				arr.push(that._get(s1, p1, o1, true));				
 			}
-		}));
+		});
 		return arr;		
-	},
+	};
 
 	/**
 	 * Finds all statements with a given subject and object.
 	 * Note: Close to optimal without further indexing, to many checks due to iteration via _map.
 	 */
-	_findSO: function(s, o) {
-		var arr = [];
-		this._map(dojo.hitch(this, function(s1, p1, o1) {
+	Graph.prototype._findSO = function(s, o) {
+		var arr = [], that = this;
+		this._map(function(s1, p1, o1) {
 			if (s===s1 && rdfjson.objectEquals(o, o1)) {
-				arr.push(this._get(s1, p1, o1, true));				
+				arr.push(that._get(s1, p1, o1, true));				
 			}
-		}));
+		});
 		return arr;		
-	},
+	};
 
 	/**
 	 * Finds all statements with a given predicate and object.
 	 * Note: Close to optimal without further indexing, to many checks due to iteration via _map.
 	 */
-	_findPO: function(p, o) {
-		var arr = [];
-		this._map(dojo.hitch(this, function(s1, p1, o1) {
+	Graph.prototype._findPO = function(p, o) {
+		var arr = [], that = this;
+		this._map(function(s1, p1, o1) {
 			if (p===p1 && rdfjson.objectEquals(o, o1)) {
-				arr.push(this._get(s1, p1, o1, true));				
+				arr.push(that._get(s1, p1, o1, true));				
 			}
-		}));
+		});
 		return arr;
-	},
+	};
 	
 	/**
 	 * Iterates through all statements of the graph and calls the provided function on them.
@@ -389,7 +525,7 @@ dojo.declare("rdfjson.Graph", null, {
 	 * @param {Function} f are called for each statement with the three arguments 
 	 *  (in order) subject, predicate, and object. 
 	 */
-	_map: function(f) {
+	Graph.prototype._map = function(f) {
 		var s, p, oindex, graph = this._graph, objArr;
 		for (s in graph) {
 			if (graph.hasOwnProperty(s)) {
@@ -403,13 +539,13 @@ dojo.declare("rdfjson.Graph", null, {
 				}
 			}
 		}
-	},
+	};
 	
-	_validate: function() {
+	Graph.prototype._validate = function() {
 		var s, p, oindex, graph = this._graph, objArr, report = {valid: true, errors: [], nr: 0};
 		for (s in graph) {
 			if (graph.hasOwnProperty(s)) {
-				if (!dojo.isObject(graph[s])) {
+				if (!rdfjson.isObject(graph[s])) {
 					report.errors.push({s: s, message: "Subject must point to an object."});
 					report.valid = false;
 					continue;
@@ -417,7 +553,7 @@ dojo.declare("rdfjson.Graph", null, {
 				for (p in graph[s]) {
 					if (graph[s].hasOwnProperty(p)) {
 						objArr = graph[s][p];
-						if (!dojo.isArray(objArr)) {
+						if (!rdfjson.isArray(objArr)) {
 							report.errors.push({s: s, p: p, message: "Predicate must point to an array of objects."});
 							report.valid = false;
 							continue;
@@ -425,7 +561,7 @@ dojo.declare("rdfjson.Graph", null, {
 						
 						for (oindex = objArr.length-1;oindex>=0;oindex--) {
 							var o = objArr[oindex];
-							if (!dojo.isObject(o)) {
+							if (!rdfjson.isObject(o)) {
 								report.errors.push({s: s, p: p, oindex: (oindex+1), message: "Element "+(oindex+1)+" in object array is not an object."});
 								report.valid = false;
 								continue;
@@ -435,7 +571,7 @@ dojo.declare("rdfjson.Graph", null, {
 								report.valid = false;
 								continue;
 							}
-							if (!dojo.isString(o.value)) {
+							if (!rdfjson.isString(o.value)) {
 								report.errors.push({s: s, p: p, oindex: (oindex+1), message: "Object "+(oindex+1)+" in object array must have the 'value' attribute pointing to a string."});
 								report.valid = false;
 								continue;
@@ -447,14 +583,14 @@ dojo.declare("rdfjson.Graph", null, {
 			}
 		}
 		return report;
-	},
+	};
 	
 	/**
 	 * Creates a new bnode that is unique in the current graph.
 	 * Bnodes in temporarily unasserted statements (currently removed from the graph)
 	 * are avoided as well.   
 	 */
-	_newBNode: function() {
+	Graph.prototype._newBNode = function() {
 		this._indexBNodes();
 		var p, n, bnode;
 		for (p=1;p<10;p++) {
@@ -466,7 +602,7 @@ dojo.declare("rdfjson.Graph", null, {
 				}
 			}
 		}
-	},
+	};
 	
 	/**
 	 * Adds the bnodes in the graph to the bnode index.
@@ -476,7 +612,7 @@ dojo.declare("rdfjson.Graph", null, {
 	 * they should not overlap with newly created bnodes.)
 	 * After the index is created all statemnts added update the index.
 	 */
-	_indexBNodes: function() {
+	Graph.prototype._indexBNodes = function() {
 		if (this._bnodesIndexed) {
 			return;
 		}
@@ -502,7 +638,7 @@ dojo.declare("rdfjson.Graph", null, {
 			}
 		}
 		this._bnodesIndexed = true;
-	},
+	};
 	
 	/**
 	 * Adds any bnodes in the given parameters to the index (the index may still be incomplete).
@@ -510,7 +646,7 @@ dojo.declare("rdfjson.Graph", null, {
 	 * @param {Object} p the predicate in a statement.
 	 * @param {Object} o the object in a statement.
 	 */
-	_trackBNodes: function(s, p, o) {
+	Graph.prototype._trackBNodes = function(s, p, o) {
 		if (s.indexOf("_:") === 0) {
 			this._bnodes[s] = true;
 		}
@@ -520,5 +656,6 @@ dojo.declare("rdfjson.Graph", null, {
 		if (o.type === "bnode") {
 			this._bnodes[o.value] = true;
 		}
-	}
+	};
+	return Graph;
 });

@@ -3,26 +3,33 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
   </head>
   <body class="tundra">
-    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.js" 
-		djConfig="parseOnLoad: true" type="text/javascript"></script>
-	<script type="text/javascript" src="http://rforms.googlecode.com/files/rforms_ROOT.js"></script>
-	<script type="text/javascript" src="http://rforms.googlecode.com/files/rforms.js"></script>
+    <script>
+    var dojoConfig = {
+	async:true,
+	  paths: {
+	    "rforms/rforms": "http://rforms.googlecode.com/files/rforms2"
+	  }
+    };
+   </script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js" type="text/javascript"></script>
 	<script type="text/javascript" src="testdata.js"></script>
 
 	<style>
-		@import "http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dijit/themes/tundra/tundra.css";
+		@import "http://ajax.googleapis.com/ajax/libs/dojo/1.8.3/dijit/themes/tundra/tundra.css";
 		@import "http://rforms.googlecode.com/svn/trunk/src/rforms/view/resources/rforms.css";
 	</style>
     
 	<script type="text/javascript">
-		dojo.require("rforms.template.ItemStore");
-		dojo.require("rforms.apps.Validator");
-		
-		dojo.addOnLoad(function() {
-			var itemStore = new rforms.template.ItemStore();
-	 		itemStore.createTemplate(testdata.templateSrc);
-			new rforms.apps.Validator({itemStore: itemStore, type2template: {"http://xmlns.com/foaf/0.1/Document": "testTemplate"}, rdfjson: testdata.rdfSrc}, "container");
+	  require(['rforms/rforms'], function() {
+	     require(['rforms/template/ItemStore', 
+	              'rforms/apps/Validator'
+                ], function(ItemStore, Validator) {
+	             var itemStore = new rforms.template.ItemStore();
+	 	     itemStore.createTemplate(testdata.templateSrc);
+		     new Validator({itemStore: itemStore, type2template: {"http://xmlns.com/foaf/0.1/Document": "testTemplate"}, rdfjson: testdata.rdfSrc}, "container");
 		});
+          });
 	</script>
 	<div id="container"></div>
   </body>

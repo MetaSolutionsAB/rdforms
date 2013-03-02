@@ -3,25 +3,30 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
   </head>
   <body class="tundra">
-  	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.js" 
-		djConfig="parseOnLoad: true" type="text/javascript"></script>
-	<script type="text/javascript" src="http://rforms.googlecode.com/files/rforms_ROOT.js"></script>
-	<script type="text/javascript" src="http://rforms.googlecode.com/files/rforms.js"></script>
-	<script type="text/javascript" src="testdata.js"></script>
+     <script>
+        var dojoConfig = {
+          async:true,
+	  paths: {
+	    "rforms/rforms": "http://rforms.googlecode.com/files/rforms2"
+	  }
+        };
+     </script>
+     <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js"></script>
+     <script type="text/javascript" src="testdata.js"></script>
+     <style>
+	@import "http://ajax.googleapis.com/ajax/libs/dojo/1.8.3/dijit/themes/tundra/tundra.css";
+	@import "http://rforms.googlecode.com/svn/trunk/src/rforms/view/resources/rforms.css";
+     </style>
 
-	<style>
-		@import "http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dijit/themes/tundra/tundra.css";
-		@import "http://rforms.googlecode.com/svn/trunk/src/rforms/view/resources/rforms.css";
-	</style>
-	<script type="text/javascript">
-		dojo.require("rforms.apps.Experiment");
-		
-		dojo.addOnLoad(function() {
-			testdata.templateSrc.root.content[1].cls = ["rformsTable"];
-			var e = new rforms.apps.Experiment({templateObj: testdata.templateSrc, graphObj: testdata.rdfSrc}, "container");
-			e.startup();
-		});
-	</script>
-	<div style="width:100%;height:100%" id="container"></div>
+     <script type="text/javascript">
+       	require(['rforms/rforms'], function() {
+      	  require(['rforms/apps/Experiment'], function(Experiment) {
+            testdata.templateSrc.root.content[1].cls = ["rformsTable"];
+	    var e = new Experiment({templateObj: testdata.templateSrc, graphObj: testdata.rdfSrc}, "container");
+            e.startup();
+          });
+        });
+     </script>
+     <div style="width:100%;height:100%" id="container"></div>
   </body>
 </html>

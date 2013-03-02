@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
   <ModulePrefs title="Gadget Wrapper" author_email="mpalmer@gmail.com" description="Shows whatever url in an iframe that is provided in the url user preference." height="500">
-	<Optional feature="content-rewrite">
-	    <Param name="exclude-url">*</Param>
-	</Optional>
   </ModulePrefs>
 	<UserPref name="templateSrc" datatype="string" 
                default_value=""/>

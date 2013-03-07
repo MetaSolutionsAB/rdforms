@@ -31,16 +31,23 @@
 	<script>
 	   gadgets.util.registerOnLoadHandler(function(){
 		require(['rforms/rforms'], function() {
-		  require(['rforms/apps/Experiment'], function(Experiment) {
+		  require(['rforms/apps/Experiment', 'dojo/json'], function(Experiment, json) {
 		     document.body.className += "tundra";
 			var prefs = new gadgets.Prefs();
 			var templateSrc = prefs.getString("templateSrc");
-			var params = {};
-			params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
-			gadgets.io.makeRequest(templateSrc, function(response) {
-			    var e = new Experiment({templateObj: dojo.fromJson(response.data), graphObj: {}}, "container");
-			    e.startup();
-			});
+			if (templateSrc.slice(-5) == ".json") {
+				var params = {};
+				params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+				gadgets.io.makeRequest(templateSrc, function(response) {
+				    var e = new Experiment({templateObj: json.parse(response.data), graphObj: {}}, "container");
+			    	e.startup();
+				});
+			} else {
+				require([templateSrc], function(template) {
+				    var e = new Experiment({templateObj: template, graphObj: {}}, "container");
+				    e.startup();
+			 	});
+			}
 		  });
 		});
 	  });

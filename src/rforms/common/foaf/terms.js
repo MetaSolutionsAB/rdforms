@@ -45,8 +45,9 @@ define({
    "description": {
     "en": "A sha1sum hash, in hex."
    },
-   "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "type": "group",
+   "automatic": true,
+   "content": []
   },
   {
    "id": "foaf:based_near",
@@ -77,8 +78,9 @@ define({
    "description": {
     "en": "Title (Mr, Mrs, Ms, Dr. etc)"
    },
-   "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "type": "group",
+   "automatic": true,
+   "content": []
   },
   {
    "id": "foaf:nick",
@@ -89,8 +91,9 @@ define({
    "description": {
     "en": "A short informal nickname characterising an agent (includes login identifiers, IRC and other chat nicknames)."
    },
-   "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "type": "group",
+   "automatic": true,
+   "content": []
   },
   {
    "id": "foaf:jabberID",
@@ -209,8 +212,9 @@ define({
    "description": {
     "en": "The given name of some person."
    },
-   "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "type": "group",
+   "automatic": true,
+   "content": []
   },
   {
    "id": "foaf:familyName",
@@ -233,8 +237,9 @@ define({
    "description": {
     "en": "A phone,  specified using fully qualified tel: URI scheme (refs: http://www.w3.org/Addressing/schemes.html#tel)."
    },
-   "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "type": "group",
+   "automatic": true,
+   "content": []
   },
   {
    "id": "foaf:homepage",
@@ -674,8 +679,9 @@ define({
    "description": {
     "en": "Indicates the class of individuals that are a member of a Group"
    },
-   "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "type": "group",
+   "automatic": true,
+   "content": []
   },
   {
    "id": "foaf:birthday",
@@ -719,8 +725,9 @@ define({
    "label": {
     "en": "rdf-schema#label"
    },
-   "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "type": "group",
+   "automatic": true,
+   "content": []
   },
   {
    "id": "foaf:LabelProperty",
@@ -1354,6 +1361,12 @@ define({
      "id": "foaf:name"
     },
     {
+     "id": "foaf:img"
+    },
+    {
+     "id": "foaf:weblog"
+    },
+    {
      "id": "foaf:depiction"
     },
     {
@@ -1364,6 +1377,28 @@ define({
     },
     {
      "id": "foaf:maker"
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Online accounts"
+     },
+     "content": [
+      {
+       "id": "foaf:openid"
+      },
+      {
+       "id": "foaf:tipjar"
+      }
+     ]
     },
     {
      "cardinality": {
@@ -1412,6 +1447,12 @@ define({
      "id": "foaf:name"
     },
     {
+     "id": "foaf:img"
+    },
+    {
+     "id": "foaf:weblog"
+    },
+    {
      "id": "foaf:depiction"
     },
     {
@@ -1422,6 +1463,28 @@ define({
     },
     {
      "id": "foaf:maker"
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Online accounts"
+     },
+     "content": [
+      {
+       "id": "foaf:openid"
+      },
+      {
+       "id": "foaf:tipjar"
+      }
+     ]
     },
     {
      "cardinality": {
@@ -1470,6 +1533,12 @@ define({
      "id": "foaf:name"
     },
     {
+     "id": "foaf:img"
+    },
+    {
+     "id": "foaf:weblog"
+    },
+    {
      "id": "foaf:depiction"
     },
     {
@@ -1480,6 +1549,28 @@ define({
     },
     {
      "id": "foaf:maker"
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Online accounts"
+     },
+     "content": [
+      {
+       "id": "foaf:openid"
+      },
+      {
+       "id": "foaf:tipjar"
+      }
+     ]
     },
     {
      "cardinality": {
@@ -1528,6 +1619,12 @@ define({
      "id": "foaf:name"
     },
     {
+     "id": "foaf:img"
+    },
+    {
+     "id": "foaf:weblog"
+    },
+    {
      "id": "foaf:depiction"
     },
     {
@@ -1538,6 +1635,28 @@ define({
     },
     {
      "id": "foaf:maker"
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Online accounts"
+     },
+     "content": [
+      {
+       "id": "foaf:openid"
+      },
+      {
+       "id": "foaf:tipjar"
+      }
+     ]
     },
     {
      "cardinality": {
@@ -1570,6 +1689,28 @@ define({
    ]
   },
   {
+   "id": "http://www.w3.org/2000/01/rdf-schema#Class",
+   "label": {
+    "en": "rdf-schema#Class"
+   },
+   "constraints": {
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2000/01/rdf-schema#Class"
+   },
+   "type": "group",
+   "content": []
+  },
+  {
+   "id": "http://www.w3.org/2000/10/swap/pim/contact#Person",
+   "label": {
+    "en": "Person"
+   },
+   "constraints": {
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2000/10/swap/pim/contact#Person"
+   },
+   "type": "group",
+   "content": []
+  },
+  {
    "id": "http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing",
    "label": {
     "en": "Spatial Thing"
@@ -1585,17 +1726,6 @@ define({
    ]
   },
   {
-   "id": "http://www.w3.org/2000/10/swap/pim/contact#Person",
-   "label": {
-    "en": "Person"
-   },
-   "constraints": {
-    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2000/10/swap/pim/contact#Person"
-   },
-   "type": "group",
-   "content": []
-  },
-  {
    "id": "http://www.w3.org/2002/07/owl#Thing",
    "label": {
     "en": "Thing"
@@ -1609,10 +1739,38 @@ define({
      "id": "foaf:name"
     },
     {
+     "id": "foaf:img"
+    },
+    {
+     "id": "foaf:weblog"
+    },
+    {
      "id": "foaf:depiction"
     },
     {
      "id": "foaf:maker"
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Online accounts"
+     },
+     "content": [
+      {
+       "id": "foaf:openid"
+      },
+      {
+       "id": "foaf:tipjar"
+      }
+     ]
     },
     {
      "cardinality": {

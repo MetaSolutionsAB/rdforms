@@ -402,3 +402,38 @@
 .dijitTooltipDialog {
     outline: none;
 }
+
+/* ---------- StoreManager -----------*/
+
+.groupEditor>div {
+    display: table;
+    width: 100%;
+}
+.groupEditor .row {
+    display: table-row;
+}
+
+.groupEditor .row>* {
+    display: table-cell;
+    padding-bottom: 0.3em;
+}
+
+.groupEditor .row>*>* {
+    width: 100%;
+}
+
+.groupEditor .row label {
+    width: 5.5em;
+}
+
+.storeManager .itemList>div {
+    cursor: pointer;
+}
+
+.storeManager .itemList>div.selected {
+    background: lightblue;
+}
+
+.storeManager .itemList>div:hover {
+    background: lightgrey;
+}

@@ -196,9 +196,12 @@ define(["util", "fs", 'rdfjson/Graph', 'rdfjson/Rdfs'], function(util, fs, Graph
 	    source.content = propArr;
 	    auxC.push(source);
 	}
-	return {auxilliary: auxP.concat(auxC), scope: conf.abbrev, namespace: conf.ns};
+	if (conf.root) {
+	    return {auxilliary: auxP.concat(auxC), scope: conf.abbrev, namespace: conf.ns, root: {id: conf.root}};
+	} else {
+	    return {auxilliary: auxP.concat(auxC), scope: conf.abbrev, namespace: conf.ns};
+	}
     };
-    
     
     return {convert: convert};
 });

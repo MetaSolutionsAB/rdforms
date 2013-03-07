@@ -25,20 +25,14 @@
     <script type="text/javascript">
 	  require(['rforms/template/ItemStore',
 	           'rforms/formulator/StoreManager',
+		   './terms.js',
 		   'dojo/domReady!'], 
-		   function(ItemStore, StoreManager) {
-			var xhrArgs = {
-				url: "terms.json",
-				handleAs: "json-comment-optional"
-			};
-			var req = dojo.xhrGet(xhrArgs);
-			req.addCallback(function(source) {
-			    var itemStore = new ItemStore();
-			    itemStore.createTemplate(source)
-			    var storeManager = new StoreManager({itemStore: itemStore}, "_node");
+		  function(ItemStore, StoreManager, foafterms) {
+		      var itemStore = new ItemStore();
+		      itemStore.createTemplate(foafterms);
+		      var storeManager = new StoreManager({itemStore: itemStore}, "_node");
 			    storeManager.startup();
-			});
-		   });
+		  });
     </script>
     <div id="_node"></div>
   </body>

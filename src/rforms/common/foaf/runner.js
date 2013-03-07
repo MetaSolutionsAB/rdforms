@@ -8,6 +8,7 @@ var conf = {
     destination: "terms.js",
     ns: "http://xmlns.com/foaf/0.1/",
     abbrev: "foaf",
+    root: "foaf:Person",
     major: ["Agent", "Group", "Person", "Organization", "Document", "Image", "PersonalProfileDocument", "OnlineAccount", "OnlineGamingAccount", "OnlineEcommerceAccount", "OnlineChatAccount", "Project"],
     ignore: ["geekcode", "dnaChecksum", "givenname", "surname", "family_name", "fundedBy", "theme", "holdsAccount"],
     order: [

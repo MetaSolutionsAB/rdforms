@@ -1804,5 +1804,8 @@ define({
   }
  ],
  "scope": "foaf",
- "namespace": "http://xmlns.com/foaf/0.1/"
+ "namespace": "http://xmlns.com/foaf/0.1/",
+ "root": {
+  "id": "foaf:Person"
+ }
 });

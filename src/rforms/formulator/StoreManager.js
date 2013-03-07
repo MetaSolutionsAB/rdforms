@@ -2,6 +2,7 @@
 define(["dojo/_base/declare", 
 	"dojo/_base/lang",
  	"dojo/on", 
+	"dojo/dom-class", 
 	"dojo/dom-construct", 
 	"dojo/dom-attr", 
 	"dojo/_base/array",
@@ -18,7 +19,7 @@ define(["dojo/_base/declare",
 	"rforms/template/Group",
 	"rforms/apps/Experiment",
 	"dojo/text!./StoreManagerTemplate.html"
-], function(declare, lang, on, construct, attr, array, json, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin, Tree, ContentPane, TabContainer, BorderContainer, GroupEditor, TreeModel, Group, Experiment, template) {
+], function(declare, lang, on, domClass, construct, attr, array, json, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin, Tree, ContentPane, TabContainer, BorderContainer, GroupEditor, TreeModel, Group, Experiment, template) {
 
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -69,6 +70,11 @@ define(["dojo/_base/declare",
 	},
 	_itemIdClicked: function(event) {
 	    if (event.target !== this._listNode) {
+		if (this._curSel != null) {
+		    domClass.remove(this._curSel, "selected");
+		}
+		this._curSel = event.target;
+		domClass.add(this._curSel, "selected");
 		var id = attr.get(event.target, "innerHTML");
 		if (id === "all") {
 		    this._showAll();

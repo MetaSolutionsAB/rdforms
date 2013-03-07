@@ -3,7 +3,8 @@ define(["./Graph"], function(Graph) {
     
     var _ns = {
 	rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-	rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+	rdfs: "http://www.w3.org/2000/01/rdf-schema#",
+	owl: "http://www.w3.org/2002/07/owl#"
     };
     var _terms = {
 	rdftype: _ns.rdf+"type",
@@ -12,6 +13,7 @@ define(["./Graph"], function(Graph) {
 	rdfsrange: _ns.rdfs+"range",
 	rdfsspo: _ns.rdfs+"subPropertyOf",
 	rdfsClass: _ns.rdfs+"Class",
+	owlClass: _ns.owl+"Class",
 	rdfProperty: _ns.rdf+"Property"
     };
 
@@ -34,6 +36,19 @@ define(["./Graph"], function(Graph) {
 	    return hash;
 	}
     };
+    
+    var toSet = function(arr) {
+	var narr = [];
+	var idx = {}
+	for (var i=0;i<arr.length;i++) {
+	    var m = arr[i];
+	    if (!idx[m]) {
+		narr.push(m);
+		idx[m] = true;
+	    }
+	}
+	return narr;
+    }
     
     var Cls = function(uri, graph) {
 	this._uri = uri;
@@ -142,23 +157,37 @@ define(["./Graph"], function(Graph) {
     }	
     
     Cls.prototype.getRange = function() {
-	return this._range;
+	if (this._allRange == null) {
+	    this._allRange = this._range || [];
+	    for (var i=0;i<this._parents.length;i++) {
+		this._allRange = this._allRange.concat(this._parents[i].getRange());
+	    }
+	    this._allRange = toSet(this._allRange);
+	}
+	return this._allRange;
     };
     
     Cls.prototype.getDomain = function() {
-	return this._domain;
-    }
+	if (this._allDomain == null) {
+	    this._allDomain = this._domain || [];
+	    for (var i=0;i<this._parents.length;i++) {
+		this._allDomain = this._allDomain.concat(this._parents[i].getDomain());
+	    }
+	    this._allDomain = toSet(this._allDomain);
+	}
+	return this._allDomain;
+    };
 
     Cls.prototype.setDomainOf = function(prop) {
 	if (this._domainOf == null) {
 	    this._domainOf = [];
 	}
 	this._domainOf.push(prop);
-    }	
+    };	
 
     Cls.prototype.getDomainOf = function() {
 	return this._domainOf;
-    }
+    };
 
     Cls.prototype.getAllDomainOf = function() {
 	//Avoid infinite recursion if loops.
@@ -167,7 +196,11 @@ define(["./Graph"], function(Graph) {
 	}
 	this._domainOfLock = true;
 	if (this._allDomainOf == null) {
+	    var childDomainOf = this._domainOf || [];
 	    this._allDomainOf = this._domainOf || [];
+	    for (var j=0;j<childDomainOf.length;j++) {
+		this._allDomainOf = this._allDomainOf.concat(childDomainOf[j].getChildren());
+	    }
 	    for (var i=0;i<this._parents.length;i++) {
 		this._allDomainOf = this._allDomainOf.concat(this._parents[i].getAllDomainOf());
 	    }
@@ -232,6 +265,7 @@ define(["./Graph"], function(Graph) {
     Rdfs.prototype.terms = _terms;
     Rdfs.prototype.addGraph = function(graph) {
 	indexf(this._cidx, this._carr, graph.find(null, _terms.rdftype, _terms.rdfsClass));
+	indexf(this._cidx, this._carr, graph.find(null, _terms.rdftype, _terms.owlClass));
 	indexf(this._cidx, this._carr, graph.find(null, _terms.rdfssco, null), true);
 	indexf(this._pidx, this._parr, graph.find(null, _terms.rdftype, _terms.rdfProperty));
 	indexf(this._pidx, this._parr, graph.find(null, _terms.rdfsspo, null), true);

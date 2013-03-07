@@ -192,7 +192,7 @@ define(["dojo/_base/declare",
 	    var clss = item.getClasses();
 	    for (var e=0;e<clss.length;e++) {
 		if (clss[e].indexOf("rforms") == -1) {
-		    domClass.add(newRow, cls);
+		    domClass.add(newRow, clss[e]);
 		}
 	    }
 	    if (item instanceof Group) {
@@ -224,51 +224,52 @@ define(["dojo/_base/declare",
 	// Private methods
 	//===================================================	
 	_showInfo:function(item, aroundNode) {
-		if (__currentDomNode === aroundNode) {
-			return;
-		}
-		__currentDomNode = aroundNode;
-		
-		//Prepare the TooltipDialog.
-		var tooltipDialog = new TooltipDialog({});
-		tooltipDialog._onBlur = function() {
-			popup.close(tooltipDialog);
-		};
-		
-		tooltipDialog.openPopup = function() {
-			popup.open({
-				popup: tooltipDialog,
-				around: aroundNode,
-				onClose: lang.hitch(null, function() {
-					tooltipDialog.destroy();
-					setTimeout(function() {__currentDomNode = null;}, 500);
-				})
-			});
-		};
-		
-		var node = construct.create("div", {"class": "rforms itemInfo"});
-		tooltipDialog.setContent(node);
+	    if (__currentDomNode === aroundNode) {
+		return;
+	    }
+	    __currentDomNode = aroundNode;
+	    
+	    //Prepare the TooltipDialog.
+	    var tooltipDialog = new TooltipDialog({});
+	    
+	    tooltipDialog.onBlur = function() {
+		popup.close(tooltipDialog);
+	    };
+	    
+	    tooltipDialog.openPopup = function() {
+		popup.open({
+		    popup: tooltipDialog,
+		    around: aroundNode,
+		    onClose: lang.hitch(null, function() {
+			tooltipDialog.destroy();
+			setTimeout(function() {
+			    if (aroundNode === __currentDomNode) {__currentDomNode = null;}}, 500);
+		    })
+		});
+	    };
 
-		//Now init the content of the dialog
-		var property = item.getProperty();
-		var description = item.getDescription();
-		var message = "<div class='itemInfoTable'>";
-		var label = item.getLabel() || "";
-		if (label !== "") {
-			message += "<div><label class='propertyLabel'>Label:&nbsp;</label><span class='propertyValue'>"+label+"</span></div>";
-		}
-		if (property != null) {
-			message += "<div><label class='propertyLabel'>Property:&nbsp;</label><span class='propertyValue'>"+item.getProperty()+"</span></div>";
-		}
-		if (description != null) {
-			message += "<div><label class='descriptionLabel'>Description:&nbsp;</label><span class='descriptionValue'>"+description.replace(/(\r\n|\r|\n)/g, "<br/>")+"</span></div>";
-		}
-		message +="</div>";
-		attr.set(node, "innerHTML", message);
-		focus.focus(node);
-		
-		//Launch the dialog.
-		tooltipDialog.openPopup();
+	    //Now init the content of the dialog
+	    var property = item.getProperty();
+	    var description = item.getDescription();
+	    var message = "<div class='rforms itemInfo'><div class='itemInfoTable'>";
+	    var label = item.getLabel() || "";
+	    if (label !== "") {
+		message += "<div><label class='propertyLabel'>Label:&nbsp;</label><span class='propertyValue'>"+label+"</span></div>";
+	    }
+	    if (property != null) {
+		message += "<div><label class='propertyLabel'>Property:&nbsp;</label><span class='propertyValue'>"+item.getProperty()+"</span></div>";
+	    }
+	    if (description != null) {
+		message += "<div><label class='descriptionLabel'>Description:&nbsp;</label><span class='descriptionValue'>"+description.replace(/(\r\n|\r|\n)/g, "<br/>")+"</span></div>";
+	    }
+	    message +="</div></div>";
+	    tooltipDialog.setContent(message);
+	    setTimeout(function() {
+		focus.focus(tooltipDialog.domNode);
+	    }, 1);
+	    
+	    //Launch the dialog.
+	    tooltipDialog.openPopup();
 	}
     });
 });

@@ -168,7 +168,7 @@ define(["dojo/_base/declare",
 	    }
 	    var subView;
 	    if (binding.getItem().hasClass("rformsexpandable") || binding.getItem().hasClass("expandable")) { //Backwardscompatible.
-		var titlePane = new TitlePane({}, fieldDiv);
+		var titlePane = new TitlePane({open: false}, fieldDiv);
 		var node = construct.create("div");
 		titlePane.set("content", node);
 		subView = new Editor({languages: this.languages, binding: binding, template: this.template, topLevel: false, includeLevel: this.includeLevel}, node);
@@ -195,9 +195,7 @@ define(["dojo/_base/declare",
 		if (datatype === "http://www.w3.org/2001/XMLSchema#date" || datatype === "http://purl.org/dc/terms/W3CDTF") {
 		    tb = new DateTime({binding: binding, item: item}, construct.create("div", null, fieldDiv));				
 		} else if (datatype === "http://www.w3.org/2001/XMLSchema#duration") {
-		    tb = new Duration({disabled: !item.isEnabled(), onChange: function(){
-			binding.setValue(tb.attr("value"));
-		    }}, construct.create("div", null, fieldDiv));
+		    tb = new Duration({disabled: !item.isEnabled(), binding: binding}, construct.create("div", null, fieldDiv));
 		} else if (datatype === "http://www.w3.org/2001/XMLSchema#integer") {
 		    tb = new ValidationTextBox({
 			value: binding.getValue(),
@@ -206,7 +204,7 @@ define(["dojo/_base/declare",
 			regExp: "[0-9]*",
 			onChange: function() {
 			    if (tb.isValid()) {
-				binding.setValue(this.attr("value"));
+				binding.setValue(this.get("value"));
 			    } else {
 				binding.setValue("");
 			    }
@@ -216,7 +214,7 @@ define(["dojo/_base/declare",
 		    tb = new TextBox({
 			value: binding.getValue(),
 			onChange: function(){
-			    binding.setValue(this.attr("value"));
+			    binding.setValue(this.get("value"));
 			}
 		    }, construct.create("div", null, fieldDiv));
 		    domClass.add(tb.domNode, "rformsFieldInput");
@@ -229,14 +227,14 @@ define(["dojo/_base/declare",
 		    tb = new Textarea({
 			value: binding.getValue(),
 			onChange: function(){
-			    binding.setValue(this.attr("value"));
+			    binding.setValue(this.get("value"));
 			}
 		    }, construct.create("div", null, fieldDiv));
 		} else {
 		    tb = new TextBox({
 			value: binding.getValue(),
 			onChange: function(){
-			    binding.setValue(this.attr("value"));
+			    binding.setValue(this.get("value"));
 			}
 		    }, construct.create("div", null, fieldDiv));
 		}
@@ -253,7 +251,7 @@ define(["dojo/_base/declare",
 		    searchAttr: "label"
 		}, langSpan);
 		languageSelector.set("value", binding.getLanguage() || "");
-		on(languageSelector, "onChange", lang.hitch(this, function(){
+		on(languageSelector, "change", lang.hitch(this, function(){
 		    binding.setLanguage(languageSelector.getValue());
 		}));
 		domClass.add(langSpan, "rformsLanguage");
@@ -262,7 +260,7 @@ define(["dojo/_base/declare",
 	    }
 	    if (noCardinalityButtons !== true) {
 		this._addRemoveButton(fieldDiv, binding, controlDiv, function() {
-		    tb.attr("value", "");
+		    tb.set("value", "");
 		    if (nodeType === "LANGUAGE_LITERAL" || nodeType === "PLAIN_LITERAL") {
 			languageSelector.set("value", "");
 		    }				
@@ -297,7 +295,7 @@ define(["dojo/_base/declare",
 			    value: choices[ind].value,
 			    checked: choices[ind].value === binding.getValue()
 			}, inputToUse);
-			on(rb, "onChange", lang.hitch(this, function(but){
+			on(rb, "change", lang.hitch(this, function(but){
 			    var val = but.get("value");
 			    if (val !== false) {
 				binding.setValue(val);
@@ -533,7 +531,7 @@ define(["dojo/_base/declare",
 		    if (cardTr.getCardinality() === 1) {
 			//Clear somehow.
 			//				binding.setValue(null);
-			//			tb.attr("value", "");
+			//			tb.set("value", "");
 		    } else {
 			con.remove();
 			addCon.remove();
@@ -573,7 +571,7 @@ define(["dojo/_base/declare",
 
 	_addExpandButton: function(rowDiv, labelDiv, item) {
 	    var expand = construct.create("span", {"class": "action editExpand", "title": "Expand"}, labelDiv);
-	    var expandCon = on(expand, "click", this, function() {
+	    var expandCon = on(expand, "click", lang.hitch(this, function() {
 		var nBinding = Engine.create(this.binding, item);
 		if (this.showAsTable(item)) {
 		    var table = this.addTable(rowDiv, nBinding, item);
@@ -585,7 +583,7 @@ define(["dojo/_base/declare",
 		construct.destroy(expand);
 		
 		expandCon.remove();	
-	    });
+	    }));
 	},
 
 	_addTableRow: function(table, binding) {
@@ -610,7 +608,7 @@ define(["dojo/_base/declare",
 		var cardConnect1 = aspect.after(cardTr, "cardinalityChanged", function() {
 		    domClass.toggle(remove, "disabled", cardTr.isMin());
 		});	
-		var removeConnect = on(remove, "click", this, function() {
+		var removeConnect = on(remove, "click", lang.hitch(this, function() {
 		    if (!cardTr.isMin()) {
 			if (cardTr.getCardinality() === 1) {
 			    var parentBinding = binding.getParent(), item = binding.getItem();
@@ -622,7 +620,7 @@ define(["dojo/_base/declare",
 			binding.remove();
 			construct.destroy(trEl);
 		    }
-		});
+		}));
 	    }
 	},
 

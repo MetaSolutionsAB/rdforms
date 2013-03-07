@@ -24,15 +24,15 @@ define(["dojo/_base/declare",
 		var f = function(value) {
 			return value && value.length > 1 ? parseInt(value[0], 10) : 0;
 		}
-		this.attr("years", f(value.match(/([0-9])*Y/)));
-		this.attr("days", f(value.match(/([0-9])*D/)));
-		this.attr("hours", f(value.match(/([0-9])*H/)));
+		this.set("years", f(value.match(/([0-9])*Y/)));
+		this.set("days", f(value.match(/([0-9])*D/)));
+		this.set("hours", f(value.match(/([0-9])*H/)));
 		if (value.indexOf("T") == -1) {
-			this.attr("months", f(value.match(/([0-9])*M/)));
+			this.set("months", f(value.match(/([0-9])*M/)));
 		} else {
 			var arr = value.split("T");
-			this.attr("months", f(arr[0].match(/([0-9])*M/)));
-			this.attr("minutes", f(arr[1].match(/([0-9])*M/)));
+			this.set("months", f(arr[0].match(/([0-9])*M/)));
+			this.set("minutes", f(arr[1].match(/([0-9])*M/)));
 		}
 	}
     });

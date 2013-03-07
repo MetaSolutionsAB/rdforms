@@ -22,6 +22,12 @@ define(["dojo/_base/declare", "../utils"], function(declare, utils) {
 		this._source.id = id;
 		delete this._source["@id"];
 	},
+	getType: function() {
+	    return this._source.type || this._source["@type"];
+	},
+	getExtends: function() {
+	    return this._source["extends"] || "";
+	},
 	getLabelMap: function() {
 		return this._source.label;
 	},

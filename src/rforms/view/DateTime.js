@@ -1,5 +1,6 @@
 /*global define*/
-define(["dojo/_base/declare", 
+define(["dojo/_base/declare",
+	"dojo/_base/lang",
 	"dojo/dom-attr", 
 	"dojo/dom-construct", 
 	"dojo/dom-class", 
@@ -9,7 +10,7 @@ define(["dojo/_base/declare",
 	"dijit/form/Select",
 	"dijit/form/DateTextBox", 
 	"dijit/form/NumberSpinner"
-], function(declare, attr, construct, domClass, stamp, array, _Widget, Select, DateTextBox, NumberSpinner) {
+], function(declare, lang, attr, construct, domClass, stamp, array, _Widget, Select, DateTextBox, NumberSpinner) {
 
     return declare(_Widget, {
 	//===================================================

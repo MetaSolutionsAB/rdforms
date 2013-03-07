@@ -1,5 +1,15 @@
 /*global define*/
-define(["rforms/template/Template", "rforms/template/Text", "rforms/template/Group", "rforms/template/Choice", "rforms/template/PropertyGroup", "./GroupBinding", "./PropertyGroupBinding", "./ValueBinding", "./ChoiceBinding", "./system"], function(Template, Text, Group, Choice, PropertyGroup, GroupBinding, PropertyGroupBinding, ValueBinding, ChoiceBinding, system) {
+define(["rforms/template/Template", 
+	"rforms/template/Text", 
+	"rforms/template/Group", 
+	"rforms/template/Choice", 
+	"rforms/template/PropertyGroup", 
+	"./GroupBinding", 
+	"./PropertyGroupBinding", 
+	"./ValueBinding", 
+	"./ChoiceBinding", 
+	"./system"
+], function(Template, Text, Group, Choice, PropertyGroup, GroupBinding, PropertyGroupBinding, ValueBinding, ChoiceBinding, system) {
     
     //See public API at the bottom of this file.
 

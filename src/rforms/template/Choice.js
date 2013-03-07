@@ -6,8 +6,8 @@ define(["dojo/_base/declare", "../utils", "./Item"], function(declare, utils, It
 		return;
 	}
 	choices.sort(function(c1, c2) {
-		var lab1 = rforms.utils.getLocalizedValue(c1.label).value || c1.value;
-		var lab2 = rforms.utils.getLocalizedValue(c2.label).value || c2.value;
+		var lab1 = utils.getLocalizedValue(c1.label).value || c1.value;
+		var lab2 = utils.getLocalizedValue(c2.label).value || c2.value;
 		if (lab1 > lab2) {
 			return 1;
 		} else if (lab1 < lab2) {

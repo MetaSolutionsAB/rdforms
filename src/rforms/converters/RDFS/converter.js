@@ -19,6 +19,78 @@ define(["util", "fs", 'rdfjson/Graph', 'rdfjson/Rdfs'], function(util, fs, Graph
 	return uri;
     };
 
+    var normalizeConf = function(conf) {
+	var major = {};
+	for (var co=0;co<conf.major.length;co++) {
+	    major[conf.ns+conf.major[co]] = true;
+	}
+	conf._major = major;
+	
+	var ignore = {};
+	for (var ig=0;ig<conf.ignore.length;ig++) {
+	    ignore[conf.ns+conf.ignore[ig]] = true;
+	}
+	conf._ignore = ignore;
+
+	var order = [];
+	var arr = [];
+	if (conf.order) {
+	    for (var i=0;i<conf.order.length;i++) {
+		arr.push(conf.ns+conf.order[i]);
+	    }
+	}
+	order.push({properties: arr});
+	
+	if (conf.categories) {
+	    for (var c=0;c<conf.categories.length;c++) {
+		var cat = conf.categories[c];
+		var arr = [];
+		for (var p=0;p<cat.properties.length;p++) {
+		    arr.push(conf.ns+cat.properties[p]);
+		}
+		order.push({properties: arr, name: cat.name});
+	    }
+	}
+	conf._order = order;
+    };
+
+    var removeIgnored = function(arr, conf) {
+	var ret = [];
+	for (var i=0;i<arr.length;i++) {
+	    if (!conf._ignore[arr[i].getURI()]) {
+		ret.push(arr[i]);
+	    }
+	}
+	return ret;
+    };
+    var groupIntoCategories = function(properties, conf) {	
+	var cats = [];
+	var propIdx = {};
+	for (var j=0;j<properties.length;j++) {
+	    propIdx[properties[j].getURI()] = properties[j];
+	}
+
+	for (var c=0;c<conf._order.length;c++) {
+	    var catarr = conf._order[c].properties;
+	    var arr = [];
+	    cats.push(arr);
+	    for (var p=0;p<catarr.length;p++) {
+		var prop = catarr[p];
+		if (propIdx[prop] != null) {
+		    arr.push(propIdx[prop]);
+		    propIdx[prop] = null;
+		}
+	    }
+	}
+	//Add those that have not been included
+	var lastCat = cats[cats.length-1];
+	for (var k=0;k<properties.length;k++) {
+	    if (propIdx[properties[k].getURI()] != null) {
+		lastCat.push(properties[k]);
+	    }
+	}
+	return cats;
+    };
 	
     var convert = function(graph, conf) {
 	var rdfs = new Rdfs();
@@ -26,15 +98,14 @@ define(["util", "fs", 'rdfjson/Graph', 'rdfjson/Rdfs'], function(util, fs, Graph
 	
 	var auxP = [];
 	var auxC = [];
-	
-	var major = {};
-	for (var co=0;co<conf.major.length;co++) {
-	    major[conf.ns+conf.major[co]] = true;
-	}
+	normalizeConf(conf);
 
 	var props = rdfs.getProperties();
 	for (var p=0;p<props.length;p++) {
 	    var prop = props[p];
+	    if (conf._ignore[prop.getURI()]) {
+		continue;
+	    }
 	    var source = {
 		id: getAbbrevId(prop.getURI(), conf), 
 		property: prop.getURI(), 
@@ -59,13 +130,16 @@ define(["util", "fs", 'rdfjson/Graph', 'rdfjson/Rdfs'], function(util, fs, Graph
 		    }
 		    source["constraints"] = constraints;
 		}
-		if (ranges.length === 1 && major[ranges[0]]){
+		if (ranges.length === 1 && conf._major[ranges[0]]){
 		    source["type"] = "choice";
 		    source["nodetype"] = "RESOURCE";
 		} else {
 		    var propsFC = getPropertiesFromClasses(rdfs, ranges);
 		    var propArr = [];
 		    for (var pf=0;pf<propsFC.length;pf++) {
+			if (conf._ignore[propsFC[pf].getURI()]) {
+			    continue;
+			}
 			propArr.push({"id": getAbbrevId(propsFC[pf].getURI(), conf)});
 		    }
 		    source["type"] = "group";
@@ -76,29 +150,51 @@ define(["util", "fs", 'rdfjson/Graph', 'rdfjson/Rdfs'], function(util, fs, Graph
 	    auxP.push(source);
 	}
 	
-	var clss = rdfs.getClasses();
+	var clss = removeIgnored(rdfs.getClasses(), conf);
 	for (var c=0;c<clss.length;c++) {
 	    var cls = clss[c];
 	    var source = {
 		id: getAbbrevId(cls.getURI(), conf), 
-		label: cls.getLabels()
+		label: cls.getLabels(),
+		constraints: {"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": cls.getURI()}
 	    };
 	    var desc = 	cls.getComments();
 	    if (desc != null) {
 		source.description = desc;
 	    }
 	    
-	    var props = getPropertiesFromClasses(rdfs, [cls.getURI()]);
+	    var props = removeIgnored(getPropertiesFromClasses(rdfs, [cls.getURI()]), conf);
+	    var cats = groupIntoCategories(props, conf); //Order and organize into categories.
 	    var propArr = [];
-	    for (var p=0;p<props.length;p++) {
-		propArr.push({"id": getAbbrevId(props[p].getURI(), conf)});
+	    
+	    //All properties that should not be organized into categories.
+	    for (var p=0;p<cats[0].length;p++) {
+		propArr.push({"id": getAbbrevId(cats[0][p].getURI(), conf)});
 	    }
-	    if (propArr.length > 0) {
-		source["type"] = "group";
-		source.content = propArr;
-		source.automatic = true;
-		auxC.push(source);
+	    
+	    //Category-divided properties.    
+	    if (cats[0].length !== props.length) {
+		for (var q=1;q<cats.length;q++) {
+		    var cat = cats[q];
+		    if (cat.length > 0) {
+			var group = {
+			    cardinality: {"min": 1, "pref": 1, "max": 1},
+			    type: "group",
+                            cls: ["rformsexpandable"],
+                            label: conf.categories[q-1].label,
+			    content: []
+			};
+			propArr.push(group);
+			
+			for (var s=0;s<cat.length;s++) {
+			    group.content.push({"id": getAbbrevId(cat[s].getURI(), conf)});
+			}
+		    }
+		}
 	    }
+	    source["type"] = "group";
+	    source.content = propArr;
+	    auxC.push(source);
 	}
 	return {auxilliary: auxP.concat(auxC), scope: conf.abbrev, namespace: conf.ns};
     };

@@ -271,6 +271,28 @@ define(["./Graph"], function(Graph) {
 	indexf(this._pidx, this._parr, graph.find(null, _terms.rdfsspo, null), true);
 	rangeDomain(graph, this._pidx,this._cidx);
     };
+    Rdfs.prototype.addThing = function() {
+    	var turi = "http://www.w3.org/2002/07/owl#Thing";
+    	var thing = this._cidx[turi];
+    	var thingIsNew = false;
+	    if (!thing) {
+			thing = new Cls(turi, new Graph());
+			this._cidx[suri] = thing;
+			this._carr.push(thing);
+			thingIsNew = true;
+	    }
+
+    	for (var c=0;c<this._carr.length;c++) {
+    		var cls = this._carr[c];
+    		if (thingIsNew) {
+    			cls.addParent(thing);
+    		} else {
+    			if (cls.getParents().indexOf(thing) === -1) {
+    				cls.addParent(thing);    				
+    			}
+    		}
+    	}
+    };
     Rdfs.prototype.getClasses = function() {
 	return this._carr;
     };

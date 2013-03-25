@@ -45,9 +45,8 @@ define({
    "description": {
     "en": "skos:prefLabel, skos:altLabel and skos:hiddenLabel are pairwise\n      disjoint properties."
    },
-   "type": "group",
-   "automatic": true,
-   "content": []
+   "type": "text",
+   "nodetype": "LANGUAGE_LITERAL"
   },
   {
    "id": "skos:altLabel",
@@ -58,9 +57,8 @@ define({
    "description": {
     "en": "skos:prefLabel, skos:altLabel and skos:hiddenLabel are pairwise disjoint properties."
    },
-   "type": "group",
-   "automatic": true,
-   "content": []
+   "type": "text",
+   "nodetype": "LANGUAGE_LITERAL"
   },
   {
    "id": "skos:hiddenLabel",
@@ -71,9 +69,8 @@ define({
    "description": {
     "en": "skos:prefLabel, skos:altLabel and skos:hiddenLabel are pairwise disjoint properties."
    },
-   "type": "group",
-   "automatic": true,
-   "content": []
+   "type": "text",
+   "nodetype": "LANGUAGE_LITERAL"
   },
   {
    "id": "skos:notation",
@@ -91,9 +88,11 @@ define({
    "label": {
     "en": "note"
    },
-   "type": "group",
-   "automatic": true,
-   "content": []
+   "type": "text",
+   "nodetype": "LANGUAGE_LITERAL",
+   "cls": [
+    "rformsmultiline"
+   ]
   },
   {
    "id": "skos:changeNote",
@@ -101,9 +100,11 @@ define({
    "label": {
     "en": "change note"
    },
-   "type": "group",
-   "automatic": true,
-   "content": []
+   "type": "text",
+   "nodetype": "LANGUAGE_LITERAL",
+   "cls": [
+    "rformsmultiline"
+   ]
   },
   {
    "id": "skos:definition",
@@ -111,9 +112,11 @@ define({
    "label": {
     "en": "definition"
    },
-   "type": "group",
-   "automatic": true,
-   "content": []
+   "type": "text",
+   "nodetype": "LANGUAGE_LITERAL",
+   "cls": [
+    "rformsmultiline"
+   ]
   },
   {
    "id": "skos:editorialNote",
@@ -121,9 +124,11 @@ define({
    "label": {
     "en": "editorial note"
    },
-   "type": "group",
-   "automatic": true,
-   "content": []
+   "type": "text",
+   "nodetype": "LANGUAGE_LITERAL",
+   "cls": [
+    "rformsmultiline"
+   ]
   },
   {
    "id": "skos:example",
@@ -131,9 +136,11 @@ define({
    "label": {
     "en": "example"
    },
-   "type": "group",
-   "automatic": true,
-   "content": []
+   "type": "text",
+   "nodetype": "LANGUAGE_LITERAL",
+   "cls": [
+    "rformsmultiline"
+   ]
   },
   {
    "id": "skos:historyNote",
@@ -141,9 +148,11 @@ define({
    "label": {
     "en": "history note"
    },
-   "type": "group",
-   "automatic": true,
-   "content": []
+   "type": "text",
+   "nodetype": "LANGUAGE_LITERAL",
+   "cls": [
+    "rformsmultiline"
+   ]
   },
   {
    "id": "skos:scopeNote",
@@ -151,21 +160,11 @@ define({
    "label": {
     "en": "scope note"
    },
-   "type": "group",
-   "automatic": true,
-   "content": []
-  },
-  {
-   "id": "skos:semanticRelation",
-   "property": "http://www.w3.org/2004/02/skos/core#semanticRelation",
-   "label": {
-    "en": "is in semantic relation with"
-   },
-   "constraints": {
-    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
-   },
-   "type": "choice",
-   "nodetype": "RESOURCE"
+   "type": "text",
+   "nodetype": "LANGUAGE_LITERAL",
+   "cls": [
+    "rformsmultiline"
+   ]
   },
   {
    "id": "skos:broader",
@@ -368,52 +367,105 @@ define({
    "type": "group",
    "content": [
     {
+     "id": "skos:prefLabel"
+    },
+    {
+     "id": "skos:definition"
+    },
+    {
+     "id": "skos:example"
+    },
+    {
      "id": "skos:topConceptOf"
     },
     {
-     "id": "skos:semanticRelation"
-    },
-    {
-     "id": "skos:relatedMatch"
-    },
-    {
-     "id": "skos:related"
-    },
-    {
-     "id": "skos:broadMatch"
+     "id": "skos:inScheme"
     },
     {
      "id": "skos:broader"
     },
     {
-     "id": "skos:broaderTransitive"
-    },
-    {
-     "id": "skos:narrowMatch"
-    },
-    {
      "id": "skos:narrower"
     },
     {
-     "id": "skos:narrowerTransitive"
+     "id": "skos:related"
     },
     {
-     "id": "skos:broadMatch"
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Labels and annotations"
+     },
+     "content": [
+      {
+       "id": "skos:altLabel"
+      },
+      {
+       "id": "skos:hiddenLabel"
+      },
+      {
+       "id": "skos:note"
+      },
+      {
+       "id": "skos:editorialNote"
+      },
+      {
+       "id": "skos:scopeNote"
+      },
+      {
+       "id": "skos:changeNote"
+      },
+      {
+       "id": "skos:historyNote"
+      }
+     ]
     },
     {
-     "id": "skos:narrowMatch"
-    },
-    {
-     "id": "skos:relatedMatch"
-    },
-    {
-     "id": "skos:exactMatch"
-    },
-    {
-     "id": "skos:closeMatch"
-    },
-    {
-     "id": "skos:mappingRelation"
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Additional concept relations"
+     },
+     "content": [
+      {
+       "id": "skos:broaderTransitive"
+      },
+      {
+       "id": "skos:narrowerTransitive"
+      },
+      {
+       "id": "skos:broadMatch"
+      },
+      {
+       "id": "skos:narrowMatch"
+      },
+      {
+       "id": "skos:exactMatch"
+      },
+      {
+       "id": "skos:closeMatch"
+      },
+      {
+       "id": "skos:relatedMatch"
+      },
+      {
+       "id": "skos:mappingRelation"
+      }
+     ]
     }
    ]
   },

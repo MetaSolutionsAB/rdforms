@@ -10,7 +10,10 @@ define({
     "en": "A \npersonal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a 'static inverse functional property', in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox."
    },
    "type": "text",
-   "nodetype": "URI"
+   "nodetype": "URI",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:mbox_sha1sum",
@@ -22,7 +25,10 @@ define({
     "en": "The sha1sum of the URI of an Internet mailbox associated with exactly one owner, the  first owner of the mailbox."
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:gender",
@@ -34,7 +40,10 @@ define({
     "en": "The gender of this Agent (typically but not necessarily 'male' or 'female')."
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:sha1",
@@ -66,6 +75,54 @@ define({
    "content": [
     {
      "id": "foaf:based_near"
+    },
+    {
+     "id": "foaf:name"
+    },
+    {
+     "id": "foaf:homepage"
+    },
+    {
+     "id": "foaf:maker"
+    },
+    {
+     "id": "foaf:depiction"
+    },
+    {
+     "id": "foaf:logo"
+    },
+    {
+     "id": "foaf:isPrimaryTopicOf"
+    },
+    {
+     "id": "foaf:page"
+    },
+    {
+     "id": "foaf:img"
+    },
+    {
+     "id": "foaf:homepage"
+    },
+    {
+     "id": "foaf:openid"
+    },
+    {
+     "id": "foaf:homepage"
+    },
+    {
+     "id": "foaf:weblog"
+    },
+    {
+     "id": "foaf:tipjar"
+    },
+    {
+     "id": "foaf:homepage"
+    },
+    {
+     "id": "foaf:openid"
+    },
+    {
+     "id": "foaf:isPrimaryTopicOf"
     }
    ]
   },
@@ -105,7 +162,10 @@ define({
     "en": "A jabber ID for something."
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:aimChatID",
@@ -117,7 +177,10 @@ define({
     "en": "An AIM chat ID"
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:skypeID",
@@ -129,7 +192,10 @@ define({
     "en": "A Skype ID"
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:icqChatID",
@@ -141,7 +207,10 @@ define({
     "en": "An ICQ chat ID"
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:yahooChatID",
@@ -153,7 +222,10 @@ define({
     "en": "A Yahoo chat ID"
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:msnChatID",
@@ -165,7 +237,10 @@ define({
     "en": "An MSN chat ID"
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:name",
@@ -177,7 +252,10 @@ define({
     "en": "A name for some thing."
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:firstName",
@@ -189,7 +267,10 @@ define({
     "en": "The first name of a person."
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:lastName",
@@ -201,7 +282,10 @@ define({
     "en": "The last name of a person."
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:givenName",
@@ -226,7 +310,10 @@ define({
     "en": "The family name of some person."
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:phone",
@@ -254,7 +341,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Document"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:weblog",
@@ -265,11 +355,11 @@ define({
    "description": {
     "en": "A weblog of some thing (whether person, group, company etc.)."
    },
-   "constraints": {
-    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Document"
-   },
-   "type": "choice",
-   "nodetype": "RESOURCE"
+   "type": "text",
+   "nodetype": "URI",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:openid",
@@ -284,7 +374,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Document"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:tipjar",
@@ -299,7 +392,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Document"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:plan",
@@ -311,7 +407,13 @@ define({
     "en": "A .plan comment, in the tradition of finger and '.plan' files."
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "LANGUAGE_LITERAL",
+   "cls": [
+    "rformsmultiline"
+   ],
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:made",
@@ -323,7 +425,10 @@ define({
     "en": "Something that was made by this agent."
    },
    "type": "text",
-   "nodetype": "URI"
+   "nodetype": "URI",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:maker",
@@ -338,7 +443,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Agent"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:img",
@@ -349,11 +457,11 @@ define({
    "description": {
     "en": "An image that can be used to represent some thing (ie. those depictions which are particularly representative of something, eg. one's photo on a homepage)."
    },
-   "constraints": {
-    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Image"
-   },
-   "type": "choice",
-   "nodetype": "RESOURCE"
+   "type": "text",
+   "nodetype": "URI",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:depiction",
@@ -368,7 +476,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Image"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:depicts",
@@ -380,7 +491,10 @@ define({
     "en": "A thing depicted in this representation."
    },
    "type": "text",
-   "nodetype": "URI"
+   "nodetype": "URI",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:thumbnail",
@@ -395,7 +509,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Image"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:myersBriggs",
@@ -407,7 +524,10 @@ define({
     "en": "A Myers Briggs (MBTI) personality classification."
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:workplaceHomepage",
@@ -422,7 +542,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Document"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:workInfoHomepage",
@@ -437,7 +560,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Document"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:schoolHomepage",
@@ -452,7 +578,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Document"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:knows",
@@ -467,7 +596,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:interest",
@@ -482,7 +614,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Document"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:topic_interest",
@@ -494,7 +629,10 @@ define({
     "en": "A thing of interest to this person."
    },
    "type": "text",
-   "nodetype": "URI"
+   "nodetype": "URI",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:publications",
@@ -509,7 +647,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Document"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:currentProject",
@@ -521,7 +662,10 @@ define({
     "en": "A current project this person works on."
    },
    "type": "text",
-   "nodetype": "URI"
+   "nodetype": "URI",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:pastProject",
@@ -533,7 +677,10 @@ define({
     "en": "A project this person has previously worked on."
    },
    "type": "text",
-   "nodetype": "URI"
+   "nodetype": "URI",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:logo",
@@ -545,7 +692,10 @@ define({
     "en": "A logo representing some thing."
    },
    "type": "text",
-   "nodetype": "URI"
+   "nodetype": "URI",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:topic",
@@ -557,7 +707,10 @@ define({
     "en": "A topic of some page or document."
    },
    "type": "text",
-   "nodetype": "URI"
+   "nodetype": "URI",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:primaryTopic",
@@ -569,7 +722,10 @@ define({
     "en": "The primary topic of some page or document."
    },
    "type": "text",
-   "nodetype": "URI"
+   "nodetype": "URI",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:focus",
@@ -581,7 +737,10 @@ define({
     "en": "The underlying or 'focal' entity associated with some SKOS-described concept."
    },
    "type": "text",
-   "nodetype": "URI"
+   "nodetype": "URI",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:isPrimaryTopicOf",
@@ -596,7 +755,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Document"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:page",
@@ -611,7 +773,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Document"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:account",
@@ -626,7 +791,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/OnlineAccount"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:accountServiceHomepage",
@@ -641,7 +809,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Document"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:accountName",
@@ -653,7 +824,10 @@ define({
     "en": "Indicates the name (identifier) associated with this online account."
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:member",
@@ -668,7 +842,10 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Agent"
    },
    "type": "choice",
-   "nodetype": "RESOURCE"
+   "nodetype": "RESOURCE",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:membershipClass",
@@ -693,7 +870,10 @@ define({
     "en": "The birthday of this Agent, represented in mm-dd string form, eg. '12-31'."
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:age",
@@ -705,7 +885,10 @@ define({
     "en": "The age in years of some agent."
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:status",
@@ -717,7 +900,13 @@ define({
     "en": "A string expressing what the user is happy for the general public (normally) to know about their current activity."
    },
    "type": "text",
-   "nodetype": "LANGUAGE_LITERAL"
+   "nodetype": "LANGUAGE_LITERAL",
+   "cls": [
+    "rformsmultiline"
+   ],
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "http://www.w3.org/2000/01/rdf-schema#label",
@@ -741,7 +930,73 @@ define({
     "en": "A foaf:LabelProperty is any RDF property with texual values that serve as labels."
    },
    "type": "group",
-   "content": []
+   "content": [
+    {
+     "id": "foaf:name"
+    },
+    {
+     "id": "foaf:img"
+    },
+    {
+     "id": "foaf:weblog"
+    },
+    {
+     "id": "foaf:homepage"
+    },
+    {
+     "id": "foaf:depiction"
+    },
+    {
+     "id": "foaf:maker"
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Online accounts"
+     },
+     "content": [
+      {
+       "id": "foaf:openid"
+      },
+      {
+       "id": "foaf:tipjar"
+      }
+     ]
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Additional information"
+     },
+     "content": [
+      {
+       "id": "foaf:page"
+      },
+      {
+       "id": "foaf:isPrimaryTopicOf"
+      },
+      {
+       "id": "foaf:logo"
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "foaf:Person",
@@ -757,6 +1012,9 @@ define({
    "type": "group",
    "content": [
     {
+     "id": "foaf:name"
+    },
+    {
      "id": "foaf:firstName"
     },
     {
@@ -770,6 +1028,9 @@ define({
     },
     {
      "id": "foaf:weblog"
+    },
+    {
+     "id": "foaf:homepage"
     },
     {
      "id": "foaf:gender"
@@ -791,6 +1052,15 @@ define({
     },
     {
      "id": "foaf:status"
+    },
+    {
+     "id": "foaf:plan"
+    },
+    {
+     "id": "foaf:depiction"
+    },
+    {
+     "id": "foaf:maker"
     },
     {
      "cardinality": {
@@ -850,7 +1120,7 @@ define({
      },
      "content": [
       {
-       "id": "foaf:plan"
+       "id": "foaf:page"
       },
       {
        "id": "foaf:myersBriggs"
@@ -875,6 +1145,12 @@ define({
       },
       {
        "id": "foaf:publications"
+      },
+      {
+       "id": "foaf:isPrimaryTopicOf"
+      },
+      {
+       "id": "foaf:logo"
       },
       {
        "id": "foaf:schoolHomepage"
@@ -903,10 +1179,19 @@ define({
    "type": "group",
    "content": [
     {
+     "id": "foaf:name"
+    },
+    {
+     "id": "foaf:img"
+    },
+    {
      "id": "foaf:mbox"
     },
     {
      "id": "foaf:weblog"
+    },
+    {
+     "id": "foaf:homepage"
     },
     {
      "id": "foaf:gender"
@@ -922,6 +1207,12 @@ define({
     },
     {
      "id": "foaf:status"
+    },
+    {
+     "id": "foaf:depiction"
+    },
+    {
+     "id": "foaf:maker"
     },
     {
      "cardinality": {
@@ -981,6 +1272,9 @@ define({
      },
      "content": [
       {
+       "id": "foaf:page"
+      },
+      {
        "id": "foaf:interest"
       },
       {
@@ -988,6 +1282,12 @@ define({
       },
       {
        "id": "foaf:made"
+      },
+      {
+       "id": "foaf:isPrimaryTopicOf"
+      },
+      {
+       "id": "foaf:logo"
       }
      ]
     }
@@ -1007,10 +1307,50 @@ define({
    "type": "group",
    "content": [
     {
+     "id": "foaf:name"
+    },
+    {
+     "id": "foaf:img"
+    },
+    {
+     "id": "foaf:weblog"
+    },
+    {
+     "id": "foaf:homepage"
+    },
+    {
+     "id": "foaf:depiction"
+    },
+    {
      "id": "foaf:primaryTopic"
     },
     {
      "id": "foaf:topic"
+    },
+    {
+     "id": "foaf:maker"
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Online accounts"
+     },
+     "content": [
+      {
+       "id": "foaf:openid"
+      },
+      {
+       "id": "foaf:tipjar"
+      }
+     ]
     },
     {
      "cardinality": {
@@ -1026,6 +1366,15 @@ define({
       "en": "Additional information"
      },
      "content": [
+      {
+       "id": "foaf:page"
+      },
+      {
+       "id": "foaf:isPrimaryTopicOf"
+      },
+      {
+       "id": "foaf:logo"
+      },
       {
        "id": "foaf:sha1"
       }
@@ -1047,10 +1396,19 @@ define({
    "type": "group",
    "content": [
     {
+     "id": "foaf:name"
+    },
+    {
+     "id": "foaf:img"
+    },
+    {
      "id": "foaf:mbox"
     },
     {
      "id": "foaf:weblog"
+    },
+    {
+     "id": "foaf:homepage"
     },
     {
      "id": "foaf:gender"
@@ -1066,6 +1424,12 @@ define({
     },
     {
      "id": "foaf:status"
+    },
+    {
+     "id": "foaf:depiction"
+    },
+    {
+     "id": "foaf:maker"
     },
     {
      "cardinality": {
@@ -1125,6 +1489,9 @@ define({
      },
      "content": [
       {
+       "id": "foaf:page"
+      },
+      {
        "id": "foaf:interest"
       },
       {
@@ -1132,6 +1499,12 @@ define({
       },
       {
        "id": "foaf:made"
+      },
+      {
+       "id": "foaf:isPrimaryTopicOf"
+      },
+      {
+       "id": "foaf:logo"
       }
      ]
     }
@@ -1151,10 +1524,19 @@ define({
    "type": "group",
    "content": [
     {
+     "id": "foaf:name"
+    },
+    {
+     "id": "foaf:img"
+    },
+    {
      "id": "foaf:mbox"
     },
     {
      "id": "foaf:weblog"
+    },
+    {
+     "id": "foaf:homepage"
     },
     {
      "id": "foaf:gender"
@@ -1170,6 +1552,12 @@ define({
     },
     {
      "id": "foaf:status"
+    },
+    {
+     "id": "foaf:depiction"
+    },
+    {
+     "id": "foaf:maker"
     },
     {
      "id": "foaf:member"
@@ -1232,6 +1620,9 @@ define({
      },
      "content": [
       {
+       "id": "foaf:page"
+      },
+      {
        "id": "foaf:interest"
       },
       {
@@ -1239,6 +1630,12 @@ define({
       },
       {
        "id": "foaf:made"
+      },
+      {
+       "id": "foaf:isPrimaryTopicOf"
+      },
+      {
+       "id": "foaf:logo"
       }
      ]
     }
@@ -1256,32 +1653,46 @@ define({
     "en": "A project (a collective endeavour of some kind)."
    },
    "type": "group",
-   "content": []
-  },
-  {
-   "id": "foaf:Image",
-   "label": {
-    "en": "Image"
-   },
-   "constraints": {
-    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Image"
-   },
-   "description": {
-    "en": "An image."
-   },
-   "type": "group",
    "content": [
     {
-     "id": "foaf:primaryTopic"
+     "id": "foaf:name"
     },
     {
-     "id": "foaf:topic"
+     "id": "foaf:img"
     },
     {
-     "id": "foaf:depicts"
+     "id": "foaf:weblog"
     },
     {
-     "id": "foaf:thumbnail"
+     "id": "foaf:homepage"
+    },
+    {
+     "id": "foaf:depiction"
+    },
+    {
+     "id": "foaf:maker"
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Online accounts"
+     },
+     "content": [
+      {
+       "id": "foaf:openid"
+      },
+      {
+       "id": "foaf:tipjar"
+      }
+     ]
     },
     {
      "cardinality": {
@@ -1297,6 +1708,107 @@ define({
       "en": "Additional information"
      },
      "content": [
+      {
+       "id": "foaf:page"
+      },
+      {
+       "id": "foaf:isPrimaryTopicOf"
+      },
+      {
+       "id": "foaf:logo"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "foaf:Image",
+   "label": {
+    "en": "Image"
+   },
+   "constraints": {
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Image"
+   },
+   "description": {
+    "en": "An image."
+   },
+   "type": "group",
+   "content": [
+    {
+     "id": "foaf:name"
+    },
+    {
+     "id": "foaf:img"
+    },
+    {
+     "id": "foaf:weblog"
+    },
+    {
+     "id": "foaf:homepage"
+    },
+    {
+     "id": "foaf:depiction"
+    },
+    {
+     "id": "foaf:primaryTopic"
+    },
+    {
+     "id": "foaf:topic"
+    },
+    {
+     "id": "foaf:depicts"
+    },
+    {
+     "id": "foaf:maker"
+    },
+    {
+     "id": "foaf:thumbnail"
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Online accounts"
+     },
+     "content": [
+      {
+       "id": "foaf:openid"
+      },
+      {
+       "id": "foaf:tipjar"
+      }
+     ]
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Additional information"
+     },
+     "content": [
+      {
+       "id": "foaf:page"
+      },
+      {
+       "id": "foaf:isPrimaryTopicOf"
+      },
+      {
+       "id": "foaf:logo"
+      },
       {
        "id": "foaf:sha1"
       }
@@ -1318,10 +1830,50 @@ define({
    "type": "group",
    "content": [
     {
+     "id": "foaf:name"
+    },
+    {
+     "id": "foaf:img"
+    },
+    {
+     "id": "foaf:weblog"
+    },
+    {
+     "id": "foaf:homepage"
+    },
+    {
+     "id": "foaf:depiction"
+    },
+    {
      "id": "foaf:primaryTopic"
     },
     {
      "id": "foaf:topic"
+    },
+    {
+     "id": "foaf:maker"
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Online accounts"
+     },
+     "content": [
+      {
+       "id": "foaf:openid"
+      },
+      {
+       "id": "foaf:tipjar"
+      }
+     ]
     },
     {
      "cardinality": {
@@ -1337,6 +1889,15 @@ define({
       "en": "Additional information"
      },
      "content": [
+      {
+       "id": "foaf:page"
+      },
+      {
+       "id": "foaf:isPrimaryTopicOf"
+      },
+      {
+       "id": "foaf:logo"
+      },
       {
        "id": "foaf:sha1"
       }
@@ -1365,6 +1926,9 @@ define({
     },
     {
      "id": "foaf:weblog"
+    },
+    {
+     "id": "foaf:homepage"
     },
     {
      "id": "foaf:depiction"
@@ -1416,9 +1980,6 @@ define({
      "content": [
       {
        "id": "foaf:page"
-      },
-      {
-       "id": "foaf:homepage"
       },
       {
        "id": "foaf:isPrimaryTopicOf"
@@ -1453,6 +2014,9 @@ define({
      "id": "foaf:weblog"
     },
     {
+     "id": "foaf:homepage"
+    },
+    {
      "id": "foaf:depiction"
     },
     {
@@ -1502,9 +2066,6 @@ define({
      "content": [
       {
        "id": "foaf:page"
-      },
-      {
-       "id": "foaf:homepage"
       },
       {
        "id": "foaf:isPrimaryTopicOf"
@@ -1539,6 +2100,9 @@ define({
      "id": "foaf:weblog"
     },
     {
+     "id": "foaf:homepage"
+    },
+    {
      "id": "foaf:depiction"
     },
     {
@@ -1588,9 +2152,6 @@ define({
      "content": [
       {
        "id": "foaf:page"
-      },
-      {
-       "id": "foaf:homepage"
       },
       {
        "id": "foaf:isPrimaryTopicOf"
@@ -1625,6 +2186,9 @@ define({
      "id": "foaf:weblog"
     },
     {
+     "id": "foaf:homepage"
+    },
+    {
      "id": "foaf:depiction"
     },
     {
@@ -1676,9 +2240,6 @@ define({
        "id": "foaf:page"
       },
       {
-       "id": "foaf:homepage"
-      },
-      {
        "id": "foaf:isPrimaryTopicOf"
       },
       {
@@ -1697,43 +2258,6 @@ define({
     "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2000/01/rdf-schema#Class"
    },
    "type": "group",
-   "content": []
-  },
-  {
-   "id": "http://www.w3.org/2000/10/swap/pim/contact#Person",
-   "label": {
-    "en": "Person"
-   },
-   "constraints": {
-    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2000/10/swap/pim/contact#Person"
-   },
-   "type": "group",
-   "content": []
-  },
-  {
-   "id": "http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing",
-   "label": {
-    "en": "Spatial Thing"
-   },
-   "constraints": {
-    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing"
-   },
-   "type": "group",
-   "content": [
-    {
-     "id": "foaf:based_near"
-    }
-   ]
-  },
-  {
-   "id": "http://www.w3.org/2002/07/owl#Thing",
-   "label": {
-    "en": "Thing"
-   },
-   "constraints": {
-    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2002/07/owl#Thing"
-   },
-   "type": "group",
    "content": [
     {
      "id": "foaf:name"
@@ -1743,6 +2267,9 @@ define({
     },
     {
      "id": "foaf:weblog"
+    },
+    {
+     "id": "foaf:homepage"
     },
     {
      "id": "foaf:depiction"
@@ -1790,7 +2317,238 @@ define({
        "id": "foaf:page"
       },
       {
-       "id": "foaf:homepage"
+       "id": "foaf:isPrimaryTopicOf"
+      },
+      {
+       "id": "foaf:logo"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "http://www.w3.org/2000/10/swap/pim/contact#Person",
+   "label": {
+    "en": "Person"
+   },
+   "constraints": {
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2000/10/swap/pim/contact#Person"
+   },
+   "type": "group",
+   "content": [
+    {
+     "id": "foaf:name"
+    },
+    {
+     "id": "foaf:img"
+    },
+    {
+     "id": "foaf:weblog"
+    },
+    {
+     "id": "foaf:homepage"
+    },
+    {
+     "id": "foaf:depiction"
+    },
+    {
+     "id": "foaf:maker"
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Online accounts"
+     },
+     "content": [
+      {
+       "id": "foaf:openid"
+      },
+      {
+       "id": "foaf:tipjar"
+      }
+     ]
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Additional information"
+     },
+     "content": [
+      {
+       "id": "foaf:page"
+      },
+      {
+       "id": "foaf:isPrimaryTopicOf"
+      },
+      {
+       "id": "foaf:logo"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing",
+   "label": {
+    "en": "Spatial Thing"
+   },
+   "constraints": {
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing"
+   },
+   "type": "group",
+   "content": [
+    {
+     "id": "foaf:name"
+    },
+    {
+     "id": "foaf:img"
+    },
+    {
+     "id": "foaf:weblog"
+    },
+    {
+     "id": "foaf:homepage"
+    },
+    {
+     "id": "foaf:based_near"
+    },
+    {
+     "id": "foaf:depiction"
+    },
+    {
+     "id": "foaf:maker"
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Online accounts"
+     },
+     "content": [
+      {
+       "id": "foaf:openid"
+      },
+      {
+       "id": "foaf:tipjar"
+      }
+     ]
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Additional information"
+     },
+     "content": [
+      {
+       "id": "foaf:page"
+      },
+      {
+       "id": "foaf:isPrimaryTopicOf"
+      },
+      {
+       "id": "foaf:logo"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "http://www.w3.org/2002/07/owl#Thing",
+   "label": {
+    "en": "Thing"
+   },
+   "constraints": {
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2002/07/owl#Thing"
+   },
+   "type": "group",
+   "content": [
+    {
+     "id": "foaf:name"
+    },
+    {
+     "id": "foaf:img"
+    },
+    {
+     "id": "foaf:weblog"
+    },
+    {
+     "id": "foaf:homepage"
+    },
+    {
+     "id": "foaf:depiction"
+    },
+    {
+     "id": "foaf:maker"
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Online accounts"
+     },
+     "content": [
+      {
+       "id": "foaf:openid"
+      },
+      {
+       "id": "foaf:tipjar"
+      }
+     ]
+    },
+    {
+     "cardinality": {
+      "min": 1,
+      "pref": 1,
+      "max": 1
+     },
+     "type": "group",
+     "cls": [
+      "rformsexpandable"
+     ],
+     "label": {
+      "en": "Additional information"
+     },
+     "content": [
+      {
+       "id": "foaf:page"
       },
       {
        "id": "foaf:isPrimaryTopicOf"

@@ -11,6 +11,17 @@ define(["util", "fs", 'rdfjson/Graph', 'rdfjson/Rdfs'], function(util, fs, Graph
 	}
 	return props;
     };
+
+    var getForcedProperties = function(cls, conf, rdfs) {
+	var props = [];
+	var arr = conf._forced[cls.getURI()];
+	if (arr) {
+	    for (var i=0;i<arr.length;i++) {
+		props.push(rdfs.getProperty(arr[i]));
+	    }
+	}
+	return props;
+    };
     
     var getAbbrevId = function(uri, conf) {
 	if (uri.indexOf(conf.ns) === 0) {
@@ -52,6 +63,26 @@ define(["util", "fs", 'rdfjson/Graph', 'rdfjson/Rdfs'], function(util, fs, Graph
 	    }
 	}
 	conf._order = order;
+	conf._forced = {};
+	if (conf.forced != null) {
+	    for (var cls in conf.forced) {
+		if (conf.forced.hasOwnProperty(cls)) {
+		    var arr = conf.forced[cls];
+		    conf._forced[conf.ns+cls] = arr;
+		    for (var k=0;k<arr.length;k++) {
+			arr[k] = conf.ns+arr[k];
+		    }
+		}
+	    }
+	}
+	conf._specs = {};
+	if (conf.specs != null) {
+	    for (var r in conf.specs) {
+		if (conf.specs.hasOwnProperty(r)) {
+		    conf._specs[conf.ns+r] = conf.specs[r];
+		}
+	    }
+	}
     };
 
     var removeIgnored = function(arr, conf) {
@@ -95,6 +126,7 @@ define(["util", "fs", 'rdfjson/Graph', 'rdfjson/Rdfs'], function(util, fs, Graph
     var convert = function(graph, conf) {
 	var rdfs = new Rdfs();
 	rdfs.addGraph(graph);
+	rdfs.addThing();
 	
 	var auxP = [];
 	var auxC = [];
@@ -116,10 +148,14 @@ define(["util", "fs", 'rdfjson/Graph', 'rdfjson/Rdfs'], function(util, fs, Graph
 	    }
 	    
 	    var ranges = prop.getRange();
-	    if (ranges == null || ranges.indexOf("http://www.w3.org/2000/01/rdf-schema#Literal") !== -1) {
+	    var r = conf._specs[prop.getURI()];
+	    
+	    if ((r!= null && (r.nodetype === "LANGUAGE_LITERAL" || r.nodetype === "LITERAL" || r.nodetype === "ONLY_LITERAL")) 
+		|| ranges == null || ranges.indexOf("http://www.w3.org/2000/01/rdf-schema#Literal") !== -1) {
 		source["type"] = "text";
-		source["nodetype"] = "LANGUAGE_LITERAL"
-	    } else if (ranges.length === 1 && ranges[0] === "http://www.w3.org/2002/07/owl#Thing") {
+		var nt = r != null ? r.nodetype : null;
+		source["nodetype"] = nt || conf.literalNodeTypeDefault ||"LANGUAGE_LITERAL";
+	    } else if (ranges.length === 1 && ranges[0] === "http://www.w3.org/2002/07/owl#Thing" || (r != null && r.type === "text")) {
 		source["type"] = "text";
 		source["nodetype"] = "URI"
 	    } else {
@@ -147,6 +183,15 @@ define(["util", "fs", 'rdfjson/Graph', 'rdfjson/Rdfs'], function(util, fs, Graph
 		    source.content = propArr;
 		}
 	    }
+	    if (r != null && r.cls != null) {
+		source.cls = r.cls;
+	    }
+	    if (r!= null && r.cardinality != null) {
+			source.cardinality = r.cardinality;
+		}
+		if (conf.nonGroupCardinalityDefault != null && source.type !== "group") {
+	    	source.cardinality = conf.nonGroupCardinalityDefault;
+	    }
 	    auxP.push(source);
 	}
 	
@@ -162,8 +207,8 @@ define(["util", "fs", 'rdfjson/Graph', 'rdfjson/Rdfs'], function(util, fs, Graph
 	    if (desc != null) {
 		source.description = desc;
 	    }
-	    
-	    var props = removeIgnored(getPropertiesFromClasses(rdfs, [cls.getURI()]), conf);
+	    var forced = getForcedProperties(cls, conf, rdfs);
+	    var props = removeIgnored(getPropertiesFromClasses(rdfs, [cls.getURI()]).concat(forced), conf);
 	    var cats = groupIntoCategories(props, conf); //Order and organize into categories.
 	    var propArr = [];
 	    

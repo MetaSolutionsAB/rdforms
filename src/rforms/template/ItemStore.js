@@ -123,7 +123,7 @@ define(["dojo/_base/declare",
 		    break;
 		case "sirff":
 		    request.get(config.url, {
-			handleAs: "json.comment-optional"
+			handleAs: "json"
 		    }).then(lang.hitch(this, function(data){
 			this.createTemplate(data);
 			down();

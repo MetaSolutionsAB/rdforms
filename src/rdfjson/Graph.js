@@ -192,6 +192,17 @@ var Graph = function(graph, validate) {
 									 this._graphObject(statement._o)), 
 						 true);
 	};
+	
+	/**
+	 * Convenience function that combines the find and remove functions.
+	 */
+	Graph.prototype.findAndRemove = function(s, p, o) {
+		var stmts = this.find(s, p, o);
+		for (var i=0;i<stmts.length;i++) {
+			this.remove(stmts[i]);
+		}
+	};
+	
 	/**
 	 * Removes the given statement from the graph.
 	 * If you plan to keep the statement around and assert it later, 

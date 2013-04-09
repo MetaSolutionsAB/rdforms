@@ -177,7 +177,30 @@ var Graph = function(graph, validate) {
 	
 	//===================================================
 	// Public API
-	//===================================================	
+	//===================================================
+	/**
+	 * @return true if the graph contains no asserted statements.
+	 */
+	Graph.prototype.isEmpty = function() {
+		var s, p, oindex, graph = this._graph, objArr;
+		for (s in graph) {
+			if (graph.hasOwnProperty(s)) {
+				for (p in graph[s]) {
+					if (graph[s].hasOwnProperty(p)) {
+						objArr = graph[s][p];
+						for (oindex = objArr.length-1;oindex>=0;oindex--) {
+							var o = objArr[oindex];
+							if (o._statement == null || o._statement.isAsserted()) {
+								return false;
+							}
+						}
+					}
+				}
+			}
+		}
+		return true;
+	};
+	
 	/**
 	 * Adds the provided statement to the graph.
 	 * The statement may originate from another graph, although potential bnodes are not renamed.

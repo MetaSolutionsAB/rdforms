@@ -3,7 +3,7 @@ define(["dojo/_base/declare",
 	"dojo/dom-attr",
 	"dojo/dom-style",
 	"dojo/window",
-	"dijit/layout/_LayoutWidget",
+	"dijit/_WidgetBase",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
 	"dijit/Dialog", //Used in template
@@ -12,9 +12,9 @@ define(["dojo/_base/declare",
 	"dijit/layout/BorderContainer", //Used in template
 	"./SortedStore",
 	"dojo/text!./ChooserTemplate.html"
-], function(declare, attr, style, window, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin, Dialog, Button, ContentPane, BorderContainer, SortedStore, template) {
+], function(declare, attr, style, window, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Dialog, Button, ContentPane, BorderContainer, SortedStore, template) {
 
-    return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
+    return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 	templateString: template,
 	binding: null,
 

@@ -20,7 +20,7 @@ var conf = {
     		editorialNote: {nodetype: "LANGUAGE_LITERAL", cls: ["rformsmultiline"]},
     		scopeNote: {nodetype: "LANGUAGE_LITERAL", cls: ["rformsmultiline"]},
     		changeNote: {nodetype: "LANGUAGE_LITERAL", cls: ["rformsmultiline"]},
-    		historyNote: {nodetype: "LANGUAGE_LITERAL", cls: ["rformsmultiline"]},
+    		historyNote: {nodetype: "LANGUAGE_LITERAL", cls: ["rformsmultiline"]}
     },
     forced: {"Concept": ["prefLabel",
     					"altLabel",
@@ -32,7 +32,7 @@ var conf = {
     					"scopeNote",
     					"changeNote",
     					"historyNote",
-    					"inScheme",
+    					"inScheme"
     	]},
     order: [
     	"prefLabel",
@@ -46,7 +46,7 @@ var conf = {
 		"broader",
 		"narrower",
 		"related",
-		"member",
+		"member"
     ],
     categories: [{
     	label: {en: "Labels and annotations"},

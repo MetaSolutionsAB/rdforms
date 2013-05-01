@@ -17,7 +17,7 @@ var conf = {
 			plan: {nodetype: "LANGUAGE_LITERAL", cls: ["rformsmultiline"]},
 			status: {nodetype: "LANGUAGE_LITERAL", cls: ["rformsmultiline"]},
 			img: {type: "text"},
-			weblog: {type: "text"},
+			weblog: {type: "text"}
 	},
     order: [
 	"name",

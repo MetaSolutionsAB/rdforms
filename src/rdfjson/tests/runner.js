@@ -1,4 +1,5 @@
 //#!/usr/bin/env node
+/*global require*/
 
 var requirejs = require('requirejs');
 requirejs.config({nodeRequire: require});

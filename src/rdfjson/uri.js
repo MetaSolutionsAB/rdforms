@@ -32,8 +32,9 @@ define([], function() {
 	    	if (given.indexOf("//") == 0) {    // Starts with //
 				return baseScheme + given;
 			}
+            var baseSingle;
 	    	if (base.indexOf('//', baseColon)==baseColon+1) {  // Any hostpart?
-		    	var baseSingle = base.indexOf("/", baseColon+3);
+		    	baseSingle = base.indexOf("/", baseColon+3);
 				if (baseSingle < 0) {
 		    		if (base.length-baseColon-3 > 0) {
 						return base + "/" + given;
@@ -42,7 +43,7 @@ define([], function() {
 		    		}
 				}
 	    	} else {
-				var baseSingle = base.indexOf("/", baseColon+1);
+				baseSingle = base.indexOf("/", baseColon+1);
 				if (baseSingle < 0) {
 		    		if (base.length-baseColon-1 > 0) {
 						return base + "/" + given;
@@ -56,7 +57,7 @@ define([], function() {
 			}
 	
 		    var path = base.slice(baseSingle);
-			var lastSlash = path.lastIndexOf("/");
+			var lastSlash = path.lastIndexOf('/');
 			if (lastSlash <0) return baseScheme + given;
 			if ((lastSlash >=0) && (lastSlash < (path.length-1))) {
 				path = path.slice(0, lastSlash+1); // Chop trailing filename from base

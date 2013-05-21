@@ -1,4 +1,4 @@
-define(['nodeunit', '../Graph', '../converters', './rdf1', 'fs'], function(nodeunitNode, Graph, converters, rdf1, fs) {
+define(['nodeunit', '../Graph', '../converters', './rdf1'], function(nodeunitNode, Graph, converters, rdf1) {
 	//browsers have the global nodeunit already available
 	var nu = nodeunitNode || nodeunit;
 	

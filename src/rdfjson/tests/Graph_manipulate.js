@@ -39,7 +39,7 @@ define(['nodeunit', '../Graph', '../Statement', './rdf1'], function(nodeunitNode
 		},
 	    createNonAssertedStatement: function(test) {
 			var g = new Graph({});
-			var s1 = g.create(rdf1.uris[0], rdf1.predicates[0], undefined, false);
+			g.create(rdf1.uris[0], rdf1.predicates[0], undefined, false);
 			test.ok(g.find().length === 0);
 			test.done();
 		},

@@ -12,10 +12,9 @@ define(["./uri"], function(URI) {
 	//
 	// W3C open source licence 2005.
 	//
-	
-	var terms = {};
 
-	var RDFTracking = 0  // Are we requiring reasons for statements?
+	var RDFTracking = 0;
+    // Are we requiring reasons for statements?
 
 	//takes in an object and makes it an object if it's a literal
 	var makeTerm = function(val) {
@@ -30,37 +29,52 @@ define(["./uri"], function(URI) {
 
 	//	Symbol
 
-	var RDFEmpty = function() {
-		return this;
-	}
-	RDFEmpty.prototype.termType = 'empty'
-	RDFEmpty.prototype.toString = function () { return "" }
-	RDFEmpty.prototype.toNT = function () { return "" }
+	var RDFEmpty = function () {
+        return this;
+    };
 
-	var RDFSymbol_toNT = function(x) {
-    	return ("<" + x.uri + ">");
-	}
+	RDFEmpty.prototype.termType = 'empty';
+
+	RDFEmpty.prototype.toString = function () {
+        return ""
+    };
+
+	RDFEmpty.prototype.toNT = function () {
+        return ""
+    };
+
+
+    /**
+     * @return {string}
+     */
+    var RDFSymbol_toNT = function (x) {
+        return ("<" + x.uri + ">");
+    };
+
 
 	var toNT = function () {
-    	return RDFSymbol_toNT(this);
-	}
+        return RDFSymbol_toNT(this);
+    };
+
 
 	var RDFSymbol = function(uri) {
     	this.uri = uri;
 	    return this;
 	};
 	
-	RDFSymbol.prototype.termType = 'symbol'
-	RDFSymbol.prototype.toString = toNT
-	RDFSymbol.prototype.toNT = toNT
+	RDFSymbol.prototype.termType = 'symbol';
+
+	RDFSymbol.prototype.toString = toNT;
+
+	RDFSymbol.prototype.toNT = toNT;
+
 
 	//	Blank Node
 
 	var RDFNextId = 0;  // Gobal genid
-	var RDFGenidPrefix = "genid:";
 	var NTAnonymousNodePrefix = "_:n";
 
-	var RDFBlankNode = function(id) {
+	var RDFBlankNode = function() {
     	this.id = RDFNextId++;
 	    return this;
 	};
@@ -74,24 +88,22 @@ define(["./uri"], function(URI) {
 
 	//	Literal
 
-	var RDFLiteral = function(value, lang, datatype) {
+	var RDFLiteral = function(value, /*String=*/ lang, /*String=*/datatype) {
     	this.value = value;
     	this.lang=lang;	  // string
     	this.datatype=datatype;  // term
-    	this.toString = RDFLiteralToString;
-	    this.toNT = RDFLiteral_toNT;
 	    return this;
 	};
 
 	RDFLiteral.prototype.termType = 'literal';
 
-	var RDFLiteral_toNT = function() {
+    RDFLiteral.prototype.toNT = function() {
     	var str = this.value;
 	    if (typeof str != 'string') {
 			throw Error("Value of RDF literal is not string: "+str);
 	    }
     	str = str.replace(/\\/g, '\\\\');  // escape
-	    str = str.replace(/\"/g, '\\"');
+	    str = str.replace(/"/g, '\\"');
     	str = '"' + str + '"';
 
 	    if (this.datatype){
@@ -104,12 +116,9 @@ define(["./uri"], function(URI) {
     	return str;
 	};
 
-	var RDFLiteralToString = function() {
-    	return this.value;
-	}
-    
-	RDFLiteral.prototype.toString = RDFLiteralToString;   
-	RDFLiteral.prototype.toNT = RDFLiteral_toNT
+    RDFLiteral.prototype.toString = function () {
+        return this.value;
+    };
 
 	var RDFCollection = function() {
     	this.id = RDFNextId++;
@@ -138,7 +147,10 @@ define(["./uri"], function(URI) {
 	//
 	//   The reason can point to provenece or inference
 	//
-	var RDFStatement_toNT = function() {
+    /**
+     * @return {string}
+     */
+    var RDFStatement_toNT = function() {
     	return (this.subject.toNT() + " "
 	    	+ this.predicate.toNT() + " "
 	    	+  this.object.toNT() +" .");
@@ -151,7 +163,7 @@ define(["./uri"], function(URI) {
 	    if (typeof why !='undefined') {
 			this.why = why;
     	} else if (RDFTracking) {
-			fyi("WARNING: No reason on "+subject+" "+predicate+" "+object);
+			console.log("WARNING: No reason on "+subject+" "+predicate+" "+object);
 	    }
     	return this;
 	};
@@ -180,7 +192,10 @@ define(["./uri"], function(URI) {
 		return this
 	}*/
 
-	var RDFFormula_toNT = function() {
+    /**
+     * @return {string}
+     */
+    var RDFFormula_toNT = function() {
 	    return "{\n" + this.statements.join('\n') + "}";
 	};
 
@@ -207,13 +222,13 @@ define(["./uri"], function(URI) {
 	    return new RDFLiteral(val.toString(), lang, dt);
 	};
 
-	RDFFormula.prototype.bnode = function(id) {
-    	return new RDFBlankNode(id);
+	RDFFormula.prototype.bnode = function() {
+    	return new RDFBlankNode();
 	};
 
-	RDFFormula.prototype.formula = function() {
-    	return new RDFFormula();
-	}
+	RDFFormula.prototype.formula = function () {
+        return new RDFFormula();
+    };
 
 	RDFFormula.prototype.collection = function () {
     	return new RDFCollection();
@@ -250,13 +265,6 @@ define(["./uri"], function(URI) {
 
 	RDFVariable.prototype.hashString = RDFVariable.prototype.toNT;
 
-
-	// The namespace function generator 
-
-	var Namespace = function(nsuri) {
-    	return function(ln) { return new RDFSymbol(nsuri+ln) }
-	}
-
 	// Parse a single token
 	//
 	// The bnode bit should not be used on program-external values; designed
@@ -264,8 +272,8 @@ define(["./uri"], function(URI) {
 	// Not coded for literals.
 
 	RDFFormula.prototype.fromNT = function(str) {
-	    var len = str.length
-    	var ch = str.slice(0,1)
+	    var len = str.length;
+    	var ch = str.slice(0, 1);
     	if (ch == '<') return this.sym(str.slice(1,len-1));
     	if (ch == '_') {
 			var x = new RDFBlankNode();

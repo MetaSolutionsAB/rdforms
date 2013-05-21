@@ -60,7 +60,7 @@ define(['nodeunit', '../Graph', './rdf1'], function(nodeunitNode, Graph, rdf1) {
 			var g1 = new Graph({});
 			var s1 = g1.create(rdf1.uris[0], rdf1.predicates[0], {type: 'literal', value: 'hi'});
 			var g2 = new Graph({});
-			var s2 = g1.create(rdf1.uris[0], rdf1.predicates[0], {type: 'literal', value: 'hi'});
+			g1.create(rdf1.uris[0], rdf1.predicates[0], {type: 'literal', value: 'hi'});
 			g2.remove(s1);
 			test.ok(g1.find().length === 1);
 			test.ok(g2.find().length === 0);

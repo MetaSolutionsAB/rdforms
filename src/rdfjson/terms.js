@@ -1,8 +1,5 @@
 define(["./uri"], function(URI) {
 
-//TODO fyi?
-
-
 	// These are the classes corresponding to the RDF and N3 data models
 	//
 	// Designed to look like rdflib and cwm designs.

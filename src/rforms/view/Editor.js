@@ -27,6 +27,38 @@ define(["dojo/_base/declare",
 
     var uniqueRadioButtonNameNr = 0;
 
+    var showNow = function(item, bindings, includeLevel) {
+        if (item.hasStyle("invisible")) {
+            return false;
+        }
+        if (bindings.length > 0) {
+            if (item.getProperty()) {
+                return true;
+            }
+            //Take care of layout grouping by checking recursively.
+            var groupedItemsArr = item.getChildren(),
+                groupedBindingsArr = bindings[0].getItemGroupedChildBindings(),
+                groupIndex, bindings, item;
+            for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
+                bindings = groupedBindingsArr[groupIndex];
+                item = groupedItemsArr[groupIndex];
+                if (showNow(item, bindings, includeLevel)) {       //Recursive call
+                    return true;
+                }
+            }
+        }
+        var card = item.getCardinality();
+        switch(includeLevel) {
+            case "mandatory":
+                return card && card.min>=1;
+            case "recommended":
+                return card && (card.min>=1 || card.pref>=1);
+            default:
+                return true;
+        }
+    };
+
+
     var Editor = declare(Presenter, {
 	//===================================================
 	// Public attributes
@@ -82,21 +114,7 @@ define(["dojo/_base/declare",
 	 * @param {Object} bindings
 	 */
 	showNow: function(item, bindings) {
-	    if (item.hasStyle("invisible")) {
-		return false;
-	    }
-	    if (bindings.length > 0) {
-		return true;
-	    }
-	    var card = item.getCardinality();
-	    switch(this.includeLevel) {
-	    case "mandatory":
-		return card && card.min>=1;
-	    case "recommended":
-		return card && (card.min>=1 || card.pref>=1);
-	    default:
-		return true;
-	    }
+	    return showNow(item, bindings, this.includeLevel);
 	},
 	/**
 	 * Will add bindings until the min cardinality is reached.

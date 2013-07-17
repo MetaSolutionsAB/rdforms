@@ -422,8 +422,19 @@
     width: 100%;
 }
 
+.groupEditor .row .select {
+    width: 16em;
+}
+
+
+.groupEditor .row .cardinality .dijitTextBox {
+    width: 2em;
+    margin-left: 0.5em;
+    margin-right: 1em;
+}
+
 .groupEditor .row label {
-    width: 5.5em;
+    width: 7em;
 }
 
 .storeManager .itemList>div {
@@ -436,4 +447,46 @@
 
 .storeManager .itemList>div:hover {
     background: lightgrey;
+}
+
+.langStringArr {
+    display: table;
+}
+
+.langStringArr .langString {
+    display: table-row;
+}
+
+.langString>* {
+    display: table-cell;
+}
+
+.langString .langStringString {
+    width: auto;
+}
+
+.langString .langStringLang {
+    width: 5em;
+}
+.langString .langStringString>* {
+    width: 100%;
+}
+
+.langString .langStringLang>* {
+    width: 4.7em;
+    margin-left: 0.3em;
+}
+
+.groupEditor label .addButton {
+    background: lightgreen;
+    border-radius: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.groupEditor label .addButton:hover {
+    background: green;
+    color: white;
 }

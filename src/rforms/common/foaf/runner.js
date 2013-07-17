@@ -16,6 +16,8 @@ var conf = {
     specs: {
 			plan: {nodetype: "LANGUAGE_LITERAL", cls: ["rformsmultiline"]},
 			status: {nodetype: "LANGUAGE_LITERAL", cls: ["rformsmultiline"]},
+            title: {nodetype: "ONLY_LITERAL", type: "text"},
+            nick: {nodetype: "ONLY_LITERAL", type: "text"},
 			img: {type: "text"},
 			weblog: {type: "text"}
 	},

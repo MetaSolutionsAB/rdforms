@@ -3,30 +3,42 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
   </head>
   <body class="tundra">
-	<script type="text/javascript" src="../lib/dojo/dojo/dojo.js.uncompressed.js"
-		djConfig="isDebug: true, debugAtAllCosts: true, parseOnLoad: true, usePlainJson: true"></script>
-		
+  <script>
+      var dojoConfig = {
+          async:true,
+          packages: [
+              { name: "rforms", location: "../../../src/rforms" },
+              { name: "rdfjson", location: "../../../src/rdfjson" }]
+      };
+  </script>
+  <script src="../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
+
+
 	<style>
 		@import "../lib/dojo/dijit/themes/tundra/tundra.css"; /* required when dijit */	
 		@import "../src/rforms/view/resources/rforms.css";
 	</style>
 
 	<script type="text/javascript">
-		dojo.registerModulePath("rdfjson","../../../src/rdfjson");
-		dojo.require("rdfjson.ajar.parser");
-		dojo.require("dijit.form.SimpleTextarea");
-		
-		dojo.addOnLoad(function() {
-		    var xhrArgs = {
-		    		url: "testgraph.rdf",
-					handleAs: "xml",
-					load: function(xmldoc) {
-						dijit.byId("source").set("value", rdfjson.ajar.XML2String(xmldoc));
-						var graph = rdfjson.ajar.importRDFXML(xmldoc);
-						dijit.byId("destination").set("value", dojo.toJson(graph.exportRDFJSON(), 1));
-					}
-		    };
-			dojo.xhrGet(xhrArgs);
+
+
+        require(['rdfjson/converters',     //Contains the rdf/json to rdf/xml converter
+            'dojo/json',                   //To serialize/deserialize the json
+            'dijit/registry',              //To access the dijits
+            'dojo/parser',                 //To parse the inline template
+            'dijit/form/SimpleTextarea',   //Used in the template
+            'dojo/text!./testgraph.rdf',   //RDF/XML testdata.
+            'dojo/domReady!'               //Wait until the dom is ready.
+        ], function(converters, json, registry, parser, SimpleTextarea, testdata) {
+            parser.parse(); //Init the dijits in the dom.
+            registry.byId("source").set("value", testdata); //Show the source rdfxml
+
+            //------Here is where the conversion from rdfxml to rdfjson happens.--------
+            var graph = converters.rdfxml2graph(testdata)
+            var jsonrdf = graph.exportRDFJSON();
+            //---------------------------------------------------------------------------
+
+            registry.byId("destination").set("value", json.stringify(jsonrdf, true, "  ")); //Show the resulting rdf/json.
 		});
 	</script>
 	<div style="width:50%;height:100%;float:left;">

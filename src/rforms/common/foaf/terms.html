@@ -2,7 +2,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     </head>
-    <body class="tundra">
+    <body class="claro">
     <script>
     var dojoConfig = {
 	async:true,
@@ -13,7 +13,7 @@
     </script>
     <script src="../../../../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
     <style>
-      @import "../../../../lib/dojo/dijit/themes/tundra/tundra.css";
+      @import "../../../../lib/dojo/dijit/themes/claro/claro.css";
       @import "../../view/resources/rforms.css";
       html, body {
         height: 100%;
@@ -29,9 +29,9 @@
 		   'dojo/domReady!'], 
 		  function(ItemStore, StoreManager, foafterms) {
 		      var itemStore = new ItemStore();
-		      itemStore.createTemplate(foafterms);
+		      itemStore.registerBundle({path: "terms.js", source: foafterms});
 		      var storeManager = new StoreManager({itemStore: itemStore}, "_node");
-			    storeManager.startup();
+              storeManager.startup();
 		  });
     </script>
     <div id="_node"></div>

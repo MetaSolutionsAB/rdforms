@@ -112,7 +112,7 @@ define(["dojo/_base/declare",
 	},
 	addChoice: function(fieldDiv, binding) {
 		var choice = binding.getChoice();
-		if (binding.getItem().hasStyle("rformsstars") && parseInt(choice.value) != NaN) {
+		if (binding.getItem().hasStyle("stars") && parseInt(choice.value) != NaN) {
 			for (var i=parseInt(choice.value);i>0;i--) {
 				construct.create("span", {"class": "rformsStar"}, fieldDiv);
 			}

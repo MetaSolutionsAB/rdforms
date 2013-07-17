@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    </head>
+    <body class="claro">
+    <script>
+    var dojoConfig = {
+	async:true,
+	packages: [
+	    { name: "rforms", location: "../../../src/rforms" },
+	    { name: "rdfjson", location: "../../../src/rdfjson" }]
+    };
+    </script>
+    <script src="../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
+    <style>
+      @import "../lib/dojo/dijit/themes/claro/claro.css";
+      @import "../src/rforms/view/resources/rforms.css";
+      html, body {
+        height: 100%;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+      }
+    </style>
+    <script type="text/javascript">
+        var params = window.location.href.match(/\?(.*)/)[1].split("&");
+        var parobj = {};
+        for (var i=0;i<params.length;i++) {
+            var pair = params[i].split("=");
+            parobj[pair[0]] = pair[1];
+        }
+        require([
+            'rforms/template/ItemStore',
+            'rforms/formulator/StoreManager',
+            'rdfjson/converters',
+            'dojo/json',
+            "dojo/text!"+parobj.templates,
+            "dojo/text!"+parobj.rdf,
+		   'dojo/domReady!'],
+		  function(ItemStore, StoreManager, rdfConverters, json, templates, rdf) {
+		      var itemStore = new ItemStore();
+		      itemStore.registerBundle({path: parobj.templates, source: json.parse(templates)});
+		      var storeManager = new StoreManager({itemStore: itemStore, data: rdfConverters.rdfxml2graph(rdf).exportRDFJSON()}, "_node");
+              storeManager.startup();
+		  });
+    </script>
+    <div id="_node"></div>
+  </body>
+</html>

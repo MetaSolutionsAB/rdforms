@@ -100,17 +100,17 @@ define(["dojo/_base/declare",
 		}
 	},
 	_initEditor: function() {
-		this._binding = Engine.match(this._graph, "http://example.org/about", this._template);
+		this._binding = Engine.match(this._graph, "http://example.com/about", this._template);
 		var node = construct.create("div");
 		this._editorTab.set("content", node);
 		new Editor({template: this._template, binding: this._binding, includeLevel: "optional", compact: true}, node);
 	},
 		
 	_initPresenter: function() {
-		this._binding = Engine.match(this._graph, "http://example.org/about", this._template);
+		this._binding = Engine.match(this._graph, "http://example.com/about", this._template);
 		var node = construct.create("div");
 		this._presenterTab.set("content", node);
-		new Presenter({template: this._template, binding: this._binding}, node);
+		new Presenter({template: this._template, binding: this._binding, compact: true}, node);
 	},
 		
 	_initRDF: function() {

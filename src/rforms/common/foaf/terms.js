@@ -135,9 +135,8 @@ define({
    "description": {
     "en": "Title (Mr, Mrs, Ms, Dr. etc)"
    },
-   "type": "group",
-   "automatic": true,
-   "content": []
+   "type": "text",
+   "automatic": true
   },
   {
    "id": "foaf:nick",

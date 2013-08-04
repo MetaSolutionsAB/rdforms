@@ -8,20 +8,32 @@ define(["dojo/_base/declare",
     "dojo/dom-attr",
     "dojo/_base/array",
     "dojo/json",
+    "dijit/registry",
     "dijit/layout/_LayoutWidget",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
+    "dojo/dnd/Source",
+    "dijit/tree/dndSource",
     "dijit/Tree",
+    "dijit/Menu",
+    "dijit/MenuItem",
+    "dijit/MenuSeparator",
     "dijit/layout/ContentPane", //For template
     "dijit/layout/TabContainer", //For template
     "dijit/layout/BorderContainer", //For template
     "dijit/form/Button", //For template
+    "dijit/Menu", //For template
+    "dijit/MenuItem", //For template
     "./ItemEditor",
-    "./TreeModel",
+    "./ItemTreeModel",
+    "./ChoicesEditor",
     "rforms/template/Group",
+    "rforms/template/Choice",
     "rforms/apps/Experiment",
     "dojo/text!./StoreManagerTemplate.html"
-], function (declare, lang, xhr, on, domClass, construct, attr, array, json, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin, Tree, ContentPane, TabContainer, BorderContainer, Button, ItemEditor, TreeModel, Group, Experiment, template) {
+], function (declare, lang, xhr, on, domClass, construct, attr, array, json, registry, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin,
+             DnDSource, TreeDndSource, Tree, Menu, MenuItem, MenuSeparator, ContentPane, TabContainer, BorderContainer, Button, Menu, MenuItem,
+             ItemEditor, ItemTreeModel, ChoicesEditor, Group, Choice, Experiment, template) {
 
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -40,17 +52,21 @@ define(["dojo/_base/declare",
         //===================================================
         postCreate: function () {
             this.inherited("postCreate", arguments);
-            this._buildList();
-            on(this._listNode, "click", lang.hitch(this, this._itemIdClicked));
+            this._buildTree();
+//            on(this._listNode, "click", lang.hitch(this, this._itemIdClicked));
         },
         startup: function () {
             this.inherited("startup", arguments);
             this._tabsDijit.watch("selectedChildWidget", lang.hitch(this, function (name, oval, nval) {
-                if (nval === this._itemEditorDijit) {
-                    this.item._source = json.parse(attr.get(this._contentsNode, "value"))
-                    this._showEditor(this.item);
+                if (nval === this._itemEditorTab) {
+                    if (oval !== this._choicesTab) {
+                        this.item._source = json.parse(attr.get(this._contentsNode, "value"));
+                    }
+                    this._showEditor();
+                } else if (nval === this._choicesTab) {
+                    this._showChoices();
                 } else {
-                    this._showContent(this.item);
+                    this._showContent();
                 }
             }));
         },
@@ -60,11 +76,15 @@ define(["dojo/_base/declare",
                 this._bcDijit.resize();
             }
         },
+        itemChanged: function() {
+            this.tree.get("model").onChange(this.item);
+            this._showContent();
+        },
         //===================================================
         // Private methods
         //===================================================
-        _buildList: function () {
-            construct.create("div", {innerHTML: "all"}, this._listNode);
+
+        _buildTree: function () {
             var items = this.itemStore.getItems();
             items.sort(function (i1, i2) {
                 var lab1 = i1.getId() || i1.getProperty();
@@ -77,15 +97,143 @@ define(["dojo/_base/declare",
                     return 0;
                 }
             });
-            array.forEach(items, function (item) {
-                construct.create("div", {innerHTML: item.getId() || item.getProperty()}, this._listNode);
-            }, this);
+
+            var root = new Group({});
+            root.items = items;
+            root._internalId = "_root";
+            root.getChildren = function () {
+                return this.items;
+            };
+            root.getLabel = function() {
+                return "Root";
+            };
+            var itemAcceptance = function(node,source,position) {
+                var tn = registry.getEnclosingWidget(node);
+                if (tn.item === root) {
+                    return false;
+                }
+                var sourceTn = source.getSelectedTreeNodes()[0];
+                if (position === "over") {
+                    if (tn.item instanceof Group) {
+                        return tn.item.getChildren().indexOf(sourceTn.item) == -1; //only allow if the item is not already a child.
+                    }
+                    return false;
+                }
+
+                if (tn.getParent().item === root) { //Changing order between items in root is not allowed.
+                    return false;
+                }
+
+                if (tn.getParent() == sourceTn.getParent()) { //a move within the same group, always ok.
+                    return true;
+                } else {
+                    //Only allow a move into a group if the item is not already a child.
+                    return tn.getParent().item.getChildren().indexOf(sourceTn.item) == -1;
+                }
+            };
+
+            this.tree = new Tree({
+                showRoot: false,
+                model: new ItemTreeModel(root, this.itemStore),
+                dndController: TreeDndSource,
+                "class": "container",
+                checkItemAcceptance: itemAcceptance,
+                betweenThreshold: 5,
+                getIconClass: function(/*dojo.store.Item*/ item, /*Boolean*/ opened){
+                    return (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") :
+                        item instanceof Choice ? "dijitIconConnector" : "dijitLeaf";
+                },
+                onClick: lang.hitch(this, function (item) {
+                    if (this._editor != null) {
+                        this._editor.destroy();
+                    }
+                    this.item = item;
+                    this._editor = new ItemEditor({item: item, itemStore: this.itemStore, storeManager: this}, construct.create("div", null, this._editorNode));
+                    this._showEditor();
+                    this._showContent();
+                    this._showChoices();
+                })
+            }, construct.create("div", null, this._treeNode));
+            this.tree.startup();
+            if (this.menu) {
+                this.menu.destroy();
+            }
+            this.menu = new Menu({
+                targetNodeIds: [this.tree.id],
+                selector: ".dijitTreeNode"
+            });
+            var addItem = lang.hitch(this, function(tn, source) {
+                var clone = source == null;
+                if (clone) {
+                    source = lang.clone(tn.item._source);
+                    delete source.id;
+                }
+                if (tn.item === root || (tn.getParent().item === root && !(tn.item instanceof Group))) {
+                    source.id = ""+new Date().getTime();
+                    this.__newItem(source, root);
+                    return;
+                }
+
+                if (tn.item instanceof Group && !clone) {
+                    this.__newItem(source, tn.item);
+                } else {
+                    var parent = tn.getParent().item;
+                    this.__newItem(source, parent, parent.getChildren().indexOf(tn.item)+1);
+                }
+            });
+            this.menu.addChild(new MenuItem({
+                label: "New TextItem",
+                iconClass: "dijitIconFile",
+                onClick: function() {
+                    addItem(registry.byNode(this.getParent().currentTarget), {type: "text"});
+                }
+            }));
+            this.menu.addChild(new MenuItem({
+                label: "New ChoiceItem",
+                iconClass: "dijitIconConnector",
+                onClick: function() {
+                    addItem(registry.byNode(this.getParent().currentTarget), {type: "choice"});
+                }
+            }));
+            this.menu.addChild(new MenuItem({
+                label: "New GroupItem",
+                iconClass: "dijitFolderOpened",
+                onClick: function() {
+                    addItem(registry.byNode(this.getParent().currentTarget), {type: "group"});
+                }
+            }));
+            this.menu.addChild(new MenuItem({
+                label: "Clone Item",
+                iconClass: "dijitFolderOpened",
+                onClick: function() {
+                    addItem(registry.byNode(this.getParent().currentTarget));
+                }
+            }));
+            this.menu.addChild(new MenuSeparator());
+            var removeItem = lang.hitch(this, function(tn) {
+                if (tn.item === root) {
+                    alert("Cannot remove root!");
+                } else if (tn.getParent().item === root) {
+                    this.__removeItem(tn.item);
+                } else {
+                    this.tree.get("model").removeItem(tn.item, tn.getParent().item);
+                }
+            });
+            this.menu.addChild(new MenuItem({
+                label: "Remove item",
+                iconClass: "dijitEditorIcon dijitEditorIconDelete",
+                onClick: function() {
+                    removeItem(registry.byNode(this.getParent().currentTarget));
+                }
+            }));
+
+            this.menu.startup();
         },
         _saveTemplates: function () {
             var bundle = this.itemStore.getBundles()[0];
             xhr.put(bundle.path, {data: json.stringify(bundle.source, true, "  "), headers: {"content-type": "application/json"}});
         },
-        _itemIdClicked: function (event) {
+/*        _itemIdClicked: function (event) {
             if (event.target !== this._listNode) {
                 if (this._curSel != null) {
                     domClass.remove(this._curSel, "selected");
@@ -102,44 +250,61 @@ define(["dojo/_base/declare",
                     this._showEditor(this.item);
                 }
             }
-        },
-        _showEditor: function (item) {
+        },*/
+        _showEditor: function () {
             if (this._editor != null) {
                 this._editor.destroy();
             }
-            if (item != null) {
-                this._editor = new ItemEditor({item: item}, construct.create("div", null, this._editorNode));
-                if (this.tree) {
-                    this.tree.destroy();
-                }
-                var root = item;
-                if (item.getChildren == null) {
-                    var root = new Group({});
-                    root._internalId = "_root";
-                    root.getChildren = function () {
-                        return [item]
-                    };
-                }
-                this.tree = new Tree({
-                    showRoot: item.getChildren != null,
-                    model: new TreeModel(root),
-                    onClick: lang.hitch(this, function (item) {
-                        if (this._editor != null) {
-                            this._editor.destroy();
-                        }
-                        this._editor = new ItemEditor({item: item}, construct.create("div", null, this._editorNode));
-                    })
-                }, construct.create("div", null, this._dijitItemTreeNode));
-                this.tree.startup();
+            if (this.item != null) {
+                this._editor = new ItemEditor({item: this.item, itemStore: this.itemStore, storeManager: this}, construct.create("div", null, this._editorNode));
             }
         },
-        _showContent: function (item) {
-            attr.set(this._contentsNode, "value", json.stringify(item._source, true, "  "));
-            var template;
-            if (item.getChildren) {
-                template = this.itemStore.createTemplateFromChildren(item.getChildren());
+        _newTextItem: function() {
+            this.__newItem({type: "text", id: ""+new Date().getTime()});
+        },
+        _newChoiceItem: function() {
+            this.__newItem({type: "choice", id: ""+new Date().getTime()});
+        },
+        _newGroupItem: function() {
+            this.__newItem({type: "group", id: ""+new Date().getTime()});
+        },
+        __newItem: function(source, parent, insertIndex) {
+            var newItem;
+            var treeModel = this.tree.get("model");
+            if (parent && parent !== treeModel.item) { //Not root.
+                newItem = this.itemStore.createItem(source, false, true); //Do not clone, but skip registration since item is inline.
+                treeModel.newItem(newItem, parent, insertIndex);
             } else {
-                template = this.itemStore.createTemplateFromChildren([item]);
+                newItem = this.itemStore.createItem(source); //Register mew item since it is not inline.
+                treeModel.newItem(newItem, treeModel.item, insertIndex);
+            }
+            var tn = this.tree.getNodesByItem(newItem)[0];
+            tn.getParent().expand();
+            this.tree.focusNode(tn);
+            this.tree.set("selectedItem", newItem);
+            this.item = newItem;
+            this._showEditor();
+            this._showContent();
+            this._showChoices();
+        },
+        __removeItem: function(item) {
+            var bundle = this.itemStore.getBundles()[0];
+            var templates = bundle.source.templates || bundle.source.auxilliary;
+            var idx = templates.indexOf(item._source);
+            templates.splice(idx, 1);
+            this.itemStore.removeItem(item);
+            var treeModel = this.tree.get("model");
+            var idx = treeModel.item.items.indexOf(item);
+            treeModel.item.items.splice(idx, 1);
+            treeModel.onChildrenChange(treeModel.item, treeModel.item.items); //Root has changed its children
+        },
+        _showContent: function () {
+            attr.set(this._contentsNode, "value", json.stringify(this.item._source, true, "  "));
+            var template;
+            if (this.item.getChildren) {
+                template = this.itemStore.createTemplateFromChildren(this.item.getChildren());
+            } else {
+                template = this.itemStore.createTemplateFromChildren([this.item]);
             }
             if (this._editorDijit != null) {
                 this._editorDijit.destroy();
@@ -147,6 +312,17 @@ define(["dojo/_base/declare",
             this._editorDijit = new Experiment({hideTemplate: true, template: template, graphObj: this.data}, construct.create("div", null, this._previewNode));
             this._editorDijit.startup();
             this._bcDijit.resize();
+        },
+        _showChoices: function() {
+            if (this._choicesEditor) {
+                this._choicesEditor.destroy();
+            }
+            if (this.item instanceof Choice) {
+                this._choicesEditor = new ChoicesEditor({item: this.item}, construct.create("div", null, this._choicesNode));
+                this._choicesEditor.onChange = lang.hitch(this, this._showContent);
+                this._choicesEditor.startup();
+                this._choicesEditor.resize();
+            }
         },
         _showAll: function () {
             var arr = [];

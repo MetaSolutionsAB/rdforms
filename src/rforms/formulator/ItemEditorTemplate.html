@@ -1,5 +1,5 @@
-<div class="groupEditor">
-    <div>
+<div>
+    <div class="formulatorTable">
         <div class="row"><label for="${id}_type">Type:</label><div><div id="${id}_type" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_typeDijit" data-dojo-props="disabled: true"></div></div></div>
         <div class="row"><label for="${id}_id">Id:</label><div><div id="${id}_id" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_idDijit" data-dojo-attach-event="onChange: _changeId" data-dojo-props="intermediateChanges: true"></div></div></div>
         <div class="row"><label for="${id}_extends">Extends:</label><div><div id="${id}_extends" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_extendsDijit" data-dojo-attach-event="onChange: _changeExtends" data-dojo-props="intermediateChanges: true"></div></div></div>
@@ -24,6 +24,7 @@
                 <option>http://www.w3.org/2001/XMLSchema#integer</option>
             </select>
         </div></div>
+        <div class="row"><label for="${id}_pattern">Pattern:</label><div><div id="${id}_pattern" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_patternDijit" data-dojo-attach-event="onChange: _changePattern" data-dojo-props="intermediateChanges: true"></div></div></div>
         <div class="row"><label>Label: <span data-dojo-attach-point="_addLabel" class="addButton">+</span></label><div>
             <div data-dojo-attach-point="_labelLangString" data-dojo-type="rforms/formulator/LangString"></div>
         </div></div>
@@ -36,7 +37,7 @@
             <label for="${id}_max">Max:</label><div id="${id}_max" data-dojo-type="dijit/form/NumberTextBox" data-dojo-attach-point="_maxDijit" data-dojo-attach-event="onChange: _changeCard"></div>
         </div></div></div>
         <div class="row"><label for="${id}_constr">Constraints:</label><div><div id="${id}_constr" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-attach-point="_constrDijit" data-dojo-attach-event="onChange: _changeConstr" data-dojo-props="intermediateChanges: true, invalidMessage: 'Must be a valid json string.'"></div></div></div>
-        <div class="row"><label for="${id}_cls">Classes:</label><div><div id="${id}_cls" data-dojo-type="dijit/form/Textarea" data-dojo-attach-point="_clsDijit" data-dojo-attach-event="onChange: _changeCls" data-dojo-props="intermediateChanges: true"></div></div></div>
+        <div class="row"><label for="${id}_cls">Classes:</label><div><div id="${id}_cls" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_clsDijit" data-dojo-attach-event="onChange: _changeCls" data-dojo-props="intermediateChanges: true"></div></div></div>
         <div class="row"><label for="${id}_sty">Styles:</label><div><div data-dojo-attach-point="_stylesWrapper">
         </div></div></div>
     </div>

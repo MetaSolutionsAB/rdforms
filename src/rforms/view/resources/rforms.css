@@ -405,48 +405,53 @@
 
 /* ---------- StoreManager -----------*/
 
-.groupEditor>div {
+.formulatorTable {
     display: table;
     width: 100%;
 }
-.groupEditor .row {
+.formulatorTable .row {
     display: table-row;
 }
 
-.groupEditor .row>* {
+.formulatorTable .row>* {
     display: table-cell;
     padding-bottom: 0.3em;
 }
 
-.groupEditor .row>*>* {
+.formulatorTable .row>*>* {
     width: 100%;
 }
 
-.groupEditor .row .select {
+.formulatorTable .row .select {
     width: 16em;
 }
 
-
-.groupEditor .row .cardinality .dijitTextBox {
+.formulatorTable .row .cardinality .dijitTextBox {
     width: 2em;
     margin-left: 0.5em;
     margin-right: 1em;
 }
 
-.groupEditor .row label {
+.formulatorTable .row label {
     width: 7em;
 }
 
-.storeManager .itemList>div {
-    cursor: pointer;
+.formulatorTable label .addButton {
+    background: lightgreen;
+    border-radius: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-left: 5px;
+    font-weight: bold;
 }
 
-.storeManager .itemList>div.selected {
-    background: lightblue;
+.formulatorTable label .addButton:hover {
+    background: green;
+    color: white;
 }
 
-.storeManager .itemList>div:hover {
-    background: lightgrey;
+.inlineState .dynamic  {
+    display: none;
 }
 
 .langStringArr {
@@ -475,18 +480,4 @@
 .langString .langStringLang>* {
     width: 4.7em;
     margin-left: 0.3em;
-}
-
-.groupEditor label .addButton {
-    background: lightgreen;
-    border-radius: 3px;
-    padding-left: 3px;
-    padding-right: 3px;
-    margin-left: 5px;
-    font-weight: bold;
-}
-
-.groupEditor label .addButton:hover {
-    background: green;
-    color: white;
 }

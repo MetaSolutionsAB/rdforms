@@ -157,7 +157,7 @@ define(["dojo/_base/declare",
 		}
 		
 		//Taking care of dom node structure plus label.
-		if (includeLabel || (includeLabel == null && binding instanceof GroupBinding)) {
+		if (includeLabel || ((includeLabel == null || includeLabel === false) && binding instanceof GroupBinding)) {
 			newRow = this.addLabelClean(lastRow, binding, item);
 			fieldDiv = construct.create("div", null, construct.create("div", {"class": "rformsFields"}, newRow));
 		} else {

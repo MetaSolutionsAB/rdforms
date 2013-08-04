@@ -9,7 +9,7 @@ define(["dojo/_base/declare",
     "rforms/utils",
     "./Presenter",
     "./TreeOntologyChooser",
-    "./SortedStore",
+    "dojo/store/Memory",
     "./DateTime",
     "./Duration",
     "rforms/model/system",
@@ -23,7 +23,8 @@ define(["dojo/_base/declare",
     "dijit/form/Textarea",
     "dijit/form/FilteringSelect",
     "dijit/form/RadioButton"
-], function (declare, lang, aspect, on, domClass, construct, attr, array, utils, Presenter, TreeOntologyChooser, SortedStore, DateTime, Duration, system, Group, PropertyGroup, Choice, Engine, TitlePane, TextBox, ValidationTextBox, Textarea, FilteringSelect, RadioButton) {
+], function (declare, lang, aspect, on, domClass, construct, attr, array, utils, Presenter, TreeOntologyChooser, Memory, DateTime, Duration,
+             system, Group, PropertyGroup, Choice, Engine, TitlePane, TextBox, ValidationTextBox, Textarea, FilteringSelect, RadioButton) {
 
     var uniqueRadioButtonNameNr = 0;
 
@@ -241,13 +242,23 @@ define(["dojo/_base/declare",
             else {
                 var itemToUse = binding.getItem();
                 //TODO: Sort out if the textarea should be multiline using style or class...
-                if (itemToUse.hasStyle("multiline")) {
+                if (itemToUse.getNodetype() === "ONLY_LITERAL" && itemToUse.getPattern() != null) {
+                    tb = new ValidationTextBox({
+                        value: binding.getValue(),
+                        pattern: itemToUse.getPattern(),
+                        invalidMessage: itemToUse.getDescription(),
+                        onChange: function () {
+                            binding.setValue(this.get("value"));
+                        }
+                    }, construct.create("div", null, fieldDiv));
+                } else if (itemToUse.hasStyle("multiline")) {
                     tb = new Textarea({
                         value: binding.getValue(),
                         onChange: function () {
                             binding.setValue(this.get("value"));
                         }
                     }, construct.create("div", null, fieldDiv));
+                    tb.resize(); // To size the area to the value.
                 } else {
                     tb = new TextBox({
                         value: binding.getValue(),
@@ -298,7 +309,7 @@ define(["dojo/_base/declare",
                 //			domClass.add(controlDiv, "rformsFieldControl");
                 var divToUse = construct.create("div", null, fieldDiv);
 
-                var hierarchy = item.getParentProperty() && item.getHierarchyProperty();
+                var hierarchy = item.getHierarchyProperty() || item.hasStyle("tree");
                 //Check if radiobuttons can be created, i.e. when few choices and max-cardinality == 1
                 if (!hierarchy && (!item.hasStyle("dropDown") && (choices.length < 5 || item.hasStyle("verticalRadioButtons") || item.hasStyle("horizontalRadioButtons"))) && item.getCardinality().max === 1) {
                     var buts = [];
@@ -670,14 +681,21 @@ define(["dojo/_base/declare",
             if (noEmptyValue !== true && !(item.getCardinality().min > 0)) {
                 itemsArray.push({value: "", label: "", top: true});
             }
-            var store = new SortedStore({
+
+            var store = new Memory({
+                data: itemsArray,
+                idProperty: "value",
+                fetchProperties: {sort: [{attribute: "label", descending: true}]}
+            });
+            /*var store = new SortedStore({
                 sortBy: "label",
+                idProperty: "value",
                 data: {
                     identifier: "value",
                     label: "label",
                     items: itemsArray
                 }
-            });
+            });*/
             return store;
         },
         _getCopiedLabeledChoices: function (objects, item) {

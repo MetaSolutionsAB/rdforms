@@ -38,6 +38,7 @@ define(["dojo/_base/declare",
         onChange: function(map) {
         },
         setMap: function(map) {
+            map = map || {};
             if (this._rows) {
                 for (var i=0;i<this._rows.length;i++) {
                     this._rows[i].lang.destroy();
@@ -77,6 +78,7 @@ define(["dojo/_base/declare",
             var text;
             if (this.multiline) {
                 text = Textarea({value: s, onChange: this._onChange, intermediateChanges: true}, construct.create("div", null, textNode));
+                text.resize();
             } else {
                 text = TextBox({value: s, onChange: this._onChange, intermediateChanges: true}, construct.create("div", null, textNode));
             }

@@ -85,7 +85,11 @@ define(["dojo/_base/declare", "../utils"], function (declare, utils) {
             return this._source.cls || [];
         },
         setClasses: function(arr) {
-            this._source.cls = arr;
+            if (arr) {
+                this._source.cls = arr;
+            } else {
+                delete this._source.cls;
+            }
         },
 
         /**
@@ -109,12 +113,15 @@ define(["dojo/_base/declare", "../utils"], function (declare, utils) {
             "invisible",
             "stars",
             "commentOn",
+            "multiline",
             "horizontalRadioButtons",
             "verticalRadioButtons",
             "nonEditable",
             "expandable",
             "dropDown",
-            "firstcolumnfixedtable"],
+            "firstcolumnfixedtable",
+            "tree"
+        ],
         /**
          * Supported styles at this point:
          * invisible

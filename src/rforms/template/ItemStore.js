@@ -65,6 +65,40 @@ define(["dojo/_base/declare",
             }
             return arr;
         },
+        renameItem: function(from, to) {
+            if (this._registry[to]) {
+                throw "Cannot rename to "+ to + " since an item with that id already exists.";
+            }
+            var item = this._registry[from];
+            if (item) {
+                delete this._registry[from];
+                this._registry[to] = item;
+                item.setId(to);
+            }
+            var renameInGroup = function(source) {
+                var children = source.content;
+                if (children) {
+                    for (var j=0;j<children.length;j++) {
+                        var child = children[j];
+                        if (child.id === from || child["@id"] === from) {
+                            child.id = to;
+                            delete child["@id"]; //Clean up backward compatability.
+                        }
+                        if (child.content) {
+                            renameInGroup(child);
+                        }
+                    }
+                }
+            }
+
+            var items = this.getItems();
+            for (var i=0;i<items.length;i++) {
+                var childItem = items[i];
+                if (childItem instanceof Group) {
+                    renameInGroup(childItem._source);
+                }
+            }
+        },
         getItemIds: function () {
             var arr = [];
             for (var key in this._registry) {
@@ -103,7 +137,7 @@ define(["dojo/_base/declare",
                 this._ontologyStore.importRegistry(source.cachedChoices);
             }
             if (typeof source.root === "object") {
-                var t = new Template(source, this._createItem(source.root), this);
+                var t = new Template(source, this.createItem(source.root), this);
                 if (source.id || source["@id"]) {
                     this._tRegistry[source.id || source["@id"]] = t;
                 }
@@ -149,36 +183,23 @@ define(["dojo/_base/declare",
             }, this);
         },
 
-        //===================================================
-        // Inherited methods
-        //===================================================
-        constructor: function (ontologyStore) {
-            this._bundles = [];
-            this._registry = {};
-            this._registryByProperty = {};
-            this._tRegistry = {};
-            this._ontologyStore = ontologyStore || new OntologyStore();
-        },
-
-        //===================================================
-        // Private methods
-        //===================================================
-        _createItems: function (sourceArray, forceClone) {
-            return array.map(sourceArray, function (child) {
-                return this._createItem(child, forceClone);
-            }, this);
-        },
-        _createItem: function (source, forceClone, skipRegistration) {
+        /**
+         * At a minimum the source must contain a type, the rest can be changed later.
+         *
+         * @param source
+         * @returns {*}
+         */
+        createItem: function (source, forceClone, skipRegistration) {
             var item, id = source.id || source["@id"], type = source["type"] || source["@type"];
             if (source["extends"]) {
-            //Explicit extends given
+                //Explicit extends given
                 if (this._registry[source["extends"]] === undefined) {
                     throw "Cannot find item to extend with id: " + source["extends"];
                 }
                 var newSource = lang.mixin(lang.clone(this._registry[source["extends"]]._source), source);
                 newSource["_extendedSource"] = source;
                 newSource["extends"] = null; //Avoid infinite recursion when creating the fleshed out item.
-                return this._createItem(newSource, false, false);
+                return this.createItem(newSource, false, false);
             } else if (type != null && source["extends"] == null) {
                 //If there is a type in the source then it means that the object is a new item.
                 switch (type) {
@@ -217,7 +238,7 @@ define(["dojo/_base/declare",
                 }
                 //Check if there are any overlay properties, if so force clone mode.
                 for (var key in source) {
-                    if (source.hasOwnProperty(key) && (key !== "id" || key !== "@id")) {
+                    if (source.hasOwnProperty(key) && (key !== "id" && key !== "@id")) {
                         forceClone = true;
                         break;
                     }
@@ -225,11 +246,40 @@ define(["dojo/_base/declare",
 
                 if (forceClone === true) {
                     var newSource = lang.mixin(lang.clone(this._registry[id]._source), source);
-                    return this._createItem(newSource, false, true);
+                    return this.createItem(newSource, false, true);
                 } else {
                     return this._registry[id];
                 }
             }
+        },
+        removeItem: function(item) {
+            if (item.getId() != null) {
+                delete this._registry[item.getId()];
+            }
+            var prop = item.getProperty();
+            if (prop != null && this._registryByProperty[prop] === item) {
+                delete this._registryByProperty[prop];
+            }
+        },
+
+        //===================================================
+        // Inherited methods
+        //===================================================
+        constructor: function (ontologyStore) {
+            this._bundles = [];
+            this._registry = {};
+            this._registryByProperty = {};
+            this._tRegistry = {};
+            this._ontologyStore = ontologyStore || new OntologyStore();
+        },
+
+        //===================================================
+        // Private methods
+        //===================================================
+        _createItems: function (sourceArray, forceClone) {
+            return array.map(sourceArray, function (child) {
+                return this.createItem(child, forceClone);
+            }, this);
         }
     });
 });

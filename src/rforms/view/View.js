@@ -217,7 +217,7 @@ define(["dojo/_base/declare",
 		}
 	},
 	showAsTable: function(item) {
-		return item instanceof Group && item.hasClass("rformsTable");
+		return item instanceof Group && (item.hasStyle("table") || item.hasClass("rformsTable"));
 	},
 
 	//===================================================

@@ -119,6 +119,7 @@ define(["dojo/_base/declare", "../utils"], function (declare, utils) {
             "nonEditable",
             "expandable",
             "dropDown",
+            "table",
             "firstcolumnfixedtable",
             "tree"
         ],

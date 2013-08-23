@@ -127,11 +127,19 @@
 }
 .rformsEditor table.rformsGroup th {
 	border-bottom: 1px solid #E6E6E6;
-}		
+}
+
 
 .rformsEditor table.rformsGroup td {
 	padding-left: 0em;
 	padding-right: 0.6em;
+}
+
+.rformsEditor table.rformsGroup td.rformsLangcontrolledfield {
+    padding-right: 6.8em;
+}
+.rformsEditor table.rformsGroup td.rformsLangcontrolledfield .rformsLangFieldControl {
+    width: 6.4em;
 }
 
 .rformsEditor table.rformsGroup td.rformsTableControl,

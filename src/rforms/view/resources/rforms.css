@@ -53,6 +53,16 @@
 	*display: inline;
 }
 
+a.rformsUrl {
+    text-decoration: no-underline;
+    color: black;
+}
+
+a.rformsUrl:hover {
+    text-decoration: underline;
+    color: blue;
+}
+
 /* compact anyway for first level*/
 .compact .rformsTopLevel.rformsRow.notCompact {
 	display: table;

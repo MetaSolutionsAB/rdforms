@@ -1,5 +1,5 @@
 define({
-    getChoice: function(item, value) {
+    getChoice: function(item, value, seeAlso) {
 	return {"value": "http://example.com/choice2",
 	 	"label": {"en": "Second choice", "sv": "Andra valet"}};
     },

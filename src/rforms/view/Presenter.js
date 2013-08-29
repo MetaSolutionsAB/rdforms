@@ -1,13 +1,15 @@
 /*global define*/
 define(["dojo/_base/declare", 
-	"dojo/_base/kernel", 
+	"dojo/_base/kernel",
+    "dojo/_base/event",
+    "dojo/on",
 	"dojo/dom-class", 
 	"dojo/dom-construct", 
 	"dojo/dom-attr", 
 	"./View",
 	"rforms/template/Group",
 	"rforms/utils"
-], function(declare, kernel, domClass, construct, attr, View, Group, utils) {
+], function(declare, kernel, event, on, domClass, construct, attr, View, Group, utils) {
 
     var Presenter = declare(View, {
 	//===================================================
@@ -117,12 +119,23 @@ define(["dojo/_base/declare",
 				construct.create("span", {"class": "rformsStar"}, fieldDiv);
 			}
 		} else {
-			var span = construct.create("span", {"innerHTML": utils.getLocalizedValue(choice.label).value}, fieldDiv);
+			var desc;
+            if (choice.description) {
+                desc = utils.getLocalizedValue(choice.description).value;
+            }
+            var span = construct.create("a", {class: "rformsUrl", target: choice.target ? choice.target : "_blank",
+                href: choice.seeAlso || choice.value, title: desc || choice.seeAlso || choice.value, "innerHTML": utils.getLocalizedValue(choice.label).value}, fieldDiv);
+            if (choice.onClick) {
+                on(span, "click", function(e) {
+                    event.stop(e);
+                    choice.onClick(e);
+                });
+            }
 			if (choice.load != null) {
 				choice.load(function() {
 					attr.add(span, "innerHTML", utils.getLocalizedValue(choice.label).value);
 				});
-			}			
+			}
 		}
 	}
     });

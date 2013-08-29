@@ -8,8 +8,9 @@ define(["rforms/template/Template",
     "./PropertyGroupBinding",
     "./ValueBinding",
     "./ChoiceBinding",
-    "./system"
-], function (Template, Text, Group, Choice, PropertyGroup, GroupBinding, PropertyGroupBinding, ValueBinding, ChoiceBinding, system) {
+    "./system",
+    "rforms/utils"
+], function (Template, Text, Group, Choice, PropertyGroup, GroupBinding, PropertyGroupBinding, ValueBinding, ChoiceBinding, system, utils) {
 
     //See public API at the bottom of this file.
 
@@ -379,19 +380,16 @@ define(["rforms/template/Template",
                 }
             }
         } else {
-            var labelStmts = graph.find(obj, ChoiceBinding.label);
-            if (labelStmts.length > 0) {
-                var choice = {label: {}};
-                for (var i=0;i<labelStmts.length;i++) {
-                    choice.label[labelStmts[i].getLanguage() ||  ""] = labelStmts[i].getValue();
-                }
-                var sa = graph.findFirstValue(obj, ChoiceBinding.seeAlso);
+            var label = utils.getLocalizedMap(graph, obj, ChoiceBinding.label);
+            var sa = graph.findFirstValue(obj, ChoiceBinding.seeAlso);
+            if (label != null) {
+                var choice = {label: label, value: obj};
                 if (sa) {
                     choice.seeAlso = sa;
                 }
                 return choice;
             } else if (system.getChoice != null) {
-                return system.getChoice(item, obj);
+                return system.getChoice(item, obj, sa);
             }
         }
     };

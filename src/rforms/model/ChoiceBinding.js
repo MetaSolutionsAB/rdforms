@@ -44,16 +44,18 @@ define(["dojo/_base/declare", "./ValueBinding"], function (declare, ValueBinding
             this.inherited("setValue", arguments);
             var graph = this._statement.getGraph();
             graph.findAndRemove(oldval, ChoiceBinding.label);
-            graph.findAndRemove(oldval.getSubject(), ChoiceBinding.seeAlso);
+            graph.findAndRemove(oldval, ChoiceBinding.seeAlso);
 
-            if (value != null && choice != null && choice.inline === true) {
-                var labelmap = choice.label;
-                for (var lang in labelMap) {
-                    graph.create(value, label, {value: labelMap[lang], language: lang});
+            if (value != null && choice != null) {
+                if (choice.seeAlso && choice.inlineSeeAlso) {
+                    graph.create(value, ChoiceBinding.seeAlso, choice.seeAlso);
                 }
 
-                if (choice.seeAlso) {
-                    graph.create(value, seeAlso, choice.seeAlso);
+                if (choice.inlineLabel === true) {
+                    var labelMap = choice.label || {};
+                    for (var lang in labelMap) if (labelMap.hasOwnProperty(lang)) {
+                        graph.create(value, ChoiceBinding.label, {value: labelMap[lang], lang: lang, type: "literal"});
+                    }
                 }
             }
         }

@@ -1,64 +1,65 @@
 /*global define*/
-define(["dojo/_base/declare", "./ValueBinding"], function(declare, ValueBinding) {
-
-    var label = "http://www.w3.org/2000/01/rdf-schema#label";
-    var seeAlso = "http://www.w3.org/2000/01/rdf-schema#seeAlso";
+define(["dojo/_base/declare", "./ValueBinding"], function (declare, ValueBinding) {
 
     /**
      * A ValueBinding that only accepts uris from a controlled vocabulary encoded as choices.
      * @see rforms.template.Choice#getChoices
-     */	
-    return declare(ValueBinding, {
-	//===================================================
-	// Private attributes
-	//===================================================
-	_choice: null,
+     */
+    var ChoiceBinding = declare(ValueBinding, {
+        //===================================================
+        // Private attributes
+        //===================================================
+        _choice: null,
 
-	//===================================================
-	// Public API
-	//===================================================
-	setChoice: function(choice) {
-		this._choice = choice;
-		if (choice == null) {
-			this.setValue(null);
-		} else if (this.getValue() != choice.value) {
-			this.setValue(choice.value, choice);
-		}
-	},
-	getChoice: function() {
-		return this._choice;
-	},
-	
-	//===================================================
-	// Inherited methods
-	//===================================================
-	constructor: function(args) {
-		this._choice = args.choice;
-	},
-	remove: function() {
-		this.setValue(null);
-		//Removed line below as it is also done in superclass
-		//and therefore causes an error
-		//this._parent.removeChildBinding(this);
-		this.inherited("remove", arguments);
-	},
-    setValue: function(value, choice) {
-        var oldval = this.getValue();
-        this.inherited("setValue", arguments);
-        var graph = this._statement.getGraph();
-        graph.findAndRemove(oldval, label);
-        graph.findAndRemove(oldval.getSubject(), seeAlso);
-
-        if (value != null && choice != null && choice.inline === true) {
-            var labelmap = choice.label;
-            for (var lang in labelMap) {
-                graph.create(value, label, {value: labelMap[lang], language: lang});
+        //===================================================
+        // Public API
+        //===================================================
+        setChoice: function (choice) {
+            this._choice = choice;
+            if (choice == null) {
+                this.setValue(null);
+            } else if (this.getValue() != choice.value) {
+                this.setValue(choice.value, choice);
             }
+        },
+        getChoice: function () {
+            return this._choice;
+        },
 
-            if (choice.seeAlso) {
-                graph.create(value, seeAlso, choice.seeAlso);
+        //===================================================
+        // Inherited methods
+        //===================================================
+        constructor: function (args) {
+            this._choice = args.choice;
+        },
+        remove: function () {
+            this.setValue(null);
+            //Removed line below as it is also done in superclass
+            //and therefore causes an error
+            //this._parent.removeChildBinding(this);
+            this.inherited("remove", arguments);
+        },
+        setValue: function (value, choice) {
+            var oldval = this.getValue();
+            this.inherited("setValue", arguments);
+            var graph = this._statement.getGraph();
+            graph.findAndRemove(oldval, ChoiceBinding.label);
+            graph.findAndRemove(oldval.getSubject(), ChoiceBinding.seeAlso);
+
+            if (value != null && choice != null && choice.inline === true) {
+                var labelmap = choice.label;
+                for (var lang in labelMap) {
+                    graph.create(value, label, {value: labelMap[lang], language: lang});
+                }
+
+                if (choice.seeAlso) {
+                    graph.create(value, seeAlso, choice.seeAlso);
+                }
             }
         }
-    }
-});
+    });
+    ChoiceBinding.label = "http://www.w3.org/2000/01/rdf-schema#label";
+    ChoiceBinding.seeAlso = "http://www.w3.org/2000/01/rdf-schema#seeAlso";
+
+    return ChoiceBinding;
 });

@@ -226,8 +226,8 @@ define(["rforms/template/Template",
             bindings = [];
             dojo.forEach(stmts, function (stmt) {
                 if (_isNodeTypeMatch(oItem, stmt)) {
-                    pChoice = _findChoice(pItem, stmt.getPredicate());
-                    oChoice = _findChoice(oItem, stmt.getValue());
+                    pChoice = _findChoice(pItem, stmt.getPredicate(). stmt.getGraph());
+                    oChoice = _findChoice(oItem, stmt.getValue(), stmt.getGraph());
                     ;
 
                     if (pChoice !== undefined) {
@@ -239,7 +239,7 @@ define(["rforms/template/Template",
                                 _matchGroupItemChildren(binding.getObjectBinding()); //Recursive call
                             }
                         } else if (oItem instanceof ChoiceBinding) {
-                            oChoice = _findChoice(oItem, stmt.getValue());
+                            oChoice = _findChoice(oItem, stmt.getValue(), stmt.getGraph());
                             if (oChoice !== undefined) {
                                 binding = new PropertyGroupBinding({item: item, statement: stmt});
                                 binding.getObjectBinding.setChoice(oChoice);
@@ -287,7 +287,7 @@ define(["rforms/template/Template",
             bindings = [];
             dojo.forEach(stmts, function (stmt) {
                 if (_isNodeTypeMatch(item, stmt)) {
-                    choice = _findChoice(item, stmt.getValue());
+                    choice = _findChoice(item, stmt.getValue(), stmt.getGraph());
                     if (choice !== undefined) {
                         bindings.push(new ChoiceBinding({item: item, statement: stmt, choice: choice}));
                     }
@@ -369,7 +369,7 @@ define(["rforms/template/Template",
         }
     };
 
-    var _findChoice = function (item, obj) {
+    var _findChoice = function (item, obj, graph) {
         var index, choices;
         if (item.hasChoices()) {
             choices = item.getChoices();
@@ -378,8 +378,21 @@ define(["rforms/template/Template",
                     return choices[index];
                 }
             }
-        } else if (system.getChoice != null) {
-            return system.getChoice(item, obj);
+        } else {
+            var labelStmts = graph.find(obj, ChoiceBinding.label);
+            if (labelStmts.length > 0) {
+                var choice = {label: {}};
+                for (var i=0;i<labelStmts.length;i++) {
+                    choice.label[labelStmts[i].getLanguage() ||  ""] = labelStmts[i].getValue();
+                }
+                var sa = graph.findFirstValue(obj, ChoiceBinding.seeAlso);
+                if (sa) {
+                    choice.seeAlso = sa;
+                }
+                return choice;
+            } else if (system.getChoice != null) {
+                return system.getChoice(item, obj);
+            }
         }
     };
 

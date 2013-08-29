@@ -390,6 +390,7 @@ define(["./rdfjson", "./Statement"], function (rjson, Statement) {
      * @param {String} p the predicate in the form of a uri, if undefined a new blank node is created.
      * @param {Object} o the object in the form of an object containing
      *  the attributes: 'type', 'value', 'lang', and 'datatype'. If undefined a new blank node is created.
+     *  If a string is provided it is assumed to be a url, i.e. sending in "the url" is the same as sending in {type: "uri", value: "the url"}.
      * @param {Boolean} assert indicated if the statement should be added to the graph directly. If not specified true is assumed.
      * @returns {rdfjson.Statement}
      * @see rdfjson.rdfjson#add
@@ -403,6 +404,8 @@ define(["./rdfjson", "./Statement"], function (rjson, Statement) {
         }
         if (o == null) {
             o = {type: 'bnode', value: this._newBNode()};
+        } else if (rjson.isString(o)) {
+            o = {type: "uri", value: o};
         } else {
             //The object is copied to avoid reuse of same object in multiple places of the graph
             //leading to strange updates.

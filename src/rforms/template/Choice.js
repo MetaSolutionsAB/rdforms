@@ -40,7 +40,7 @@ define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, I
         //===================================================
         /**
          *  A choice is an object which looks like:
-         * {"d": "http://example.com/choice1",
+         * {"value": "http://example.com/choice1",
 	 *  "label": {"en": "First choice", "sv": "Första valet"}
 	 * }
          *

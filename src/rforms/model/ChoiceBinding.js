@@ -1,6 +1,9 @@
 /*global define*/
 define(["dojo/_base/declare", "./ValueBinding"], function(declare, ValueBinding) {
 
+    var label = "http://www.w3.org/2000/01/rdf-schema#label";
+    var seeAlso = "http://www.w3.org/2000/01/rdf-schema#seeAlso";
+
     /**
      * A ValueBinding that only accepts uris from a controlled vocabulary encoded as choices.
      * @see rforms.template.Choice#getChoices
@@ -19,7 +22,7 @@ define(["dojo/_base/declare", "./ValueBinding"], function(declare, ValueBinding)
 		if (choice == null) {
 			this.setValue(null);
 		} else if (this.getValue() != choice.value) {
-			this.setValue(choice.value);
+			this.setValue(choice.value, choice);
 		}
 	},
 	getChoice: function() {
@@ -38,6 +41,24 @@ define(["dojo/_base/declare", "./ValueBinding"], function(declare, ValueBinding)
 		//and therefore causes an error
 		//this._parent.removeChildBinding(this);
 		this.inherited("remove", arguments);
-	}
-    });
+	},
+    setValue: function(value, choice) {
+        var oldval = this.getValue();
+        this.inherited("setValue", arguments);
+        var graph = this._statement.getGraph();
+        graph.findAndRemove(oldval, label);
+        graph.findAndRemove(oldval.getSubject(), seeAlso);
+
+        if (value != null && choice != null && choice.inline === true) {
+            var labelmap = choice.label;
+            for (var lang in labelMap) {
+                graph.create(value, label, {value: labelMap[lang], language: lang});
+            }
+
+            if (choice.seeAlso) {
+                graph.create(value, seeAlso, choice.seeAlso);
+            }
+        }
+    }
+});
 });

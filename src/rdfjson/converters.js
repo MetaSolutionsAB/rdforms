@@ -5,9 +5,8 @@ define([
     "./Graph",
     "./Statement",
     "./terms",
-    "./rdfparser",
-    "dojo/has"
-], function (exports, rjson, Graph, Statement, terms, RDFParser, has) {
+    "./rdfparser"
+], function (exports, rjson, Graph, Statement, terms, RDFParser) {
 
     var nss = {
         ical: "http://www.w3.org/2002/12/cal/ical#",
@@ -25,7 +24,7 @@ define([
     var sp = "  ";
     var sp2 = "    ";
 
-    if (has("host-browser")) {
+    if (this.window) {
         exports.xml2string = function (xml) {
             return xml.xml;
         };
@@ -99,7 +98,7 @@ define([
                     obj.lang = o.lang;
                 }
                 if (o.datatype) {
-                    obj.datatype = o.datatype;
+                    obj.datatype = o.datatype.uri;
                 }
             } else if (o instanceof terms.RDFSymbol) {
                 obj.type = "uri";

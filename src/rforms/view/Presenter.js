@@ -123,7 +123,7 @@ define(["dojo/_base/declare",
             if (choice.description) {
                 desc = utils.getLocalizedValue(choice.description).value;
             }
-            var span = construct.create("a", {class: "rformsUrl", target: choice.target ? choice.target : "_blank",
+            var span = construct.create("a", {"class": "rformsUrl", target: choice.target ? choice.target : "_blank",
                 href: choice.seeAlso || choice.value, title: desc || choice.seeAlso || choice.value, "innerHTML": utils.getLocalizedValue(choice.label).value}, fieldDiv);
             if (choice.onClick) {
                 on(span, "click", function(e) {

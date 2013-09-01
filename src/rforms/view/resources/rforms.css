@@ -102,11 +102,25 @@ a.rformsUrl:hover {
 	font-weight: bold;
 }
 
-
 .rformsGroup {
 	margin-left: 1em;
  }
- 
+
+.compact .rformsRow.rformsInvisibleGroup>.rformsLabelRow,
+.rformsRow.rformsInvisibleGroup>.rformsLabelRow,
+.compact .rformsRow.rformsInvisibleGroup>.rformsLabel,
+.rformsRow.rformsInvisibleGroup>.rformsLabel{
+    display: none;
+}
+
+.rformsInvisibleGroup>.rformsFields>.rformsGroup {
+    margin-left: 0em;
+}
+.rformsInvisibleGroup>.rformsFields>.rformsGroup>.rformsRow {
+    padding-left: 0px;
+}
+
+
 .rformsField {
 	margin-left: 2em;
 /*	background: white;*/

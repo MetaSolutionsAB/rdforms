@@ -111,6 +111,7 @@ define(["dojo/_base/declare", "../utils"], function (declare, utils) {
 
         _styles: [
             "invisible",
+            "invisibleGroup",
             "stars",
             "commentOn",
             "multiline",

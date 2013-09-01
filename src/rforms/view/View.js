@@ -188,7 +188,11 @@ define(["dojo/_base/declare",
 		if (this.topLevel) {
 			domClass.add(newRow, "rformsTopLevel");
 		}
-		domClass.add(newRow, "rformsRow");
+
+        domClass.add(newRow, "rformsRow");
+        if (item.hasStyle("invisibleGroup")) {
+            domClass.add(newRow, "rformsInvisibleGroup")
+        }
 	    var clss = item.getClasses();
 	    for (var e=0;e<clss.length;e++) {
 		if (clss[e].indexOf("rforms") == -1) {

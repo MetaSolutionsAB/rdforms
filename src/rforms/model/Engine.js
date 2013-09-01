@@ -310,11 +310,12 @@ define(["rforms/template/Template",
     var _isNodeTypeMatch = function (item, stmt) {
         var objectType = stmt.getType();
         switch (item.getNodetype()) {
-            case "LITERAL":
-            case "ONLY_LITERAL":
-            case "LANGUAGE_LITERAL":
+            case "LITERAL":      //Any form of literal
+            case "ONLY_LITERAL":  //No language, no datatype
+            case "PLAIN_LITERAL":  //No datatype, perhaps a language
+            case "LANGUAGE_LITERAL":  //Definitely a language
                 return objectType === "literal";
-            case "DATATYPE_LITERAL":
+            case "DATATYPE_LITERAL":     //Definitiely a datatype
                 return objectType === "literal" && stmt.getDatatype() === item.getDatatype();
             case "RESOURCE":
                 return objectType === "uri" || objectType === "bnode";

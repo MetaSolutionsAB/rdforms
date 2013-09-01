@@ -43,6 +43,9 @@ define(["dojo/_base/declare",
 		var data = this.binding.getValue();
 		this._valid = data != null && data != "";
 		if (this._valid) {
+            if (data.match(/.*Z$/)) {
+                data = data.substr(0, data.length-1);
+            }
 			this._date = stamp.fromISOString(data);
 			this._valid = this._date != null;
 		}

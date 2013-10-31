@@ -163,22 +163,20 @@ define(["dojo/_base/declare",
                 }
             }
             array.forEach(configArr, function (config) {
-                var converter;
-                switch (config.type) {
-                    case "exhibit":
-                        if (converter == null) {
-                            converter = new Converter(this);
-                        }
-                        converter.convertExhibit(config.url, down);
-                        break;
-                    case "sirff":
-                        request.get(config.url, {
-                            handleAs: "json"
-                        }).then(lang.hitch(this, function (data) {
-                                this.createTemplate(data);
-                                down();
-                            }), down);
-                        break;
+                if(lang.isString(config) || config.type === "sirff") {
+                    var url = lang.isString(config) ? config : config.url;
+                    request.get(url, {
+                        handleAs: "json"
+                    }).then(lang.hitch(this, function (data) {
+                            this.createTemplate(data);
+                            down();
+                        }), down);
+                } else if (config.type === "exhibit") {
+                    var converter;
+                    if (converter == null) {
+                        converter = new Converter(this);
+                    }
+                    converter.convertExhibit(config.url, down);
                 }
             }, this);
         },

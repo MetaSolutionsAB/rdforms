@@ -22,8 +22,6 @@ define(["dojo/_base/declare",
     "dijit/layout/TabContainer", //For template
     "dijit/layout/BorderContainer", //For template
     "dijit/form/Button", //For template
-    "dijit/Menu", //For template
-    "dijit/MenuItem", //For template
     "./ItemEditor",
     "./ItemTreeModel",
     "./ChoicesEditor",
@@ -32,7 +30,7 @@ define(["dojo/_base/declare",
     "rforms/apps/Experiment",
     "dojo/text!./StoreManagerTemplate.html"
 ], function (declare, lang, xhr, on, domClass, construct, attr, array, json, registry, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin,
-             DnDSource, TreeDndSource, Tree, Menu, MenuItem, MenuSeparator, ContentPane, TabContainer, BorderContainer, Button, Menu, MenuItem,
+             DnDSource, TreeDndSource, Tree, Menu, MenuItem, MenuSeparator, ContentPane, TabContainer, BorderContainer, Button,
              ItemEditor, ItemTreeModel, ChoicesEditor, Group, Choice, Experiment, template) {
 
 

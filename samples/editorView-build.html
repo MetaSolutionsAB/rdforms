@@ -16,7 +16,6 @@
 		@import "../target/rforms/view/resources/rforms.css";
 	</style>
 	<script type="text/javascript">
-	  require(['rforms/rforms'], function() {
       	  require(['rdfjson/Graph',             //Rdfjson Graph API
 	           'rforms/template/ItemStore', //Stores all the form templates
 	           'rforms/model/Engine',       //The engine for matching RDF to template
@@ -29,7 +28,6 @@
 			var binding = Engine.match(graph, "http://example.org/about", template);
 			new Editor({template: template, binding: binding}, "compactView");
 		});
-});
 	</script>
 	<div id="compactView"></div>
   </body>

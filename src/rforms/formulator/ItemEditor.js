@@ -39,6 +39,7 @@ define([
         //===================================================
         postCreate: function() {
             this.inherited("postCreate", arguments);
+            this.lock = true;
             this._styles2Dijit = {};
             var styles= this.item.getAvailableStyles();
             var f = lang.hitch(this, this._changeStyles);
@@ -92,6 +93,9 @@ define([
                 }
             }
             this._clsDijit.set("value", this.item.getClasses().join(", "));
+            setTimeout(lang.hitch(this, function() {
+                this.lock = false;
+            }), 200);
 //            this._styDijit.set("value", json.stringify(this.item.getStyles() || {}));
         },
         itemChanged: function() {
@@ -103,6 +107,9 @@ define([
         _addLangString: function(node, onChange) {
         },
         _changeId: function() {
+            if (this.lock) {
+                return;
+            }
             if (this._idTimer) {
                 clearTimeout(this._idTimer);
             }
@@ -119,14 +126,23 @@ define([
             }), 200);
         },
         _changeExtends: function() {
+            if (this.lock) {
+                return;
+            }
             this.item.setExtends(this._extendsDijit.get("value"));
             this.itemChanged();
         },
         _changeProperty: function() {
+            if (this.lock) {
+                return;
+            }
             this.item.setProperty(this._propDijit.get("value"));
             this.storeManager.itemChanged(this.item);
         },
         _changeNT: function() {
+            if (this.lock) {
+                return;
+            }
             var nt = this._ntDijit.get("value");
             this.item.setNodetype(nt);
             this._dtDijit.set("disabled", nt !== "DATATYPE_LITERAL");
@@ -135,14 +151,23 @@ define([
             this.itemChanged();
         },
         _changeDT: function() {
+            if (this.lock) {
+                return;
+            }
             this.item.setDatatype(this._dtDijit.get("value"));
             this.itemChanged();
         },
         _changePattern: function() {
+            if (this.lock) {
+                return;
+            }
             this.item.setPattern(this._patternDijit.get("value"));
             this.itemChanged();
         },
         _changeCard: function() {
+            if (this.lock) {
+                return;
+            }
             var card = {
                 "min": this._minDijit.get("value") || 0,
                 "pref": this._prefDijit.get("value") || 0,
@@ -155,6 +180,9 @@ define([
             this.itemChanged();
         },
         _changeConstr: function() {
+            if (this.lock) {
+                return;
+            }
             try {
                 var val = this._constrDijit.get("value");
                 if (val === "{}" || val === "") {
@@ -168,6 +196,9 @@ define([
             }
         },
         _changeCls: function() {
+            if (this.lock) {
+                return;
+            }
             var val = this._clsDijit.get("value");
             var arr = val.replace(/[,;:] ?/, " ").split(" ");
             if (arr.length === 1 && arr[0] === "") {
@@ -178,6 +209,9 @@ define([
             this.itemChanged();
         },
         _changeStyles: function() {
+            if (this.lock) {
+                return;
+            }
             var styles= this.item.getAvailableStyles();
             var arr = [];
             for (var i=0;i< styles.length;i++) {

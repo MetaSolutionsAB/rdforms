@@ -36,16 +36,21 @@ define(["dojo/_base/declare",
             if (item.getProperty()) {
                 return true;
             }
+
             //Take care of layout grouping by checking recursively.
-            var groupedItemsArr = item.getChildren(),
-                groupedBindingsArr = bindings[0].getItemGroupedChildBindings(),
-                groupIndex, bindings, item;
-            for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
-                bindings = groupedBindingsArr[groupIndex];
-                item = groupedItemsArr[groupIndex];
-                if (showNow(item, bindings, includeLevel)) {       //Recursive call
-                    return true;
+            if (item instanceof Group) {
+                var groupedItemsArr = item.getChildren(),
+                    groupedBindingsArr = bindings[0].getItemGroupedChildBindings(),
+                    groupIndex, bindings, item;
+                for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
+                    bindings = groupedBindingsArr[groupIndex];
+                    item = groupedItemsArr[groupIndex];
+                    if (showNow(item, bindings, includeLevel)) {       //Recursive call
+                        return true;
+                    }
                 }
+            } else {
+                return true;
             }
         }
         var card = item.getCardinality();

@@ -300,7 +300,7 @@ define(["dojo/_base/declare",
             attr.set(this._contentsNode, "value", json.stringify(this.item._source, true, "  "));
             var template;
             if (this.item.getChildren) {
-                template = this.itemStore.createTemplateFromChildren(this.item.getChildren());
+                template = this.itemStore.createTemplateFromRoot(this.item);
             } else {
                 template = this.itemStore.createTemplateFromChildren([this.item]);
             }

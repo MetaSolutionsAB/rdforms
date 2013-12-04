@@ -178,7 +178,7 @@ define(["util", "fs", 'rdfjson/Graph', 'rdfjson/Rdfs'], function(util, fs, Graph
 			}
 			propArr.push({"id": getAbbrevId(propsFC[pf].getURI(), conf)});
 		    }
-		    source["type"] = "group";
+		    source["type"] = conf.noRangeTypeDefault || "group";
 		    source.automatic = true;
 		    source.content = propArr;
 		}
@@ -242,9 +242,9 @@ define(["util", "fs", 'rdfjson/Graph', 'rdfjson/Rdfs'], function(util, fs, Graph
 	    auxC.push(source);
 	}
 	if (conf.root) {
-	    return {auxilliary: auxP.concat(auxC), scope: conf.abbrev, namespace: conf.ns, root: {id: conf.root}};
+	    return {templates: auxP.concat(auxC), scope: conf.abbrev, namespace: conf.ns, root: {id: conf.root}};
 	} else {
-	    return {auxilliary: auxP.concat(auxC), scope: conf.abbrev, namespace: conf.ns};
+	    return {templates: auxP.concat(auxC), scope: conf.abbrev, namespace: conf.ns};
 	}
     };
     

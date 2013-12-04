@@ -102,7 +102,7 @@ define(["dojo/_base/declare",
 		this.domNode = this.srcNodeRef;
 		domClass.add(this.domNode, "rforms");
 		domClass.add(this.domNode, this.styleCls);
-		if (this.compact) {
+        if ((this.compact || this.binding.getItem().hasStyle("compact")) && !this.binding.getItem().hasStyle("nonCompact")) {
 			domClass.add(this.domNode, "compact");			
 		}
 

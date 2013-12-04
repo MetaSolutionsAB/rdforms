@@ -119,6 +119,8 @@ define(["dojo/_base/declare", "../utils"], function (declare, utils) {
             "verticalRadioButtons",
             "nonEditable",
             "expandable",
+            "compact",
+            "nonCompact",
             "dropDown",
             "table",
             "firstcolumnfixedtable",

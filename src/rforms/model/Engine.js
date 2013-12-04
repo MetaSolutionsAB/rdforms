@@ -227,10 +227,7 @@ define(["rforms/template/Template",
             bindings = [];
             dojo.forEach(stmts, function (stmt) {
                 if (_isNodeTypeMatch(oItem, stmt)) {
-                    pChoice = _findChoice(pItem, stmt.getPredicate(). stmt.getGraph());
-                    oChoice = _findChoice(oItem, stmt.getValue(), stmt.getGraph());
-                    ;
-
+                    pChoice = _findChoice(pItem, stmt.getPredicate(), stmt.getGraph());
                     if (pChoice !== undefined) {
                         binding = null;
                         if (oItem instanceof Group) {
@@ -243,7 +240,7 @@ define(["rforms/template/Template",
                             oChoice = _findChoice(oItem, stmt.getValue(), stmt.getGraph());
                             if (oChoice !== undefined) {
                                 binding = new PropertyGroupBinding({item: item, statement: stmt});
-                                binding.getObjectBinding.setChoice(oChoice);
+                                binding.getObjectBinding().setChoice(oChoice);
                             }
                         } else {
                             binding = new PropertyGroupBinding({item: item, statement: stmt});
@@ -251,7 +248,6 @@ define(["rforms/template/Template",
 
                         if (binding !== null) {
                             binding.getPredicateBinding().setChoice(pChoice);
-                            binding.getObjectBinding().setChoice(oChoice);
                             bindings.push(binding);
                         }
                     }

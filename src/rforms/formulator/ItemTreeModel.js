@@ -80,13 +80,20 @@ define(["dojo/_base/declare", "rforms/template/Group"], function(declare, Group)
         //      If oldParentItem is specified and bCopy is false, childItem is removed from oldParentItem.
         //      If newParentItem is specified, childItem is attached to newParentItem.
 	pasteItem: function(/*Item*/ childItem, /*Item*/ oldParentItem, /*Item*/ newParentItem, /*Boolean*/ bCopy, insertIndex) {
-        var ref = {id: childItem.getId()};
+        var ref;
         var oldItems = oldParentItem.getChildren();
         var oldSource = oldParentItem._source.content;
         if (oldSource) {  //If oldsource exists, then we are not in fake root.
             var oldIndex = oldItems.indexOf(childItem);
+            if (childItem.getId() == null) {
+                ref = oldSource[oldIndex];
+            } else {
+                ref = {id: childItem.getId()};
+            }
             oldItems.splice(oldIndex, 1);
             oldSource.splice(oldIndex, 1);
+        } else {
+            ref = {id: childItem.getId()};
         }
 
         if (oldParentItem === newParentItem) {
@@ -97,7 +104,6 @@ define(["dojo/_base/declare", "rforms/template/Group"], function(declare, Group)
                 oldItems.splice(insertIndex, 0, childItem);
                 oldSource.splice(insertIndex, 0, ref);
             }
-            var ref = oldSource[oldIndex];
             this.onChildrenChange(oldParentItem, oldItems);
         } else {
             if (newParentItem._source.content == null) {

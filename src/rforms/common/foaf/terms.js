@@ -136,7 +136,10 @@ define({
     "en": "Title (Mr, Mrs, Ms, Dr. etc)"
    },
    "type": "text",
-   "automatic": true
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:nick",
@@ -147,9 +150,11 @@ define({
    "description": {
     "en": "A short informal nickname characterising an agent (includes login identifiers, IRC and other chat nicknames)."
    },
-   "type": "group",
-   "automatic": true,
-   "content": []
+   "type": "text",
+   "nodetype": "ONLY_LITERAL",
+   "cardinality": {
+    "pref": 1
+   }
   },
   {
    "id": "foaf:jabberID",

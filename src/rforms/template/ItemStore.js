@@ -144,6 +144,9 @@ define(["dojo/_base/declare",
                 return t;
             }
         },
+        createTemplateFromRoot: function(rootItem) {
+            return new Template({}, rootItem, this);
+        },
         createTemplateFromChildren: function (children) {
             var childrenObj = array.map(children || [], function (child) {
                 return typeof child === "string" ? this.getItem(child) : child;

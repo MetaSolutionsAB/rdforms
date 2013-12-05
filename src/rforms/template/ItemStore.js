@@ -69,6 +69,9 @@ define(["dojo/_base/declare",
             if (this._registry[to]) {
                 throw "Cannot rename to "+ to + " since an item with that id already exists.";
             }
+            if (to === "" || to === null) {
+                throw "Cannot give an item an empty string or null as id.";
+            }
             var item = this._registry[from];
             if (item) {
                 delete this._registry[from];

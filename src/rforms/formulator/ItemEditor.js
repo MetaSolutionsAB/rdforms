@@ -120,8 +120,12 @@ define([
                 }
                 var from = this.item.getId(), to = this._idDijit.get("value");
                 if (from !== to) {
-                    this.itemStore.renameItem(from, to);
-                    this.itemChanged();
+                    try {
+                        this.itemStore.renameItem(from, to);
+                        this.itemChanged();
+                    } catch (e) {
+                        //Silently ignore non-acceptable changes
+                    }
                 }
             }), 200);
         },

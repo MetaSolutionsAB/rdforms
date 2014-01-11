@@ -128,7 +128,8 @@ define(["dojo/_base/declare",
 			} else {
 			    if (bindings.length > 0) {
 				for (var i=0;i<bindings.length;i++) {
-				    lastRow = this.addRow(lastRow, bindings[i], i === 0);
+                    //Add row with label if first row of same item or the binding is a group.
+				    lastRow = this.addRow(lastRow, bindings[i], i === 0 || bindings[i] instanceof GroupBinding);
 				}
 			    } else {
 				lastRow = this.addLabelClean(lastRow, null, item);
@@ -147,7 +148,7 @@ define(["dojo/_base/declare",
 	 * 
 	 * @param {Object} lastRow last row that was added
 	 * @param {Object} binding the binding to add a row for
-	 * @param {Boolean} includeLabel, a label is added when true or if undefined and the binding corresponds to a group. 
+	 * @param {Boolean} includeLabel, tells if a label should be added, if undefined a label is added only when the binding is a GroupBinding.
 	 */
 	addRow: function(lastRow, binding, includeLabel) {
 		var fieldDiv, newRow, item = binding.getItem();
@@ -155,9 +156,13 @@ define(["dojo/_base/declare",
 		if (this.skipBinding(binding)) {
 			return;
 		}
-		
+
+		if (includeLabel == null) {
+            includeLabel = binding instanceof GroupBinding;
+        }
+
 		//Taking care of dom node structure plus label.
-		if (includeLabel || ((includeLabel == null || includeLabel === false) && binding instanceof GroupBinding)) {
+		if (includeLabel === true) {
 			newRow = this.addLabelClean(lastRow, binding, item);
 			fieldDiv = construct.create("div", null, construct.create("div", {"class": "rformsFields"}, newRow));
 		} else {

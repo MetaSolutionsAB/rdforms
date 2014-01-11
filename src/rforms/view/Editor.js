@@ -611,9 +611,10 @@ define(["dojo/_base/declare",
                     var table = this.addTable(rowDiv, nBinding, item);
                     this.fillTable(table, [nBinding]);
                 } else {
-                    this.addRow(rowDiv, nBinding, false); //not the first binding...
+                    this.addRow(rowDiv, nBinding, false); //Label is already added.
                     this._addGroupButtons(rowDiv, labelDiv, nBinding);
                 }
+
                 construct.destroy(expand);
 
                 expandCon.remove();

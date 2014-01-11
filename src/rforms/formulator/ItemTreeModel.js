@@ -14,7 +14,7 @@ define(["dojo/_base/declare", "rforms/template/Group"], function(declare, Group)
 	},
 	getChildren: function(/*dojo.data.Item*/ parentItem, /*function(items)*/ onComplete, onError){
 	    if (parentItem instanceof Group) {
-            onComplete(parentItem.getChildren());
+            onComplete(parentItem.getChildren(true));
         } else {
             onComplete([]);
         }
@@ -25,7 +25,7 @@ define(["dojo/_base/declare", "rforms/template/Group"], function(declare, Group)
 	    return item._internalId;
 	},
 	getLabel: function(/*dojo.data.Item*/ item){
-	    return item.getId() || item.getLabel() || item.getProperty() || "??? (missing label and/or property).";
+	    return item.getId(true) || item.getLabel(false, true) || item.getId() || item.getLabel() || item.getProperty(true) || item.getProperty() || "??? (missing label and/or property).";
 	},
 	
 	
@@ -35,13 +35,13 @@ define(["dojo/_base/declare", "rforms/template/Group"], function(declare, Group)
         // summary
         // Creates a new item.   See dojo.data.api.Write for details on args.
 	newItem: function(/* Object? */ args, /*Item?*/ parent, insertIndex){
-        var source, children = parent.getChildren();
+        var source, children = parent.getChildren(true);
         if (args.id) {
             //Do a reference
             source = {id: args.id};
         } else {
             //Insert inline
-            source = args._source;
+            source = args.getSource(true);
         }
         if (parent === this.item) {
             var bundle = this.itemStore.getBundles()[0];
@@ -49,29 +49,30 @@ define(["dojo/_base/declare", "rforms/template/Group"], function(declare, Group)
             templates.push(source);
             children.push(args);
         } else {
-            if (parent._source.content == null) {
-                parent._source.content = [];
+            var psource = parent.getSource(true);
+            if (psource.content == null) {
+                psource.content = [];
             }
             if (isNaN(insertIndex)) {
-                parent._source.content.push(source);
+                psource.content.push(source);
                 children.push(args);
             } else {
-                parent._source.content.splice(insertIndex, 0, source);
+                psource.content.splice(insertIndex, 0, source);
                 children.splice(insertIndex, 0, args);
             }
         }
         this.onChildrenChange(parent, children);
 	},
     removeItem: function(item, parent) {
-        var oldItems = parent.getChildren();
-        var oldSource = parent._source.content;
+        var oldItems = parent.getChildren(true);
+        var oldSource = parent.getSource(true).content;
         var oldIndex = oldItems.indexOf(item);
         oldItems.splice(oldIndex, 1);
         oldSource.splice(oldIndex, 1);
         this.onChildrenChange(parent, oldItems);
     },
     isItem: function(item) {
-        var children = this.item.getChildren();
+        var children = this.item.getChildren(true);
         return children.indexOf(item) != -1;
     },
         // summary
@@ -81,8 +82,8 @@ define(["dojo/_base/declare", "rforms/template/Group"], function(declare, Group)
         //      If newParentItem is specified, childItem is attached to newParentItem.
 	pasteItem: function(/*Item*/ childItem, /*Item*/ oldParentItem, /*Item*/ newParentItem, /*Boolean*/ bCopy, insertIndex) {
         var ref;
-        var oldItems = oldParentItem.getChildren();
-        var oldSource = oldParentItem._source.content;
+        var oldItems = oldParentItem.getChildren(true);
+        var oldSource = oldParentItem.getSource(true).content;
         if (oldSource) {  //If oldsource exists, then we are not in fake root.
             var oldIndex = oldItems.indexOf(childItem);
             if (childItem.getId() == null) {
@@ -106,16 +107,16 @@ define(["dojo/_base/declare", "rforms/template/Group"], function(declare, Group)
             }
             this.onChildrenChange(oldParentItem, oldItems);
         } else {
-            if (newParentItem._source.content == null) {
-                newParentItem._source.content = [];
+            if (newParentItem.getSource(true).content == null) {
+                newParentItem.getSource(true).content = [];
             }
-            var newItems = newParentItem.getChildren();
+            var newItems = newParentItem.getChildren(true);
             if (isNaN(insertIndex)) {
                 newItems.push(childItem);
-                newParentItem._source.content.push(ref);
+                newParentItem.getSource(true).content.push(ref);
             } else {
                 newItems.splice(insertIndex, 0, childItem);
-                newParentItem._source.content.splice(insertIndex, 0, ref);
+                newParentItem.getSource(true).content.splice(insertIndex, 0, ref);
             }
             if (oldSource) {
                 this.onChildrenChange(oldParentItem, oldItems);
@@ -136,6 +137,7 @@ define(["dojo/_base/declare", "rforms/template/Group"], function(declare, Group)
         // summary
         //            Callback to do notifications about new, updated, or deleted items.
 	onChildrenChange: function(/*dojo.data.Item*/ parent, /*dojo.data.Item[]*/ newChildrenList){
-	}
+        parent.originalChildrenChanged();
+    }
     });
 });

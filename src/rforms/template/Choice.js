@@ -46,37 +46,56 @@ define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, I
          *
          * @return {Array} of choices.
          */
-        getChoices: function () {
-            return this.getStaticChoices() || this.getDynamicChoices() || [];
+        getChoices: function (original) {
+            return this.getStaticChoices(original) || this.getDynamicChoices(original) || [];
         },
 
         /**
          * @return {Boolean} true if there is an ontology or static choices.
          */
-        hasChoices: function () {
-            return this._source.ontologyUrl != null || this._source.choices != null;
+        hasChoices: function (original) {
+            var s = this.getSource(original);
+            return s.ontologyUrl != null || s.choices != null;
         },
 
         /**
          * @return {Array} of choices defined manually in the Template.
          */
-        getStaticChoices: function () {
-            if (this._source.choices && !this._staticIsSorted) {
-                sortChoices(this._source.choices);
-                this._staticIsSorted = true;
+        getStaticChoices: function (original) {
+            var s = this.getSource(original);
+            if (s.choices) {
+                if (original && this.isExtention()) {
+                    if (!this._origStaticIsSorted) {
+                        sortChoices(s.choices);
+                        this._origStaticIsSorted = true;
+                    }
+                } else {
+                    if (!this._staticIsSorted) {
+                        sortChoices(s.choices);
+                        this._staticIsSorted = true;
+                    }
+                }
             }
-            return this._source.choices;
+            return s.choices;
         },
         setStaticChoices: function(choices) {
-            if (this._source.choices === choices) {
+            var s = this.getSource(true);
+            if (s.choices === choices) {
                 return;
             }
             if (choices != null) {
                 sortChoices(choices);
-                this._staticIsSorted = true;
+                this._origStaticIsSorted = true;
             }
-            this._source.choices = choices;
+            s.choices = choices;
         },
+
+        setExtends: function(extendsStr) {
+            this.inherited("setExtends", arguments);
+            delete this._staticIsSorted;
+            delete this._origStaticIsSorted;
+        },
+
         /**
          * Fetches choices from an external ontology.
          *
@@ -108,62 +127,67 @@ define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, I
                 }
             }
         },
-        getOntologyUrl: function () {
-            return this._source.ontologyUrl;
+        getOntologyUrl: function (original) {
+            return this.getSource(original).ontologyUrl;
         },
         setOntologyUrl: function (url) {
+            var s = this.getSource(true);
             if (url == null || url == "") {
-                delete this._source.ontologyUrl;
+                delete s.ontologyUrl;
             } else {
-                this._source.ontologyUrl = url;
+                s.ontologyUrl = url;
             }
         },
-        getParentProperty: function () {
-            return this._source.parentProperty;
+        getParentProperty: function (original) {
+            return this.getSource(original).parentProperty;
         },
         setParentProperty: function (prop) {
+            var s = this.getSource(true);
             if (prop == null || prop == "") {
-                delete this._source.parentProperty;
+                delete s.parentProperty;
             } else {
-                this._source.parentProperty = prop;
+                s.parentProperty = prop;
             }
         },
-        getHierarchyProperty: function () {
-            return this._source.hierarchyProperty;
+        getHierarchyProperty: function (original) {
+            return this.getSource(original).hierarchyProperty;
         },
         setHierarchyProperty: function (prop) {
+            var s = this.getSource(true);
             if (prop == null || prop == "") {
-                delete this._source.hierarchyProperty;
+                delete s.hierarchyProperty;
             } else {
-                this._source.hierarchyProperty = prop;
+                s.hierarchyProperty = prop;
             }
         },
-        isParentPropertyInverted: function () {
-            return this._source.isParentPropertyInverted === true;
+        isParentPropertyInverted: function (original) {
+            return this.getSource(original).isParentPropertyInverted === true;
         },
         setParentPropertyInverted: function (inverted) {
+            var s = this.getSource(true);
             if (inverted === true) {
-                this._source.isParentPropertyInverted = true;
+                s.isParentPropertyInverted = true;
             } else {
-                delete this._source.isParentPropertyInverted;
+                delete s.isParentPropertyInverted;
             }
         },
-        isHierarchyPropertyInverted: function () {
-            return this._source.isHierarchyPropertyInverted === true;
+        isHierarchyPropertyInverted: function (original) {
+            return this.getSource(original).isHierarchyPropertyInverted === true;
         },
         setHierarchyPropertyInverted: function (inverted) {
+            var s = this.getSource(true);
             if (inverted) {
-                this._source.isHierarchyPropertyInverted = true;
+                s.isHierarchyPropertyInverted = true;
             } else {
-                delete this._source.isHierarchyPropertyInverted;
+                delete s.isHierarchyPropertyInverted;
             }
         },
 
         //===================================================
         // Inherited methods
         //===================================================
-        constructor: function (source, ontologyStore) {
-            this._ontologyStore = ontologyStore;
+        constructor: function (params) {
+            this._ontologyStore = params.ontologyStore;
         }
     });
 });

@@ -50,6 +50,7 @@ define(["dojo/_base/declare",
         //===================================================
         postCreate: function () {
             this.inherited("postCreate", arguments);
+            this.itemStore.automaticSortAllowed = false;
             this._buildTree();
 //            on(this._listNode, "click", lang.hitch(this, this._itemIdClicked));
         },
@@ -58,7 +59,8 @@ define(["dojo/_base/declare",
             this._tabsDijit.watch("selectedChildWidget", lang.hitch(this, function (name, oval, nval) {
                 if (nval === this._itemEditorTab) {
                     if (oval !== this._choicesTab) {
-                        this.item._source = json.parse(attr.get(this._contentsNode, "value"));
+//TODO fix
+//                        this.item._source = json.parse(attr.get(this._contentsNode, "value"));
                     }
                     this._showEditor();
                 } else if (nval === this._choicesTab) {
@@ -96,7 +98,7 @@ define(["dojo/_base/declare",
                 }
             });
 
-            var root = new Group({});
+            var root = new Group({source: {}});
             root.items = items;
             root._internalId = "_root";
             root.getChildren = function () {
@@ -163,7 +165,7 @@ define(["dojo/_base/declare",
             var addItem = lang.hitch(this, function(tn, source) {
                 var clone = source == null;
                 if (clone) {
-                    source = lang.clone(tn.item._source);
+                    source = lang.clone(tn.item.getSource(true));
                     delete source.id;
                 }
                 if (tn.item === root || (tn.getParent().item === root && !(tn.item instanceof Group))) {
@@ -273,8 +275,9 @@ define(["dojo/_base/declare",
                 newItem = this.itemStore.createItem(source, false, true); //Do not clone, but skip registration since item is inline.
                 treeModel.newItem(newItem, parent, insertIndex);
             } else {
+                parent = treeModel.item;
                 newItem = this.itemStore.createItem(source); //Register mew item since it is not inline.
-                treeModel.newItem(newItem, treeModel.item, insertIndex);
+                treeModel.newItem(newItem, parent, insertIndex);
             }
             var tn = this.tree.getNodesByItem(newItem)[0];
             tn.getParent().expand();
@@ -288,7 +291,7 @@ define(["dojo/_base/declare",
         __removeItem: function(item) {
             var bundle = this.itemStore.getBundles()[0];
             var templates = bundle.source.templates || bundle.source.auxilliary;
-            var idx = templates.indexOf(item._source);
+            var idx = templates.indexOf(item.getSource(true));
             templates.splice(idx, 1);
             this.itemStore.removeItem(item);
             var treeModel = this.tree.get("model");
@@ -297,7 +300,7 @@ define(["dojo/_base/declare",
             treeModel.onChildrenChange(treeModel.item, treeModel.item.items); //Root has changed its children
         },
         _showContent: function () {
-            attr.set(this._contentsNode, "value", json.stringify(this.item._source, true, "  "));
+            attr.set(this._contentsNode, "value", json.stringify(this.item.getSource(true), true, "  "));
             var template;
             if (this.item.getChildren) {
                 template = this.itemStore.createTemplateFromRoot(this.item);
@@ -325,7 +328,7 @@ define(["dojo/_base/declare",
         _showAll: function () {
             var arr = [];
             array.forEach(this.itemStore.getItems(), function (item) {
-                arr.push(item._source);
+                arr.push(item.getSource(true));
             }, this);
 
             var str = json.stringify(arr, true, "  ");

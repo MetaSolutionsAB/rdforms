@@ -11,124 +11,136 @@ define(["dojo/_base/declare", "./_BaseItem"], function (declare, _BaseItem) {
         /**
          * @return {String} as a URI, may be undefined for Groups, never undefined for Text or choice item types.
          */
-        getProperty: function () {
-            return this._source.property;
+        getProperty: function (original) {
+            return this.getSource(original).property;
         },
 
         setProperty: function(prop) {
+            var s = this.getSource(true);
             if (prop && prop !== "") {
-                this._source.property = prop;
+                s.property = prop;
             } else {
-                delete this._source.property;
+                delete s.property;
             }
         },
         /**
          * @return {Object} never available for Text item type.
          * The property value pairs corresponds to predicate and objects in required tripples.
          */
-        getConstraints: function () {
-            return this._source.constraints;
+        getConstraints: function (original) {
+            return this.getSource(original).constraints;
         },
         setConstraints: function (constr) {
+            var s = this.getSource(true);
             if (constr) {
-                this._source.constraints = constr;
+                s.constraints = constr;
             } else {
-                delete this._source.constraints;
+                delete s.constraints;
             }
         },
         /**
          * @return {String} a URI indicating the datatype, for example: "http://www.w3.org/2001/XMLSchema.xsd#date".
          */
-        getDatatype: function () {
-            return this._source.datatype;
+        getDatatype: function (original) {
+            return this.getSource(original).datatype;
         },
         setDatatype: function (dt) {
+            var s = this.getSource(true);
             if (dt && dt !== "") {
-                this._source.datatype = dt;
+                s.datatype = dt;
             } else {
-                delete this._source.datatype;
+                delete s.datatype;
             }
         },
-        getPattern: function() {
-            return this._source.pattern;
+        getPattern: function(original) {
+            return this.getSource(original).pattern;
         },
         setPattern: function(pattern) {
+            var s = this.getSource(true);
             if (pattern && pattern !== "") {
-                this._source.pattern = pattern;
+                s.pattern = pattern;
             } else {
-                delete this._source.pattern;
+                delete s.pattern;
             }
         },
         /**
          * @return {String} a two character language code, only relevant if the item type is Text and the nodetype is
          * a LANGUAGE_LITERAL, indicating that all matching bindings should be set with this language.
          */
-        getLanguage: function () {
-            return this._source.language;
+        getLanguage: function (original) {
+            return this.getSource(original).language;
         },
         setLanguage: function (lang) {
+            var s = this.getSource(true);
             if (lang && lang !== "") {
-                this._source.language = lang;
+                s.language = lang;
             } else {
-                delete this._source.language;
+                delete s.language;
             }
         },
-        getMember: function () {
-            return this._source.member;
+        getMember: function (original) {
+            return this.getSource(original).member;
         },
         setMember: function (member) {
+            var s = this.getSource(true);
             if (member != null) {
-                this._source.member = member;
+                s.member = member;
             } else {
-                delete this._source.member;
+                delete s.member;
             }
         },
         /**
          * Allowed values are:
          * LITERAL, RESOURCE, URI, BLANK, PLAIN_LITERAL, ONLY_LITERAL, LANGUAGE_LITERAL, DATATYPE_LITERAL
          */
-        getNodetype: function () {
-            return this._source.nodetype || this._source.nodeType; //Ugly fix because it is often wrong written in SIRFF.
+        getNodetype: function (original) {
+            var s = this.getSource(original);
+            return s.nodetype || s.nodeType; //Ugly fix because it is often wrong written in SIRFF.
         },
         setNodetype: function (nt) {
+            var s = this.getSource(true);
             if (nt) {
-                this._source.nodetype = nt;
+                s.nodetype = nt;
             } else {
-                delete this._source.nodetype;
+                delete s.nodetype;
             }
-            this._source.nodetype = nt;
+            s.nodetype = nt;
         },
-        getValue: function () {
-            return this._source.value;
+        getValue: function (original) {
+            return this.getSource(original).value;
         },
         setValue: function (value) {
+            var s = this.getSource(true);
             if (value && value != "") {
-                this._source.value = value;
+                s.value = value;
             } else {
-                delete this._source.value;
+                delete s.value;
             }
         },
         /**
          * @return {Object} containing max, min, and preferred properties.
          */
-        getCardinality: function () {
-            return this._source.cardinality || {};
+        getCardinality: function (original) {
+            return this.getSource(original).cardinality || {};
         },
         setCardinality: function (card) {
+            var s = this.getSource(true);
             if (card) {
-                this._source.cardinality = card;
+                s.cardinality = card;
             } else {
-                delete this._source.cardinality;
+                delete s.cardinality;
             }
         },
-        isEnabled: function () {
-            return this._source.enabled === undefined ? true : this._source.enabled;
+        isEnabled: function (original) {
+            var s = this.getSource(original);
+            return s.enabled === undefined ? true : s.enabled;
         },
         setEnabled: function(en) {
+            var s = this.getSource(true);
             if (en) {
-                delete this._source.enabled;
+                delete s.enabled;
             } else {
-                this._source.enabled = en;
+                s.enabled = en;
             }
         }
     });

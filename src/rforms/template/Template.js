@@ -27,10 +27,9 @@ define(["dojo/_base/declare", "rforms/template/_BaseItem"], function(declare, _B
 	//===================================================
 	// Inherited methods
 	//===================================================	
-	constructor: function(source, root, itemStore) {
-		this._itemStore = itemStore;
-		this._ontologies = source.ontologies;
-		this._root = root;
+	constructor: function(params) {
+		this._ontologies = params.source.ontologies;
+		this._root = params.root;
 	}
     });
 });

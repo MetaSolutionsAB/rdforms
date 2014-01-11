@@ -20,6 +20,8 @@ define(["dojo/_base/declare",
      * created and stored separately as well.
      */
     return declare(null, {
+        automaticSortAllowed: true,
+        ignoreMissingItems: true,
         //===================================================
         // Private Attributes
         //===================================================
@@ -35,18 +37,27 @@ define(["dojo/_base/declare",
         getTemplate: function (id) {
             return this._tRegistry[id];
         },
-        getChildren: function (group) {
-            var children = [];
-            var ext = group._source["extends"];
-            if (ext) {
-                ext = this.getItem(ext);
-                children = children.concat(this.getChildren(ext));
+        getChildren: function (group, original) {
+            if (group == null) {
+                return [];
             }
-            children = children.concat(this._createItems(group._source.content || group._source.items || [], group._forceChildrenClones));
-            return children;
+            var origSource = group.getSource(true);
+            var origSourceContent = origSource.content || origSource.items || [];
+            if (original) {
+                return this._createItems(origSourceContent, group._forceChildrenClones);
+            } else {
+                var children = [];
+                var ext = this.getItem(origSource["extends"]);
+                if (ext) {
+                    children = children.concat(ext.getChildren());
+                }
+                return children.concat(group.getChildren(true));
+            }
         },
         getItem: function (id) {
-            return this._registry[id];
+            if (id != null) {
+                return this._registry[id];
+            }
         },
         getItems: function () {
             var arr = [];
@@ -140,7 +151,7 @@ define(["dojo/_base/declare",
                 this._ontologyStore.importRegistry(source.cachedChoices);
             }
             if (typeof source.root === "object") {
-                var t = new Template(source, this.createItem(source.root), this);
+                var t = new Template({source: source, root: this.createItem(source.root), itemStore: this});
                 if (source.id || source["@id"]) {
                     this._tRegistry[source.id || source["@id"]] = t;
                 }
@@ -148,14 +159,14 @@ define(["dojo/_base/declare",
             }
         },
         createTemplateFromRoot: function(rootItem) {
-            return new Template({}, rootItem, this);
+            return new Template({source: {}, root: rootItem, itemStore: this});
         },
         createTemplateFromChildren: function (children) {
             var childrenObj = array.map(children || [], function (child) {
                 return typeof child === "string" ? this.getItem(child) : child;
             }, this);
-            var root = new Group({}, childrenObj);
-            return new Template({}, root, this);
+            var root = new Group({source: {}, children: childrenObj, itemStore: this});
+            return new Template({source: {}, root: root, itemStore: this});
         },
         setPriorities: function (priorities) {
             this.priorities = priorities;
@@ -187,6 +198,14 @@ define(["dojo/_base/declare",
             }, this);
         },
 
+        createExtendedSource: function(origSource, extSource) {
+            var newSource = lang.mixin(lang.clone(origSource), extSource);
+            newSource["_extendedSource"] = extSource;
+            newSource["extends"] = null; //Avoid infinite recursion when creating the fleshed out item.
+            delete newSource["children"];
+            return newSource;
+        },
+
         /**
          * At a minimum the source must contain a type, the rest can be changed later.
          *
@@ -197,27 +216,30 @@ define(["dojo/_base/declare",
             var item, id = source.id || source["@id"], type = source["type"] || source["@type"];
             if (source["extends"]) {
                 //Explicit extends given
-                if (this._registry[source["extends"]] === undefined) {
+                var extItem = this._registry[source["extends"]];
+                if (extItem == null && !this.ignoreMissingItems) {
                     throw "Cannot find item to extend with id: " + source["extends"];
                 }
-                var newSource = lang.mixin(lang.clone(this._registry[source["extends"]]._source), source);
-                newSource["_extendedSource"] = source;
-                newSource["extends"] = null; //Avoid infinite recursion when creating the fleshed out item.
-                return this.createItem(newSource, false, false);
-            } else if (type != null && source["extends"] == null) {
+                if (extItem) {
+                    var newSource = this.createExtendedSource(extItem.getSource(), source);
+                    return this.createItem(newSource, false, false);
+                }
+            }
+
+            if (type != null) {
                 //If there is a type in the source then it means that the object is a new item.
                 switch (type) {
                     case "text":
-                        item = new Text(source);
+                        item = new Text({source: source, itemStore: this});
                         break;
                     case "choice":
-                        item = new Choice(source, this._ontologyStore);
+                        item = new Choice({source: source, itemStore: this, ontologyStore: this._ontologyStore});
                         break;
                     case "group":
-                        item = new Group(source, null, this); //Lazy loading of children.
+                        item = new Group({source: source, children: null, itemStore: this}); //Lazy loading of children.
                         break;
                     case "propertygroup":
-                        item = new PropertyGroup(source, null, this); //Lazy loading of children.
+                        item = new PropertyGroup({source: source, children: null, itemStore: this}); //Lazy loading of children.
                         break;
                 }
                 if (skipRegistration !== true) {

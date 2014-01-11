@@ -54,34 +54,34 @@ define([
                 }, construct.create("div", null, this._stylesWrapper));
             }
 
-            var id = this.item.getId();
+            var id = this.item.getId(true);
             if (id == null) {
                 this._idDijit.set("disabled", "true");
             } else {
                 this._idDijit.set("value", id);
             }
-            this._typeDijit.set("value", this.item.getType() || "");
-            this._extendsDijit.set("value", this.item.getExtends() || "");
-            this._propDijit.set("value", this.item.getProperty() || "");
-            this._ntDijit.set("value", this.item.getNodetype() || "");
-            this._dtDijit.set("value", this.item.getDatatype() || "");
-            this._dtDijit.set("disabled", this.item.getNodetype() !== "DATATYPE_LITERAL");
-            this._patternDijit.set("value", this.item.getPattern() || "");
-            this._patternDijit.set("disabled", this.item.getNodetype() !== "ONLY_LITERAL");
-            this._labelLangString.setMap(this.item.getLabelMap());
+            this._typeDijit.set("value", this.item.getType(true) || "");
+            this._extendsDijit.set("value", this.item.getExtends(true) || "");
+            this._propDijit.set("value", this.item.getProperty(true) || "");
+            this._ntDijit.set("value", this.item.getNodetype(true) || "");
+            this._dtDijit.set("value", this.item.getDatatype(true) || "");
+            this._dtDijit.set("disabled", this.item.getNodetype(true) !== "DATATYPE_LITERAL");
+            this._patternDijit.set("value", this.item.getPattern(true) || "");
+            this._patternDijit.set("disabled", this.item.getNodetype(true) !== "ONLY_LITERAL");
+            this._labelLangString.setMap(this.item.getLabelMap(true));
             aspect.before(this._labelLangString, "onChange", lang.hitch(this.item, "setLabelMap"));
             aspect.after(this._labelLangString, "onChange", lang.hitch(this, this.itemChanged));
             on(this._addLabel, "click", lang.hitch(this._labelLangString, this._labelLangString.add));
-            this._descLangString.setMap(this.item.getDescriptionMap());
+            this._descLangString.setMap(this.item.getDescriptionMap(true));
             aspect.before(this._descLangString, "onChange", lang.hitch(this.item, "setDescriptionMap"));
             aspect.after(this._descLangString, "onChange", lang.hitch(this, this.itemChanged));
             on(this._addDesc, "click", lang.hitch(this._descLangString, this._descLangString.add));
-            var card = this.item.getCardinality();
+            var card = this.item.getCardinality(true);
             this._minDijit.set("value", card.min || "");
             this._prefDijit.set("value", card.pref || "");
             this._maxDijit.set("value", card.max || "");
-            this._constrDijit.set("value", json.stringify(this.item.getConstraints() || {}));
-            this._constrDijit.set("disabled", this.item.getType() === "text" || (this.item.getNodetype() !== "URI" && this.item.getNodetype() !== "RESOURCE"));
+            this._constrDijit.set("value", json.stringify(this.item.getConstraints(true) || {}));
+            this._constrDijit.set("disabled", this.item.getType(true) === "text" || (this.item.getNodetype(true) !== "URI" && this.item.getNodetype(true) !== "RESOURCE"));
             this._constrDijit.validator = function(value, constraints){
                 try {
                     if (value !== "{}" && value !== "") {
@@ -92,7 +92,7 @@ define([
                     return false;
                 }
             }
-            this._clsDijit.set("value", this.item.getClasses().join(", "));
+            this._clsDijit.set("value", this.item.getClasses(true).join(", "));
             setTimeout(lang.hitch(this, function() {
                 this.lock = false;
             }), 200);
@@ -151,7 +151,7 @@ define([
             this.item.setNodetype(nt);
             this._dtDijit.set("disabled", nt !== "DATATYPE_LITERAL");
             this._patternDijit.set("disabled", nt !== "ONLY_LITERAL");
-            this._constrDijit.set("disabled", this.item.getType() === "text" || (this.item.getNodetype() !== "URI" && this.item.getNodetype() !== "RESOURCE"));
+            this._constrDijit.set("disabled", this.item.getType(true) === "text" || (this.item.getNodetype(true) !== "URI" && this.item.getNodetype(true) !== "RESOURCE"));
             this.itemChanged();
         },
         _changeDT: function() {

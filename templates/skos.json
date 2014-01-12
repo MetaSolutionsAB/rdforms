@@ -1,0 +1,621 @@
+{
+  "templates": [
+    {
+      "id": "skos:inScheme",
+      "property": "http://www.w3.org/2004/02/skos/core#inScheme",
+      "label": {
+        "en": "In scheme"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:hasTopConcept",
+      "property": "http://www.w3.org/2004/02/skos/core#hasTopConcept",
+      "label": {
+        "en": "Top concept"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:topConceptOf",
+      "property": "http://www.w3.org/2004/02/skos/core#topConceptOf",
+      "label": {
+        "en": "Top concept of"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:prefLabel",
+      "property": "http://www.w3.org/2004/02/skos/core#prefLabel",
+      "label": {
+        "en": "Preferred label"
+      },
+      "description": {
+        "en": "skos:prefLabel, skos:altLabel and skos:hiddenLabel are pairwise\n      disjoint properties."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:altLabel",
+      "property": "http://www.w3.org/2004/02/skos/core#altLabel",
+      "label": {
+        "en": "Alternative label"
+      },
+      "description": {
+        "en": "skos:prefLabel, skos:altLabel and skos:hiddenLabel are pairwise disjoint properties."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:hiddenLabel",
+      "property": "http://www.w3.org/2004/02/skos/core#hiddenLabel",
+      "label": {
+        "en": "Hidden label"
+      },
+      "description": {
+        "en": "skos:prefLabel, skos:altLabel and skos:hiddenLabel are pairwise disjoint properties."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:notation",
+      "property": "http://www.w3.org/2004/02/skos/core#notation",
+      "label": {
+        "en": "Notation"
+      },
+      "type": "group",
+      "automatic": true,
+      "content": [],
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "skos:note",
+      "property": "http://www.w3.org/2004/02/skos/core#note",
+      "label": {
+        "en": "Note"
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "cls": [
+        "rformsmultiline"
+      ],
+      "styles": [
+        "multiline"
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:changeNote",
+      "property": "http://www.w3.org/2004/02/skos/core#changeNote",
+      "label": {
+        "en": "Change note"
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "cls": [
+        "rformsmultiline"
+      ],
+      "styles": [
+        "multiline"
+      ]
+    },
+    {
+      "id": "skos:definition",
+      "property": "http://www.w3.org/2004/02/skos/core#definition",
+      "label": {
+        "en": "Definition"
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "cls": [
+        "rformsmultiline"
+      ],
+      "styles": [
+        "multiline"
+      ]
+    },
+    {
+      "id": "skos:editorialNote",
+      "property": "http://www.w3.org/2004/02/skos/core#editorialNote",
+      "label": {
+        "en": "Editorial note"
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "cls": [
+        "rformsmultiline"
+      ],
+      "styles": [
+        "multiline"
+      ]
+    },
+    {
+      "id": "skos:example",
+      "property": "http://www.w3.org/2004/02/skos/core#example",
+      "label": {
+        "en": "Example"
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "cls": [
+        "rformsmultiline"
+      ],
+      "styles": [
+        "multiline"
+      ]
+    },
+    {
+      "id": "skos:historyNote",
+      "property": "http://www.w3.org/2004/02/skos/core#historyNote",
+      "label": {
+        "en": "History note"
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "cls": [
+        "rformsmultiline"
+      ],
+      "styles": [
+        "multiline"
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:scopeNote",
+      "property": "http://www.w3.org/2004/02/skos/core#scopeNote",
+      "label": {
+        "en": "Scope note"
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "cls": [
+        "rformsmultiline"
+      ],
+      "styles": [
+        "multiline"
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:broader",
+      "property": "http://www.w3.org/2004/02/skos/core#broader",
+      "label": {
+        "en": "Broader"
+      },
+      "description": {
+        "en": "Broader concepts are typically rendered as parents in a concept hierarchy (tree)."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:narrower",
+      "property": "http://www.w3.org/2004/02/skos/core#narrower",
+      "label": {
+        "en": "Narrower"
+      },
+      "description": {
+        "en": "Narrower concepts are typically rendered as children in a concept hierarchy (tree)."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:related",
+      "property": "http://www.w3.org/2004/02/skos/core#related",
+      "label": {
+        "en": "Related"
+      },
+      "description": {
+        "en": "skos:related is disjoint with skos:broaderTransitive"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "skos:broaderTransitive",
+      "property": "http://www.w3.org/2004/02/skos/core#broaderTransitive",
+      "label": {
+        "en": "Broader transitive"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:narrowerTransitive",
+      "property": "http://www.w3.org/2004/02/skos/core#narrowerTransitive",
+      "label": {
+        "en": "Narrower transitive"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:member",
+      "property": "http://www.w3.org/2004/02/skos/core#member",
+      "label": {
+        "en": "Member"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "automatic": true,
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "skos:memberList",
+      "property": "http://www.w3.org/2004/02/skos/core#memberList",
+      "label": {
+        "en": "Member list"
+      },
+      "description": {
+        "en": "For any resource, every item in the list given as the value of the skos:memberList property is also a value of the skos:member property."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+      },
+      "type": "group",
+      "automatic": true,
+      "content": [],
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "skos:mappingRelation",
+      "property": "http://www.w3.org/2004/02/skos/core#mappingRelation",
+      "label": {
+        "en": "Mapping relation"
+      },
+      "description": {
+        "en": "These concept mapping relations mirror semantic relations, and the data model defined below is similar (with the exception of skos:exactMatch) to the data model defined for semantic relations. A distinct vocabulary is provided for concept mapping relations, to provide a convenient way to differentiate links within a concept scheme from links between concept schemes. However, this pattern of usage is not a formal requirement of the SKOS data model, and relies on informal definitions of best practice."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "skos:broadMatch",
+      "property": "http://www.w3.org/2004/02/skos/core#broadMatch",
+      "label": {
+        "en": "Broader match"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "skos:narrowMatch",
+      "property": "http://www.w3.org/2004/02/skos/core#narrowMatch",
+      "label": {
+        "en": "Narrower match"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:relatedMatch",
+      "property": "http://www.w3.org/2004/02/skos/core#relatedMatch",
+      "label": {
+        "en": "Related match"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:exactMatch",
+      "property": "http://www.w3.org/2004/02/skos/core#exactMatch",
+      "label": {
+        "en": "Exact match"
+      },
+      "description": {
+        "en": "skos:exactMatch is disjoint with each of the properties skos:broadMatch and skos:relatedMatch."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:closeMatch",
+      "property": "http://www.w3.org/2004/02/skos/core#closeMatch",
+      "label": {
+        "en": "Close match"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "http://www.w3.org/2000/01/rdf-schema#label",
+      "property": "http://www.w3.org/2000/01/rdf-schema#label",
+      "label": {
+        "en": "rdf-schema#label"
+      },
+      "type": "group",
+      "automatic": true,
+      "content": [],
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "skos:Concept",
+      "label": {
+        "en": "Concept"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "group",
+      "content": [
+        {
+          "id": "skos:prefLabel"
+        },
+        {
+          "id": "skos:definition"
+        },
+        {
+          "id": "skos:example"
+        },
+        {
+          "id": "skos:broader"
+        },
+        {
+          "id": "skos:narrower"
+        },
+        {
+          "id": "skos:related"
+        },
+        {
+          "id": "skos:inScheme"
+        },
+        {
+          "id": "skos:topConceptOf"
+        },
+        {
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "type": "group",
+          "cls": [
+            "rformsexpandable"
+          ],
+          "label": {
+            "en": "Labels and annotations"
+          },
+          "content": [
+            {
+              "id": "skos:altLabel"
+            },
+            {
+              "id": "skos:hiddenLabel"
+            },
+            {
+              "id": "skos:note"
+            },
+            {
+              "id": "skos:editorialNote"
+            },
+            {
+              "id": "skos:scopeNote"
+            },
+            {
+              "id": "skos:changeNote"
+            },
+            {
+              "id": "skos:historyNote"
+            }
+          ],
+          "nodetype": "RESOURCE",
+          "styles": [
+            "expandable"
+          ]
+        },
+        {
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "type": "group",
+          "cls": [
+            "rformsexpandable"
+          ],
+          "label": {
+            "en": "Additional concept relations"
+          },
+          "content": [
+            {
+              "id": "skos:broaderTransitive"
+            },
+            {
+              "id": "skos:narrowerTransitive"
+            },
+            {
+              "id": "skos:broadMatch"
+            },
+            {
+              "id": "skos:narrowMatch"
+            },
+            {
+              "id": "skos:exactMatch"
+            },
+            {
+              "id": "skos:closeMatch"
+            },
+            {
+              "id": "skos:relatedMatch"
+            },
+            {
+              "id": "skos:mappingRelation"
+            }
+          ],
+          "nodetype": "RESOURCE",
+          "styles": [
+            "expandable"
+          ]
+        }
+      ],
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "skos:ConceptScheme",
+      "label": {
+        "en": "Concept Scheme"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+      },
+      "type": "group",
+      "content": [
+        {
+          "id": "skos:hasTopConcept"
+        }
+      ],
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "skos:Collection",
+      "label": {
+        "en": "Collection"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Collection"
+      },
+      "type": "group",
+      "content": [
+        {
+          "id": "skos:member"
+        }
+      ]
+    },
+    {
+      "id": "skos:OrderedCollection",
+      "label": {
+        "en": "Ordered Collection"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#OrderedCollection"
+      },
+      "type": "group",
+      "content": [
+        {
+          "id": "skos:memberList"
+        },
+        {
+          "id": "skos:member"
+        }
+      ]
+    }
+  ],
+  "scope": "skos",
+  "namespace": "http://www.w3.org/2004/02/skos/core#"
+}

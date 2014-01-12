@@ -1,0 +1,6 @@
+/lib/dojo/*
+/lib/dojo-src/*
+.idea
+node_modules/
+*~
+/local_templates/*

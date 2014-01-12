@@ -35,14 +35,20 @@
             'rdfjson/converters',
             'dojo/json',
             "dojo/text!"+parobj.templates,
-            "dojo/text!"+parobj.rdf,
 		   'dojo/domReady!'],
-		  function(ItemStore, StoreManager, rdfConverters, json, templates, rdf) {
-		      var itemStore = new ItemStore();
-		      itemStore.registerBundle({path: parobj.templates, source: json.parse(templates)});
-		      var storeManager = new StoreManager({itemStore: itemStore, data: rdfConverters.rdfxml2graph(rdf).exportRDFJSON()}, "_node");
-              storeManager.startup();
-		  });
+		  function(ItemStore, StoreManager, rdfConverters, json, templates) {
+              var itemStore = new ItemStore();
+              itemStore.registerBundle({path: parobj.templates, source: json.parse(templates)});
+              if (parobj.rdf) {
+                  require(["dojo/text!"+parobj.rdf], function(rdf) {
+                      var storeManager = new StoreManager({itemStore: itemStore, data: rdfConverters.rdfxml2graph(rdf).exportRDFJSON()}, "_node");
+                      storeManager.startup();
+                  });
+              } else {
+                  var storeManager = new StoreManager({itemStore: itemStore, data: {}}, "_node");
+                  storeManager.startup();
+              };
+          });
     </script>
     <div id="_node"></div>
   </body>

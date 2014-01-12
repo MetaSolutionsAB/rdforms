@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <rdf:Description rdf:about="http://example.com/about">
+    <dc:title xml:lang="en">A title</dc:title>
+    <dc:description xml:lang="en">And a longer description</dc:description>    
+  </rdf:Description>
+</rdf:RDF>

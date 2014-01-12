@@ -64,7 +64,7 @@ and if you press the save button it will update the template on disk.
 To help you experiment without destroying the existing established RForms templates there is a another directory called
 *local_templates* accessible at
 [http://localhost:8181/local_templates/](http://localhost:8181/local_templates/)
-It is recommended to copy the *templates/test.json* and *templates/test.rdf* to *local_templates* for experimenting purposes.
+It is recommended to copy the *templates/dc.json* and *templates/dc.rdf* to *local_templates* for experimenting purposes.
 Everything in *local_templates* will be ignored by the versioning system (git).
 
 # Generating RForms templates

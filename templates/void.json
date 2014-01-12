@@ -1,0 +1,1174 @@
+{
+  "templates": [
+    {
+      "id": "void:feature",
+      "property": "http://rdfs.org/ns/void#feature",
+      "label": {
+        "en": "Feature"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://rdfs.org/ns/void#TechnicalFeature"
+      },
+      "type": "group",
+      "content": [],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "nodetype": "BLANK",
+      "extends": "void:TechnicalFeature"
+    },
+    {
+      "id": "void:subset",
+      "property": "http://rdfs.org/ns/void#subset",
+      "label": {
+        "en": "Has subset"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://rdfs.org/ns/void#Dataset"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "pref": 1
+      }
+    },
+    {
+      "id": "void:target",
+      "property": "http://rdfs.org/ns/void#target",
+      "label": {
+        "en": "Target"
+      },
+      "description": {
+        "en": "One of the two datasets linked by the Linkset."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://rdfs.org/ns/void#Dataset"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "pref": 1
+      }
+    },
+    {
+      "id": "void:sparqlEndpoint",
+      "property": "http://rdfs.org/ns/void#sparqlEndpoint",
+      "label": {
+        "en": "SPARQL endpoint at"
+      },
+      "type": "text",
+      "nodetype": "URI",
+      "cardinality": {
+        "pref": 1
+      }
+    },
+    {
+      "id": "void:linkPredicate",
+      "property": "http://rdfs.org/ns/void#linkPredicate",
+      "label": {
+        "en": "Link predicate"
+      },
+      "type": "text",
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      },
+      "description": {
+        "en": "The property void:linkPredicate can be used to specify the type of links that connect two datasets. In other words, it names the RDF property in the predicate position of the link triples."
+      }
+    },
+    {
+      "id": "void:exampleResource",
+      "property": "http://rdfs.org/ns/void#exampleResource",
+      "label": {
+        "en": "Example resource of dataset"
+      },
+      "type": "text",
+      "nodetype": "URI",
+      "cardinality": {
+        "pref": 1
+      }
+    },
+    {
+      "id": "void:vocabulary",
+      "property": "http://rdfs.org/ns/void#vocabulary",
+      "label": {
+        "en": "Used vocabulary"
+      },
+      "description": {
+        "en": "A vocabulary that is used in the dataset."
+      },
+      "type": "text",
+      "nodetype": "URI",
+      "cardinality": {
+        "pref": 1
+      }
+    },
+    {
+      "id": "void:subjectsTarget",
+      "property": "http://rdfs.org/ns/void#subjectsTarget",
+      "label": {
+        "en": "Subjects target"
+      },
+      "description": {
+        "en": "The dataset describing the subjects of triples contained in the Linkset."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://rdfs.org/ns/void#Dataset"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "pref": 1
+      }
+    },
+    {
+      "id": "void:objectsTarget",
+      "property": "http://rdfs.org/ns/void#objectsTarget",
+      "label": {
+        "en": "Objects target"
+      },
+      "description": {
+        "en": "The dataset describing the objects of the triples contained in the Linkset."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://rdfs.org/ns/void#Dataset"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "pref": 1
+      }
+    },
+    {
+      "id": "void:dataDump",
+      "property": "http://rdfs.org/ns/void#dataDump",
+      "label": {
+        "en": "Data dump"
+      },
+      "description": {
+        "en": "An RDF dump, partial or complete, of a void:Dataset."
+      },
+      "type": "text",
+      "nodetype": "URI",
+      "cardinality": {
+        "pref": 1
+      }
+    },
+    {
+      "id": "void:uriLookupEndpoint",
+      "property": "http://rdfs.org/ns/void#uriLookupEndpoint",
+      "label": {
+        "en": "URI look-up endpoint at"
+      },
+      "description": {
+        "en": "Defines a simple URI look-up protocol for accessing a dataset."
+      },
+      "type": "text",
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "void:uriRegexPattern",
+      "property": "http://rdfs.org/ns/void#uriRegexPattern",
+      "label": {
+        "en": "URI regular expression pattern"
+      },
+      "description": {
+        "en": "Defines a regular expression pattern matching URIs in the dataset."
+      },
+      "type": "text",
+      "nodetype": "LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "void:class",
+      "property": "http://rdfs.org/ns/void#class",
+      "label": {
+        "en": "Class"
+      },
+      "description": {
+        "en": "The rdfs:Class that is the rdf:type of all entities in a class-based partition."
+      },
+      "type": "text",
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 1,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "void:classes",
+      "property": "http://rdfs.org/ns/void#classes",
+      "label": {
+        "en": "Number of Classes"
+      },
+      "description": {
+        "en": "The total number of distinct classes in a void:Dataset. In other words, the number of distinct resources occuring as objects of rdf:type triples in the dataset."
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "void:classPartition",
+      "property": "http://rdfs.org/ns/void#classPartition",
+      "label": {
+        "en": "Class partition"
+      },
+      "description": {
+        "en": "A subset of a void:Dataset that contains only the entities of a certain rdfs:Class."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://rdfs.org/ns/void#Dataset"
+      },
+      "type": "group",
+      "content": [
+        {
+          "id": "void:class"
+        },
+        {
+          "id": "void:properties"
+        },
+        {
+          "id": "void:documents"
+        },
+        {
+          "id": "void:entities"
+        },
+        {
+          "id": "void:distinctSubjects"
+        },
+        {
+          "id": "void:distinctObjects"
+        },
+        {
+          "id": "void:triples"
+        },
+        {
+          "id": "void:uriSpace"
+        },
+        {
+          "id": "void:uriRegexPattern"
+        }
+      ],
+      "styles": []
+    },
+    {
+      "id": "void:distinctObjects",
+      "property": "http://rdfs.org/ns/void#distinctObjects",
+      "label": {
+        "en": "Number of distinct objects"
+      },
+      "description": {
+        "en": "The total number of distinct objects in a void:Dataset. In other words, the number of distinct resources that occur in the object position of triples in the dataset. Literals are included in this count."
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "void:distinctSubjects",
+      "property": "http://rdfs.org/ns/void#distinctSubjects",
+      "label": {
+        "en": "Number of distinct subjects"
+      },
+      "description": {
+        "en": "The total number of distinct subjects in a void:Dataset. In other words, the number of distinct resources that occur in the subject position of triples in the dataset."
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "void:documents",
+      "property": "http://rdfs.org/ns/void#documents",
+      "label": {
+        "en": "Number of documents"
+      },
+      "description": {
+        "en": "The total number of documents, for datasets that are published as a set of individual documents, such as RDF/XML documents or RDFa-annotated web pages. Non-RDF documents, such as web pages in HTML or images, are usually not included in this count. This property is intended for datasets where the total number of triples or entities is hard to determine. void:triples or void:entities should be preferred where practical."
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "void:entities",
+      "property": "http://rdfs.org/ns/void#entities",
+      "label": {
+        "en": "Number of entities"
+      },
+      "description": {
+        "en": "The total number of entities that are described in a void:Dataset."
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "void:inDataset",
+      "property": "http://rdfs.org/ns/void#inDataset",
+      "label": {
+        "en": "In dataset"
+      },
+      "description": {
+        "en": "Points to the void:Dataset that a document is a part of."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://rdfs.org/ns/void#Dataset"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "pref": 1
+      }
+    },
+    {
+      "id": "void:openSearchDescription",
+      "property": "http://rdfs.org/ns/void#openSearchDescription",
+      "label": {
+        "en": "Open search description"
+      },
+      "description": {
+        "en": "An OpenSearch description document for a free-text search service over a void:Dataset."
+      },
+      "type": "text",
+      "nodetype": "URI",
+      "cardinality": {
+        "pref": 1
+      }
+    },
+    {
+      "id": "void:properties",
+      "property": "http://rdfs.org/ns/void#properties",
+      "label": {
+        "en": "Number of properties"
+      },
+      "description": {
+        "en": "The total number of distinct properties in a void:Dataset. In other words, the number of distinct resources that occur in the predicate position of triples in the dataset."
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "void:property",
+      "property": "http://rdfs.org/ns/void#property",
+      "label": {
+        "en": "Property"
+      },
+      "description": {
+        "en": "The rdf:Property that is the predicate of all triples in a property-based partition."
+      },
+      "type": "text",
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 1,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "void:propertyPartition",
+      "property": "http://rdfs.org/ns/void#propertyPartition",
+      "label": {
+        "en": "Property partition"
+      },
+      "description": {
+        "en": "A subset of a void:Dataset that contains only the triples of a certain rdf:Property."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://rdfs.org/ns/void#Dataset"
+      },
+      "type": "group",
+      "automatic": true,
+      "content": [
+        {
+          "id": "void:property"
+        },
+        {
+          "id": "void:property"
+        },
+        {
+          "id": "void:documents"
+        },
+        {
+          "id": "void:entities"
+        },
+        {
+          "id": "void:distinctSubjects"
+        },
+        {
+          "id": "void:classes"
+        },
+        {
+          "id": "void:triples"
+        },
+        {
+          "id": "void:uriSpace"
+        },
+        {
+          "id": "void:uriSpace"
+        }
+      ]
+    },
+    {
+      "id": "void:rootResource",
+      "property": "http://rdfs.org/ns/void#rootResource",
+      "label": {
+        "en": "Root resource"
+      },
+      "description": {
+        "en": "A top concept or entry point for a void:Dataset that is structured in a tree-like fashion. All resources in a dataset can be reached by following links from its root resources in a small number of steps."
+      },
+      "type": "text",
+      "nodetype": "URI",
+      "cardinality": {
+        "pref": 1
+      }
+    },
+    {
+      "id": "void:triples",
+      "property": "http://rdfs.org/ns/void#triples",
+      "label": {
+        "en": "Number of triples"
+      },
+      "description": {
+        "en": "The total number of triples contained in a void:Dataset."
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "void:uriSpace",
+      "property": "http://rdfs.org/ns/void#uriSpace",
+      "label": {
+        "en": "URI space"
+      },
+      "description": {
+        "en": "A URI that is a common string prefix of all the entity URIs in a void:Dataset."
+      },
+      "type": "text",
+      "nodetype": "LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "void:Dataset",
+      "label": {
+        "en": "Dataset"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://rdfs.org/ns/void#Dataset"
+      },
+      "description": {
+        "en": "A set of RDF triples that are published, maintained or aggregated by a single provider."
+      },
+      "type": "group",
+      "content": [
+        {
+          "id": "void:dcterms:title"
+        },
+        {
+          "id": "void:dcterms:description"
+        },
+        {
+          "type": "text",
+          "label": {
+            "en": "Homepage"
+          },
+          "description": {
+            "en": "A homepage of some sort on the web, where further information about the dataset can be found."
+          },
+          "property": "http://xmlns.com/foaf/0.1/homepage",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "nodetype": "URI"
+        },
+        {
+          "type": "text",
+          "label": {
+            "en": "Page"
+          },
+          "description": {
+            "en": "Additional web pages with relevant information that can not be considered the homepage of the dataset."
+          },
+          "property": "http://xmlns.com/foaf/0.1/page",
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          },
+          "nodetype": "URI"
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Provenance"
+          },
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "content": [
+            {
+              "type": "group",
+              "label": {
+                "en": "Creator"
+              },
+              "extends": "void:foaf:Agent",
+              "description": {
+                "en": "An entity, such as a person, organisation, or service, that is primarily responsible for creating the dataset."
+              },
+              "cardinality": {
+                "min": 0,
+                "pref": 1,
+                "max": 1
+              },
+              "content": [],
+              "property": "http://purl.org/dc/terms/creator"
+            },
+            {
+              "type": "group",
+              "label": {
+                "en": "Publisher"
+              },
+              "extends": "void:foaf:Agent",
+              "description": {
+                "en": "An entity, such as a person, organisation, or service, that is primarily responsible for creating the dataset."
+              },
+              "cardinality": {
+                "min": 0,
+                "pref": 1,
+                "max": 1
+              },
+              "content": [],
+              "property": "http://purl.org/dc/terms/publisher"
+            },
+            {
+              "type": "group",
+              "label": {
+                "en": "Contributor"
+              },
+              "extends": "void:foaf:Agent",
+              "description": {
+                "en": "An entity, such as a person, organisation, or service, that is responsible for making contributions to the dataset."
+              },
+              "cardinality": {
+                "min": 0,
+                "pref": 1
+              },
+              "content": [],
+              "property": "http://purl.org/dc/terms/contributor"
+            },
+            {
+              "type": "text",
+              "description": {
+                "en": "A related resource from which the dataset is derived."
+              },
+              "label": {
+                "en": "Source"
+              },
+              "property": "http://purl.org/dc/terms/source",
+              "cardinality": {
+                "min": 0,
+                "pref": 1,
+                "max": 1
+              },
+              "nodetype": "URI"
+            },
+            {
+              "type": "text",
+              "description": {
+                "en": "A point or period of time associated with an event in the life-cycle of the resource."
+              },
+              "label": {
+                "en": "Date"
+              },
+              "property": "http://purl.org/dc/terms/date",
+              "cardinality": {
+                "min": 0,
+                "pref": 1,
+                "max": 1
+              },
+              "nodetype": "DATATYPE_LITERAL",
+              "datatype": "http://www.w3.org/2001/XMLSchema#date"
+            },
+            {
+              "type": "text",
+              "description": {
+                "en": "Date of creation of the dataset. "
+              },
+              "label": {
+                "en": "Created"
+              },
+              "property": "http://purl.org/dc/terms/created",
+              "cardinality": {
+                "min": 0,
+                "pref": 1,
+                "max": 1
+              },
+              "nodetype": "DATATYPE_LITERAL",
+              "datatype": "http://www.w3.org/2001/XMLSchema#date"
+            },
+            {
+              "type": "text",
+              "description": {
+                "en": "Date of formal issuance (e.g., publication) of the dataset."
+              },
+              "label": {
+                "en": "Issued"
+              },
+              "property": "http://purl.org/dc/terms/issued",
+              "cardinality": {
+                "min": 0,
+                "pref": 1,
+                "max": 1
+              },
+              "nodetype": "DATATYPE_LITERAL",
+              "datatype": "http://www.w3.org/2001/XMLSchema#date"
+            },
+            {
+              "type": "text",
+              "description": {
+                "en": "Date on which the dataset was changed. "
+              },
+              "label": {
+                "en": "Modified"
+              },
+              "property": "http://purl.org/dc/terms/modified",
+              "cardinality": {
+                "min": 0,
+                "pref": 1,
+                "max": 1
+              },
+              "nodetype": "DATATYPE_LITERAL",
+              "datatype": "http://www.w3.org/2001/XMLSchema#date"
+            }
+          ],
+          "styles": [
+            "expandable"
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Access and technical metadata"
+          },
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "content": [
+            {
+              "id": "void:uriLookupEndpoint"
+            },
+            {
+              "id": "void:openSearchDescription"
+            },
+            {
+              "id": "void:dataDump"
+            },
+            {
+              "id": "void:rootResource"
+            },
+            {
+              "id": "void:sparqlEndpoint"
+            },
+            {
+              "id": "void:feature-defined"
+            },
+            {
+              "id": "void:feature"
+            }
+          ],
+          "styles": [
+            "expandable"
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Structural metadata"
+          },
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "content": [
+            {
+              "id": "void:uriSpace"
+            },
+            {
+              "id": "void:uriRegexPattern"
+            },
+            {
+              "id": "void:exampleResource"
+            },
+            {
+              "id": "void:vocabulary"
+            },
+            {
+              "id": "void:subset"
+            }
+          ],
+          "styles": [
+            "expandable"
+          ]
+        },
+        {
+          "type": "group",
+          "description": {},
+          "label": {
+            "en": "Statistics metadata"
+          },
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "content": [
+            {
+              "id": "void:documents"
+            },
+            {
+              "id": "void:entities"
+            },
+            {
+              "id": "void:distinctSubjects"
+            },
+            {
+              "id": "void:distinctObjects"
+            },
+            {
+              "id": "void:properties"
+            },
+            {
+              "id": "void:classes"
+            },
+            {
+              "id": "void:triples"
+            },
+            {
+              "id": "void:classPartition"
+            },
+            {
+              "id": "void:propertyPartition"
+            }
+          ],
+          "styles": [
+            "expandable"
+          ]
+        }
+      ],
+      "styles": [
+        "nonCompact"
+      ]
+    },
+    {
+      "id": "void:Linkset",
+      "label": {
+        "en": "Linkset"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://rdfs.org/ns/void#Linkset"
+      },
+      "description": {
+        "en": "A collection of RDF links between two void:Datasets."
+      },
+      "type": "group",
+      "content": [
+        {
+          "id": "void:dcterms:title"
+        },
+        {
+          "id": "void:dcterms:description"
+        },
+        {
+          "id": "void:linkPredicate"
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Linked datasets"
+          },
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "styles": [
+            "expandable"
+          ],
+          "content": [
+            {
+              "id": "void:subjectsTarget"
+            },
+            {
+              "id": "void:objectsTarget"
+            },
+            {
+              "id": "void:target"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Access metadata"
+          },
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "content": [
+            {
+              "id": "void:sparqlEndpoint"
+            },
+            {
+              "id": "void:dataDump"
+            }
+          ],
+          "styles": [
+            "expandable"
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Statistics"
+          },
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "content": [
+            {
+              "id": "void:distinctSubjects"
+            },
+            {
+              "id": "void:distinctObjects"
+            },
+            {
+              "id": "void:triples"
+            }
+          ],
+          "styles": [
+            "expandable"
+          ]
+        }
+      ],
+      "styles": [
+        "nonCompact"
+      ]
+    },
+    {
+      "id": "void:TechnicalFeature",
+      "label": {
+        "en": "Technical feature"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://rdfs.org/ns/void#TechnicalFeature"
+      },
+      "description": {
+        "en": "A technical feature of a void:Dataset, such as a supported RDF serialization format."
+      },
+      "type": "group",
+      "content": [
+        {
+          "type": "text",
+          "property": "http://www.w3.org/2000/01/rdf-schema#label",
+          "label": {
+            "en": "Label"
+          },
+          "description": {
+            "en": "A short and descriptive label of the feature, e.g. \"HTTP ETag support\". "
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          },
+          "nodetype": "PLAIN_LITERAL"
+        },
+        {
+          "type": "text",
+          "label": {
+            "en": "Comment"
+          },
+          "property": "http://www.w3.org/2000/01/rdf-schema#comment",
+          "description": {
+            "en": "A longer description of the feature."
+          },
+          "nodetype": "PLAIN_LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          },
+          "styles": [
+            "multiline"
+          ]
+        },
+        {
+          "type": "text",
+          "property": "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+          "label": {
+            "en": "See also"
+          },
+          "description": {
+            "en": "A web resource providing information related to the feature."
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          },
+          "nodetype": "URI"
+        }
+      ]
+    },
+    {
+      "id": "void:DatasetDescription",
+      "label": {
+        "en": "Dataset description"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://rdfs.org/ns/void#DatasetDescription"
+      },
+      "description": {
+        "en": "A web resource whose foaf:primaryTopic or foaf:topics include void:Datasets."
+      },
+      "type": "group",
+      "content": [
+        {
+          "id": "void:inDataset"
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "id": "void:feature-defined",
+      "property": "http://rdfs.org/ns/void#feature",
+      "label": {
+        "en": "Feature"
+      },
+      "description": {
+        "en": "Choose one of the established features, see http://www.w3.org/TR/void/#features."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "nodetype": "URI",
+      "choices": [
+        {
+          "value": "http://www.w3.org/ns/formats/N-Triples",
+          "description": {
+            "en": "N-Triples is a line-based, plain text format for encoding an RDF graph. It was designed to be a fixed subset of N3.\nThe Internet media type / MIME type of N-Triples is text/plain and the character encoding is 7-bit US-ASCII."
+          },
+          "label": {
+            "en": "N-Triples"
+          }
+        },
+        {
+          "value": "http://www.w3.org/ns/formats/N3",
+          "label": {
+            "en": "Notation3 (N3)"
+          },
+          "description": {
+            "en": "A readable RDF syntax: W3C Team Submission 14 January 2008.\nThe Internet media type / MIME type of Notation 3 is text/n3; charset=utf-8."
+          }
+        },
+        {
+          "value": "http://www.w3.org/ns/formats/RDF_XML",
+          "label": {
+            "en": "RDF/XML"
+          },
+          "description": {
+            "en": "This is the official XML serialization of RDF, see the RDF/XML Syntax Specification at http://www.w3.org/TR/REC-rdf-syntax/ for the full specification.\nThe Internet media type / MIME type of RDF/XML is application/rdf+xml."
+          }
+        },
+        {
+          "value": "http://www.w3.org/ns/formats/RDFa",
+          "label": {
+            "": "RDFa"
+          },
+          "description": {
+            "": "RDFa allows you to embed RDF into HTML via specific attributes, see the RDFa W3C Recommendation at http://www.w3.org/TR/rdfa-syntax/.\nThe Internet media type / MIME type of RDFa is given by the surrounding webpage."
+          }
+        },
+        {
+          "value": "http://www.w3.org/ns/formats/Turtle",
+          "label": {
+            "en": "Turtle"
+          },
+          "description": {
+            "en": "Turtle is a Terse RDF Triple Language that allows RDF graphs to be completely written in a compact and natural text form, with abbreviations for common usage patterns and datatypes. Turtle provides levels of compatibility with the existing N-Triples and Notation 3 formats as well as the triple pattern syntax of the SPARQL W3C Proposed Recommendation.\nThe Internet media type / MIME type of Turtle is text/turtle."
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "id": "void:foaf:Agent",
+      "content": [
+        {
+          "type": "choice",
+          "choices": [
+            {
+              "value": "http://xmlns.com/foaf/0.1/Organization",
+              "label": {
+                "en": "Organization"
+              }
+            },
+            {
+              "value": "http://xmlns.com/foaf/0.1/Person",
+              "label": {
+                "en": "Person"
+              },
+              "description": {}
+            }
+          ],
+          "nodetype": "URI",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "label": {
+            "": "Type"
+          },
+          "styles": [
+            "horizontalRadioButtons"
+          ]
+        },
+        {
+          "type": "text",
+          "label": {
+            "en": "Name"
+          },
+          "property": "http://www.w3.org/2000/01/rdf-schema#label",
+          "description": {},
+          "nodetype": "PLAIN_LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          }
+        },
+        {
+          "type": "text",
+          "label": {
+            "en": "Mail box"
+          },
+          "description": {
+            "en": "Provide an email in the format mailto:john@example.com"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        }
+      ],
+      "label": {}
+    },
+    {
+      "type": "text",
+      "id": "void:dcterms:title",
+      "property": "http://purl.org/dc/terms/title",
+      "label": {
+        "en": "Name"
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "nodetype": "PLAIN_LITERAL",
+      "description": {
+        "en": "The name of the dataset."
+      }
+    },
+    {
+      "type": "text",
+      "property": "http://purl.org/dc/terms/description",
+      "label": {
+        "en": "Description"
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "nodetype": "PLAIN_LITERAL",
+      "description": {
+        "en": "A textual description of the dataset. If several descriptions are provided they should correspond to translations of the same description rather than different descriptions."
+      },
+      "id": "void:dcterms:description",
+      "styles": [
+        "multiline"
+      ]
+    }
+  ],
+  "scope": "void",
+  "namespace": "http://rdfs.org/ns/void#",
+  "root": {
+    "id": "void:Dataset"
+  }
+}

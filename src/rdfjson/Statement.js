@@ -6,7 +6,7 @@ define([], function () {
      * Never create directly, use the methods in rdfjson.Graph.
      * Constructs a statement from the provided parts, the object is assumed to be the same actual javascript object as is used in the graph.
      *
-     * @param {rdfjson.Statement} graph the rdfjson.Graph we will manipulate.
+     * @param {rdfjson.Graph} graph the rdfjson.Graph we will manipulate.
      * @param {String} s the subject in the statement
      * @param {String} p the predicate in the statement.
      * @param {Object} o the object in the statement.
@@ -69,6 +69,13 @@ define([], function () {
         return this._s;
     };
 
+    Statement.prototype.isSubjectBlank = function() {
+        if (this._sIsBlank !== true && this._sIsBlank !== false) {
+            this._sIsBlank = this._graph._bnodes[this._s] === true;
+        }
+        return this._sIsBlank;
+    };
+
     /**
      * Sets the subhect of this statement, other Statements with this resource as subject or object is not affected.
      * @param {String} s must be a valid URI.
@@ -78,6 +85,7 @@ define([], function () {
             this._graph.remove(this);
             this._s = s;
             this._graph.add(this);
+            delete this._sIsBlank;
         } else {
             this._s = s;
         }

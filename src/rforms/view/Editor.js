@@ -159,6 +159,7 @@ define(["dojo/_base/declare",
 
         addLabel: function (rowDiv, labelDiv, binding, item) {
             if (item.hasStyle("nonEditable")) {
+                domClass.add(labelDiv, "rformsLabelRow");
                 return this.inherited("addLabel", arguments);
             }
             var isGroup = item instanceof Group;

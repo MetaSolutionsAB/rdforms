@@ -1,6 +1,29 @@
 /*global define*/
 define(["dojo/_base/declare", "./Item"], function(declare, Item) {
 
+    var sortItems = function(items) {
+        dojo.forEach(items, function(item) {
+            item.__label = item.getLabel().toLowerCase();
+        });
+        items.sort(function(o1, o2) {
+            if (o1._source.priority != null) {
+                if (o2._source.priority != null) {
+                    return o1._source.priority > o2._source.priority ? -1 : o1._source.priority < o2._source.priority ? 1 : 0;
+                } else {
+                    return o1._source.priority > 0 ? -1 : 1;
+                }
+            } else if (o2._source.priority != null) {
+                return o2._source.priority > 0 ? 1 : -1;
+            } else if (o1.__label > o2.__label) {
+                return 1;
+            } else if (o1.__label < o2.__label) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+    };
+
     /**
      * Group extends an Item by having children.
      */
@@ -22,7 +45,7 @@ define(["dojo/_base/declare", "./Item"], function(declare, Item) {
             if (children == null) {
                 children = this._itemStore.getChildren(this, original);
                 if ((this.getSource().automatic !== false || this.getSource(false))&& this._itemStore.automaticSortAllowed) {
-                    sortItems(this._ochildren);
+                    sortItems(children);
                 }
                 this["_"+(original ? "o" : "")+"children"] = children;
             }
@@ -48,27 +71,4 @@ define(["dojo/_base/declare", "./Item"], function(declare, Item) {
             return this.inherited("getNodetype", arguments) || "RESOURCE"; //Ugly fix because it is often wrong written in SIRFF.
         }
     });
-
-    var sortItems = function(items) {
-        dojo.forEach(items, function(item) {
-            item.__label = item.getLabel().toLowerCase();
-        });
-        items.sort(function(o1, o2) {
-            if (o1._source.priority != null) {
-                if (o2._source.priority != null) {
-                    return o1._source.priority > o2._source.priority ? -1 : o1._source.priority < o2._source.priority ? 1 : 0;
-                } else {
-                    return o1._source.priority > 0 ? -1 : 1;
-                }
-            } else if (o2._source.priority != null) {
-                return o2._source.priority > 0 ? 1 : -1;
-            } else if (o1.__label > o2.__label) {
-                return 1;
-            } else if (o1.__label < o2.__label) {
-                return -1;
-            } else {
-                return 0;
-            }
-        });
-    }
 });

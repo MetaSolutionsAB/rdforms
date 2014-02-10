@@ -12,8 +12,9 @@ var file = new(static.Server)(webroot, {
 http.createServer(function(req, res) {
     var pathname = decodeURI(url.parse(req.url).pathname);
     console.log("Serving : " +pathname);
-    if (req.method==="PUT") {
-        if (pathname.indexOf("/templates/") === 0 || pathname.indexOf("/local_templates/")) {
+    if (req.method === "PUT") {
+        if (pathname.indexOf("/templates/") === 0 || pathname.indexOf("/local_templates/") === 0) {
+            console.log("Serving a PUT");
             var body = "";
             req.on("data", function(data){ body += data; });
             req.on("end", function(){

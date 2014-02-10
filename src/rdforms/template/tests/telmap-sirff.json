@@ -1,0 +1,592 @@
+{
+	"label":{"en":"Telmap forms"},
+	"auxilliary":[
+		{
+			"id":"TEL-Map Project Aspects",
+			"type":"group",
+			"label":{"en":"Project Aspects"},
+			"description":{"en":""},
+			"cardinality": {"min": 1, "pref": 1, "max": 1},
+			"content":[
+				// Overview, incl. title, about, webpage, logo, ...
+				// additional profiles for: participant, comment (incl. typed comments)
+				{"id": "http://purl.org/dc/terms/title"},
+				{"id": "http://purl.org/telmap/isAbout"},
+				{"id": "http://purl.org/dc/elements/1.1/subject"},
+				{"id": "CORDIS"},
+				{"id": "Context"},
+				{"id": "Assumptions"},
+				{"id": "Goals"},
+				{"id": "Impact"},
+				{"id": "Approach"}
+			]
+		},
+		{	"id":"CORDIS",
+			"type":"group",
+			"label":{"en":"CORDIS"},
+			"cardinality": {"min": 1, "pref": 1, "max": 1},
+			"cls": ["rdformsexpandable"],
+			"content":[
+				{"id": "http://purl.org/telmap/cordis/title"},
+				{"id": "http://purl.org/telmap/cordis/abbreviation"},
+				{"id": "http://purl.org/telmap/cordis/abstract"},
+				{"id": "http://purl.org/telmap/cordis/contract"},
+				{"id": "http://purl.org/telmap/cordis/coordinator"},
+				{"id": "http://purl.org/telmap/cordis/partner"},
+				{"id": "http://purl.org/telmap/cordis/fundedBy"},
+				{"id": "http://purl.org/telmap/cordis/funding"},
+				{"id": "http://purl.org/telmap/cordis/fundingScheme"}
+			]
+		},
+		{
+			"id":"Context",
+			"type":"group",
+			"label":{"en":"Context"},
+			"description":{"en":"Project Context"},
+			"cardinality": {"min": 1, "pref": 0, "max": 1},
+			"cls": ["expandable"],
+			"content":[
+				{"id": "http://purl.org/telmap/stakeholder"},
+				{"id": "http://purl.org/telmap/supportedBy"},
+				{"id": "http://purl.org/telmap/contradictedBy"},
+				{"id": "http://purl.org/dc/terms/relation#Context"},
+				{"id": "http://purl.org/telmap/collaborator"},
+				{"id": "http://purl.org/telmap/predecessor"},
+				{"id": "http://purl.org/telmap/successor"}
+			]
+		},
+		{
+			"id":"Assumptions",
+			"type":"group",
+			"label":{"en":"Assumptions"},
+			"description":{"en":"Project Assumptions"},
+			"cardinality": {"min": 1, "pref": 0, "max": 1},
+			"cls": ["expandable"],
+			"content":[
+				{"id": "http://purl.org/dc/terms/relation#Assumptions"},
+				{"id": "http://purl.org/telmap/idea"},
+				{"id": "http://purl.org/telmap/innovation"},
+				{"id": "http://purl.org/telmap/influences#Assumptions"}
+			]
+		},
+		{
+			"id":"Goals",
+			"type":"group",
+			"label":{"en":"Goals"},
+			"description":{"en":"Project Goals"},
+			"cardinality": {"min": 1, "pref": 1, "max": 1},
+			"cls": ["expandable"],
+			"content":[
+				{"id": "http://purl.org/telmap/contributesTo#Goals"},
+				{"id": "http://purl.org/telmap/obstructedBy#Goals"},
+				{"id": "http://purl.org/telmap/influences#Goals"}
+			]
+		},
+		{
+			"id":"Impact",
+			"type":"group",
+			"label":{"en":"Impacts"},
+			"description":{"en":"Project Impact"},
+			"cardinality": {"min": 1, "pref": 1, "max": 1},
+			"cls": ["expandable"],
+			"content":[
+				{"id": "http://purl.org/telmap/outcome"},
+				{"id": "http://purl.org/telmap/impact"},
+				{"id": "http://purl.org/telmap/usedBy"},
+				{"id": "http://purl.org/telmap/influences#Impact"}
+			]
+		},
+		{
+			"id":"Approach",
+			"type":"group",
+			"label":{"en":"Approach"},
+			"description":{"en":"Project Approach"},
+			"cardinality": {"min": 1, "pref": 1, "max": 1},
+			"cls": ["expandable"],
+			"content":[
+				{"id": "http://purl.org/telmap/basedOn"},
+				{"id": "http://purl.org/telmap/method"},
+				{"id": "http://purl.org/telmap/uses#Approach"}
+			]
+		},
+	  	{
+	  		"id": "http://purl.org/telmap/usedBy", 
+	  		"property": "http://purl.org/telmap/usedBy", 
+	  		"label": {
+	  			"en": "used by"
+	  		}, 
+	  		"description": {
+	  			"en": ""
+	  		},
+			"lookupProtocol": "scam",
+	  		"type": "choice",
+			"nodetype": "URI"
+  		},
+	  	{
+	  		"id": "http://purl.org/telmap/collaborator", 
+	  		"property": "http://purl.org/telmap/collaborator", 
+	  		"label": {
+	  			"en": "Collaborator"
+	  		}, 
+			"lookupProtocol": "scam",
+	  		"type": "choice", 
+			"nodeType": "URI"
+  		},
+	  	{
+	  		"id": "http://purl.org/telmap/predecessor", 
+	  		"property": "http://purl.org/telmap/predecessor", 
+	  		"label": {
+	  			"en": "Predecessor"
+	  		}, 
+	  		"description": {
+	  			"en": ""
+	  		},
+			"lookupProtocol": "scam",
+	  		"type": "choice", 
+			"nodeType": "URI"
+  		},
+	  	{
+	  		"id": "http://purl.org/telmap/successor", 
+	  		"property": "http://purl.org/telmap/successor", 
+	  		"label": {
+	  			"en": "Successor"
+	  		}, 
+	  		"description": {
+	  			"en": ""
+	  		},
+			"lookupProtocol": "scam",
+	  		"type": "choice", 
+			"nodeType": "URI"
+  		},
+	  	{
+	  		"id": "http://purl.org/telmap/cordis/partner", 
+	  		"property": "http://purl.org/telmap/cordis/partner", 
+	  		"label": {
+	  			"en": "Partner"
+	  		},
+			"lookupProtocol": "scam",
+	  		"type": "choice", 
+			"nodeType": "URI"
+  		},
+	  	{
+	  		"id": "http://purl.org/telmap/cordis/coordinator",
+	  		"property": "http://purl.org/telmap/cordis/coordinator", 
+	  		"label": {
+	  			"en": "Coordinator"
+	  		},
+			"lookupProtocol": "scam",
+	  		"type": "choice", 
+			"nodeType": "URI"
+  		},
+  		{
+	  		"id": "http://purl.org/telmap/stakeholder", 
+	  		"property": "http://purl.org/telmap/stakeholder", 
+	  		"label": {
+	  			"en": "Stakeholder"
+	  		}, 
+	  		"description": {
+	  			"en": ""
+	  		},
+			"lookupProtocol": "scam",
+	  		"type": "choice", 
+			"nodeType": "URI"
+  		},
+		{
+	  		"id": "http://purl.org/telmap/cordis/fundedBy",
+	  		"property": "http://purl.org/telmap/cordis/fundedBy", 
+	  		"label": {
+	  			"en": "funded by"
+	  		},
+	  		"type": "choice", 
+			"nodeType": "URI",
+			"choices": [
+				{"value": "http://purl.org/telmap/Funding-EC-FP5", "label": {"en":"FP5"}},
+			 	{"value": "http://purl.org/telmap/Funding-EC-FP6", "label": {"en":"FP6"}},
+			 	{"value": "http://purl.org/telmap/Funding-EC-FP7", "label": {"en":"FP7"}},
+			 	{"value": "http://purl.org/telmap/Funding-EC-ICTPSP", "label": {"en":"ICT PSP (incl. eContentplus)"}},
+			 	{"value": "http://purl.org/telmap/Funding-EC-LifelongLearning", "label": {"en": "Lifelong Learning"}},
+			 	{"value": "http://purl.org/telmap/Funding-EC-Other", "label": {"en":"Other EC-funded"}}
+			]
+  		},
+  		{
+	  		"id": "http://purl.org/telmap/cordis/fundingScheme",
+	  		"property": "http://purl.org/telmap/cordis/fundingScheme", 
+	  		"label": {
+	  			"en": "Funding Scheme"
+	  		},
+	  		"type": "choice", 
+			"nodeType": "URI",
+			"choices": [
+				{"value": "http://purl.org/telmap/Funding-EC-NoE", "label": {"en": "Network of Excellence"}},
+			 	{"value": "http://purl.org/telmap/Funding-EC-CP", "label": {"en": "Collaborative Project"}},
+			 	{"value": "http://purl.org/telmap/Funding-EC-CSA", "label": {"en": "Coordination and Support Action"}},
+			 	{"value": "http://purl.org/telmap/Funding-EC-Individual", "label": {"en": "Individual Project"}}
+			]
+  		},
+  		{
+	  		"id": "http://purl.org/telmap/cordis/funding",
+	  		"property": "http://purl.org/telmap/cordis/funding", 
+	  		"label": {
+	  			"en": "Funding"
+	  		}, 
+	  		"type": "text", 
+			"nodeType": "LITERAL"
+  		},
+	  	{
+	  		"id": "http://purl.org/telmap/isAbout",
+			"property": "http://purl.org/telmap/isAbout",
+			"label": {
+	  			"en": "is about"
+	  		},
+			"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://purl.org/telmap/Context"},
+	  		"description": {
+	  			"en": ""
+	  		}, 
+	  		"cardinality": {"pref": 1},
+	  		"type": "group", 
+	  		"content": [
+				{"id": "http://www.w3.org/TR/rdf-schema/seeAlso"},
+				{"id": "http://purl.org/dc/terms/description"}
+	  		]
+		},
+	  	{
+	  		"id": "http://purl.org/telmap/supportedBy",
+			"property": "http://purl.org/telmap/supportedBy",
+			"label": {
+	  			"en": "supported by"
+	  		},
+			"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://purl.org/telmap/Context"},
+			"cardinality": {"pref": 1},
+	  		"description": {
+	  			"en": ""
+	  		},
+	  		"type": "group", 
+	  		"content": [
+				{"id": "http://www.w3.org/TR/rdf-schema/seeAlso"},
+				{"id": "http://purl.org/dc/terms/description"}
+	  		]
+		},
+		{
+	  		"id": "http://purl.org/telmap/contradictedBy",
+			"property": "http://purl.org/telmap/contradictedBy",
+			"label": {
+	  			"en": "contradicted by"
+	  		},
+			"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://purl.org/telmap/Context"},
+			"cardinality": {"pref": 1},
+	  		"description": {
+	  			"en": ""
+	  		}, 
+	  		"type": "group", 
+	  		"content": [
+				{"id": "http://www.w3.org/TR/rdf-schema/seeAlso"},
+				{"id": "http://purl.org/dc/terms/description"}
+	  		]
+		},
+		{
+	  		"id": "http://purl.org/dc/terms/relation#Context",
+	  		"property": "http://purl.org/dc/terms/relation",
+			"label": {
+	  			"en": "is related to"
+	  		},
+			"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://purl.org/telmap/Context"},
+			"cardinality": {"pref": 1},
+	  		"description": {
+	  			"en": ""
+	  		}, 
+	  		"type": "group", 
+	  		"content": [
+				{"id": "http://www.w3.org/TR/rdf-schema/seeAlso"},
+				{"id": "http://purl.org/dc/terms/description"}
+	  		]
+		},
+		{
+	  		"id": "http://purl.org/dc/terms/relation#Assumptions",
+	  		"property": "http://purl.org/dc/terms/relation",
+			"label": {
+	  			"en": "is related to"
+	  		},
+			"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://purl.org/telmap/Assumptions"},
+			"cardinality": {"pref": 1},
+	  		"description": {
+	  			"en": ""
+	  		}, 
+	  		"type": "group", 
+	  		"content": [
+				{"id": "http://www.w3.org/TR/rdf-schema/seeAlso"},
+				{"id": "http://purl.org/dc/terms/description"}
+	  		]
+		},
+	  	{
+	  		"id": "http://www.w3.org/TR/rdf-schema/seeAlso", 
+	  		"property": "http://www.w3.org/TR/rdf-schema/seeAlso", 
+	  		"label": {
+	  			"en": "Link"
+	  		}, 
+	  		"description": {
+	  			"en": ""
+	  		}, 
+	  		"type": "text",
+			"nodeType": "URI"
+  		},
+  		{
+	  		"id": "http://purl.org/dc/terms/title", 
+	  		"property": "http://purl.org/dc/terms/title", 
+	  		"label": {
+	  			"en": "Title"
+	  		},
+	  		"type": "text",
+			"nodeType": "LITERAL"
+  		},
+		{
+	  		"id": "http://purl.org/telmap/cordis/title",
+			"cardinality": {"min": 0, "pref": 1}, 
+	  		"property": "http://purl.org/telmap/cordis/title", 
+	  		"label": {
+	  			"en": "Title"
+	  		},
+	  		"type": "text",
+			"nodetype": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/telmap/cordis/abbreviation", 
+	  		"property": "http://purl.org/telmap/cordis/abbreviation", 
+	  		"label": {
+	  			"en": "Abbreviation"
+	  		},
+	  		"type": "text",
+			"nodeType": "LITERAL"
+  		},
+		{
+	  		"id": "http://purl.org/telmap/cordis/abstract", 
+	  		"property": "http://purl.org/telmap/cordis/abstract",
+	  		"cls": ["multiline"], 
+	  		"label": {
+	  			"en": "Abstract"
+	  		},
+	  		"type": "text",
+			"nodeType": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/telmap/cordis/contract", 
+	  		"property": "http://purl.org/telmap/cordis/contract",
+	  		"label": {
+	  			"en": "Contract Number"
+	  		},
+	  		"type": "text",
+			"nodeType": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/dc/elements/1.1/subject", 
+	  		"property": "http://purl.org/dc/elements/1.1/subject", 
+	  		"label": {
+	  			"en": "Keyword"
+	  		},
+	  		"type": "text",
+			"nodeType": "LITERAL"
+  		},
+	  	{
+	  		"id": "http://purl.org/dc/terms/description", 
+	  		"property": "http://purl.org/dc/terms/description", 
+			"cls": ["multiline"],
+	  		"label": {
+	  			"en": "Description"
+	  		}, 
+	  		"type": "text", 
+			"nodeType": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/telmap/idea", 
+	  		"property": "http://purl.org/telmap/idea", 
+	  		"label": {
+	  			"en": "Idea"
+	  		}, 
+	  		"type": "text", 
+			"nodeType": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/telmap/innovation", 
+	  		"property": "http://purl.org/telmap/innovation", 
+	  		"label": {
+	  			"en": "Innovation"
+	  		}, 
+	  		"type": "text", 
+			"nodeType": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/telmap/influences#Assumptions",
+	  		"property": "http://purl.org/telmap/influences",
+			"label": {
+	  			"en": "influences"
+	  		},
+			"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://purl.org/telmap/Assumptions"},
+			"cardinality": {"pref": 1},
+	  		"description": {
+	  			"en": ""
+	  		}, 
+	  		"type": "group", 
+	  		"content": [
+				{"id": "http://www.w3.org/TR/rdf-schema/seeAlso"},
+				{"id": "http://purl.org/dc/terms/description"}
+	  		]
+		},
+  		{
+	  		"id": "http://purl.org/telmap/contributesTo#Goals",
+	  		"property": "http://purl.org/telmap/contributesTo",
+			"label": {
+	  			"en": "contributes to"
+	  		},
+			"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://purl.org/telmap/Goals"},
+			"cardinality": {"pref": 1},
+	  		"description": {
+	  			"en": ""
+	  		}, 
+	  		"type": "group", 
+	  		"content": [
+				{"id": "http://www.w3.org/TR/rdf-schema/seeAlso"},
+				{"id": "http://purl.org/dc/terms/description"}
+	  		]
+		},
+  		{
+	  		"id": "http://purl.org/telmap/obstructedBy#Goals",
+	  		"property": "http://purl.org/telmap/obstructedBy",
+			"label": {
+	  			"en": "obstructed by"
+	  		},
+			"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://purl.org/telmap/Goals"},
+			"cardinality": {"pref": 1},
+	  		"description": {
+	  			"en": ""
+	  		}, 
+	  		"type": "group", 
+	  		"content": [
+				{"id": "http://www.w3.org/TR/rdf-schema/seeAlso"},
+				{"id": "http://purl.org/dc/terms/description"}
+	  		]
+		},
+  		{
+	  		"id": "http://purl.org/telmap/influences#Goals",
+	  		"property": "http://purl.org/telmap/influences",
+			"label": {
+	  			"en": "influences"
+	  		},
+			"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://purl.org/telmap/Goals"},
+			"cardinality": {"pref": 1},
+	  		"description": {
+	  			"en": ""
+	  		}, 
+	  		"type": "group", 
+	  		"content": [
+				{"id": "http://www.w3.org/TR/rdf-schema/seeAlso"},
+				{"id": "http://purl.org/dc/terms/description"}
+	  		]
+		},
+  		{
+	  		"id": "http://purl.org/telmap/influences#Impact",
+	  		"property": "http://purl.org/telmap/influences",
+			"label": {
+	  			"en": "influences"
+	  		},
+			"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://purl.org/telmap/Impact"},
+			"cardinality": {"pref": 1},
+	  		"description": {
+	  			"en": ""
+	  		}, 
+	  		"type": "group", 
+	  		"content": [
+				{"id": "http://www.w3.org/TR/rdf-schema/seeAlso"},
+				{"id": "http://purl.org/dc/terms/description"}
+	  		]
+		},
+  		{
+	  		"id": "http://purl.org/telmap/outcome", 
+	  		"property": "http://purl.org/telmap/outcome", 
+	  		"label": {
+	  			"en": "Outcome"
+	  		}, 
+	  		"description": {
+	  			"en": ""
+	  		},
+	  		"type": "text", 
+			"nodeType": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/telmap/impact", 
+	  		"property": "http://purl.org/telmap/impact", 
+	  		"label": {
+	  			"en": "Impact"
+	  		}, 
+	  		"description": {
+	  			"en": ""
+	  		},
+	  		"type": "text", 
+			"nodeType": "LITERAL"
+  		},
+		{
+	  		"id": "http://purl.org/telmap/usedBy",
+	  		"property": "http://purl.org/telmap/usedBy", 
+	  		"label": {
+	  			"en": "used by"
+	  		}, 
+	  		"description": {
+	  			"en": ""
+	  		},
+	  		"type": "choice", 
+			"nodeType": "URI"
+  		},
+		{
+	  		"id": "http://purl.org/telmap/basedOn",
+	  		"property": "http://purl.org/telmap/basedOn", 
+	  		"label": {
+	  			"en": "based on"
+	  		},
+	  		"cls": ["multiline"],
+	  		"type": "text", 
+			"nodeType": "LITERAL"
+  		},
+  		{
+	  		"id": "http://purl.org/telmap/uses#Approach",
+	  		"property": "http://purl.org/telmap/uses",
+			"label": {
+	  			"en": "uses"
+	  		},
+			"constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://purl.org/telmap/Approach"},
+			"cardinality": {"pref": 1},
+	  		"description": {
+	  			"en": ""
+	  		}, 
+	  		"type": "group", 
+	  		"content": [
+				{"id": "http://www.w3.org/TR/rdf-schema/seeAlso"},
+				{"id": "http://purl.org/dc/terms/description"}
+	  		]
+		},
+  		{
+	  		"id": "http://purl.org/telmap/method",
+	  		"property": "http://purl.org/telmap/method",
+	  		"label": {
+	  			"en": "Method"
+	  		},
+	  		"type": "choice",
+			"nodeType": "URI",
+			"choices": [
+				{"value": "http://purl.org/telmap/Method-ActionResearch", "label": {"en": "Action research"}},			 	
+				{"value": "http://purl.org/telmap/Method-CaseStudy", "label": {"en": "Case study"}},
+				{"value": "http://purl.org/telmap/Method-FocusGroup", "label": {"en": "Focus group"}},
+			 	{"value": "http://purl.org/telmap/Method-GroundedTheory", "label": {"en": "Grounded theory"}},
+				{"value": "http://purl.org/telmap/Method-Interview", "label": {"en": "Interview"}},
+				{"value": "http://purl.org/telmap/Method-LabExperiments", "label": {"en": "Lab experiments"}},
+			 	{"value": "http://purl.org/telmap/Method-ParticipativeObservation", "label": {"en": "Participative observation"}},
+			 	{"value": "http://purl.org/telmap/Method-PhenomenologicalApproach", "label": {"en": "Phenomenological approach"}},
+			 	{"value": "http://purl.org/telmap/Method-Prototyping", "label": {"en": "Prototyping"}},
+			 	{"value": "http://purl.org/telmap/Method-Quantitative", "label": {"en": "Quantitative"}},
+			 	{"value": "http://purl.org/telmap/Method-Qualitative", "label": {"en": "Qualitative"}},
+			 	{"value": "http://purl.org/telmap/Method-ResponsiveEvaluationModel", "label": {"en": "Responsive evaluation model"}},
+			 	{"value": "http://purl.org/telmap/Method-Survey", "label": {"en": "Survey"}},
+			 	{"value": "http://purl.org/telmap/Method-StatisticalAnalysis", "label": {"en": "Statistical analysis"}},
+			 	{"value": "http://purl.org/telmap/Method-SocialNetworkAnalysis", "label": {"en": "Social network analysis"}},
+			 	{"value": "http://purl.org/telmap/Method-UsabilityStudy", "label": {"en": "Usability study"}}
+			]
+  		}
+  ]
+}

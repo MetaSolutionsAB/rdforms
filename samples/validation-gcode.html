@@ -21,9 +21,9 @@
 	</style>
     
 	<script type="text/javascript">
-	  require(['rforms/rforms'], function() {
-	     require(['rforms/template/ItemStore', 
-	              'rforms/apps/Validator'
+	  require(['./rforms'], function() {
+	     require(['./template/ItemStore',
+	              './apps/Validator'
                 ], function(ItemStore, Validator) {
 	             var itemStore = new rforms.template.ItemStore();
 	 	     itemStore.createTemplate(testdata.templateSrc);

@@ -1,0 +1,35 @@
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+	<script type="text/javascript" src="../../../../lib/dojo/dojo/dojo.js.uncompressed.js"
+		djConfig="isDebug: true, debugAtAllCosts: true, parseOnLoad: false, usePlainJson: true"></script>
+	<script type="text/javascript">
+		dojo.registerModulePath("rdforms","../../../src/rdforms");
+		dojo.require("rdforms.template.ItemStore");
+		dojo.require("rdforms.template.tests.data");
+		dojo.addOnLoad(function() {
+			debugger;
+			var doh = {};
+			doh.t = function(val) {
+				console.log(val);
+			}
+
+			//Paste code from the tests below (within start and end mark) to be able to debug them,
+			//remove any use of doh to allow independent debugging.
+			//-------------------------START----------------------------------------
+		  	  	var is = new rdforms.template.ItemStore();
+	var t = is.createTemplate(rdforms.template.tests.template1);
+	var children = t.getChildren();
+	doh.t(children.length === 4);
+	children[3].getDynamicChoices(function(choices) {
+		console.log(choices.length === 2);
+});
+			
+			//-------------------------END----------------------------------------
+			console.log("A sensless log entry, to be able to step over last code row in firebug above.")
+		});
+	</script>
+  </body>
+</html>

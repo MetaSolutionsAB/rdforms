@@ -19,12 +19,14 @@
 		@import "http://rforms.googlecode.com/svn/trunk/src/rforms/view/resources/rforms.css";
 	</style>
 	<script type="text/javascript">
-      	  require(['rdfjson/Graph',             //Rdfjson Graph API
-	           'rforms/template/ItemStore', //Stores all the form templates
-	           'rforms/model/Engine',       //The engine for matching RDF to template
-                   'rforms/view/Editor',        //The editor User interface
-                   'dojo/domReady!'             //Wait until the dom is ready.
-	       ], function(Graph, ItemStore, Engine, Editor) {
+        //TODO: Change to rdforms when there is a new hosted version.
+        require([
+              'rdfjson/Graph',             //Rdfjson Graph API
+              'rforms/template/ItemStore', //Stores all the form templates
+              'rforms/model/Engine',       //The engine for matching RDF to template
+              'rforms/view/Editor',        //The editor User interface
+              'dojo/domReady!'             //Wait until the dom is ready.
+          ], function(Graph, ItemStore, Engine, Editor) {
 	                var graph = new Graph(testdata.rdfSrc);
 			var itemStore = new ItemStore();
 	 		var template = itemStore.createTemplate(testdata.templateSrc);

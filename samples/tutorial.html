@@ -8,14 +8,14 @@
           var dojoConfig = {
             async:true,
               packages: [
-	         { name: "rforms", location: "../../../src/rforms" },
+	         { name: "rdforms", location: "../../../src/rdforms" },
 	         { name: "rdfjson", location: "../../../src/rdfjson" }]
           };
         </script>
         <script src="../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
 	<style>
 		@import "../lib/dojo/dijit/themes/tundra/tundra.css"; /* required when dijit */	
-		@import "../src/rforms/view/resources/rforms.css";
+		@import "../src/rdforms/view/resources/rdforms.css";
 	</style>
 	<script type="text/javascript">
 
@@ -72,7 +72,7 @@
 			    }
 			};
 
-		require(['rforms/apps/Experiment',    // The Experiment UI. 
+		require(['rdforms/apps/Experiment',    // The Experiment UI.
 		         'dojo/domReady!'             // Wait until the dom is ready.
 		        ], function(Experiment) {
 		            var e = new Experiment({templateObj: templateSrc, graphObj: rdf, hideTemplate: true}, "container");

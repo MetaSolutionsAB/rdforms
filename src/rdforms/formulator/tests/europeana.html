@@ -1,0 +1,53 @@
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body class="tundra">
+	<script type="text/javascript" src="../../../../lib/dojo/dojo/dojo.js.uncompressed.js"
+		djConfig="isDebug: true, debugAtAllCosts: true, parseOnLoad: false, usePlainJson: true"></script>
+	<style>
+		@import "../../../../lib/dojo/dijit/themes/tundra/tundra.css"; /* required when dijit */	
+		@import "../../view/resources/rdforms.css";
+		html, body {
+			height: 100%;
+			width: 100%;
+			padding: 0px;
+			margin: 0px;
+		}
+	</style>
+	<script type="text/javascript">
+		dojo.registerModulePath("rdforms","../../../src/rdforms");
+		dojo.registerModulePath("rdfjson","../../../src/rdfjson");
+		dojo.require("rdforms.template.ItemStore");
+		dojo.require("rdforms.template.Converter");
+		dojo.require("rdforms.template.tests.data");
+		dojo.require("rdforms.formulator.StoreManager");
+		dojo.require("rdfjson.Graph");
+		dojo.require("rdfjson.tests.data");
+		dojo.require("rdforms.model.Engine");
+		dojo.require("rdforms.view.Editor");
+		dojo.addOnLoad(function() {
+			var itemStore = new rdforms.template.ItemStore();
+			var xhrArgs = {
+				url: "../../template/tests/europeana-sirff.json",
+				sync: true,
+				handleAs: "json-comment-optional"
+			};
+			var req = dojo.xhrGet(xhrArgs);
+				req.addCallback(function(source) {
+					itemStore.createTemplate(source)
+					dojo.xhrGet({
+					url: "europeana-test.json",
+					sync: true,
+					handleAs: "json-comment-optional",
+					load: function(data) {
+						var storeManager = new rforms.formulator.StoreManager({itemStore: itemStore, data: data, resourceUri: "http://www.mapfre.com/documentacion/publico/i18n/catalogo_imagenes/imagen_id.cmd?idImagen=1024840"}, "_node");
+						storeManager.startup();
+					}
+				});
+			});
+		});
+	</script>
+	<div id="_node"></div>
+  </body>
+</html>

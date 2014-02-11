@@ -19,8 +19,8 @@
      </style>
 
      <script type="text/javascript">
-       	require(['rforms/rforms'], function() {
-      	  require(['rforms/apps/Experiment'], function(Experiment) {
+       	require(['./rforms'], function() {
+      	  require(['./apps/Experiment'], function(Experiment) {
             testdata.templateSrc.root.content[1].cls = ["rformsTable"];
 	    var e = new Experiment({templateObj: testdata.templateSrc, graphObj: testdata.rdfSrc}, "container");
             e.startup();

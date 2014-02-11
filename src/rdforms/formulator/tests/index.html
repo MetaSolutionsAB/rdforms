@@ -1,0 +1,52 @@
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body class="tundra">
+    <script>
+    var dojoConfig = {
+	async:false,
+	packages: [
+	    {
+		name: "rforms",
+		location: "../../../src/rforms"
+	    },
+	    {
+		name: "rdfjson",
+		location: "../../../src/rdfjson"
+	    }
+	]
+    };
+</script>
+    <script src="../../../../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
+
+	<!--script type="text/javascript" src="../../../../lib/dojo/dojo/dojo.js.uncompressed.js"
+		djConfig="isDebug: true, debugAtAllCosts: true, parseOnLoad: false, usePlainJson: true"></script-->
+	<style>
+		@import "../../../../lib/dojo/dijit/themes/tundra/tundra.css"; /* required when dijit */	
+		@import "../../view/resources/rdforms.css";
+		html, body {
+			height: 100%;
+			width: 100%;
+			padding: 0px;
+			margin: 0px;
+		}
+	</style>
+	<script type="text/javascript">
+        require([
+            '../../template/ItemStore',
+            '../../template/Converter',
+            '../StoreManager',
+            'dojo/domReady!'],
+		   function(ItemStore, Converter, StoreManager) {
+		       var itemStore = new ItemStore();
+		       var converter = new Converter(itemStore);
+	 		converter.convertExhibit(dojo.moduleUrl("rforms.template.tests", "foaf-exhibit.json"), function(results) {
+				var storeManager = new StoreManager({itemStore: itemStore}, "_node");
+				storeManager.startup();
+			});
+		   });
+	</script>
+	<div id="_node"></div>
+  </body>
+</html>

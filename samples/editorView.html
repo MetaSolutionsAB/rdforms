@@ -8,7 +8,7 @@
         var dojoConfig = {
           async:true,
            packages: [
-	     { name: "rforms", location: "../../../src/rforms" },
+	     { name: "rdforms", location: "../../../src/rdforms" },
 	     { name: "rdfjson", location: "../../../src/rdfjson" }]
         };
      </script>
@@ -16,14 +16,15 @@
      <script type="text/javascript" src="testdata.js"></script>
 	<style>
 		@import "../lib/dojo/dijit/themes/tundra/tundra.css"; /* required when dijit */	
-		@import "../src/rforms/view/resources/rforms.css";
+		@import "../src/rdforms/view/resources/rdforms.css";
 	</style>
 	<script type="text/javascript">
-      	  require(['rdfjson/Graph',             //Rdfjson Graph API
-	           'rforms/template/ItemStore', //Stores all the form templates
-	           'rforms/model/Engine',       //The engine for matching RDF to template
-                   'rforms/view/Editor',        //The editor User interface
-                   'dojo/domReady!'             //Wait until the dom is ready.
+      	  require([
+              'rdfjson/Graph',             //Rdfjson Graph API
+              'rdforms/template/ItemStore', //Stores all the form templates
+              'rdforms/model/Engine',       //The engine for matching RDF to template
+              'rdforms/view/Editor',        //The editor User interface
+              'dojo/domReady!'             //Wait until the dom is ready.
 	       ], function(Graph, ItemStore, Engine, Editor) {
 	                var graph = new Graph(testdata.rdfSrc);
 			var itemStore = new ItemStore();

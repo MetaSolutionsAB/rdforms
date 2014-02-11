@@ -1,0 +1,37 @@
+<div>
+    <div data-dojo-type="dijit/layout/BorderContainer" data-dojo-attach-point="_bcDijit" style="height: 100%">
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-attach-point="_controlDijit" data-dojo-props="region: 'top', splitter: true" style="height: 25px">
+            <div class="formulatorTable">
+                <div class="row"><label for="${id}_inline">Inline choices: </label><div><div>
+                    <div data-dojo-attach-point="_inlineDijit" id="${id}_inline" data-dojo-type="dijit/form/CheckBox" data-dojo-attach-event="onChange: _changeInline"></div>
+                </div></div></div>
+                <div class="row dynamic"><label for="${id}_ontology">Ontology URL:</label><div><div id="${id}_ontology" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_ontologyDijit" data-dojo-attach-event="onChange: _changeOntologyUrl" data-dojo-props="intermediateChanges: true"></div></div></div>
+                <div class="row dynamic"><label for="${id}_hproperty">Hierarchy property:</label><div><div id="${id}_hproperty" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_hpDijit" data-dojo-attach-event="onChange: _changeHProperty" data-dojo-props="intermediateChanges: true"></div></div></div>
+                <div class="row dynamic"><label for="${id}_hpinv">is inverted: </label><div><div>
+                    <div data-dojo-attach-point="_hpinvDijit" id="${id}_hpinv" data-dojo-type="dijit/form/CheckBox" data-dojo-attach-event="onChange: _changeHPI"></div>
+                </div></div></div>
+                <div class="row dynamic"><label for="${id}_pproperty">Parent property:</label><div><div id="${id}_pproperty" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_ppDijit" data-dojo-attach-event="onChange: _changePProperty" data-dojo-props="intermediateChanges: true"></div></div></div>
+                <div class="row dynamic"><label for="${id}_ppinv">is inverted: </label><div><div>
+                    <div data-dojo-attach-point="_ppinvDijit" id="${id}_ppinv" data-dojo-type="dijit/form/CheckBox" data-dojo-attach-event="onChange: _changePPI"></div>
+                </div></div></div>
+            </div>
+        </div>
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center'">
+            <div data-dojo-attach-point="_treeNode"></div>
+        </div>
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'bottom', splitter: true" style="height: 35%">
+            <div class="formulatorTable">
+                <div class="row"><label for="${id}_value">Value:</label><div><div id="${id}_value" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-attach-point="_valueDijit" data-dojo-attach-event="onChange: _changeValue" data-dojo-props="intermediateChanges: true, invalidMessage: 'Value must be unique.'"></div></div></div>
+                <div class="row"><label>Label: <span data-dojo-attach-point="_addLabel" class="addButton">+</span></label><div>
+                    <div data-dojo-attach-point="_labelLangString" data-dojo-type="rdforms/formulator/LangString"></div>
+                </div></div>
+                <div class="row"><label>Description: <span data-dojo-attach-point="_addDesc" class="addButton">+</span></label><div>
+                    <div data-dojo-attach-point="_descLangString" data-dojo-type="rdforms/formulator/LangString" data-dojo-props="multiline: true"></div>
+                </div></div>
+                <div class="row"><label>Selectable: </label><div><div>
+                    <div data-dojo-attach-point="_selectable" data-dojo-type="dijit/form/CheckBox" data-dojo-attach-event="onChange: _changeSelectable"></div>
+                </div></div></div>
+            </div>
+        </div>
+    </div>
+</div>

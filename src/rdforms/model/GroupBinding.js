@@ -190,7 +190,7 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 	},
 	remove: function() {
 		this._oneValidChild = false;
-		this.updateAssertions();
+        this.setAncestorValid(false);
 		if (this._parent !== undefined) {
 			this._parent.removeChildBinding(this);
 		}
@@ -222,6 +222,9 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 		dojo.forEach(this._constraints, function(constraintStmt) {
 			constraintStmt.setAsserted(assert);
 		});
+        dojo.forEach(this.getChildBindings(), function(binding) {
+            binding.updateAssertions();
+        })
 	},
 
 	//===================================================

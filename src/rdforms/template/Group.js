@@ -3,7 +3,7 @@ define(["dojo/_base/declare", "./Item"], function(declare, Item) {
 
     var sortItems = function(items) {
         dojo.forEach(items, function(item) {
-            item.__label = item.getLabel().toLowerCase();
+            item.__label = (item.getLabel() || "").toLowerCase();
         });
         items.sort(function(o1, o2) {
             if (o1._source.priority != null) {

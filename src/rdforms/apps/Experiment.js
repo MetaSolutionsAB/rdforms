@@ -13,8 +13,9 @@ define(["dojo/_base/declare",
 	"../template/ItemStore",
 	"../view/Editor",
 	"../view/Presenter",
+    "./RDFView",
 	"dojo/text!./ExperimentTemplate.html"
-], function(declare, lang, topic, construct, json, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin, TabContainer, Graph, Engine, ItemStore, Editor, Presenter, template) {
+], function(declare, lang, topic, construct, json, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin, TabContainer, Graph, Engine, ItemStore, Editor, Presenter, RDFView, template) {
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
 	//===================================================
@@ -62,18 +63,18 @@ define(["dojo/_base/declare",
 	// Private methods
 	//===================================================	
 	_selectChild: function(child) {
-	    this._updateGraph();
-	    this._updateTemplate();
-	    if(child === this._rdfTab) {
-		this._initRDF();
-		this._graphInvalid = true;
-	    } else if(child === this._templateTab) {
-		this._templateInvalid = true;
-	    } else if (child === this._editorTab) {
-		this._initEditor();
-	    } else if (child === this._presenterTab) {
-		this._initPresenter();
-	    }
+        this._updateGraph();
+        this._updateTemplate();
+        if(child === this._rdfTab) {
+            this._rdfTab.setGraph(this._graph);
+            this._graphInvalid = true;
+        } else if(child === this._templateTab) {
+            this._templateInvalid = true;
+        } else if (child === this._editorTab) {
+            this._initEditor();
+        } else if (child === this._presenterTab) {
+            this._initPresenter();
+        }
 	},
 	_updateTemplate: function() {
 		if (this._templateInvalid) {
@@ -88,7 +89,7 @@ define(["dojo/_base/declare",
 	_updateGraph: function() {
 		if (this._graphInvalid) {
 			try {
-				this._graph = new Graph(json.parse(this._rdfView.get("value")));
+				this._graph = this._rdfTab.getGraph();
 				this._graphInvalid = false;
 			} catch (e) {
 				alert("Error in rdf.");
@@ -111,7 +112,6 @@ define(["dojo/_base/declare",
 	},
 		
 	_initRDF: function() {
-	    this._rdfView.set("value", json.stringify(this._graph.exportRDFJSON(), true, "  "));
 	}
     });
 });

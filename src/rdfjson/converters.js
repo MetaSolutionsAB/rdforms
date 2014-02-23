@@ -117,10 +117,14 @@ define([
     exports.rdfjson2rdfxml = function (graph) {
         graph = graph instanceof Graph ? graph : new Graph(graph);
         var nsUsed = [], s, p, nsp, o, props, objs, i, g = graph._graph || graph; //just in case a Graph is provided.
+        var nsAdded = {};
         var nsify = function (prop) {
             for (var ns in nss) {
                 if (nss.hasOwnProperty(ns) && prop.indexOf(nss[ns]) === 0) {
-                    nsUsed.push(ns);
+                    if (!nsAdded[ns]) {
+                        nsUsed.push(ns);
+                        nsAdded[ns] = true;
+                    }
                     return ns + ":" + prop.substring(nss[ns].length);
                 }
             }
@@ -164,7 +168,7 @@ define([
                                 case "uri":
                                     strs.push(sp2 + '<' + nsp + ' rdf:resource="' + o.value + '"/>\n');
                                     break;
-                                case "blank":
+                                case "bnode":
                                     strs.push(sp2 + '<' + nsp + ' rdf:nodeID="' + o.value + '"/>\n');
                                     break;
                             }

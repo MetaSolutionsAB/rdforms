@@ -110,7 +110,7 @@ define(["dojo/_base/declare",
 			var lang = construct.create("div", {"innerHTML": binding.getLanguage()}, fieldDiv);
 			domClass.add(lang, "rformsLanguage");
 		}
-		construct.create("div", {"innerHTML": binding.getValue().replace(/(\r\n|\r|\n)/g, "<br/>")}, fieldDiv);
+		construct.create("div", {"innerHTML": binding.getValue().replace(/(\r\n|\r|\n)/g, "<br/>").replace("<", "&lt;").replace(">", "&gt;")}, fieldDiv);
 	},
 	addChoice: function(fieldDiv, binding) {
 		var choice = binding.getChoice();

@@ -374,9 +374,7 @@
           "id": "dcat:byteSize"
         }
       ],
-      "styles": [
-        "expandable"
-      ]
+      "styles": []
     },
     {
       "type": "group",

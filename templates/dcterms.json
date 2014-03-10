@@ -161,7 +161,7 @@
         "en": "An unambiguous reference to the resource within a given context."
       },
       "type": "text",
-      "nodetype": "LANGUAGE_LITERAL",
+      "nodetype": "ONLY_LITERAL",
       "cardinality": {
         "min": 0,
         "pref": 1
@@ -191,9 +191,1116 @@
       "constraints": {
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/LinguisticSystem"
       },
-      "type": "group",
+      "type": "choice",
       "automatic": true,
-      "content": []
+      "content": [],
+      "choices": [
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ab",
+          "label": {
+            "en": "Abkhazian"
+          }
+        },
+        {
+          "Value": "http://id.loc.gov/vocabulary/iso639-1/aa",
+          "label": {
+            "en": "Afar"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/af",
+          "label": {
+            "en": "Afrikaans"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ak",
+          "label": {
+            "en": "Akan"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sq",
+          "label": {
+            "en": "Albanian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/am",
+          "label": {
+            "en": "Amharic"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ar",
+          "label": {
+            "en": "Arabic"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/an",
+          "label": {
+            "en": "Aragonese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/hy",
+          "label": {
+            "en": "Armenian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/as",
+          "label": {
+            "en": "Assamese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/av",
+          "label": {
+            "en": "Avaric"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ae",
+          "label": {
+            "en": "Avestan"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ay",
+          "label": {
+            "en": "Aymara"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/az",
+          "label": {
+            "en": "Azerbaijani"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/bm",
+          "label": {
+            "en": "Bambara"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ba",
+          "label": {
+            "en": "Bashkir"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/eu",
+          "label": {
+            "en": "Basque"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/be",
+          "label": {
+            "en": "Belarusian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/bn",
+          "label": {
+            "en": "Bengali"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/bh",
+          "label": {
+            "en": "Bihari languages"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/bi",
+          "label": {
+            "en": "Bislama"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/nb",
+          "label": {
+            "en": "Bokmål, Norwegian |  Norwegian Bokmål"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/bs",
+          "label": {
+            "en": "Bosnian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/br",
+          "label": {
+            "en": "Breton"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/bg",
+          "label": {
+            "en": "Bulgarian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/my",
+          "label": {
+            "en": "Burmese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ca",
+          "label": {
+            "en": "Catalan |  Valencian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/km",
+          "label": {
+            "en": "Central Khmer"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ch",
+          "label": {
+            "en": "Chamorro"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ce",
+          "label": {
+            "en": "Chechen"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ny",
+          "label": {
+            "en": "Chichewa |  Chewa |  Nyanja"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/zh",
+          "label": {
+            "en": "Chinese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/cu",
+          "label": {
+            "en": "Church Slavic |  Old Slavonic |  Church Slavonic |  Old Bulgarian |  Old Church Slavonic"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/cv",
+          "label": {
+            "en": "Chuvash"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kw",
+          "label": {
+            "en": "Cornish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/co",
+          "label": {
+            "en": "Corsican"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/cr",
+          "label": {
+            "en": "Cree"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/hr",
+          "label": {
+            "en": "Croatian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/cs",
+          "label": {
+            "en": "Czech"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/da",
+          "label": {
+            "en": "Danish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/dv",
+          "label": {
+            "en": "Divehi |  Dhivehi |  Maldivian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/nl",
+          "label": {
+            "en": "Dutch |  Flemish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/dz",
+          "label": {
+            "en": "Dzongkha"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/en",
+          "label": {
+            "en": "English"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/eo",
+          "label": {
+            "en": "Esperanto"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/et",
+          "label": {
+            "en": "Estonian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ee",
+          "label": {
+            "en": "Ewe"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/fo",
+          "label": {
+            "en": "Faroese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/fj",
+          "label": {
+            "en": "Fijian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/fi",
+          "label": {
+            "en": "Finnish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/fr",
+          "label": {
+            "en": "French"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ff",
+          "label": {
+            "en": "Fulah"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/gd",
+          "label": {
+            "en": "Gaelic |  Scottish Gaelic"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/gl",
+          "label": {
+            "en": "Galician"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/lg",
+          "label": {
+            "en": "Ganda"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ka",
+          "label": {
+            "en": "Georgian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/de",
+          "label": {
+            "en": "German"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/el",
+          "label": {
+            "en": "Greek, Modern (1453-)"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/gn",
+          "label": {
+            "en": "Guarani"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/gu",
+          "label": {
+            "en": "Gujarati"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ht",
+          "label": {
+            "en": "Haitian |  Haitian Creole"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ha",
+          "label": {
+            "en": "Hausa"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/he",
+          "label": {
+            "en": "Hebrew"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/hz",
+          "label": {
+            "en": "Herero"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/hi",
+          "label": {
+            "en": "Hindi"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ho",
+          "label": {
+            "en": "Hiri Motu"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/hu",
+          "label": {
+            "en": "Hungarian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/is",
+          "label": {
+            "en": "Icelandic"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/io",
+          "label": {
+            "en": "Ido"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ig",
+          "label": {
+            "en": "Igbo"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/id",
+          "label": {
+            "en": "Indonesian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ia",
+          "label": {
+            "en": "Interlingua (International Auxiliary Language Association)"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ie",
+          "label": {
+            "en": "Interlingue |  Occidental"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/iu",
+          "label": {
+            "en": "Inuktitut"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ik",
+          "label": {
+            "en": "Inupiaq"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ga",
+          "label": {
+            "en": "Irish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/it",
+          "label": {
+            "en": "Italian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ja",
+          "label": {
+            "en": "Japanese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/jv",
+          "label": {
+            "en": "Javanese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kl",
+          "label": {
+            "en": "Kalaallisut |  Greenlandic"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kn",
+          "label": {
+            "en": "Kannada"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kr",
+          "label": {
+            "en": "Kanuri"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ks",
+          "label": {
+            "en": "Kashmiri"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kk",
+          "label": {
+            "en": "Kazakh"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ki",
+          "label": {
+            "en": "Kikuyu |  Gikuyu"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/rw",
+          "label": {
+            "en": "Kinyarwanda"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ky",
+          "label": {
+            "en": "Kirghiz |  Kyrgyz"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kv",
+          "label": {
+            "en": "Komi"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kg",
+          "label": {
+            "en": "Kongo"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ko",
+          "label": {
+            "en": "Korean"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kj",
+          "label": {
+            "en": "Kuanyama |  Kwanyama"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ku",
+          "label": {
+            "en": "Kurdish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/lo",
+          "label": {
+            "en": "Lao"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/la",
+          "label": {
+            "en": "Latin"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/lv",
+          "label": {
+            "en": "Latvian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/li",
+          "label": {
+            "en": "Limburgan |  Limburger |  Limburgish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ln",
+          "label": {
+            "en": "Lingala"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/lt",
+          "label": {
+            "en": "Lithuanian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/lu",
+          "label": {
+            "en": "Luba-Katanga"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/lb",
+          "label": {
+            "en": "Luxembourgish |  Letzeburgesch"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/mk",
+          "label": {
+            "en": "Macedonian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/mg",
+          "label": {
+            "en": "Malagasy"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ms",
+          "label": {
+            "en": "Malay"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ml",
+          "label": {
+            "en": "Malayalam"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/mt",
+          "label": {
+            "en": "Maltese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/gv",
+          "label": {
+            "en": "Manx"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/mi",
+          "label": {
+            "en": "Maori"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/mr",
+          "label": {
+            "en": "Marathi"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/mh",
+          "label": {
+            "en": "Marshallese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/mn",
+          "label": {
+            "en": "Mongolian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/na",
+          "label": {
+            "en": "Nauru"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/nv",
+          "label": {
+            "en": "Navajo |  Navaho"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/nd",
+          "label": {
+            "en": "Ndebele, North |  North Ndebele"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/nr",
+          "label": {
+            "en": "Ndebele, South |  South Ndebele"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ng",
+          "label": {
+            "en": "Ndonga"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ne",
+          "label": {
+            "en": "Nepali"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/se",
+          "label": {
+            "en": "Northern Sami"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/no",
+          "label": {
+            "en": "Norwegian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/nn",
+          "label": {
+            "en": "Norwegian Nynorsk |  Nynorsk, Norwegian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/oc",
+          "label": {
+            "en": "Occitan (post 1500)"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/oj",
+          "label": {
+            "en": "Ojibwa"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/or",
+          "label": {
+            "en": "Oriya"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/om",
+          "label": {
+            "en": "Oromo"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/os",
+          "label": {
+            "en": "Ossetian |  Ossetic"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/pi",
+          "label": {
+            "en": "Pali"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/pa",
+          "label": {
+            "en": "Panjabi |  Punjabi"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/fa",
+          "label": {
+            "en": "Persian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/pl",
+          "label": {
+            "en": "Polish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/pt",
+          "label": {
+            "en": "Portuguese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ps",
+          "label": {
+            "en": "Pushto |  Pashto"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/qu",
+          "label": {
+            "en": "Quechua"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ro",
+          "label": {
+            "en": "Romanian |  Moldavian |  Moldovan"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/rm",
+          "label": {
+            "en": "Romansh"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/rn",
+          "label": {
+            "en": "Rundi"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ru",
+          "label": {
+            "en": "Russian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sm",
+          "label": {
+            "en": "Samoan"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sg",
+          "label": {
+            "en": "Sango"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sa",
+          "label": {
+            "en": "Sanskrit"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sc",
+          "label": {
+            "en": "Sardinian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sr",
+          "label": {
+            "en": "Serbian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sn",
+          "label": {
+            "en": "Shona"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ii",
+          "label": {
+            "en": "Sichuan Yi |  Nuosu"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sd",
+          "label": {
+            "en": "Sindhi"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/si",
+          "label": {
+            "en": "Sinhala |  Sinhalese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sk",
+          "label": {
+            "en": "Slovak"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sl",
+          "label": {
+            "en": "Slovenian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/so",
+          "label": {
+            "en": "Somali"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/st",
+          "label": {
+            "en": "Sotho, Southern"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/es",
+          "label": {
+            "en": "Spanish |  Castilian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/su",
+          "label": {
+            "en": "Sundanese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sw",
+          "label": {
+            "en": "Swahili"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ss",
+          "label": {
+            "en": "Swati"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sv",
+          "label": {
+            "en": "Swedish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/tl",
+          "label": {
+            "en": "Tagalog"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ty",
+          "label": {
+            "en": "Tahitian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/tg",
+          "label": {
+            "en": "Tajik"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ta",
+          "label": {
+            "en": "Tamil"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/tt",
+          "label": {
+            "en": "Tatar"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/te",
+          "label": {
+            "en": "Telugu"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/th",
+          "label": {
+            "en": "Thai"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/bo",
+          "label": {
+            "en": "Tibetan"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ti",
+          "label": {
+            "en": "Tigrinya"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/to",
+          "label": {
+            "en": "Tonga (Tonga Islands)"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ts",
+          "label": {
+            "en": "Tsonga"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/tn",
+          "label": {
+            "en": "Tswana"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/tr",
+          "label": {
+            "en": "Turkish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/tk",
+          "label": {
+            "en": "Turkmen"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/tw",
+          "label": {
+            "en": "Twi"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ug",
+          "label": {
+            "en": "Uighur |  Uyghur"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/uk",
+          "label": {
+            "en": "Ukrainian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ur",
+          "label": {
+            "en": "Urdu"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/uz",
+          "label": {
+            "en": "Uzbek"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ve",
+          "label": {
+            "en": "Venda"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/vi",
+          "label": {
+            "en": "Vietnamese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/vo",
+          "label": {
+            "en": "Volapük"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/wa",
+          "label": {
+            "en": "Walloon"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/cy",
+          "label": {
+            "en": "Welsh"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/fy",
+          "label": {
+            "en": "Western Frisian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/wo",
+          "label": {
+            "en": "Wolof"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/xh",
+          "label": {
+            "en": "Xhosa"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/yi",
+          "label": {
+            "en": "Yiddish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/yo",
+          "label": {
+            "en": "Yoruba"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/za",
+          "label": {
+            "en": "Zhuang |  Chuang"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/zu",
+          "label": {
+            "en": "Zulu"
+          }
+        }
+      ],
+      "nodetype": "URI"
     },
     {
       "id": "dcterms:relation",
@@ -372,7 +1479,8 @@
         "en": "Date on which the resource was changed."
       },
       "type": "text",
-      "nodetype": "LANGUAGE_LITERAL"
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#date"
     },
     {
       "id": "dcterms:extent",
@@ -713,19 +1821,146 @@
     },
     {
       "id": "dcterms:license",
-      "property": "http://purl.org/dc/terms/license",
       "label": {
         "en": "License"
       },
       "description": {
         "en": "A legal document giving official permission to do something with the resource."
       },
-      "constraints": {
-        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/LicenseDocument"
-      },
       "type": "group",
       "automatic": true,
-      "content": []
+      "content": [
+        {
+          "type": "choice",
+          "property": "http://purl.org/dc/terms/license",
+          "nodetype": "URI",
+          "extends": "dcterms:cc-license-choices",
+          "label": {
+            "en": "Choose a CC license"
+          },
+          "choices": [
+            {
+              "value": "http://creativecommons.org/licenses/by/3.0/",
+              "label": {
+                "en": "CC BY 3.0 (Attribution)"
+              },
+              "description": {
+                "de": "Der Urheber gestattet die Ressource für kommerzielle Zwecke zu nutzen und Änderungen vorzunehmen",
+                "sl": "Lastnik DOVOLJUJE komercialno rabo in spreminjanje vira.",
+                "ro": "Autorul PERMITE utilizarea in scop comercial SI modificari asupra resursei",
+                "el": "Άδεια που εφαρμόζεται στο αντικείμενο (αναφορικά με Creative Commons)",
+                "hu": "A tulajdonos engedélyezi a kereskedelmi forgalomba hozatalt és a változásokat",
+                "bg": "Притежателят ПОЗВОЛЯВА търговска употреба и промени в ресурса ",
+                "fr": "Le détenteur des droits AUTORISE l'utilisation commerciale ET les modifications de la ressource",
+                "en": "The owner ALLOWS commercial uses AND changes to the resource",
+                "ru": "Владелец РАЗРЕШАЕТ как использование источника в коммерческих целях, ТАК И изменение содержания",
+                "hi": "स्वामी वाणिज्यिक उपयोग एवं संसाधनों में परिवर्तन की अनुमति देता है",
+                "et": "Omanik LUBAB kasutada allikat kommertslikel eesmärkidel JA muuta allika sisu",
+                "es": "El propieatrio PERMITE uso comercial Y cambios en el recurso"
+              }
+            },
+            {
+              "value": "http://creativecommons.org/licenses/by-nc/3.0/",
+              "label": {
+                "en": "CC BY-NC 3.0 (Attribution, Non-Commercial)"
+              },
+              "description": {
+                "de": "Der Urheber gestattet keine kommerzielle Nutzung, erlaubt aber Änderungen an der Ressource",
+                "sl": "Lastnik NE dovoljuje komercialne rabe toda DOVOLJUJE spreminjanje vira.",
+                "ro": "Autorul NU permite utilizarea in scop comercial dar PERMITE modificari asupra resursei",
+                "el": "Ο ιδιοκτήτης του αντικειμένου ΔΕΝ επιτρέπει εμπορικές χρήσεις αλλά ΕΠΙΤΡΕΠΕΙ αλλαγές στο αντικείμενο",
+                "hu": "A tulajdonos nem engedélyezi a kereskedelmi forgalomba hozatalt, de a módosítást igen. ",
+                "bg": "Притежателят НЕ ПОЗВОЛЯВА за търговски цели, но ПОЗВОЛЯВА да се променя ресурса",
+                "fr": "Le détenteur des droits N'AUTORISE PAS l'utilisation commerciale MAIS ACCEPTE les modifications de la ressource",
+                "en": "The owner does NOT allow commercial uses but ALLOWS changes to the resource",
+                "ru": "Владелец НЕ РАЗРЕШАЕТ использование источника в коммерческих целях, но РАЗРЕШАЕТ изменение содержания",
+                "hi": "स्वामी वाणिज्यिक उपयोग की अनुमति नही देता है परंतु संसाधनों में परिवर्तन की अनुमति देता है",
+                "et": "Omanik EI LUBA kasutada allikat kommertslikel eesmärkidel, kuid LUBAB muuta allika sisu",
+                "es": "El propieatrio NO permite uso comercial pero PERMITE cambios en el recurso"
+              }
+            },
+            {
+              "value": "http://creativecommons.org/licenses/by-nc-nd/3.0/",
+              "label": {
+                "en": "CC BY-NC-ND 3.0 (Attribution, Non-Commercial, No Derivative Works)"
+              },
+              "description": {
+                "de": "Der Urheber gestattet die nicht-kommerzielle Nutzung oder Änderungen an der Ressourcen",
+                "sl": "Lastnik NE dovoljuje komercialne rabe ALI spreminjanja virov.",
+                "ro": "Autorul NU permite nici utilizarea in scop comercial nici modificari asupra resursei",
+                "el": "Ο ιδιοκτήτης του αντικειμένου ΕΠΙΤΡΕΠΕΙ εμπορικές χρήσεις αλλά ΌΧΙ αλλαγές στο αντικείμενο",
+                "hu": "A tulajdonos nem engedélyezi a kereskedelmi forgalomba hozatalt és módosítást. ",
+                "bg": "Притежателят НЕ позволява търговска употреба и ИЛИ да се променя ресурса ",
+                "fr": "Le détenteur des droits N'AUTORISE PAS l'utilisation commerciale NI les modifications de la ressource",
+                "en": "The owner does NOT allow commercial uses OR changes to the resource",
+                "ru": "Владелец НЕ РАЗРЕШАЕТ как использование источника в коммерческих целях, ТАК И изменение содержания",
+                "hi": "स्वामी वाणिज्यिक उपयोग और संसाधनों में परिवर्तन की अनुमति नहीं  देता है",
+                "et": "Omanik EI LUBA kasutada allikat kommertslikel eesmärkidel EGA luba muuta allika sisu",
+                "es": "El propieatrio NO permite uso comercial ni cambios en el recurso"
+              }
+            },
+            {
+              "value": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+              "label": {
+                "en": "CC BY-NC-SA 3.0 (Attribution, Non-Commercial, Share Alike)"
+              }
+            },
+            {
+              "value": "http://creativecommons.org/licenses/by-nd/3.0/",
+              "label": {
+                "en": "CC BY-ND 3.0 (Attribution, No Derivative Works)"
+              },
+              "description": {
+                "de": "Der Urheber gestattet, die Ressource für kommerzielle Zwecke zu nutzen, es dürfen jedoch keine Änderungen vorgenommen werden",
+                "sl": "Lastnik DOVOLJUJE komercialno rabo toda NE dovoli spreminjanja vira.",
+                "ro": "Autorul PERMITE utilizarea in scop comercial dar nu permite modificari asupra resursei",
+                "el": "Ο ιδιοκτήτης του αντικειμένου ΕΠΙΤΡΕΠΕΙ εμπορικές χρήσεις ΚΑΙ αλλαγές στο αντικείμενο",
+                "hu": "A tulajdonos engedélyezi a kereskedelmi forgalomba hozatalt, változások nélkül.",
+                "bg": "Притежателят ПОЗВОЛЯВА търговска употреба, но НЕ се позволява да се променя ресурса",
+                "fr": "Le détenteur des droits AUTORISE l'utilisation commerciale MAIS REFUSE les modifications de la ressource",
+                "en": "The owner ALLOWS commercial uses but does NOT allow changes to the resource",
+                "ru": "Владелец РАЗРЕШАЕТ использование источника в коммерческих целях, но НЕ РАЗРЕШАЕТ изменение содержания",
+                "hi": "स्वामी वाणिज्यिक उपयोग की अनुमति देता है परंतु  संसाधनों में परिवर्तन की अनुमति नहीं  देता है",
+                "et": "Omanik LUBAB kasutada allikat kommertslikel eesmärkidel, kuid EI luba muuta allika sisu",
+                "es": "El propieatrio PERMITE uso comercial pero NO permite cambios en el recurso"
+              }
+            },
+            {
+              "value": "http://creativecommons.org/licenses/by-sa/3.0/",
+              "label": {
+                "en": "CC BY-SA 3.0 (Attribution, Share Alike)"
+              }
+            },
+            {
+              "value": "http://creativecommons.org/publicdomain/zero/1.0/",
+              "label": {
+                "en": "CC0 1.0 (Public Domain Dedication, No Copyright)"
+              }
+            }
+          ],
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          }
+        },
+        {
+          "type": "text",
+          "property": "http://purl.org/dc/terms/license",
+          "label": {
+            "": "or provide a URL to a license"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          },
+          "nodetype": "URI"
+        }
+      ],
+      "cardinality": {
+        "min": 1,
+        "pref": 1,
+        "max": 1
+      }
     },
     {
       "id": "dcterms:rightsHolder",
@@ -1176,6 +2411,115 @@
       },
       "type": "group",
       "content": []
+    },
+    {
+      "type": "choice",
+      "id": "dcterms:cc-license-choices",
+      "nodetype": "URI",
+      "choices": [
+        {
+          "value": "http://creativecommons.org/licenses/by/3.0/",
+          "label": {
+            "en": "CC BY 3.0 (Attribution)"
+          },
+          "description": {
+            "de": "Der Urheber gestattet die Ressource für kommerzielle Zwecke zu nutzen und Änderungen vorzunehmen",
+            "sl": "Lastnik DOVOLJUJE komercialno rabo in spreminjanje vira.",
+            "ro": "Autorul PERMITE utilizarea in scop comercial SI modificari asupra resursei",
+            "el": "Άδεια που εφαρμόζεται στο αντικείμενο (αναφορικά με Creative Commons)",
+            "hu": "A tulajdonos engedélyezi a kereskedelmi forgalomba hozatalt és a változásokat",
+            "bg": "Притежателят ПОЗВОЛЯВА търговска употреба и промени в ресурса ",
+            "fr": "Le détenteur des droits AUTORISE l'utilisation commerciale ET les modifications de la ressource",
+            "en": "The owner ALLOWS commercial uses AND changes to the resource",
+            "ru": "Владелец РАЗРЕШАЕТ как использование источника в коммерческих целях, ТАК И изменение содержания",
+            "hi": "स्वामी वाणिज्यिक उपयोग एवं संसाधनों में परिवर्तन की अनुमति देता है",
+            "et": "Omanik LUBAB kasutada allikat kommertslikel eesmärkidel JA muuta allika sisu",
+            "es": "El propieatrio PERMITE uso comercial Y cambios en el recurso"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-nc/3.0/",
+          "label": {
+            "en": "CC BY-NC 3.0 (Attribution, Non-Commercial)"
+          },
+          "description": {
+            "de": "Der Urheber gestattet keine kommerzielle Nutzung, erlaubt aber Änderungen an der Ressource",
+            "sl": "Lastnik NE dovoljuje komercialne rabe toda DOVOLJUJE spreminjanje vira.",
+            "ro": "Autorul NU permite utilizarea in scop comercial dar PERMITE modificari asupra resursei",
+            "el": "Ο ιδιοκτήτης του αντικειμένου ΔΕΝ επιτρέπει εμπορικές χρήσεις αλλά ΕΠΙΤΡΕΠΕΙ αλλαγές στο αντικείμενο",
+            "hu": "A tulajdonos nem engedélyezi a kereskedelmi forgalomba hozatalt, de a módosítást igen. ",
+            "bg": "Притежателят НЕ ПОЗВОЛЯВА за търговски цели, но ПОЗВОЛЯВА да се променя ресурса",
+            "fr": "Le détenteur des droits N'AUTORISE PAS l'utilisation commerciale MAIS ACCEPTE les modifications de la ressource",
+            "en": "The owner does NOT allow commercial uses but ALLOWS changes to the resource",
+            "ru": "Владелец НЕ РАЗРЕШАЕТ использование источника в коммерческих целях, но РАЗРЕШАЕТ изменение содержания",
+            "hi": "स्वामी वाणिज्यिक उपयोग की अनुमति नही देता है परंतु संसाधनों में परिवर्तन की अनुमति देता है",
+            "et": "Omanik EI LUBA kasutada allikat kommertslikel eesmärkidel, kuid LUBAB muuta allika sisu",
+            "es": "El propieatrio NO permite uso comercial pero PERMITE cambios en el recurso"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-nc-nd/3.0/",
+          "label": {
+            "en": "CC BY-NC-ND 3.0 (Attribution, Non-Commercial, No Derivative Works)"
+          },
+          "description": {
+            "de": "Der Urheber gestattet die nicht-kommerzielle Nutzung oder Änderungen an der Ressourcen",
+            "sl": "Lastnik NE dovoljuje komercialne rabe ALI spreminjanja virov.",
+            "ro": "Autorul NU permite nici utilizarea in scop comercial nici modificari asupra resursei",
+            "el": "Ο ιδιοκτήτης του αντικειμένου ΕΠΙΤΡΕΠΕΙ εμπορικές χρήσεις αλλά ΌΧΙ αλλαγές στο αντικείμενο",
+            "hu": "A tulajdonos nem engedélyezi a kereskedelmi forgalomba hozatalt és módosítást. ",
+            "bg": "Притежателят НЕ позволява търговска употреба и ИЛИ да се променя ресурса ",
+            "fr": "Le détenteur des droits N'AUTORISE PAS l'utilisation commerciale NI les modifications de la ressource",
+            "en": "The owner does NOT allow commercial uses OR changes to the resource",
+            "ru": "Владелец НЕ РАЗРЕШАЕТ как использование источника в коммерческих целях, ТАК И изменение содержания",
+            "hi": "स्वामी वाणिज्यिक उपयोग और संसाधनों में परिवर्तन की अनुमति नहीं  देता है",
+            "et": "Omanik EI LUBA kasutada allikat kommertslikel eesmärkidel EGA luba muuta allika sisu",
+            "es": "El propieatrio NO permite uso comercial ni cambios en el recurso"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "label": {
+            "en": "CC BY-NC-SA 3.0 (Attribution, Non-Commercial, Share Alike)"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-nd/3.0/",
+          "label": {
+            "en": "CC BY-ND 3.0 (Attribution, No Derivative Works)"
+          },
+          "description": {
+            "de": "Der Urheber gestattet, die Ressource für kommerzielle Zwecke zu nutzen, es dürfen jedoch keine Änderungen vorgenommen werden",
+            "sl": "Lastnik DOVOLJUJE komercialno rabo toda NE dovoli spreminjanja vira.",
+            "ro": "Autorul PERMITE utilizarea in scop comercial dar nu permite modificari asupra resursei",
+            "el": "Ο ιδιοκτήτης του αντικειμένου ΕΠΙΤΡΕΠΕΙ εμπορικές χρήσεις ΚΑΙ αλλαγές στο αντικείμενο",
+            "hu": "A tulajdonos engedélyezi a kereskedelmi forgalomba hozatalt, változások nélkül.",
+            "bg": "Притежателят ПОЗВОЛЯВА търговска употреба, но НЕ се позволява да се променя ресурса",
+            "fr": "Le détenteur des droits AUTORISE l'utilisation commerciale MAIS REFUSE les modifications de la ressource",
+            "en": "The owner ALLOWS commercial uses but does NOT allow changes to the resource",
+            "ru": "Владелец РАЗРЕШАЕТ использование источника в коммерческих целях, но НЕ РАЗРЕШАЕТ изменение содержания",
+            "hi": "स्वामी वाणिज्यिक उपयोग की अनुमति देता है परंतु  संसाधनों में परिवर्तन की अनुमति नहीं  देता है",
+            "et": "Omanik LUBAB kasutada allikat kommertslikel eesmärkidel, kuid EI luba muuta allika sisu",
+            "es": "El propieatrio PERMITE uso comercial pero NO permite cambios en el recurso"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "label": {
+            "en": "CC BY-SA 3.0 (Attribution, Share Alike)"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "label": {
+            "en": "CC0 1.0 (Public Domain Dedication, No Copyright)"
+          }
+        }
+      ],
+      "styles": [
+        "verticalRadioButtons"
+      ],
+      "description": {}
     }
   ],
   "scope": "dcterms",

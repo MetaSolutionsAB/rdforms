@@ -1,0 +1,329 @@
+{
+  "templates": [
+    {
+      "type": "group",
+      "id": "odrs:RightsStatement",
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://schema.theodi.org/odrs#RightsStatement"
+      },
+      "label": {
+        "en": "Rights Statement"
+      },
+      "description": {
+        "en": "A description of the rights and terms of re-use for a dataset. A rights statement will include a reference to one or more licences copyright notices, and attribution requirements. Where a Rights Statement refers to several licences the intention is that these should separately apply to the data and content associated with the dataset. An individual Rights Statement may be specific to a dataset or could be applied to a number of datasets published by the same organisation or person, where the rights associated with each dataset are identical."
+      },
+      "content": [
+        {
+          "id": "odrs:attributionText"
+        },
+        {
+          "id": "odrs:attributionURL"
+        },
+        {
+          "id": "odrs:copyrightNotice"
+        },
+        {
+          "id": "odrs:copyrightStatement"
+        },
+        {
+          "id": "odrs:databaseRightStatement"
+        },
+        {
+          "id": "odrs:copyrightYear"
+        },
+        {
+          "id": "odrs:databaseRightYear"
+        },
+        {
+          "id": "odrs:copyrightHolder"
+        },
+        {
+          "id": "odrs:databaseRightHolder"
+        },
+        {
+          "id": "odrs:jurisdiction"
+        },
+        {
+          "id": "odrs:reuserGuidelines"
+        },
+        {
+          "id": "odrs:dataLicense"
+        },
+        {
+          "id": "odrs:contentLicense"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "odrs:attributionText",
+      "property": "http://schema.theodi.org/odrs#attributionText",
+      "label": {
+        "en": "Attribution text"
+      },
+      "description": {
+        "en": "The text to use in an attribution link. This may be the name of the publisher or a reference to a community or group of contributors"
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "styles": [
+        "multiline"
+      ],
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "type": "text",
+      "id": "odrs:attributionURL",
+      "property": "http://schema.theodi.org/odrs#attributionURL",
+      "nodetype": "URI",
+      "label": {
+        "en": "Attribution URL"
+      },
+      "description": {
+        "en": "The link which should be used when attributing a data source. The URL could be a reference to the dataset or publisher homepage, but may also be a dedicated attribution page. This is useful when providing onward attribution to upstream sources."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "text",
+      "id": "odrs:copyrightNotice",
+      "property": "http://schema.theodi.org/odrs#copyrightNotice",
+      "label": {
+        "en": "Copyright notice"
+      },
+      "description": {
+        "en": "The copyright notice associated with a rights statement. A notice must typically be preserved and displayed when acknowledging the source of some data. This property is expressed as a simple literal value and so is suitable for simple copyright notices. Where a data publisher needs to reference a larger copyright statement and/or related guidance then the copyrightStatement property should be used instead."
+      },
+      "styles": [
+        "multiline"
+      ],
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "type": "text",
+      "id": "odrs:reuserGuidelines",
+      "label": {
+        "en": "Guidelines for re-users"
+      },
+      "description": {
+        "en": "Link to a document that provides guidelines for re-users of data that is covered by a specific rights statement. The guidelines may include more detail on attribution guidelines, a fuller copyright statement, and general guidance on how the data might be re-used"
+      },
+      "property": "http://schema.theodi.org/odrs#reuserGuidelines",
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "text",
+      "id": "odrs:copyrightStatement",
+      "property": "http://schema.theodi.org/odrs#copyrightStatement",
+      "nodetype": "URI",
+      "label": {
+        "en": "Copyright statement"
+      },
+      "description": {
+        "en": "A link to a document that includes a statement about the copyright status of the content of a dataset. The web page might include both a copyright notice for a dataset, and any relevant guidance for re-users."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "group",
+      "id": "odrs:copyrightHolder",
+      "property": "http://schema.theodi.org/odrs#copyrightHolder",
+      "extends": "foaf:Organization-ref",
+      "label": {
+        "en": "Copyright holder"
+      },
+      "description": {
+        "en": "A reference to the organization that holds copyright over the content of the dataset"
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "group",
+      "id": "odrs:databaseRightHolder",
+      "property": "http://schema.theodi.org/odrs#databaseRightHolder",
+      "extends": "foaf:Organization-ref",
+      "label": {
+        "en": "Database right holder"
+      },
+      "description": {
+        "en": "A reference to the organization that holds database rights over the dataset"
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "text",
+      "id": "odrs:jurisdiction",
+      "property": "http://schema.theodi.org/odrs#jurisdiction",
+      "nodetype": "URI",
+      "label": {
+        "en": "Jurisdiction"
+      },
+      "description": {
+        "en": "A reference to the jurisdiction in which copyright and/or database rights have been asserts. It is recommended that this refer to the URI for a country or region."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "text",
+      "id": "odrs:copyrightYear",
+      "property": "http://schema.theodi.org/odrs#copyrightYear",
+      "nodetype": "ONLY_LITERAL",
+      "label": {
+        "en": "Copyright year"
+      },
+      "description": {
+        "en": "The year from which copyright over the content of the dataset is asserted."
+      }
+    },
+    {
+      "type": "text",
+      "id": "odrs:databaseRightYear",
+      "property": "http://schema.theodi.org/odrs#databaseRightYear",
+      "nodetype": "ONLY_LITERAL",
+      "label": {
+        "en": "Database right year"
+      },
+      "description": {
+        "en": "The year from which a database right over the dataset is asserted."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "choice",
+      "id": "odrs:compatibleWith",
+      "property": "http://schema.theodi.org/odrs#compatibleWith",
+      "description": {
+        "en": "This property is used to indicates that one license is compatible with another. A re-use that meets the requirements, permissions and prohibitions of the first license should also meet the requirements, permissions and prohibitions of the second, compatible license. The inverse is not necessarily true: the compatible license might have stricter requirements. This statement can be used as an indicator that a re-user could publish a derivative dataset under the compatible license, e.g. to help drive automated selection and guidance licenses for publishers of derived data. However it is not a substitute for properly reading and understanding the text of either license."
+      },
+      "label": {
+        "en": "Compatible with"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://schema.theodi.org/odrs#License"
+      },
+      "nodetype": "URI"
+    },
+    {
+      "type": "group",
+      "id": "odrs:dataLicense",
+      "label": {
+        "en": "Data license"
+      },
+      "content": [
+        {
+          "type": "choice",
+          "property": "http://schema.theodi.org/odrs#dataLicense",
+          "label": {
+            "en": "Choose an existing license"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "nodetype": "URI",
+          "extends": "dcterms:cc-license-choices"
+        },
+        {
+          "type": "text",
+          "nodetype": "URI",
+          "property": "http://schema.theodi.org/odrs#dataLicense",
+          "label": {
+            "en": "or, provide a URL to the license"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 1,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "type": "text",
+      "property": "http://schema.theodi.org/odrs#databaseRightStatement",
+      "nodetype": "URI",
+      "label": {
+        "en": "Database right statement"
+      },
+      "description": {
+        "en": "A link to a document that includes a statement about the database rights that apply to this dataset. The web page might include both a statement on the applicable rights and any relevant guidance for re-users."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "id": "odrs:databaseRightStatement"
+    },
+    {
+      "type": "group",
+      "id": "odrs:contentLicense",
+      "cardinality": {
+        "min": 1,
+        "pref": 1,
+        "max": 1
+      },
+      "label": {
+        "": "Content license"
+      },
+      "content": [
+        {
+          "type": "choice",
+          "property": "http://schema.theodi.org/odrs#contentLicense",
+          "label": {
+            "en": "Choose an existing license"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "nodetype": "URI",
+          "extends": "dcterms:cc-license-choices"
+        },
+        {
+          "type": "text",
+          "nodetype": "URI",
+          "property": "http://schema.theodi.org/odrs#contentLicense",
+          "label": {
+            "en": "or, provide a URL to the license"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        }
+      ]
+    }
+  ]
+}

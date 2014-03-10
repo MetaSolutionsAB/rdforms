@@ -37,7 +37,7 @@ define(["dojo/_base/declare",
 	//===================================================
 	buildRendering: function() {
 		this.domNode = this.srcNodeRef || construct.create("div");
-		this.editorNode = construct.create("span", null, this.domNode);
+		this.editorNode = construct.create("span", {"class": "rformsDateValue"}, this.domNode);
 		this.formatChooserNode = construct.create("span", null, this.domNode);
 		var data = this.binding.getValue();
 		this._valid = data != null && data != "";

@@ -159,7 +159,7 @@ a.rformsUrl:hover {
 }
 
 .rformsEditor table.rformsGroup td.rformsLangcontrolledfield {
-    padding-right: 6.8em;
+    padding-right: 7.4em;
 }
 .rformsEditor table.rformsGroup td.rformsLangcontrolledfield .rformsLangFieldControl {
     width: 6.4em;
@@ -203,8 +203,8 @@ a.rformsUrl:hover {
  	margin-right: 1em;
  }
  .rformsEditor .rformsLangcontrolledfield {
- 	padding-right: 10.7em;
- }	
+ 	padding-right: 10.9em;
+ }
  .rformsEditor .rformsFieldControl {
 	position: absolute;
 	width: 3.8em;
@@ -235,7 +235,8 @@ a.rformsUrl:hover {
 }
 .rformsEditor .rformsField textarea {
 	font: inherit;
-	 padding-left: 0.3em;
+    box-sizing: content-box !important;
+    padding-right: 0px;
 }
 
 .rformsEditor .langFieldControl .dijitButton {
@@ -434,6 +435,10 @@ a.rformsUrl:hover {
 
 .dijitTooltipDialog {
     outline: none;
+}
+
+.rformsEditor .rformsDateValue {
+    margin-right: 0.4em;
 }
 
 /* ---------- StoreManager -----------*/

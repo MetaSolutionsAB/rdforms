@@ -28,7 +28,7 @@ define(["dojo/_base/declare",
         choices: [],
         templateString: template,
         postCreate: function() {
-            this.choices = this.item.getStaticChoices();
+            this.choices = this.item.getStaticChoices() || [];
             this.inherited("postCreate", arguments);
 
             this._valueDijit.validator = lang.hitch(this, function(value, constraints){
@@ -44,7 +44,7 @@ define(["dojo/_base/declare",
             };
             this.tree = new Tree({
                 showRoot: true,
-                model: new ChoicesTreeModel(this.choices || []),
+                model: new ChoicesTreeModel(this.choices),
                 dndController: TreeDndSource,
                 "class": "container",
                 checkItemAcceptance: itemAcceptance,
@@ -89,7 +89,7 @@ define(["dojo/_base/declare",
             }));
 
             this.menu.startup();
-            this._inlineDijit.set("checked", this.choices != null);
+            this._inlineDijit.set("checked", this.item.getStaticChoices() != null);
             this._ontologyDijit.set("value", this.item.getOntologyUrl() || "");
             this._ppDijit.set("value", this.item.getParentProperty() || "");
             this._ppinvDijit.set("checked", this.item.isParentPropertyInverted() || false);
@@ -121,16 +121,12 @@ define(["dojo/_base/declare",
         },
         _changeInline: function() {
             if (this._inlineDijit.get("checked")) {
-                this.choices = this.choices || this._backupChoices || [];
-                this._backupChoices = null;
                 this.item.setStaticChoices(this.choices);
                 style.set(this.tree.domNode, "display", "");
                 style.set(this._controlDijit.domNode, "height", "25px");
                 domClass.add(this._controlDijit.domNode, "inlineState");
                 this._bcDijit.resize();
             } else {
-                this._backupChoices = this._backupChoices || this.choices;
-                this.choices = null;
                 this.item.setStaticChoices();
                 style.set(this.tree.domNode, "display", "none");
                 style.set(this._controlDijit.domNode, "height", "45%");

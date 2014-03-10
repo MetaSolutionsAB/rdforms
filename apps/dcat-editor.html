@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    </head>
+    <body class="claro">
+    <script>
+    var dojoConfig = {
+	async:true,
+	packages: [
+	    { name: "rdforms", location: "../../../src/rdforms" },
+	    { name: "rdfjson", location: "../../../src/rdfjson" }]
+    };
+    </script>
+    <script src="../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
+    <style>
+      @import "../lib/dojo/dijit/themes/claro/claro.css";
+      @import "../src/rdforms/view/resources/rdforms.css";
+      html, body {
+        height: 100%;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+      }
+    </style>
+    <script type="text/javascript">
+        require([
+            'rdforms/template/ItemStore',
+            'rdforms/apps/Experiment',
+            'dojo/json',
+            "dojo/text!../templates/dcterms.json",
+            "dojo/text!../templates/odrs.json",
+            "dojo/text!../templates/foaf.json",
+            "dojo/text!../templates/dcat.json",
+		   'dojo/domReady!'],
+		  function(ItemStore, Experiment, json, dctermsTemplate, odrsTemplate, foafTemplate, dcatTemplate) {
+              var itemStore = new ItemStore();
+              itemStore.automaticSortAllowed = false;
+              itemStore.createTemplate(json.parse(dctermsTemplate));
+              itemStore.createTemplate(json.parse(odrsTemplate));
+              itemStore.createTemplate(json.parse(foafTemplate));
+              itemStore.createTemplate(json.parse(dcatTemplate));
+              var e = new Experiment({template: itemStore.createTemplateFromRoot(itemStore.getItem("dcat:Dataset")), graphObj: {}, hideTemplate: true}, "_node");
+              e.startup();
+        });
+    </script>
+    <div id="_node"></div>
+  </body>
+</html>

@@ -137,6 +137,7 @@ define([
             ns = "ns" + nscounter;
             nss[ns] = prop.substring(0, slash + 1);
             nsUsed.push(ns);
+            nsAdded[ns] = true;
             return ns + ":" + prop.substring(slash + 1);
         };
 
@@ -180,7 +181,9 @@ define([
         }
         var initialStrs = ['<?xml version="1.0"?>\n<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"'];
         for (var j = 0; j < nsUsed.length; j++) {
-            initialStrs.push('\n\txmlns:' + nsUsed[j] + '="' + nss[nsUsed[j]] + '"');
+            if (nsUsed[j] !== "rdf") {
+                initialStrs.push('\n\txmlns:' + nsUsed[j] + '="' + nss[nsUsed[j]] + '"');
+            }
         }
         initialStrs.push('>\n');
         strs.unshift(initialStrs.join(""));

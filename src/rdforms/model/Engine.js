@@ -16,7 +16,8 @@ define(["../template/Template",
 
     var match = function (graph, uri, template) {
         var rootBinding = new GroupBinding({item: template.getRoot(), childrenRootUri: uri, graph: graph});
-        _matchGroupItemChildren(rootBinding, graph);
+        _matchGroupItemChildren(rootBinding);
+        _clearDibbs(rootBinding);
         return rootBinding;
     };
 
@@ -197,9 +198,10 @@ define(["../template/Template",
             if (stmts.length > 0) {
                 bindings = [];
                 dojo.forEach(stmts, function (stmt) {
-                    if (_isNodeTypeMatch(item, stmt)) {
+                    if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt)) {
                         constStmts = _findStatementsForConstraints(graph, stmt.getValue(), item);
                         if (constStmts !== undefined) {
+                            _dibbs(stmt);
                             groupBinding = new GroupBinding({item: item, statement: stmt, constraints: constStmts});
                             bindings.push(groupBinding);
                             _matchGroupItemChildren(groupBinding); //Recursive call
@@ -226,23 +228,26 @@ define(["../template/Template",
         if (stmts.length > 0) {
             bindings = [];
             dojo.forEach(stmts, function (stmt) {
-                if (_isNodeTypeMatch(oItem, stmt)) {
+                if (_noDibbs(stmt) && _isNodeTypeMatch(oItem, stmt)) {
                     pChoice = _findChoice(pItem, stmt.getPredicate(), stmt.getGraph());
                     if (pChoice !== undefined) {
                         binding = null;
                         if (oItem instanceof Group) {
                             constStmts = _findStatementsForConstraints(graph, stmt.getValue(), oItem);
                             if (constStmts !== undefined) {
+                                _dibbs(stmt);
                                 binding = new PropertyGroupBinding({item: item, statement: stmt, constraints: constStmts});
                                 _matchGroupItemChildren(binding.getObjectBinding()); //Recursive call
                             }
                         } else if (oItem instanceof ChoiceBinding) {
                             oChoice = _findChoice(oItem, stmt.getValue(), stmt.getGraph());
                             if (oChoice !== undefined) {
+                                _dibbs(stmt);
                                 binding = new PropertyGroupBinding({item: item, statement: stmt});
                                 binding.getObjectBinding().setChoice(oChoice);
                             }
                         } else {
+                            _dibbs(stmt);
                             binding = new PropertyGroupBinding({item: item, statement: stmt});
                         }
 
@@ -266,7 +271,8 @@ define(["../template/Template",
         if (stmts.length > 0) {
             bindings = [];
             dojo.forEach(stmts, function (stmt) {
-                if (_isNodeTypeMatch(item, stmt)) {
+                if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt)) {
+                    _dibbs(stmt);
                     bindings.push(new ValueBinding({item: item, statement: stmt}));
                 }
             });
@@ -283,9 +289,10 @@ define(["../template/Template",
         if (stmts.length > 0) {
             bindings = [];
             dojo.forEach(stmts, function (stmt) {
-                if (_isNodeTypeMatch(item, stmt)) {
+                if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt)) {
                     choice = _findChoice(item, stmt.getValue(), stmt.getGraph());
                     if (choice !== undefined) {
+                        _dibbs(stmt);
                         bindings.push(new ChoiceBinding({item: item, statement: stmt, choice: choice}));
                     }
                 }
@@ -387,6 +394,30 @@ define(["../template/Template",
                 return choice;
             } else if (system.getChoice != null) {
                 return system.getChoice(item, obj, sa);
+            }
+        }
+    };
+
+    var _dibbs = function(stmt) {
+        stmt._dibbs = true;
+    };
+
+    var _noDibbs = function(stmt) {
+        return stmt._dibbs !== true;
+    };
+
+    var _clearDibbs = function(groupBinding) {
+        var i, j, arr, arrarr = groupBinding.getItemGroupedChildBindings() || [];
+        for (i=0;i<arrarr.length;i++) {
+            arr = arrarr[i];
+            for (j=0;j<arr.length;j++) {
+                var binding = arr[j];
+                if (binding._statement) {
+                    delete binding._statement._dibbs;
+                }
+                if (binding instanceof GroupBinding || binding instanceof PropertyGroupBinding) {
+                    _clearDibbs(binding);
+                }
             }
         }
     };

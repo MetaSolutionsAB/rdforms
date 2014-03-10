@@ -225,8 +225,22 @@ define(["dojo/_base/declare",
                     tb = new ValidationTextBox({
                         value: binding.getValue(),
                         disabled: !item.isEnabled(),
-                        invalidMessage: "Only integer value is allowed, value will not be saved",
+                        invalidMessage: "Only an integer value is allowed, value will not be saved",
                         regExp: "[0-9]*",
+                        onChange: function () {
+                            if (tb.isValid()) {
+                                binding.setValue(this.get("value"));
+                            } else {
+                                binding.setValue("");
+                            }
+                        }
+                    }, construct.create("div", null, fieldDiv));
+                } else if (datatype === "http://www.w3.org/2001/XMLSchema#decimal") {
+                    tb = new ValidationTextBox({
+                        value: binding.getValue(),
+                        disabled: !item.isEnabled(),
+                        invalidMessage: "Only a decimal value is allowed, value will not be saved",
+                        regExp: "[0-9]*.?[0-9]*",
                         onChange: function () {
                             if (tb.isValid()) {
                                 binding.setValue(this.get("value"));

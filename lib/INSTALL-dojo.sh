@@ -1,6 +1,6 @@
 #!/bin/sh
 
-dojoversion="1.8.3";
+dojoversion="1.9.3";
 
 dojodir="dojo-release-"$dojoversion"-src"
 dojofile=$dojodir".tar.gz"

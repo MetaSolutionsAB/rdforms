@@ -2,7 +2,8 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="shortcut icon" type="image/ico" href="/favicon.ico">
+    <title>RDForms DCAT Editor</title>
 </head>
 <body class="claro">
 <script src="../target-all/dojo/dojo.js.uncompressed.js"></script>
@@ -26,7 +27,7 @@
     }
     .main #_editor {
         position: absolute;
-        top: 5em;
+        top: 6em;
         bottom: 1em;
         left: 0px;
         right: 0px;
@@ -36,6 +37,15 @@
     }
     #_editor .rformsLabel {
         font-weight: normal;
+    }
+
+    .header {
+        margin-top: 27px;
+    }
+    .icon {
+        float: left;
+        margin-top: -20px;
+        margin-right: 15px;
     }
 </style>
 <script type="text/javascript">
@@ -90,7 +100,8 @@
             <li id="_editorButton" class="active"><a href="#editor">Editor</a></li>
             <li id="_aboutButton"><a href="#about">About</a></li>
         </ul>
-        <h3 class="text-muted">DCAT Editor</h3>
+        <img src="/favicon.ico" class="icon"></img>
+        <h3 class="text-muted">RDForms DCAT Editor</h3>
     </div>
     <div id="_editor">
         <div id="_editorInner"></div>

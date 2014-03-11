@@ -158,8 +158,8 @@ define([
                             o = objs[i];
                             switch (o.type) {
                                 case "literal":
-                                    if (o.language != null) {
-                                        strs.push(sp2 + '<' + nsp + ' xml:lang="' + o.language + '">' + o.value + '</' + nsp + '>\n');
+                                    if (o.lang != null) {
+                                        strs.push(sp2 + '<' + nsp + ' xml:lang="' + o.lang + '">' + o.value + '</' + nsp + '>\n');
                                     } else if (o.datatype != null) {
                                         strs.push(sp2 + '<' + nsp + ' rdf:datatype="' + o.datatype + '">' + o.value + '</' + nsp + '>\n');
                                     } else {
@@ -189,5 +189,11 @@ define([
         strs.unshift(initialStrs.join(""));
         strs.push('</rdf:RDF>');
         return strs.join("");
+    };
+    exports.namespaces = function() {
+        return nss;
+    };
+    exports.addNamespace = function(ns, expanded) {
+        nss[ns] = expanded;
     };
 });

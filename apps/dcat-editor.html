@@ -41,19 +41,21 @@
     require([
         'rdforms/template/ItemStore',
         'rdforms/apps/Experiment',
+        'rdfjson/converters',
         'dojo/json',
         "dojo/text!../templates/dcterms.json",
         "dojo/text!../templates/odrs.json",
         "dojo/text!../templates/foaf.json",
         "dojo/text!../templates/dcat.json",
         'dojo/domReady!'],
-            function(ItemStore, Experiment, json, dctermsTemplate, odrsTemplate, foafTemplate, dcatTemplate) {
+            function(ItemStore, Experiment, converters, json, dctermsTemplate, odrsTemplate, foafTemplate, dcatTemplate) {
                 var itemStore = new ItemStore();
                 itemStore.automaticSortAllowed = false;
                 itemStore.createTemplate(json.parse(dctermsTemplate));
                 itemStore.createTemplate(json.parse(odrsTemplate));
                 itemStore.createTemplate(json.parse(foafTemplate));
                 itemStore.createTemplate(json.parse(dcatTemplate));
+                converters.addNamespace("dcat", "http://www.w3.org/ns/dcat#");
                 var e = new Experiment({template: itemStore.createTemplateFromRoot(itemStore.getItem("dcat:Dataset")), graphObj: {}, hideTemplate: true}, "_editorInner");
                 e.startup();
 

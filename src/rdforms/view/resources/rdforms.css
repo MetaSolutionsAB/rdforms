@@ -8,6 +8,11 @@
 
 .compact .rformsRow.rformsTopLevel .rformsRow {
 	padding-left: 0.7em;
+    margin-bottom: 0.3em;
+}
+
+.rformsRow.rformsTopLevel .rformsRow {
+    margin-bottom: 0.15em;
 }
 
 .rformsEditor .rformsTopLevel {
@@ -15,7 +20,7 @@
 }
 
 .rformsLabel {
-	font-weight:bold;
+/*	font-weight:bold;*/
 	color: black;
 }
 .rforms .rformsField.errorReport,
@@ -51,6 +56,7 @@
 	display: inline-block;
 	zoom:1;
 	*display: inline;
+    vertical-align: middle;
 }
 
 a.rformsUrl {
@@ -318,7 +324,7 @@ a.rformsUrl:hover {
 }
 
 .compact .rformsTopLevel.rformsRow>.rformsLabelRow .action {
-	vertical-align: bottom;
+	vertical-align: middle;
 }
 
 .compact .rformsField {
@@ -364,6 +370,7 @@ a.rformsUrl:hover {
 .rforms .rformsTableControl>.action.editDelete,
 .rforms .rformsFieldControl>.action.editDelete {
 	float: right;
+    margin-top: 3px;
 }
 .rforms .action.editSearch {
 	margin-left: 13px;

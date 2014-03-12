@@ -7,11 +7,13 @@ define([
     "dojo/json",
     "dojo/dom-construct",
     "dijit/_WidgetBase",
+    "dijit/form/ComboBox",
+    "rdforms/formulator/LangString",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
     "dijit/form/ToggleButton", //For template
 	"dojo/text!./ItemEditorTemplate.html"
-], function(lang, declare, aspect, on, json, construct, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
+], function(lang, declare, aspect, on, json, construct, _WidgetBase, ComboBox, LangString, _TemplatedMixin, _WidgetsInTemplateMixin,
             ToggleButton, template) {
 
 

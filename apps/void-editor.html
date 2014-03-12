@@ -3,7 +3,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/ico" href="/favicon.ico">
-    <title>RDForms DCAT Editor</title>
+    <title>RDForms VoID Editor</title>
 </head>
 <body class="claro">
 <script src="../target-all/dojo/dojo.js.uncompressed.js"></script>
@@ -55,19 +55,15 @@
         'rdfjson/converters',
         'dojo/json',
         "dojo/text!../templates/dcterms.json",
-        "dojo/text!../templates/odrs.json",
-        "dojo/text!../templates/foaf.json",
-        "dojo/text!../templates/dcat.json",
+        "dojo/text!../templates/void.json",
         'dojo/domReady!'],
-            function(ItemStore, Experiment, converters, json, dctermsTemplate, odrsTemplate, foafTemplate, dcatTemplate) {
+            function(ItemStore, Experiment, converters, json, dctermsTemplate, voidTemplate) {
                 var itemStore = new ItemStore();
                 itemStore.automaticSortAllowed = false;
                 itemStore.createTemplate(json.parse(dctermsTemplate));
-                itemStore.createTemplate(json.parse(odrsTemplate));
-                itemStore.createTemplate(json.parse(foafTemplate));
-                itemStore.createTemplate(json.parse(dcatTemplate));
-                converters.addNamespace("dcat", "http://www.w3.org/ns/dcat#");
-                var e = new Experiment({template: itemStore.createTemplateFromRoot(itemStore.getItem("dcat:Dataset")), graphObj: {}, hideTemplate: true}, "_editorInner");
+                itemStore.createTemplate(json.parse(voidTemplate));
+                converters.addNamespace("void", "http://rdfs.org/ns/void#");
+                var e = new Experiment({template: itemStore.createTemplateFromRoot(itemStore.getItem("void:Dataset")), graphObj: {}, hideTemplate: true}, "_editorInner");
                 e.startup();
 
                 var showEditor = function() {
@@ -110,16 +106,16 @@
 
         <div class="jumbotron">
             <h2>About the editor</h2>
-            <p>This is a proof of concept editor for editing data catalog descriptions according to the <a href="http://www.w3.org/TR/vocab-dcat/">Data Catalog Vocabulary (DCAT) W3C recommendation</a>.
+            <p>This is a proof of concept editor for editing metadata about RDF datasets according to the <a href="http://www.w3.org/TR/void/">Vocabulary of Interlinked Datasets (VoID)</a>.
                 The editor is driven by the <a href="http://rdforms.org/">RDForms library</a> which uses templates to generate HTML Forms to edit RDF.</p>
 
             <p>The development was done by <a href="http://metasolutions.se/">MetaSolutions AB</a>.</p>
             <h2>How to use it</h2>
             <p>Edit your description in the editor tab, see the results in the present tab and cut and paste the resulting RDF in the RDF tab.
-                Any changes you make in the editor or RDF tab will be reflected in the other tabs. Hence, it is possible to paste existing DCAT expressions
+                Any changes you make in the editor or RDF tab will be reflected in the other tabs. Hence, it is possible to paste existing VoID expressions
                 into the RDF tab and then view it (and possibly change it) in the editor tab. (As long as the expression is centered around the URI http://example.com/about.)</p>
             <h2>I want feature X</h2>
-            <p>This is a proof of concept DCAT editor based on the capabilities of the RDForms library which main focus is to provide form based editing of RDF and allow easy integration into other applications.
+            <p>This is a proof of concept VoID editor based on the capabilities of the RDForms library which main focus is to provide form based editing of RDF and allow easy integration into other applications.
                 Hence, the editor is deliberately kept simple (one HTML file plus the template files). This means that the editor is far from feature complete,
                 for instance there are no upload or download options as this would require a bigger application, including server side support.</p>
         </div>

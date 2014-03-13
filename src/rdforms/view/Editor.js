@@ -724,7 +724,7 @@ define(["dojo/_base/declare",
             for (var i = 0; i < objects.length; i++) {
                 var o = objects[i];
                 var currentLabel = item._getLocalizedValue(o.label);
-                var obj = {value: o.value, label: currentLabel.value || "no label found"};
+                var obj = {value: o.value, label: currentLabel.value || o.value || ""};
                 if (o.top === true) {
                     obj.top = true;
                 }

@@ -45,11 +45,11 @@
 }
 
 .compact.rformsEditor .rformsTopLevel>.rformsLabelRow {
-	width: 19.4em !important;
+	width: 13em !important;
 	border-right: 1px solid white;
 }
 .rformsEditor .rformsTopLevel>.rformsLabelRow>.rformsLabel {
-	max-width: 16em;
+	max-width: 10em;
 	width: auto;
 	overflow: hidden;
 	text-overflow: ellipsis;

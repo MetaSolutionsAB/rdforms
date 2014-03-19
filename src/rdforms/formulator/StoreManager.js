@@ -104,9 +104,9 @@ define(["dojo/_base/declare",
             root.getChildren = function () {
                 return this.items;
             };
-            root.getLabel = function() {
+       /*     root.getLabel = function() {
                 return "Root";
-            };
+            };*/
             var itemAcceptance = function(node,source,position) {
                 var tn = registry.getEnclosingWidget(node);
                 if (tn.item === root) {
@@ -290,7 +290,8 @@ define(["dojo/_base/declare",
         },
         __removeItem: function(item) {
             var bundle = this.itemStore.getBundles()[0];
-            var templates = bundle.source.templates || bundle.source.auxilliary;
+            var src = bundle.getSource();
+            var templates = src.templates || src.auxilliary;
             var idx = templates.indexOf(item.getSource(true));
             templates.splice(idx, 1);
             this.itemStore.removeItem(item);
@@ -303,7 +304,7 @@ define(["dojo/_base/declare",
             attr.set(this._contentsNode, "value", json.stringify(this.item.getSource(true), true, "  "));
             var template;
             if (this.item.getChildren) {
-                template = this.itemStore.createTemplateFromRoot(this.item);
+                template = this.item;
             } else {
                 template = this.itemStore.createTemplateFromChildren([this.item]);
             }

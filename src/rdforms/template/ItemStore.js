@@ -3,7 +3,7 @@ define(["dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
     "dojo/request",
-    "./Template",
+    "./Bundle",
     "./Group",
     "./PropertyGroup",
     "./Text",
@@ -11,7 +11,7 @@ define(["dojo/_base/declare",
     "./OntologyStore",
     "./Converter",
     "../model/Engine"
-], function (declare, lang, array, request, Template, Group, PropertyGroup, Text, Choice, OntologyStore, Converter, Engine) {
+], function (declare, lang, array, request, Bundle, Group, PropertyGroup, Text, Choice, OntologyStore, Converter, Engine) {
 
     /**
      * Keeps a registry of templates and reusable items.
@@ -28,14 +28,13 @@ define(["dojo/_base/declare",
         _bundles: null,
         _registry: null,
         _registryByProperty: null,
-        _tRegistry: null,
         _ontologyStore: null,
 
         //===================================================
         // Public API
         //===================================================
         getTemplate: function (id) {
-            return this._tRegistry[id];
+            return this.getItem(id);
         },
         getChildren: function (group, original) {
             if (group == null) {
@@ -44,7 +43,7 @@ define(["dojo/_base/declare",
             var origSource = group.getSource(true);
             var origSourceContent = origSource.content || origSource.items || [];
             if (original) {
-                return this._createItems(origSourceContent, group._forceChildrenClones);
+                return this._createItems(origSourceContent, group._forceChildrenClones, false, group.getBundle());
             } else {
                 var children = [];
                 var ext = this.getItem(origSource["extends"]);
@@ -128,45 +127,44 @@ define(["dojo/_base/declare",
         detectTemplate: function (graph, uri, requiredItems) {
             return Engine.constructTemplate(graph, uri, this, requiredItems);
         },
+
         /**
-         * Templates is a object containing:
-         * path - can be a relative or absolute path to where the templates are/will be loaded from.
-         * source - a SIRFF object.
+         * Bundle is an object containing:
+         * path - can be a relative or absolute path to where the templates are/will be loaded from, optional.
+         * source - a RDForms template object, mandatory.
          *
-         * @param templates
+         * @param {Object} bundleSrc
+         * @return {Bundle} the created bundle.
          */
         registerBundle: function(bundle) {
-            this._bundles.push(bundle)
-            this.createTemplate(bundle.source);
+            bundle.itemStore = this;
+            var b = new Bundle(bundle);
+            this._bundles.push(b);
+
+            var templates = bundle.source.templates || bundle.source.auxilliary;
+            if (templates instanceof Array) {
+                this._createItems(templates, false, b);
+            }
+            if (typeof bundle.source.cachedChoices === "object") {
+                this._ontologyStore.importRegistry(bundle.source.cachedChoices);
+            }
+
+            return b;
         },
         getBundles: function() {
             return this._bundles;
         },
+
+        //Backward compatability
         createTemplate: function (source) {
-            var templates = source.templates || source.auxilliary;
-            if (templates instanceof Array) {
-                this._createItems(templates);
-            }
-            if (typeof source.cachedChoices === "object") {
-                this._ontologyStore.importRegistry(source.cachedChoices);
-            }
-            if (typeof source.root === "object") {
-                var t = new Template({source: source, root: this.createItem(source.root), itemStore: this});
-                if (source.id || source["@id"]) {
-                    this._tRegistry[source.id || source["@id"]] = t;
-                }
-                return t;
-            }
-        },
-        createTemplateFromRoot: function(rootItem) {
-            return new Template({source: {}, root: rootItem, itemStore: this});
+            var b = this.registerBundle({source: source});
+            return b.getRoot();
         },
         createTemplateFromChildren: function (children) {
             var childrenObj = array.map(children || [], function (child) {
                 return typeof child === "string" ? this.getItem(child) : child;
             }, this);
-            var root = new Group({source: {}, children: childrenObj, itemStore: this});
-            return new Template({source: {}, root: root, itemStore: this});
+            return new Group({source: {}, children: childrenObj, itemStore: this});
         },
         setPriorities: function (priorities) {
             this.priorities = priorities;
@@ -212,7 +210,7 @@ define(["dojo/_base/declare",
          * @param source
          * @returns {*}
          */
-        createItem: function (source, forceClone, skipRegistration) {
+        createItem: function (source, forceClone, skipRegistration, bundle) {
             var item, id = source.id || source["@id"], type = source["type"] || source["@type"];
             if (source["extends"]) {
                 //Explicit extends given
@@ -222,7 +220,7 @@ define(["dojo/_base/declare",
                 }
                 if (extItem) {
                     var newSource = this.createExtendedSource(extItem.getSource(), source);
-                    return this.createItem(newSource, false, false);
+                    return this.createItem(newSource, false, false, bundle);
                 }
             }
 
@@ -230,16 +228,16 @@ define(["dojo/_base/declare",
                 //If there is a type in the source then it means that the object is a new item.
                 switch (type) {
                     case "text":
-                        item = new Text({source: source, itemStore: this});
+                        item = new Text({source: source, itemStore: this, bundle: bundle});
                         break;
                     case "choice":
-                        item = new Choice({source: source, itemStore: this, ontologyStore: this._ontologyStore});
+                        item = new Choice({source: source, itemStore: this, ontologyStore: this._ontologyStore, bundle: bundle});
                         break;
                     case "group":
-                        item = new Group({source: source, children: null, itemStore: this}); //Lazy loading of children.
+                        item = new Group({source: source, children: null, itemStore: this, bundle: bundle}); //Lazy loading of children.
                         break;
                     case "propertygroup":
-                        item = new PropertyGroup({source: source, children: null, itemStore: this}); //Lazy loading of children.
+                        item = new PropertyGroup({source: source, children: null, itemStore: this, bundle: bundle}); //Lazy loading of children.
                         break;
                 }
                 if (skipRegistration !== true) {
@@ -251,6 +249,9 @@ define(["dojo/_base/declare",
                     }
                     if (id != null && this._registry[id] == null) {
                         this._registry[id] = item;
+                        if (bundle != null) {
+                            bundle.addItem(item);
+                        }
                     }
                 }
                 return item;
@@ -279,6 +280,10 @@ define(["dojo/_base/declare",
             }
         },
         removeItem: function(item) {
+            var b = item.getBundle();
+            if (b != null) {
+                b.removeItem(item);
+            }
             if (item.getId() != null) {
                 delete this._registry[item.getId()];
             }
@@ -295,16 +300,15 @@ define(["dojo/_base/declare",
             this._bundles = [];
             this._registry = {};
             this._registryByProperty = {};
-            this._tRegistry = {};
             this._ontologyStore = ontologyStore || new OntologyStore();
         },
 
         //===================================================
         // Private methods
         //===================================================
-        _createItems: function (sourceArray, forceClone) {
+        _createItems: function (sourceArray, forceClone, bundle) {
             return array.map(sourceArray, function (child) {
-                return this.createItem(child, forceClone);
+                return this.createItem(child, forceClone, false, bundle);
             }, this);
         }
     });

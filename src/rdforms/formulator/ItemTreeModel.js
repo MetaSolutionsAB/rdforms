@@ -45,7 +45,8 @@ define(["dojo/_base/declare", "../template/Group"], function(declare, Group) {
         }
         if (parent === this.item) {
             var bundle = this.itemStore.getBundles()[0];
-            var templates = bundle.source.templates || bundle.source.auxilliary;
+            var src = bundle.getSource();
+            var templates = src.templates || src.auxilliary;
             templates.push(source);
             children.push(args);
         } else {

@@ -3,8 +3,9 @@ testdata = {};
 //A simple template showing a title and an creator in the form of a foaf:Person with a firstname and lastname.
 //The person being shown in a table format.
 testdata.templateSrc = {
-	"id": "testTemplate",
-	"root":{
+        "root": "test",
+	"templates":[{
+	        "id": "test", 
 		"type":"group",
 		"content":[
 			{
@@ -38,7 +39,7 @@ testdata.templateSrc = {
 				]
 			}
 		]
-	}
+	}]
 };
 
 //Simple rdfjson data, all triples are matched into the template.

@@ -195,12 +195,16 @@ define(["dojo/_base/declare", "../utils"], function (declare, utils) {
                 return this._source;
             }
         },
+        getBundle: function() {
+            return this._bundle;
+        },
         //===================================================
         // Inherited methods
         //===================================================
         constructor: function (params) {
             this._itemStore = params.itemStore;
             this._source = params.source;
+            this._bundle = params.bundle;
             this._internalId = itemCount++;
         },
 

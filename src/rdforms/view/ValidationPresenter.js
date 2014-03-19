@@ -105,7 +105,7 @@ define([
 	
 	addGroup: function(fieldDiv, binding) {
 		if (!this.addValidationMarker(fieldDiv, binding)) {
-			new ValidationPresenter({binding: binding, template: this.template, topLevel: false}, fieldDiv);	
+			new ValidationPresenter({binding: binding, topLevel: false}, fieldDiv);
 		}
 	},
 

@@ -103,7 +103,7 @@ define(["dojo/_base/declare",
 		this.showInfo(binding.getItem(), labelDiv);
 	},
 	addGroup: function(fieldDiv, binding) {
-		var subView = new Presenter({binding: binding, template: this.template, topLevel: false}, fieldDiv);
+		var subView = new Presenter({binding: binding, topLevel: false}, fieldDiv);
 	},
 	addText: function(fieldDiv, binding) {
 		if (this.showLanguage && binding.getLanguage()) {

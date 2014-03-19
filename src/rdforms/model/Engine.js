@@ -1,5 +1,5 @@
 /*global define*/
-define(["../template/Template",
+define([
     "../template/Text",
     "../template/Group",
     "../template/Choice",
@@ -10,12 +10,12 @@ define(["../template/Template",
     "./ChoiceBinding",
     "./system",
     "../utils"
-], function (Template, Text, Group, Choice, PropertyGroup, GroupBinding, PropertyGroupBinding, ValueBinding, ChoiceBinding, system, utils) {
+], function (Text, Group, Choice, PropertyGroup, GroupBinding, PropertyGroupBinding, ValueBinding, ChoiceBinding, system, utils) {
 
     //See public API at the bottom of this file.
 
     var match = function (graph, uri, template) {
-        var rootBinding = new GroupBinding({item: template.getRoot(), childrenRootUri: uri, graph: graph});
+        var rootBinding = new GroupBinding({item: template, childrenRootUri: uri, graph: graph});
         _matchGroupItemChildren(rootBinding);
         _clearDibbs(rootBinding);
         return rootBinding;
@@ -44,8 +44,6 @@ define(["../template/Template",
                 if (item != null) {
                     if (item instanceof Group && item.getProperty() == null) {
                         dojo.forEach(item.getChildren(), addItem);
-                    } else if (item instanceof Template) {
-                        dojo.forEach(item.getRoot().getChildren(), addItem);
                     } else {
                         addItem(item);
                     }

@@ -23,7 +23,6 @@ define(["dojo/_base/declare",
 	// Public attributes
 	//===================================================
 	binding: null,
-	template: null,
 	topLevel: true,
 	compact: false,
 	styleCls: "",

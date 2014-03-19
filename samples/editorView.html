@@ -30,7 +30,7 @@
 			var itemStore = new ItemStore();
 	 		var template = itemStore.createTemplate(testdata.templateSrc);
 			var binding = Engine.match(graph, "http://example.org/about", template);
-			new Editor({template: template, binding: binding}, "compactView");
+			new Editor({binding: binding}, "compactView");
 		});
 	</script>
 	<div id="compactView"></div>

@@ -1,6 +1,7 @@
 /*global define*/
 define(["dojo/_base/declare"], function(declare) {
 
+    var counter = 0;
     /**
      * A Bundle corresponds to a set of items typically managed in a single file.
      */
@@ -13,10 +14,15 @@ define(["dojo/_base/declare"], function(declare) {
         _path: null,
         _items: null,
         _root: null,
+        _id: null,
 
         //===================================================
         // Public API
         //===================================================
+        getInternalId: function() {
+            return this._id;
+        },
+
         getSource: function() {
             return this._source;
         },
@@ -35,6 +41,10 @@ define(["dojo/_base/declare"], function(declare) {
             return this._path;
         },
 
+        getItems: function() {
+            return this._items;
+        },
+
         addItem: function(item) {
             this._items.push(item);
         },
@@ -51,6 +61,8 @@ define(["dojo/_base/declare"], function(declare) {
             this._source = params.source;
             this._path = params.path;
             this._items = [];
+            counter++;
+            this._id = "_bundle_"+counter;
         }
     });
 });

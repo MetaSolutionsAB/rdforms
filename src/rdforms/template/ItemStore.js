@@ -45,12 +45,12 @@ define(["dojo/_base/declare",
             if (original) {
                 return this._createItems(origSourceContent, group._forceChildrenClones, false, group.getBundle());
             } else {
-                var children = [];
                 var ext = this.getItem(origSource["extends"]);
                 if (ext) {
-                    children = children.concat(ext.getChildren());
+                    return ext.getChildren().concat(group.getChildren(true));
+                } else {
+                    return group.getChildren(true);
                 }
-                return children.concat(group.getChildren(true));
             }
         },
         getItem: function (id) {

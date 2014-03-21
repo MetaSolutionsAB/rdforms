@@ -25,13 +25,14 @@ define(["dojo/_base/declare",
     "./ItemEditor",
     "./ItemTreeModel",
     "./ChoicesEditor",
+    "../template/Bundle",
     "../template/Group",
     "../template/Choice",
     "../apps/Experiment",
     "dojo/text!./StoreManagerTemplate.html"
 ], function (declare, lang, xhr, on, domClass, construct, attr, array, json, registry, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin,
              DnDSource, TreeDndSource, Tree, Menu, MenuItem, MenuSeparator, ContentPane, TabContainer, BorderContainer, Button,
-             ItemEditor, ItemTreeModel, ChoicesEditor, Group, Choice, Experiment, template) {
+             ItemEditor, ItemTreeModel, ChoicesEditor, Bundle, Group, Choice, Experiment, template) {
 
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -85,28 +86,7 @@ define(["dojo/_base/declare",
         //===================================================
 
         _buildTree: function () {
-            var items = this.itemStore.getItems();
-            items.sort(function (i1, i2) {
-                var lab1 = i1.getId() || i1.getProperty();
-                var lab2 = i2.getId() || i2.getProperty();
-                if (lab1 > lab2) {
-                    return 1;
-                } else if (lab1 < lab2) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            });
-
-            var root = new Group({source: {}});
-            root.items = items;
-            root._internalId = "_root";
-            root.getChildren = function () {
-                return this.items;
-            };
-       /*     root.getLabel = function() {
-                return "Root";
-            };*/
+            var root = this.itemStore;
             var itemAcceptance = function(node,source,position) {
                 var tn = registry.getEnclosingWidget(node);
                 if (tn.item === root) {
@@ -120,7 +100,7 @@ define(["dojo/_base/declare",
                     return false;
                 }
 
-                if (tn.getParent().item === root) { //Changing order between items in root is not allowed.
+                if (tn.getParent().item instanceof Bundle) { //Changing order between items in root is not allowed.
                     return false;
                 }
 
@@ -134,7 +114,7 @@ define(["dojo/_base/declare",
 
             this.tree = new Tree({
                 showRoot: false,
-                model: new ItemTreeModel(root, this.itemStore),
+                model: new ItemTreeModel(root),
                 dndController: TreeDndSource,
                 "class": "container",
                 checkItemAcceptance: itemAcceptance,
@@ -146,6 +126,9 @@ define(["dojo/_base/declare",
                 onClick: lang.hitch(this, function (item) {
                     if (this._editor != null) {
                         this._editor.destroy();
+                    }
+                    if (item instanceof Bundle) {
+                        return;
                     }
                     this.item = item;
                     this._editor = new ItemEditor({item: item, itemStore: this.itemStore, storeManager: this}, construct.create("div", null, this._editorNode));
@@ -168,9 +151,14 @@ define(["dojo/_base/declare",
                     source = lang.clone(tn.item.getSource(true));
                     delete source.id;
                 }
-                if (tn.item === root || (tn.getParent().item === root && !(tn.item instanceof Group))) {
+                if (tn.item === root || tn.item instanceof Bundle) {
                     source.id = ""+new Date().getTime();
-                    this.__newItem(source, root);
+                    this.__newItem(source, tn.item);
+                    return;
+                }
+                if (tn.getParent().item instanceof Bundle && !(tn.item instanceof Group)) {
+                    source.id = ""+new Date().getTime();
+                    this.__newItem(source, tn.getParent().item);
                     return;
                 }
 
@@ -211,10 +199,11 @@ define(["dojo/_base/declare",
             }));
             this.menu.addChild(new MenuSeparator());
             var removeItem = lang.hitch(this, function(tn) {
-                if (tn.item === root) {
-                    alert("Cannot remove root!");
-                } else if (tn.getParent().item === root) {
-                    this.__removeItem(tn.item);
+                if (tn.item === root || tn.item instanceof Bundle) {
+                    alert("Cannot remove root or bundles!");
+                } else if (tn.getParent().item instanceof Bundle) {
+                    this.tree.get("model").removeItem(tn.item, tn.getParent().item);
+                    this.itemStore.removeItem(tn.item);
                 } else {
                     this.tree.get("model").removeItem(tn.item, tn.getParent().item);
                 }
@@ -231,26 +220,9 @@ define(["dojo/_base/declare",
         },
         _saveTemplates: function () {
             var bundle = this.itemStore.getBundles()[0];
-            xhr.put(bundle.path, {data: json.stringify(bundle.source, true, "  "), headers: {"content-type": "application/json"}});
+            xhr.put(bundle.getPath(), {data: json.stringify(bundle.getSource(), true, "  "), headers: {"content-type": "application/json"}});
         },
-/*        _itemIdClicked: function (event) {
-            if (event.target !== this._listNode) {
-                if (this._curSel != null) {
-                    domClass.remove(this._curSel, "selected");
-                }
-                this._curSel = event.target;
-                domClass.add(this._curSel, "selected");
-                var id = attr.get(event.target, "innerHTML");
-                if (id === "all") {
-                    this._showAll();
-                    this._showEditor();
-                } else {
-                    this.item = this.itemStore.getItem(id) || this.itemStore.getItemByProperty(id);
-                    this._showContent(this.item);
-                    this._showEditor(this.item);
-                }
-            }
-        },*/
+
         _showEditor: function () {
             if (this._editor != null) {
                 this._editor.destroy();
@@ -270,15 +242,15 @@ define(["dojo/_base/declare",
         },
         __newItem: function(source, parent, insertIndex) {
             var newItem;
-            var treeModel = this.tree.get("model");
-            if (parent && parent !== treeModel.item) { //Not root.
-                newItem = this.itemStore.createItem(source, false, true); //Do not clone, but skip registration since item is inline.
-                treeModel.newItem(newItem, parent, insertIndex);
+            if (parent === this.itemStore || parent == null) {
+                parent = this.itemStore;
+                newItem = this.itemStore.createItem(source, false, false, this.itemStore.getBundles()[0]); //Register mew item since it is not inline.
+            } else if (parent instanceof Bundle) {
+                newItem = this.itemStore.createItem(source, false, false, parent); //Register mew item since it is not inline.
             } else {
-                parent = treeModel.item;
-                newItem = this.itemStore.createItem(source); //Register mew item since it is not inline.
-                treeModel.newItem(newItem, parent, insertIndex);
+                newItem = this.itemStore.createItem(source, false, true, parent.getBundle()); //Do not clone, but skip registration since item is inline.
             }
+            this.tree.get("model").newItem(newItem, parent, insertIndex);
             var tn = this.tree.getNodesByItem(newItem)[0];
             tn.getParent().expand();
             this.tree.focusNode(tn);
@@ -287,18 +259,6 @@ define(["dojo/_base/declare",
             this._showEditor();
             this._showContent();
             this._showChoices();
-        },
-        __removeItem: function(item) {
-            var bundle = this.itemStore.getBundles()[0];
-            var src = bundle.getSource();
-            var templates = src.templates || src.auxilliary;
-            var idx = templates.indexOf(item.getSource(true));
-            templates.splice(idx, 1);
-            this.itemStore.removeItem(item);
-            var treeModel = this.tree.get("model");
-            var idx = treeModel.item.items.indexOf(item);
-            treeModel.item.items.splice(idx, 1);
-            treeModel.onChildrenChange(treeModel.item, treeModel.item.items); //Root has changed its children
         },
         _showContent: function () {
             attr.set(this._contentsNode, "value", json.stringify(this.item.getSource(true), true, "  "));

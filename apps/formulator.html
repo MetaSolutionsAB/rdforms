@@ -81,11 +81,11 @@
               }
               require(arr, function() {
                   var args = Array.prototype.slice.call(arguments, 0);
-                  for (var i=0;i<templatescount;i++) {
-                      itemStore.registerBundle({path: parobj.templates[i], source: json.parse(args[i])});
-                  }
                   for (var i=0;i<depscount;i++) {
                       itemStore.registerBundle({path: parobj.deps[i], source: json.parse(args[i+templatescount]), readOnly: true});
+                  }
+                  for (var i=0;i<templatescount;i++) {
+                      itemStore.registerBundle({path: parobj.templates[i], source: json.parse(args[i])});
                   }
                   if (parobj.rdf) {
                       var storeManager = new StoreManager({itemStore: itemStore, data: converters.rdfxml2graph(args[templatescount+depscount]).exportRDFJSON()}, "formulator");

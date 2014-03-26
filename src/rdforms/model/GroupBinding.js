@@ -153,19 +153,22 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 		};
 		dojo.forEach(this.getItemGroupedChildBindings(), function(bindings, index) {
 			var item = childrenItems[index];
+
 			if (item.getProperty() != null) {
 				var nrOfValid = countValidBindings(bindings);
 				var card = item.getCardinality();
 				if (card.min != null && card.min > nrOfValid) {
-					report.errors.push({parentBinding: this, item: item, message: "To few valid values"})
+					report.errors.push({parentBinding: this, item: item, message: "Too few valid values"})
 				} else if (card.pref != null && card.pref > nrOfValid) {
-					report.warnings.push({parentBinding: this, item: item, message: "To few valid values"})
+					report.warnings.push({parentBinding: this, item: item, message: "Too few valid values"})
 				}
 				if (card.max != null && card.max < nrOfValid) {
-					report.errors.push({parentBinding: this, item: item, message: "To many values"})
+					report.errors.push({parentBinding: this, item: item, message: "Too many values"})
 				}
 			}
-			if (item instanceof GroupBinding){
+
+			// if (item instanceof GroupBinding){
+			if (item.getType() === "group") {
 				dojo.forEach(bindings, function(binding) {
 					binding.report(report);
 				});

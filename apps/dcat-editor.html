@@ -70,7 +70,7 @@
                 itemStore.createTemplate(json.parse(foafTemplate));
                 itemStore.createTemplate(json.parse(dcatTemplate));
                 converters.addNamespace("dcat", "http://www.w3.org/ns/dcat#");
-                var e = new Experiment({template: itemStore.createTemplateFromRoot(itemStore.getItem("dcat:Dataset")), graphObj: {}, hideTemplate: true}, "_editorInner");
+                var e = new Experiment({template: itemStore.getItem("dcat:Dataset"), graphObj: {}, hideTemplate: true}, "_editorInner");
                 e.startup();
 
                 var showEditor = function() {

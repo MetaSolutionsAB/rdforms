@@ -43,7 +43,7 @@ define(["dojo/_base/declare",
             var origSource = group.getSource(true);
             var origSourceContent = origSource.content || origSource.items || [];
             if (original) {
-                return this._createItems(origSourceContent, group._forceChildrenClones, false, group.getBundle());
+                return this._createItems(origSourceContent, group._forceChildrenClones, group.getBundle());
             } else {
                 var ext = this.getItem(origSource["extends"]);
                 if (ext) {

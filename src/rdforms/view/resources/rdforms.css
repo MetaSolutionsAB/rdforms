@@ -478,7 +478,19 @@ a.rformsUrl:hover {
 }
 
 .formulatorTable .row label {
-    width: 7em;
+    width: 10em;
+}
+
+.formulatorTable .row .cardinality label {
+    width: 2.5em;
+}
+
+.storeManager .readOnly {
+    color: gray !important;
+}
+
+.storeManager .itemList>div {
+    height: 100%;
 }
 
 .formulatorTable label .addButton {
@@ -525,4 +537,12 @@ a.rformsUrl:hover {
 .langString .langStringLang>* {
     width: 4.7em;
     margin-left: 0.3em;
+}
+
+.maximized_textarea {
+    width: 100%;
+    height: 100%;
+    border-width: 0px;
+    padding: 0px;
+    resize: none;
 }

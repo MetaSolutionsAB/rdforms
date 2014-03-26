@@ -14,9 +14,6 @@
             padding: 0px;
             margin: 0px;
         }
-        .readOnly {
-            color: gray !important;
-        }
         .icon {
             float: left;
             margin-top: 3px;
@@ -38,13 +35,9 @@
             left: 0px;
             right: 0px;
         }
-        .itemList>div {
-            height: 100%;
-        }
-
     </style>
     <script type="text/javascript">
-        var params = window.location.href.match(/\?(.*)#?/)[1].split("&");
+        var params = window.location.href.match(/\?([^#]*)/)[1].split("&");
         var parobj = {};
         for (var i=0;i<params.length;i++) {
             var pair = params[i].split("=");
@@ -135,7 +128,7 @@
 
                 <p>The development was done by <a href="http://metasolutions.se/">MetaSolutions AB</a>.</p>
 
-                <h3>Birds eye view of Formulator</h3>
+                <h3>Bird's-eye view of Formulator</h3>
                 <p>Formulator consists of three panes. The leftmost pane consists of a tree view of all loaded templates
                     grouped in "bundles", i.e. loaded files containing several templates. The loaded bundles are specified
                     as the two parameters templates and deps to the Formulator web-application. Those specified in the templates

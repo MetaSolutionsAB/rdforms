@@ -128,14 +128,17 @@ define(["dojo/_base/declare", "../template/Group", "../template/Bundle", "../tem
             if (parent instanceof Bundle) {
                 var oldItems = parent.getItems();
                 var oldSource = parent.getSource().templates || parent.getSource().auxilliary;
+                var itemIndex = oldItems.indexOf(item);
+                oldItems.splice(itemIndex, 1);
+                var srcIndex = oldSource.indexOf(item.getSource(true)); //Bundle is reordered, find source-index.
+                oldSource.splice(srcIndex, 1);
             } else {
                 var oldItems = parent.getChildren(true);
                 var oldSource = parent.getSource(true).content;
+                var itemIndex = oldItems.indexOf(item);
+                oldItems.splice(itemIndex, 1);
+                oldSource.splice(itemIndex, 1); //No reordering is Groups
             }
-            var itemIndex = oldItems.indexOf(item);
-            oldItems.splice(itemIndex, 1);
-            var srcIndex = oldSource.indexOf(item.getSource(true));
-            oldSource.splice(srcIndex, 1);
             this.onChildrenChange(parent, oldItems);
         },
         isItem: function(item) {
@@ -178,7 +181,7 @@ define(["dojo/_base/declare", "../template/Group", "../template/Bundle", "../tem
                         return "NA_readOnly_destination";
                     } else if (oldParentItem === newParentItem) {
                         return "reorder_in_group";
-                    } else if (oldParentÍtem.getBundle() === newParentItem.getBundle()) {
+                    } else if (oldParentItem.getBundle() === newParentItem.getBundle()) {
                         return "move_between_groups_in_same_bundle";
                     } else if (oldParentItem.getBundle().isReadOnly()) {
                         return "NA_move_from_readOnly_source";

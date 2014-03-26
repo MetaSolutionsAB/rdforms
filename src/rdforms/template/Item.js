@@ -48,9 +48,15 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             var s = this.getSource(true);
             s.type = typeStr;
             delete s["@type"];
+            this.refreshExtends();
         },
         getExtends: function () {
             return this.getSource(true)["extends"] || "";
+        },
+        refreshExtends: function() {
+            if (this.isExtention) {
+                this.setExtends(this.getExtends());
+            }
         },
         setExtends: function(extendsStr) {
             var s = this.getSource(true);
@@ -76,12 +82,14 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
         setLabel: function (value, lang) {
             var s = this.getSource(true);
             s.label = this._setLangHash(s.label, value, lang);
+            this.refreshExtends();
         },
         getLabelMap: function (original) {
             return this.getSource(original).label;
         },
         setLabelMap: function (map) {
             this.getSource(true).label = map;
+            this.refreshExtends();
         },
         getDescription: function (returnDetails, original) {
             var s = this.getSource(original);
@@ -90,12 +98,14 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
         setDescription: function (value, lang) {
             var s = this.getSource(true);
             s.description = this._setLangHash(s.description, value, lang);
+            this.refreshExtends();
         },
         getDescriptionMap: function (original) {
             return this.getSource(original).description;
         },
         setDescriptionMap: function(map) {
             this.getSource(true).description = map;
+            this.refreshExtends();
         },
 
         /**
@@ -112,6 +122,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             } else {
                 delete s.property;
             }
+            this.refreshExtends();
         },
         /**
          * @return {Object} never available for Text item type.
@@ -127,6 +138,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             } else {
                 delete s.constraints;
             }
+            this.refreshExtends();
         },
         /**
          * @return {String} a URI indicating the datatype, for example: "http://www.w3.org/2001/XMLSchema.xsd#date".
@@ -141,6 +153,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             } else {
                 delete s.datatype;
             }
+            this.refreshExtends();
         },
         getPattern: function(original) {
             return this.getSource(original).pattern;
@@ -152,6 +165,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             } else {
                 delete s.pattern;
             }
+            this.refreshExtends();
         },
         /**
          * @return {String} a two character language code, only relevant if the item type is Text and the nodetype is
@@ -167,6 +181,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             } else {
                 delete s.language;
             }
+            this.refreshExtends();
         },
         getMember: function (original) {
             return this.getSource(original).member;
@@ -178,6 +193,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             } else {
                 delete s.member;
             }
+            this.refreshExtends();
         },
         /**
          * Allowed values are:
@@ -195,6 +211,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
                 delete s.nodetype;
             }
             s.nodetype = nt;
+            this.refreshExtends();
         },
         getValue: function (original) {
             return this.getSource(original).value;
@@ -206,6 +223,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             } else {
                 delete s.value;
             }
+            this.refreshExtends();
         },
         /**
          * @return {Object} containing max, min, and preferred properties.
@@ -220,6 +238,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             } else {
                 delete s.cardinality;
             }
+            this.refreshExtends();
         },
         isEnabled: function (original) {
             var s = this.getSource(original);
@@ -232,6 +251,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             } else {
                 s.enabled = en;
             }
+            this.refreshExtends();
         },
 
         /**
@@ -248,6 +268,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             } else {
                 delete s.cls;
             }
+            this.refreshExtends();
         },
 
         /**
@@ -293,6 +314,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
         },
         setStyles: function(arr) {
             this.getSource(true).styles = arr;
+            this.refreshExtends();
         },
         hasStyle: function (sty, original) {
             var s = this.getSource(original);

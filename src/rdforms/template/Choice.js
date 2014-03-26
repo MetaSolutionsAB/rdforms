@@ -88,6 +88,7 @@ define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, I
                 this._origStaticIsSorted = true;
             }
             s.choices = choices;
+            this.refreshExtends();
         },
 
         setExtends: function(extendsStr) {
@@ -137,6 +138,7 @@ define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, I
             } else {
                 s.ontologyUrl = url;
             }
+            this.refreshExtends();
         },
         getParentProperty: function (original) {
             return this.getSource(original).parentProperty;
@@ -148,6 +150,7 @@ define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, I
             } else {
                 s.parentProperty = prop;
             }
+            this.refreshExtends();
         },
         getHierarchyProperty: function (original) {
             return this.getSource(original).hierarchyProperty;
@@ -159,6 +162,7 @@ define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, I
             } else {
                 s.hierarchyProperty = prop;
             }
+            this.refreshExtends();
         },
         isParentPropertyInverted: function (original) {
             return this.getSource(original).isParentPropertyInverted === true;
@@ -170,6 +174,7 @@ define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, I
             } else {
                 delete s.isParentPropertyInverted;
             }
+            this.refreshExtends();
         },
         isHierarchyPropertyInverted: function (original) {
             return this.getSource(original).isHierarchyPropertyInverted === true;
@@ -181,6 +186,7 @@ define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, I
             } else {
                 delete s.isHierarchyPropertyInverted;
             }
+            this.refreshExtends();
         },
 
         //===================================================

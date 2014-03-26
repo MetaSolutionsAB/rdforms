@@ -39,7 +39,6 @@ define(["dojo/_base/declare",
                 model: new ChoicesTreeModel(this.choices),
                 disabled: readOnly,
                 dndController: TreeDndSource,
-                "class": "container",
                 checkItemAcceptance: function(node,source,position) {
                     return !readOnly && position === "over";
                 },

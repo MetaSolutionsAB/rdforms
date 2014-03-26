@@ -70,6 +70,12 @@ define(["dojo/_base/declare",
                     this._showContent();
                 }
             }));
+            var readOnly = this.saveDisabled || array.every(this.itemStore.getBundles(), function(bundle) {
+                return bundle.isReadOnly();
+            })
+            if (readOnly) {
+                this._saveAllButton.set("disabled", true);
+            }
         },
         resize: function () {
             this.inherited("resize", arguments);
@@ -87,38 +93,38 @@ define(["dojo/_base/declare",
 
         _buildTree: function () {
             var root = this.itemStore;
+            var model = new ItemTreeModel(root);
+
             var itemAcceptance = function(node,source,position) {
                 var tn = registry.getEnclosingWidget(node);
+                var sourceTn = source.getSelectedTreeNodes()[0];
                 if (tn.item === root) {
                     return false;
                 }
-                var sourceTn = source.getSelectedTreeNodes()[0];
-                if (position === "over") {
-                    if (tn.item instanceof Group) {
-                        return tn.item.getChildren().indexOf(sourceTn.item) == -1; //only allow if the item is not already a child.
-                    }
+
+                var item = sourceTn.item;
+                var oldParentItem = sourceTn.getParent().item;
+                var newParentItem = position === "over" ? tn.item: tn.getParent().item;
+                if (!(newParentItem instanceof Group || newParentItem instanceof Bundle)) {
                     return false;
                 }
-
-                if (tn.getParent().item instanceof Bundle) { //Changing order between items in root is not allowed.
-                    return false;
-                }
-
-                if (tn.getParent() == sourceTn.getParent()) { //a move within the same group, always ok.
-                    return true;
-                } else {
-                    //Only allow a move into a group if the item is not already a child.
-                    return tn.getParent().item.getChildren().indexOf(sourceTn.item) == -1;
-                }
+                return model.getPasteAction(item, oldParentItem, newParentItem)[0] !== "N";
             };
 
             this.tree = new Tree({
                 showRoot: false,
-                model: new ItemTreeModel(root),
+                model: model,
                 dndController: TreeDndSource,
-                "class": "container",
                 checkItemAcceptance: itemAcceptance,
                 betweenThreshold: 5,
+                getRowClass: function(item) {
+                    if (item === root) {
+                        return "readOnly";
+                    } else {
+                        var bundle = item instanceof Bundle ? item : item.getBundle();
+                        return bundle.isReadOnly() ? "readOnly": "editable";
+                    }
+                },
                 getIconClass: function(/*dojo.store.Item*/ item, /*Boolean*/ opened){
                     return (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") :
                         item instanceof Choice ? "dijitIconConnector" : "dijitLeaf";
@@ -127,11 +133,7 @@ define(["dojo/_base/declare",
                     if (this._editor != null) {
                         this._editor.destroy();
                     }
-                    if (item instanceof Bundle) {
-                        return;
-                    }
                     this.item = item;
-                    this._editor = new ItemEditor({item: item, itemStore: this.itemStore, storeManager: this}, construct.create("div", null, this._editorNode));
                     this._showEditor();
                     this._showContent();
                     this._showChoices();
@@ -146,6 +148,11 @@ define(["dojo/_base/declare",
                 selector: ".dijitTreeNode"
             });
             var addItem = lang.hitch(this, function(tn, source) {
+                var bundle = tn.item instanceof Bundle ? tn.item : tn.item.getBundle();
+                if (bundle.isReadOnly()) {
+                    alert("Cannot perform operation on read-only item.");
+                    return;
+                }
                 var clone = source == null;
                 if (clone) {
                     source = lang.clone(tn.item.getSource(true));
@@ -202,9 +209,17 @@ define(["dojo/_base/declare",
                 if (tn.item === root || tn.item instanceof Bundle) {
                     alert("Cannot remove root or bundles!");
                 } else if (tn.getParent().item instanceof Bundle) {
+                    if (tn.item.getBundle().isReadOnly()) {
+                        alert("Cannot remove read-only items.");
+                        return;
+                    }
                     this.tree.get("model").removeItem(tn.item, tn.getParent().item);
                     this.itemStore.removeItem(tn.item);
                 } else {
+                    if (tn.getParent().item.getBundle().isReadOnly()) {
+                        alert("Cannot remove read-only items.");
+                        return;
+                    }
                     this.tree.get("model").removeItem(tn.item, tn.getParent().item);
                 }
             });
@@ -219,26 +234,20 @@ define(["dojo/_base/declare",
             this.menu.startup();
         },
         _saveTemplates: function () {
-            var bundle = this.itemStore.getBundles()[0];
-            xhr.put(bundle.getPath(), {data: json.stringify(bundle.getSource(), true, "  "), headers: {"content-type": "application/json"}});
+            array.forEach(this.itemStore.getBundles(), function(bundle) {
+                if (!bundle.isReadOnly()) {
+                    xhr.put(bundle.getPath(), {data: json.stringify(bundle.getSource(), true, "  "), headers: {"content-type": "application/json"}});
+                }
+            });
         },
 
         _showEditor: function () {
             if (this._editor != null) {
                 this._editor.destroy();
             }
-            if (this.item != null) {
+            if (this.item != null && !(this.item instanceof Bundle)) {
                 this._editor = new ItemEditor({item: this.item, itemStore: this.itemStore, storeManager: this}, construct.create("div", null, this._editorNode));
             }
-        },
-        _newTextItem: function() {
-            this.__newItem({type: "text", id: ""+new Date().getTime()});
-        },
-        _newChoiceItem: function() {
-            this.__newItem({type: "choice", id: ""+new Date().getTime()});
-        },
-        _newGroupItem: function() {
-            this.__newItem({type: "group", id: ""+new Date().getTime()});
         },
         __newItem: function(source, parent, insertIndex) {
             var newItem;
@@ -262,16 +271,19 @@ define(["dojo/_base/declare",
         },
         _showContent: function () {
             attr.set(this._contentsNode, "value", json.stringify(this.item.getSource(true), true, "  "));
+            if (this._editorDijit != null) {
+                this._editorDijit.destroy();
+            }
+            if (this.item instanceof Bundle) {
+                return;
+            }
             var template;
             if (this.item.getChildren) {
                 template = this.item;
             } else {
                 template = this.itemStore.createTemplateFromChildren([this.item]);
             }
-            if (this._editorDijit != null) {
-                this._editorDijit.destroy();
-            }
-            this._editorDijit = new Experiment({hideTemplate: true, template: template, graphObj: this.data}, construct.create("div", null, this._previewNode));
+            this._editorDijit = new Experiment({gutters: false, hideTemplate: true, template: template, graphObj: this.data}, construct.create("div", null, this._previewNode));
             this._editorDijit.startup();
             this._bcDijit.resize();
         },

@@ -65,14 +65,14 @@ define(["dojo/_base/declare",
                     arr.push(this._registry[key]);
                 }
             }
-            for (var key in this._registryByProperty) {
+          /*  for (var key in this._registryByProperty) {
                 if (this._registryByProperty.hasOwnProperty(key)) {
                     var item = this._registryByProperty[key]
                     if (item.getId() == null) {
                         arr.push(item);
                     }
                 }
-            }
+            }*/
             return arr;
         },
         renameItem: function(from, to) {
@@ -279,7 +279,7 @@ define(["dojo/_base/declare",
                 }
             }
         },
-        removeItem: function(item) {
+        removeItem: function(item, removereferences) {
             var b = item.getBundle();
             if (b != null) {
                 b.removeItem(item);
@@ -290,6 +290,10 @@ define(["dojo/_base/declare",
             var prop = item.getProperty();
             if (prop != null && this._registryByProperty[prop] === item) {
                 delete this._registryByProperty[prop];
+            }
+            if (removereferences) {
+                //TODO
+
             }
         },
 

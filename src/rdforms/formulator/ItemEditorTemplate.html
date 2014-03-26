@@ -2,7 +2,11 @@
     <div class="formulatorTable">
         <div class="row"><label for="${id}_type">Type:</label><div><div id="${id}_type" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_typeDijit" data-dojo-props="disabled: true"></div></div></div>
         <div class="row"><label for="${id}_id">Id:</label><div><div id="${id}_id" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_idDijit" data-dojo-attach-event="onChange: _changeId" data-dojo-props="intermediateChanges: true"></div></div></div>
-        <div class="row"><label for="${id}_extends">Extends:</label><div><div id="${id}_extends" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_extendsDijit" data-dojo-attach-event="onChange: _changeExtends" data-dojo-props="intermediateChanges: true"></div></div></div>
+        <div class="row"><label for="${id}_extends">Extends:</label>
+            <div data-dojo-type="dojo/dnd/Target" data-dojo-attach-point="_extends_target" data-dojo-props="accept: ['treenode', 'text']">
+                <div id="${id}_extends" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_extendsDijit" data-dojo-attach-event="onChange: _changeExtends" data-dojo-props="intermediateChanges: true"></div>
+            </div>
+        </div>
         <div class="row"><label for="${id}_property">Property:</label><div><div id="${id}_property" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_propDijit" data-dojo-attach-event="onChange: _changeProperty" data-dojo-props="intermediateChanges: true"></div></div></div>
         <div class="row"><label for="${id}_nt">NodeType:</label><div>
             <select class="select" name="select1" data-dojo-type="dijit/form/Select" id="${id}_nt" data-dojo-attach-point="_ntDijit" data-dojo-attach-event="onChange: _changeNT">

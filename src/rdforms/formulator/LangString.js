@@ -77,12 +77,12 @@ define(["dojo/_base/declare",
             var langNode = construct.create("div", {"class": "langStringLang"}, row);
             var text;
             if (this.multiline) {
-                text = Textarea({value: s, onChange: this._onChange, intermediateChanges: true}, construct.create("div", null, textNode));
+                text = Textarea({value: s, disabled: this.get("disabled"), onChange: this._onChange, intermediateChanges: true}, construct.create("div", null, textNode));
                 text.resize();
             } else {
-                text = TextBox({value: s, onChange: this._onChange, intermediateChanges: true}, construct.create("div", null, textNode));
+                text = TextBox({value: s, disabled: this.get("disabled"), onChange: this._onChange, intermediateChanges: true}, construct.create("div", null, textNode));
             }
-            var lang = ComboBox({value: l, onChange: this._onChange, store: this._comboChoiceStore, searchAttr: "id"}, construct.create("div", null, langNode));
+            var lang = ComboBox({value: l, disabled: this.get("disabled"), onChange: this._onChange, store: this._comboChoiceStore, searchAttr: "id"}, construct.create("div", null, langNode));
             if (this._rows == null) {
                 this._rows = [];
             }

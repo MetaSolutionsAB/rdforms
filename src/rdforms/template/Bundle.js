@@ -15,6 +15,8 @@ define(["dojo/_base/declare"], function(declare) {
         _items: null,
         _root: null,
         _id: null,
+        _modified: false,
+        _readOnly: false,
 
         //===================================================
         // Public API
@@ -53,6 +55,18 @@ define(["dojo/_base/declare"], function(declare) {
             this._items.splice(this._items.indexOf(item), 1);
         },
 
+        isModified: function() {
+           return this._modified;
+        },
+
+        setModified: function(modified) {
+            this._modified = modified;
+        },
+
+        isReadOnly: function() {
+            return this._readOnly || this._path == null;
+        },
+
         //===================================================
         // Inherited methods
         //===================================================
@@ -60,6 +74,7 @@ define(["dojo/_base/declare"], function(declare) {
             this._itemStore = params.itemStore;
             this._source = params.source;
             this._path = params.path;
+            this._readOnly = params.readOnly;
             this._items = [];
             counter++;
             this._id = "_bundle_"+counter;

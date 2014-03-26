@@ -1,20 +1,24 @@
 /*global define*/
 define([
     "dojo/_base/lang",
+    "dojo/_base/array",
     "dojo/_base/declare",
     "dojo/aspect",
 	"dojo/on",
     "dojo/json",
     "dojo/dom-construct",
     "dijit/_WidgetBase",
+    "dijit/registry",
     "dijit/form/ComboBox",
     "rdforms/formulator/LangString",
+    "rdforms/template/Item",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
     "dijit/form/ToggleButton", //For template
+    "dojo/dnd/Target",
 	"dojo/text!./ItemEditorTemplate.html"
-], function(lang, declare, aspect, on, json, construct, _WidgetBase, ComboBox, LangString, _TemplatedMixin, _WidgetsInTemplateMixin,
-            ToggleButton, template) {
+], function(lang, array, declare, aspect, on, json, construct, _WidgetBase, registry, ComboBox, LangString,
+            Item, _TemplatedMixin, _WidgetsInTemplateMixin, ToggleButton, Target, template) {
 
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -35,6 +39,7 @@ define([
         postCreate: function() {
             this.inherited("postCreate", arguments);
             this.lock = true;
+            var readOnly = this.item.getBundle().isReadOnly()
             this._styles2Dijit = {};
             var styles= this.item.getAvailableStyles();
             var f = lang.hitch(this, this._changeStyles);
@@ -42,6 +47,7 @@ define([
                 var style = styles[i];
                 this._styles2Dijit[style] = new ToggleButton({
                     showLabel: true,
+                    disabled: readOnly,
                     checked: this.item.hasStyle(style),
                     onChange: f,
                     label: style,
@@ -49,48 +55,70 @@ define([
                 }, construct.create("div", null, this._stylesWrapper));
             }
 
-            var id = this.item.getId(true);
-            if (id == null) {
-                this._idDijit.set("disabled", "true");
-            } else {
-                this._idDijit.set("value", id);
-            }
             this._typeDijit.set("value", this.item.getType(true) || "");
             this._extendsDijit.set("value", this.item.getExtends(true) || "");
             this._propDijit.set("value", this.item.getProperty(true) || "");
             this._ntDijit.set("value", this.item.getNodetype(true) || "");
             this._dtDijit.set("value", this.item.getDatatype(true) || "");
-            this._dtDijit.set("disabled", this.item.getNodetype(true) !== "DATATYPE_LITERAL");
             this._patternDijit.set("value", this.item.getPattern(true) || "");
-            this._patternDijit.set("disabled", this.item.getNodetype(true) !== "ONLY_LITERAL");
-            this._labelLangString.setMap(this.item.getLabelMap(true));
-            aspect.before(this._labelLangString, "onChange", lang.hitch(this.item, "setLabelMap"));
-            aspect.after(this._labelLangString, "onChange", lang.hitch(this, this.itemChanged));
-            on(this._addLabel, "click", lang.hitch(this._labelLangString, this._labelLangString.add));
-            this._descLangString.setMap(this.item.getDescriptionMap(true));
-            aspect.before(this._descLangString, "onChange", lang.hitch(this.item, "setDescriptionMap"));
-            aspect.after(this._descLangString, "onChange", lang.hitch(this, this.itemChanged));
-            on(this._addDesc, "click", lang.hitch(this._descLangString, this._descLangString.add));
             var card = this.item.getCardinality(true);
             this._minDijit.set("value", card.min || "");
             this._prefDijit.set("value", card.pref || "");
             this._maxDijit.set("value", card.max || "");
             this._constrDijit.set("value", json.stringify(this.item.getConstraints(true) || {}));
-            this._constrDijit.set("disabled", this.item.getType(true) === "text" || (this.item.getNodetype(true) !== "URI" && this.item.getNodetype(true) !== "RESOURCE"));
-            this._constrDijit.validator = function(value, constraints){
-                try {
-                    if (value !== "{}" && value !== "") {
-                        var obj = json.parse(value);
-                    }
-                    return true;
-                } catch(e) {
-                    return false;
-                }
-            }
             this._clsDijit.set("value", this.item.getClasses(true).join(", "));
             setTimeout(lang.hitch(this, function() {
                 this.lock = false;
             }), 200);
+            if (readOnly) {
+                array.forEach(["_idDijit", "_typeDijit", "_extendsDijit", "_propDijit", "_ntDijit", "_dtDijit",
+                    "_patternDijit", "_labelLangString", "_descLangString", "_minDijit", "_prefDijit", "_maxDijit",
+                    "_constrDijit", "_clsDijit"], function(wid) {
+                    this[wid].set("disabled", "true");
+                }, this);
+            } else {
+                var id = this.item.getId(true);
+                if (id == null) {
+                    this._idDijit.set("disabled", "true");
+                } else {
+                    this._idDijit.set("value", id);
+                }
+                this._dtDijit.set("disabled", this.item.getNodetype(true) !== "DATATYPE_LITERAL");
+                this._patternDijit.set("disabled", this.item.getNodetype(true) !== "ONLY_LITERAL");
+                aspect.before(this._labelLangString, "onChange", lang.hitch(this.item, "setLabelMap"));
+                aspect.after(this._labelLangString, "onChange", lang.hitch(this, this.itemChanged));
+                on(this._addLabel, "click", lang.hitch(this._labelLangString, this._labelLangString.add));
+                aspect.before(this._descLangString, "onChange", lang.hitch(this.item, "setDescriptionMap"));
+                aspect.after(this._descLangString, "onChange", lang.hitch(this, this.itemChanged));
+                on(this._addDesc, "click", lang.hitch(this._descLangString, this._descLangString.add));
+                this._constrDijit.set("disabled", this.item.getType(true) === "text" || (this.item.getNodetype(true) !== "URI" && this.item.getNodetype(true) !== "RESOURCE"));
+                this._constrDijit.validator = function(value, constraints){
+                    try {
+                        if (value !== "{}" && value !== "") {
+                            var obj = json.parse(value);
+                        }
+                        return true;
+                    } catch(e) {
+                        return false;
+                    }
+                }
+
+                this._extends_target.checkAcceptance = function(source, nodes) {
+                    if (nodes.length === 1) {
+                        var tn = registry.getEnclosingWidget(nodes[0]);
+                        return tn.item instanceof Item;
+                    }
+
+                    return false;
+                };
+                this._extends_target.onDrop = lang.hitch(this, function(source, nodes, copy) {
+                    var tn = registry.getEnclosingWidget(nodes[0]);
+                    this._extendsDijit.set("value", tn.item.getId());
+                });
+            }
+            this._labelLangString.setMap(this.item.getLabelMap(true));
+            this._descLangString.setMap(this.item.getDescriptionMap(true));
+
 //            this._styDijit.set("value", json.stringify(this.item.getStyles() || {}));
         },
         itemChanged: function() {

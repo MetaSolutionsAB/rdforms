@@ -4,10 +4,18 @@
       <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
   </head>
     <body class="claro">
-    <script src="../target-all/dojo/dojo.js.uncompressed.js"></script>
+    <script>
+    var dojoConfig = {
+	async:true,
+	packages: [
+	    { name: "rdforms", location: "../../../src/rdforms" },
+	    { name: "rdfjson", location: "../../../src/rdfjson" }]
+    };
+    </script>
+    <script src="../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
     <style>
-        @import "../target-all/dijit/themes/claro/claro.css";
-        @import "../target-all/rdforms/view/resources/rdforms.css";
+        @import "../lib/dojo/dijit/themes/claro/claro.css";
+        @import "../src/rdforms/view/resources/rdforms.css";
         html, body {
             height: 100%;
             width: 100%;

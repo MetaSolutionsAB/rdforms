@@ -1,6 +1,7 @@
 /*global define*/
 define(["dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/array",
     "dojo/aspect",
     "dojo/on",
     "dojo/dom-class",
@@ -21,7 +22,7 @@ define(["dojo/_base/declare",
     "dijit/tree/dndSource",
     "./ChoicesTreeModel",
     "dojo/text!./ChoicesEditorTemplate.html"
-], function(declare, lang, aspect, on, domClass, construct, style, registry, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin, Tree,
+], function(declare, lang, array, aspect, on, domClass, construct, style, registry, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin, Tree,
             Menu, MenuItem, TreeDndSource, ChoicesTreeModel, template) {
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -30,65 +31,74 @@ define(["dojo/_base/declare",
         postCreate: function() {
             this.choices = this.item.getStaticChoices() || [];
             this.inherited("postCreate", arguments);
+            var readOnly = this.item.getBundle().isReadOnly();
 
-            this._valueDijit.validator = lang.hitch(this, function(value, constraints){
-                var model = this.tree.get("model");
-                if (this._choice == null || this._choice.value === value) {
-                    return true;
-                }
-                return model.isNameFree(value);
-            });
 
-            var itemAcceptance = function(node,source,position) {
-                return position === "over";
-            };
             this.tree = new Tree({
                 showRoot: true,
                 model: new ChoicesTreeModel(this.choices),
+                disabled: readOnly,
                 dndController: TreeDndSource,
                 "class": "container",
-                checkItemAcceptance: itemAcceptance,
+                checkItemAcceptance: function(node,source,position) {
+                    return !readOnly && position === "over";
+                },
                 betweenThreshold: 5,
                 onClick: lang.hitch(this, this._editChoice)
             }, construct.create("div", null, this._treeNode));
             this.tree.startup();
-            aspect.before(this._labelLangString, "onChange", lang.hitch(this, "_setLabelMap"));
-            on(this._addLabel, "click", lang.hitch(this._labelLangString, this._labelLangString.add));
-            aspect.before(this._descLangString, "onChange", lang.hitch(this, "_setDescriptionMap"));
-            on(this._addDesc, "click", lang.hitch(this._descLangString, this._descLangString.add));
 
-            var self = this;
-            this.menu = new Menu({
-                targetNodeIds: [this.tree.id],
-                selector: ".dijitTreeNode"
-            });
-            this.menu.addChild(new MenuItem({
-                label: "New Choice",
-                iconClass: "dijitIconFile",
-                onClick: function() {
-                    var tn = registry.byNode(this.getParent().currentTarget);
-                    var treeModel = self.tree.get("model");
-                    var newChoice = {value: ""+(new Date()).getTime()};
-                    treeModel.newItem(newChoice, tn.item);
-                    var newtn = self.tree.getNodesByItem(newChoice)[0];
-                    tn.expand();
-                    self.tree.focusNode(newtn);
-                    self.tree.set("selectedItem", newChoice);
-                    self._editChoice(newChoice);
-                }
-            }));
-            this.menu.addChild(new MenuItem({
-                label: "Remove choice",
-                iconClass: "dijitEditorIcon dijitEditorIconDelete",
-                onClick: function() {
-                    var tn = registry.byNode(this.getParent().currentTarget);
-                    var treeModel = self.tree.get("model");
-                    treeModel.removeItem(tn.item, tn.getParent().item);
-                    self._choicesChanged();
-                }
-            }));
+            if (readOnly) {
+                array.forEach(["_valueDijit", "_labelLangString", "_descLangString", "_valueDijit", "_selectable",
+                    "_inlineDijit", "_ontologyDijit", "_ppDijit", "_ppinvDijit", "_hpDijit", "_hpinvDijit"], function(wid) {
+                    this[wid].set("disabled", "true");
+                }, this);
+            } else {
+                this._valueDijit.validator = lang.hitch(this, function(value, constraints){
+                    var model = this.tree.get("model");
+                    if (this._choice == null || this._choice.value === value) {
+                        return true;
+                    }
+                    return model.isNameFree(value);
+                });
+                aspect.before(this._labelLangString, "onChange", lang.hitch(this, "_setLabelMap"));
+                on(this._addLabel, "click", lang.hitch(this._labelLangString, this._labelLangString.add));
+                aspect.before(this._descLangString, "onChange", lang.hitch(this, "_setDescriptionMap"));
+                on(this._addDesc, "click", lang.hitch(this._descLangString, this._descLangString.add));
+                var self = this;
+                this.menu = new Menu({
+                    targetNodeIds: [this.tree.id],
+                    selector: ".dijitTreeNode"
+                });
+                this.menu.addChild(new MenuItem({
+                    label: "New Choice",
+                    iconClass: "dijitIconFile",
+                    onClick: function() {
+                        var tn = registry.byNode(this.getParent().currentTarget);
+                        var treeModel = self.tree.get("model");
+                        var newChoice = {value: ""+(new Date()).getTime()};
+                        treeModel.newItem(newChoice, tn.item);
+                        var newtn = self.tree.getNodesByItem(newChoice)[0];
+                        tn.expand();
+                        self.tree.focusNode(newtn);
+                        self.tree.set("selectedItem", newChoice);
+                        self._editChoice(newChoice);
+                    }
+                }));
+                this.menu.addChild(new MenuItem({
+                    label: "Remove choice",
+                    iconClass: "dijitEditorIcon dijitEditorIconDelete",
+                    onClick: function() {
+                        var tn = registry.byNode(this.getParent().currentTarget);
+                        var treeModel = self.tree.get("model");
+                        treeModel.removeItem(tn.item, tn.getParent().item);
+                        self._choicesChanged();
+                    }
+                }));
 
-            this.menu.startup();
+                this.menu.startup();
+            }
+
             this._inlineDijit.set("checked", this.item.getStaticChoices() != null);
             this._ontologyDijit.set("value", this.item.getOntologyUrl() || "");
             this._ppDijit.set("value", this.item.getParentProperty() || "");

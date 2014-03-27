@@ -54,13 +54,22 @@ Note that by default it will start the server on port 8181, so make sure that it
 Otherwise you have to change the server.js file. Now when the simple web server is running you can point your browser
 to the *templates* directory at [http://localhost:8181/templates/](http://localhost:8181/templates/).
 
-You will see a listing of all the RDForms templates in that directory. If you click on one of them the Formulator will
-launch that allows you to test the template functionality. Note that if there is an accompanying file ending with .rdf
+You will see a listing of all the RDForms template bundles in that directory. If you click on one of them the Formulator will
+launch that allows you to test the template bundle functionality. Note that if there is an accompanying file ending with .rdf
 it will be loaded and matched RDF expressions will show up in the editor/presentor UI (only triples originating from the
 resource *http://example.com/about*).
 
-The Formulator also allows you to change the RDForms template
-and if you press the save button it will update the template on disk.
+The Formulator also allows you to change the RDForms template bundle and if you press the save button it will update the template bundle
+on disk. Note that Formulator takes three arguments:
+
+<table><tbody>
+<th><td>Argument</td><td>Value</td><td>Comment</td></th>
+<tr><td>templates</td><td>a comma-separated list of template bundles</td><td>each template bundle must be specified relatively the formulator.html file.</td></tr>
+<tr><td>deps</td><td>a comma-separated list of template bundles</td><td>these template bundles will be read-only, but can be referenced</td></tr>
+<tr><td>saveDisabled</td><td>true or false, false is assumed if this argument is not provided</td><td>indicates whether the save button should be enabled or not</td></tr>
+</tbody></table>
+
+For example: http://localhost:8181/rdforms/apps/formulator?templates=../templates/test.json&deps=../templates/dcterms.json
 
 To help you experiment without destroying the existing established RDForms templates there is a another directory called
 *local_templates* accessible at

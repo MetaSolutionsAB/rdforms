@@ -62,12 +62,11 @@ resource *http://example.com/about*).
 The Formulator also allows you to change the RDForms template bundle and if you press the save button it will update the template bundle
 on disk. Note that Formulator takes three arguments:
 
-<table><tbody>
-<th><td>Argument</td><td>Value</td><td>Comment</td></th>
-<tr><td>templates</td><td>a comma-separated list of template bundles</td><td>each template bundle must be specified relatively the formulator.html file.</td></tr>
-<tr><td>deps</td><td>a comma-separated list of template bundles</td><td>these template bundles will be read-only, but can be referenced</td></tr>
-<tr><td>saveDisabled</td><td>true or false, false is assumed if this argument is not provided</td><td>indicates whether the save button should be enabled or not</td></tr>
-</tbody></table>
+Argument | Value | Comment
+---------|-------|--------
+templates | a comma-separated list of template bundles | each template bundle must be specified relatively the formulator.html file.
+deps | a comma-separated list of template bundles | these template bundles will be read-only, but can be referenced
+saveDisabled | true or false, false is assumed if this argument is not provided | indicates whether the save button should be enabled or not
 
 For example: http://localhost:8181/rdforms/apps/formulator?templates=../templates/test.json&deps=../templates/dcterms.json
 

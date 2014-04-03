@@ -1,36 +1,24 @@
 <html>
   <head>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <link type="text/css" href="../release/dijit/themes/claro/claro.css" rel="stylesheet" />
+      <link type="text/css" href="../release/rdforms/view/resources/rdforms.css" rel="stylesheet" />
+      <script src="../release/dojo/dojo.js"></script>
   </head>
-  <body class="tundra">
-    <script>
-    var dojoConfig = {
-	async:true,
-	packages: [
-	    { name: "rforms", location: "../../../src/rforms" },
-	    { name: "rdfjson", location: "../../../src/rdfjson" }]
-    };
-   </script>
-    <script src="../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
-    <script type="text/javascript" src="testdata.js"></script>
-	
-    <style>
-      @import "../lib/dojo/dijit/themes/tundra/tundra.css"; /* required when dijit */	
-      @import "../src/rdforms/view/resources/rforms.css";
-    </style>
-
-    <script type="text/javascript">
-      	  require(['rdfjson/converters',        //Contains the rdf/json to rdf/xml converter 
-	           'dojo/json',                 //To serialize/deserialize the json
-	           'dijit/registry',            //To access the dijits
-                   'dojo/parser',               //To parse the inline template
-                   'dijit/form/SimpleTextarea', //Used in the template
-                   'dojo/domReady!'             //Wait until the dom is ready.
-	       ], function(converters, json, registry, parser) {
-	    parser.parse();
-	    registry.byId("source").set("value", json.stringify(testdata.rdfSrc, true, "  "));
-	    registry.byId("destination").set("value", converters.rdfjson2rdfxml(testdata.rdfSrc));
-	  });
+  <body class="claro">
+  <script type="text/javascript">
+      require(['rdfjson/converters',        //Contains the rdf/json to rdf/xml converter
+          'dojo/json',                 //To serialize/deserialize the json
+          'dijit/registry',            //To access the dijits
+          'dojo/parser',               //To parse the inline template
+          'dojo/text!./sampleRDF.json',         //The sample RDF
+          'dijit/form/SimpleTextarea', //Used in the template
+          'dojo/domReady!'             //Wait until the dom is ready.
+      ], function(converters, json, registry, parser, sampleRDF) {
+          parser.parse();
+          registry.byId("source").set("value", sampleRDF);
+          registry.byId("destination").set("value", converters.rdfjson2rdfxml(json.parse(sampleRDF)));
+      });
 	</script>
 	<div style="width:50%;height:100%;float:left;">
 		<h1>RDF/XML loaded from testgraph.rdf</h1>

@@ -30,7 +30,9 @@
         var itemStore = new ItemStore();
         var bundle = itemStore.registerBundle({source: json.parse(sampleTemplate)});
         var binding = Engine.match(graph, "http://example.org/about", bundle.getRoot());
-        new Editor({binding: binding, compact: true}, "node");
+        new Editor({binding: binding, compact: true
+
+        }, "node");
     });
 </script>
 <div id="node"></div>

@@ -66,6 +66,10 @@ define(["dojo/_base/declare", "./Item"], function(declare, Item) {
         //===================================================
         constructor: function(params) {
             this._children = params.children;
+            if (this._source.content != null) {
+                this._source.items = this._source.content;
+                delete this._source.content;
+            }
         },
         getNodetype: function() {
             return this.inherited("getNodetype", arguments) || "RESOURCE"; //Ugly fix because it is often wrong written in SIRFF.

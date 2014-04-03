@@ -105,14 +105,12 @@ define(["dojo/_base/declare", "../template/Group", "../template/Bundle", "../tem
             } else {
                 children = parent.getChildren(true);
                 var psource = parent.getSource(true);
-                if (psource.content == null) {
-                    psource.content = [];
-                }
+                psource.items = psource.items || [];
                 if (isNaN(insertIndex)) {
-                    psource.content.push(source);
+                    psource.items.push(source);
                     children.push(args);
                 } else {
-                    psource.content.splice(insertIndex, 0, source);
+                    psource.items.splice(insertIndex, 0, source);
                     children.splice(insertIndex, 0, args);
                 }
             }
@@ -134,7 +132,7 @@ define(["dojo/_base/declare", "../template/Group", "../template/Bundle", "../tem
                 oldSource.splice(srcIndex, 1);
             } else {
                 var oldItems = parent.getChildren(true);
-                var oldSource = parent.getSource(true).content;
+                var oldSource = parent.getSource(true).items;
                 var itemIndex = oldItems.indexOf(item);
                 oldItems.splice(itemIndex, 1);
                 oldSource.splice(itemIndex, 1); //No reordering is Groups
@@ -207,8 +205,8 @@ define(["dojo/_base/declare", "../template/Group", "../template/Bundle", "../tem
             //newParentItem is a group, since it is not allowed to be the ItemStore or a Bundle
             var newItems = newParentItem.getChildren(true);
             var newSource = newParentItem.getSource(true);
-            newSource.content = newSource.content || [];
-            newSource = newSource.content;
+            newSource.items = newSource.items || [];
+            newSource = newSource.items;
 
             switch(action) {
                 case "reference_item_in_group":
@@ -221,7 +219,7 @@ define(["dojo/_base/declare", "../template/Group", "../template/Bundle", "../tem
                 case "move_between_groups_in_same_bundle":
                 case "move_between_groups_in_different_bundles":
                     oldItems = oldParentItem.getChildren(true);
-                    oldSource = oldParentItem.getSource(true).content;
+                    oldSource = oldParentItem.getSource(true).items;
                     var oldIndex = oldItems.indexOf(childItem);
                     var childItemSource = oldSource[oldIndex];
                     oldItems.splice(oldIndex, 1);
@@ -253,7 +251,7 @@ define(["dojo/_base/declare", "../template/Group", "../template/Bundle", "../tem
                 oldSource = oldSource.templates || oldSource.auxilliary;
             } else {
                 oldItems = oldParentItem.getChildren(true);
-                oldSource = oldParentItem.getSource(true).content;
+                oldSource = oldParentItem.getSource(true).items;
             }
             if (oldSource) {  //If oldsource exists, then we are not in fake root.
                 var oldIndex = oldItems.indexOf(childItem);
@@ -288,10 +286,8 @@ define(["dojo/_base/declare", "../template/Group", "../template/Bundle", "../tem
                     newItems = newParentItem.getItems();
                 } else {
                     newSource = newParentItem.getSource(true);
-                    if (newSource.content == null) {
-                        newSource.content = [];
-                    }
-                    newSource = newSource.content;
+                    newSource.items = newSource.items || [];
+                    newSource = newSource.items;
                     newItems = newParentItem.getChildren(true);
                 }
 

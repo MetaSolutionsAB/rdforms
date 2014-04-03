@@ -72,12 +72,9 @@ var profile = {
 	    // load as possible, so we configure it as a custom, bootable base.
 	    boot: true
 	},
-	'dijit/dijit-all': {
-	    include: ['dijit/dijit-all']
-	},
 	'rdforms/rdforms': {
 	    include: ['rdforms/view/Editor', 'rdforms/formulator/StoreManager', 'rdforms/apps/Validator'],
-	    exclude: ['dijit/dijit-all']
+	    exclude: ['dojo/dojo']
 	}
     },
 

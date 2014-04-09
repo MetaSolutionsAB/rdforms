@@ -575,12 +575,22 @@ define(["dojo/_base/declare",
                 }
             }));
 
-            var removeCon = on(remove, "click", function () {
+            var removeCon = on(remove, "click", lang.hitch(this, function () {
                 if (!cardTr.isMin()) {
                     if (cardTr.getCardinality() === 1) {
-                        //Clear somehow.
-                        //				binding.setValue(null);
-                        //			tb.set("value", "");
+                        var parentBinding = binding.getParent(), item = binding.getItem();
+                        con.remove();
+                        addCon.remove();
+                        removeCon.remove();
+                        binding.remove();
+                        var card = item.getCardinality();
+                        if (card.pref > 0 || card.min > 0) {
+                            var nBinding = Engine.create(parentBinding, item);
+                            this.addRow(rowDiv, nBinding); //not the first binding...
+                        } else {
+                            this.addLabelClean(rowDiv, null, item);
+                        }
+                        construct.destroy(rowDiv);
                     } else {
                         con.remove();
                         addCon.remove();
@@ -590,7 +600,7 @@ define(["dojo/_base/declare",
                         construct.destroy(rowDiv);
                     }
                 }
-            });
+            }));
         },
         _addRemoveButton: function (fieldDiv, binding, containerDiv, onReset) {
             var remove = construct.create("span", {"class": "action editDelete", "title": "remove"}, containerDiv);

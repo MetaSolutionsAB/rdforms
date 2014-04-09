@@ -70,6 +70,7 @@ http.createServer(function(req, res) {
                 });
             });
         }
+        req.resume();
     }
 }).listen(port);
 console.log('node-static running at http://localhost:%d', port);

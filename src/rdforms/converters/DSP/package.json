@@ -1,0 +1,8 @@
+{
+    "name": "RDForms-DSP-converter",
+    "dependencies" : {
+        "requirejs": "2.1.11",
+        "amdefine" : "0.1.0",
+        "xml2js"   : "0.4.2"
+    }
+}

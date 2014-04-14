@@ -5,5 +5,6 @@ Both are available as packages on recent linux distros.
 The converter is dependent upon the packages requirejs, amdefine, and xml2js.
 
 To launch the converter use the nodejs script, require the dspconverter and call the convert method.
-See the test/VOA3RConverter example for details.
-
+See the test/VOA3RConverter example for details, the result is saved in the VOA3R.json that is also committed.
+To see the results you can launch formulator with this file as parameter, e.g.:
+http://localhost:8080/rdforms/apps/formulator-dev.html?templates=../src/rdforms/converters/DSP/test/VOA3R.json

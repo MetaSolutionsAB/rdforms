@@ -17,14 +17,14 @@
    }
   ]
  },
- "auxilliary": [
+ "templates": [
   {
    "id": "AgResResource",
    "type": "group",
    "label": {
     "en": "AgResResource"
    },
-   "content": [
+   "items": [
     {
      "id": "http://purl.org/dc/terms/title"
     },
@@ -139,7 +139,7 @@
    "label": {
     "en": "agent"
    },
-   "content": [
+   "items": [
     {
      "id": "http://xmlns.com/foaf/0.1/name"
     },
@@ -169,7 +169,7 @@
    "label": {
     "en": "metametadata"
    },
-   "content": [
+   "items": [
     {
      "id": "http://purl.org/dc/terms/identifier2"
     },
@@ -196,7 +196,7 @@
    "label": {
     "en": "research"
    },
-   "content": [
+   "items": [
     {
      "id": "http://voa3r.eu/terms/objectOfInterest"
     },
@@ -268,7 +268,7 @@
   {
    "id": "http://purl.org/dc/terms/contributor",
    "type": "propertygroup",
-   "content": [
+   "items": [
     {
      "type": "choice",
      "label": {
@@ -332,7 +332,7 @@
     "pref": 1
    },
    "id": "http://purl.org/dc/terms/language",
-   "content": [
+   "items": [
     {
      "type": "choice",
      "nodetype": "URI",
@@ -389,7 +389,7 @@
     "pref": 1
    },
    "id": "http://purl.org/dc/terms/identifier",
-   "content": [
+   "items": [
     {
      "type": "text",
      "nodetype": "DATATYPE_LITERAL",
@@ -424,7 +424,7 @@
    "constraints": {
     "http://purl.org/dc/dcam/memberOf": "http://purl.org/dc/terms/IMT"
    },
-   "content": [
+   "items": [
     {
      "type": "text",
      "nodetype": "LITERAL",
@@ -482,7 +482,7 @@
     "pref": 1
    },
    "id": "http://purl.org/dc/terms/subject",
-   "content": [
+   "items": [
     {
      "type": "text",
      "nodetype": "DATATYPE_LITERAL",
@@ -553,7 +553,7 @@
    "constraints": {
     "http://purl.org/dc/dcam/memberOf": "http://www.openurl.info/registry/"
    },
-   "content": [
+   "items": [
     {
      "type": "text",
      "nodetype": "DATATYPE_LITERAL",
@@ -593,7 +593,7 @@
    "constraints": {
     "http://purl.org/dc/dcam/memberOf": "http://voa3r.eu/terms/ResourceType"
    },
-   "content": [
+   "items": [
     {
      "type": "text",
      "nodetype": "LITERAL",
@@ -677,7 +677,7 @@
    "constraints": {
     "http://purl.org/dc/dcam/memberOf": "http://voa3r.eu/terms/ReviewStatus"
    },
-   "content": [
+   "items": [
     {
      "type": "text",
      "nodetype": "LITERAL",
@@ -707,7 +707,7 @@
    "constraints": {
     "http://purl.org/dc/dcam/memberOf": "http://voa3r.eu/terms/PublicationStatus"
    },
-   "content": [
+   "items": [
     {
      "type": "text",
      "nodetype": "LITERAL",
@@ -1037,7 +1037,7 @@
     "pref": 1
    },
    "id": "http://purl.org/dc/terms/language2",
-   "content": [
+   "items": [
     {
      "type": "choice",
      "nodetype": "URI",
@@ -1108,7 +1108,7 @@
   {
    "id": "http://purl.org/dc/terms/contributor2",
    "type": "propertygroup",
-   "content": [
+   "items": [
     {
      "type": "choice",
      "label": {

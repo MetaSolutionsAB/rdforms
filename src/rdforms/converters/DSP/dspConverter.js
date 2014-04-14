@@ -49,7 +49,7 @@ define(["util", "fs", "xml2js"], function(util, fs, xml2js) {
 			children.push({id: sts[i].id});
 		}
 		var id = dt["@"].ID;
-		return {id: id, type: "group", label: {en: id}, content: children, cardinality: occurence(dt)};
+		return {id: id, type: "group", label: {en: id}, items: children, cardinality: occurence(dt)};
 	};
 	
 	var buildST = function(rforms, prefs, schema, st) {
@@ -108,7 +108,7 @@ define(["util", "fs", "xml2js"], function(util, fs, xml2js) {
 						result.type = "text";
 					}
 				} else {
-					result.content = [];
+					result.items = [];
 					result.nodetype = "BLANK";
 					result.type = "group";
 					result.cardinality.pref = 1;
@@ -119,7 +119,7 @@ define(["util", "fs", "xml2js"], function(util, fs, xml2js) {
 						for (var v=0;v<ves.length;v++) {
 							choice.choices[v] = {value: ves[v], label: schema.getLabel(ves[v])};
 						}
-						result.content.push(choice);
+						result.items.push(choice);
 					}
 
 					var literal = {type: "text", 
@@ -135,7 +135,7 @@ define(["util", "fs", "xml2js"], function(util, fs, xml2js) {
 						literal.nodetype = "DATATYPE_LITERAL";
 						literal.datatype = nonLit.ValueStringConstraint.SyntaxEncodingScheme;
 					}
-					result.content.push(literal);
+					result.items.push(literal);
 				}
 			}
 		}
@@ -161,13 +161,13 @@ define(["util", "fs", "xml2js"], function(util, fs, xml2js) {
 				};
 			var id = result.id;
 			delete result.id;
-			result = {id: id, type: "propertygroup", "content": [choice, result], label: schema.getLabel(st.SubPropertyOf)}
+			result = {id: id, type: "propertygroup", "items": [choice, result], label: schema.getLabel(st.SubPropertyOf)}
 			var desc = schema.getDescription(st.SubPropertyOf);
 			if (desc) {
 				result.description = desc;
 			}
 		}
-		rforms.auxilliary.push(result);
+		rforms.templates.push(result);
 	};
 	
 	var getId = (function() {
@@ -189,7 +189,7 @@ define(["util", "fs", "xml2js"], function(util, fs, xml2js) {
 	})();
 	
 	var buildRForms = function(dsps, schema, stub, prefs) {
-		stub.auxilliary = stub.auxilliary || [];
+		stub.templates = stub.templates || [];
 		stub.cachedChoices = stub.cachedChoices || {};
 		//Generate all StatementTemplate ids
 		for (var key in dsps) {
@@ -204,7 +204,7 @@ define(["util", "fs", "xml2js"], function(util, fs, xml2js) {
 		//although the identifiers to the children must be correct, i.e. thats why the code above.
 		for (var key in dsps) {
 			var dsp = dsps[key];
-			stub.auxilliary.push(buildDT(dsp));
+			stub.templates.push(buildDT(dsp));
 		}
 		//Generate all StatementTemplates, that extend DescriptionTemplates when there are DescriptionTemplateRefs	
 		for (var key in dsps) {
@@ -222,9 +222,9 @@ define(["util", "fs", "xml2js"], function(util, fs, xml2js) {
 	 */
 	return {convert: function(params) {
 		fs.readFile(params.infile, function(err, data) {
-			var parser = new xml2js.Parser();
+			var parser = new xml2js.Parser({attrkey: "@", explicitArray: false});
 			parser.parseString(data, function(err, src) {
-				var dsparr = src.DescriptionTemplate;
+				var dsparr = src.DescriptionSetTemplate.DescriptionTemplate;
 				var dsps = {};
 				for (var i=0;i<dsparr.length;i++) {
 					dsps[dsparr[i]["@"].ID] = dsparr[i];

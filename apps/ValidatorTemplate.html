@@ -1,0 +1,9 @@
+<div class='validator'>
+  <div data-dojo-type='dijit.TitlePane' title='RDF/JSON source' data-dojo-props="open: ${rdfjsonEditorOpen}">
+    <div data-dojo-type='dijit.form.SimpleTextarea' data-dojo-attach-point='_rdfjsonDijit' style='width:100%;height:200px'></div>
+    <div data-dojo-type='dijit.form.Button' data-dojo-props="label:'Update'" dojoAttachEvent='onClick:_update'></div>
+  </div>
+  <div class='json' data-dojo-attach-point='_jsonNode'></div>
+  <div class='rdfjson' data-dojo-attach-point='_rdfjsonNode'></div>
+  <div class='rforms' data-dojo-attach-point='_rformsNode'></div>
+</div>

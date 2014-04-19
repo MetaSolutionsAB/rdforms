@@ -8,21 +8,22 @@
           var dojoConfig = {
             async:true,
               packages: [
-	         { name: "rdforms", location: "../../../src/rdforms" },
-	         { name: "rdfjson", location: "../../../src/rdfjson" }]
+	         { name: "rdforms", location: "../.." }]
           };
         </script>
-        <script src="../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
+        <script src="../libs/dojo/dojo.js"></script>
 	<style>
-		@import "../lib/dojo/dijit/themes/tundra/tundra.css"; /* required when dijit */	
-		@import "../src/rdforms/view/resources/rdforms.css";
+		@import "../libs/dijit/themes/tundra/tundra.css"; /* required when dijit */
+		@import "../view/resources/rdforms.css";
 	</style>
 	<script type="text/javascript">
 
 		//A simple template showing a title and an creator in the form of a foaf:Person with a firstname and lastname.
 		//The person being shown in a table format.
 		templateSrc = {
-			"root":{
+			"root": "tutorialEx",
+            "templates": [{
+                "id": "tutorialEx",
 				"type":"group",
 				"content":[
 					{
@@ -55,7 +56,7 @@
 						]
 					}
 				]
-			}
+			}]
 		};
 		
 		//Simple rdfjson data, all triples are matched into the template.

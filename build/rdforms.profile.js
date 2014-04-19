@@ -14,7 +14,7 @@ var profile = {
     // `basePath` is relative to the directory containing this profile file; in this case, it is being set to the
     // src/ directory, which is the same place as the `baseUrl` directory in the loader configuration. (If you change
     // this, you will also need to update run.js.)
-    basePath: '../src/',
+    basePath: '../libs/',
     releaseDir: '../release',
 
     // Builds a new release.
@@ -47,10 +47,10 @@ var profile = {
     selectorEngine: 'acme',
 
     packages:[
-        {name: "dojo", location: "../lib/dojo-src/dojo"},
-        {name: "dijit", location: "../lib/dojo-src/dijit"},
-	"rdfjson",
-	"rdforms"
+        "dojo",
+        "dijit",
+        "rdfjson",
+        {name: "rdforms", location: ".."}
     ],
 
     // Builds can be split into multiple different JavaScript files called "layers". This allows applications to

@@ -8,13 +8,15 @@ define(["dojo/_base/declare",
 	"dijit/_Widget", 
 	"dijit/focus", 
 	"dijit/TooltipDialog", 
-	"dijit/popup", 
+	"dijit/popup",
+    "../model/Engine",
 	"../model/ValueBinding",
 	"../model/GroupBinding",
 	"../model/ChoiceBinding",
 	"../model/PropertyChoiceBinding",
 	"../template/Group"
-], function(declare, lang, domClass, construct, attr, query, _Widget, focus, TooltipDialog, popup, ValueBinding, GroupBinding, ChoiceBinding, PropertyChoiceBinding, Group) {
+], function(declare, lang, domClass, construct, attr, query, _Widget, focus, TooltipDialog, popup,
+            Engine, ValueBinding, GroupBinding, ChoiceBinding, PropertyChoiceBinding, Group) {
     
     var __currentDomNode;
 
@@ -87,23 +89,56 @@ define(["dojo/_base/declare",
 	//===================================================
 	// Inherited methods
 	//===================================================
-	/**
+	constructor: function(params) {
+        this._handleParams(params);
+    },
+
+    _handleParams: function(params) {
+        if (params.binding) {
+            this.binding = params.binding;
+        } else {
+            this.template = params.template || this.template;
+            this.graph = params.graph || this.graph;
+            this.resource = params.resource || this.resource;
+            if (this.graph == null || this.resource == null || this.template == null) {
+                return;
+            }
+            this.binding = Engine.match(this.graph, this.resource, this.template);
+        }
+    },
+
+    /**
 	 * Builds the user interface by iterating over the child bindings of the current binding and recursively
 	 * creates new views for all groupbindings.
 	 */
 	buildRendering: function() {
+        this.domNode = this.srcNodeRef;
+        domClass.add(this.domNode, "rforms");
+        domClass.add(this.domNode, this.styleCls);
+        this.render();
+    },
+
+    show: function(params) {
+        this._handleParams(params);
+        this.render();
+    },
+
+    render: function() {
+        attr.set(this.domNode, "innerHTML", "");
+        if (this.binding == null) {
+            return;
+        }
 		var groupIndex, table, lastRow, table,
 			groupedItemsArr = this.binding.getItem().getChildren(), 
 			groupedBindingsArr = this.binding.getItemGroupedChildBindings(), 
 			bindings, item;
 		this._binding2node = {};
 
-		this.domNode = this.srcNodeRef;
-		domClass.add(this.domNode, "rforms");
-		domClass.add(this.domNode, this.styleCls);
         if ((this.compact || this.binding.getItem().hasStyle("compact")) && !this.binding.getItem().hasStyle("nonCompact")) {
 			domClass.add(this.domNode, "compact");			
-		}
+		} else {
+            domClass.remove(this.domNode, "compact");
+        }
 
 		for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
 			bindings = groupedBindingsArr[groupIndex];

@@ -124,6 +124,33 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             }
             this.refreshExtends();
         },
+
+        /**
+         * If the value is a uri, it is not nice to show it directly.
+         * Hence, we need to discover (or provide if we are in edit mode)
+         * a suitable label for the URI. Labels are typically provided by
+         * having triples with the URI as subject, but which predicates do we use?
+         *
+         * URIValueLabelProperties is an array of properties to be used in this scenario,
+         * were each should be tried in turn. In editing mode the first property should be used,
+         * alternatively a dropdown can be used to select among the properties.
+         *
+         * @return {Array} array of properties
+         * The property value pairs corresponds to predicate and objects in required tripples.
+         */
+        getURIValueLabelProperties: function (original) {
+            return this.getSource(original).uriValueLabelProperties;
+        },
+        setURIValueLabelProperties: function (props) {
+            var s = this.getSource(true);
+            if (props) {
+                s.uriValueLabelProperties = props;
+            } else {
+                delete s.uriValueLabelProperties;
+            }
+            this.refreshExtends();
+        },
+
         /**
          * @return {Object} never available for Text item type.
          * The property value pairs corresponds to predicate and objects in required tripples.
@@ -140,6 +167,24 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             }
             this.refreshExtends();
         },
+
+        /**
+         * @return {Object} never available for Text item type.
+         * The property value pairs corresponds to predicate and objects in required tripples.
+         */
+        getConstraints: function (original) {
+            return this.getSource(original).constraints;
+        },
+        setConstraints: function (constr) {
+            var s = this.getSource(true);
+            if (constr) {
+                s.constraints = constr;
+            } else {
+                delete s.constraints;
+            }
+            this.refreshExtends();
+        },
+
         /**
          * @return {String} a URI indicating the datatype, for example: "http://www.w3.org/2001/XMLSchema.xsd#date".
          */

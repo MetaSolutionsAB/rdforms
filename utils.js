@@ -1,6 +1,6 @@
 /*global define*/
-define({
-    getLocalizedValue: function(hash) {
+define(["exports", "rdforms/model/system"], function(exports, system) {
+    exports.getLocalizedValue = function(hash) {
         if (hash == null) {
             return {precision: "none"};
         } else if (dojo.isString(hash)) {
@@ -22,15 +22,29 @@ define({
             return {precision: "none"};
             }
         }
-    },
-    getLocalizedMap: function(graph, subject, property) {
-        var stmts = graph.find(subject, property);
-        if (stmts.length > 0) {
-            var map = {};
-            for (var i=0;i<stmts.length;i++) {
-                map[stmts[i].getLanguage() ||  ""] = stmts[i].getValue();
-            }
-            return map;
+    };
+    exports.getLocalizedMap = function(graphOrBinding, subject, propArr) {
+        var graph;
+        if (graphOrBinding.getItem) { //graphOrBinding is a Binding
+            graph = graphOrBinding.getGraph();
+            subject = graphOrBinding.getValue();
+            propArr = graphOrBinding.getItem().getURIValueLabelProperties();
+        } else {
+            graph = graphOrBinding;
         }
-    }
+        if (propArr == null || propArr.length == 0) {
+            propArr = system.labelProperties;
+        }
+        var stmts;
+        for (var i=0;i<propArr.length;i++) {
+            stmts = graph.find(subject, propArr[i]);
+            if (stmts.length > 0) {
+                var obj = {};
+                for (var s=0;s<stmts.length;s++) {
+                    obj[stmts[s].getLanguage() || ""] = stmts[s].getValue();
+                }
+                return obj;
+            }
+        }
+    };
 });

@@ -7,10 +7,12 @@ define(["dojo/_base/declare",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
     "dijit/layout/TabContainer",
+    "dijit/form/SimpleTextarea",
 	"rdfjson/Graph",
     "rdfjson/formats/converters",
 	"dojo/text!./RDFViewTemplate.html"
-], function(declare, lang, topic, json, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin, TabContainer, Graph, converters, template) {
+], function(declare, lang, topic, json, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin,
+            TabContainer, SimpleTextarea, Graph, converters, template) {
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
         //===================================================

@@ -61,12 +61,10 @@
 
 a.rformsUrl {
     text-decoration: none;
-    color: black;
 }
 
 a.rformsUrl:hover {
     text-decoration: underline;
-    color: blue;
 }
 
 /* compact anyway for first level*/

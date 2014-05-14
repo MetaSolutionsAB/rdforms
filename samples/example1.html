@@ -15,7 +15,7 @@
         'dojo/domReady!'             //Wait until the dom is ready.
     ], function(Graph, ItemStore, Engine, Editor) {
         var graph = new Graph({
-            "http://example.org/about": {"http://example.com/terms/": [{type: "uri", value: "http://example.com/color/blue"}]}
+            "http://example.org/about": {"http://example.com/terms/colorOfHouse": [{type: "uri", value: "http://example.com/color/blue"}]}
         });
         var itemStore = new ItemStore();
         itemStore.createItem({

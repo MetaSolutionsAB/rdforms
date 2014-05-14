@@ -44,7 +44,7 @@ define(["dojo/_base/declare", "./Item"], function(declare, Item) {
 
             if (children == null) {
                 children = this._itemStore.getChildren(this, original);
-                if ((this.getSource().automatic !== false || this.getSource(false))&& this._itemStore.automaticSortAllowed) {
+                if (this.getSource().automatic === true && this._itemStore.automaticSortAllowed) {
                     sortItems(children);
                 }
                 this["_"+(original ? "o" : "")+"children"] = children;

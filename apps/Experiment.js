@@ -23,8 +23,10 @@ define(["dojo/_base/declare",
 	//===================================================
 	templateObj: "",
 	graphObj: "",
+    graph: null,
 	itemStore: null,
 	template: null,
+    resource: "http://example.com/about",
 	hideTemplate: false,
 
 	//===================================================
@@ -47,8 +49,10 @@ define(["dojo/_base/declare",
 	    } else {
 		this._templateView.set("value", json.stringify(this.templateObj, true, "  "));
 	    }
-	    
-	    this._graph = new Graph(this.graphObj);
+
+        if (this.graph == null) {
+            this.graph = new Graph(this.graphObj);
+        }
 	    this._graphInvalid = false;
 	    topic.subscribe(this._tabContainer.id+"-selectChild", lang.hitch(this, this._selectChild));
 	    this._initEditor();
@@ -66,7 +70,7 @@ define(["dojo/_base/declare",
         this._updateGraph();
         this._updateTemplate();
         if(child === this._rdfTab) {
-            this._rdfTab.setGraph(this._graph);
+            this._rdfTab.setGraph(this.graph);
             this._graphInvalid = true;
         } else if(child === this._templateTab) {
             this._templateInvalid = true;
@@ -89,7 +93,7 @@ define(["dojo/_base/declare",
 	_updateGraph: function() {
 		if (this._graphInvalid) {
 			try {
-				this._graph = this._rdfTab.getGraph();
+				this.graph = this._rdfTab.getGraph();
 				this._graphInvalid = false;
 			} catch (e) {
 				alert("Error in rdf.");
@@ -98,20 +102,11 @@ define(["dojo/_base/declare",
 		}
 	},
 	_initEditor: function() {
-		this._binding = Engine.match(this._graph, "http://example.com/about", this._template);
-		var node = construct.create("div");
-		this._editorTab.set("content", node);
-		new Editor({template: this._template, binding: this._binding, includeLevel: "optional", compact: true}, node);
+		this.editor.show({template: this._template, graph: this.graph, resource: this.resource});
 	},
 		
 	_initPresenter: function() {
-		this._binding = Engine.match(this._graph, "http://example.com/about", this._template);
-		var node = construct.create("div");
-		this._presenterTab.set("content", node);
-		new Presenter({template: this._template, binding: this._binding, compact: true}, node);
-	},
-		
-	_initRDF: function() {
+        this.presenter.show({template: this._template, graph: this.graph, resource: this.resource});
 	}
     });
 });

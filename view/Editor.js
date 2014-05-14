@@ -112,6 +112,11 @@ define(["dojo/_base/declare",
             this.inherited("buildRendering", arguments);
         },
 
+        show: function(params) {
+            this._subEditors = [];
+            this.inherited("show", arguments);
+        },
+
         /**
          * Will only show something for the given item if there is anything to show, or if the includeLevel indicates
          * to show it anyhow (for example min cardinality > 0 or includeLevel is optional or recommended at the same

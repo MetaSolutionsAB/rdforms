@@ -8,8 +8,9 @@ define(["dojo/_base/declare",
 	"dojo/dom-attr", 
 	"./View",
 	"../template/Group",
-	"../utils"
-], function(declare, kernel, event, on, domClass, construct, attr, View, Group, utils) {
+	"../utils",
+    "rdforms/model/system"
+], function(declare, kernel, event, on, domClass, construct, attr, View, Group, utils, system) {
 
     var Presenter = declare(View, {
 	//===================================================
@@ -106,11 +107,25 @@ define(["dojo/_base/declare",
 		var subView = new Presenter({binding: binding, topLevel: false}, fieldDiv);
 	},
 	addText: function(fieldDiv, binding) {
-		if (this.showLanguage && binding.getLanguage()) {
-			var lang = construct.create("div", {"innerHTML": binding.getLanguage()}, fieldDiv);
-			domClass.add(lang, "rformsLanguage");
-		}
-		construct.create("div", {"innerHTML": binding.getValue().replace(/(\r\n|\r|\n)/g, "<br/>").replace("<", "&lt;").replace(">", "&gt;")}, fieldDiv);
+        var item = binding.getItem();
+        if (item.getNodetype() === "URI") {
+            var a, vmap = utils.getLocalizedMap(binding);
+            if (vmap) {
+                a = construct.create("a", {"class": "rformsUrl", title: binding.getValue(),
+                    href: binding.getValue(), innerHTML: utils.getLocalizedValue(vmap).value}, fieldDiv);
+            } else {
+                a = construct.create("a", {"class": "rformsUrl",
+                    href: binding.getValue(), innerHTML: binding.getValue()}, fieldDiv);
+            }
+            system.attachLinkBehaviour(a, binding);
+        } else {
+            if (this.showLanguage && binding.getLanguage()) {
+                var lang = construct.create("div", {"innerHTML": binding.getLanguage()}, fieldDiv);
+                domClass.add(lang, "rformsLanguage");
+            }
+            var text = binding.getValue().replace(/(\r\n|\r|\n)/g, "<br/>").replace("<", "&lt;").replace(">", "&gt;");
+            construct.create("div", {"innerHTML": text}, fieldDiv);
+        }
 	},
 	addChoice: function(fieldDiv, binding) {
 		var choice = binding.getChoice();
@@ -119,23 +134,18 @@ define(["dojo/_base/declare",
 				construct.create("span", {"class": "rformsStar"}, fieldDiv);
 			}
 		} else {
-			var desc;
+            var desc, choice = binding.getChoice();
             if (choice.description) {
                 desc = utils.getLocalizedValue(choice.description).value;
             }
-            var span = construct.create("a", {"class": "rformsUrl", target: choice.target ? choice.target : "_blank",
+            var a = construct.create("a", {"class": "rformsUrl",
                 href: choice.seeAlso || choice.value, title: desc || choice.seeAlso || choice.value, "innerHTML": utils.getLocalizedValue(choice.label).value}, fieldDiv);
-            if (choice.onClick) {
-                on(span, "click", function(e) {
-                    event.stop(e);
-                    choice.onClick(e);
+            system.attachLinkBehaviour(a, binding);
+            if (choice.load != null) {
+                choice.load(function () {
+                    attr.add(a, "innerHTML", utils.getLocalizedValue(choice.label).value);
                 });
             }
-			if (choice.load != null) {
-				choice.load(function() {
-					attr.add(span, "innerHTML", utils.getLocalizedValue(choice.label).value);
-				});
-			}
 		}
 	}
     });

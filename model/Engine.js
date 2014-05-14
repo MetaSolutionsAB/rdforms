@@ -40,7 +40,7 @@ define([
                 }
             };
             dojo.forEach(requiredItems, function (id) {
-                var item = itemStore.getItem(id) || itemStore.getTemplate(id);
+                var item = itemStore.getItem(id);
                 if (item != null) {
                     if (item instanceof Group && item.getProperty() == null) {
                         dojo.forEach(item.getChildren(), addItem);
@@ -48,7 +48,13 @@ define([
                         addItem(item);
                     }
                 } else {
-                    addItem(itemStore.getItemByProperty(id));
+                    item = itemStore.getItemByProperty(id);
+                    if (item) {
+                        addItem(item);
+                    } else {
+                        console.warn("Warning, when autodetecting a template: Required item '"+id+
+                            "' is neither an id for a loaded item or a property for a loaded item, ignoring.");
+                    }
                 }
             });
         }
@@ -382,7 +388,7 @@ define([
                 }
             }
         } else {
-            var label = utils.getLocalizedMap(graph, obj, ChoiceBinding.label);
+            var label = utils.getLocalizedMap(graph, obj, [ChoiceBinding.label]);
             var sa = graph.findFirstValue(obj, ChoiceBinding.seeAlso);
             if (label != null) {
                 var choice = {label: label, value: obj};
@@ -391,7 +397,7 @@ define([
                 }
                 return choice;
             } else if (system.getChoice != null) {
-                return system.getChoice(item, obj, sa);
+                return system.getChoice(item, obj, sa, graph);
             }
         }
     };

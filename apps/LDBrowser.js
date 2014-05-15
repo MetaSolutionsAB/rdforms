@@ -21,6 +21,7 @@ define(["dojo/_base/declare",
     'rdforms/model/system',
     'rdforms/template/ItemStore',
     "rdfjson/Graph",
+    "rdfjson/formats/converters",
     'dojo/hash',
     'dojo/topic',
     'dojo/keys',
@@ -28,7 +29,7 @@ define(["dojo/_base/declare",
     "dojo/text!./LDBrowserTemplate.html"
 ], function(declare, lang, array, on, all, Deferred, request, domStyle, domConstruct, _LayoutWidget,  _TemplatedMixin,
             _WidgetsInTemplateMixin, TabContainer, ContentPane, BorderContainer, TextBox, Engine, Presenter,
-            RDFView, system, ItemStore, Graph, hash, topic, keys, ioQuery, template) {
+            RDFView, system, ItemStore, Graph, converters, hash, topic, keys, ioQuery, template) {
 
     /**
      * Linked Data browser, initialize by:
@@ -49,7 +50,8 @@ define(["dojo/_base/declare",
         pattern2template: null,
         bundlePaths: null,
         keyInFragment: "uri",
-        rdfjsonGraph: null,
+        rdf: null,
+        rdfFormat: "rdf/json",
         graph: null,
         proxyLoadResourcePattern: null,
 
@@ -63,12 +65,20 @@ define(["dojo/_base/declare",
         loadResource: function(uri) {
             if (this.proxyLoadResourcePattern) {
                 var url = lang.replace(this.proxyLoadResourcePattern, {uri: encodeURIComponent(uri)});
-                return request.get(url,
-                    {handleAs: "json"}).then(function(data) {
-                        return new Graph(data);
-                    }, function(err) {
-                        throw "Failed to use the proxyLoadResourcePattern, cannot load: "+url;
-                    });
+                var params;
+                switch(this.rdfFormat) {
+                    case "rdf/xml":
+                        params = {headers: {"Accept": "application/rdf+xml"}, handleAs: "string"};
+                        break;
+                    case "rdf/json":
+                    default:
+                        params = {headers: {"Accept": "application/json"}, handleAs: "json"};
+                }
+                return request.get(url, params).then(lang.hitch(this, function(data) {
+                    return this._convertRDF(data);
+                }), function(err) {
+                    throw "Failed to use the proxyLoadResourcePattern, cannot load: "+url;
+                });
             } else if (this.graph) {
                 var d = new Deferred();
                 d.resolve(this.graph);
@@ -144,9 +154,7 @@ define(["dojo/_base/declare",
 
             var g = lang.hitch(this, function(config) {
                 lang.mixin(this, this.config, config);
-                if (this.graph == null && this.rdfjsonGraph != null) {
-                    this.graph = new Graph(this.rdfjsonGraph);
-                }
+                this._convertRDF(this.rdf);
 
                 if (this.exampleURIs) {
                     domStyle.set(this.examplesBlock, "display", "");
@@ -196,6 +204,17 @@ define(["dojo/_base/declare",
             this.inherited("resize", arguments);
             if (this._borderContainer) {
                 this._borderContainer.resize();
+            }
+        },
+        _convertRDF: function(rdf) {
+            this.rdf = rdf;
+            if (this.rdf != null) {
+                switch(this.rdfFormat) {
+                    case "rdf/json":
+                        return this.graph = new Graph(this.rdf);
+                    case "rdf/xml":
+                        return this.graph = converters.rdfxml2graph(this.rdf);
+                }
             }
         },
         _showBrowse: function(uri, graph) {

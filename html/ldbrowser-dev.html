@@ -48,9 +48,10 @@
         require([
             'dojo/on',
             'dojo/dom-style',
+            'dojo/dom',
             'rdforms/apps/LDBrowser',
             'dojo/domReady!'
-        ], function(on, domStyle, LDBrowser) {
+        ], function(on, domStyle, dom, LDBrowser) {
 
             new LDBrowser({configPath: "ldb-config.json"}, "ldbrowser");
 

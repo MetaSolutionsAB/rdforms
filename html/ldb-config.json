@@ -8,7 +8,8 @@
         "../templates/foaf.json",
         "../templates/skos.json"
     ],
-    "rdfjsonGraph": {
+    "rdfFormat": "rdf/json",
+    "rdf": {
         "http://example.com/a": {
             "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [{"value": "http://example.com/terms/Thing", "type": "uri"}],
             "http://purl.org/dc/terms/title": [{"value": "Individual A", "type": "literal"}],

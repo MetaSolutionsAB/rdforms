@@ -168,7 +168,14 @@ define(["dojo/_base/declare",
                 return this.inherited("addLabel", arguments);
             }
             var isGroup = item instanceof Group;
-            var label = construct.create("span", {"innerHTML": item.getLabel() || ""}, labelDiv);
+            var l = item.getLabel();
+            if (l != null && l != "") {
+                l = l.charAt(0).toUpperCase() + l.slice(1);
+            } else {
+                l = "";
+            }
+
+            var label = construct.create("span", {"innerHTML": l}, labelDiv);
             domClass.add(labelDiv, "rformsLabelRow");
             domClass.add(label, "rformsLabel");
             this.showInfo(item, label);

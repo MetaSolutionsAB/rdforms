@@ -99,7 +99,14 @@ define(["dojo/_base/declare",
 	addLabel: function(rowDiv, labelDiv, binding) {
 		var item = binding.getItem();
 		var isGroup = item instanceof Group;
-		attr.set(labelDiv, "innerHTML", item.getLabel() || "");
+        var label = item.getLabel();
+        if (label != null && label != "") {
+            label = label.charAt(0).toUpperCase() + label.slice(1);
+        } else {
+            label = "";
+        }
+
+		attr.set(labelDiv, "innerHTML", label);
 		domClass.add(labelDiv, "rformsLabel");
 		this.showInfo(binding.getItem(), labelDiv);
 	},

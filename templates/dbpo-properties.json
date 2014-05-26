@@ -5651,7 +5651,10 @@
     "el": "Προορίζεται για την DBpedia."
    },
    "type": "text",
-   "nodetype": "LITERAL",
+   "nodetype": "LANGUAGE_LITERAL",
+   "styles": [
+    "multiline"
+   ],
    "cardinality": {
     "pref": 1
    }
@@ -23014,8 +23017,11 @@
    "description": {
     "en": "Reserved for DBpedia."
    },
-   "type": "choice",
-   "nodetype": "RESOURCE",
+   "type": "text",
+   "nodetype": "LANGUAGE_LITERAL",
+   "styles": [
+    "externalLink"
+   ],
    "cardinality": {
     "pref": 1
    }

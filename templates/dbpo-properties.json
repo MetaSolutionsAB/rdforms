@@ -23017,8 +23017,8 @@
    "description": {
     "en": "Reserved for DBpedia."
    },
-   "type": "text",
-   "nodetype": "LANGUAGE_LITERAL",
+   "type": "choice",
+   "nodetype": "RESOURCE",
    "styles": [
     "externalLink"
    ],
@@ -26284,6 +26284,9 @@
    },
    "type": "choice",
    "nodetype": "RESOURCE",
+   "styles": [
+    "externalLink"
+   ],
    "cardinality": {
     "pref": 1
    }

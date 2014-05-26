@@ -80,6 +80,10 @@ a.rformsUrl:hover {
 	margin-left: 0px;
 }
 
+.rformsImage {
+    max-width: 100%;
+    max-height: 300px;
+}
 
 .rformsLabel:hover {
 	text-decoration: underline;

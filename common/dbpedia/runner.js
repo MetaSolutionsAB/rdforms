@@ -17,7 +17,8 @@ var conf = {
     ignoreAllClasses: true,
     specs: {
         "abstract": {nodetype: "LANGUAGE_LITERAL", styles: ["multiline"]},
-        "wikiPageExternalLink" : {nodetype: "LANGUAGE_LITERAL", styles: ["externalLink"]}
+        "wikiPageExternalLink" : {styles: ["externalLink"]},
+        "thumbnail" : {styles: ["externalLink"]}
     },
     order: [],
     label: {en: "Additional information"}

@@ -18,7 +18,7 @@ var conf = {
     specs: {
         "abstract": {nodetype: "LANGUAGE_LITERAL", styles: ["multiline"]},
         "wikiPageExternalLink" : {styles: ["externalLink"]},
-        "thumbnail" : {styles: ["externalLink"]}
+        "thumbnail" : {styles: ["image"]}
     },
     order: [],
     label: {en: "Additional information"}

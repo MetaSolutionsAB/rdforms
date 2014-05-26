@@ -26285,7 +26285,7 @@
    "type": "choice",
    "nodetype": "RESOURCE",
    "styles": [
-    "externalLink"
+    "image"
    ],
    "cardinality": {
     "pref": 1

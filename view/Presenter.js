@@ -116,18 +116,22 @@ define(["dojo/_base/declare",
 	addText: function(fieldDiv, binding) {
         var item = binding.getItem();
         if (item.getNodetype() === "URI") {
-            var a, vmap = utils.getLocalizedMap(binding);
-            if (vmap) {
-                a = construct.create("a", {"class": "rformsUrl", title: binding.getValue(),
-                    href: binding.getValue(), innerHTML: utils.getLocalizedValue(vmap).value}, fieldDiv);
+            if (item.hasStyle("image")) {
+                construct.create("img", {"class": "rformsImage", "src": binding.getValue()}, fieldDiv);
             } else {
-                a = construct.create("a", {"class": "rformsUrl",
-                    href: binding.getValue(), innerHTML: binding.getValue()}, fieldDiv);
-            }
-            if (item.hasStyle("externalLink")) {
-                system.attachExternalLinkBehaviour(a, binding);
-            } else {
-                system.attachLinkBehaviour(a, binding);
+                var a, vmap = utils.getLocalizedMap(binding);
+                if (vmap) {
+                    a = construct.create("a", {"class": "rformsUrl", title: binding.getValue(),
+                        href: binding.getValue(), innerHTML: utils.getLocalizedValue(vmap).value}, fieldDiv);
+                } else {
+                    a = construct.create("a", {"class": "rformsUrl",
+                        href: binding.getValue(), innerHTML: binding.getValue()}, fieldDiv);
+                }
+                if (item.hasStyle("externalLink")) {
+                    system.attachExternalLinkBehaviour(a, binding);
+                } else {
+                    system.attachLinkBehaviour(a, binding);
+                }
             }
         } else {
             if (this.showLanguage && binding.getLanguage()) {

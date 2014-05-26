@@ -14,8 +14,8 @@ var conf = {
     major: ["Agent", "Group", "Person", "Organization", "Document", "Image", "PersonalProfileDocument", "OnlineAccount", "OnlineGamingAccount", "OnlineEcommerceAccount", "OnlineChatAccount", "Project"],
     ignore: ["geekcode", "dnaChecksum", "givenname", "surname", "family_name", "fundedBy", "theme", "holdsAccount"],
     specs: {
-			plan: {nodetype: "LANGUAGE_LITERAL", cls: ["rformsmultiline"]},
-			status: {nodetype: "LANGUAGE_LITERAL", cls: ["rformsmultiline"]},
+			plan: {nodetype: "LANGUAGE_LITERAL", styles: ["multiline"]},
+			status: {nodetype: "LANGUAGE_LITERAL", styles: ["multiline"]},
             title: {nodetype: "ONLY_LITERAL", type: "text"},
             nick: {nodetype: "ONLY_LITERAL", type: "text"},
 			img: {type: "text"},

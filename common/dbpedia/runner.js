@@ -5,7 +5,7 @@ requirejs.config({nodeRequire: require, baseUrl: '../../../'});
 
 var conf = {
     source: "terms.rdf",
-    destination: "terms.js",
+    destination: "../../templates/dbpo-properties.json",
     ns: "http://dbpedia.org/ontology/",
     abbrev: "dbpo",
     literalNodeTypeDefault: "ONLY_LITERAL",
@@ -16,6 +16,8 @@ var conf = {
     ignore: [],
     ignoreAllClasses: true,
     specs: {
+        "abstract": {nodetype: "LANGUAGE_LITERAL", styles: ["multiline"]},
+        "wikiPageExternalLink" : {nodetype: "LANGUAGE_LITERAL", styles: ["externalLink"]}
     },
     order: [],
     label: {en: "Additional information"}
@@ -27,7 +29,7 @@ requirejs(['fs', 'rdfjson/Graph', 'rdfjson/formats/converters', 'rdforms/convert
             var graph = conv.rdfxml2graph(data);
             var sirf = rdfsconv.convert(graph, conf);
             var fd = fs.openSync(conf.destination, "w");
-            fs.writeSync(fd, "define("+JSON.stringify(sirf, true, 1)+");", 0, "utf8");
+            fs.writeSync(fd, JSON.stringify(sirf, true, 1), 0, "utf8");
         });
     }
 );

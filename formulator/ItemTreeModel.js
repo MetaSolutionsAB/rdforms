@@ -93,6 +93,8 @@ define(["dojo/_base/declare", "../template/Group", "../template/Bundle", "../tem
             if (parent instanceof Bundle) {
                 //If parent is a bundle the item is already registered and added to the bundles list of children.
                 children = parent.getItems();
+                var templates = parent.getSource().templates || parent.getSource().auxilliary;
+                templates.push(source);
             } else if (parent === this.itemStore) {
                 //Should never happen
                 throw "Solve in calling method instead.";

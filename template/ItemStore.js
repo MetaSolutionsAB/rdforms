@@ -311,7 +311,10 @@ define(["dojo/_base/declare",
         // Private methods
         //===================================================
         _createItems: function (sourceArray, forceClone, bundle) {
-            return array.map(sourceArray, function (child) {
+            return array.map(sourceArray, function (child, index) {
+                if (lang.isString(child)) {  //If child is not a object but a direct string reference, create a object.
+                    child = sourceArray[index] = {id: child};
+                }
                 return this.createItem(child, forceClone, false, bundle);
             }, this);
         }

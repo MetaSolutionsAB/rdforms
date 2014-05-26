@@ -12,6 +12,18 @@ define(['rdfjson/Rdfs'], function (Rdfs) {
         return props;
     };
 
+    var isDatatype = function(range, conf) {
+        if (range.indexOf("http://www.w3.org/2001/XMLSchema#") === 0) {
+            return true;
+        }
+        if (conf.datatypeBases != null) {
+            for (var i=0;i<conf.datatypeBases.length;i++) {
+                if (range.indexOf(conf.datatypeBases[i]) === 0) {
+                    return true;
+                }
+            }
+        }
+    };
     var getForcedProperties = function (cls, conf, rdfs) {
         var props = [];
         var arr = conf._forced[cls.getURI()];
@@ -32,10 +44,10 @@ define(['rdfjson/Rdfs'], function (Rdfs) {
 
     var normalizeConf = function (conf) {
         var major = {};
+        conf.major = conf.major || [];
         for (var co = 0; co < conf.major.length; co++) {
             major[conf.ns + conf.major[co]] = true;
         }
-        conf._major = major;
 
         var ignore = {};
         for (var ig = 0; ig < conf.ignore.length; ig++) {
@@ -132,121 +144,151 @@ define(['rdfjson/Rdfs'], function (Rdfs) {
         var auxC = [];
         normalizeConf(conf);
 
-        var props = rdfs.getProperties();
-        for (var p = 0; p < props.length; p++) {
-            var prop = props[p];
-            if (conf._ignore[prop.getURI()]) {
-                continue;
-            }
-            var source = {
-                id: getAbbrevId(prop.getURI(), conf),
-                property: prop.getURI(),
-                label: prop.getLabels()};
-            var desc = prop.getComments();
-            if (desc != null) {
-                source.description = desc;
-            }
-
-            var ranges = prop.getRange();
-            var r = conf._specs[prop.getURI()];
-
-            if ((r != null && (r.nodetype === "LANGUAGE_LITERAL" || r.nodetype === "LITERAL" || r.nodetype === "ONLY_LITERAL"))
-                || ranges == null || ranges.indexOf("http://www.w3.org/2000/01/rdf-schema#Literal") !== -1) {
-                source["type"] = "text";
-                var nt = r != null ? r.nodetype : null;
-                source["nodetype"] = nt || conf.literalNodeTypeDefault || "LANGUAGE_LITERAL";
-            } else if ((r != null && r.nodetype === "DATATYPE_LITERAL") || (ranges.length === 1 && ranges[0].indexOf("http://www.w3.org/2001/XMLSchema#") === 0)) {
-                source["type"] = "text";
-                source["nodetype"] = "DATATYPE_LITERAL";
-                if (ranges.length === 1) {
-                    source["datatype"] = ranges[0];
+        if (!conf.ignoreAllProperties) {
+            var props = rdfs.getProperties();
+            for (var p = 0; p < props.length; p++) {
+                var prop = props[p];
+                if (conf._ignore[prop.getURI()]) {
+                    continue;
                 }
-            }else if (ranges.length === 1 && ranges[0] === "http://www.w3.org/2002/07/owl#Thing" || (r != null && r.type === "text")) {
-                source["type"] = "text";
-                source["nodetype"] = "URI"
-            } else {
-                if (ranges.length > 0) {
-                    var constraints = {};
-                    for (var cr = 0; cr < ranges.length; cr++) {
-                        constraints["http://www.w3.org/1999/02/22-rdf-syntax-ns#type"] = ranges[cr];
+                var source = {
+                    id: getAbbrevId(prop.getURI(), conf),
+                    property: prop.getURI(),
+                    label: prop.getLabels()};
+                var desc = prop.getComments();
+                if (desc != null) {
+                    source.description = desc;
+                }
+
+                var ranges = prop.getRange();
+                var r = conf._specs[prop.getURI()];
+
+                if (ranges != null && ranges.indexOf("http://www.w3.org/2001/XMLSchema#string") !== -1) {
+                    source["type"] = "text";
+                    source["nodetype"] = (r != null ? r.nodetype : null) || "LITERAL";
+                } else if ((r != null && (r.nodetype === "LANGUAGE_LITERAL" || r.nodetype === "LITERAL" || r.nodetype === "ONLY_LITERAL"))
+                    || ranges == null || ranges.indexOf("http://www.w3.org/2000/01/rdf-schema#Literal") !== -1) {
+                    source["type"] = "text";
+                    var nt = r != null ? r.nodetype : null;
+                    source["nodetype"] = nt || conf.literalNodeTypeDefault || "LANGUAGE_LITERAL";
+                } else if ((r != null && r.nodetype === "DATATYPE_LITERAL") || (ranges.length === 1 && isDatatype(ranges[0], conf))) {
+                    source["type"] = "text";
+                    source["nodetype"] = "DATATYPE_LITERAL";
+                    if (ranges.length === 1) {
+                        source["datatype"] = ranges[0];
                     }
-                    source["constraints"] = constraints;
-                }
-                if (ranges.length === 1 && conf._major[ranges[0]] && (r == null || r.type === "choice" || r.type == null)) {
-                    source["type"] = "choice";
-                    source["nodetype"] = "RESOURCE";
+                } else if (ranges.length === 1 && ranges[0] === "http://www.w3.org/2002/07/owl#Thing" || (r != null && r.type === "text")) {
+                    source["type"] = "text";
+                    source["nodetype"] = "URI"
                 } else {
-                    var propsFC = getPropertiesFromClasses(rdfs, ranges);
-                    var propArr = [];
-                    for (var pf = 0; pf < propsFC.length; pf++) {
-                        if (conf._ignore[propsFC[pf].getURI()]) {
-                            continue;
+                    if (ranges.length > 0) {
+                        var constraints = {};
+                        for (var cr = 0; cr < ranges.length; cr++) {
+                            constraints["http://www.w3.org/1999/02/22-rdf-syntax-ns#type"] = ranges[cr];
                         }
-                        propArr.push({"id": getAbbrevId(propsFC[pf].getURI(), conf)});
+                        source["constraints"] = constraints;
                     }
-                    source["type"] = (r ? r.type : r) || conf.noRangeTypeDefault || "group";
-                    source.automatic = true;
-                    source.content = propArr;
-                }
-            }
-            if (r != null && r.cls != null) {
-                source.cls = r.cls;
-            }
-            if (r != null && r.cardinality != null) {
-                source.cardinality = r.cardinality;
-            }
-            if (conf.nonGroupCardinalityDefault != null && source.type !== "group") {
-                source.cardinality = conf.nonGroupCardinalityDefault;
-            }
-            auxP.push(source);
-        }
-
-        var clss = removeIgnored(rdfs.getClasses(), conf);
-        for (var c = 0; c < clss.length; c++) {
-            var cls = clss[c];
-            var source = {
-                id: getAbbrevId(cls.getURI(), conf),
-                label: cls.getLabels(),
-                constraints: {"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": cls.getURI()}
-            };
-            var desc = cls.getComments();
-            if (desc != null) {
-                source.description = desc;
-            }
-            var forced = getForcedProperties(cls, conf, rdfs);
-            var props = removeIgnored(getPropertiesFromClasses(rdfs, [cls.getURI()]).concat(forced), conf);
-            var cats = groupIntoCategories(props, conf); //Order and organize into categories.
-            var propArr = [];
-
-            //All properties that should not be organized into categories.
-            for (var p = 0; p < cats[0].length; p++) {
-                propArr.push({"id": getAbbrevId(cats[0][p].getURI(), conf)});
-            }
-
-            //Category-divided properties.
-            if (cats[0].length !== props.length) {
-                for (var q = 1; q < cats.length; q++) {
-                    var cat = cats[q];
-                    if (cat.length > 0) {
-                        var group = {
-                            cardinality: {"min": 1, "pref": 1, "max": 1},
-                            type: "group",
-                            cls: ["rformsexpandable"],
-                            label: conf.categories[q - 1].label,
-                            content: []
-                        };
-                        propArr.push(group);
-
-                        for (var s = 0; s < cat.length; s++) {
-                            group.content.push({"id": getAbbrevId(cat[s].getURI(), conf)});
+                    if (ranges.length === 0 && conf.typeForUnknownRange === "choice") {
+                        source["type"] = "choice";
+                        source["nodetype"] = "RESOURCE";
+                    } else if (ranges.length === 1
+                        && (conf.allClassesMajor
+                            || conf._major[ranges[0]] && (r == null || r.type === "choice" || r.type == null))) {
+                        source["type"] = "choice";
+                        source["nodetype"] = "RESOURCE";
+                    } else {
+                        if (ranges.length === 1 && !conf.ignoreAllClasses) {
+                            source.extends = getAbbrevId(ranges[0], conf);
+                        } else {
+                            var propsFC = getPropertiesFromClasses(rdfs, ranges);
+                            var propArr = [];
+                            for (var pf = 0; pf < propsFC.length; pf++) {
+                                if (conf._ignore[propsFC[pf].getURI()]) {
+                                    continue;
+                                }
+                                propArr.push(getAbbrevId(propsFC[pf].getURI(), conf));
+                            }
+                            if (propArr.length > 0) {
+                                source.items = propArr;
+                            }
                         }
+                        source["type"] = (r ? r.type : r) || conf.noRangeTypeDefault || "group";
+                        source.automatic = true;
                     }
                 }
+                if (r != null && r.cls != null) {
+                    source.cls = r.cls;
+                }
+                if (r != null && r.styles != null) {
+                    source.styles = r.styles;
+                }
+                if (r != null && r.cardinality != null) {
+                    source.cardinality = r.cardinality;
+                }
+                if (conf.nonGroupCardinalityDefault != null && source.type !== "group") {
+                    source.cardinality = conf.nonGroupCardinalityDefault;
+                }
+                auxP.push(source);
             }
-            source["type"] = "group";
-            source.content = propArr;
-            auxC.push(source);
         }
+
+        if (!conf.ignoreAllClasses) {
+            var clss = removeIgnored(rdfs.getClasses(), conf);
+            for (var c = 0; c < clss.length; c++) {
+                var cls = clss[c];
+                var source = {
+                    id: getAbbrevId(cls.getURI(), conf),
+                    label: cls.getLabels(),
+                    constraints: {"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": cls.getURI()}
+                };
+                var desc = cls.getComments();
+                if (desc != null) {
+                    source.description = desc;
+                }
+                var forced = getForcedProperties(cls, conf, rdfs);
+                var props;
+                if (cls.getDirectParents().length === 1) {
+                    source.extends = getAbbrevId(cls.getDirectParents()[0].getURI(), conf);
+                    props = removeIgnored((cls.getDomainOf() || []).concat(forced), conf);
+                } else {
+                    props = removeIgnored(getPropertiesFromClasses(rdfs, [cls.getURI()]).concat(forced), conf);
+                }
+                var cats = groupIntoCategories(props, conf); //Order and organize into categories.
+                var propArr = [];
+
+                //All properties that should not be organized into categories.
+                for (var p = 0; p < cats[0].length; p++) {
+                    propArr.push(getAbbrevId(cats[0][p].getURI(), conf));
+                }
+
+                //Category-divided properties.
+                if (cats[0].length !== props.length) {
+                    for (var q = 1; q < cats.length; q++) {
+                        var cat = cats[q];
+                        if (cat.length > 0) {
+                            var group = {
+                                cardinality: {"min": 1, "pref": 1, "max": 1},
+                                type: "group",
+                                styles: ["expandable"],
+                                label: conf.categories[q - 1].label,
+                                items: []
+                            };
+                            propArr.push(group);
+
+                            for (var s = 0; s < cat.length; s++) {
+                                group.items.push(getAbbrevId(cat[s].getURI(), conf));
+                            }
+                        }
+                    }
+                }
+                source["type"] = "group";
+                if (propArr.length > 0) {
+                    source.items = propArr;
+                }
+                auxC.push(source);
+            }
+        }
+
         if (conf.root) {
             return {templates: auxP.concat(auxC), scope: conf.abbrev, namespace: conf.ns, root: {id: conf.root}};
         } else {

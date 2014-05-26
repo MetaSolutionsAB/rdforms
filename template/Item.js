@@ -25,7 +25,9 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             "dropDown",
             "table",
             "firstcolumnfixedtable",
-            "tree"
+            "tree",
+            "externalLink",
+            "image"
         ],
 
         //===================================================
@@ -335,16 +337,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
         },
 
         /**
-         * Supported styles at this point:
-         * invisible
-         * stars
-         * commentOn
-         * horizontalRadioButtons
-         * verticalRadioButtons
-         * nonEditable
-         * expandable
-         * dropDown
-         * firstcolumnfixedtable
+         * The available styles, see the _styles variable.
          *
          * @return {Array} that contains strings with all available styles.
          */

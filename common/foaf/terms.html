@@ -7,14 +7,13 @@
     var dojoConfig = {
 	async:true,
 	packages: [
-	    { name: "rforms", location: "../../../src/rforms" },
-	    { name: "rdfjson", location: "../../../src/rdfjson" }]
+	    { name: "rdforms", location: "../../" }]
     };
     </script>
-    <script src="../../../../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
+    <script src="../../libs/dojo/dojo.js"></script>
     <style>
-      @import "../../../../lib/dojo/dijit/themes/claro/claro.css";
-      @import "../../view/resources/rforms.css";
+      @import "../../libs/dijit/themes/claro/claro.css";
+      @import "../../view/resources/rdforms.css";
       html, body {
         height: 100%;
         width: 100%;
@@ -23,9 +22,9 @@
       }
     </style>
     <script type="text/javascript">
-	  require(['.././template/ItemStore',
-	           '.././formulator/StoreManager',
-		   './terms.js',
+	  require(['rdforms/template/ItemStore',
+	           'rdforms/formulator/StoreManager',
+                  './terms.js',
 		   'dojo/domReady!'], 
 		  function(ItemStore, StoreManager, foafterms) {
 		      var itemStore = new ItemStore();

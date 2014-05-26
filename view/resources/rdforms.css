@@ -61,6 +61,7 @@
 
 a.rformsUrl {
     text-decoration: none;
+    word-break: break-all;
 }
 
 a.rformsUrl:hover {

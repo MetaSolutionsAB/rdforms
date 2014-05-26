@@ -211,7 +211,7 @@ define(["dojo/_base/declare",
             if (this.rdf != null) {
                 switch(this.rdfFormat) {
                     case "rdf/json":
-                        return this.graph = new Graph(this.rdf);
+                        return this.graph = new Graph(this.rdf, false);
                     case "rdf/xml":
                         return this.graph = converters.rdfxml2graph(this.rdf);
                 }

@@ -124,7 +124,11 @@ define(["dojo/_base/declare",
                 a = construct.create("a", {"class": "rformsUrl",
                     href: binding.getValue(), innerHTML: binding.getValue()}, fieldDiv);
             }
-            system.attachLinkBehaviour(a, binding);
+            if (item.hasStyle("externalLink")) {
+                system.attachExternalLinkBehaviour(a, binding);
+            } else {
+                system.attachLinkBehaviour(a, binding);
+            }
         } else {
             if (this.showLanguage && binding.getLanguage()) {
                 var lang = construct.create("div", {"innerHTML": binding.getLanguage()}, fieldDiv);
@@ -135,19 +139,27 @@ define(["dojo/_base/declare",
         }
 	},
 	addChoice: function(fieldDiv, binding) {
-		var choice = binding.getChoice();
-		if (binding.getItem().hasStyle("stars") && parseInt(choice.value) != NaN) {
+		var choice = binding.getChoice(),
+            item = binding.getItem(),
+            desc;
+        if (choice.description) {
+            desc = utils.getLocalizedValue(choice.description).value;
+        }
+        if (item.hasStyle("image")) {
+            construct.create("img", {"class": "rformsImage", "src": choice.value, title: desc || choice.value}, fieldDiv);
+        } else if (item.hasStyle("stars") && parseInt(choice.value) != NaN) {
 			for (var i=parseInt(choice.value);i>0;i--) {
 				construct.create("span", {"class": "rformsStar"}, fieldDiv);
 			}
 		} else {
-            var desc, choice = binding.getChoice();
-            if (choice.description) {
-                desc = utils.getLocalizedValue(choice.description).value;
-            }
             var a = construct.create("a", {"class": "rformsUrl",
                 href: choice.seeAlso || choice.value, title: desc || choice.seeAlso || choice.value, "innerHTML": utils.getLocalizedValue(choice.label).value}, fieldDiv);
-            system.attachLinkBehaviour(a, binding);
+
+            if (item.hasStyle("externalLink")) {
+                system.attachExternalLinkBehaviour(a, binding);
+            } else {
+                system.attachLinkBehaviour(a, binding);
+            }
             if (choice.load != null) {
                 choice.load(function () {
                     attr.add(a, "innerHTML", utils.getLocalizedValue(choice.label).value);

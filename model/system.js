@@ -5,7 +5,7 @@ define(["exports", "rdforms/utils", "dojo/dom-attr"], function(exports, utils, d
             var lmap = utils.getLocalizedMap(graph, value, item.getURIValueLabelProperties());
             if (!lmap) {
                 var lastHash = value.lastIndexOf("#"), lastSlash = value.lastIndexOf("/");
-                lmap = {"": value.substring(lastHash > lastSlash ? lastHash : lastSlash > lastHash ? lastSlash : 0)};
+                lmap = {"": value.substring(1+ (lastHash > lastSlash ? lastHash : lastSlash > lastHash ? lastSlash : 0))};
             }
             return {"value": value, "label": lmap};
         } else {
@@ -30,6 +30,9 @@ define(["exports", "rdforms/utils", "dojo/dom-attr"], function(exports, utils, d
             "Simply require the AMD module 'rdforms/model/system' and override the methods 'getChoices' and 'openChoiceSelector'.");
         callback({"value": "http://example.com/choice1",
             "label": {"en": "First choice", "sv": "Första valet "}});
+    };
+    exports.attachExternalLinkBehaviour = function(node, binding) {
+        domAttr.set(node, "target", "_blank");
     };
     exports.attachLinkBehaviour = function(node, binding) {
         //Deprecated default behaviour, should not be given per choice...

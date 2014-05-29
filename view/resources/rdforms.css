@@ -192,15 +192,18 @@ a.rformsUrl:hover {
 	padding-left: 0.3em;
 	padding-right: 0.3em;
 }
+
+
 .rformsPresenter .rformsLanguage {
  	float: right;
 	border-left: 1px solid #E6E6E6;
-	padding-left: 0.3em;
+	padding-left: 0.7em;
  }
- .rformsEditor .rformsLanguage {
- 	position: absolute;
-	float:left;
-	padding-left: 0.3em;
+
+.rformsEditor .rformsLanguage {
+ 	float: right;
+	border-left: 1px solid white;
+	padding-right: 0.7em;
  }
  .rformsEditor .rformsField {
  	padding-right: 4em;

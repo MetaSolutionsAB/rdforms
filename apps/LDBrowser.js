@@ -98,7 +98,7 @@ define(["dojo/_base/declare",
                         break;
                     case "rdf/json":
                     default:
-                    params = {headers: {"Accept": "application/json"}, handleAs: "json"};
+                    params = {headers: {"Accept": "application/rdf+json"}, handleAs: "json"};
                 }
 		this.showOrUpdateLoadProgress(secondAttempt ? this.loadResourceMessage2 : this.loadResourceMessage);
                 return request.get(url, params).then(lang.hitch(this, function(data) {

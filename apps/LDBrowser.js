@@ -1,34 +1,37 @@
 /*global define*/
 define(["dojo/_base/declare", 
 	"dojo/_base/lang",
-    "dojo/_base/array",
-    'dojo/on',
-    'dojo/promise/all',
-    "dojo/Deferred",
-    "dojo/request",
-    "dojo/dom-style",
-    "dojo/dom-construct",
-    "dijit/layout/_LayoutWidget",
+	"dojo/_base/array",
+	'dojo/on',
+	'dojo/promise/all',
+	"dojo/Deferred",
+	"dojo/request",
+	"dojo/dom-style",
+	"dojo/dom-construct",
+	"dojo/dom-attr",
+	"dijit/layout/_LayoutWidget",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
-    "dijit/layout/TabContainer",
-    "dijit/layout/ContentPane",
-    "dijit/layout/BorderContainer",
-    "dijit/form/TextBox",
+	"dijit/layout/TabContainer",
+	"dijit/layout/ContentPane",
+	"dijit/layout/BorderContainer",
+	"dijit/form/TextBox",
+	"dijit/Dialog",
+	"dijit/ProgressBar",
 	"rdforms/model/Engine",
 	"rdforms/view/Presenter",
-    "rdforms/apps/RDFView",
-    'rdforms/model/system',
-    'rdforms/template/ItemStore',
-    "rdfjson/Graph",
-    "rdfjson/formats/converters",
-    'dojo/hash',
-    'dojo/topic',
-    'dojo/keys',
-    'dojo/io-query',
-    "dojo/text!./LDBrowserTemplate.html"
-], function(declare, lang, array, on, all, Deferred, request, domStyle, domConstruct, _LayoutWidget,  _TemplatedMixin,
-            _WidgetsInTemplateMixin, TabContainer, ContentPane, BorderContainer, TextBox, Engine, Presenter,
+	"rdforms/apps/RDFView",
+	'rdforms/model/system',
+	'rdforms/template/ItemStore',
+	"rdfjson/Graph",
+	"rdfjson/formats/converters",
+	'dojo/hash',
+	'dojo/topic',
+	'dojo/keys',
+	'dojo/io-query',
+	"dojo/text!./LDBrowserTemplate.html"
+], function(declare, lang, array, on, all, Deferred, request, domStyle, domConstruct, domAttr, _LayoutWidget,  _TemplatedMixin,
+            _WidgetsInTemplateMixin, TabContainer, ContentPane, BorderContainer, TextBox, Dialog, ProgressBar, Engine, Presenter,
             RDFView, system, ItemStore, Graph, converters, hash, topic, keys, ioQuery, template) {
 
     /**
@@ -54,6 +57,10 @@ define(["dojo/_base/declare",
         rdfFormat: "rdf/json",
         graph: null,
         proxyLoadResourcePattern: null,
+        proxyLoadResourcePattern2: null,
+	loadResourceMessage: "Loading Resource",
+	loadResourceMessage2: "Loading Resource via secondary mechanism",
+	loadResourceFailed: "Failed to load resource",
 
         showResource: function(uri) {
             this.textboxURI.set("value", uri);
@@ -62,9 +69,28 @@ define(["dojo/_base/declare",
                 this._rdfTab.setGraph(graph);
             }));
         },
-        loadResource: function(uri) {
-            if (this.proxyLoadResourcePattern) {
-                var url = lang.replace(this.proxyLoadResourcePattern, {uri: encodeURIComponent(uri)});
+	showOrUpdateLoadProgress: function(message) {
+	    if (!this._progressDialog) {
+		var node = domConstruct.create("div", {style: {"width": "400px", "height": "100px"}});
+		this._progressMessage = domConstruct.create("div", {"class": "progressMessage"}, node);
+		this._progressBar = new ProgressBar({value: "infinity", indeterminate: true}, domConstruct.create("div", null, node));
+		this._progressDialog = new Dialog();
+		this._progressDialog.setContent(node);
+	    }
+	    domAttr.set(this._progressMessage, "innerHTML", message);
+	    this._progressDialog.show();
+	},
+	endLoadProgress: function() {
+	    this._progressDialog.hide();
+	},
+	failedLoadProgress: function(message) {
+	    this._progressDialog.hide();
+	    alert(this.loadResourceFailed);
+	},
+        loadResource: function(uri, secondAttempt) {
+	    var pattern = secondAttempt === true ? this.proxyLoadResourcePattern2 : this.proxyLoadResourcePattern;
+            if (pattern) {
+                var url = lang.replace(pattern, {uri: encodeURIComponent(uri)});
                 var params;
                 switch(this.rdfFormat) {
                     case "rdf/xml":
@@ -72,13 +98,19 @@ define(["dojo/_base/declare",
                         break;
                     case "rdf/json":
                     default:
-                        params = {headers: {"Accept": "application/json"}, handleAs: "json"};
+                    params = {headers: {"Accept": "application/json"}, handleAs: "json"};
                 }
+		this.showOrUpdateLoadProgress(secondAttempt ? this.loadResourceMessage2 : this.loadResourceMessage);
                 return request.get(url, params).then(lang.hitch(this, function(data) {
-                    return this._convertRDF(data);
-                }), function(err) {
-                    throw "Failed to use the proxyLoadResourcePattern, cannot load: "+url;
-                });
+                    this.endLoadProgress();
+		    return this._convertRDF(data);
+                }), lang.hitch(this, function(err) {
+		    if (secondAttempt === true || this.proxyLoadResourcePattern2 == null) {
+			this.failedLoadProgress();
+		    } else {
+			this.loadResource(uri, true);
+		    }
+                }));
             } else if (this.graph) {
                 var d = new Deferred();
                 d.resolve(this.graph);

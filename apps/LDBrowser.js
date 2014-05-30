@@ -108,7 +108,7 @@ define(["dojo/_base/declare",
 		    if (secondAttempt === true || this.proxyLoadResourcePattern2 == null) {
 			this.failedLoadProgress();
 		    } else {
-			this.loadResource(uri, true);
+			return this.loadResource(uri, true);
 		    }
                 }));
             } else if (this.graph) {

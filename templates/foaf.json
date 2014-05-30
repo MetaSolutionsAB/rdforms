@@ -793,7 +793,10 @@
       "nodetype": "RESOURCE",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "externalLink"
+      ]
     },
     {
       "id": "foaf:page",

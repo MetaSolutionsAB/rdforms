@@ -9,7 +9,7 @@ var profile = (function(){
                 return exclude.test(mid);
             },
             test: function(filename, mid) {
-                return testResourceRe.test(mid)
+                return testResourceRe.test(mid);
             },
             amd: function(filename, mid) {
                 return /\.js$/.test(filename);

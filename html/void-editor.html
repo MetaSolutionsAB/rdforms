@@ -52,44 +52,46 @@
     }
 </style>
 <script type="text/javascript">
-    require([
-        'rdforms/template/ItemStore',
-        'rdforms/apps/Experiment',
-        'rdfjson/formats/converters',
-        'dojo/json',
-        "dojo/text!../templates/dcterms.json",
-        "dojo/text!../templates/void.json",
-        'dojo/domReady!'],
-            function(ItemStore, Experiment, converters, json, dctermsTemplate, voidTemplate) {
-                var itemStore = new ItemStore();
-                itemStore.automaticSortAllowed = false;
-                itemStore.createTemplate(json.parse(dctermsTemplate));
-                itemStore.createTemplate(json.parse(voidTemplate));
-                converters.addNamespace("void", "http://rdfs.org/ns/void#");
-                var e = new Experiment({template: itemStore.getItem("void:Dataset"), graphObj: {}, hideTemplate: true}, "_editorInner");
-                e.startup();
+    require(["rdforms/extras"], function() {
+        require([
+            'rdforms/template/ItemStore',
+            'rdforms/apps/Experiment',
+            'rdfjson/formats/converters',
+            'dojo/json',
+            "dojo/text!../templates/dcterms.json",
+            "dojo/text!../templates/void.json",
+            'dojo/domReady!'
+        ], function(ItemStore, Experiment, converters, json, dctermsTemplate, voidTemplate) {
+            var itemStore = new ItemStore();
+            itemStore.automaticSortAllowed = false;
+            itemStore.createTemplate(json.parse(dctermsTemplate));
+            itemStore.createTemplate(json.parse(voidTemplate));
+            converters.addNamespace("void", "http://rdfs.org/ns/void#");
+            var e = new Experiment({template: itemStore.getItem("void:Dataset"), graphObj: {}, hideTemplate: true}, "_editorInner");
+            e.startup();
 
-                var showEditor = function() {
-                    $("#_editorButton").addClass("active");
-                    $("#_aboutButton").removeClass("active");
-                    $("#_editor").show();
-                    $("#_about").hide();
-                };
-                var showAbout = function() {
-                    $("#_editorButton").removeClass("active");
-                    $("#_aboutButton").addClass("active");
-                    $("#_editor").hide();
-                    $("#_about").show();
-                };
+            var showEditor = function() {
+                $("#_editorButton").addClass("active");
+                $("#_aboutButton").removeClass("active");
+                $("#_editor").show();
+                $("#_about").hide();
+            };
+            var showAbout = function() {
+                $("#_editorButton").removeClass("active");
+                $("#_aboutButton").addClass("active");
+                $("#_editor").hide();
+                $("#_about").show();
+            };
 
-                $("#_editorButton").click(showEditor);
-                $("#_aboutButton").click(showAbout);
-                $(document).ready(function() {
-                    if (window.location.href.indexOf("#about") > 0) {
-                        showAbout();
-                    }
-                });
+            $("#_editorButton").click(showEditor);
+            $("#_aboutButton").click(showAbout);
+            $(document).ready(function() {
+                if (window.location.href.indexOf("#about") > 0) {
+                    showAbout();
+                }
             });
+        });
+    });
 </script>
 
 

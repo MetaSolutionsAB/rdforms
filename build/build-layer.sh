@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 (
+rm -rf ../release-layer
 cd ../libs
 NODE_PATH=$(which node)
 if [ -x "$NODE_PATH" ] ; then

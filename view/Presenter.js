@@ -138,7 +138,7 @@ define(["dojo/_base/declare",
                 var lang = construct.create("div", {"innerHTML": binding.getLanguage()}, fieldDiv);
                 domClass.add(lang, "rformsLanguage");
             }
-            var text = binding.getValue().replace(/(\r\n|\r|\n)/g, "<br/>").replace("<", "&lt;").replace(">", "&gt;");
+            var text = binding.getValue().replace("<", "&lt;").replace(">", "&gt;").replace(/(\r\n|\r|\n)/g, "<br/>");
             construct.create("div", {"innerHTML": text}, fieldDiv);
         }
 	},

@@ -180,21 +180,21 @@ define(["dojo/_base/declare",
                 label: "New TextItem",
                 iconClass: "dijitIconFile",
                 onClick: function() {
-                    addItem(registry.byNode(this.getParent().currentTarget), {type: "text"});
+                    addItem(registry.byNode(this.getParent().currentTarget), {type: "text", nodetype: "LITERAL"});
                 }
             }));
             this.menu.addChild(new MenuItem({
                 label: "New ChoiceItem",
                 iconClass: "dijitIconConnector",
                 onClick: function() {
-                    addItem(registry.byNode(this.getParent().currentTarget), {type: "choice"});
+                    addItem(registry.byNode(this.getParent().currentTarget), {type: "choice", nodetype: "URI"});
                 }
             }));
             this.menu.addChild(new MenuItem({
                 label: "New GroupItem",
                 iconClass: "dijitFolderOpened",
                 onClick: function() {
-                    addItem(registry.byNode(this.getParent().currentTarget), {type: "group"});
+                    addItem(registry.byNode(this.getParent().currentTarget), {type: "group", nodetype: "RESOURCE"});
                 }
             }));
             this.menu.addChild(new MenuItem({

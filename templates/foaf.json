@@ -376,7 +376,10 @@
       "nodetype": "URI",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "externalLink"
+      ]
     },
     {
       "id": "foaf:weblog",
@@ -652,7 +655,10 @@
       "nodetype": "RESOURCE",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "externalLink"
+      ]
     },
     {
       "id": "foaf:topic_interest",
@@ -850,7 +856,10 @@
       "nodetype": "RESOURCE",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "externalLink"
+      ]
     },
     {
       "id": "foaf:accountName",

@@ -276,7 +276,7 @@ define(["dojo/_base/declare",
 	    var tooltipDialog = new TooltipDialog({});
 	    
 	    tooltipDialog.onBlur = function() {
-		popup.close(tooltipDialog);
+            popup.close(tooltipDialog);
 	    };
 	    
 	    tooltipDialog.openPopup = function() {
@@ -300,7 +300,8 @@ define(["dojo/_base/declare",
 		message += "<div><label class='propertyLabel'>Label:&nbsp;</label><span class='propertyValue'>"+label+"</span></div>";
 	    }
 	    if (property != null) {
-		message += "<div><label class='propertyLabel'>Property:&nbsp;</label><span class='propertyValue'>"+item.getProperty()+"</span></div>";
+            var ptemp = item.getProperty();
+            message += "<div><label class='propertyLabel'>Property:&nbsp;</label><a class='propertyValue' target='_blank' href='"+ptemp+"'>"+ptemp+"</a></div>";
 	    }
 	    if (description != null) {
 		message += "<div><label class='descriptionLabel'>Description:&nbsp;</label><span class='descriptionValue'>"+description.replace(/(\r\n|\r|\n)/g, "<br/>")+"</span></div>";

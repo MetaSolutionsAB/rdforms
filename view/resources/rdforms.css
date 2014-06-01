@@ -214,6 +214,10 @@ a.rformsUrl:hover {
  	margin-left: 0.2em;
  	margin-right: 1em;
  }
+ .rformsEditor .rformsField .mismatch {
+     color: red;
+     font-weight: bold;
+ }
  .rformsEditor .rformsLangcontrolledfield {
  	padding-right: 10.9em;
  }

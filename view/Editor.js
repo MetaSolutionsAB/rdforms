@@ -344,24 +344,33 @@ define(["dojo/_base/declare",
                 var hierarchy = item.getHierarchyProperty() || item.hasStyle("tree");
                 //Check if radiobuttons can be created, i.e. when few choices and max-cardinality == 1
                 if (!hierarchy && (!item.hasStyle("dropDown") && (choices.length < 5 || item.hasStyle("verticalRadioButtons") || item.hasStyle("horizontalRadioButtons"))) && item.getCardinality().max === 1) {
+                    if (binding.getChoice() != null && binding.getChoice().mismatch) {
+                        choices = choices.slice(0);
+                        choices.push(binding.getChoice());
+                    }
                     var buts = [];
                     for (var ind = 0; ind < choices.length; ind++) {
-                        var inputToUse = construct.create("input", null, divToUse);
-                        construct.create("span", { "class": "rformsChoiceLabel", innerHTML: item._getLocalizedValue(choices[ind].label).value }, divToUse);
+                        var c = choices[ind], inputToUse = construct.create("input", null, divToUse);
+                        var sp = construct.create("span", { "class": "rformsChoiceLabel", innerHTML: item._getLocalizedValue(c.label).value }, divToUse);
                         if (item.hasStyle("verticalRadioButtons")) {
                             construct.create("br", null, divToUse);
                         }
                         var rb = new RadioButton({
                             name: "RadioButtonName" + uniqueRadioButtonNameNr,
-                            value: choices[ind].value,
-                            checked: choices[ind].value === binding.getValue()
+                            value: c.value,
+                            checked: c.value === binding.getValue()
                         }, inputToUse);
-                        on(rb, "change", lang.hitch(this, function (but) {
-                            var val = but.get("value");
-                            if (val !== false) {
-                                binding.setValue(val);
-                            }
-                        }, rb));
+                        if (c.mismatch) {
+                            domClass.add(sp, "mismatch");
+                            rb.set("disabled", true);
+                        } else {
+                            on(rb, "change", lang.hitch(this, function (but) {
+                                var val = but.get("value");
+                                if (val !== false) {
+                                    binding.setValue(val);
+                                }
+                            }, rb));
+                        }
                         buts.push(rb);
                     }
                     uniqueRadioButtonNameNr++;
@@ -389,7 +398,11 @@ define(["dojo/_base/declare",
 
                     //Sets the value if any
                     if (binding.getValue()) {
-                        fSelect.set("value", binding.getValue());
+                        if (binding.getChoice().mismatch) {
+                            fSelect.set("displayedValue", binding.getValue());
+                        } else {
+                            fSelect.set("value", binding.getValue());
+                        }
                     } else {
                         fSelect.set("value", "");
                     }
@@ -425,6 +438,9 @@ define(["dojo/_base/declare",
                 var divToUse = construct.create("div", null, fieldDiv);
                 var cNode = construct.create("div", {"class": "rformsChoiceValue"}, divToUse);
                 var choice = binding.getChoice();//system.getChoice(item, binding.getValue());
+                if (choice != null && choice.mismatch) {
+                    domClass.add(cNode, "mismatch");
+                }
                 if (choice) {
                     attr.set(cNode, "innerHTML", utils.getLocalizedValue(choice.label).value || "");
                     if (choice.load != null) {
@@ -440,6 +456,7 @@ define(["dojo/_base/declare",
                         binding.setChoice(choice);
                         if (choice) {
                             attr.set(cNode, "innerHTML", utils.getLocalizedValue(choice.label).value || "&nbsp;");
+                            domClass.remove(cNode, "mismatch");
                         }
                     });
                 }));

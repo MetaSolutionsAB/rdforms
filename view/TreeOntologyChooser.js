@@ -12,7 +12,7 @@ define([
         //===================================================
         postCreate: function () {
             this.inherited("postCreate", arguments);
-            var tree = new Tree({
+            this.tree = new Tree({
                 model: new ChoicesTreeModel(this.binding.getItem().getChoices() || []),
                 showRoot: false,
                 onClick: lang.hitch(this, this._selectChoice),
@@ -29,8 +29,6 @@ define([
                     }
                     return "default";
                 })}, this.selectionNode);
-            tree.startup();
-            this.bc.startup();
         }
     });
 });

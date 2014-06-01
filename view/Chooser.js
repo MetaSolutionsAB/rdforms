@@ -6,10 +6,14 @@ define(["dojo/_base/declare",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
+    "dijit/Dialog",
+    "dijit/layout/ContentPane",
+    "dijit/layout/BorderContainer",
+    "dijit/form/Button",
     "../utils",
     "dojo/text!./ChooserTemplate.html"
 ], function (declare, attr, style, window, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
-             utils, template) {
+             Dialog, ContentPane, BorderContainer, Button, utils, template) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
         templateString: template,

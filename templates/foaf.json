@@ -56,7 +56,7 @@
       },
       "type": "group",
       "automatic": true,
-      "content": []
+      "items": []
     },
     {
       "id": "foaf:based_near",
@@ -72,7 +72,7 @@
       },
       "type": "group",
       "automatic": true,
-      "content": [
+      "items": [
         {
           "id": "foaf:based_near"
         },
@@ -181,7 +181,7 @@
       },
       "type": "group",
       "automatic": true,
-      "content": []
+      "items": []
     },
     {
       "id": "foaf:jabberID",
@@ -358,7 +358,7 @@
       },
       "type": "group",
       "automatic": true,
-      "content": []
+      "items": []
     },
     {
       "id": "foaf:homepage",
@@ -376,7 +376,10 @@
       "nodetype": "URI",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "externalLink"
+      ]
     },
     {
       "id": "foaf:weblog",
@@ -511,7 +514,10 @@
       "nodetype": "RESOURCE",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "image"
+      ]
     },
     {
       "id": "foaf:depicts",
@@ -649,7 +655,10 @@
       "nodetype": "RESOURCE",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "externalLink"
+      ]
     },
     {
       "id": "foaf:topic_interest",
@@ -790,7 +799,10 @@
       "nodetype": "RESOURCE",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "externalLink"
+      ]
     },
     {
       "id": "foaf:page",
@@ -844,7 +856,10 @@
       "nodetype": "RESOURCE",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "externalLink"
+      ]
     },
     {
       "id": "foaf:accountName",
@@ -890,7 +905,7 @@
       },
       "type": "group",
       "automatic": true,
-      "content": []
+      "items": []
     },
     {
       "id": "foaf:birthday",
@@ -952,7 +967,7 @@
         "en": "A foaf:LabelProperty is any RDF property with texual values that serve as labels."
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "foaf:name"
         },
@@ -1032,7 +1047,7 @@
         "en": "A person."
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "foaf:firstName"
         },
@@ -1193,7 +1208,7 @@
         "en": "An agent (eg. person, group, software or physical artifact)."
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "foaf:name"
         },
@@ -1312,7 +1327,7 @@
         "en": "A document."
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "foaf:name"
         },
@@ -1401,7 +1416,7 @@
         "en": "An organization."
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "foaf:name"
         },
@@ -1520,7 +1535,7 @@
         "en": "A class of Agents."
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "foaf:name"
         },
@@ -1651,7 +1666,7 @@
         "en": "A project (a collective endeavour of some kind)."
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "foaf:name"
         },
@@ -1731,7 +1746,7 @@
         "en": "An image."
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "foaf:name"
         },
@@ -1826,7 +1841,7 @@
         "en": "A personal profile RDF document."
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "foaf:name"
         },
@@ -1915,7 +1930,7 @@
         "en": "An online account."
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "foaf:name"
         },
@@ -2001,7 +2016,7 @@
         "en": "An online gaming account."
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "foaf:name"
         },
@@ -2087,7 +2102,7 @@
         "en": "An online e-commerce account."
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "foaf:name"
         },
@@ -2173,7 +2188,7 @@
         "en": "An online chat account."
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "foaf:name"
         },
@@ -2250,7 +2265,10 @@
     {
       "type": "group",
       "id": "foaf:Person-ref",
-      "content": [
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person"
+      },
+      "items": [
         {
           "id": "foaf:title"
         },
@@ -2263,15 +2281,15 @@
         {
           "id": "foaf:mbox"
         }
-      ],
-      "constraints": {
-        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person"
-      }
+      ]
     },
     {
       "type": "group",
       "id": "foaf:Organization-ref",
-      "content": [
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Organization"
+      },
+      "items": [
         {
           "id": "foaf:name"
         },
@@ -2285,10 +2303,7 @@
             "en": "Mailbox"
           }
         }
-      ],
-      "constraints": {
-        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Organization"
-      }
+      ]
     }
   ],
   "scope": "foaf",

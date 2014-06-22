@@ -1,0 +1,6 @@
+Takes a RDF Schema, in the RDF/JSON format and produces a schema object
+from which it is possible to ask for labels, descriptions etc.
+
+Use the online converter:
+http://graphite.ecs.soton.ac.uk/rdf2json/
+In the "Full" mode to get RDF/JSON from other RDF sources.

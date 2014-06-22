@@ -1,0 +1,24 @@
+<div class="ldbrowser">
+  <div style='height: 100%;position: relative'>
+      <div style="font-size: large; margin: 0px 5px">
+          <div style="display: table;width: 100%"><div style="display: table-row">
+              <div style="display:table-cell;width:1px;padding-right: 1em">Resource:</div>
+              <div style="display:table-cell;width: auto">
+                  <div style="width: 100%;box-sizing: border-box;padding: 0px 5px" data-dojo-type="dijit/form/TextBox"
+                       data-dojo-attach-point="textboxURI" data-dojo-props="trim: true" data-dojo-attach-event="onKeyPress: _uriKeypress"></div></div>
+          </div></div>
+      </div>
+      <div style="display:none;margin: 5px;" data-dojo-attach-point="examplesBlock">
+          <span>Example resources: </span>
+          <span data-dojo-attach-point="examples"></span>
+      </div>
+      <div data-dojo-type="dijit/layout/BorderContainer" data-dojo-attach-point="_borderContainer" style="position:absolute; top: 35px;bottom: 0px; left: 0px; right: 0px">
+          <div data-dojo-type='dijit/layout/TabContainer' data-dojo-attach-point='_tabContainer' data-dojo-props="region: 'center'">
+              <div data-dojo-type='dijit/layout/ContentPane' title='Browser' data-dojo-attach-point='_presenterTab'>
+                  <div data-dojo-type="rdforms/view/Presenter" data-dojo-attach-point="presenter" data-dojo-props="compact: true"></div>
+              </div>
+              <div data-dojo-type='rdforms/apps/RDFView' title='RDF data' data-dojo-attach-point='_rdfTab'></div>
+          </div>
+      </div>
+  </div>
+</div>

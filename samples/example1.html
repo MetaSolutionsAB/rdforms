@@ -1,21 +1,20 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link type="text/css" href="../target-all/dijit/themes/claro/claro.css" rel="stylesheet" />
-    <link type="text/css" href="../target-all/rdforms/view/resources/rdforms.css" rel="stylesheet" />
-    <script src="../target-all/dojo/dojo.js"></script>
+    <link type="text/css" href="../release/dijit/themes/claro/claro.css" rel="stylesheet" />
+    <link type="text/css" href="../release/rdforms/view/resources/rdforms.css" rel="stylesheet" />
+    <script src="../release/dojo/dojo.js"></script>
 </head>
 <body class="claro">
 <script type="text/javascript">
     require([
         'rdfjson/Graph',             //Rdfjson Graph API
         'rdforms/template/ItemStore', //Stores all the RDForm templates
-        'rdforms/model/Engine',       //The engine for matching RDF with a template to form a binding tree
         'rdforms/view/Editor',        //The editor User interface
         'dojo/domReady!'             //Wait until the dom is ready.
-    ], function(Graph, ItemStore, Engine, Editor) {
+    ], function(Graph, ItemStore, Editor) {
         var graph = new Graph({
-            "http://example.org/about": {"http://example.com/terms/": [{type: "uri", value: "http://example.com/color/blue"}]}
+            "http://example.org/about": {"http://example.com/terms/colorOfHouse": [{type: "uri", value: "http://example.com/color/blue"}]}
         });
         var itemStore = new ItemStore();
         itemStore.createItem({
@@ -30,8 +29,12 @@
             ],
             "cardinality": {"min": 1, "pref": 1, "max": 1}
         });
-        var binding = Engine.match(graph, "http://example.org/about", itemStore.createTemplateFromChildren(["ex:color"]));
-        new Editor({binding: binding, compact: true}, "node");
+        new Editor({
+            graph: graph,
+            resource: "http://example.org/about",
+            template: itemStore.createTemplateFromChildren(["ex:color"]),
+            compact: true
+        }, "node");
     });
 </script>
 <div id="node"></div>

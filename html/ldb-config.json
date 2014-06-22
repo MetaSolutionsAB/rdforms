@@ -1,0 +1,22 @@
+{
+    "exampleURIs": ["http://example.com/a", "http://example.com/b"],
+    "type2template": {
+        "http://example.com/terms/Thing": "dcterms:BibliographicResource"
+    },
+    "bundlePaths": [
+        "../templates/dcterms.json",
+        "../templates/foaf.json",
+        "../templates/skos.json"
+    ],
+    "rdfFormat": "rdf/json",
+    "rdf": {
+        "http://example.com/a": {
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [{"value": "http://example.com/terms/Thing", "type": "uri"}],
+            "http://purl.org/dc/terms/title": [{"value": "Individual A", "type": "literal"}],
+            "http://purl.org/dc/terms/relation": [{"value": "http://example.com/b", "type": "uri"}]
+        },
+        "http://example.com/b": {
+            "http://purl.org/dc/terms/title": [{"value": "Individual B", "type": "literal"}]
+        }
+    }
+}

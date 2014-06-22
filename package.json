@@ -1,0 +1,14 @@
+{
+  "name": "rdforms",
+  "version": "4.1.0",
+  "dependencies": {
+    "requirejs": "~2.1.11",
+    "amdefine": "~0.1.0",
+    "xml2js": "~0.4.2",
+    "node-static": "~0.7.3",
+    "xmldom": "~0.1.19"
+  },
+  "description": "RDForms is a library for generating forms for RDF.",
+  "homepage": "https://bitbucket.org/metasolutions/rdforms",
+  "dojoBuild": "package.js"
+}

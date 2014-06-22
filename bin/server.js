@@ -48,9 +48,9 @@ http.createServer(function(req, res) {
                     var d = ".." + pathname+fname+".rdf";
                     try {
                         fs.statSync(d); //File exists
-                        str += "<a href=\" ../apps/formulator.html?templates="+t+"&rdf="+d+"\">"+fname+"</a><br/>";
+                        str += "<a href=\" ../html/formulator.html?templates="+t+"&rdf="+d+"\">"+fname+"</a><br/>";
                     } catch(e) { //Files does not exist
-                        str += "<a href=\" ../apps/formulator.html?templates="+t+"\">"+fname+"</a><br/>"
+                        str += "<a href=\" ../html/formulator.html?templates="+t+"\">"+fname+"</a><br/>"
                     }
                 }
                 str += "</body></html>"
@@ -70,6 +70,7 @@ http.createServer(function(req, res) {
                 });
             });
         }
+        req.resume();
     }
 }).listen(port);
 console.log('node-static running at http://localhost:%d', port);

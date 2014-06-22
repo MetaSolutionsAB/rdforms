@@ -1,0 +1,138 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/ico" href="/favicon.ico">
+    <title>RDForms DCAT Editor</title>
+</head>
+<body class="claro">
+<script src="../release/dojo/dojo.js.uncompressed.js"></script>
+<style>
+    @import "../release/dijit/themes/claro/claro.css";
+    @import "../release/rdforms/view/resources/rdforms.css";
+
+    @media (min-width: 768px) {   .container {     max-width: 730px;   } }
+
+    html, body {
+        height: 100%;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+    }
+    #_editor * {
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+    }
+    .main {
+        position: relative;
+        height: 100%;
+    }
+    .main #_editor {
+        position: absolute;
+        top: 6em;
+        bottom: 1em;
+        left: 0px;
+        right: 0px;
+    }
+    .aboutText {
+        margin-top: 5em;
+    }
+    #_editor .rformsLabel {
+        font-weight: normal;
+    }
+
+    .header {
+        margin-top: 27px;
+    }
+    .icon {
+        float: left;
+        margin-top: -20px;
+        margin-right: 15px;
+    }
+</style>
+<script type="text/javascript">
+    require(["rdforms/extras"], function() {
+        require([
+        'rdforms/template/ItemStore',
+        'rdforms/apps/Experiment',
+        'rdfjson/formats/converters',
+        'dojo/json',
+        "dojo/text!../templates/dcterms.json",
+        "dojo/text!../templates/odrs.json",
+        "dojo/text!../templates/foaf.json",
+        "dojo/text!../templates/dcat.json",
+        'dojo/domReady!'
+        ], function(ItemStore, Experiment, converters, json, dctermsTemplate, odrsTemplate, foafTemplate, dcatTemplate) {
+            var itemStore = new ItemStore();
+            itemStore.automaticSortAllowed = false;
+            itemStore.createTemplate(json.parse(dctermsTemplate));
+            itemStore.createTemplate(json.parse(odrsTemplate));
+            itemStore.createTemplate(json.parse(foafTemplate));
+            itemStore.createTemplate(json.parse(dcatTemplate));
+            converters.addNamespace("dcat", "http://www.w3.org/ns/dcat#");
+            var e = new Experiment({template: itemStore.getItem("dcat:Dataset"), graphObj: {}, hideTemplate: true}, "_editorInner");
+            e.startup();
+
+            var showEditor = function() {
+                $("#_editorButton").addClass("active");
+                $("#_aboutButton").removeClass("active");
+                $("#_editor").show();
+                $("#_about").hide();
+            };
+            var showAbout = function() {
+                $("#_editorButton").removeClass("active");
+                $("#_aboutButton").addClass("active");
+                $("#_editor").hide();
+                $("#_about").show();
+            };
+
+            $("#_editorButton").click(showEditor);
+            $("#_aboutButton").click(showAbout);
+            $(document).ready(function() {
+                if (window.location.href.indexOf("#about") > 0) {
+                    showAbout();
+                }
+            });
+        });
+    });
+</script>
+
+
+<div class="container main">
+    <div class="header">
+        <ul class="nav nav-pills pull-right">
+            <li id="_editorButton" class="active"><a href="#editor">Editor</a></li>
+            <li id="_aboutButton"><a href="#about">About</a></li>
+        </ul>
+        <img src="/favicon.ico" class="icon"></img>
+        <h3 class="text-muted">RDForms DCAT Editor</h3>
+    </div>
+    <div id="_editor">
+        <div id="_editorInner"></div>
+    </div>
+    <div id="_about" style="display: none">
+
+        <div class="aboutText">
+            <h2>About the editor</h2>
+            <p>This is a proof of concept editor for editing data catalog descriptions according to the <a href="http://www.w3.org/TR/vocab-dcat/">Data Catalog Vocabulary (DCAT) W3C recommendation</a>.
+                The editor is driven by the <a href="http://rdforms.org/">RDForms library</a> which uses templates to generate HTML Forms to edit RDF.</p>
+
+            <p>The development was done by <a href="http://metasolutions.se/">MetaSolutions AB</a>.</p>
+            <h2>How to use it</h2>
+            <p>Edit your description in the editor tab, see the results in the present tab and cut and paste the resulting RDF in the RDF tab.
+                Any changes you make in the editor or RDF tab will be reflected in the other tabs. Hence, it is possible to paste existing DCAT expressions
+                into the RDF tab and then view it (and possibly change it) in the editor tab. (As long as the expression is centered around the URI http://example.com/about.)</p>
+            <h2>I want feature X</h2>
+            <p>This is a proof of concept DCAT editor based on the capabilities of the RDForms library which main focus is to provide form based editing of RDF and allow easy integration into other applications.
+                Hence, the editor is deliberately kept simple (one HTML file plus the template files). This means that the editor is far from feature complete,
+                for instance there are no upload or download options as this would require a bigger application, including server side support.</p>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!--script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script-->
+</body>
+</html>

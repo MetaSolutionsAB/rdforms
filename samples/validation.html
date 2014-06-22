@@ -7,25 +7,26 @@
     var dojoConfig = {
 	async:true,
 	packages: [
-	    { name: "rforms", location: "../../../src/rforms" },
-	    { name: "rdfjson", location: "../../../src/rdfjson" }]
+	    { name: "rdforms", location: "../.." }]
     };
    </script>
-    <script src="../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
-    <script type="text/javascript" src="testdata.js"></script>
-		
+    <script src="../libs/dojo/dojo.js"></script>
     <style>
-       @import "../lib/dojo/dijit/themes/tundra/tundra.css"; /* required when dijit */	
-       @import "../src/rdforms/view/resources/rforms.css";
+       @import "../libs/dijit/themes/tundra/tundra.css"; /* required when dijit */
+       @import "../view/resources/rdforms.css";
     </style>
     <script type="text/javascript">
-	  require(['./template/ItemStore',
-	           './apps/Validator',
-		   'dojo/domReady!'], 
-		   function(ItemStore, Validator) {
-			var itemStore = new ItemStore();
-	 		itemStore.createTemplate(testdata.templateSrc);
-			new Validator({itemStore: itemStore, type2template: {"http://xmlns.com/foaf/0.1/Document": "testTemplate"}, rdfjson: testdata.rdfSrc}, "container");
+        require(['rdforms/template/ItemStore',
+            'rdforms/apps/Validator',
+            'dojo/json',
+            'dojo/text!./sampleRDF.json',         //The sample RDF
+            'dojo/text!./sampleTemplate.json',    //The sample template
+            'dojo/domReady!'
+        ], function(ItemStore, Validator, json, sampleRDF, sampleTemplate) {
+            var itemStore = new ItemStore();
+	 		itemStore.createTemplate(json.parse(sampleTemplate));
+			new Validator({itemStore: itemStore, type2template: {"http://xmlns.com/foaf/0.1/Document": "test"},
+                rdfjsonEditorOpen: true, rdfjson: json.parse(sampleRDF)}, "container");
 		});
     </script>
 	<div id="container"></div>

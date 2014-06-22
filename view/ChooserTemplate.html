@@ -1,0 +1,28 @@
+<div>
+    <div data-dojo-type="dijit/Dialog" autofocus="true" data-dojo-attach-point="dialog">
+        <div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'sidebar',gutters: 'false'" data-dojo-attach-point="bc" class="chooser rforms">
+            <div data-dojo-type="dijit/layout/ContentPane" data-dojo-attach-point="cpLeft" data-dojo-props="region:'left',splitter:'true'" style="width: 60%; height: 100%">
+                <div data-dojo-attach-point="selectionNode"  style="height:100%"></div>
+            </div>
+            <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
+                <h2>Selected item</h2>
+                <div>
+                    <label>Idenditier:</label>
+                    <span data-dojo-attach-point="uriNode" class="uriNode"></span>
+                </div>
+                <div>
+                    <label>Label:</label>
+                    <span data-dojo-attach-point="labelNode" class="labelNode"></span>
+                </div>
+                <label>Description:</label>
+                <div data-dojo-attach-point="descriptionNode"  class="descriptionNode"></div>
+            </div>
+            <div data-dojo-type="dijit/layout/ContentPane" data-dojo-attach-point="cpBottom" data-dojo-props="region:'bottom'">
+                <div class="buttonRow">
+                    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="cancelButton" data-dojo-attach-event="onClick: _cancelClicked" label="cancel"></div>
+                    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="doneButton" disabled="true" data-dojo-attach-event="onClick: _doneClicked" label="done"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<div>
+  <div data-dojo-type='dijit/layout/TabContainer' data-dojo-attach-point='_tabContainer' style='height: 100%' data-dojo-props="gutters:false">
+    <div data-dojo-type='dijit/layout/ContentPane' title='Editor' data-dojo-props="selected:'true'" data-dojo-attach-point='_editorTab'>
+        <div data-dojo-type="rdforms/view/Editor" data-dojo-attach-point="editor" data-dojo-props="compact: true,includeLevel: 'optional'"></div>
+    </div>
+    <div data-dojo-type='dijit/layout/ContentPane' title='Presenter' data-dojo-attach-point='_presenterTab'>
+        <div data-dojo-type="rdforms/view/Presenter" data-dojo-attach-point="presenter" data-dojo-props="compact: true"></div>
+    </div>
+    <div data-dojo-type='dijit/layout/ContentPane' title='Template' data-dojo-attach-point='_templateTab'>
+      <div data-dojo-type='dijit/form/SimpleTextarea' data-dojo-attach-point='_templateView' style='padding: 0px; margin: 0px;height: 100%; width: 100%; overflow:auto;'></div>
+    </div>
+    <div data-dojo-type='rdforms/apps/RDFView' title='RDF data' data-dojo-attach-point='_rdfTab'></div>
+  </div>
+</div>

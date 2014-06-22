@@ -1,0 +1,169 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+    <body class="claro">
+    <script>
+    var dojoConfig = {
+	async:true,
+	packages: [
+	    { name: "rdforms", location: "../../" }]
+    };
+    </script>
+    <script src="../libs/dojo/dojo.js"></script>
+    <style>
+        @import "../libs/dijit/themes/claro/claro.css";
+        @import "../view/resources/rdforms.css";
+        html, body {
+            height: 100%;
+            width: 100%;
+            padding: 0px;
+            margin: 0px;
+        }
+        .icon {
+            float: left;
+            margin-top: 3px;
+            margin-right: 15px;
+            width: 45px;
+        }
+        .ldbrowser * {
+            -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+        .main {
+            position: relative;
+            height: 100%;
+        }
+        #content {
+            position: absolute;
+            top: 61px;
+            bottom: 10px;
+            left: 50px;
+            right: 50px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        require([
+            'dojo/on',
+            'dojo/dom',
+            'dojo/dom-style',
+            'dojo/Deferred',
+            'rdfjson/Graph',
+            'rdforms/template/ItemStore',
+            'rdforms/apps/LDBrowser',
+            'dojo/domReady!'
+        ], function(on, dom, domStyle, Deferred, Graph, ItemStore, LDBrowser) {
+            var itemStore = new ItemStore();
+            itemStore.createItem({
+                "type": "text",
+                "nodetype": "LITERAL",
+                "id": "ex:label",
+                "property": "http://example.com/terms/label",
+                "label": {"en": "Label"}
+            });
+            itemStore.createItem({
+                "type": "text",
+                "nodetype": "URI",
+                "id": "ex:relation",
+                "property": "http://example.com/terms/relation",
+                "uriValueLabelProperties": ["http://example.com/terms/label"],
+                "label": {"en": "Relation"}
+            });
+            itemStore.createItem({
+                "type": "choice",
+                "nodetype": "URI",
+                "id": "ex:color",
+                "property": "http://example.com/terms/color",
+                "label": {"en": "Color"},
+                "choices": [
+                    { "value": "http://example.com/color/blue", "label": {"en": "Blue"}},
+                    { "value": "http://example.com/color/red", "label": {"en": "Red"}}
+                ],
+                "cardinality": {"min": 1, "pref": 1, "max": 1}
+            });
+            itemStore.createItem({
+                "type": "group",
+                "id": "ex:allInOrder",
+                "label": {"en": "Relations"},
+                "items": [
+                    {id: "ex:label"},
+                    {id: "ex:relation"},
+                    {id: "ex:color"}
+                ]
+            });
+            var g = new Graph({
+                "http://example.com/a": {
+                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [{value: "http://example.com/terms/Thing", type: "uri"}],
+                    "http://example.com/terms/label": [{value: "Individual A", type: "literal"}],
+                    "http://example.com/terms/relation": [{value: "http://example.com/b", type: "uri"}],
+                    "http://example.com/terms/color": [{value: "http://example.com/color/red", type: "uri"}],
+                },
+                "http://example.com/b": {
+                    "http://example.com/terms/label": [{value: "Individual B", type: "literal"}],
+                    "http://example.com/terms/color": [{value: "http://example.com/color/blue", type: "uri"}],
+                },
+                "http://example.com/color/red": {
+                    "http://example.com/terms/label": [{value: "Red", type: "literal"}]
+                },
+                "http://example.com/color/blue": {
+                    "http://example.com/terms/label": [{value: "Blue", type: "literal"}]
+                }
+            });
+
+            var ldp = new LDBrowser({
+                itemStore: itemStore,
+                initialURI: "http://example.com/a",
+                loadResource: function(uri) {
+                    var d = new Deferred();
+                    d.resolve(g);
+                    return d.promise;
+                },
+                suggestedTemplate: function(uri, graph) {
+                    if (uri === "http://example.com/a") {
+                        return ["ex:allInOrder"];
+                    }
+                }
+            }, dom.byId("ldbrowser"));
+
+            on(dom.byId("ldbrowserButton"), "click", function() {
+                domStyle.set(dom.byId("ldbrowser"), "display", "");
+                domStyle.set(dom.byId("about"), "display", "none");
+            });
+            on(dom.byId("aboutButton"), "click", function() {
+                domStyle.set(dom.byId("ldbrowser"), "display", "none");
+                domStyle.set(dom.byId("about"), "display", "");
+            });
+        });
+    </script>
+
+    <div class="main">
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <img src="http://rdforms.com/favicon.ico" class="icon"/>
+                    <a class="navbar-brand" href="#">RDForms Linked Data Browser</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a id="ldbrowserButton" href="#ldbrowser">Browser</a></li>
+                        <li><a id="aboutButton" href="#about">About</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <div id="ldbrowser"></div>
+            <div class="container" id="about" style="display: none;">
+                <h2>About RDForms Linked Data Browser</h2>
+                <p>
+                    Yada yada
+                </p>
+
+                <p>The development was done by <a href="http://metasolutions.se/">MetaSolutions AB</a>.</p>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>

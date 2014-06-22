@@ -1,17 +1,15 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link type="text/css" href="../lib/dojo/dijit/themes/claro/claro.css" rel="stylesheet" />
-    <link type="text/css" href="../src/rdforms/view/resources/rdforms.css" rel="stylesheet" />
+    <link type="text/css" href="../libs/dijit/themes/claro/claro.css" rel="stylesheet" />
+    <link type="text/css" href="../view/resources/rdforms.css" rel="stylesheet" />
     <script>
         var dojoConfig = {
             async:true,
-            packages: [
-                { name: "rdforms", location: "../../../src/rdforms" },
-                { name: "rdfjson", location: "../../../src/rdfjson" }]
+            packages: [{name: "rdforms", location: "../.." }]
         };
     </script>
-    <script src="../lib/dojo/dojo/dojo.js.uncompressed.js"></script>
+    <script src="../libs/dojo/dojo.js"></script>
 </head>
 <body class="claro">
 
@@ -19,18 +17,21 @@
     require([
         'rdfjson/Graph',              //Rdfjson Graph API
         'rdforms/template/ItemStore', //Stores all the RDForm templates
-        'rdforms/model/Engine',       //The engine for matching RDF with a template to form a binding tree
         'rdforms/view/Editor',        //The editor User interface
         'dojo/json',                          //Json parser
         'dojo/text!./sampleRDF.json',         //The sample RDF
         'dojo/text!./sampleTemplate.json',    //The sample template
         'dojo/domReady!'             //Wait until the dom is ready.
-    ], function(Graph, ItemStore, Engine, Editor, json, sampleRDF, sampleTemplate) {
+    ], function(Graph, ItemStore, Editor, json, sampleRDF, sampleTemplate) {
         var graph = new Graph(json.parse(sampleRDF));
         var itemStore = new ItemStore();
         var bundle = itemStore.registerBundle({source: json.parse(sampleTemplate)});
-        var binding = Engine.match(graph, "http://example.org/about", bundle.getRoot());
-        new Editor({binding: binding, compact: true}, "node");
+        new Editor({
+            graph: graph,
+            resource: "http://example.org/about",
+            template: bundle.getRoot(),
+            compact: true
+        }, "node");
     });
 </script>
 <div id="node"></div>

@@ -1,0 +1,64 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link type="text/css" href="../release/dijit/themes/claro/claro.css" rel="stylesheet" />
+    <link type="text/css" href="../release/rdforms/view/resources/rdforms.css" rel="stylesheet" />
+    <script src="../release/dojo/dojo.js"></script>
+</head>
+<body class="claro">
+
+<script type="text/javascript">
+    require([
+        'rdfjson/Graph',             //Rdfjson Graph API
+        'rdforms/template/ItemStore', //Stores all the RDForm templates
+        'rdforms/apps/Experiment',        //The editor User interface
+        'rdforms/model/system',
+        'dojo/dom-attr',
+        'dojo/domReady!'             //Wait until the dom is ready.
+    ], function(Graph, ItemStore, Experiment, system, domAttr) {
+        var graph = new Graph({
+            "http://example.org/about": {"http://example.com/terms/colorOfHouse": [{type: "uri", value: "http://example.com/color/blue"}]}
+        });
+        var itemStore = new ItemStore();
+        itemStore.createItem({
+            "type": "choice",
+            "nodetype": "URI",
+            "id": "ex:color",
+            "property": "http://example.com/terms/colorOfHouse",
+            "label": {"en": "Color of house", "sv": "Färg på huset"},
+            "cardinality": {"min": 1, "pref": 1, "max": 1}
+        });
+        itemStore.createItem({
+            "type": "text",
+            "nodetype": "URI",
+            "id": "ex:manufacturerWebPage",
+            "property": "http://example.com/terms/manufacturer",
+            "label": {"en": "Manufacturer web page", "sv": "Tillverkarens hemsida"},
+            "cardinality": {"min": 1, "pref": 1, "max": 1}
+        });
+
+        system.getChoice = function(item, value, seeAlso) {
+            return {"value": "http://example.com/color/blue",
+                "label": {"en": "Blue", "sv": "Blå"}};
+        };
+        system.openChoiceSelector = function(binding, callback) {
+            alert("Changing automatically to red, should in most cases be a dialog of some sort.");
+            callback({"value": "http://example.com/color/red",
+                "label": {"en": "Red", "sv": "Röd"}});
+        };
+        system.attachLinkBehaviour = function(node, binding) {
+            domAttr.set(node, "target", "_blank");
+        };
+
+        var e = new Experiment({
+            template: itemStore.createTemplateFromChildren(["ex:color", "ex:manufacturerWebPage"]),
+            graph: graph,
+            resource: "http://example.org/about",
+            hideTemplate: true
+        }, "container");
+        e.startup();
+    });
+</script>
+<div id="container"></div>
+</body>
+</html>

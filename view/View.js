@@ -25,6 +25,9 @@ define(["dojo/_base/declare",
 	// Public attributes
 	//===================================================
 	binding: null,
+    template: null,
+    graph: null,
+    resource: "",
 	topLevel: true,
 	compact: false,
 	styleCls: "",

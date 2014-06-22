@@ -10,10 +10,9 @@
     require([
         'rdfjson/Graph',             //Rdfjson Graph API
         'rdforms/template/ItemStore', //Stores all the RDForm templates
-        'rdforms/model/Engine',       //The engine for matching RDF with a template to form a binding tree
         'rdforms/view/Editor',        //The editor User interface
         'dojo/domReady!'             //Wait until the dom is ready.
-    ], function(Graph, ItemStore, Engine, Editor) {
+    ], function(Graph, ItemStore, Editor) {
         var graph = new Graph({
             "http://example.org/about": {"http://example.com/terms/colorOfHouse": [{type: "uri", value: "http://example.com/color/blue"}]}
         });
@@ -30,8 +29,12 @@
             ],
             "cardinality": {"min": 1, "pref": 1, "max": 1}
         });
-        var binding = Engine.match(graph, "http://example.org/about", itemStore.createTemplateFromChildren(["ex:color"]));
-        new Editor({binding: binding, compact: true}, "node");
+        new Editor({
+            graph: graph,
+            resource: "http://example.org/about",
+            template: itemStore.createTemplateFromChildren(["ex:color"]),
+            compact: true
+        }, "node");
     });
 </script>
 <div id="node"></div>

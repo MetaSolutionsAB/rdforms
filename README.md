@@ -42,6 +42,52 @@ in Firefox this is done by:
 
 In Chrome this is done by starting the browser with the following flag: --allow-file-access-from-files
 
+# Samples
+
+A good way to start is to take a look at the samples.
+
+## samples/example1.html
+
+1. Loads the library and necessary CSS.
+2. Loads the correct javascript components (classes) AMD-style.
+3. Creates a minimal RDF graph manually.
+4. Creates a minimal RDForms template manually.
+5. Creates the editor UI from the RDF graph, a given resource, a template and an HTML node.
+
+## samples/example2.html
+
+Different from example1 in the sense that it loads the graph and template from separate files (AMD-style, pure XHR is ok as well).
+It also shows four different ways to initialize RDForms:
+
+### Built version - example2.html
+
+Similar to example1.html
+
+### Dev version - example2-dev.html
+
+Loads from the source directory directly, take inspiration from this approach if you need to test new code and want to avoid the delay of the building process.
+
+### Hosted version - example2-hosted.html
+
+When you have a stable release that you want to depend on, you can deploy it anywhere and just point to it,
+i.e. it does not have to reside on the same system as the webpage where it is used.
+RDForms is packaged as a single js-file and two css files.
+
+### CDN - example2-CDN.html
+
+This is a variant of the hosted version where RDForms is provided as a layer on top of the dojo core layer.
+Hence, dojo-core is loaded from a CDN such as ajax.googleapis.com and the RDForms layer is loaded from another server.
+This approach requires that RDForms is built using the build-layer.sh command.
+
+## samples/example3.html
+
+This example shows how you can provide specific functionality using the system module to provide a good integration
+with a surrounding web plattform. In short it shows how to configure how:
+
+1. links should be opened
+2. to open a dialog for choosing system specific values ("choices")
+3. to load the system specific values ("choices") again at a later point
+
 # Authoring RDForms templates in a UI
 
 It is perfectly feasible to construct the RDForms templates by hand in a text editor of some sort. But for the beginner it is

@@ -171,23 +171,6 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
         },
 
         /**
-         * @return {Object} never available for Text item type.
-         * The property value pairs corresponds to predicate and objects in required tripples.
-         */
-        getConstraints: function (original) {
-            return this.getSource(original).constraints;
-        },
-        setConstraints: function (constr) {
-            var s = this.getSource(true);
-            if (constr) {
-                s.constraints = constr;
-            } else {
-                delete s.constraints;
-            }
-            this.refreshExtends();
-        },
-
-        /**
          * @return {String} a URI indicating the datatype, for example: "http://www.w3.org/2001/XMLSchema.xsd#date".
          */
         getDatatype: function (original) {

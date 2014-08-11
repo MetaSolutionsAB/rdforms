@@ -163,7 +163,8 @@ define(['rdfjson/Rdfs'], function (Rdfs) {
                 var ranges = prop.getRange();
                 var r = conf._specs[prop.getURI()];
 
-                if (ranges != null && ranges.indexOf("http://www.w3.org/2001/XMLSchema#string") !== -1) {
+                if (ranges != null && (ranges.indexOf("http://www.w3.org/2001/XMLSchema#string") !== -1 
+				      || ranges.indexOf("http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral") !== -1)) {
                     source["type"] = "text";
                     source["nodetype"] = (r != null ? r.nodetype : null) || "LITERAL";
                 } else if ((r != null && (r.nodetype === "LANGUAGE_LITERAL" || r.nodetype === "LITERAL" || r.nodetype === "ONLY_LITERAL"))
@@ -172,7 +173,7 @@ define(['rdfjson/Rdfs'], function (Rdfs) {
                     var nt = r != null ? r.nodetype : null;
                     source["nodetype"] = nt || conf.literalNodeTypeDefault || "LANGUAGE_LITERAL";
                 } else if ((r != null && r.nodetype === "DATATYPE_LITERAL") || (ranges.length === 1 && isDatatype(ranges[0], conf))) {
-                    source["type"] = "text";
+                    source["type"] = (r != null && r.type ? r.type : "text");
                     source["nodetype"] = "DATATYPE_LITERAL";
                     if (ranges.length === 1) {
                         source["datatype"] = ranges[0];
@@ -193,7 +194,7 @@ define(['rdfjson/Rdfs'], function (Rdfs) {
                         source["nodetype"] = "RESOURCE";
                     } else if (ranges.length === 1
                         && (conf.allClassesMajor
-                            || conf._major[ranges[0]] && (r == null || r.type === "choice" || r.type == null))) {
+                            || conf.major[ranges[0]] && (r == null || r.type === "choice" || r.type == null))) {
                         source["type"] = "choice";
                         source["nodetype"] = "RESOURCE";
                     } else {
@@ -222,11 +223,14 @@ define(['rdfjson/Rdfs'], function (Rdfs) {
                 if (r != null && r.styles != null) {
                     source.styles = r.styles;
                 }
+                if (conf.nonGroupCardinalityDefault != null && source.type !== "group") {
+                    source.cardinality = conf.nonGroupCardinalityDefault;
+                }
                 if (r != null && r.cardinality != null) {
                     source.cardinality = r.cardinality;
                 }
-                if (conf.nonGroupCardinalityDefault != null && source.type !== "group") {
-                    source.cardinality = conf.nonGroupCardinalityDefault;
+                if (source.type === "choice" && r != null && r.choices != null) {
+                    source.choices = r.choices;
                 }
                 auxP.push(source);
             }

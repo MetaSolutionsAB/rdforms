@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+requirejs = require('requirejs');
+requirejs.config({nodeRequire: require, baseUrl: '../../libs/', paths: {rdforms: ".."}});
+
+if (process.argv.length < 3) {
+    console.log("You need to call the program with one or two arguments like:");
+    console.log("  $> ./skosGenerate skosInfile choicesOutfile");
+    console.log("    --OR--");
+    console.log("  $> ./skosGenerate configFile");
+    console.log("\nSee the test catalog for example config files.");
+    process.exit();
+}
+
+var deps = ['fs', 'rdfjson/formats/converters', 'rdforms/converters/vocab/skos'];
+if (process.argv.length === 3) {
+    deps.push("rdforms/converters/vocab/"+process.argv[2]);
+}
+
+requirejs(deps, function (fs, converters, skos, conf) {
+        if (process.argv.length > 3) {
+            conf = {
+                source: process.argv[2],
+                destination: process.argv[3]
+            }
+        }
+
+        fs.readFile(conf.source, 'utf8', function(err, data) {
+            var graph = converters.rdfxml2graph(data);
+            var choices = skos.extractChoices(graph, conf);
+            var fd = fs.openSync(conf.destination, "w");
+            fs.writeSync(fd, JSON.stringify(choices, true, 1), 0, "utf8");
+
+        });
+    }
+);

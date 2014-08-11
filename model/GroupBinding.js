@@ -25,6 +25,10 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 	//===================================================
 	// Public API
 	//===================================================
+
+    getValue: function() {
+        return this.getChildrenRootUri();
+    },
 	oneChildValidityChanged: function(valid) {
 		if (valid === this._oneValidChild) {
 			return;

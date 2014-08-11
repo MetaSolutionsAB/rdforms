@@ -27,7 +27,8 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             "firstcolumnfixedtable",
             "tree",
             "externalLink",
-            "image"
+            "image",
+            "label"
         ],
 
         //===================================================

@@ -139,7 +139,23 @@ define(["dojo/_base/declare",
                 domClass.add(lang, "rformsLanguage");
             }
             var text = binding.getValue().replace("<", "&lt;").replace(">", "&gt;").replace(/(\r\n|\r|\n)/g, "<br/>");
-            construct.create("div", {"innerHTML": text}, fieldDiv);
+
+            // The text is shown as a link to the parents bindings URI if:
+            // 1) The current item is indicated to be a label.
+            // 2) The presenter is not at topLevel.
+            // 3) The current item is first in the parents list of children.
+            // 4) The parent binding corresponds to a URI.
+            var parentBinding = binding.getParent();
+            if (item.hasStyle("label")
+                && this.topLevel !== true
+                && parentBinding != null && parentBinding.getItem().getChildren()[0] === item
+                && parentBinding.getStatement() != null && parentBinding.getStatement().getType() === "uri") {
+                a = construct.create("a", {"class": "rformsUrl",
+                    href: parentBinding.getStatement().getValue(), innerHTML: text}, fieldDiv);
+                system.attachLinkBehaviour(a, parentBinding);
+            } else {
+                construct.create("div", {"innerHTML": text}, fieldDiv);
+            }
         }
 	},
 	addChoice: function(fieldDiv, binding) {
@@ -155,10 +171,11 @@ define(["dojo/_base/declare",
 			for (var i=parseInt(choice.value);i>0;i--) {
 				construct.create("span", {"class": "rformsStar"}, fieldDiv);
 			}
-		} else {
+		} else if (item.hasStaticChoices() && !item.hasStyle("externalLink")) {
+            construct.create("div", {"innerHTML": utils.getLocalizedValue(choice.label).value}, fieldDiv);
+        } else {
             var a = construct.create("a", {"class": "rformsUrl",
                 href: choice.seeAlso || choice.value, title: desc || choice.seeAlso || choice.value, "innerHTML": utils.getLocalizedValue(choice.label).value}, fieldDiv);
-
             if (item.hasStyle("externalLink")) {
                 system.attachExternalLinkBehaviour(a, binding);
             } else {

@@ -58,6 +58,10 @@ define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, I
             return s.ontologyUrl != null || s.choices != null;
         },
 
+        hasStaticChoices: function(original) {
+            var s = this.getSource(original);
+            return s.choices != null;
+        },
         /**
          * @return {Array} of choices defined manually in the Template.
          */

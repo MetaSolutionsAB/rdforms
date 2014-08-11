@@ -394,7 +394,10 @@
       "nodetype": "URI",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "externalLink"
+      ]
     },
     {
       "id": "foaf:openid",
@@ -583,7 +586,10 @@
       "nodetype": "RESOURCE",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "externalLink"
+      ]
     },
     {
       "id": "foaf:workInfoHomepage",
@@ -601,7 +607,10 @@
       "nodetype": "RESOURCE",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "externalLink"
+      ]
     },
     {
       "id": "foaf:schoolHomepage",
@@ -619,7 +628,10 @@
       "nodetype": "RESOURCE",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "externalLink"
+      ]
     },
     {
       "id": "foaf:knows",
@@ -691,7 +703,10 @@
       "nodetype": "RESOURCE",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "externalLink"
+      ]
     },
     {
       "id": "foaf:currentProject",
@@ -820,7 +835,10 @@
       "nodetype": "RESOURCE",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "styles": [
+        "externalLink"
+      ]
     },
     {
       "id": "foaf:account",

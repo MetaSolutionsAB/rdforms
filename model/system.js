@@ -1,11 +1,15 @@
 define(["exports", "rdforms/utils", "dojo/dom-attr"], function(exports, utils, domAttr) {
 
     exports.getFallbackChoice = function(item, value, seeAlso, graph) {
-        if (item.getNodetype() === "URI") {
+        if (item.getNodetype() === "URI" || item.getNodetype() === "RESOURCE") {
             var lmap = utils.getLocalizedMap(graph, value, item.getURIValueLabelProperties());
             if (!lmap) {
                 var lastHash = value.lastIndexOf("#"), lastSlash = value.lastIndexOf("/");
-                lmap = {"": value.substring(1+ (lastHash > lastSlash ? lastHash : lastSlash > lastHash ? lastSlash : 0))};
+                if (lastHash > 0 || lastSlash > 0) {
+                    lmap = {"": decodeURIComponent(value.substring(1+ (lastHash > lastSlash ? lastHash : lastSlash)))};
+                } else {
+                    lmap = {"": value};
+                }
             }
             return {"value": value, "label": lmap};
         } else {

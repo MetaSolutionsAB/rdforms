@@ -58,9 +58,9 @@ define(["dojo/_base/declare",
         graph: null,
         proxyLoadResourcePattern: null,
         proxyLoadResourcePattern2: null,
-	loadResourceMessage: "Loading Resource",
-	loadResourceMessage2: "Loading Resource via secondary mechanism",
-	loadResourceFailed: "Failed to load resource",
+        loadResourceMessage: "Loading Resource",
+        loadResourceMessage2: "Loading Resource via secondary mechanism",
+        loadResourceFailed: "Failed to load resource",
 
         showResource: function(uri) {
             this.textboxURI.set("value", uri);
@@ -69,28 +69,39 @@ define(["dojo/_base/declare",
                 this._rdfTab.setGraph(graph);
             }));
         },
-	showOrUpdateLoadProgress: function(message) {
-	    if (!this._progressDialog) {
-		var node = domConstruct.create("div", {style: {"width": "400px", "height": "100px"}});
-		this._progressMessage = domConstruct.create("div", {"class": "progressMessage"}, node);
-		this._progressBar = new ProgressBar({value: "infinity", indeterminate: true}, domConstruct.create("div", null, node));
-		this._progressDialog = new Dialog();
-		this._progressDialog.setContent(node);
-	    }
-	    domAttr.set(this._progressMessage, "innerHTML", message);
-	    this._progressDialog.show();
-	},
-	endLoadProgress: function() {
-	    this._progressDialog.hide();
-	},
-	failedLoadProgress: function(message) {
-	    this._progressDialog.hide();
-	    alert(this.loadResourceFailed);
-	},
+        showOrUpdateLoadProgress: function(message) {
+            if (!this._progressDialog) {
+                var node = domConstruct.create("div", {style: {"width": "400px", "height": "100px"}});
+                this._progressMessage = domConstruct.create("div", {"class": "progressMessage"}, node);
+                this._progressBar = new ProgressBar({value: "infinity", indeterminate: true}, domConstruct.create("div", null, node));
+                this._progressDialog = new Dialog();
+                this._progressDialog.setContent(node);
+            }
+            domAttr.set(this._progressMessage, "innerHTML", message);
+            this._progressDialog.show();
+        },
+        endLoadProgress: function() {
+            this._progressDialog.hide();
+        },
+        failedLoadProgress: function(message) {
+            this._progressDialog.hide();
+            alert(this.loadResourceFailed);
+        },
         loadResource: function(uri, secondAttempt) {
-	    var pattern = secondAttempt === true ? this.proxyLoadResourcePattern2 : this.proxyLoadResourcePattern;
+            var pattern = secondAttempt === true ? this.proxyLoadResourcePattern2 : this.proxyLoadResourcePattern;
+            var uriParamLookup = secondAttempt === true ? this.pattern2loadParam2 : this.pattern2loadParam;
+            var uriparams = "";
+            if (uriParamLookup) {
+                var matchLength;
+                for (var key in uriParamLookup) if (uriParamLookup.hasOwnProperty(key)) {
+                    if (uri.substring(0,key.length) === key && (matchLength == null || matchLength > key.length)) {
+                        uriparams = uriParamLookup[key];
+                        matchLength = key.length;
+                    }
+                }
+            }
             if (pattern) {
-                var url = lang.replace(pattern, {uri: encodeURIComponent(uri)});
+                var url = lang.replace(pattern, {uri: encodeURIComponent(uri)})+uriparams;
                 var params;
                 switch(this.rdfFormat) {
                     case "rdf/xml":
@@ -100,16 +111,16 @@ define(["dojo/_base/declare",
                     default:
                     params = {headers: {"Accept": "application/rdf+json"}, handleAs: "json"};
                 }
-		this.showOrUpdateLoadProgress(secondAttempt ? this.loadResourceMessage2 : this.loadResourceMessage);
+                this.showOrUpdateLoadProgress(secondAttempt ? this.loadResourceMessage2 : this.loadResourceMessage);
                 return request.get(url, params).then(lang.hitch(this, function(data) {
                     this.endLoadProgress();
-		    return this._convertRDF(data);
+                    return this._convertRDF(data);
                 }), lang.hitch(this, function(err) {
-		    if (secondAttempt === true || this.proxyLoadResourcePattern2 == null) {
-			this.failedLoadProgress();
-		    } else {
-			return this.loadResource(uri, true);
-		    }
+                    if (secondAttempt === true || this.proxyLoadResourcePattern2 == null) {
+                        this.failedLoadProgress();
+                    } else {
+                        return this.loadResource(uri, true);
+                    }
                 }));
             } else if (this.graph) {
                 var d = new Deferred();
@@ -159,6 +170,7 @@ define(["dojo/_base/declare",
             if (this.itemStore == null) {
                 this.itemStore = new ItemStore();
             }
+            this.itemStore.automaticSortAllowed = false;
 
             var self = this;
             var f = function() {
@@ -250,6 +262,12 @@ define(["dojo/_base/declare",
             }
         },
         _showBrowse: function(uri, graph) {
+            if (graph._graph[uri] == null) {
+                var _uri = decodeURIComponent(uri);
+                if (graph._graph[_uri] != null) {
+                    uri = _uri;
+                }
+            }
             var requiredItems = this.suggestedTemplate(uri, graph) || [];
             if (lang.isString(requiredItems)) {
                 requiredItems = [requiredItems];

@@ -122,6 +122,11 @@ a.rformsUrl:hover {
     display: none;
 }
 
+.rformsInvisibleGroup>.rformsFields>.rformsField {
+    margin-left: 0em;
+    padding-left: 0em;
+}
+
 .rformsInvisibleGroup>.rformsFields>.rformsGroup {
     margin-left: 0em;
 }

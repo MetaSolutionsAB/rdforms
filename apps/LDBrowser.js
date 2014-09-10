@@ -6,15 +6,15 @@ define(["dojo/_base/declare",
 	'dojo/promise/all',
 	"dojo/Deferred",
 	"dojo/request",
+    "dojo/request/script",
 	"dojo/dom-style",
 	"dojo/dom-construct",
 	"dojo/dom-attr",
+    "dojo/dom-class",
 	"dijit/layout/_LayoutWidget",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
 	"dijit/layout/TabContainer",
-	"dijit/layout/ContentPane",
-	"dijit/layout/BorderContainer",
 	"dijit/form/TextBox",
 	"dijit/Dialog",
 	"dijit/ProgressBar",
@@ -30,9 +30,9 @@ define(["dojo/_base/declare",
 	'dojo/keys',
 	'dojo/io-query',
 	"dojo/text!./LDBrowserTemplate.html"
-], function(declare, lang, array, on, all, Deferred, request, domStyle, domConstruct, domAttr, _LayoutWidget,  _TemplatedMixin,
-            _WidgetsInTemplateMixin, TabContainer, ContentPane, BorderContainer, TextBox, Dialog, ProgressBar, Engine, Presenter,
-            RDFView, system, ItemStore, Graph, converters, hash, topic, keys, ioQuery, template) {
+], function(declare, lang, array, on, all, Deferred, request, script, domStyle, domConstruct, domAttr, domClass,
+            _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin, TabContainer, TextBox, Dialog, ProgressBar,
+            Engine, Presenter, RDFView, system, ItemStore, Graph, converters, hash, topic, keys, ioQuery, template) {
 
     /**
      * Linked Data browser, initialize by:
@@ -56,36 +56,48 @@ define(["dojo/_base/declare",
         rdf: null,
         rdfFormat: "rdf/json",
         graph: null,
+        timeout: 8000,
         proxyLoadResourcePattern: null,
         proxyLoadResourcePattern2: null,
         loadResourceMessage: "Loading Resource",
         loadResourceMessage2: "Loading Resource via secondary mechanism",
         loadResourceFailed: "Failed to load resource",
+        doLayout: false,
 
-        showResource: function(uri) {
-            this.textboxURI.set("value", uri);
+        showResource: function(uri, onSuccess, onError) {
+            if (this.currentURI === uri) {
+                return;
+            }
             this.loadResource(uri).then(lang.hitch(this, function(graph) {
-                this._showBrowse(uri, graph);
-                this._rdfTab.setGraph(graph);
-            }));
+                this.currentURI = uri;
+                if (graph != null) {
+                    this.textboxURI.set("value", uri);
+                    this._showBrowse(uri, graph);
+                    this._rdf.setGraph(graph);
+                    onSuccess && onSuccess(true);
+                } else {
+                    onError && onError();
+                }
+            }), onError);
         },
         showOrUpdateLoadProgress: function(message) {
-            if (!this._progressDialog) {
+           /* if (!this._progressDialog) {
                 var node = domConstruct.create("div", {style: {"width": "400px", "height": "100px"}});
                 this._progressMessage = domConstruct.create("div", {"class": "progressMessage"}, node);
                 this._progressBar = new ProgressBar({value: "infinity", indeterminate: true}, domConstruct.create("div", null, node));
                 this._progressDialog = new Dialog();
                 this._progressDialog.setContent(node);
-            }
-            domAttr.set(this._progressMessage, "innerHTML", message);
-            this._progressDialog.show();
+            }*/
+            domAttr.set(this._progressDialogMessageNode, "innerHTML", message);
+            this._progressDialogDijit.show();
         },
         endLoadProgress: function() {
-            this._progressDialog.hide();
+            this._progressDialogDijit.hide();
         },
         failedLoadProgress: function(message) {
-            this._progressDialog.hide();
-            alert(this.loadResourceFailed);
+            this._progressDialogDijit.hide();
+            this._errorDialogDijit.show();
+            //alert(this.loadResourceFailed);
         },
         loadResource: function(uri, secondAttempt) {
             var pattern = secondAttempt === true ? this.proxyLoadResourcePattern2 : this.proxyLoadResourcePattern;
@@ -112,16 +124,24 @@ define(["dojo/_base/declare",
                     params = {headers: {"Accept": "application/rdf+json"}, handleAs: "json"};
                 }
                 this.showOrUpdateLoadProgress(secondAttempt ? this.loadResourceMessage2 : this.loadResourceMessage);
-                return request.get(url, params).then(lang.hitch(this, function(data) {
+                var succ = lang.hitch(this, function(data) {
                     this.endLoadProgress();
                     return this._convertRDF(data);
-                }), lang.hitch(this, function(err) {
+                });
+                var fail = lang.hitch(this, function(err) {
                     if (secondAttempt === true || this.proxyLoadResourcePattern2 == null) {
                         this.failedLoadProgress();
                     } else {
                         return this.loadResource(uri, true);
                     }
-                }));
+                });
+                if (this.callback) {
+                    params.jsonp = this.callback;
+                    params.timeout = this.timeout;
+                    return script.get(url, params).then(succ, fail);
+                } else {
+                    return request.get(url, params).then(succ, fail);
+                }
             } else if (this.graph) {
                 var d = new Deferred();
                 d.resolve(this.graph);
@@ -161,11 +181,13 @@ define(["dojo/_base/declare",
         //===================================================
         templateString: template,
         _graph: null,
-        _presenterTab: null, //From template
-        _rdfTab: null, //From template
 
         postCreate: function() {
             this.inherited("postCreate", arguments);
+
+            this._errorConfirmButton.onClick = lang.hitch(this, function() {
+                this._errorDialogDijit.hide();
+            });
 
             if (this.itemStore == null) {
                 this.itemStore = new ItemStore();
@@ -177,9 +199,7 @@ define(["dojo/_base/declare",
                 system.attachLinkBehaviour = function (node, binding) {
                     on(node, "click", function (e) {
                         e.preventDefault();
-                        var obj = ioQuery.queryToObject(hash());
-                        obj[self.keyInFragment] = binding.getValue();
-                        hash(ioQuery.objectToQuery(obj));
+                        self._tryShowResource(binding.getValue());
                     });
                 };
 
@@ -200,9 +220,11 @@ define(["dojo/_base/declare",
                 lang.mixin(this, this.config, config);
                 this._convertRDF(this.rdf);
 
+                domAttr.set(this._errorDialogMessageNode, "innerHTML", this.loadResourceFailed);
+
                 if (this.exampleURIs) {
                     domStyle.set(this.examplesBlock, "display", "");
-                    domStyle.set(this._borderContainer.domNode, "top", "55");
+                    domClass.add(this.domNode, "examples");
                     array.forEach(this.exampleURIs, function(exURI) {
                         var a = domConstruct.create("a", {href: exURI, innerHTML: exURI}, this.examples);
                         domConstruct.create("span", {innerHTML: ", "}, this.examples);
@@ -230,7 +252,7 @@ define(["dojo/_base/declare",
             });
 
             if (this.configPath) {
-                var path = this.configPath.substring(0, this.configPath.lastIndexOf("/"));
+                var path = this.configPath.substring(0, this.configPath.lastIndexOf("/")+1);
                 this.loadJSON(this.configPath).then(function(config) {
                     if (path !== "" && config.bundlePaths != null) {
                         config.bundlePaths = array.map(config.bundlePaths, function(bpath) {
@@ -242,12 +264,17 @@ define(["dojo/_base/declare",
             } else {
                 g();
             }
+
+            this._tabContainer.set("doLayout", this.doLayout);
+            if (this.doLayout) {
+                domClass.add(this.domNode, "managedHeight");
+            }
             this.startup();
         },
         resize: function( ){
             this.inherited("resize", arguments);
-            if (this._borderContainer) {
-                this._borderContainer.resize();
+            if (this._tabContainer) {
+                this._tabContainer.resize();
             }
         },
         _convertRDF: function(rdf) {
@@ -274,17 +301,22 @@ define(["dojo/_base/declare",
             }
             var template = Engine.constructTemplate(graph, uri, this.itemStore, requiredItems);
             var binding = Engine.match(graph, uri, template);
-            this.presenter.show({binding: binding});
+            this._presenter.show({binding: binding});
         },
         _uriKeypress: function(ev) {
             if (ev.keyCode === keys.ENTER) {
-                var obj = ioQuery.queryToObject(hash());
-                obj[this.keyInFragment] = this.textboxURI.get("value");
-                hash(ioQuery.objectToQuery(obj));
+                var url = this.textboxURI.get("value");
+                this._tryShowResource(url);
             }
         },
+        _tryShowResource: function(url) {
+            this.showResource(url, lang.hitch(this, function() {
+                var obj = ioQuery.queryToObject(hash());
+                obj[this.keyInFragment] = url;
+                hash(ioQuery.objectToQuery(obj));
+            }));
+        },
         _loadConfig: function(configPath) {
-
         }
     });
 });

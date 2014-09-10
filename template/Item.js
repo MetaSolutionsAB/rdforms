@@ -28,7 +28,8 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             "tree",
             "externalLink",
             "image",
-            "label"
+            "label",
+            "strictmatch"
         ],
 
         //===================================================
@@ -256,6 +257,19 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             }
             this.refreshExtends();
         },
+        getValueTemplate: function(original) {
+            return this.getSource(original).valueTemplate;
+        },
+        setValueTemplate: function(valueTemplate) {
+            var s = this.getSource(true);
+            if (valueTemplate) {
+                s.valueTemplate = valueTemplate;
+            } else {
+                delete s.valueTemplate;
+            }
+            this.refreshExtends();
+        },
+
         /**
          * @return {Object} containing max, min, and preferred properties.
          */

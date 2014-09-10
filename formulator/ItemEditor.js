@@ -61,6 +61,11 @@ define([
             this._ntDijit.set("value", this.item.getNodetype(true) || "");
             this._dtDijit.set("value", this.item.getDatatype(true) || "");
             this._patternDijit.set("value", this.item.getPattern(true) || "");
+            if (this.item.getType() === "text") {
+                this._valueTemplateDijit.set("value", this.item.getValueTemplate(true) || "");
+            } else {
+                this._valueTemplateDijit.set("disabled", "true");
+            }
             var card = this.item.getCardinality(true);
             this._minDijit.set("value", card.min || "");
             this._prefDijit.set("value", card.pref || "");
@@ -84,7 +89,7 @@ define([
                     this._idDijit.set("value", id);
                 }
                 this._dtDijit.set("disabled", this.item.getNodetype(true) !== "DATATYPE_LITERAL");
-                this._patternDijit.set("disabled", this.item.getNodetype(true) !== "ONLY_LITERAL");
+                this._patternDijit.set("disabled", this.item.getType(true) !== "text");
                 aspect.before(this._labelLangString, "onChange", lang.hitch(this.item, "setLabelMap"));
                 aspect.after(this._labelLangString, "onChange", lang.hitch(this, this.itemChanged));
                 on(this._addLabel, "click", lang.hitch(this._labelLangString, this._labelLangString.add));
@@ -189,6 +194,13 @@ define([
                 return;
             }
             this.item.setPattern(this._patternDijit.get("value"));
+            this.itemChanged();
+        },
+        _changeValueTemplate: function() {
+            if (this.lock) {
+                return;
+            }
+            this.item.setValueTemplate(this._valueTemplateDijit.get("value"));
             this.itemChanged();
         },
         _changeCard: function() {

@@ -4,35 +4,43 @@ define(["dojo/_base/declare",
     "dojo/topic",
 	"dojo/json",
     "dojo/dom-attr",
-    "dojo/dom-class",
 	"dijit/layout/_LayoutWidget",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
     "dijit/layout/TabContainer",
+    "dijit/form/SimpleTextarea",
 	"rdfjson/Graph",
     "rdfjson/formats/converters",
-	"dojo/text!./RDFViewTemplate.html"
-], function(declare, lang, topic, json, domAttr, domClass, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin,
-            TabContainer, Graph, converters, template) {
+	"dojo/text!./RDFEditTemplate.html"
+], function(declare, lang, topic, json, domAttr, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin,
+            TabContainer, SimpleTextarea, Graph, converters, template) {
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
         //===================================================
         // Public attributes
         //===================================================
-        graph: null,
+        graph: "",
         subView: "rdf/xml",
 
         //===================================================
         // Public methods
         //===================================================
-        setGraph: function(graph) {
-            this.graph = graph;
+        getGraph: function() {
             switch(this.subView) {
                 case "rdf/xml":
-                    this.showRDFXML();
+                    return this.getRDFXML() || this.origGraph;
+                case "rdf/json":
+                    return this.getRDFJSON() || this.origGraph;
+            }
+        },
+        setGraph: function(graph) {
+            this.origGraph = graph;
+            switch(this.subView) {
+                case "rdf/xml":
+                    this.setRDFXML(graph);
                     break;
                 case "rdf/json":
-                    this.showRDFJSON();
+                    this.setRDFJSON(graph);
                     break;
             }
         },
@@ -45,13 +53,6 @@ define(["dojo/_base/declare",
         //===================================================
         // Inherited methods
         //===================================================
-        postCreate: function() {
-            this.inherited("postCreate", arguments);
-            this._tabContainer.set("doLayout", this.doLayout);
-            if (this.doLayout) {
-                domClass.add(this.domNode, "managedHeight");
-            }
-        },
         startup: function() {
             this.inherited("startup", arguments);
             topic.subscribe(this._tabContainer.id+"-selectChild", lang.hitch(this, this._selectChild));
@@ -64,32 +65,42 @@ define(["dojo/_base/declare",
         },
 	//===================================================
 	// Private methods
-	//===================================================
-        showRDFXML: function() {
-            var rdfxmlValue = converters.rdfjson2rdfxml(this.graph);
-            if (rdfxmlValue.length > 100000) {
-                rdfxmlValue = rdfxmlValue.substring(0, 100000) + "\n    ----- \n RDF to large, truncating it. \n   ------";
+	//===================================================	
+        getRDFXML: function() {
+            if (this.rdfxmlValue.length <= 100000) {
+                return converters.rdfxml2graph(this._rdfxml.value);
             }
-            rdfxmlValue = rdfxmlValue.replace(/>/g,'&gt;').replace(/</g,'&lt;').replace(/"/g,'&quot;').replace(/[\r\n]/, "<br>");
-            domAttr.set(this._rdfxml, "innerHTML", rdfxmlValue);
         },
-        showRDFJSON: function() {
-            var rdfjsonValue = json.stringify(this.graph.exportRDFJSON(), 0, 2);
-            if (rdfjsonValue.length > 100000) {
-                rdfjsonValue = rdfjsonValue.substring(0,100000)+ "\n    ----- \n RDF to large, truncating it. \n   ------";
+        setRDFXML: function(graph) {
+            this.rdfxmlValue = converters.rdfjson2rdfxml(graph);
+            if (this.rdfxmlValue.length > 100000) {
+                this._rdfxml.value = this.rdfxmlValue.substring(0,100000)+ "\n    ----- \n RDF to large, truncating it. \n   ------";
+            } else {
+                this._rdfxml.value = this.rdfxmlValue;
             }
-            rdfjsonValue = rdfjsonValue.replace(/>/g,'&gt;').replace(/</g,'&lt;').replace(/"/g,'&quot;')
-            domAttr.set(this._rdfjson, "innerHTML", rdfjsonValue);
+        },
+        getRDFJSON: function() {
+            if (this.rdfjsonValue.length <= 100000) {
+                return new Graph(json.parse(this._rdfjson.value));
+            }
+        },
+        setRDFJSON: function(graph) {
+            this.rdfjsonValue = json.stringify(graph.exportRDFJSON(), 0, 2);
+            if (this.rdfjsonValue.length > 100000) {
+                this._rdfjson.value = this.rdfjsonValue.substring(0,100000)+ "\n    ----- \n RDF to large, truncating it. \n   ------";
+            } else {
+                this._rdfjson.value = this.rdfjsonValue;
+            }
         },
 
         _selectChild: function(child) {
+            var graph = this.getGraph();
             if(child === this._rdfxmlTab) {
                 this.subView = "rdf/xml";
-                this.showRDFXML();
             } else if(child === this._rdfjsonTab) {
                 this.subView = "rdf/json";
-                this.showRDFJSON();
             }
+            this.setGraph(graph);
         }
     });
 });

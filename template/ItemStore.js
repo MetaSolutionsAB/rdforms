@@ -155,6 +155,18 @@ define(["dojo/_base/declare",
             return this._bundles;
         },
 
+        /**
+         * @param {Array} bundlePaths is an array of paths to bundles that can be understood by require.
+         */
+        loadBundles: function(bundlePaths) {
+            require(bundlePaths, lang.hitch(this, function() {
+                var bundles = Array.prototype.slice.call(arguments); //Convert to regular array
+                for (var b=0;b<bundles.length;b++) {
+                    this.registerBundle({path: bundlePaths[b], source: bundles[b]});
+                }
+            }));
+        },
+
         //Backward compatability
         createTemplate: function (source) {
             var b = this.registerBundle({source: source});

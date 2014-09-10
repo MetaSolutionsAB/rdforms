@@ -52,8 +52,8 @@
             'rdforms/apps/LDBrowser',
             'dojo/domReady!'
         ], function(on, domStyle, dom, LDBrowser) {
-
-            new LDBrowser({configPath: "ldb-config.json"}, "ldbrowser");
+            alert("test "+test.test);
+            new LDBrowser({configPath: "../samples/ldb-config.json"}, "ldbrowser");
 
             on(dom.byId("ldbrowserButton"), "click", function() {
                 domStyle.set(dom.byId("ldbrowser"), "display", "");

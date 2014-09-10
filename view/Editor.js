@@ -261,41 +261,49 @@ define(["dojo/_base/declare",
                             }
                         }
                     }, construct.create("div", null, fieldDiv));
+                } else if (itemToUse.getPattern() != null) {
+                    tb = new ValidationTextBox({
+                        value: binding.getGist(),
+                        pattern: itemToUse.getPattern(),
+                        invalidMessage: itemToUse.getDescription(),
+                        onChange: function () {
+                            binding.setGist(this.get("value"));
+                        }
+                    }, construct.create("div", null, fieldDiv));
                 } else {
                     tb = new TextBox({
-                        value: binding.getValue(),
+                        value: binding.getGist(),
                         onChange: function () {
-                            binding.setValue(this.get("value"));
+                            binding.setGist(this.get("value"));
                         }
                     }, construct.create("div", null, fieldDiv));
                     domClass.add(tb.domNode, "rformsFieldInput");
                 }
-            }
-            else {
+            } else {
                 var itemToUse = binding.getItem();
                 //TODO: Sort out if the textarea should be multiline using style or class...
-                if (itemToUse.getNodetype() === "ONLY_LITERAL" && itemToUse.getPattern() != null) {
-                    tb = new ValidationTextBox({
-                        value: binding.getValue(),
-                        pattern: itemToUse.getPattern(),
-                        invalidMessage: itemToUse.getDescription(),
-                        onChange: function () {
-                            binding.setValue(this.get("value"));
-                        }
-                    }, construct.create("div", null, fieldDiv));
-                } else if (itemToUse.hasStyle("multiline")) {
+                if (itemToUse.hasStyle("multiline")) {
                     tb = new Textarea({
-                        value: binding.getValue(),
+                        value: binding.getGist(),
                         onChange: function () {
-                            binding.setValue(this.get("value"));
+                            binding.setGist(this.get("value"));
                         }
                     }, construct.create("div", null, fieldDiv));
                     tb.resize(); // To size the area to the value.
+                } else if (itemToUse.getPattern() != null) {
+                    tb = new ValidationTextBox({
+                        value: binding.getGist(),
+                        pattern: itemToUse.getPattern(),
+                        invalidMessage: itemToUse.getDescription(),
+                        onChange: function () {
+                            binding.setGist(this.get("value"));
+                        }
+                    }, construct.create("div", null, fieldDiv));
                 } else {
                     tb = new TextBox({
-                        value: binding.getValue(),
+                        value: binding.getGist(),
                         onChange: function () {
-                            binding.setValue(this.get("value"));
+                            binding.setGist(this.get("value"));
                         }
                     }, construct.create("div", null, fieldDiv));
                 }

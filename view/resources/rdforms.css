@@ -566,3 +566,47 @@ a.rformsUrl:hover {
     padding: 0px;
     resize: none;
 }
+
+
+/* LDBrowser */
+
+.ldbrowser.managedHeight>div {
+    height: 100%;
+    position: relative;
+}
+.ldbrowser.managedHeight>div>.dijitTabContainer {
+    position:absolute;
+    top:45px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.ldbrowser.managedHeight.examples>div>.dijitTabContainer {
+    position:absolute;
+    top:55px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.ldbrowser.examples .examplesBlock {
+    display: block;
+}
+.ldbrowser .examplesBlock {
+    display:none;
+    margin: 5px;
+}
+
+/* RDFView */
+.rdfView pre {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    border-width:0px;
+}
+
+.rdfView.managedHeight pre {
+    height: 100%;
+    overflow:auto;
+}

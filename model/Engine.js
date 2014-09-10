@@ -387,7 +387,9 @@ define([
                     return choices[index];
                 }
             }
-            return {value: obj, label: {"": obj}, mismatch: true};
+            if (!item.hasStyle("strictmatch")) {
+                return {value: obj, label: {"": obj}, mismatch: true};
+            }
         } else {
             var label = utils.getLocalizedMap(graph, obj, [ChoiceBinding.label]);
             var sa = graph.findFirstValue(obj, ChoiceBinding.seeAlso);

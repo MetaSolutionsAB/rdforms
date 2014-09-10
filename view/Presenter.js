@@ -78,7 +78,9 @@ define(["dojo/_base/declare",
 		}
 		var item = bindings[0].getItem();
 		var rowInd, colInd, childBindingsGroups, trEl;
-		
+
+        var tl = this.topLevel;
+        this.topLevel = false; //Table-cells are never toplevel, hence intermediate override.
 		for (rowInd = 0; rowInd < bindings.length;rowInd++) {
 			childBindingsGroups = bindings[rowInd].getItemGroupedChildBindings();
 			trEl = construct.create("tr", null, table);
@@ -91,6 +93,7 @@ define(["dojo/_base/declare",
 				}
 			}
 		}
+        this.topLevel = tl;
 	},
 	skipBinding: function(binding) {
 		return binding.getItem() instanceof Group && binding.getChildBindings().length === 0;
@@ -117,7 +120,7 @@ define(["dojo/_base/declare",
         var item = binding.getItem();
         if (item.getNodetype() === "URI") {
             if (item.hasStyle("image")) {
-                construct.create("img", {"class": "rformsImage", "src": binding.getValue()}, fieldDiv);
+                construct.create("img", {"class": "rformsImage", "src": binding.getGist()}, fieldDiv);
             } else {
                 var a, vmap = utils.getLocalizedMap(binding);
                 if (vmap) {
@@ -125,7 +128,7 @@ define(["dojo/_base/declare",
                         href: binding.getValue(), innerHTML: utils.getLocalizedValue(vmap).value}, fieldDiv);
                 } else {
                     a = construct.create("a", {"class": "rformsUrl",
-                        href: binding.getValue(), innerHTML: binding.getValue()}, fieldDiv);
+                        href: binding.getValue(), innerHTML: binding.getGist()}, fieldDiv);
                 }
                 if (item.hasStyle("externalLink")) {
                     system.attachExternalLinkBehaviour(a, binding);
@@ -138,7 +141,7 @@ define(["dojo/_base/declare",
                 var lang = construct.create("div", {"innerHTML": binding.getLanguage()}, fieldDiv);
                 domClass.add(lang, "rformsLanguage");
             }
-            var text = binding.getValue().replace("<", "&lt;").replace(">", "&gt;").replace(/(\r\n|\r|\n)/g, "<br/>");
+            var text = binding.getGist().replace("<", "&lt;").replace(">", "&gt;").replace(/(\r\n|\r|\n)/g, "<br/>");
 
             // The text is shown as a link to the parents bindings URI if:
             // 1) The current item is indicated to be a label.

@@ -240,6 +240,9 @@ define(['rdfjson/Rdfs'], function (Rdfs) {
             var clss = removeIgnored(rdfs.getClasses(), conf);
             for (var c = 0; c < clss.length; c++) {
                 var cls = clss[c];
+                if (cls.getURI().indexOf("_:") === 0) {
+                    continue;
+                }
                 var source = {
                     id: getAbbrevId(cls.getURI(), conf),
                     label: cls.getLabels(),

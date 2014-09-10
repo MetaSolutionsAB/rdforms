@@ -1,0 +1,5038 @@
+{
+  "id": "LOM",
+  "label": {
+    "en": "Default Base formlet in compound formlets",
+    "sv": "Default formulet bas i sammansatta formuletter"
+  },
+  "root": "LOM",
+  "cachedChoices": {
+    "http://localhost:8080/ontologies/Model0.rdf": [
+      {
+        "choices": [
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Structure-atomic",
+            "top": true,
+            "label": {
+              "hu": "Elemi",
+              "et": "Atomaarne",
+              "de": "Atomar",
+              "no": "Atomisk",
+              "ro": "Atomic",
+              "el": "ατομική",
+              "es": "Atómica",
+              "en": "Atomic",
+              "sv": "Atomisk",
+              "ru": "атомный"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Structure-collection",
+            "top": true,
+            "label": {
+              "hu": "gyüjtemény",
+              "de": "Sammlung",
+              "et": "Kollektsioon",
+              "no": "Samling",
+              "ro": "Colectie",
+              "el": "συλλογή",
+              "es": "Colección",
+              "en": "Collection",
+              "sv": "Samling",
+              "ru": "коллекция"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Structure-hierarchical",
+            "top": true,
+            "label": {
+              "hu": "Hierarchikus",
+              "de": "Hierachie",
+              "et": "Hierarhiline",
+              "no": "Hierarkisk",
+              "ro": "Ierarhic",
+              "el": "ιεραρχικό",
+              "es": "Jerárquica",
+              "en": "Hierarchical",
+              "sv": "Hierarkisk",
+              "ru": "иерархический"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Structure-linear",
+            "top": true,
+            "label": {
+              "hu": "Lineáris",
+              "et": "Lineaarne",
+              "de": "Linear",
+              "no": "Lineær",
+              "ro": "Liniar",
+              "el": "γραμμικό",
+              "es": "Lineal",
+              "en": "Linear",
+              "sv": "Linjär",
+              "ru": "линейный"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Structure-networked",
+            "top": true,
+            "label": {
+              "hu": "Hálózat",
+              "de": "netzwerk",
+              "et": "võrgustatud",
+              "no": "Nettverk",
+              "ro": "In retea",
+              "el": "δικτυωμένη",
+              "es": "en red",
+              "en": "Networked",
+              "sv": "Networked",
+              "ru": "сетевой"
+            }
+          }
+        ],
+        "constraints": {
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Structure"
+        }
+      },
+      {
+        "choices": [
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-author",
+            "top": true,
+            "label": {
+              "hu": "szerző",
+              "et": "autor",
+              "de": "autor",
+              "no": "forfatter",
+              "ro": "autor",
+              "el": "συγγραφέας",
+              "es": "autor",
+              "en": "Author",
+              "sv": "Författare",
+              "ru": "автор"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-contentProvider",
+            "top": true,
+            "label": {
+              "hu": "Tartalomszolgáltató",
+              "et": "Sisu Pakkuja",
+              "de": "Inhalts-anbieter",
+              "no": "innholdsleverandør",
+              "ro": "Furnizor de Continut",
+              "el": "παροχέας περιεχομένου",
+              "es": "Proveedor de Contenidos",
+              "en": "Content Provider",
+              "sv": "Innehållsleverantör",
+              "ru": "поставщик информации"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-creator",
+            "top": true,
+            "label": {
+              "hu": "készítő",
+              "de": "urheber",
+              "et": "looja",
+              "no": "opphavsmann",
+              "ro": "creator",
+              "el": "δημιουργός",
+              "es": "creador",
+              "en": "Creator",
+              "sv": "Skapare",
+              "ru": "создатель"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-editor",
+            "top": true,
+            "label": {
+              "hu": "szerkesztő",
+              "de": "redakteur",
+              "et": "toimetaja",
+              "no": "redaktør",
+              "ro": "redactor",
+              "el": "συντάκτης επιμελητής",
+              "es": "editor",
+              "en": "Editor",
+              "sv": "Redaktör",
+              "ru": "редактор"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-educationalValidator",
+            "top": true,
+            "label": {
+              "hu": "Oktatási engedélyezö",
+              "et": "Hariduslik kontrollija",
+              "de": "Bildungs-validierer",
+              "no": "Faglig godkjenner",
+              "ro": "Revizor educational",
+              "el": "εκπαιδευτικός επαληθευτής",
+              "es": "Revisor educativo",
+              "en": "Educational Validator",
+              "sv": "Läro-utvärderare",
+              "ru": "образовательный контролер"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-graphicalDesigner",
+            "top": true,
+            "label": {
+              "hu": "Grafikus",
+              "de": "grafik-designer",
+              "et": "graafiline kujundaja",
+              "no": "Grafisk Designer",
+              "ro": "Designer Grafica",
+              "el": "σχεδιαστής γραφικών",
+              "es": "diseñador gráfico",
+              "en": "Graphical Designer",
+              "sv": "Grafisk Designer",
+              "ru": "графический дизайнер"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-initiator",
+            "top": true,
+            "label": {
+              "hu": "kezdeményező",
+              "de": "initiator",
+              "et": "algataja",
+              "no": "initiativtaker",
+              "ro": "initiator",
+              "el": "εναρκτής",
+              "es": "iniciador",
+              "en": "Initiator",
+              "sv": "Initiativtagare",
+              "ru": "инициатор"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-instructionalDesigner",
+            "top": true,
+            "label": {
+              "hu": "Oktatásszervező",
+              "de": "Erziehugns-designer",
+              "et": "Juhiste kujundaja",
+              "no": "Pedagog",
+              "ro": "Designer Instructional",
+              "el": "διδακτικός σχεδιαστής",
+              "es": "Diseñador educativo",
+              "en": "Instructional designer",
+              "sv": "Pedagog",
+              "ru": "создатель правил"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-publisher",
+            "top": true,
+            "label": {
+              "hu": "kiadó",
+              "et": "kirjastaja",
+              "de": "verleger",
+              "no": "utgiver",
+              "ro": "editor",
+              "el": "εκδότης",
+              "es": "editor",
+              "en": "Publisher",
+              "sv": "Utgivare",
+              "ru": "издатель"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-scriptWriter",
+            "top": true,
+            "label": {
+              "hu": "szkript készítő",
+              "de": "skript-schreiber",
+              "et": "stsenarist",
+              "no": "kursforfatter",
+              "ro": "scenarist",
+              "el": "συγγραφέας σεναρίου",
+              "es": "guionista",
+              "en": "Script writer",
+              "sv": "Kurs-kompositör",
+              "ru": "сценарист"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-subjectMatterExpert",
+            "top": true,
+            "label": {
+              "hu": "sme / tartalom szakértö",
+              "et": "Teema ekspert",
+              "de": "Themen-experte",
+              "no": "Fagekspert",
+              "ro": "Expert care propune subiecte",
+              "el": "ειδήμων θεματικού αντικειμένου",
+              "es": "Experto en la materia",
+              "en": "Subject Matter Expert",
+              "sv": "Ämnes-expert",
+              "ru": "предметный эксперт"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-techicalImplementer",
+            "top": true,
+            "label": {
+              "hu": "technikai kivitelező",
+              "et": "techniline rakendaja",
+              "de": "technik-implementierer",
+              "no": "Teknisk ansvarlig",
+              "ro": "Implementator technic",
+              "el": "τεχνικός υλοποιητής",
+              "es": "desarrollador técnico",
+              "en": "Technical Implementer",
+              "sv": "Teknsikt ansvarig",
+              "ru": "технический исполнитель"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-technicalValidator",
+            "top": true,
+            "label": {
+              "hu": "Technikai engedélyezö",
+              "de": "Technok-validierer",
+              "et": "Tehniline kontrollija",
+              "no": "Teknisk godkjenner",
+              "ro": "Revizor technic",
+              "el": "τεχνικός επαληθευτής",
+              "es": "Revisor técnico",
+              "en": "Technical Validator",
+              "sv": "Teknisk utvärderare",
+              "ru": "технический контролер"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-terminator",
+            "top": true,
+            "label": {
+              "hu": "befejező",
+              "de": "beender",
+              "et": "teostaja",
+              "no": "avslutter",
+              "ro": "finalizator",
+              "el": "τερματιστής",
+              "es": "terminador",
+              "en": "Terminator",
+              "sv": "Avslutare",
+              "ru": "исполнитель"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-unknown",
+            "top": true,
+            "label": {
+              "hu": "ismeretlen",
+              "de": "unbekannt",
+              "et": "teadmata",
+              "no": "ukjent",
+              "ro": "necunoscut",
+              "el": "άγνωστο",
+              "es": "desconocido",
+              "en": "Unknown",
+              "sv": "Okänt",
+              "ru": "неизвестный"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Role-validator",
+            "top": true,
+            "label": {
+              "hu": "jóváhagyó",
+              "de": "validierer",
+              "et": "kinnitaja",
+              "no": "godkjenner",
+              "ro": "revizor",
+              "el": "επαληθευτής",
+              "es": "revisor",
+              "en": "Validator",
+              "sv": "Utvärderare",
+              "ru": "заверитель"
+            }
+          }
+        ],
+        "constraints": {
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Role"
+        }
+      },
+      {
+        "choices": [
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#IntendedEndUserRole-author",
+            "top": true,
+            "label": {
+              "hu": "szerző",
+              "et": "autor",
+              "de": "autor",
+              "no": "forfatter",
+              "ro": "autor",
+              "el": "συγγραφέας",
+              "es": "autor",
+              "en": "Author",
+              "sv": "Författare",
+              "ru": "автор"
+            }
+          },
+          {
+            "value": "http://organic-edunet.eu/LOM/rdf/voc#IntendedEndUserRole-counsellor",
+            "top": true,
+            "label": {
+              "hu": "tanácsadó",
+              "de": "berater",
+              "et": "nõustaja",
+              "no": "rådgiver",
+              "ro": "consilier",
+              "el": "σύμβουλος",
+              "es": "orientador",
+              "en": "Counsellor",
+              "sv": "Rådgivare",
+              "ru": "советник"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#IntendedEndUserRole-learner",
+            "top": true,
+            "label": {
+              "hu": "tanuló",
+              "de": "lerner",
+              "et": "õppur",
+              "no": "elev/student",
+              "ro": "cursant",
+              "el": "μαθητής",
+              "es": "aprendiz",
+              "en": "Learner",
+              "sv": "Elev/Student",
+              "ru": "ученик"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#IntendedEndUserRole-manager",
+            "top": true,
+            "label": {
+              "hu": "igazgató",
+              "et": "juht",
+              "de": "manager",
+              "no": "leder",
+              "ro": "manager",
+              "el": "διοικητικό στέλεχος",
+              "es": "administrador",
+              "en": "Manager",
+              "sv": "Manager",
+              "ru": "менеджер"
+            }
+          },
+          {
+            "value": "http://organic-edunet.eu/LOM/rdf/voc#IntendedEndUserRole-other",
+            "top": true,
+            "label": {
+              "hu": "egyéb",
+              "de": "sonstiges",
+              "et": "muu",
+              "no": "andre",
+              "ro": "altele",
+              "el": "άλλος",
+              "es": "otro",
+              "en": "Other",
+              "sv": "Annat",
+              "ru": "другие"
+            }
+          },
+          {
+            "value": "http://organic-edunet.eu/LOM/rdf/voc#IntendedEndUserRole-parent",
+            "top": true,
+            "label": {
+              "hu": "szülő",
+              "de": "elternteil",
+              "et": "lapsevanem",
+              "no": "foreldre",
+              "ro": "parinte",
+              "el": "γονέας",
+              "es": "padre",
+              "en": "Parent",
+              "sv": "Förälder",
+              "ru": "родитель"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#IntendedEndUserRole-teacher",
+            "top": true,
+            "label": {
+              "hu": "tanár",
+              "et": "õpetaja",
+              "de": "lehrer",
+              "no": "lærer",
+              "ro": "invatator",
+              "el": "δάσκαλος",
+              "es": "profesor",
+              "en": "Teacher",
+              "sv": "Lärare",
+              "ru": "учитель"
+            }
+          }
+        ],
+        "constraints": {
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/AgentClass"
+        }
+      },
+      {
+        "choices": [],
+        "constraints": {
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.cc.uah.es/ie/ont/OE-Predicates#predicate"
+        }
+      },
+      {
+        "parentProperty": "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+        "isParentPropertyInverted": false,
+        "choices": [],
+        "constraints": {
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.cc.uah.es/ie/ont/OE-OAAE#Concepts"
+        },
+        "isHierarchyPropertyInverted": false,
+        "hierarchyProperty": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+      },
+      {
+        "choices": [
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#AggregationLevel-1",
+            "top": true,
+            "label": {
+              "": "1"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#AggregationLevel-2",
+            "top": true,
+            "label": {
+              "": "2"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#AggregationLevel-3",
+            "top": true,
+            "label": {
+              "": "3"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#AggregationLevel-4",
+            "top": true,
+            "label": {
+              "": "4"
+            }
+          }
+        ],
+        "constraints": {
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#AggregationLevel"
+        }
+      },
+      {
+        "choices": [
+          {
+            "value": "http://organic-edunet.eu/LOM/rdf/voc#Accepted",
+            "top": true,
+            "label": {
+              "": "Accepted"
+            }
+          },
+          {
+            "value": "http://organic-edunet.eu/LOM/rdf/voc#Rejected",
+            "top": true,
+            "label": {
+              "": "Rejected"
+            }
+          }
+        ],
+        "constraints": {
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://organic-edunet.eu/LOM/rdf/voc#ValidationStatus"
+        }
+      },
+      {
+        "choices": [],
+        "constraints": {
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Organization"
+        }
+      },
+      {
+        "choices": [
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Status-draft",
+            "top": true,
+            "label": {
+              "hu": "piszkozat",
+              "de": "vorlage",
+              "et": "mustand",
+              "no": "utkast",
+              "ro": "schita",
+              "el": "προσχέδιο",
+              "es": "borrador",
+              "en": "Draft",
+              "sv": "Utkast",
+              "ru": "черновик"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Status-final",
+            "top": true,
+            "label": {
+              "hu": "végleges",
+              "et": "lõplik",
+              "de": "finale",
+              "no": "ferdig utgave",
+              "ro": "final",
+              "el": "τελικό",
+              "es": "final",
+              "en": "Final",
+              "sv": "Slutgiltig",
+              "ru": "окончательный"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Status-revised",
+            "top": true,
+            "label": {
+              "hu": "módosított",
+              "et": "uuendatud",
+              "de": "revidiert",
+              "no": "revidert",
+              "ro": "revizuit",
+              "el": "αναθεωρημένο",
+              "es": "revisado",
+              "en": "Revised",
+              "sv": "Reviderad",
+              "ru": "обновленный"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Status-unavailable",
+            "top": true,
+            "label": {
+              "hu": "elérhetetlen",
+              "de": "nicht verfügbar",
+              "et": "kättesaamatu",
+              "no": "utilgjengelig",
+              "ro": "indisponibil",
+              "el": "μη διαθέσιμο",
+              "es": "no disponible",
+              "en": "Unavailable",
+              "sv": "Ej tillgänglig",
+              "ru": "недоступный"
+            }
+          }
+        ],
+        "constraints": {
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Status"
+        }
+      },
+      {
+        "choices": [
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#RequirementType-browser",
+            "top": true,
+            "label": {
+              "hu": "bönésző",
+              "et": "brauser",
+              "de": "browser",
+              "no": "nettleser",
+              "ro": "incarcare",
+              "el": "φυλλομετρητής",
+              "es": "navegador",
+              "en": "Browser",
+              "sv": "Webb-läsare",
+              "ru": "браузер"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#RequirementType-operatingSystem",
+            "top": true,
+            "label": {
+              "hu": "operációs rendszer",
+              "et": "operatsioonisüsteem",
+              "de": "betriebssystem",
+              "no": "operativsystem",
+              "ro": "sistem de operare",
+              "el": "λειτουργικού συστήματος",
+              "es": "sistema operativo",
+              "en": "Operating System",
+              "sv": "Operativsystem",
+              "ru": "операционная система"
+            }
+          }
+        ],
+        "constraints": {
+          "http://www.w3.org/2000/01/rdf-schema#subClassOf": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Requirement"
+        }
+      },
+      {
+        "choices": [
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#OSTechnology-macos",
+            "top": true,
+            "label": {
+              "hu": "operációs rendszer: MAC OS",
+              "et": "operatsioonisüsteem: MAC OS",
+              "de": "betriebssystem: MAC OS",
+              "no": "operativsystem: MAC OS",
+              "ro": "sistem de operare: MAC OS",
+              "el": "λειτουργικού συστήματος: MAC OS",
+              "es": "sistema operativo: MAC OS",
+              "en": "Operating System: MAC OS",
+              "sv": "Operativsystem: MAC OS",
+              "ru": "операционная система: MAC OS"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#BrowserTechnology-netscapeCommunicator",
+            "top": true,
+            "label": {
+              "hu": "bönésző: Netscape Communicator",
+              "et": "brauser: Netscape Communicator",
+              "de": "browser: Netscape Communicator",
+              "no": "nettleser: Netscape Communicator",
+              "ro": "incarcare: Netscape Communicator",
+              "el": "φυλλομετρητής: Netscape Communicator",
+              "es": "navegador: Netscape Communicator",
+              "en": "Browser: Netscape Communicator",
+              "sv": "Webb-läsare: Netscape Communicator",
+              "ru": "браузер: Netscape Communicator"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#OSTechnology-pc-dos",
+            "top": true,
+            "label": {
+              "hu": "operációs rendszer: PC-DOS",
+              "et": "operatsioonisüsteem: PC-DOS",
+              "de": "betriebssystem: PC-DOS",
+              "no": "operativsystem: PC-DOS",
+              "ro": "sistem de operare: PC-DOS",
+              "el": "λειτουργικού συστήματος: PC-DOS",
+              "es": "sistema operativo: PC-DOS",
+              "en": "Operating System: PC-DOS",
+              "sv": "Operativsystem: PC-DOS",
+              "ru": "операционная система: PC-DOS"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#BrowserTechnology-amaya",
+            "top": true,
+            "label": {
+              "hu": "bönésző: Amaya",
+              "et": "brauser: Amaya",
+              "de": "browser: Amaya",
+              "no": "nettleser: Amaya",
+              "ro": "incarcare: Amaya",
+              "el": "φυλλομετρητής: Amaya",
+              "es": "navegador: Amaya",
+              "en": "Browser: Amaya",
+              "sv": "Webb-läsare: Amaya",
+              "ru": "браузер: Amaya"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#OSTechnology-multi-os",
+            "top": true,
+            "label": {
+              "hu": "operációs rendszer: multi-os",
+              "et": "operatsioonisüsteem: multi-os",
+              "de": "betriebssystem: multi-os",
+              "no": "operativsystem: multi-operativsystemer",
+              "ro": "sistem de operare: multi-os",
+              "el": "λειτουργικού συστήματος: πολλαπλό λειτουργικό",
+              "es": "sistema operativo: multi-os",
+              "en": "Operating System: Multiple-OS",
+              "sv": "Operativsystem: Multipla operativ-system",
+              "ru": "операционная система: multi-os"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#BrowserTechnology-opera",
+            "top": true,
+            "label": {
+              "hu": "bönésző: Opera",
+              "et": "brauser: Opera",
+              "de": "browser: Opera",
+              "no": "nettleser: Opera",
+              "ro": "incarcare: Opera",
+              "el": "φυλλομετρητής: Opera",
+              "es": "navegador: Opera",
+              "en": "Browser: Opera",
+              "sv": "Webb-läsare: Opera",
+              "ru": "браузер: Opera"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#OSTechnology-ms-windows",
+            "top": true,
+            "label": {
+              "hu": "operációs rendszer: Windows",
+              "et": "operatsioonisüsteem: Windows",
+              "de": "betriebssystem: Windows",
+              "no": "operativsystem: Windows",
+              "ro": "sistem de operare: Windows",
+              "el": "λειτουργικού συστήματος: Windows",
+              "es": "sistema operativo: Windows",
+              "en": "Operating System: Windows",
+              "sv": "Operativsystem: Windows",
+              "ru": "операционная система: Windows"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#OSTechnology-unix",
+            "top": true,
+            "label": {
+              "hu": "operációs rendszer: Unix",
+              "et": "operatsioonisüsteem: Unix",
+              "de": "betriebssystem: Unix",
+              "no": "operativsystem: Unix",
+              "ro": "sistem de operare: Unix",
+              "el": "λειτουργικού συστήματος: Unix",
+              "es": "sistema operativo: Unix",
+              "en": "Operating System: Unix",
+              "sv": "Operativsystem: Unix",
+              "ru": "операционная система: Unix"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#OSTechnology-none",
+            "top": true,
+            "label": {
+              "hu": "operációs rendszer: nincs",
+              "et": "operatsioonisüsteem: ükski",
+              "de": "betriebssystem: keiner",
+              "no": "operativsystem: ingen",
+              "ro": "sistem de operare: nimic",
+              "el": "λειτουργικού συστήματος: κανένα",
+              "es": "sistema operativo: ninguno",
+              "en": "Operating System: None",
+              "sv": "Operativsystem: Ingen",
+              "ru": "операционная система: никакой"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#BrowserTechnology-ms-internetExplorer",
+            "top": true,
+            "label": {
+              "hu": "bönésző: ms-Internet Explorer",
+              "de": "browser: ms-Internet Explorer",
+              "et": "brauser: ms-Internet Explorer",
+              "no": "nettleser: ms-Internet Explorer",
+              "ro": "incarcare: ms-Internet Explorer",
+              "el": "φυλλομετρητής: ms-Internet Explorer",
+              "es": "navegador: ms-Internet Explorer",
+              "en": "Browser: ms-Internet Explorer",
+              "sv": "Webb-läsare: ms-Internet Explorer",
+              "ru": "браузер: ms-Internet Explorer"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#BrowserTechnology-any",
+            "top": true,
+            "label": {
+              "hu": "bönésző: bármi",
+              "de": "browser: jeder",
+              "et": "brauser: suvaline",
+              "no": "nettleser: noen",
+              "ro": "incarcare: oricare",
+              "el": "φυλλομετρητής: οποιοσδήποτε",
+              "es": "navegador: cualquiera",
+              "en": "Browser: Any",
+              "sv": "Webb-läsare: Valfri",
+              "ru": "браузер: любой"
+            }
+          }
+        ],
+        "constraints": {
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Technology"
+        }
+      },
+      {
+        "choices": [
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#InteractivityType-active",
+            "top": true,
+            "label": {
+              "hu": "tevékeny",
+              "et": "aktiivne",
+              "de": "aktiv",
+              "no": "aktiv deltakelse",
+              "ro": "activ",
+              "el": "ενεργός",
+              "es": "activo",
+              "en": "Active",
+              "sv": "Aktiv",
+              "ru": "активный"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#InteractivityType-expositive",
+            "top": true,
+            "label": {
+              "hu": "tapasztaló",
+              "et": "tõlgendav",
+              "de": "erklärend",
+              "no": "opplysende informativt",
+              "ro": "explicativ",
+              "el": "αφηγηματικός",
+              "es": "expositivo",
+              "en": "Expositive",
+              "sv": "Upplysande",
+              "ru": "объяснительный"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#InteractivityType-mixed",
+            "top": true,
+            "label": {
+              "hu": "vegyes",
+              "et": "sega",
+              "de": "gemischt",
+              "no": "blandet",
+              "ro": "mixt",
+              "el": "μικτός",
+              "es": "combinado",
+              "en": "Mixed",
+              "sv": "Blandad",
+              "ru": "смешанный"
+            }
+          }
+        ],
+        "constraints": {
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#InteractivityType"
+        }
+      },
+      {
+        "choices": [
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#SemanticDensity-veryLow",
+            "top": true,
+            "label": {
+              "hu": "1: nagyon alacsony",
+              "de": "1: sehr niedrig",
+              "et": "1: väga madal",
+              "no": "1: veldig lav",
+              "ro": "1: foarte scazut",
+              "el": "1: πολύ χαμηλό",
+              "es": "1: muy bajo",
+              "en": "1: Very low",
+              "sv": "1: Väldigt låg",
+              "ru": "1: очень низкий"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#SemanticDensity-low",
+            "top": true,
+            "label": {
+              "hu": "2: alacsony",
+              "et": "2: madal",
+              "de": "2: niedrig",
+              "no": "2: lav",
+              "ro": "2: scazut",
+              "el": "2: χαμηλό",
+              "es": "2: bajo",
+              "en": "2: Low",
+              "sv": "2: Låg",
+              "ru": "2: низкий"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#SemanticDensity-medium",
+            "top": true,
+            "label": {
+              "hu": "3: közepes",
+              "et": "3: keskmine",
+              "de": "3: mittel",
+              "no": "3: middels",
+              "ro": "3: mediu",
+              "el": "3: μεσαίο",
+              "es": "3: medio",
+              "en": "3: Medium",
+              "sv": "3: Medium",
+              "ru": "3: средний"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#SemanticDensity-high",
+            "top": true,
+            "label": {
+              "hu": "4: magas",
+              "de": "4: hoch",
+              "et": "4: kõrge",
+              "no": "4: høy",
+              "ro": "4: ridicat",
+              "el": "4: υψηλό",
+              "es": "4: alto",
+              "en": "4: High",
+              "sv": "4: Hög",
+              "ru": "4: высокий"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#SemanticDensity-veryHigh",
+            "top": true,
+            "label": {
+              "hu": "5: nagyon magas",
+              "de": "5: sehr hoch",
+              "et": "5: väga kõrge",
+              "no": "5: veldig høy",
+              "ro": "5: foarte ridicat",
+              "el": "5: πολύ υψηλό",
+              "es": "5: muy alto",
+              "en": "5: Very High",
+              "sv": "5: Väldigt hög",
+              "ru": "5: очень высокий"
+            }
+          }
+        ],
+        "constraints": {
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#SemanticDensity"
+        }
+      },
+      {
+        "choices": [
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#InteractivityLevel-veryLow",
+            "top": true,
+            "label": {
+              "hu": "1: nagyon alacsony",
+              "de": "1: sehr niedrig",
+              "et": "1: väga madal",
+              "no": "1: veldig lav",
+              "ro": "1: foarte scazut",
+              "el": "1: πολύ χαμηλό",
+              "es": "1: muy bajo",
+              "en": "1: Very low",
+              "sv": "1: Väldigt låg",
+              "ru": "1: очень низкий"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#InteractivityLevel-low",
+            "top": true,
+            "label": {
+              "hu": "2: alacsony",
+              "et": "2: madal",
+              "de": "2: niedrig",
+              "no": "2: lav",
+              "ro": "2: scazut",
+              "el": "2: χαμηλό",
+              "es": "2: bajo",
+              "en": "2: Low",
+              "sv": "2: Låg",
+              "ru": "2: низкий"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#InteractivityLevel-medium",
+            "top": true,
+            "label": {
+              "hu": "3: közepes",
+              "et": "3: keskmine",
+              "de": "3: mittel",
+              "no": "3: middels",
+              "ro": "3: mediu",
+              "el": "3: μεσαίο",
+              "es": "3: medio",
+              "en": "3: Medium",
+              "sv": "3: Medium",
+              "ru": "3: средний"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#InteractivityLevel-high",
+            "top": true,
+            "label": {
+              "hu": "4: magas",
+              "de": "4: hoch",
+              "et": "4: kõrge",
+              "no": "4: høy",
+              "ro": "4: ridicat",
+              "el": "4: υψηλό",
+              "es": "4: alto",
+              "en": "4: High",
+              "sv": "4: Hög",
+              "ru": "4: высокий"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#InteractivityLevel-veryHigh",
+            "top": true,
+            "label": {
+              "hu": "5: nagyon magas",
+              "de": "5: sehr hoch",
+              "et": "5: väga kõrge",
+              "no": "5: veldig høy",
+              "ro": "5: foarte ridicat",
+              "el": "5: πολύ υψηλό",
+              "es": "5: muy alto",
+              "en": "5: Very High",
+              "sv": "5: Väldigt hög",
+              "ru": "5: очень высокий"
+            }
+          }
+        ],
+        "constraints": {
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#InteractivityLevel"
+        }
+      },
+      {
+        "choices": [
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Difficulty-veryEasy",
+            "top": true,
+            "label": {
+              "hu": "1: nagyon könnyű",
+              "de": "1: sehr einfach",
+              "et": "1: väga kerge",
+              "no": "1: veldig lett",
+              "ro": "1: foarte usor",
+              "el": "1: πολύ εύκολο",
+              "es": "1: muy fácil",
+              "en": "1: Very Easy",
+              "sv": "1: Väldigt lätt",
+              "ru": "1: очень простой"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Difficulty-easy",
+            "top": true,
+            "label": {
+              "hu": "2: könnyű",
+              "et": "2: kerge",
+              "de": "2: einfach",
+              "no": "2: lett",
+              "ro": "2: usor",
+              "el": "2: εύκολο",
+              "es": "2: fácil",
+              "en": "2: Easy",
+              "sv": "2: Lätt",
+              "ru": "2: простой"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Difficulty-medium",
+            "top": true,
+            "label": {
+              "hu": "3: közepes",
+              "et": "3: keskmine",
+              "de": "3: mittel",
+              "no": "3: middels",
+              "ro": "3: mediu",
+              "el": "3: μεσαίο",
+              "es": "3: medio",
+              "en": "3: Medium",
+              "sv": "3: Medium",
+              "ru": "3: средний"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Difficulty-difficult",
+            "top": true,
+            "label": {
+              "hu": "4: nehéz",
+              "de": "4: schwierig",
+              "et": "4: raske",
+              "no": "4: vanskelig",
+              "ro": "4: dificil",
+              "el": "4: δύσκολο",
+              "es": "4: difícil",
+              "en": "4: Difficult",
+              "sv": "4: Svår",
+              "ru": "4: трудный"
+            }
+          },
+          {
+            "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Difficulty-veryDifficult",
+            "top": true,
+            "label": {
+              "hu": "5: nagyon nehéz",
+              "et": "5: väga raske",
+              "de": "5: sehr schwierig",
+              "no": "5: veldig vanskelig",
+              "ro": "5: foarte dificil",
+              "el": "5: πολύ δύσκολο",
+              "es": "5: muy difícil",
+              "en": "5: Very difficult",
+              "sv": "5: Väldigt svår",
+              "ru": "5: очень трудный"
+            }
+          }
+        ],
+        "constraints": {
+          "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Difficulty"
+        }
+      }
+    ]
+  },
+  "description": {
+    "en": "This is the formlet used as base in compound formlets by default. The formlets consists of a query with only a base variable and a minimal form specification. If the base formlet is not loaded (i.e. the containing formlet set) many compound formlets will break.",
+    "sv": "Denna formuletten används som bas i många sammansatta formuletter som default. Formuletten består av en fråga med endast en basvariabel samt en minimal formulärspecifikation. Om denna basformulett inte är laddad (egentligen den omgivande formulett mängden) så kommer många sammansatta formuletter inte att fungera."
+  },
+  "templates": [
+    {
+      "id": "LOM",
+      "type": "group",
+      "items": [
+        {
+          "id": "LOM-Title"
+        },
+        {
+          "id": "LOM-Description"
+        },
+        {
+          "id": "LOM-Identifier"
+        },
+        {
+          "id": "LOM-AggregationLevel"
+        },
+        {
+          "id": "LOM-Annotation"
+        },
+        {
+          "id": "LOM-Context"
+        },
+        {
+          "id": "LOM-Contribution"
+        },
+        {
+          "id": "LOM-CopyrightAndOtherRestrictions"
+        },
+        {
+          "id": "LOM-CopyrightDescription"
+        },
+        {
+          "id": "LOM-Cost"
+        },
+        {
+          "id": "LOM-Coverage"
+        },
+        {
+          "id": "LOM-Difficulty"
+        },
+        {
+          "id": "LOM-Duration"
+        },
+        {
+          "id": "LOM-EducationalDescription"
+        },
+        {
+          "id": "LOM-EducationalLanguage"
+        },
+        {
+          "id": "LOM-Format"
+        },
+        {
+          "id": "LOM-InstallationsRemarks"
+        },
+        {
+          "id": "LOM-IntendedEndUserRole"
+        },
+        {
+          "id": "LOM-InteractivityLevel"
+        },
+        {
+          "id": "LOM-InteractivityType"
+        },
+        {
+          "id": "LOM-Keyword"
+        },
+        {
+          "id": "LOM-Language"
+        },
+        {
+          "id": "LOM-OtherPlatformRequirements"
+        },
+        {
+          "id": "LOM-Requirement"
+        },
+        {
+          "id": "LOM-ResourceType"
+        },
+        {
+          "id": "LOM-SemanticDensity"
+        },
+        {
+          "id": "LOM-Status"
+        },
+        {
+          "id": "LOM-Structure"
+        },
+        {
+          "id": "LOM-TypicalAgeRange"
+        },
+        {
+          "id": "LOM-TypicalLearningTime"
+        },
+        {
+          "id": "LOM-Version"
+        }
+      ]
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "label": {
+        "hu": "Azonosító",
+        "de": "Kennung",
+        "et": "Identifikaator",
+        "ro": "Identificator",
+        "el": "Αναγνωριστικό",
+        "es": "Identificador",
+        "en": "Identifier",
+        "sv": "Identifierare",
+        "ru": "Идентификатор "
+      },
+      "type": "group",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#identifier",
+      "id": "LOM-Identifier",
+      "items": [
+        {
+          "styles": [
+            "ChoiceFormItem"
+          ],
+          "nodetype": "LITERAL",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "label": {
+            "hu": "Katalógus",
+            "de": "Katalog",
+            "et": "Kataloog",
+            "ro": "Catalog",
+            "el": "Κατάλογος",
+            "es": "Catálogo",
+            "en": "Catalog",
+            "sv": "Katalog",
+            "ru": "Каталог"
+          },
+          "type": "choice",
+          "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#catalog",
+          "choices": [
+            {
+              "value": "DOI",
+              "label": {
+                "en": "DOI"
+              }
+            },
+            {
+              "value": "ISBN",
+              "label": {
+                "en": "ISBN"
+              }
+            },
+            {
+              "value": "ISSN",
+              "label": {
+                "en": "ISSN"
+              }
+            },
+            {
+              "value": "URI",
+              "label": {
+                "en": "URI "
+              }
+            }
+          ]
+        },
+        {
+          "styles": [
+            "TextFormItem"
+          ],
+          "nodetype": "LITERAL",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "label": {
+            "hu": "Bejegyzés",
+            "et": "Kirje",
+            "de": "Eintrag",
+            "ro": "Intrare",
+            "el": "Εγγραφή",
+            "es": "Entrada",
+            "en": "Entry",
+            "sv": "Post",
+            "ru": "Ввод"
+          },
+          "type": "text",
+          "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#entry"
+        }
+      ]
+    },
+    {
+      "styles": [
+        "TextFormItem",
+        "LanguageControlled"
+      ],
+      "nodetype": "LANGUAGE_LITERAL",
+      "cardinality": {
+        "min": 1,
+        "pref": 1
+      },
+      "label": {
+        "hu": "Cím",
+        "et": "Pealkiri",
+        "de": "Titel",
+        "ro": "Titlu",
+        "el": "Τίτλος",
+        "es": "Título",
+        "en": "Title",
+        "sv": "Titel",
+        "ru": "Название"
+      },
+      "type": "text",
+      "property": "http://purl.org/dc/terms/title",
+      "id": "LOM-Title",
+      "description": {
+        "en": "This is the title of the resource"
+      }
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 1,
+        "pref": 1
+      },
+      "label": {
+        "hu": "A forrás nyelve",
+        "et": "Allika keel",
+        "de": "in der Ressource verwendete Sprache",
+        "ro": "Limba in care este prezentata  resursa",
+        "el": "Γλώσσα του αντικειμένου",
+        "es": "Idioma del recurso",
+        "en": "Language of the resource",
+        "sv": "Resursens språk",
+        "ru": "Язык источника"
+      },
+      "type": "group",
+      "property": "http://purl.org/dc/terms/language",
+      "id": "LOM-Language",
+      "description": {
+        "en": "The primary human language or languages used within this learning object to communicate to the intended user.\n"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/LinguisticSystem"
+      },
+      "items": [
+        {
+          "styles": [
+            "ChoiceFormItem"
+          ],
+          "nodetype": "DATATYPE_LITERAL",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "type": "choice",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
+          "datatype": "http://purl.org/dc/terms/RFC4646",
+          "choices": [
+            {
+              "value": "cs",
+              "label": {
+                "en": "Czech"
+              }
+            },
+            {
+              "value": "da",
+              "label": {
+                "en": "Danish"
+              }
+            },
+            {
+              "value": "nl",
+              "label": {
+                "en": "Dutch"
+              }
+            },
+            {
+              "value": "en",
+              "label": {
+                "en": "English",
+                "sv": "Engelska"
+              }
+            },
+            {
+              "value": "et",
+              "label": {
+                "en": "Estonian"
+              }
+            },
+            {
+              "value": "fi",
+              "label": {
+                "en": "Finnish"
+              }
+            },
+            {
+              "value": "fr",
+              "label": {
+                "en": "French"
+              }
+            },
+            {
+              "value": "de",
+              "label": {
+                "en": "German"
+              }
+            },
+            {
+              "value": "el",
+              "label": {
+                "en": "Greek"
+              }
+            },
+            {
+              "value": "hu",
+              "label": {
+                "en": "Hungarian"
+              }
+            },
+            {
+              "value": "it",
+              "label": {
+                "en": "Italian"
+              }
+            },
+            {
+              "value": "la",
+              "label": {
+                "en": "Latin"
+              }
+            },
+            {
+              "value": "no",
+              "label": {
+                "en": "Norwegian"
+              }
+            },
+            {
+              "value": "x-t-notapplicable",
+              "label": {
+                "en": "Not applicable"
+              }
+            },
+            {
+              "value": "pl",
+              "label": {
+                "en": "Polish"
+              }
+            },
+            {
+              "value": "pt",
+              "label": {
+                "en": "Portugese"
+              }
+            },
+            {
+              "value": "ro",
+              "label": {
+                "en": "Romanian"
+              }
+            },
+            {
+              "value": "ru",
+              "label": {
+                "en": "Russian"
+              }
+            },
+            {
+              "value": "sk",
+              "label": {
+                "en": "Slovak"
+              }
+            },
+            {
+              "value": "es",
+              "label": {
+                "en": "Spanish"
+              }
+            },
+            {
+              "value": "sv",
+              "label": {
+                "en": "Swedish",
+                "sv": "Svenska"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 1,
+        "pref": 1
+      },
+      "label": {
+        "hu": "Leírás",
+        "et": "Kirjeldus",
+        "de": "Beschreibung",
+        "ro": "Descriere",
+        "el": "Περιγραφή",
+        "es": "Descripción",
+        "en": "Description",
+        "sv": "Beskrivning",
+        "ru": "Описание"
+      },
+      "type": "group",
+      "property": "http://purl.org/dc/terms/description",
+      "id": "LOM-Description",
+      "description": {
+        "en": "Provide one paragraph describing the content of this resource"
+      },
+      "items": [
+        {
+          "styles": [
+            "MultiLine",
+            "TextFormItem",
+            "LanguageControlled"
+          ],
+          "nodetype": "LANGUAGE_LITERAL",
+          "cardinality": {
+            "min": 1,
+            "pref": 1
+          },
+          "label": {
+            "en": ""
+          },
+          "type": "text",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
+          "description": {
+            "en": ""
+          }
+        }
+      ]
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "label": {
+        "hu": "Kiterjedés",
+        "et": "Ala",
+        "de": "Gültigkeitsbereich",
+        "ro": "Acoperire",
+        "el": "Γεωγραφική κάλυψη",
+        "es": "Ámbito",
+        "en": "Coverage",
+        "ru": "Зона"
+      },
+      "type": "group",
+      "property": "http://purl.org/dc/terms/coverage",
+      "id": "LOM-Coverage",
+      "description": {
+        "en": "Geographical coverage\n\nIndicate the countries and/or regions for which this resource is more appropriate"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/LocationPeriodOrJurisdiction"
+      },
+      "items": [
+        {
+          "styles": [
+            "ChoiceFormItem"
+          ],
+          "nodetype": "LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 10
+          },
+          "type": "choice",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
+          "choices": [
+            {
+              "value": "Africa",
+              "label": {
+                "hu": "Afrika",
+                "de": "Afrika",
+                "et": "Aafrika",
+                "no": "Afrika",
+                "ro": "Africa",
+                "el": "Αφρική",
+                "es": "África",
+                "en": "Africa",
+                "sv": "Afrika",
+                "ru": "Африка"
+              }
+            },
+            {
+              "value": "Albania",
+              "label": {
+                "hu": "Albánia",
+                "de": "Albanien",
+                "et": "Albaania",
+                "no": "Albania",
+                "ro": "Albania",
+                "el": "Αλβανία",
+                "es": "Albania",
+                "en": "Albania",
+                "sv": "Albanien",
+                "ru": "Албания"
+              }
+            },
+            {
+              "value": "Andorra",
+              "label": {
+                "hu": "Andorra",
+                "de": "Andorra",
+                "et": "Andorra",
+                "no": "Andorra",
+                "ro": "Andorra",
+                "el": "Ανδόρα",
+                "es": "Andorra",
+                "en": "Andorra",
+                "sv": "Andorra",
+                "ru": "Андорра"
+              }
+            },
+            {
+              "value": "Antarctica",
+              "label": {
+                "hu": "Antarktisz",
+                "de": "Antarktis",
+                "et": "Antarktika",
+                "no": "Antarktis",
+                "ro": "Antarctica",
+                "el": "Ανταρκτική",
+                "es": "Antártida",
+                "en": "Antarctica",
+                "sv": "Antarktis",
+                "ru": "Антарктида"
+              }
+            },
+            {
+              "value": "Arctic",
+              "label": {
+                "hu": "Északi Sarkkör",
+                "de": "Arktis",
+                "et": "Arktika",
+                "no": "Arktis",
+                "ro": "Arctic",
+                "el": "Αρκτική",
+                "es": "Océano Ártico",
+                "en": "Arctic",
+                "sv": "Arktis",
+                "ru": "Арктика"
+              }
+            },
+            {
+              "value": "Asia",
+              "label": {
+                "hu": "Ázsia",
+                "de": "Asien",
+                "et": "Aasia",
+                "no": "Asia",
+                "ro": "Asia",
+                "el": "Ασία",
+                "es": "Asia",
+                "en": "Asia",
+                "sv": "Asien",
+                "ru": "Азия"
+              }
+            },
+            {
+              "value": "Austria",
+              "label": {
+                "hu": "Ausztria",
+                "de": "Österreich",
+                "et": "Austria",
+                "no": "Østerrike",
+                "ro": "Austria",
+                "el": "Αυστρία",
+                "es": "Austria",
+                "en": "Austria",
+                "sv": "Österrike",
+                "ru": "Австрия"
+              }
+            },
+            {
+              "value": "Baltic Countries",
+              "label": {
+                "hu": "Balti országok",
+                "de": "Baltikum",
+                "et": "Balti riigid",
+                "no": "Baltikum",
+                "ro": "Ţările Baltice",
+                "el": "Βαλτικές Χώρες",
+                "es": "Países bálticos",
+                "en": "Baltic Countries",
+                "sv": "Baltikum",
+                "ru": "Страны Балтии"
+              }
+            },
+            {
+              "value": "Belarus",
+              "label": {
+                "hu": "Fehéroroszország",
+                "de": "Weißrussland",
+                "et": "Valgevene",
+                "no": "Hviterussland",
+                "ro": "Belarus",
+                "el": "Λευκορωσία",
+                "es": "Belarús",
+                "en": "Belarus",
+                "sv": "Vitryssland",
+                "ru": "Беларусь"
+              }
+            },
+            {
+              "value": "Belgium",
+              "label": {
+                "hu": "Belgium",
+                "de": "Belgien",
+                "et": "Belgia",
+                "no": "Belgia",
+                "ro": "Belgia",
+                "el": "Βέλγιο",
+                "es": "Bélgica",
+                "en": "Belgium",
+                "sv": "Belgien",
+                "ru": "Бельгия"
+              }
+            },
+            {
+              "value": "Bulgaria",
+              "label": {
+                "hu": "Bulgária",
+                "de": "Bulgarien",
+                "et": "Bulgaaria",
+                "no": "Bulgaria",
+                "ro": "Bulgaria",
+                "el": "Βουλγαρία",
+                "es": "Bulgaria",
+                "en": "Bulgaria",
+                "sv": "Bulgarien",
+                "ru": "Болгария"
+              }
+            },
+            {
+              "value": "Central America",
+              "label": {
+                "hu": "Közép-Amerika",
+                "de": "Mittelamerika",
+                "et": "Kesk-Ameerika",
+                "no": "Mellom-Amerika",
+                "ro": "America Centrala",
+                "el": "Κεντρική Αμερική",
+                "es": "América Central",
+                "en": "Central America",
+                "sv": "Central-Amerika",
+                "ru": "Центральная Америка"
+              }
+            },
+            {
+              "value": "Central Asia",
+              "label": {
+                "hu": "Közép-Ázsia",
+                "de": "Zentralasien",
+                "et": "Kesk-Aasia",
+                "no": "Sentral-Asia",
+                "ro": "Asia Centrală",
+                "el": "Κεντρική Ασία",
+                "es": "Asia Central",
+                "en": "Central Asia",
+                "sv": "Central-Asien",
+                "ru": "Средняя Азия"
+              }
+            },
+            {
+              "value": "Central and Eastern Europe",
+              "label": {
+                "hu": "Kelet-közép-Európa",
+                "de": "Mittel- und Osteuropa",
+                "et": "Kesk- ja Ida-Euroopa",
+                "no": "Sentral og Øst-Europa",
+                "ro": "Europa Centrala si De Est",
+                "el": "Κεντρική και Ανατολική Ευρώπη",
+                "es": "Europa Central y Oriental",
+                "en": "Central and Eastern Europe",
+                "sv": "Central- och Östeuropa",
+                "ru": "Центральная И Восточная Европа"
+              }
+            },
+            {
+              "value": "Cyprus",
+              "label": {
+                "hu": "Ciprus",
+                "de": "Zypern",
+                "et": "Küpros",
+                "no": "Kypros",
+                "ro": "Cipru",
+                "el": "Κύπρος",
+                "es": "Chipre",
+                "en": "Cyprus",
+                "sv": "Cypern",
+                "ru": "Кипр"
+              }
+            },
+            {
+              "value": "Czech Republic",
+              "label": {
+                "hu": "Cseh köztársaság",
+                "de": "Tschechische Republik",
+                "et": "Tšehhi",
+                "no": "Tsjekkia",
+                "ro": "Republica Cehă",
+                "el": "Τσεχία",
+                "es": "República Checa",
+                "en": "Czech Republic",
+                "sv": "Tjeckien",
+                "ru": "Чехия"
+              }
+            },
+            {
+              "value": "Denmark",
+              "label": {
+                "hu": "Dánia",
+                "de": "Dänemark",
+                "et": "Taani",
+                "no": "Danmark",
+                "ro": "Danemarca",
+                "el": "Δανία",
+                "es": "Dinamarca",
+                "en": "Denmark",
+                "sv": "Danmark",
+                "ru": "Дания"
+              }
+            },
+            {
+              "value": "Third World",
+              "label": {
+                "hu": "Fejlődő országok",
+                "de": "Entwicklungsländer",
+                "et": "Arengumaad",
+                "no": "Utviklingsland",
+                "ro": "Ţările în curs de dezvoltare",
+                "el": "Αναπτυσσόμενες χώρες",
+                "es": "Los países en desarrollo",
+                "en": "Developing countries",
+                "sv": "Utvecklingsländer",
+                "ru": "Развивающиеся страны"
+              }
+            },
+            {
+              "value": "Estonia",
+              "label": {
+                "hu": "Észtország",
+                "de": "Estland",
+                "et": "Eesti",
+                "no": "Estland",
+                "ro": "Estonia",
+                "el": "Εσθονία",
+                "es": "Estonia",
+                "en": "Estonia",
+                "sv": "Estland",
+                "ru": "Эстония"
+              }
+            },
+            {
+              "value": "Eurasia",
+              "label": {
+                "hu": "Eurázsiában",
+                "de": "Eurasia",
+                "et": "Euraasia",
+                "no": "Eurasia",
+                "ro": "Eurasiei",
+                "el": "Ευρασία",
+                "es": "Eurasia",
+                "en": "Eurasia",
+                "sv": "Eurasien",
+                "ru": "Евразия"
+              }
+            },
+            {
+              "value": "Europa",
+              "label": {
+                "hu": "Európa",
+                "de": "Europa",
+                "et": "Euroopa",
+                "no": "Europa",
+                "ro": "Europa",
+                "el": "Ευρώπη",
+                "es": "Europa",
+                "en": "Europe",
+                "sv": "Europa",
+                "ru": "Европа"
+              }
+            },
+            {
+              "value": "European Union",
+              "label": {
+                "hu": "Európai Unió",
+                "de": "Europäische Union",
+                "et": "Euroopa Liit",
+                "no": "Den europeiske unionen",
+                "ro": "Uniunea Europeană",
+                "el": "Ευρωπαϊκή Ένωση",
+                "es": "De la Unión Europea",
+                "en": "European Union",
+                "sv": "Europeiska unionen",
+                "ru": "Европейский союз"
+              }
+            },
+            {
+              "value": "Finland",
+              "label": {
+                "hu": "Finnország",
+                "de": "Finnland",
+                "et": "Soome",
+                "no": "Finland",
+                "ro": "Finlanda",
+                "el": "Φινλανδία",
+                "es": "Finlandia",
+                "en": "Finland",
+                "sv": "Finland",
+                "ru": "Финляндия"
+              }
+            },
+            {
+              "value": "France",
+              "label": {
+                "hu": "Franciaország",
+                "de": "Frankreich",
+                "et": "Prantsusmaa",
+                "no": "Frankrike",
+                "ro": "Franţa",
+                "el": "Γαλλία",
+                "es": "Francia",
+                "en": "France",
+                "sv": "Frankrike",
+                "ru": "Франция"
+              }
+            },
+            {
+              "value": "Germany",
+              "label": {
+                "hu": "Németország",
+                "de": "Deutscland",
+                "et": "Saksamaa",
+                "no": "Tyskland",
+                "ro": "Germania",
+                "el": "Γερμανία",
+                "es": "Alemania",
+                "en": "Germany",
+                "sv": "Tyskland",
+                "ru": "Германия"
+              }
+            },
+            {
+              "value": "Greece",
+              "label": {
+                "hu": "Görögország",
+                "de": "Griechenland",
+                "et": "Kreeka",
+                "no": "Hellas",
+                "ro": "Grecia",
+                "el": "Ελλάδα",
+                "es": "Grecia",
+                "en": "Greece",
+                "sv": "Grekland",
+                "ru": "Греция"
+              }
+            },
+            {
+              "value": "Hungary",
+              "label": {
+                "hu": "Magyarország",
+                "de": "Ungarn",
+                "et": "Ungari",
+                "no": "Ungarn",
+                "ro": "Ungaria",
+                "el": "Ουγγαρία",
+                "es": "Hungría",
+                "en": "Hungary",
+                "sv": "Ungern",
+                "ru": "Венгрия"
+              }
+            },
+            {
+              "value": "Ireland",
+              "label": {
+                "hu": "Írország",
+                "de": "Irland",
+                "et": "Iirimaa",
+                "no": "Irland",
+                "ro": "Irlanda",
+                "el": "Ιρλανδία",
+                "es": "Irlanda",
+                "en": "Ireland",
+                "sv": "Irland",
+                "ru": "Ирландия"
+              }
+            },
+            {
+              "value": "Italy",
+              "label": {
+                "hu": "Olaszország",
+                "de": "Italien",
+                "et": "Itaalia",
+                "no": "Italia",
+                "ro": "Italia",
+                "el": "Ιταλία",
+                "es": "Italia",
+                "en": "Italy",
+                "sv": "Italien",
+                "ru": "Италия"
+              }
+            },
+            {
+              "value": "Kosovo",
+              "label": {
+                "hu": "Koszovói",
+                "de": "Kosovo",
+                "et": "Kosovo",
+                "no": "Kosovo",
+                "ro": "Kosovari",
+                "el": "Κοσσυφοπέδιο",
+                "es": "Kosovo",
+                "en": "Kosovo",
+                "sv": "Kosovo",
+                "ru": "Косово"
+              }
+            },
+            {
+              "value": "Latin America",
+              "label": {
+                "hu": "Latin-Amerika",
+                "de": "Latin America",
+                "et": "Ladina-Ameerika",
+                "no": "Latin-Amerika",
+                "ro": "America Latină",
+                "el": "Λατινική Αμερική",
+                "es": "América Latina",
+                "en": "Latin America",
+                "sv": "Latin-Amerika",
+                "ru": "Латинская Америка"
+              }
+            },
+            {
+              "value": "Latvia",
+              "label": {
+                "hu": "Lettország",
+                "de": "Lettland",
+                "et": "Läti",
+                "no": "Latvia",
+                "ro": "Letonia",
+                "el": "Λετονία",
+                "es": "Letonia",
+                "en": "Latvia",
+                "sv": "Lettland",
+                "ru": "Латвия"
+              }
+            },
+            {
+              "value": "Lithuania",
+              "label": {
+                "hu": "Litvánia",
+                "de": "Litauen",
+                "et": "Leedu",
+                "no": "Litauen",
+                "ro": "Lituania",
+                "el": "Λιθουανία",
+                "es": "Lituania",
+                "en": "Lithuania",
+                "sv": "Litauen",
+                "ru": "Литва"
+              }
+            },
+            {
+              "value": "Luxembourg",
+              "label": {
+                "hu": "Luxemburg",
+                "de": "Luxemburg",
+                "et": "Luksemburg",
+                "no": "Luxembourg",
+                "ro": "Luxemburg",
+                "el": "Λουξεμβούργο",
+                "es": "Luxemburgo",
+                "en": "Luxembourg",
+                "sv": "Luxemburg",
+                "ru": "Люксембург"
+              }
+            },
+            {
+              "value": "Malta",
+              "label": {
+                "hu": "Málta",
+                "de": "Malta",
+                "et": "Malta",
+                "no": "Malta",
+                "ro": "Malta",
+                "el": "Μάλτα",
+                "es": "Malta",
+                "en": "Malta",
+                "sv": "Malta",
+                "ru": "Мальта"
+              }
+            },
+            {
+              "value": "Middle East",
+              "label": {
+                "hu": "Közel-Kelet",
+                "de": "Naher Osten",
+                "et": "Lähis-Ida",
+                "no": "Midtøsten",
+                "ro": "Orientul Mijlociu",
+                "el": "Μέση Ανατολή",
+                "es": "Oriente Medio",
+                "en": "Middle East",
+                "sv": "Mellanöstern",
+                "ru": "Ближний Восток"
+              }
+            },
+            {
+              "value": "Moldova",
+              "label": {
+                "hu": "Moldova",
+                "de": "Republik Moldau",
+                "et": "Moldaavia",
+                "no": "Moldova",
+                "ro": "Moldova",
+                "el": "Μολδαβία",
+                "es": "Moldavia",
+                "en": "Moldova",
+                "sv": "Moldavien",
+                "ru": "Молдова"
+              }
+            },
+            {
+              "value": "Netherlands",
+              "label": {
+                "hu": "Hollandia",
+                "de": "Niederlande",
+                "et": "Holland",
+                "no": "Nederland",
+                "ro": "Olanda",
+                "el": "Ολλανδία",
+                "es": "Países Bajos",
+                "en": "Netherlands",
+                "sv": "Nederländerna",
+                "ru": "Нидерланды"
+              }
+            },
+            {
+              "value": "Nordic Countries",
+              "label": {
+                "hu": "Skandináv Országok",
+                "de": "Nordische Länder",
+                "et": "Põhjamaad",
+                "no": "Norden",
+                "ro": "Tarile Nordice",
+                "el": "Σκανδιναβικές Χώρες",
+                "es": "Escandinavia",
+                "en": "Nordic Countries",
+                "sv": "Norden",
+                "ru": "Страны Северной Европы"
+              }
+            },
+            {
+              "value": "North America",
+              "label": {
+                "hu": "Észak-Amerika",
+                "de": "Nordamerika",
+                "et": "Põhja-Ameerika",
+                "no": "Nord-Amerika",
+                "ro": "America De Nord",
+                "el": "Βόρεια Αμερική",
+                "es": "América Del Norte",
+                "en": "North America",
+                "sv": "Nord-Amerika",
+                "ru": "Северная Америка"
+              }
+            },
+            {
+              "value": "North Pacific Ocean",
+              "label": {
+                "hu": "Északi-Csendes-óceán",
+                "de": "North Pacific Ocean",
+                "et": "Põhja-Vaikne ookean",
+                "no": "North Pacific Ocean",
+                "ro": "Oceanul Pacific de Nord",
+                "el": "Βόρειο Ειρηνικό",
+                "es": "Océano Pacífico del Norte",
+                "en": "North Pacific Ocean",
+                "sv": "Norra Stilla havet",
+                "ru": "Северной части Тихого океана"
+              }
+            },
+            {
+              "value": "Norway",
+              "label": {
+                "hu": "Norvégia",
+                "de": "Norwegen",
+                "et": "Norra",
+                "no": "Norge",
+                "ro": "Norvegia",
+                "el": "Νορβηγία",
+                "es": "Noruega",
+                "en": "Norway",
+                "sv": "Norge",
+                "ru": "Норвегия"
+              }
+            },
+            {
+              "value": "Oceania",
+              "label": {
+                "hu": "Óceánia",
+                "de": "Ozeanien",
+                "et": "Okeaania",
+                "no": "Oseania",
+                "ro": "Oceania",
+                "el": "Ωκεανία",
+                "es": "Oceanía",
+                "en": "Oceania",
+                "sv": "Oceanien",
+                "ru": "Океания"
+              }
+            },
+            {
+              "value": "Pacific Islands",
+              "label": {
+                "hu": "Csendes-óceáni szigetek",
+                "de": "Pazifik-Inseln",
+                "et": "Vaikse ookeani saared",
+                "no": "Stillehavsøyene",
+                "ro": "Insulele din Pacific",
+                "el": "Νησιά του Ειρηνικού",
+                "es": "Islas del Pacífico",
+                "en": "Pacific Islands",
+                "sv": "Söderhavsöarna",
+                "ru": "Тихоокеанские острова"
+              }
+            },
+            {
+              "value": "Poland",
+              "label": {
+                "hu": "Lengyelország",
+                "de": "Polen",
+                "et": "Poola",
+                "no": "Polen",
+                "ro": "Polonia",
+                "el": "Πολωνία",
+                "es": "Polonia",
+                "en": "Poland",
+                "sv": "Polen",
+                "ru": "Польша"
+              }
+            },
+            {
+              "value": "Portugal",
+              "label": {
+                "hu": "Portugália",
+                "de": "Portugal",
+                "et": "Portugal",
+                "no": "Portugal",
+                "ro": "Portugalia",
+                "el": "Πορτογαλία",
+                "es": "Portugal",
+                "en": "Portugal",
+                "sv": "Portugal",
+                "ru": "Португалия"
+              }
+            },
+            {
+              "value": "Romania",
+              "label": {
+                "hu": "Románia",
+                "de": "Rumänien",
+                "et": "Rumeenia",
+                "no": "Romania",
+                "ro": "Romania",
+                "el": "Ρουμανία",
+                "es": "Rumanía",
+                "en": "Romania",
+                "sv": "Rumänien",
+                "ru": "Румыния"
+              }
+            },
+            {
+              "value": "Russia",
+              "label": {
+                "hu": "Oroszország",
+                "de": "Russland",
+                "et": "Venemaa",
+                "no": "Russland",
+                "ro": "Rusia",
+                "el": "Ρωσσία",
+                "es": "Rusia",
+                "en": "Russia",
+                "sv": "Ryssland",
+                "ru": "Россия"
+              }
+            },
+            {
+              "value": "Serbia",
+              "label": {
+                "hu": "Szerbia",
+                "de": "Serbien",
+                "et": "Serbia",
+                "no": "Serbia",
+                "ro": "Serbia",
+                "el": "Σερβία",
+                "es": "Serbia",
+                "en": "Serbia",
+                "sv": "Serbien",
+                "ru": "Сербия"
+              }
+            },
+            {
+              "value": "Slovakia",
+              "label": {
+                "hu": "Szlovákia",
+                "de": "Slowakei",
+                "et": "Slovakkia",
+                "no": "Slovakia",
+                "ro": "Slovacia",
+                "el": "Σλοβακία",
+                "es": "Eslovaquia",
+                "en": "Slovakia",
+                "sv": "Slovakien",
+                "ru": "Словакия"
+              }
+            },
+            {
+              "value": "South America",
+              "label": {
+                "hu": "Dél Amerika",
+                "de": "Südamerika",
+                "et": "Lõuna-Ameerika",
+                "no": "Sør-Amerika",
+                "ro": "America De Sud",
+                "el": "Νότια Αμερική",
+                "es": "América Del Sur",
+                "en": "South America",
+                "sv": "Sydamerika",
+                "ru": "Южная Америка"
+              }
+            },
+            {
+              "value": "South Pacific Ocean",
+              "label": {
+                "hu": "Dél-Csendes-óceán",
+                "de": "Süd-Pazifik",
+                "et": "Lõuna-Vaikse ookeani",
+                "no": "South Pacific Ocean",
+                "ro": "South Pacific Ocean",
+                "el": "Νότιος Ειρηνικός Ωκεανός",
+                "es": "Océano Pacífico del Sur",
+                "en": "South Pacific Ocean",
+                "sv": "Södra stilla havet",
+                "ru": "Южная часть Тихого океана"
+              }
+            },
+            {
+              "value": "Spain",
+              "label": {
+                "hu": "Spanyolország",
+                "de": "Spanien",
+                "et": "Hispaania",
+                "no": "Spania",
+                "ro": "Spania",
+                "el": "Ισπανία",
+                "es": "España",
+                "en": "Spain",
+                "sv": "Spanien",
+                "ru": "Испания"
+              }
+            },
+            {
+              "value": "Sweden",
+              "label": {
+                "hu": "Svédország",
+                "de": "Schweden",
+                "et": "Rootsi",
+                "no": "Sverige",
+                "ro": "Suedia",
+                "el": "Σουηδία",
+                "es": "Suecia",
+                "en": "Sweden",
+                "sv": "Sverige",
+                "ru": "Швеция"
+              }
+            },
+            {
+              "value": "Switzerland",
+              "label": {
+                "hu": "Svájc",
+                "de": "Schweiz",
+                "et": "Šveits",
+                "no": "Sveits",
+                "ro": "Eleveţia",
+                "el": "Ελβετία",
+                "es": "Suiza",
+                "en": "Switzerland",
+                "sv": "Schweiz",
+                "ru": "Швейцария"
+              }
+            },
+            {
+              "value": "Turkey",
+              "label": {
+                "hu": "Törökország",
+                "de": "Türkei",
+                "et": "Türgi",
+                "no": "Tyrkia",
+                "ro": "Turcia",
+                "el": "Τουρκία",
+                "es": "Turquía",
+                "en": "Turkey",
+                "sv": "Turkiet",
+                "ru": "Турция"
+              }
+            },
+            {
+              "value": "United Kingdom",
+              "label": {
+                "hu": "Ergyesült Királyság",
+                "de": "Vereinigtes Königreich",
+                "et": "Ühendkuningriik",
+                "no": "Storbritannia",
+                "ro": "Marea Britanie",
+                "el": "Ηνωμένο Βασίλειο",
+                "es": "Reino Unido",
+                "en": "United Kingdom",
+                "sv": "Storbritanien",
+                "ru": "Великобритания"
+              }
+            },
+            {
+              "value": "United States Minor Outlying Islands",
+              "label": {
+                "hu": "Amerikai csendes-óceáni szigetek",
+                "de": "Amerikanisch-Ozeanien",
+                "et": "Ühendriikide hajasaared",
+                "no": "USAs ytre småøyar",
+                "ro": "Teritoriile îndepărtate ale statelor unite",
+                "el": "Μικρά Εξωτερικά Νησιά των Ηνωμένων Πολιτειών",
+                "es": "Estados Unidos Islas Menores",
+                "en": "United States Minor Outlying Islands",
+                "sv": "USA:s yttre öar",
+                "ru": "Внешние малые острова"
+              }
+            },
+            {
+              "value": "Western Europe",
+              "label": {
+                "hu": "Nyugat-Európa",
+                "de": "Westeuropa",
+                "et": "Lääne-Euroopa",
+                "no": "Vest-Europa",
+                "ro": "Europa De Vest",
+                "el": "Δυτική Ευρώπη",
+                "es": "Europa Occidental",
+                "en": "Western Europe",
+                "sv": "Väst-Europa",
+                "ru": "Западная Европа"
+              }
+            },
+            {
+              "value": "World",
+              "label": {
+                "hu": "Világ",
+                "de": "Welt",
+                "et": "Maailm",
+                "no": "Verden",
+                "ro": "Lume",
+                "el": "Κόσμος",
+                "es": "Mundo",
+                "en": "World",
+                "sv": "Globalt",
+                "ru": "Мир"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "label": {
+        "hu": "Kulcsszó",
+        "et": "Märksõna",
+        "de": "Stichwort",
+        "ro": "Cuvant cheie",
+        "el": "Λέξεις κλειδιά",
+        "es": "Palabra clave",
+        "en": "Keyword",
+        "sv": "Nyckelord",
+        "ru": "Ключевое слово "
+      },
+      "type": "group",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#keyword",
+      "id": "LOM-Keyword",
+      "description": {
+        "en": "Provide some keywords that describe the topic of this resource"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#LangString"
+      },
+      "items": [
+        {
+          "styles": [
+            "TextFormItem",
+            "LanguageControlled"
+          ],
+          "nodetype": "LANGUAGE_LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          },
+          "type": "text",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+        }
+      ]
+    },
+    {
+      "styles": [
+        "ChoiceFormItem"
+      ],
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      },
+      "label": {
+        "hu": "Struktúra",
+        "de": "Struktur",
+        "et": "Struktuur",
+        "ro": "Structura",
+        "el": "Δομή",
+        "es": "Estructura",
+        "en": "Structure",
+        "sv": "Struktur",
+        "ru": "Структура"
+      },
+      "type": "choice",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#structure",
+      "id": "LOM-Structure",
+      "description": {
+        "en": "Internal structure of resource\n\natomic: a single individual resource\ncollection: set of resources with no specified relationships\nnetworked: set of resources with unspecified relationships\nhierarchical: set of resources with tree structure relationships\nlinear: set of resources with \"previous\"/\"next\" relationships."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Structure"
+      },
+      "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "label": {
+        "hu": "Hozzájárulás",
+        "et": "Panus",
+        "de": "Beitrag",
+        "ro": "Contributie",
+        "el": "Συνεισφορά",
+        "es": "Contribución",
+        "en": "Contribution",
+        "ru": "Вклад"
+      },
+      "type": "group",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#contribution",
+      "id": "LOM-Contribution",
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Contribution"
+      },
+      "items": [
+        {
+          "styles": [
+            "ChoiceFormItem"
+          ],
+          "nodetype": "URI",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "label": {
+            "hu": "Szerep",
+            "et": "Roll",
+            "de": "Rolle",
+            "ro": "Rol",
+            "el": "Ρόλος",
+            "es": "Rol",
+            "en": "Role",
+            "ru": "Роль"
+          },
+          "type": "choice",
+          "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#role",
+          "description": {
+            "en": "Role of the contributor\n\nSelect the role of the contributing entity"
+          },
+          "constraints": {
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Role"
+          },
+          "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+        },
+        {
+          "styles": [
+            "GroupFormItem"
+          ],
+          "nodetype": "BLANK",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 40
+          },
+          "label": {
+            "hu": "Entitás",
+            "et": "Entiteet",
+            "de": "Entität",
+            "ro": "Entitate",
+            "el": "Οντότητα",
+            "es": "Entidad",
+            "en": "Entity",
+            "ru": "Субъект"
+          },
+          "type": "group",
+          "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#entity",
+          "description": {
+            "en": "Fullname/title of contributor\n\nProvide full name or title of contributing entity"
+          },
+          "items": [
+            {
+              "styles": [
+                "TextFormItem"
+              ],
+              "nodetype": "LITERAL",
+              "cardinality": {
+                "min": 1,
+                "pref": 1,
+                "max": 1
+              },
+              "label": {
+                "hu": "Teljes név",
+                "et": "Täisnimi",
+                "de": "vollständiger Name",
+                "ro": "Numele complet",
+                "el": "Πλήρες όνομα",
+                "es": "Nombre completo",
+                "en": "Full name",
+                "ru": "Полное имя"
+              },
+              "type": "text",
+              "property": "http://www.w3.org/2001/vcard-rdf/3.0#FN",
+              "description": {
+                "en": "Provide your name"
+              }
+            },
+            {
+              "styles": [
+                "TextFormItem"
+              ],
+              "nodetype": "LITERAL",
+              "cardinality": {
+                "min": 0,
+                "pref": 1,
+                "max": 1
+              },
+              "label": {
+                "hu": "Email",
+                "et": "E-post",
+                "de": "E-Mail",
+                "ro": "E-mail",
+                "el": "Email",
+                "es": "Correo electrónico",
+                "en": "Email",
+                "sv": "Email",
+                "ru": "Э-майл"
+              },
+              "type": "text",
+              "property": "http://www.w3.org/2001/vcard-rdf/3.0#EMAIL"
+            },
+            {
+              "styles": [
+                "GroupFormItem"
+              ],
+              "nodetype": "BLANK",
+              "cardinality": {
+                "min": 1,
+                "pref": 1,
+                "max": 1
+              },
+              "label": {
+                "hu": "Szervezet neve",
+                "et": "Asutuse nimi",
+                "de": "Name der Organisation",
+                "ro": "Numele Organizatiei",
+                "el": "Όνομα οργανισμού",
+                "es": "Nombre de la organización",
+                "en": "Organisation",
+                "ru": "Название организации"
+              },
+              "type": "group",
+              "property": "http://www.w3.org/2001/vcard-rdf/3.0#ORG",
+              "items": [
+                {
+                  "styles": [
+                    "TextFormItem"
+                  ],
+                  "nodetype": "LITERAL",
+                  "cardinality": {
+                    "min": 1,
+                    "pref": 1,
+                    "max": 1
+                  },
+                  "label": {
+                    "en": "Name"
+                  },
+                  "type": "text",
+                  "property": "http://www.w3.org/2001/vcard-rdf/3.0#Orgname"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "styles": [
+            "TextFormItem"
+          ],
+          "nodetype": "DATATYPE_LITERAL",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "label": {
+            "hu": "Dátum",
+            "et": "Kuupäev",
+            "de": "Datum",
+            "ro": "Data",
+            "el": "Ημερομηνία",
+            "es": "Fecha",
+            "en": "Date",
+            "sv": "Datum",
+            "ru": "Дата"
+          },
+          "type": "text",
+          "property": "http://purl.org/dc/terms/date",
+          "datatype": "http://purl.org/dc/terms/W3CDTF",
+          "description": {
+            "en": "Date of contribution\n\nProvide date of contribution (e.g.  Publication)"
+          }
+        }
+      ]
+    },
+    {
+      "styles": [
+        "ChoiceFormItem"
+      ],
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "label": {
+        "hu": "Ajánlott felhasználói csoport",
+        "et": "Sihtgrupp",
+        "de": "voraussichtliche NutzerInnen",
+        "ro": "Rolul Utilizatorului Final",
+        "el": "Προοριζόμενος ρόλος τελικού χρήστη",
+        "es": "Destinatario",
+        "en": "Intended End User Role",
+        "ru": "Целевая группа"
+      },
+      "type": "choice",
+      "property": "http://purl.org/dc/terms/audience",
+      "id": "LOM-IntendedEndUserRole",
+      "description": {
+        "en": "Targeted user(s)\n\nThe principal users that can benefit from using this resource"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/AgentClass"
+      },
+      "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+    },
+    {
+      "styles": [
+        "ChoiceFormItem"
+      ],
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 10
+      },
+      "label": {
+        "hu": "Tananyag típusa",
+        "et": "Allika tüüp",
+        "de": "Art der Lernressource",
+        "ro": "Tip de Resursa de Invatare",
+        "el": "Τύπος μαθησιακού πόρου",
+        "es": "Tipo de recurso educativo",
+        "en": "Learning Resource Type",
+        "ru": "Тип источника"
+      },
+      "type": "choice",
+      "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "id": "LOM-ResourceType",
+      "description": {
+        "en": "What is the type of the resource?"
+      },
+      "choices": [
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-application",
+          "label": {
+            "hu": "alkalmazás",
+            "et": "rakendus",
+            "de": "anwendung",
+            "no": "søknad",
+            "ro": "aplicatie",
+            "el": "εφαρμογή",
+            "es": "aplicación",
+            "en": "Application",
+            "sv": "tillämpning",
+            "ru": "приложение"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-assessment",
+          "label": {
+            "hu": "Értékelés",
+            "et": "Hinnang",
+            "de": "Beurteilung",
+            "no": "Vurdering",
+            "ro": "Evaluare",
+            "el": "αξιολόγηση",
+            "es": "Evaluación",
+            "en": "Assessment",
+            "sv": "Utvärdering",
+            "ru": "оценка"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-broadcast",
+          "label": {
+            "hu": "Mũsor",
+            "et": "Ülekanne",
+            "de": "Übertragung",
+            "no": "Kringkasting",
+            "ro": "Difuzare",
+            "el": "εκπομπή",
+            "es": "Programa",
+            "en": "Broadcast",
+            "sv": "Sändning",
+            "ru": "передача"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-caseStudy",
+          "label": {
+            "hu": "esettanulmány",
+            "et": "Juhtumiuuring",
+            "de": "fallstudie",
+            "no": "Case studie",
+            "ro": "Sudiu de caz",
+            "el": "μελέτη περίπτωσης",
+            "es": "Caso de estudio",
+            "en": "Case study",
+            "sv": "Fallstudie",
+            "ru": "тематическое исследование"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-course",
+          "label": {
+            "hu": "Kurzus",
+            "et": "Suund",
+            "de": "Kurs",
+            "no": "Kurs",
+            "ro": "Curs",
+            "el": "μάθημα",
+            "es": "Curso",
+            "en": "Course",
+            "sv": "Kurs",
+            "ru": "курс"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-demonstration",
+          "label": {
+            "hu": "Demonstráció",
+            "et": "Esitlemine",
+            "de": "Demonstration",
+            "no": "Demonstrasjon",
+            "ro": "Demonstratie",
+            "el": "επίδειξη",
+            "es": "Demonstración",
+            "en": "Demonstration",
+            "sv": "Demonstration",
+            "ru": "демонстрация"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-drillAndPractice",
+          "label": {
+            "hu": "Gyakorlat",
+            "et": "treeni ja harjuta",
+            "de": "Übung und praxis",
+            "no": "øvelser og praktiske oppgaver",
+            "ro": "Exercitii si aplicatii practice",
+            "el": "άσκηση και πρακτική",
+            "es": "Ejercicio y práctica",
+            "en": "Drill and practice",
+            "sv": "Praktiska uppgifter och övningar",
+            "ru": "обучение и практика"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-educationalGame",
+          "label": {
+            "hu": "Oktató játék",
+            "et": "õppemäng",
+            "de": "bilduns-spiel",
+            "no": "Pedagogisk spill",
+            "ro": "Jocuri educationale",
+            "el": "εκπαιδευτικό παιχνίδι",
+            "es": "Juego educativo",
+            "en": "Educational game",
+            "sv": "Pedagogiskt spel",
+            "ru": "обучающая игра"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-enquiryOrientedActivity",
+          "label": {
+            "hu": "adatgyűjtés",
+            "et": "küsimuspõhine tegevus",
+            "de": "fragegeleitete aktivität",
+            "no": "nettbasert aktivitet",
+            "ro": "activitate oriectata spre cercetare",
+            "el": "δραστηριότητα προσανατολισμένη στην έρευνα",
+            "es": "cuestionario orientado a la actividad",
+            "en": "Enquiry-oriented activity",
+            "sv": "Fråge-orienterad aktivitet",
+            "ru": "ориентированная на опрос деятельность"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-experiment",
+          "label": {
+            "hu": "Kísérlet",
+            "et": "Katse",
+            "de": "Experiment",
+            "no": "Eksperiment",
+            "ro": "Experiment",
+            "el": "πείραμα",
+            "es": "Experimento",
+            "en": "Experiment",
+            "sv": "Experiment",
+            "ru": "эксперимент"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-exploration",
+          "label": {
+            "hu": "Kutatás",
+            "et": "Uurimine",
+            "de": "Untersuchung",
+            "no": "Utforskning",
+            "ro": "Explorare",
+            "el": "εξερεύνηση",
+            "es": "Exploración",
+            "en": "Exploration",
+            "sv": "Utforskning",
+            "ru": "исследование"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-glossary",
+          "label": {
+            "hu": "szószedet",
+            "et": "Sõnastik",
+            "de": "Glossar",
+            "no": "Ordliste",
+            "ro": "Glosar",
+            "el": "γλωσσάριο",
+            "es": "Glosario",
+            "en": "Glossary",
+            "sv": "Ordlista",
+            "ru": "словарь"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-guide",
+          "label": {
+            "hu": "útmutató",
+            "et": "juhend",
+            "de": "Anleitung",
+            "no": "Guide",
+            "ro": "Ghid",
+            "el": "οδηγός",
+            "es": "gúia",
+            "en": "Guide",
+            "sv": "Guide",
+            "ru": "руководство"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-learningAsset-audio",
+          "label": {
+            "hu": "tananyag: audio",
+            "et": "õppevara: audio",
+            "de": "lernwert: audio",
+            "no": "informasjonselement: lyd",
+            "ro": "evaluarea invatarii: audio",
+            "el": "μαθησιακό αντικείμενο: ήχος",
+            "es": "actividad educativa: audio",
+            "en": "Learning asset: Audio",
+            "sv": "Läro-resurs: Audio",
+            "ru": "учебное пособие: аудио"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-learningAsset-data",
+          "label": {
+            "hu": "tananyag: adatok",
+            "et": "õppevara: andmed",
+            "de": "lernwert: daten",
+            "no": "informasjonselement: data",
+            "ro": "evaluarea invatarii: data",
+            "el": "μαθησιακό αντικείμενο: δεδομένα",
+            "es": "actividad educativa: datos",
+            "en": "Learning asset: Data",
+            "sv": "Läro-resurs: Data",
+            "ru": "учебное пособие: данные"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-learningAsset-image",
+          "label": {
+            "hu": "tananyag: image",
+            "et": "õppevara: image",
+            "de": "lernwert: bild",
+            "no": "informasjonselement: bilde",
+            "ro": "evaluarea invatarii: imagine",
+            "el": "μαθησιακό αντικείμενο: εικόνα",
+            "es": "actividad educativa: imagen",
+            "en": "Learning asset: Image",
+            "sv": "Läro-resurs: Bild",
+            "ru": "учебное пособие: изображение"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-learningAsset-model",
+          "label": {
+            "hu": "tananyag: modell",
+            "et": "õppevara: mudel",
+            "de": "lernwert: modell",
+            "no": "informasjonselement: modell",
+            "ro": "evaluarea invatarii: model",
+            "el": "μαθησιακό αντικείμενο: μοντέλο",
+            "es": "actividad educativa: modelo",
+            "en": "Learning asset: Model",
+            "sv": "Läro-resurs: Modell",
+            "ru": "учебное пособие: модель"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-learningAsset-text",
+          "label": {
+            "hu": "tananyag: text",
+            "et": "õppevara: tekst",
+            "de": "lernwert: text",
+            "no": "informasjonselement: tekst",
+            "ro": "evaluarea invatarii: text",
+            "el": "μαθησιακό αντικείμενο: κείμενο",
+            "es": "actividad educativa: texto",
+            "en": "Learning asset: Text",
+            "sv": "Läro-resurs: Text",
+            "ru": "учебное пособие: текст"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-learningAsset-video",
+          "label": {
+            "hu": "tananyag: videó",
+            "et": "õppevara: video",
+            "de": "lernwert: video",
+            "no": "informasjonselement: video",
+            "ro": "evaluarea invatarii: video",
+            "el": "μαθησιακό αντικείμενο: βίντεο",
+            "es": "actividad educativa: video",
+            "en": "Learning asset: Video",
+            "sv": "Läro-resurs: Video",
+            "ru": "учебное пособие: видео"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-lessonPlan",
+          "label": {
+            "hu": "tanterv",
+            "et": "tunnikava",
+            "de": "stundenplan",
+            "no": "undervisningssplan",
+            "ro": "planul lectiei",
+            "el": "πλάνο μαθήματος",
+            "es": "plan para una lección",
+            "en": "Lesson plan",
+            "sv": "Läroplan",
+            "ru": "план урока"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-openActivity",
+          "label": {
+            "hu": "szabad tevékenység",
+            "et": "lahtine üritus",
+            "de": "offene aktivität",
+            "no": "åpen aktivitet",
+            "ro": "activitate deschisa",
+            "el": "ανοικτή δραστηριότητα",
+            "es": "actividad abierta",
+            "en": "Open activity",
+            "sv": "Fri aktivitet",
+            "ru": "открытая деятельность"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-other",
+          "label": {
+            "hu": "egyéb",
+            "et": "muu",
+            "de": "sonstiges",
+            "no": "annet",
+            "ro": "altele",
+            "el": "άλλο",
+            "es": "otro",
+            "en": "Other",
+            "sv": "Annat",
+            "ru": "другое"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-presentation",
+          "label": {
+            "hu": "prezentáció",
+            "et": "esitlus",
+            "de": "präsentation",
+            "no": "presentasjon",
+            "ro": "prezentarea",
+            "el": "παρουσίαση",
+            "es": "presentación",
+            "en": "Presentation",
+            "sv": "Presentation",
+            "ru": "презентация"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-project",
+          "label": {
+            "hu": "projekt",
+            "et": "projekt",
+            "de": "projekt",
+            "no": "prosjektarbeid",
+            "ro": "proiect",
+            "el": "έργο",
+            "es": "proyecto",
+            "en": "Project",
+            "sv": "Projekt",
+            "ru": "проект"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-reference",
+          "label": {
+            "hu": "hivatkozás",
+            "et": "viide",
+            "de": "referenz",
+            "no": "kilde",
+            "ro": "bibliografie",
+            "el": "αναφορά",
+            "es": "referencia",
+            "en": "Reference",
+            "sv": "Referens",
+            "ru": "ссылка"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-rolePlay",
+          "label": {
+            "hu": "szerepjáték",
+            "et": "rollimäng",
+            "de": "rollenspiel",
+            "no": "rollespill",
+            "ro": "interpretarea unor roluri",
+            "el": "παιχνίδι ρόλων",
+            "es": "juego de rol",
+            "en": "Role play",
+            "sv": "Rollspel",
+            "ru": "ролевая игра"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-simulation",
+          "label": {
+            "hu": "szimuláció",
+            "et": "simulatsioon",
+            "de": "simulation",
+            "no": "simulering",
+            "ro": "simularea",
+            "el": "προσομοίωση",
+            "es": "simulación",
+            "en": "Simulation",
+            "sv": "Simulering",
+            "ru": "моделирование"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-tool",
+          "label": {
+            "hu": "eszköz",
+            "et": "vahend",
+            "de": "werkzeug",
+            "no": "verktøy",
+            "ro": "mijloc de invatare",
+            "el": "εργαλείο",
+            "es": "herramienta",
+            "en": "Tool",
+            "sv": "Verktyg",
+            "ru": "инструмент"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-webResource-otherWebResource",
+          "label": {
+            "hu": "internetes forrás: egyéb internetes forrás",
+            "et": "veebiressurss: muu veebiressurss",
+            "de": "web-ressource: sonstige web-ressource",
+            "no": "nettressurs: annen nettressurs",
+            "ro": "resurse web: alte resurse web",
+            "el": "δικτυακή πηγή: άλλη δικτυακή πηγή",
+            "es": "recurso web: otro recurso web",
+            "en": "Web resource: Other web resource",
+            "sv": "Webb-resurs: Annan slags web-resurs",
+            "ru": "веб-ресурс: другие веб-ресурсы"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-webResource-webPage",
+          "label": {
+            "hu": "internetes forrás: Weboldal",
+            "et": "veebiressurss: Veebileht",
+            "de": "web-ressource: Web-site",
+            "no": "nettressurs: Nettside",
+            "ro": "resurse web: Pagina web",
+            "el": "δικτυακή πηγή: ιστοσελίδα",
+            "es": "recurso web: Página web",
+            "en": "Web resource: Web Page",
+            "sv": "webb-resurs: Webb-sida",
+            "ru": "веб-ресурс: веб-страница"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-webResource-weblog",
+          "label": {
+            "hu": "internetes forrás: internetes napló (weblog)",
+            "et": "veebiressurss: blogi",
+            "de": "web-ressource: weblog",
+            "no": "nettressurs: blogg",
+            "ro": "resurse web: blog web",
+            "el": "δικτυακή πηγή: weblog",
+            "es": "recurso web: bitácora web",
+            "en": "Web resource: Weblog",
+            "sv": "Webb-resurs: Blogg",
+            "ru": "веб-ресурс: блог"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#LearningResourceType-webResource-wiki",
+          "label": {
+            "hu": "internetes forrás: Wiki",
+            "et": "veebiressurss: Wiki",
+            "de": "web-ressource: Wiki",
+            "no": "nettressurs: Wiki",
+            "ro": "resurse web: Wiki",
+            "el": "δικτυακή πηγή: Wiki",
+            "es": "recurso web: Wiki",
+            "en": "Web resource: Wiki",
+            "sv": "Webb-resurs: Wiki",
+            "ru": "веб-ресурс: вики"
+          }
+        }
+      ]
+    },
+    {
+      "styles": [
+        "ChoiceFormItem"
+      ],
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "label": {
+        "hu": "Összefüggés",
+        "et": "Kasutuskontekst",
+        "de": "Kontext",
+        "ro": "Context",
+        "el": "Περιβάλλον",
+        "es": "Contexto",
+        "en": "Context",
+        "ru": "Контекст"
+      },
+      "type": "choice",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#context",
+      "id": "LOM-Context",
+      "description": {
+        "en": "Context of use\n\nThe principal environment in which the resource should be used\n"
+      },
+      "choices": [
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#Context-compulsoryEducation",
+          "label": {
+            "hu": "kötelező oktatás",
+            "et": "kohustuslik obligatoria",
+            "de": "schulpflicht",
+            "no": "obligatorisk utdanning",
+            "ro": "educatie obligatorie",
+            "el": "υποχρεωτική εκπαίδευση",
+            "es": "educación obligatoria",
+            "en": "Compulsory education",
+            "sv": "Obligatorisk utbildning",
+            "ru": "обязательное образование"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#Context-continuingEducation",
+          "label": {
+            "hu": "élethosszig tartó oktatás",
+            "et": "jätkuõpe",
+            "de": "fortbildung",
+            "no": "etterutdanning",
+            "ro": "educatie continua",
+            "el": "συνεχιζόμενη εκπαίδευση",
+            "es": "educación continuada",
+            "en": "Continuing education",
+            "sv": "Vidareutbildning",
+            "ru": "непрерывное образование"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#Context-distanceEducation",
+          "label": {
+            "hu": "távoktatás",
+            "et": "kaugõpe",
+            "de": "fernunterricht",
+            "no": "fjernundervisning",
+            "ro": "invatamant la distanta",
+            "el": "εκπαίδευση από απόσταση",
+            "es": "educación a distancia",
+            "en": "Distance education",
+            "sv": "Distansutbildning",
+            "ru": "дистанционное обучение"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#Context-educationalAdministration",
+          "label": {
+            "hu": "Oktatásirányítás",
+            "et": "Hariduse haldamine",
+            "de": "Bildungsverwaltung",
+            "no": "Educational administrasjon",
+            "ro": "Educational administrare",
+            "el": "Διοίκηση εκπαιδευτικών οργανισμών",
+            "es": "Administración de la educación",
+            "en": "Educational administration",
+            "sv": "Utbildningsförvaltning",
+            "ru": "Образования администрации"
+          }
+        },
+        {
+          "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Context-higherEducation",
+          "label": {
+            "hu": "felsőoktatás",
+            "et": "kõrgharidus",
+            "de": "hochschulbildung",
+            "no": "høyere utdanning",
+            "ro": "studii superioare",
+            "el": "ανώτατη εκπαίδευση",
+            "es": "educación superior",
+            "en": "Higher education",
+            "sv": "Högre utbildning",
+            "ru": "высшее образование"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#Context-library",
+          "label": {
+            "hu": "Könyvtár",
+            "et": "Raamatukogu",
+            "de": "Bibliothek",
+            "no": "Bibliotek",
+            "ro": "Biblioteca",
+            "el": "Βιβλιοθήκη",
+            "es": "Biblioteca",
+            "en": "Library",
+            "sv": "Bibliotek",
+            "ru": "Библиотека"
+          }
+        },
+        {
+          "value": "http://ltsc.ieee.org/rdf/lomv1p0/vocabulary#Context-other",
+          "label": {
+            "hu": "egyéb",
+            "et": "muu",
+            "de": "sonstiges",
+            "no": "annet",
+            "ro": "altele",
+            "el": "άλλο",
+            "es": "otro",
+            "en": "Other",
+            "sv": "Annat",
+            "ru": "другое"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#Context-policyMaking",
+          "label": {
+            "hu": "Politikai döntéshozatali",
+            "et": "Poliitikakujundamist",
+            "de": "Richtliniengestaltung",
+            "no": "Politikk",
+            "ro": "Elaborarea de politici",
+            "el": "Διαμόρφωση πολιτικών",
+            "es": "Formulación de políticas",
+            "en": "Policy making",
+            "sv": "Policy making",
+            "ru": "Директивные"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#Context-preSchool",
+          "label": {
+            "hu": "előképzés",
+            "et": "eelkool",
+            "de": "vorschule",
+            "no": "førskole",
+            "ro": "prescolar",
+            "el": "προσχολική εκπαίδευση",
+            "es": "preescolar",
+            "en": "Pre-school",
+            "sv": "Förskola",
+            "ru": "дошкольное"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#Context-professionalDevelopment",
+          "label": {
+            "hu": "Szakmai fejlődés",
+            "et": "Professionaalne areng",
+            "de": "Berufliche Entwicklung",
+            "no": "Faglig utvikling",
+            "ro": "Dezvoltarea profesională",
+            "el": "Επαγγελματική ανάπτυξη",
+            "es": "Desarrollo profesional",
+            "en": "Professional development",
+            "sv": "Professionell utveckling",
+            "ru": "Профессиональное развитие"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#Context-specialEducation",
+          "label": {
+            "hu": "speciális oktatás",
+            "et": "erivajadustega inimeste haridus",
+            "de": "sonderpädagogik",
+            "no": "spesialutdanning",
+            "ro": "educatie speciala",
+            "el": "ειδική εκπαίδευση",
+            "es": "educación especial",
+            "en": "Special education",
+            "sv": "Specialanpassad utbildning",
+            "ru": "специальное образование"
+          }
+        },
+        {
+          "value": "http://organic-edunet.eu/LOM/rdf/voc#Context-vocationalEducation",
+          "label": {
+            "hu": "szakképzés",
+            "et": "kutseharidus",
+            "de": "berufsausbildung",
+            "no": "yrkesfaglig utdanning",
+            "ro": "educatie vocationala",
+            "el": "επαγγελματική εκπαίδευση",
+            "es": "educación vocacional",
+            "en": "Vocational education",
+            "sv": "Yrkesutbildning",
+            "ru": "профессиональное образование"
+          }
+        }
+      ]
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      },
+      "label": {
+        "hu": "Ajánlott felhasználói életkor",
+        "et": "Sihtgrupi vanus",
+        "de": "typischer Altersbereich",
+        "ro": "Specific Intervalului de Varsta",
+        "el": "Τυπικό εύρος ηλικίας",
+        "es": "Rango típico de edad",
+        "en": "Typical Age Range",
+        "ru": "Возраст целевой группы"
+      },
+      "type": "group",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#typicalAgeRange",
+      "id": "LOM-TypicalAgeRange",
+      "description": {
+        "en": "What is the age range of the typical intended used of this resource? Use \"U\" to leave the upper or lower limit of the age range undefined, e.g. 15-U or U-10."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#LangString"
+      },
+      "items": [
+        {
+          "styles": [
+            "TextFormItem",
+            "LanguageControlled"
+          ],
+          "nodetype": "LANGUAGE_LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "type": "text",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+        }
+      ]
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "label": {
+        "hu": "Oktatási leírás",
+        "et": "Kasutamise kirjeldus",
+        "de": "Beschreibung der Pädagogik",
+        "ro": "Descrierea Educationala",
+        "el": "Εκπαιδευτική περιγραφή",
+        "es": "Descripción educativa",
+        "en": "Educational description",
+        "ru": "Описание использования"
+      },
+      "type": "group",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#educationalDescription",
+      "id": "LOM-EducationalDescription",
+      "description": {
+        "en": "Comments on how this learning object is to be used."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#LangString"
+      },
+      "items": [
+        {
+          "styles": [
+            "TextFormItem",
+            "MultiLine",
+            "LanguageControlled"
+          ],
+          "nodetype": "LANGUAGE_LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 0
+          },
+          "type": "text",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+        }
+      ]
+    },
+    {
+      "styles": [
+        "ChoiceFormItem"
+      ],
+      "nodetype": "DATATYPE_LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      },
+      "label": {
+        "hu": "Költség",
+        "et": "Tasuline",
+        "de": "Kosten",
+        "ro": "Cost",
+        "el": "Κόστος",
+        "es": "Coste",
+        "en": "Cost",
+        "ru": "Платный"
+      },
+      "type": "choice",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#cost",
+      "id": "LOM-Cost",
+      "datatype": "http://www.w3.org/2001/XMLSchema#boolean",
+      "description": {
+        "en": "Does the usage of this resource involves any costs to the users"
+      },
+      "choices": [
+        {
+          "value": "false",
+          "label": {
+            "hu": "nem",
+            "et": "ei",
+            "de": "nein",
+            "no": "nei",
+            "ro": "nu",
+            "el": "όχι",
+            "es": "no",
+            "en": "No",
+            "sv": "Nej",
+            "ru": "нет"
+          }
+        },
+        {
+          "value": "true",
+          "label": {
+            "hu": "igen",
+            "et": "jah",
+            "de": "ja",
+            "no": "ja",
+            "ro": "da",
+            "el": "ναι",
+            "es": "si",
+            "en": "Yes",
+            "sv": "Ja",
+            "ru": "да"
+          }
+        }
+      ]
+    },
+    {
+      "styles": [
+        "ChoiceFormItem"
+      ],
+      "nodetype": "DATATYPE_LITERAL",
+      "cardinality": {
+        "min": 1,
+        "pref": 1,
+        "max": 1
+      },
+      "label": {
+        "hu": "Szerzői jog és egyéb korlátozások",
+        "et": "Autoriõigused ja muud piirangud",
+        "de": "Copyright und andere Einschränkungen",
+        "ro": "Copyright si Alte Restrictii",
+        "el": "Πνευματικά Δικαιώματα και άλλοι περιορισμοί",
+        "es": "Derechos de autor y otras restricciones",
+        "en": "Copyright and Other Restrictions",
+        "ru": "Авторское право и другие ограничения "
+      },
+      "type": "choice",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#copyrightAndOtherRestrictions",
+      "id": "LOM-CopyrightAndOtherRestrictions",
+      "datatype": "http://www.w3.org/2001/XMLSchema#boolean",
+      "description": {
+        "en": "Are there any copyrights involved in the use of this resource?"
+      },
+      "choices": [
+        {
+          "value": "false",
+          "label": {
+            "hu": "nem",
+            "et": "ei",
+            "de": "nein",
+            "no": "nei",
+            "ro": "nu",
+            "el": "όχι",
+            "es": "no",
+            "en": "No",
+            "sv": "Nej",
+            "ru": "нет"
+          }
+        },
+        {
+          "value": "true",
+          "label": {
+            "hu": "igen",
+            "et": "jah",
+            "de": "ja",
+            "no": "ja",
+            "ro": "da",
+            "el": "ναι",
+            "es": "si",
+            "en": "Yes",
+            "sv": "Ja",
+            "ru": "да"
+          }
+        }
+      ]
+    },
+    {
+      "styles": [],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "label": {
+        "hu": "Szerzői jog leírása",
+        "et": "Autoriõiguste kirjeldus",
+        "de": "Beschreibung Copyright",
+        "ro": "Descriere Copyright",
+        "el": "Περιγραφή Πνευματικών Δικαιωμάτων",
+        "es": "Descripción de los derechos de autor",
+        "en": "Copyright Description",
+        "ru": "Описание авторских прав"
+      },
+      "type": "group",
+      "property": "http://purl.org/dc/terms/rights",
+      "id": "LOM-CopyrightDescription",
+      "description": {
+        "en": "Possible values:\n1) Are commercial uses of this resource allowed? (Yes/No)\n    Are modifications of this resource by other people allowed? (Yes/No)\n2) Free-text description of the rights\n\n\nDescription of restrictions and copyrights that may refer to the use of this resource"
+      },
+      "items": [
+        {
+          "styles": [
+            "verticalRadioButtons"
+          ],
+          "nodetype": "URI",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "label": {
+            "hu": "A forrásra érvényes felhatalmazás (a Creative Commons szerint)",
+            "et": "Allikaga seotud litsents (Creative Commonsi tingimustest lähtuvalt)",
+            "de": "Ressource gemäß Creative Commons zu verwenden",
+            "ro": "Licenta care se aplica resursei (in conformitate cu drepturile de autor \"Creative Commons\")",
+            "el": "Περιγραφή Πνευματικών Δικαιωμάτων",
+            "es": "Licencia aplicada al recurso (de acuerdo con Creative Commons)",
+            "en": "Licence that applies to the resource (according to Creative Commons)",
+            "ru": "Лицензии, относящиеся к источникам (в соответствии с Creative Commons)"
+          },
+          "type": "choice",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
+          "choices": [
+            {
+              "value": "http://creativecommons.org/licenses/by/3.0/",
+              "label": {
+                "hu": "A tulajdonos engedélyezi a kereskedelmi forgalomba hozatalt és a változásokat",
+                "et": "Omanik LUBAB kasutada allikat kommertslikel eesmärkidel JA muuta allika sisu",
+                "de": "Der Urheber gestattet die Ressource für kommerzielle Zwecke zu nutzen und Änderungen vorzunehmen",
+                "ro": "Autorul PERMITE utilizarea in scop comercial SI modificari asupra resursei",
+                "el": "Άδεια που εφαρμόζεται στο αντικείμενο (αναφορικά με Creative Commons)",
+                "es": "El propieatrio PERMITE uso comercial Y cambios en el recurso",
+                "en": "The owner ALLOWS commercial uses AND changes to the resource",
+                "ru": "Владелец РАЗРЕШАЕТ как использование источника в коммерческих целях, ТАК И изменение содержания"
+              }
+            },
+            {
+              "value": "http://creativecommons.org/licenses/by-nd/3.0/",
+              "label": {
+                "hu": "A tulajdonos engedélyezi a kereskedelmi forgalomba hozatalt, változások nélkül.",
+                "et": "Omanik LUBAB kasutada allikat kommertslikel eesmärkidel, kuid EI luba muuta allika sisu",
+                "de": "Der Urheber gestattet, die Ressource für kommerzielle Zwecke zu nutzen, es dürfen jedoch keine Änderungen vorgenommen werden",
+                "ro": "Autorul PERMITE utilizarea in scop comercial dar nu permite modificari asupra resursei",
+                "el": "Ο ιδιοκτήτης του αντικειμένου ΕΠΙΤΡΕΠΕΙ εμπορικές χρήσεις ΚΑΙ αλλαγές στο αντικείμενο",
+                "es": "El propieatrio PERMITE uso comercial pero NO permite cambios en el recurso",
+                "en": "The owner ALLOWS commercial uses but does NOT allow changes to the resource",
+                "ru": "Владелец РАЗРЕШАЕТ использование источника в коммерческих целях, но НЕ РАЗРЕШАЕТ изменение содержания"
+              }
+            },
+            {
+              "value": "http://creativecommons.org/licenses/by-nc-nd/3.0/",
+              "label": {
+                "hu": "A tulajdonos nem engedélyezi a kereskedelmi forgalomba hozatalt és módosítást. ",
+                "et": "Omanik EI LUBA kasutada allikat kommertslikel eesmärkidel EGA luba muuta allika sisu",
+                "de": "Der Urheber gestattet die nicht-kommerzielle Nutzung oder Änderungen an der Ressourcen",
+                "ro": "Autorul NU permite nici utilizarea in scop comercial nici modificari asupra resursei",
+                "el": "Ο ιδιοκτήτης του αντικειμένου ΕΠΙΤΡΕΠΕΙ εμπορικές χρήσεις αλλά ΌΧΙ αλλαγές στο αντικείμενο",
+                "es": "El propieatrio NO permite uso comercial ni cambios en el recurso",
+                "en": "The owner does NOT allow commercial uses OR changes to the resource",
+                "ru": "Владелец НЕ РАЗРЕШАЕТ как использование источника в коммерческих целях, ТАК И изменение содержания"
+              }
+            },
+            {
+              "value": "http://creativecommons.org/licenses/by-nc/3.0/",
+              "label": {
+                "hu": "A tulajdonos nem engedélyezi a kereskedelmi forgalomba hozatalt, de a módosítást igen. ",
+                "et": "Omanik EI LUBA kasutada allikat kommertslikel eesmärkidel, kuid LUBAB muuta allika sisu",
+                "de": "Der Urheber gestattet keine kommerzielle Nutzung, erlaubt aber Änderungen an der Ressource",
+                "ro": "Autorul NU permite utilizarea in scop comercial dar PERMITE modificari asupra resursei",
+                "el": "Ο ιδιοκτήτης του αντικειμένου ΔΕΝ επιτρέπει εμπορικές χρήσεις αλλά ΕΠΙΤΡΕΠΕΙ αλλαγές στο αντικείμενο",
+                "es": "El propieatrio NO permite uso comercial pero PERMITE cambios en el recurso",
+                "en": "The owner does NOT allow commercial uses but ALLOWS changes to the resource",
+                "ru": "Владелец НЕ РАЗРЕШАЕТ использование источника в коммерческих целях, но РАЗРЕШАЕТ изменение содержания"
+              }
+            }
+          ]
+        },
+        {
+          "styles": [
+            "MultiLine",
+            "TextFormItem",
+            "LanguageControlled"
+          ],
+          "nodetype": "LANGUAGE_LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          },
+          "label": {
+            "hu": "Bővebben (ha a fentiek egyike sem igaz)",
+            "et": "Tekstina (kui ükski ülaltoodud variantidest ei sobi)",
+            "de": "im Worten (wenn keine der oben genannten Beschreibungen passt)",
+            "ro": "In text (daca nici unul dintre cuvintele de mai sus nu se potrivesc)",
+            "el": "Ελεύθερη περιγραφή Πνευματικών Δικαιωμάτων (αν τα παραπάνω δεν ταιριάζουν)",
+            "es": "En texto (si no corresponde ninguno de los anteriores)",
+            "en": "In text (if none of the above fits)",
+            "ru": "Текстом (если ни однин из вышеуказанных вариантов не подходит)"
+          },
+          "type": "text",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+        }
+      ]
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "label": {
+        "hu": "Osztályozás",
+        "et": "Klassifikatsioon",
+        "de": "Klassifizierung",
+        "ro": "Clasificare",
+        "el": "Ταξινόμηση",
+        "es": "Clasificación",
+        "en": "Classification",
+        "ru": "Классификация"
+      },
+      "type": "propertygroup",
+      "items": [
+        {
+          "styles": [
+            "ChoiceFormItem"
+          ],
+          "nodetype": "URI",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "type": "choice",
+          "constraints": {
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.cc.uah.es/ie/ont/OE-Predicates#predicate"
+          },
+          "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+        },
+        {
+          "styles": [
+            "ChoiceFormItem",
+            "ExpandableTree"
+          ],
+          "nodetype": "URI",
+          "parentProperty": "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "type": "choice",
+          "isParentPropertyInverted": false,
+          "constraints": {
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.cc.uah.es/ie/ont/OE-OAAE#Concepts"
+          },
+          "isHierarchyPropertyInverted": false,
+          "hierarchyProperty": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+        }
+      ]
+    },
+    {
+      "styles": [
+        "ChoiceFormItem"
+      ],
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "label": {
+        "hu": "Aggregációs szint",
+        "et": "Koondtasand",
+        "de": "Aggregationsebene",
+        "ro": "Nivel de audienta",
+        "el": "Επίπεδο συσσώρευσης",
+        "es": "Nivel de agregación",
+        "en": "Aggregation Level",
+        "ru": "Уровень агрегирования "
+      },
+      "type": "choice",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#aggregationLevel",
+      "id": "LOM-AggregationLevel",
+      "description": {
+        "en": "Level of granularity\n\n(These are the element values; the numbers in the parentheses should be stored instead of these values when each one is selected)\nraw media / resource files (1)\nlesson (2)\ncourse (3)\neducational program (4)"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#AggregationLevel"
+      },
+      "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "label": {
+        "hu": "Validálás",
+        "et": "Valideerimine",
+        "de": "Validierung",
+        "ro": "Validare",
+        "el": "Επικύρωση",
+        "es": "Validación",
+        "en": "Validation",
+        "ru": "Проверка "
+      },
+      "type": "group",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#annotation",
+      "id": "LOM-Annotation",
+      "items": [
+        {
+          "styles": [
+            "ChoiceFormItem"
+          ],
+          "nodetype": "URI",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "label": {
+            "hu": "Validálási státusz",
+            "et": "Valideerimise seis",
+            "de": "Status der Validierung",
+            "ro": "Situatia Validarii",
+            "el": "Στάδιο επικύρωσης",
+            "es": "Estado de la validación",
+            "en": "Validation status",
+            "ru": "Проверка статуса "
+          },
+          "type": "choice",
+          "property": "http://organic-edunet.eu/LOM/rdf/validationStatus",
+          "constraints": {
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://organic-edunet.eu/LOM/rdf/voc#ValidationStatus"
+          },
+          "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+        },
+        {
+          "styles": [
+            "GroupFormItem"
+          ],
+          "nodetype": "BLANK",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "label": {
+            "hu": "vCard Entitás",
+            "et": "vCard Entiteet",
+            "de": "vCard Entität",
+            "ro": "vCard Entitate",
+            "el": "vCard Οντότητα",
+            "es": "vCard Entidad",
+            "en": "vCard Entity",
+            "ru": "vCard Субъект"
+          },
+          "type": "group",
+          "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#entity",
+          "items": [
+            {
+              "styles": [
+                "TextFormItem"
+              ],
+              "nodetype": "LITERAL",
+              "cardinality": {
+                "min": 1,
+                "pref": 1,
+                "max": 1
+              },
+              "label": {
+                "en": "Name"
+              },
+              "type": "text",
+              "property": "http://www.w3.org/2001/vcard-rdf/3.0#FN"
+            },
+            {
+              "styles": [
+                "TextFormItem"
+              ],
+              "nodetype": "LITERAL",
+              "cardinality": {
+                "min": 0,
+                "pref": 1,
+                "max": 1
+              },
+              "label": {
+                "hu": "Email",
+                "et": "E-post",
+                "de": "E-Mail",
+                "ro": "E-mail",
+                "el": "Email",
+                "es": "Correo electrónico",
+                "en": "Email",
+                "sv": "Email",
+                "ru": "Э-майл"
+              },
+              "type": "text",
+              "property": "http://www.w3.org/2001/vcard-rdf/3.0#EMAIL"
+            },
+            {
+              "styles": [
+                "GroupFormItem"
+              ],
+              "nodetype": "BLANK",
+              "cardinality": {
+                "min": 1,
+                "pref": 1,
+                "max": 1
+              },
+              "label": {
+                "en": "Organisation"
+              },
+              "type": "group",
+              "property": "http://www.w3.org/2001/vcard-rdf/3.0#ORG",
+              "items": [
+                {
+                  "styles": [
+                    "ChoiceFormItem"
+                  ],
+                  "nodetype": "URI",
+                  "cardinality": {
+                    "min": 1,
+                    "pref": 1,
+                    "max": 1
+                  },
+                  "type": "choice",
+                  "property": "http://www.w3.org/2001/vcard-rdf/3.0#Orgname",
+                  "constraints": {
+                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Organization"
+                  },
+                  "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "styles": [
+            "TextFormItem"
+          ],
+          "nodetype": "DATATYPE_LITERAL",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "label": {
+            "hu": "Dátum",
+            "et": "Kuupäev",
+            "de": "Datum",
+            "ro": "Data",
+            "el": "Ημερομηνία",
+            "es": "Fecha",
+            "en": "Date",
+            "sv": "Datum",
+            "ru": "Дата"
+          },
+          "type": "text",
+          "property": "http://purl.org/dc/terms/date",
+          "datatype": "http://purl.org/dc/terms/W3CDTF"
+        },
+        {
+          "styles": [
+            "GroupFormItem"
+          ],
+          "nodetype": "BLANK",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "label": {
+            "hu": "Validálás megjegyzései",
+            "et": "Valideerimise märkused",
+            "de": "Kommentar zur Validierung",
+            "ro": "Comentarii asupra validarii",
+            "el": "Σχόλια επικύρωσης",
+            "es": "Comentarios de la validación",
+            "en": "Validation comments",
+            "ru": "Проверка комментариев "
+          },
+          "type": "group",
+          "property": "http://purl.org/dc/terms/description",
+          "items": [
+            {
+              "styles": [
+                "MultiLine",
+                "TextFormItem",
+                "LanguageControlled"
+              ],
+              "nodetype": "LANGUAGE_LITERAL",
+              "cardinality": {
+                "min": 1,
+                "pref": 1
+              },
+              "type": "text",
+              "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "styles": [
+        "ChoiceFormItem"
+      ],
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "label": {
+        "hu": "Státusz",
+        "et": "Staatus",
+        "de": "Status",
+        "ro": "Situatie",
+        "el": "Κατάσταση",
+        "es": "Estado",
+        "en": "Status",
+        "ru": "Статус"
+      },
+      "type": "choice",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#status",
+      "id": "LOM-Status",
+      "description": {
+        "en": "Status of development\n\nIs this the final version of the resource?"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Status"
+      },
+      "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "label": {
+        "hu": "Feltétel",
+        "et": "Tehnilised nõuded",
+        "de": "Anforderungen",
+        "ro": "Cerinta",
+        "el": "Απαιτήσεις",
+        "es": "Requisitos",
+        "en": "Requirement",
+        "ru": "Технические требования"
+      },
+      "type": "group",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#requirement",
+      "id": "LOM-Requirement",
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#RequirementOrComposite"
+      },
+      "items": [
+        {
+          "styles": [
+            "GroupFormItem"
+          ],
+          "nodetype": "BLANK",
+          "cardinality": {
+            "min": 0,
+            "pref": 0,
+            "max": 1
+          },
+          "type": "group",
+          "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#alternativeRequirement",
+          "content": [
+            {
+              "styles": [
+                "ChoiceFormItem"
+              ],
+              "nodetype": "URI",
+              "cardinality": {
+                "min": 1,
+                "pref": 1
+              },
+              "label": {
+                "en": "Type"
+              },
+              "type": "choice",
+              "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "description": {
+                "en": "Specific technology/software\n\nSelect if the resource needs some particular operating system or browser to be accessed"
+              },
+              "constraints": {
+                "http://www.w3.org/2000/01/rdf-schema#subClassOf": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Requirement"
+              },
+              "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+            },
+            {
+              "styles": [
+                "ChoiceFormItem"
+              ],
+              "nodetype": "URI",
+              "cardinality": {
+                "min": 1,
+                "pref": 1
+              },
+              "label": {
+                "hu": "Név",
+                "et": "Nimi",
+                "de": "Name",
+                "ro": "Nume",
+                "el": "Όνομα",
+                "es": "Nombre",
+                "en": "Name",
+                "sv": "Namn",
+                "ru": "Имя"
+              },
+              "type": "choice",
+              "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#technology",
+              "description": {
+                "en": "Name of technology/software\n\nProvide the name of the browser or operating system that is needed to access this resource"
+              },
+              "constraints": {
+                "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Technology"
+              },
+              "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+            },
+            {
+              "styles": [
+                "TextFormItem"
+              ],
+              "nodetype": "LITERAL",
+              "cardinality": {
+                "min": 0,
+                "pref": 1,
+                "max": 1
+              },
+              "label": {
+                "hu": "Minimálisan változat",
+                "et": "Minimaalne versioon",
+                "de": "Minimale Version",
+                "ro": "Versiunii minime",
+                "el": "Ελάχιστη έκδοση",
+                "es": "Versión mínima",
+                "en": "Minimum version",
+                "ru": "Минимально допустимая версия"
+              },
+              "type": "text",
+              "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#minimumVersion",
+              "description": {
+                "en": "Lowest possible version\n\nIndicate the lowest version of the software needed that can support the resource"
+              }
+            },
+            {
+              "styles": [
+                "TextFormItem"
+              ],
+              "nodetype": "LITERAL",
+              "cardinality": {
+                "min": 0,
+                "pref": 1,
+                "max": 1
+              },
+              "label": {
+                "hu": "Maximális változat",
+                "et": "Maksimaalne versioon",
+                "de": "Maximale Version",
+                "ro": "Versiunii maxime",
+                "el": "Μέγιστη απόδοση",
+                "es": "Versión máxima",
+                "en": "Maximum version",
+                "ru": "Максимально допустимая версия"
+              },
+              "type": "text",
+              "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#maximumVersion",
+              "description": {
+                "en": "Highest possible version\n\nIndicate the highest version of the software needed that can support the resource"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "label": {
+        "hu": "Verzió",
+        "et": "Versioon",
+        "de": "Version",
+        "ro": "Versiune",
+        "el": "Έκδοση",
+        "es": "Versión",
+        "en": "Version",
+        "ru": "Версия"
+      },
+      "type": "group",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#version",
+      "id": "LOM-Version",
+      "description": {
+        "en": "What is the current version of the resource"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Version"
+      },
+      "items": [
+        {
+          "styles": [
+            "TextFormItem",
+            "LanguageControlled"
+          ],
+          "nodetype": "LANGUAGE_LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 0
+          },
+          "type": "text",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+        }
+      ]
+    },
+    {
+      "styles": [
+        "ChoiceFormItem"
+      ],
+      "nodetype": "DATATYPE_LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "label": {
+        "hu": "Formátum",
+        "et": "Formaat",
+        "de": "Format",
+        "ro": "Format",
+        "el": "Μορφή",
+        "es": "Formato",
+        "en": "Format",
+        "ru": "Формат"
+      },
+      "type": "choice",
+      "property": "http://purl.org/dc/terms/format",
+      "id": "LOM-Format",
+      "datatype": "http://purl.org/dc/terms/IMT",
+      "description": {
+        "en": "File format\n\nWhat format is the resource in? Is it a word document, a picture or a video? "
+      },
+      "choices": [
+        {
+          "value": "audio/mpeg",
+          "label": {
+            "en": "Audio - MP3"
+          }
+        },
+        {
+          "value": "audio/x-wav",
+          "label": {
+            "en": "Audio - WAV"
+          }
+        },
+        {
+          "value": "audio/x-ms-wma",
+          "label": {
+            "en": "Audio - Windows Media Audio (WMA)"
+          }
+        },
+        {
+          "value": "image/gif",
+          "label": {
+            "en": "Image - GIF"
+          }
+        },
+        {
+          "value": "image/jpeg",
+          "label": {
+            "en": "Image - JPEG"
+          }
+        },
+        {
+          "value": "image/png",
+          "label": {
+            "en": "Image - Portable Network Graphics (PNG)"
+          }
+        },
+        {
+          "value": "application/vnd.ms-excel",
+          "label": {
+            "en": "Microsoft Excel file"
+          }
+        },
+        {
+          "value": "application/vnd.ms-powerpoint",
+          "label": {
+            "en": "Microsoft Powerpoint file"
+          }
+        },
+        {
+          "value": "application/msword",
+          "label": {
+            "en": "Microsoft Word file"
+          }
+        },
+        {
+          "value": "application/vnd.oasis.opendocument.spreadsheet",
+          "label": {
+            "en": "OpenOffice Spreadsheet"
+          }
+        },
+        {
+          "value": "application/vnd.oasis.opendocument.text  ",
+          "label": {
+            "en": "OpenOffice Text document"
+          }
+        },
+        {
+          "value": "application/vnd.oasis.opendocument.presentation",
+          "label": {
+            "en": "OpenOffice presentation"
+          }
+        },
+        {
+          "value": "application/pdf",
+          "label": {
+            "en": "PDF Document"
+          }
+        },
+        {
+          "value": "text/html",
+          "label": {
+            "en": "Text: HTML"
+          }
+        },
+        {
+          "value": "text/plain",
+          "label": {
+            "en": "Text: Plain"
+          }
+        },
+        {
+          "value": "XML",
+          "label": {
+            "en": "Text: xml"
+          }
+        },
+        {
+          "value": "video/mp4",
+          "label": {
+            "en": "Video - MP4"
+          }
+        },
+        {
+          "value": "video/quicktime",
+          "label": {
+            "en": "Video - Quicktime"
+          }
+        },
+        {
+          "value": "video/x-ms-wmv",
+          "label": {
+            "en": "Video - Windows Media Video (WMV)"
+          }
+        },
+        {
+          "value": "video/mpeg",
+          "label": {
+            "en": "Video: MPEG"
+          }
+        }
+      ]
+    },
+    {
+      "styles": [
+        "ChoiceFormItem"
+      ],
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "label": {
+        "hu": "Interaktivitás típusa",
+        "et": "Interaktiivsuse tüüp",
+        "de": "Interaktivitätstyp",
+        "ro": "Tip de Interactivitate ",
+        "el": "Τύπος διαδραστικότητας",
+        "es": "Tipo de interactividad",
+        "en": "Interactivity Type",
+        "ru": "Интерактивность типа"
+      },
+      "type": "choice",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#interactivityType",
+      "id": "LOM-InteractivityType",
+      "description": {
+        "en": "Is this resource causing some interaction from the learner's side? Is it partly inducing actions from the learner?"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#InteractivityType"
+      },
+      "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "label": {
+        "hu": "Telepítési megjegyzések",
+        "et": "Installeerimise selgitused",
+        "de": "Anmerkungen zur Installierung",
+        "ro": "Recomandari de Instalare",
+        "el": "Σχόλια εγκατάστασης",
+        "es": "Pautas de instalación",
+        "en": "Installation remarks",
+        "ru": "Установка замечания"
+      },
+      "type": "group",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#installationRemarks",
+      "id": "LOM-InstallationsRemarks",
+      "description": {
+        "en": "Describe any installation needed"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#LangString"
+      },
+      "items": [
+        {
+          "styles": [
+            "TextFormItem",
+            "LanguageControlled"
+          ],
+          "nodetype": "LANGUAGE_LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          },
+          "type": "text",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+        }
+      ]
+    },
+    {
+      "styles": [
+        "ChoiceFormItem"
+      ],
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "label": {
+        "hu": "Jelentéstani sűrűség",
+        "et": "Infotihedus",
+        "de": "semantische Dichte",
+        "ro": "Densitate Semantica",
+        "el": "Σημασιολογική πυκνότητα",
+        "es": "Densidad semántica",
+        "en": "Semantic Density",
+        "ru": "Информативность"
+      },
+      "type": "choice",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#semanticDensity",
+      "id": "LOM-SemanticDensity",
+      "description": {
+        "en": "Information Density\n\nEstimate the density of the information within the resource"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#SemanticDensity"
+      },
+      "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+    },
+    {
+      "styles": [
+        "ChoiceFormItem"
+      ],
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "label": {
+        "hu": "Interaktivitás szintje",
+        "et": "Interaktiivsuse tase",
+        "de": "Interaktivitätsniveau",
+        "ro": "Nivel Interactiv",
+        "el": "Επίπεδο διαδραστικότητας",
+        "es": "Nivel interactivo",
+        "en": "Interactivity Level",
+        "ru": "Уровень интерактивности "
+      },
+      "type": "choice",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#interactivityLevel",
+      "id": "LOM-InteractivityLevel",
+      "description": {
+        "en": "Level of interaction\n\nWhat is the interactivity level between the resource and its users? Ranging from very low, low and medium to high and very high"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#InteractivityLevel"
+      },
+      "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "label": {
+        "hu": "Időtartam",
+        "et": "Kestvus",
+        "de": "Dauer",
+        "ro": "Durata",
+        "el": "Διάρκεια",
+        "es": "Duración",
+        "en": "Duration",
+        "ru": "Продолжительность "
+      },
+      "type": "group",
+      "property": "http://purl.org/dc/terms/extent",
+      "id": "LOM-Duration",
+      "description": {
+        "en": "If played at the intended speed, how long would the resource take to view/follow/listen? Use \"H\", \"M\" and \"S\" to approximately (PT) indicate hours, minutes and seconds e.g. PT1H30M or PT1M50S"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Duration"
+      },
+      "items": [
+        {
+          "styles": [
+            "TextFormItem"
+          ],
+          "nodetype": "DATATYPE_LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "type": "text",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
+          "datatype": "http://www.w3.org/2001/XMLSchema#duration"
+        }
+      ]
+    },
+    {
+      "styles": [
+        "ChoiceFormItem"
+      ],
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "label": {
+        "hu": "Nehézség",
+        "et": "Raskusaste",
+        "de": "Schwierigkeitsgrad",
+        "ro": "Dificultate",
+        "el": "Δυσκολία",
+        "es": "Dificultad",
+        "en": "Difficulty",
+        "ru": "Сложность"
+      },
+      "type": "choice",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#difficulty",
+      "id": "LOM-Difficulty",
+      "description": {
+        "en": "How difficult is it to work with this resource?"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Difficulty"
+      },
+      "ontologyUrl": "http://localhost:8080/ontologies/Model0.rdf"
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "label": {
+        "hu": "Átlagos tanulási idő",
+        "et": "Tüüpiline õpiaeg",
+        "de": "Lerndauer",
+        "ro": "Perioada Specifica de Invatare",
+        "el": "Τυπική διάρκεια μάθησης",
+        "es": "Tiempo de aprendizaje típico",
+        "en": "Typical Learning Time",
+        "ru": "Типичное время обучения "
+      },
+      "type": "group",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#typicalLearningTime",
+      "id": "LOM-TypicalLearningTime",
+      "description": {
+        "en": "The typical time that it should take this resource when taught to a typical audience"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#Duration"
+      },
+      "items": [
+        {
+          "styles": [
+            "TextFormItem"
+          ],
+          "nodetype": "DATATYPE_LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "type": "text",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
+          "datatype": "http://www.w3.org/2001/XMLSchema#duration"
+        }
+      ]
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "label": {
+        "hu": "Egyéb paltform követelmények",
+        "et": "Muud tehnilised nõuded",
+        "de": "andere Plattformanforderungen",
+        "ro": "Alte Cerinte ale Platformei",
+        "el": "Άλλες απαιτήσεις πλατφόρμας",
+        "es": "Otros requisitos de la plataforma",
+        "en": "Other Platform Requirements",
+        "ru": "Другие технические требования "
+      },
+      "type": "group",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#otherPlatformRequirements",
+      "id": "LOM-OtherPlatformRequirements",
+      "description": {
+        "en": "Describe any other technical requirements"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://ltsc.ieee.org/rdf/lomv1p0/lom#LangString"
+      },
+      "items": [
+        {
+          "styles": [
+            "TextFormItem",
+            "LanguageControlled"
+          ],
+          "nodetype": "LANGUAGE_LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          },
+          "type": "text",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+        }
+      ]
+    },
+    {
+      "styles": [
+        "GroupFormItem"
+      ],
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "label": {
+        "hu": "Oktatási nyelv",
+        "et": "Õpetamisel kasutatav keel",
+        "de": "Sprache",
+        "ro": "Limba pentru Scenariul Educational",
+        "el": "Εκπαιδευτική γλώσσα",
+        "es": "Idioma",
+        "en": "Educational Language",
+        "ru": "Используемый язык обучения"
+      },
+      "type": "group",
+      "property": "http://ltsc.ieee.org/rdf/lomv1p0/lom#educationalLanguage",
+      "id": "LOM-EducationalLanguage",
+      "description": {
+        "en": "The human language(s) used by the typical intended user of this learning object."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/LinguisticSystem"
+      },
+      "items": [
+        {
+          "styles": [
+            "ChoiceFormItem"
+          ],
+          "nodetype": "DATATYPE_LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          },
+          "type": "choice",
+          "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
+          "datatype": "http://purl.org/dc/terms/RFC4646",
+          "choices": [
+            {
+              "value": "sv",
+              "label": {
+                "en": "Swedish",
+                "sv": "Svenska"
+              }
+            },
+            {
+              "value": "en",
+              "label": {
+                "en": "English",
+                "sv": "Engelska"
+              }
+            },
+            {
+              "value": "de",
+              "label": {
+                "en": "German"
+              }
+            },
+            {
+              "value": "no",
+              "label": {
+                "en": "Norwegian"
+              }
+            },
+            {
+              "value": "el",
+              "label": {
+                "en": "Greek"
+              }
+            },
+            {
+              "value": "hu",
+              "label": {
+                "en": "Hungarian"
+              }
+            },
+            {
+              "value": "ro",
+              "label": {
+                "en": "Romanian"
+              }
+            },
+            {
+              "value": "et",
+              "label": {
+                "en": "Estonian"
+              }
+            },
+            {
+              "value": "es",
+              "label": {
+                "en": "Spanish"
+              }
+            },
+            {
+              "value": "ru",
+              "label": {
+                "en": "Russian"
+              }
+            },
+            {
+              "value": "la",
+              "label": {
+                "en": "Latin"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

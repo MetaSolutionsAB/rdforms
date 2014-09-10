@@ -1,0 +1,28 @@
+{
+  "templates": [
+    {
+      "type": "text",
+      "nodetype": "URI",
+      "id": "rdfs:seeAlso",
+      "label": {
+        "sv": "See also"
+      },
+      "styles": [
+        "externalLink"
+      ],
+      "property": "http://www.w3.org/2000/01/rdf-schema#seeAlso"
+    },
+    {
+      "type": "text",
+      "nodetype": "PLAIN_LITERAL",
+      "id": "rdfs:label",
+      "property": "http://www.w3.org/2000/01/rdf-schema#label",
+      "label": {
+        "en": "Label"
+      },
+      "styles": []
+    }
+  ],
+  "scope": "rdfs",
+  "namespace": "http://www.w3.org/2000/01/rdf-schema#"
+}

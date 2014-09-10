@@ -9,7 +9,7 @@
       "constraints": {
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/ns/dcat#Dataset"
       },
-      "content": [
+      "items": [
         {
           "id": "dcat:dcterms:title"
         },
@@ -200,24 +200,20 @@
       "label": {
         "en": "Time period"
       },
-      "content": [
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2006/time#Interval"
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "items": [
         {
           "type": "group",
           "property": "http://www.w3.org/2006/time#hasBeginning",
           "label": {},
           "styles": [
             "invisibleGroup"
-          ],
-          "content": [
-            {
-              "type": "text",
-              "label": {
-                "en": "Start"
-              },
-              "property": "http://www.w3.org/2006/time#inXSDDateTime",
-              "nodetype": "DATATYPE_LITERAL",
-              "datatype": "http://www.w3.org/2001/XMLSchema#date"
-            }
           ],
           "constraints": {
             "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2006/time#Instant"
@@ -226,7 +222,23 @@
             "min": 1,
             "pref": 1,
             "max": 1
-          }
+          },
+          "items": [
+            {
+              "type": "text",
+              "label": {
+                "en": "Start"
+              },
+              "property": "http://www.w3.org/2006/time#inXSDDateTime",
+              "nodetype": "DATATYPE_LITERAL",
+              "datatype": "http://www.w3.org/2001/XMLSchema#date",
+              "cardinality": {
+                "min": 1,
+                "pref": 1,
+                "max": 1
+              }
+            }
+          ]
         },
         {
           "type": "group",
@@ -235,17 +247,6 @@
           "styles": [
             "invisibleGroup"
           ],
-          "content": [
-            {
-              "type": "text",
-              "label": {
-                "en": "End"
-              },
-              "property": "http://www.w3.org/2006/time#inXSDDateTime",
-              "nodetype": "DATATYPE_LITERAL",
-              "datatype": "http://www.w3.org/2001/XMLSchema#date"
-            }
-          ],
           "constraints": {
             "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2006/time#Instant"
           },
@@ -253,16 +254,25 @@
             "min": 1,
             "pref": 1,
             "max": 1
-          }
+          },
+          "items": [
+            {
+              "type": "text",
+              "label": {
+                "en": "End"
+              },
+              "property": "http://www.w3.org/2006/time#inXSDDateTime",
+              "nodetype": "DATATYPE_LITERAL",
+              "datatype": "http://www.w3.org/2001/XMLSchema#date",
+              "cardinality": {
+                "min": 1,
+                "pref": 1,
+                "max": 1
+              }
+            }
+          ]
         }
-      ],
-      "constraints": {
-        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2006/time#Interval"
-      },
-      "cardinality": {
-        "min": 0,
-        "pref": 1
-      }
+      ]
     },
     {
       "type": "text",
@@ -342,7 +352,8 @@
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/ns/dcat#Distribution"
       },
       "label": {},
-      "content": [
+      "styles": [],
+      "items": [
         {
           "id": "dcat:dcterms:title"
         },
@@ -373,8 +384,7 @@
         {
           "id": "dcat:byteSize"
         }
-      ],
-      "styles": []
+      ]
     },
     {
       "type": "group",
@@ -388,7 +398,7 @@
         "pref": 1,
         "max": 1
       },
-      "content": [
+      "items": [
         {
           "type": "choice",
           "property": "http://www.w3.org/ns/dcat#mediaType",

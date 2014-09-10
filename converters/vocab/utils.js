@@ -1,11 +1,24 @@
 define(["exports"], function (exports) {
     var rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
-    var langMap = function(stmts) {
+    var langMap = function(stmts, conf) {
+        if (!conf._includeLangs) {
+            conf._includeLangs = {};
+            if (conf.includeLanguages) {
+                for(var l=0;l<conf.includeLanguages.length;l++) {
+                    conf._includeLangs[conf.includeLanguages[l]] = true;
+                }
+            } else {
+                conf._includeAllLangs = true;
+            }
+        }
         var lang2value = {}, empty = true;
         for (var i=0;i< stmts.length; i++) {
-            lang2value[stmts[i].getLanguage() || ""] = stmts[i].getValue();
-            empty = false;
+            var lang = stmts[i].getLanguage() || "";
+            if (conf._includeAllLangs || conf._includeLangs[lang]) {
+                lang2value[lang] = stmts[i].getValue();
+                empty = false;
+            }
         }
         if (!empty) {
             return lang2value;
@@ -25,10 +38,10 @@ define(["exports"], function (exports) {
 
     return exports = {
         findLabels: function(graph, resource, conf) {
-            return langMap(findStmtsFor(graph, resource, conf.labelPredicates));
+            return langMap(findStmtsFor(graph, resource, conf.labelPredicates), conf);
         },
         findDescriptions: function(graph, resource, conf) {
-            return langMap(findStmtsFor(graph, resource, conf.descriptionPredicates));
+            return langMap(findStmtsFor(graph, resource, conf.descriptionPredicates), conf);
         },
         findValue: function(graph, resource, conf) {
             if (conf.valuePredicates) {
@@ -40,6 +53,15 @@ define(["exports"], function (exports) {
                 }
             }
             return resource;
+        },
+        filter: function(graph, res, conf) {
+            var match = false;
+            for(var pred in conf.filter) if (conf.filter.hasOwnProperty(pred)) {
+                if (graph.findFirstValue(res, pred) !== conf.filter[pred]) {
+                    return false;
+                }
+            }
+            return true;
         },
         extractChoice: function(graph, res, conf) {
             var c = {
@@ -54,7 +76,7 @@ define(["exports"], function (exports) {
                 return c;
             } else {
                 for (var l=0;l<conf.requireOneOfLanguages.length;l++) {
-                    if (c.label[conf.requireOneOfLanguages[l]] != null) {
+                    if (c.label != null && c.label[conf.requireOneOfLanguages[l]] != null) {
                         return c;
                     }
                 }
@@ -62,11 +84,14 @@ define(["exports"], function (exports) {
         },
         extractChoices: function(graph, conf) {
             var choices = [];
-            var stmts = graph.find(null, rdfNS+"type", {type: "uri", value: conf.instancesOfClass});
+            var res, stmts = graph.find(null, rdfNS+"type", {type: "uri", value: conf.instancesOfClass});
             for (var i=0;i<stmts.length;i++) {
-                var c = exports.extractChoice(graph, stmts[i].getSubject(), conf);
-                if (c != null) {
-                    choices.push(c);
+                res = stmts[i].getSubject();
+                if (conf.filter == null || exports.filter(graph, res, conf)) {
+                    var c = exports.extractChoice(graph, res, conf);
+                    if (c != null) {
+                        choices.push(c);
+                    }
                 }
             }
 

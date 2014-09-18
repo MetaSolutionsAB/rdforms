@@ -1,5 +1,10 @@
 /*global define*/
-define(["dojo/_base/declare"], function(declare) {
+define([
+    "dojo/_base/declare",
+    "dojo/_base/array",
+    "dojo/_base/lang",
+    "dojo/request/xhr"
+], function(declare, array, lang, xhr) {
 
     /**
      * Keeps a registry of templates and reusable items.
@@ -30,7 +35,7 @@ define(["dojo/_base/declare"], function(declare) {
 	 * @param {Function} callback will be called with the converted exhibit.
 	 */
 	convertExhibit: function(url, callback) {
-		this._load(url, dojo.hitch(this, function(data) {
+		this._load(url, lang.hitch(this, function(data) {
 			callback(this._convertExhibit(data));
 		}));
 	},
@@ -46,11 +51,10 @@ define(["dojo/_base/declare"], function(declare) {
 	//===================================================
 	_load: function(url, callback) {
 		var xhrArgs = {
-			url: url,
 			sync: true,
 			handleAs: "json-comment-optional"
 		};
-		var req = dojo.xhrGet(xhrArgs);
+		var req = xhr(url, xhrArgs);
 		req.addCallback(callback);
 //		req.addErrback(onError);
 	},
@@ -59,7 +63,7 @@ define(["dojo/_base/declare"], function(declare) {
 		var auxC = [];
 		
 		this._prepareExhibit(data);
-		dojo.forEach(data.items, function(item) {
+		array.forEach(data.items, function(item) {
 			if (item.type === "Property") {
 				var source = {"id": item.id, "property": item.id, label: {"en": item.label}, description: {"en": item.description || item.comment}};
 				if (!item.ranges || item.ranges["http://www.w3.org/2000/01/rdf-schema#Literal"]) {
@@ -108,8 +112,8 @@ define(["dojo/_base/declare"], function(declare) {
 		this._itemStore._createItems(auxP);
 		this._itemStore._createItems(auxC);
 		return {
-				properties: dojo.map(auxP, function(item) {return item["id"]}), 
-				classes: dojo.map(auxC, function(item) {return item["id"]})
+				properties: array.map(auxP, function(item) {return item["id"]}),
+				classes: array.map(auxC, function(item) {return item["id"]})
 			};
 	},
 	_prepareExhibit: function(exhibit) {
@@ -118,7 +122,7 @@ define(["dojo/_base/declare"], function(declare) {
 		exhibit.propertyIndex = {};
 		exhibit.classIndex = {};
 
-		dojo.forEach(exhibit.items, function(item) {
+		array.forEach(exhibit.items, function(item) {
 			switch (item.type) {
 				case "Property":
 					exhibit.propertyIndex[item.id] = item;
@@ -129,7 +133,7 @@ define(["dojo/_base/declare"], function(declare) {
 			}
 		});
 		//Index ranges and domains
-		dojo.forEach(exhibit.items, function(item) {
+		array.forEach(exhibit.items, function(item) {
 			switch (item.type) {
 				case "Property":
 					//Domains
@@ -176,8 +180,8 @@ define(["dojo/_base/declare"], function(declare) {
 		}
 		if (cls.subClassOf == null) {
 			return;
-		} else if (dojo.isArray(cls.subClassOf)) {
-			dojo.forEach(cls.subClassOf, function(superCls) {
+		} else if (lang.isArray(cls.subClassOf)) {
+			array.forEach(cls.subClassOf, function(superCls) {
 				if (exhibit.classIndex[superCls]) {
 					this._getPropertiesForClassesRecursive(exhibit, exhibit.classIndex[superCls], props, parentClasses);
 				}

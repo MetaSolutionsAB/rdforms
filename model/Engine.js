@@ -1,5 +1,8 @@
 /*global define*/
 define([
+    "dojo/_base/array",
+    "dojo/_base/lang",
+    "dojo/_base/kernel",
     "../template/Text",
     "../template/Group",
     "../template/Choice",
@@ -10,7 +13,7 @@ define([
     "./ChoiceBinding",
     "./system",
     "../utils"
-], function (Text, Group, Choice, PropertyGroup, GroupBinding, PropertyGroupBinding, ValueBinding, ChoiceBinding, system, utils) {
+], function (array, lang, kernel, Text, Group, Choice, PropertyGroup, GroupBinding, PropertyGroupBinding, ValueBinding, ChoiceBinding, system, utils) {
 
     //See public API at the bottom of this file.
 
@@ -30,7 +33,7 @@ define([
                 if (item.getProperty() != null) {
                     fixedProps[item.getProperty()] = true;
                 } else if (item instanceof Group) {
-                    dojo.forEach(item.getChildren(), addProperty);
+                    array.forEach(item.getChildren(), addProperty);
                 }
             };
             var addItem = function (item) {
@@ -39,11 +42,11 @@ define([
                     items.push(item);
                 }
             };
-            dojo.forEach(requiredItems, function (id) {
+            array.forEach(requiredItems, function (id) {
                 var item = itemStore.getItem(id);
                 if (item != null) {
                     if (item instanceof Group && item.getProperty() == null) {
-                        dojo.forEach(item.getChildren(), addItem);
+                        array.forEach(item.getChildren(), addItem);
                     } else {
                         addItem(item);
                     }
@@ -58,7 +61,7 @@ define([
                 }
             });
         }
-        dojo.forEach(props, function (prop) {
+        array.forEach(props, function (prop) {
             if (fixedProps[prop]) {
                 return;
             }
@@ -141,7 +144,7 @@ define([
         }
         //Do not create substructures directly, let the view model and user interaction decide when to create children.
         /*
-         dojo.forEach(item.getChildren(), function(childItem) {
+         array.forEach(item.getChildren(), function(childItem) {
          create(nBinding, childItem, parentItems);
          });*/
         return nBinding;
@@ -163,7 +166,7 @@ define([
         var nBinding = new PropertyGroupBinding({item: item, statement: stmt, constraints: constr});
         parentBinding.addChildBinding(nBinding);
         if (oItem instanceof Group) {
-            dojo.forEach(oItem.getChildren(), function (childItem) {
+            array.forEach(oItem.getChildren(), function (childItem) {
                 create(nBinding.getObjectBinding(), childItem);
             });
         }
@@ -176,7 +179,7 @@ define([
 
 
     var _matchGroupItemChildren = function (pb) {
-        dojo.forEach(pb.getItem().getChildren(), function (item) {
+        array.forEach(pb.getItem().getChildren(), function (item) {
             _matchItem(pb, item);
         });
     };
@@ -201,7 +204,7 @@ define([
             stmts = graph.find(pb.getChildrenRootUri(), item.getProperty());
             if (stmts.length > 0) {
                 bindings = [];
-                dojo.forEach(stmts, function (stmt) {
+                array.forEach(stmts, function (stmt) {
                     if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt)) {
                         constStmts = _findStatementsForConstraints(graph, stmt.getValue(), item);
                         if (constStmts !== undefined) {
@@ -231,7 +234,7 @@ define([
         stmts = graph.find(pb.getChildrenRootUri());
         if (stmts.length > 0) {
             bindings = [];
-            dojo.forEach(stmts, function (stmt) {
+            array.forEach(stmts, function (stmt) {
                 if (_noDibbs(stmt) && _isNodeTypeMatch(oItem, stmt)) {
                     pChoice = _findChoice(pItem, stmt.getPredicate(), stmt.getGraph());
                     if (pChoice !== undefined) {
@@ -274,7 +277,7 @@ define([
         stmts = pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty());
         if (stmts.length > 0) {
             bindings = [];
-            dojo.forEach(stmts, function (stmt) {
+            array.forEach(stmts, function (stmt) {
                 if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt)) {
                     _dibbs(stmt);
                     bindings.push(new ValueBinding({item: item, statement: stmt}));
@@ -292,7 +295,7 @@ define([
         stmts = pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty());
         if (stmts.length > 0) {
             bindings = [];
-            dojo.forEach(stmts, function (stmt) {
+            array.forEach(stmts, function (stmt) {
                 if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt)) {
                     choice = _findChoice(item, stmt.getValue(), stmt.getGraph());
                     if (choice !== undefined) {
@@ -345,7 +348,7 @@ define([
      */
     var _findStatementsForConstraints = function (graph, uri, item) {
         var stmts, constr, results = [];
-        if (dojo.isObject(item.getConstraints())) {
+        if (lang.isObject(item.getConstraints())) {
             constr = item.getConstraints();
             for (var key in constr) {
                 if (constr.hasOwnProperty(key)) {
@@ -365,7 +368,7 @@ define([
 
     var _createStatementsForConstraints = function (graph, uri, item) {
         var stmts, constr, results = [];
-        if (dojo.isObject(item.getConstraints())) {
+        if (lang.isObject(item.getConstraints())) {
             constr = item.getConstraints();
             for (var key in constr) {
                 if (constr.hasOwnProperty(key)) {
@@ -447,9 +450,9 @@ define([
                         if (lang == null) {
                             result.emptyLanguageValue = vbs[i];
                         } else {
-                            if (lang === dojo.locale) {
+                            if (lang === kernel.locale) {
                                 result.perfectLocaleLanguageValue = vbs[i];
-                            } else if (lang.substring(0, 1) === dojo.locale.substring(0, 1)) {
+                            } else if (lang.substring(0, 1) === kernel.locale.substring(0, 1)) {
                                 result.localeLanguageValue = vbs[i];
                             } else if (lang.indexOf("en") !== -1) {
                                 result.defaultLanguageValue = vbs[i];
@@ -469,7 +472,7 @@ define([
             } else if (createIfMissing) {
                 var b = create(binding, childItem, {});
                 if (b instanceof ValueBinding) {
-                    b.setLanguage(dojo.locale);
+                    b.setLanguage(kernel.locale);
                     return b;
                 }
                 return findFirstValueBinding(b, true);

@@ -1,5 +1,10 @@
 /*global define*/
-define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
+define([
+    "dojo/_base/declare",
+    "dojo/_base/lang",
+    "dojo/_base/array",
+    "rdforms/utils"
+], function (declare, lang, array, utils) {
     var itemCount = 0;
 
     /**
@@ -329,7 +334,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             if (s.cls === undefined) {
                 return false;
             }
-            return dojo.some(s.cls, function (c) {
+            return array.some(s.cls, function (c) {
                 return c.toLowerCase() === cls.toLowerCase();
             });
         },
@@ -357,7 +362,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             if (s.styles === undefined) {
                 return false;
             }
-            return dojo.some(s.styles, function (s) {
+            return array.some(s.styles, function (s) {
                 return s.toLowerCase() === sty.toLowerCase();
             });
         },
@@ -394,13 +399,13 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
 
         _setLangHash: function (hash, value, lang) {
             hash = hash || {};
-            if (dojo.isString(value)) {
-                if (dojo.isString(lang)) {
+            if (lang.isString(value)) {
+                if (lang.isString(lang)) {
                     hash[lang] = value;
                 } else {
                     hash[""] = value;
                 }
-            } else if (dojo.isObject(value)) {
+            } else if (lang.isObject(value)) {
                 return value;
             }
             return hash;

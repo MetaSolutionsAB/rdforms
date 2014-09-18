@@ -1,5 +1,5 @@
 /*global define*/
-define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, Item) {
+define(["dojo/_base/declare", "dojo/_base/lang", "../utils", "./Item"], function (declare, lang, utils, Item) {
 
     var sortChoices = function (choices) {
         if (choices == null) {
@@ -114,7 +114,7 @@ define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, I
                     sortChoices(this._dynamicChoices);
                     return this._dynamicChoices;
                 } else {
-                    this._ontologyStore.getChoices(this, dojo.hitch(this, function (choices) {
+                    this._ontologyStore.getChoices(this, lang.hitch(this, function (choices) {
                         sortChoices(choices);
                         if (this._dynamicChoices == null) {
                             console.log("Failed lookup of choices for " + this.getLabel());

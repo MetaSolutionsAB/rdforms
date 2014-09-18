@@ -3,6 +3,7 @@ define(["dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
     "dojo/request",
+    "dojo/json",
     "./Bundle",
     "./Group",
     "./PropertyGroup",
@@ -11,7 +12,7 @@ define(["dojo/_base/declare",
     "./OntologyStore",
     "./Converter",
     "../model/Engine"
-], function (declare, lang, array, request, Bundle, Group, PropertyGroup, Text, Choice, OntologyStore, Converter, Engine) {
+], function (declare, lang, array, request, json, Bundle, Group, PropertyGroup, Text, Choice, OntologyStore, Converter, Engine) {
 
     /**
      * Keeps a registry of templates and reusable items.
@@ -158,12 +159,26 @@ define(["dojo/_base/declare",
         /**
          * @param {Array} bundlePaths is an array of paths to bundles that can be understood by require.
          */
-        loadBundles: function(bundlePaths) {
-            require(bundlePaths, lang.hitch(this, function() {
+        loadBundles: function(bundlePaths, callback) {
+            var endsWith = function(str, suffix) {
+                return str.indexOf(suffix, str.length - suffix.length) !== -1;
+            };
+            var bpaths = array.map(bundlePaths, function(p) {
+                return endsWith(p, ".json") ? "dojo/text!"+p : (endsWith(p, ".js") ? p.substring(0, p.length-3) : p);
+            });
+            require(bpaths, lang.hitch(this, function() {
+                var arr = [];
                 var bundles = Array.prototype.slice.call(arguments); //Convert to regular array
                 for (var b=0;b<bundles.length;b++) {
-                    this.registerBundle({path: bundlePaths[b], source: bundles[b]});
+                    if (endsWith(bundlePaths[b], ".json")) {
+                        arr.push(this.registerBundle({path: bundlePaths[b], source: json.parse(bundles[b])}));
+                    } else if (endsWith(bundlePaths[b], ".js")) {
+                        arr.push(this.registerBundle({path: bundlePaths[b], source: bundles[b]}));
+                    } else {
+                        arr.push(this.registerBundle({path: bundlePaths[b]+".js", source: bundles[b]}));
+                    }
                 }
+                callback && callback(arr);
             }));
         },
 

@@ -1,5 +1,11 @@
 /*global define*/
-define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(declare, Binding, CardinalityTracker) {
+define([
+    "dojo/_base/lang",
+    "dojo/_base/array",
+    "dojo/_base/declare",
+    "./Binding",
+    "./CardinalityTracker"
+], function(lang, array, declare, Binding, CardinalityTracker) {
 
     /**
      * Corresponds to a binding for a Group item type.
@@ -65,7 +71,7 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 	},
 	addChildBindings: function(bindings) {
 		this._cachedChildBindings = null;
-		if (!dojo.isArray(bindings) || bindings.length === 0) {
+		if (!lang.isArray(bindings) || bindings.length === 0) {
 			return;
 		}
 		var item = bindings[0].getItem(), children = this._item.getChildren();
@@ -75,7 +81,7 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 						this._childBindings[i][0].getCardinalityTracker() :
 						new CardinalityTracker(item);
 				this._childBindings[i] = this._childBindings[i].concat(bindings);
-				dojo.forEach(bindings, function(binding) {
+				array.forEach(bindings, function(binding) {
 					binding.setParent(this);
 					binding.setCardinalityTracker(cardTracker);
 					cardTracker.increment();
@@ -89,7 +95,7 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 		var children = this._item.getChildren();
 		for (var i=children.length;i>=0;i--) {
 			if (binding.getItem() === children[i]) {
-				this._childBindings[i].splice(dojo.indexOf(this._childBindings[i], binding), 1);
+				this._childBindings[i].splice(array.indexOf(this._childBindings[i], binding), 1);
 				delete binding._parent;
 				binding.getCardinalityTracker().decrement();
 				break;
@@ -155,7 +161,7 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 			}
 			return counter;
 		};
-		dojo.forEach(this.getItemGroupedChildBindings(), function(bindings, index) {
+		array.forEach(this.getItemGroupedChildBindings(), function(bindings, index) {
 			var item = childrenItems[index];
 
 			if (item.getProperty() != null) {
@@ -173,7 +179,7 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 
 			// if (item instanceof GroupBinding){
 			if (item.getType() === "group") {
-				dojo.forEach(bindings, function(binding) {
+				array.forEach(bindings, function(binding) {
 					binding.report(report);
 				});
 			}
@@ -187,7 +193,7 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 	constructor: function(args) {
 		this._constraints = args.constraints || [];
 		//Generates an array of arrays, one array for each child item.
-		this._childBindings = dojo.map(this._item.getChildren(), function(child) {
+		this._childBindings = array.map(this._item.getChildren(), function(child) {
 			return [];
 		});
 		this._rootUri = args.childrenRootUri;
@@ -212,8 +218,8 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 	setAncestorValid: function(valid) {
 		this._ancestorValid = valid;
 		this.updateAssertions();
-		dojo.forEach(this._childBindings, function(bindingArr) {
-			dojo.forEach(bindingArr, function(binding) {
+		array.forEach(this._childBindings, function(bindingArr) {
+			array.forEach(bindingArr, function(binding) {
 				binding.setAncestorValid(valid && this._oneValidChild && this._validPredicate);
 			}, this);
 		}, this);
@@ -226,10 +232,10 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 		if (this._statement !== undefined) {
 			this._statement.setAsserted(assert);
 		}
-		dojo.forEach(this._constraints, function(constraintStmt) {
+		array.forEach(this._constraints, function(constraintStmt) {
 			constraintStmt.setAsserted(assert);
 		});
-        dojo.forEach(this.getChildBindings(), function(binding) {
+        array.forEach(this.getChildBindings(), function(binding) {
             binding.updateAssertions();
         })
 	},
@@ -238,8 +244,8 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 	// Private methods
 	//===================================================
 	_forceOneValidChildCheck: function() {
-		return dojo.some(this._childBindings, function(arr) {
-			return dojo.some(arr, function(binding) {
+		return array.some(this._childBindings, function(arr) {
+			return array.some(arr, function(binding) {
 				return binding.isValid();
 			});
 		});
@@ -248,8 +254,8 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 		if (!this._parent || !this._parent.oneChildValidityChanged(newValidity)) {
 			//We can reuse the setAncestorValid method by setting the current value.
 			this.updateAssertions();
-			dojo.forEach(this._childBindings, function(bindingArr) {
-				dojo.forEach(bindingArr, function(binding) {
+			array.forEach(this._childBindings, function(bindingArr) {
+				array.forEach(bindingArr, function(binding) {
 					binding.setAncestorValid(newValidity);
 				});
 			});

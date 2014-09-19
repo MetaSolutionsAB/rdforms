@@ -3,7 +3,7 @@ define([
     "dojo/_base/lang",
     "dojo/_base/declare",
     "dojo/_base/array",
-    "../view/ChoicesTreeModel"
+    "rdforms/view/ChoicesTreeModel"
 ], function (lang, declare, array, ChoicesTreeModel) {
 
     return declare(ChoicesTreeModel, {

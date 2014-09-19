@@ -10,14 +10,14 @@ define([
     "dijit/_WidgetBase",
     "dijit/registry",
     "dijit/form/ComboBox",
-    "rdforms/formulator/LangString",
+    "rdforms/apps/formulator/LangString",
     "rdforms/template/Item",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
     "dijit/form/ToggleButton", //For template
     "dojo/dnd/Target",
 	"dojo/text!./ItemEditorTemplate.html"
-], function(lang, array, declare, aspect, on, json, construct, _WidgetBase, registry, ComboBox, LangString,
+], function(lang, array, declare, aspect, on, json, domConstruct, _WidgetBase, registry, ComboBox, LangString,
             Item, _TemplatedMixin, _WidgetsInTemplateMixin, ToggleButton, Target, template) {
 
 
@@ -52,7 +52,7 @@ define([
                     onChange: f,
                     label: style,
                     iconClass:'dijitCheckBoxIcon'
-                }, construct.create("div", null, this._stylesWrapper));
+                }, domConstruct.create("div", null, this._stylesWrapper));
             }
 
             this._typeDijit.set("value", this.item.getType(true) || "");

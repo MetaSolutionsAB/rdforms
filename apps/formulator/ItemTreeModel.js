@@ -1,5 +1,10 @@
 /*global define*/
-define(["dojo/_base/declare", "../template/Group", "../template/Bundle", "../template/Item"], function(declare, Group, Bundle, Item) {
+define([
+    "dojo/_base/declare",
+    "rdforms/template/Group",
+    "rdforms/template/Bundle",
+    "rdforms/template/Item"
+], function(declare, Group, Bundle, Item) {
 
     var sortItemsWithId = function (i1, i2) {
         var lab1 = i1.getId() || i1.getProperty();

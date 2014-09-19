@@ -14,16 +14,12 @@ define(["dojo/_base/declare",
     "dijit/Tree",
     "dijit/Menu",
     "dijit/MenuItem",
-    //For template
-    //For template
-    //For template
-    //For template
-    //For template
     "dijit/tree/dndSource",
-    "./ChoicesTreeModel",
+    "rdforms/apps/formulator/ChoicesTreeModel",
     "dojo/text!./ChoicesEditorTemplate.html"
-], function(declare, lang, array, aspect, on, domClass, construct, style, registry, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin, Tree,
-            Menu, MenuItem, TreeDndSource, ChoicesTreeModel, template) {
+], function(declare, lang, array, aspect, on, domClass, domConstruct, domStyle, registry, _LayoutWidget,
+            _TemplatedMixin, _WidgetsInTemplateMixin, Tree,
+            Menu, MenuItem, dndSource, ChoicesTreeModel, template) {
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
         choices: [],
@@ -38,13 +34,13 @@ define(["dojo/_base/declare",
                 showRoot: true,
                 model: new ChoicesTreeModel(this.choices),
                 disabled: readOnly,
-                dndController: TreeDndSource,
+                dndController: dndSource,
                 checkItemAcceptance: function(node,source,position) {
                     return !readOnly && position === "over";
                 },
                 betweenThreshold: 5,
                 onClick: lang.hitch(this, this._editChoice)
-            }, construct.create("div", null, this._treeNode));
+            }, domConstruct.create("div", null, this._treeNode));
             this.tree.startup();
 
             if (readOnly) {
@@ -131,14 +127,14 @@ define(["dojo/_base/declare",
         _changeInline: function() {
             if (this._inlineDijit.get("checked")) {
                 this.item.setStaticChoices(this.choices);
-                style.set(this.tree.domNode, "display", "");
-                style.set(this._controlDijit.domNode, "height", "25px");
+                domStyle.set(this.tree.domNode, "display", "");
+                domStyle.set(this._controlDijit.domNode, "height", "25px");
                 domClass.add(this._controlDijit.domNode, "inlineState");
                 this._bcDijit.resize();
             } else {
                 this.item.setStaticChoices();
-                style.set(this.tree.domNode, "display", "none");
-                style.set(this._controlDijit.domNode, "height", "45%");
+                domStyle.set(this.tree.domNode, "display", "none");
+                domStyle.set(this._controlDijit.domNode, "height", "45%");
                 domClass.remove(this._controlDijit.domNode, "inlineState");
                 this._bcDijit.resize();
             }

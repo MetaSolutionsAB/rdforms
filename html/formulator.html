@@ -56,11 +56,11 @@
                 'dojo/dom',
                 'dojo/dom-style',
                 'rdforms/template/ItemStore',
-                'rdforms/formulator/StoreManager',
+                'rdforms/apps/formulator/StoreManager',
                 'rdfjson/formats/converters',
                 'dojo/json',
                'dojo/domReady!'
-            ],function(on, dom, style, ItemStore, StoreManager, converters, json) {
+            ],function(on, dom, domStyle, ItemStore, StoreManager, converters, json) {
                 var itemStore = new ItemStore();
                 var arr = [];
                 var templatescount = parobj.templates ? parobj.templates.length : 0;
@@ -90,12 +90,12 @@
                         storeManager.startup();
                     };
                     on(dom.byId("formulatorButton"), "click", function() {
-                        style.set(dom.byId("formulator"), "display", "");
-                        style.set(dom.byId("about"), "display", "none");
+                        domStyle.set(dom.byId("formulator"), "display", "");
+                        domStyle.set(dom.byId("about"), "display", "none");
                     });
                     on(dom.byId("aboutButton"), "click", function() {
-                        style.set(dom.byId("formulator"), "display", "none");
-                        style.set(dom.byId("about"), "display", "");
+                        domStyle.set(dom.byId("formulator"), "display", "none");
+                        domStyle.set(dom.byId("about"), "display", "");
                     });
                 });
             });
@@ -106,7 +106,7 @@
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <img src="http://rdforms.com/favicon.ico" class="icon"></img>
+                    <img src="http://rdforms.com/favicon.ico" class="icon"/>
                     <a class="navbar-brand" href="#">RDForms Formulator</a>
                 </div>
                 <div class="navbar-collapse collapse">

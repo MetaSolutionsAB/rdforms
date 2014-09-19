@@ -23,10 +23,10 @@
             <div class="formulatorTable">
                 <div class="row"><label for="${id}_value">Value:</label><div><div id="${id}_value" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-attach-point="_valueDijit" data-dojo-attach-event="onChange: _changeValue" data-dojo-props="intermediateChanges: true, invalidMessage: 'Value must be unique.'"></div></div></div>
                 <div class="row"><label>Label: <span data-dojo-attach-point="_addLabel" class="addButton">+</span></label><div>
-                    <div data-dojo-attach-point="_labelLangString" data-dojo-type="rdforms/formulator/LangString"></div>
+                    <div data-dojo-attach-point="_labelLangString" data-dojo-type="rdforms/apps/formulator/LangString"></div>
                 </div></div>
                 <div class="row"><label>Description: <span data-dojo-attach-point="_addDesc" class="addButton">+</span></label><div>
-                    <div data-dojo-attach-point="_descLangString" data-dojo-type="rdforms/formulator/LangString" data-dojo-props="multiline: true"></div>
+                    <div data-dojo-attach-point="_descLangString" data-dojo-type="rdforms/apps/formulator/LangString" data-dojo-props="multiline: true"></div>
                 </div></div>
                 <div class="row"><label>Selectable: </label><div><div>
                     <div data-dojo-attach-point="_selectable" data-dojo-type="dijit/form/CheckBox" data-dojo-attach-event="onChange: _changeSelectable"></div>

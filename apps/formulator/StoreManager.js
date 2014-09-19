@@ -25,12 +25,12 @@ define(["dojo/_base/declare",
     "./ItemEditor",
     "./ItemTreeModel",
     "./ChoicesEditor",
-    "../template/Bundle",
-    "../template/Group",
-    "../template/Choice",
-    "../apps/Experiment",
+    "rdforms/template/Bundle",
+    "rdforms/template/Group",
+    "rdforms/template/Choice",
+    "rdforms/apps/components/Experiment",
     "dojo/text!./StoreManagerTemplate.html"
-], function (declare, lang, xhr, on, domClass, construct, attr, array, json, registry, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin,
+], function (declare, lang, xhr, on, domClass, domConstruct, domAttr, array, json, registry, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin,
              DnDSource, TreeDndSource, Tree, Menu, MenuItem, MenuSeparator, ContentPane, TabContainer, BorderContainer, Button,
              ItemEditor, ItemTreeModel, ChoicesEditor, Bundle, Group, Choice, Experiment, template) {
 
@@ -138,7 +138,7 @@ define(["dojo/_base/declare",
                     this._showContent();
                     this._showChoices();
                 })
-            }, construct.create("div", null, this._treeNode));
+            }, domConstruct.create("div", null, this._treeNode));
             this.tree.startup();
             if (this.menu) {
                 this.menu.destroy();
@@ -153,27 +153,44 @@ define(["dojo/_base/declare",
                     alert("Cannot perform operation on read-only item.");
                     return;
                 }
-                var clone = source == null;
-                if (clone) {
-                    source = lang.clone(tn.item.getSource(true));
-                    delete source.id;
-                }
                 if (tn.item === root || tn.item instanceof Bundle) {
                     source.id = ""+new Date().getTime();
                     this.__newItem(source, tn.item);
                     return;
                 }
-                if (tn.getParent().item instanceof Bundle && !(tn.item instanceof Group)) {
+                var parentItem = tn.getParent().item;
+
+                if (parentItem instanceof Bundle && !(tn.item instanceof Group)) {
                     source.id = ""+new Date().getTime();
-                    this.__newItem(source, tn.getParent().item);
+                    this.__newItem(source, parentItem);
                     return;
                 }
 
-                if (tn.item instanceof Group && !clone) {
+                if (tn.item instanceof Group) {
                     this.__newItem(source, tn.item);
                 } else {
-                    var parent = tn.getParent().item;
-                    this.__newItem(source, parent, parent.getChildren().indexOf(tn.item)+1);
+                    this.__newItem(source, parentItem, parentItem.indexOf(tn.item)+1);
+                }
+            });
+            var cloneItem = lang.hitch(this, function(tn) {
+                var bundle = tn.item instanceof Bundle ? tn.item : tn.item.getBundle();
+                if (bundle.isReadOnly()) {
+                    alert("Cannot perform operation on read-only item.");
+                    return;
+                }
+                if (tn.item === root || tn.item instanceof Bundle) {
+                    alert("Cannot clone entire bundles.");
+                    return;  //Not allowed to clone bundle or root
+                }
+                var parentItem = tn.getParent().item;
+                var source = lang.clone(tn.item.getSource(true));
+
+                if (parentItem instanceof Bundle) { //Toplevel
+                    source.id = "" + new Date().getTime();
+                    this.__newItem(source, parentItem);
+                } else {
+                    delete source.id;
+                    this.__newItem(source, parentItem, parentItem.getChildren().indexOf(tn.item)+1);
                 }
             });
             this.menu.addChild(new MenuItem({
@@ -201,7 +218,7 @@ define(["dojo/_base/declare",
                 label: "Clone Item",
                 iconClass: "dijitFolderOpened",
                 onClick: function() {
-                    addItem(registry.byNode(this.getParent().currentTarget));
+                    cloneItem(registry.byNode(this.getParent().currentTarget));
                 }
             }));
             this.menu.addChild(new MenuSeparator());
@@ -246,7 +263,7 @@ define(["dojo/_base/declare",
                 this._editor.destroy();
             }
             if (this.item != null && !(this.item instanceof Bundle)) {
-                this._editor = new ItemEditor({item: this.item, itemStore: this.itemStore, storeManager: this}, construct.create("div", null, this._editorNode));
+                this._editor = new ItemEditor({item: this.item, itemStore: this.itemStore, storeManager: this}, domConstruct.create("div", null, this._editorNode));
             }
         },
         __newItem: function(source, parent, insertIndex) {
@@ -270,7 +287,7 @@ define(["dojo/_base/declare",
             this._showChoices();
         },
         _showContent: function () {
-            attr.set(this._contentsNode, "value", json.stringify(this.item.getSource(true), true, "  "));
+            domAttr.set(this._contentsNode, "value", json.stringify(this.item.getSource(true), true, "  "));
             if (this._editorDijit != null) {
                 this._editorDijit.destroy();
             }
@@ -283,7 +300,7 @@ define(["dojo/_base/declare",
             } else {
                 template = this.itemStore.createTemplateFromChildren([this.item]);
             }
-            this._editorDijit = new Experiment({gutters: false, hideTemplate: true, template: template, graphObj: this.data}, construct.create("div", null, this._previewNode));
+            this._editorDijit = new Experiment({gutters: false, hideTemplate: true, template: template, graphObj: this.data}, domConstruct.create("div", null, this._previewNode));
             this._editorDijit.startup();
             this._bcDijit.resize();
         },
@@ -292,7 +309,7 @@ define(["dojo/_base/declare",
                 this._choicesEditor.destroy();
             }
             if (this.item instanceof Choice) {
-                this._choicesEditor = new ChoicesEditor({item: this.item}, construct.create("div", null, this._choicesNode));
+                this._choicesEditor = new ChoicesEditor({item: this.item}, domConstruct.create("div", null, this._choicesNode));
                 this._choicesEditor.onChange = lang.hitch(this, this._showContent);
                 this._choicesEditor.startup();
                 this._choicesEditor.resize();
@@ -305,7 +322,7 @@ define(["dojo/_base/declare",
             }, this);
 
             var str = json.stringify(arr, true, "  ");
-            attr.set(this._contentsNode, "value", str);
+            domAttr.set(this._contentsNode, "value", str);
             if (this._editorDijit != null) {
                 this._editorDijit.destroy();
             }

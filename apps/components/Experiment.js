@@ -9,13 +9,13 @@ define(["dojo/_base/declare",
 	"dijit/_WidgetsInTemplateMixin",
     "dijit/layout/TabContainer",
 	"rdfjson/Graph",
-	"../model/Engine",
-	"../template/ItemStore",
-	"../view/Editor",
-	"../view/Presenter",
-    "rdforms/apps/RDFEdit",
+	"rdforms/model/Engine",
+	"rdforms/template/ItemStore",
+	"rdforms/view/Editor",
+	"rdforms/view/Presenter",
+    "rdforms/apps/components/RDFEdit",
 	"dojo/text!./ExperimentTemplate.html"
-], function(declare, lang, topic, construct, json, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin,
+], function(declare, lang, topic, domConstruct, json, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin,
             TabContainer, Graph, Engine, ItemStore, Editor, Presenter, RDFEdit, template) {
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {

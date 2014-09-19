@@ -9,10 +9,10 @@ define(["dojo/_base/declare",
     "dijit/form/Textarea",
     "dijit/form/ComboBox",
     "dojo/store/Memory"
-], function(declare, lang, domClass, construct, attr, Widget, TextBox, Textarea, ComboBox, Memory) {
+], function(declare, lang, domClass, domConstruct, domAttr, Widget, TextBox, Textarea, ComboBox, Memory) {
     return declare(Widget, {
         buildRendering: function() {
-            this.domNode = this.srcNodeRef || construct.create("div");
+            this.domNode = this.srcNodeRef || domConstruct.create("div");
             domClass.add(this.domNode, "langStringArr");
             var timer;
             this._onChange = lang.hitch(this, function() {
@@ -45,7 +45,7 @@ define(["dojo/_base/declare",
                     this._rows[i].text.destroy();
                 }
                 this._rows = [];
-                attr.set(this.domNode, "innerHTML", "");
+                domAttr.set(this.domNode, "innerHTML", "");
             }
             for (var key in map) {
                 if (map.hasOwnProperty(key)) {
@@ -72,17 +72,17 @@ define(["dojo/_base/declare",
             this._add("", "");
         },
         _add: function(s, l) {
-            var row = construct.create("div", {"class": "langString"}, this.domNode);
-            var textNode = construct.create("div", {"class": "langStringString"}, row);
-            var langNode = construct.create("div", {"class": "langStringLang"}, row);
+            var row = domConstruct.create("div", {"class": "langString"}, this.domNode);
+            var textNode = domConstruct.create("div", {"class": "langStringString"}, row);
+            var langNode = domConstruct.create("div", {"class": "langStringLang"}, row);
             var text;
             if (this.multiline) {
-                text = Textarea({value: s, disabled: this.get("disabled"), onChange: this._onChange, intermediateChanges: true}, construct.create("div", null, textNode));
+                text = Textarea({value: s, disabled: this.get("disabled"), onChange: this._onChange, intermediateChanges: true}, domConstruct.create("div", null, textNode));
                 text.resize();
             } else {
-                text = TextBox({value: s, disabled: this.get("disabled"), onChange: this._onChange, intermediateChanges: true}, construct.create("div", null, textNode));
+                text = TextBox({value: s, disabled: this.get("disabled"), onChange: this._onChange, intermediateChanges: true}, domConstruct.create("div", null, textNode));
             }
-            var lang = ComboBox({value: l, disabled: this.get("disabled"), onChange: this._onChange, store: this._comboChoiceStore, searchAttr: "id"}, construct.create("div", null, langNode));
+            var lang = ComboBox({value: l, disabled: this.get("disabled"), onChange: this._onChange, store: this._comboChoiceStore, searchAttr: "id"}, domConstruct.create("div", null, langNode));
             if (this._rows == null) {
                 this._rows = [];
             }

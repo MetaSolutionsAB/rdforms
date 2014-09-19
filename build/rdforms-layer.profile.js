@@ -77,7 +77,7 @@ var profile = {
             exclude: ['dojo/dojo']
         },
         'rdforms/extras': {
-            include: ['rdforms/formulator/StoreManager', 'rdforms/apps/Validator', 'rdforms/apps/LDBrowser'],
+            include: ['rdforms/apps/formulator/StoreManager', 'rdforms/apps/validator/Validator', 'rdforms/apps/ldb/LDBrowser'],
             exclude: ['dojo/dojo']
         }
     },

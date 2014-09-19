@@ -66,7 +66,7 @@ define([
 				target = 0;
 			}
 		} else {
-			target = 1;
+			target = 0;
 		}
 		if (target > bindings.length) {
 			bindings = bindings.concat([]);
@@ -105,7 +105,7 @@ define([
 	
 	addGroup: function(fieldDiv, binding) {
 		if (!this.addValidationMarker(fieldDiv, binding)) {
-			new ValidationPresenter({binding: binding, topLevel: false}, fieldDiv);
+			new ValidationPresenter({binding: binding, topLevel: false, includeLevel: this.includeLevel}, fieldDiv);
 		}
 	},
 

@@ -10,7 +10,7 @@ define(["dojo/_base/declare",
 	"../template/Group",
 	"../utils",
     "rdforms/model/system"
-], function(declare, kernel, event, on, domClass, construct, attr, View, Group, utils, system) {
+], function(declare, kernel, event, on, domClass, domConstruct, domAttr, View, Group, utils, system) {
 
     var Presenter = declare(View, {
 	//===================================================
@@ -63,12 +63,12 @@ define(["dojo/_base/declare",
 	
 	addTable: function(newRow, firstBinding) {
 		var item = firstBinding.getItem(), childItems = item.getChildren();
-		var table = construct.create("table", {"class": "rformsGroup"}, newRow);
-		var tHead = construct.create("thead", null, table);
-		var tHeadRow = construct.create("tr", null, table);
+		var table = domConstruct.create("table", {"class": "rformsGroup"}, newRow);
+		var tHead = domConstruct.create("thead", null, table);
+		var tHeadRow = domConstruct.create("tr", null, table);
 		for (var colInd = 0;colInd < childItems.length;colInd++) {
-			var th = construct.create("th", null, tHeadRow);
-			this.showInfo(item, construct.create("span", {innerHTML: childItems[colInd].getLabel()}, th));
+			var th = domConstruct.create("th", null, tHeadRow);
+			this.showInfo(item, domConstruct.create("span", {innerHTML: childItems[colInd].getLabel()}, th));
 		}
 		return table;
 	},
@@ -83,13 +83,13 @@ define(["dojo/_base/declare",
         this.topLevel = false; //Table-cells are never toplevel, hence intermediate override.
 		for (rowInd = 0; rowInd < bindings.length;rowInd++) {
 			childBindingsGroups = bindings[rowInd].getItemGroupedChildBindings();
-			trEl = construct.create("tr", null, table);
+			trEl = domConstruct.create("tr", null, table);
 			
 			for (colInd = 0; colInd< childBindingsGroups.length;colInd++) {
 				if (childBindingsGroups[colInd].length > 0) {
-					this.addComponent(construct.create("td", null, trEl), childBindingsGroups[colInd][0], true);
+					this.addComponent(domConstruct.create("td", null, trEl), childBindingsGroups[colInd][0], true);
 				} else {
-					construct.create("td", null, trEl);					
+					domConstruct.create("td", null, trEl);
 				}
 			}
 		}
@@ -99,8 +99,7 @@ define(["dojo/_base/declare",
 		return binding.getItem() instanceof Group && binding.getChildBindings().length === 0;
 	},
 
-	addLabel: function(rowDiv, labelDiv, binding) {
-		var item = binding.getItem();
+	addLabel: function(rowDiv, labelDiv, binding, item /*provided if there is no binding*/) {
 		var isGroup = item instanceof Group;
         var label = item.getLabel();
         if (label != null && label != "") {
@@ -109,9 +108,9 @@ define(["dojo/_base/declare",
             label = "";
         }
 
-		attr.set(labelDiv, "innerHTML", label);
+		domAttr.set(labelDiv, "innerHTML", label);
 		domClass.add(labelDiv, "rformsLabel");
-		this.showInfo(binding.getItem(), labelDiv);
+		this.showInfo(item, labelDiv);
 	},
 	addGroup: function(fieldDiv, binding) {
 		var subView = new Presenter({binding: binding, topLevel: false}, fieldDiv);
@@ -120,14 +119,14 @@ define(["dojo/_base/declare",
         var item = binding.getItem();
         if (item.getNodetype() === "URI") {
             if (item.hasStyle("image")) {
-                construct.create("img", {"class": "rformsImage", "src": binding.getGist()}, fieldDiv);
+                domConstruct.create("img", {"class": "rformsImage", "src": binding.getGist()}, fieldDiv);
             } else {
                 var a, vmap = utils.getLocalizedMap(binding);
                 if (vmap) {
-                    a = construct.create("a", {"class": "rformsUrl", title: binding.getValue(),
+                    a = domConstruct.create("a", {"class": "rformsUrl", title: binding.getValue(),
                         href: binding.getValue(), innerHTML: utils.getLocalizedValue(vmap).value}, fieldDiv);
                 } else {
-                    a = construct.create("a", {"class": "rformsUrl",
+                    a = domConstruct.create("a", {"class": "rformsUrl",
                         href: binding.getValue(), innerHTML: binding.getGist()}, fieldDiv);
                 }
                 if (item.hasStyle("externalLink")) {
@@ -138,7 +137,7 @@ define(["dojo/_base/declare",
             }
         } else {
             if (this.showLanguage && binding.getLanguage()) {
-                var lang = construct.create("div", {"innerHTML": binding.getLanguage()}, fieldDiv);
+                var lang = domConstruct.create("div", {"innerHTML": binding.getLanguage()}, fieldDiv);
                 domClass.add(lang, "rformsLanguage");
             }
             var text = binding.getGist().replace("<", "&lt;").replace(">", "&gt;").replace(/(\r\n|\r|\n)/g, "<br/>");
@@ -153,11 +152,11 @@ define(["dojo/_base/declare",
                 && this.topLevel !== true
                 && parentBinding != null && parentBinding.getItem().getChildren()[0] === item
                 && parentBinding.getStatement() != null && parentBinding.getStatement().getType() === "uri") {
-                a = construct.create("a", {"class": "rformsUrl",
+                a = domConstruct.create("a", {"class": "rformsUrl",
                     href: parentBinding.getStatement().getValue(), innerHTML: text}, fieldDiv);
                 system.attachLinkBehaviour(a, parentBinding);
             } else {
-                construct.create("div", {"innerHTML": text}, fieldDiv);
+                domConstruct.create("div", {"innerHTML": text}, fieldDiv);
             }
         }
 	},
@@ -165,19 +164,22 @@ define(["dojo/_base/declare",
 		var choice = binding.getChoice(),
             item = binding.getItem(),
             desc;
+        if (!choice) {
+            return;
+        }
         if (choice.description) {
             desc = utils.getLocalizedValue(choice.description).value;
         }
         if (item.hasStyle("image")) {
-            construct.create("img", {"class": "rformsImage", "src": choice.value, title: desc || choice.value}, fieldDiv);
+            domConstruct.create("img", {"class": "rformsImage", "src": choice.value, title: desc || choice.value}, fieldDiv);
         } else if (item.hasStyle("stars") && parseInt(choice.value) != NaN) {
 			for (var i=parseInt(choice.value);i>0;i--) {
-				construct.create("span", {"class": "rformsStar"}, fieldDiv);
+				domConstruct.create("span", {"class": "rformsStar"}, fieldDiv);
 			}
 		} else if (item.hasStaticChoices() && !item.hasStyle("externalLink")) {
-            construct.create("div", {"innerHTML": utils.getLocalizedValue(choice.label).value}, fieldDiv);
+            domConstruct.create("div", {"innerHTML": utils.getLocalizedValue(choice.label).value}, fieldDiv);
         } else {
-            var a = construct.create("a", {"class": "rformsUrl",
+            var a = domConstruct.create("a", {"class": "rformsUrl",
                 href: choice.seeAlso || choice.value, title: desc || choice.seeAlso || choice.value, "innerHTML": utils.getLocalizedValue(choice.label).value}, fieldDiv);
             if (item.hasStyle("externalLink")) {
                 system.attachExternalLinkBehaviour(a, binding);
@@ -186,7 +188,7 @@ define(["dojo/_base/declare",
             }
             if (choice.load != null) {
                 choice.load(function () {
-                    attr.add(a, "innerHTML", utils.getLocalizedValue(choice.label).value);
+                    domAttr.add(a, "innerHTML", utils.getLocalizedValue(choice.label).value);
                 });
             }
 		}

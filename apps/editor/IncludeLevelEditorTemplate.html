@@ -1,0 +1,16 @@
+<div class='rforms'>
+    <div class="cardinality">
+        <div class="btn-group" data-toggle="buttons">
+            <label data-dojo-attach-point="_mandatoryLabel" class="btn btn-success active" data-dojo-attach-event="click: _mandatoryClick">
+                <input type="checkbox"/> Mandatory
+            </label>
+            <label data-dojo-attach-point="_recommendedLabel" class="btn btn-default" data-dojo-attach-event="click: _recommendedClick">
+                <input type="checkbox"/> Recommended
+            </label>
+            <label data-dojo-attach-point="_optionalLabel" class="btn btn-default" data-dojo-attach-event="click: _optionalClick">
+                <input type="checkbox"/> Optional
+            </label>
+        </div>
+    </div>
+    <div data-dojo-type="rdforms/view/Editor" data-dojo-attach-point='_rdformsDijit' data-dojo-props="includeLevel: 'mandatory', compact: ${compact}"></div>
+</div>

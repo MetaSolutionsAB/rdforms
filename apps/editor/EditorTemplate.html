@@ -1,0 +1,23 @@
+<div class='singleEditor rforms'>
+    <h1 data-dojo-attach-point="_headerNode"></h1>
+    <div class="singleEditorMain" data-dojo-type='dijit/layout/TabContainer' data-dojo-attach-point='_tabContainer' data-dojo-props="gutters:false">
+        <div data-dojo-type='dijit/layout/ContentPane' title='Editor' data-dojo-props="selected:'true'" data-dojo-attach-point='_editorTab'>
+            <div data-dojo-type="rdforms/apps/editor/IncludeLevelEditor" data-dojo-attach-point="_editor" data-dojo-props="compact: true,includeLevel: 'optional'"></div>
+        </div>
+        <div data-dojo-type='dijit/layout/ContentPane' title='Presenter' data-dojo-attach-point='_presenterTab'>
+            <div data-dojo-type="rdforms/view/Presenter" data-dojo-attach-point="_presenter" data-dojo-props="compact: true"></div>
+        </div>
+
+        <div data-dojo-type='rdforms/apps/components/RDFEdit' title='RDF data' data-dojo-attach-point='_rdfTab'></div>
+    </div>
+    <div data-dojo-type="dijit/Dialog" data-dojo-attach-point="_dialog" data-dojo-props="title: 'Decide which RDF to edit'">
+        <div class="startEditingContainer">
+            <h4>Provide a URI</h4>
+            <div data-dojo-type="dijit/form/TextBox" placeholder="If provided the RDF below will be ignored" data-dojo-attach-point="_resourceURI"></div>
+            <h4>Or, provide an existing expression in RDF</h4>
+            <div data-dojo-type='rdforms/apps/components/RDFEdit' data-dojo-attach-point='_rdfInit' data-dojo-props="nested: true"></div>
+            <div style="display: none" class="alert alert-danger" role="alert" data-dojo-attach-point="_errorMessage"></div>
+            <button type="button" class="btn btn-primary pull-right" data-dojo-attach-event="onclick: _startEditing">Start editing</button>
+        </div>
+    </div>
+</div>

@@ -50,6 +50,7 @@ var profile = {
         "dojo",
         "dijit",
         "rdfjson",
+        "dbootstrap",
         {name: "rdforms", location: ".."}
     ],
 
@@ -74,7 +75,12 @@ var profile = {
             customBase: true
         },
         'rdforms/extras': {
-            include: ['rdforms/apps/formulator/StoreManager', 'rdforms/apps/validator/Validator', 'rdforms/apps/ldb/LDBrowser'],
+            include: ['rdforms/apps/formulator/StoreManager',
+                'rdforms/apps/validator/Validator',
+                'rdforms/apps/editor/Editor',
+                'rdforms/apps/ldb/LDBrowser',
+                'dbootstrap/main'
+            ],
             exclude: ['dojo/dojo']
         }
     },

@@ -1,9 +1,8 @@
 <div class='validator'>
-  <div data-dojo-type='dijit/TitlePane' title='RDF/JSON source' data-dojo-props="open: ${rdfjsonEditorOpen}">
-    <div data-dojo-type='dijit/form/SimpleTextarea' data-dojo-attach-point='_rdfjsonDijit' style='width:100%;height:200px'></div>
-    <div data-dojo-type='dijit/form/Button' data-dojo-props="label:'Update'" dojoAttachEvent='onClick:_update'></div>
-  </div>
-  <div class='json' data-dojo-attach-point='_jsonNode'></div>
-  <div class='rdfjson' data-dojo-attach-point='_rdfjsonNode'></div>
-  <div class='rforms' data-dojo-attach-point='_rformsNode'></div>
+    <h1 data-dojo-attach-point="_headerNode"></h1>
+    <div class="directInput" data-dojo-attach-point="_rdfDijit" data-dojo-type="rdforms/apps/components/RDFEdit"></div>
+    <button type="button" class="btn btn-primary" data-dojo-attach-point="_validateNode" data-dojo-attach-event="onclick:_update">Validate</button>
+    <div class='rdfValidationMessage alert' role="alert" data-dojo-attach-point='_rdfValidationMessage'></div>
+    <div class='rdfValidationMessage alert' role="alert" data-dojo-attach-point='_mandatoryErrorMessage'></div>
+    <div class='rforms' data-dojo-attach-point='_rformsNode'></div>
 </div>

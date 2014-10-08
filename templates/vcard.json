@@ -197,7 +197,11 @@
         "en": "The formatted text corresponding to the name of the object"
       },
       "type": "text",
-      "nodetype": "LITERAL"
+      "nodetype": "LITERAL",
+      "cardinality": {
+        "min": 1,
+        "pref": 0
+      }
     },
     {
       "id": "vc:nickname",
@@ -737,7 +741,11 @@
       "automatic": true,
       "valueTemplate": "mailto:",
       "pattern": "^[-a-z0-9~!$%^&*_=+}{\\'?]+(\\.[-a-z0-9~!$%^&*_=+}{\\'?]+)*@([a-z0-9_][-a-z0-9_]*(\\.[-a-z0-9_]+)*\\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}))(:[0-9]{1,5})?$",
-      "nodetype": "URI"
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 1,
+        "pref": 0
+      }
     },
     {
       "id": "vc:hasGeo",

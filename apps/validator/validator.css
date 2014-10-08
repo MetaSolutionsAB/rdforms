@@ -1,0 +1,61 @@
+.validator .report td,
+.validator .report th{
+/*    border: 1px solid lightgrey;*/
+    padding: 0.2em 0.4em;
+}
+.validator .report th{
+/*    border-bottom: 2px solid lightgrey;*/
+}
+.validator table.report {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 0.3em;
+}
+
+.validator .error td {
+    background: salmon;
+}
+
+.validator .instanceReport {
+    margin-left: 1em;
+}
+
+.validator .error {
+    border-color: salmon;
+}
+
+.validator .warning td {
+    background: bisque;
+}
+
+.instanceReport .dijitTitlePaneTitle {
+    background: rgb(136, 204, 136);
+    color: black;
+}
+
+.instanceReport.warning .dijitTitlePaneTitle {
+    background: bisque;
+    color: black;
+}
+
+.instanceReport.error .dijitTitlePaneTitle {
+    background: salmon;
+    color: black;
+}
+
+.instanceDetails {
+    float: right;
+    margin: 3px;
+}
+
+.directInput {
+    height: 400px;
+}
+
+.validator .rdfValidationMessage {
+    display: inline-block;
+}
+
+.rdfEdit textarea {
+    font-family: monospace;
+}

@@ -12,14 +12,14 @@
               'rdforms/apps/ldb/LDBrowser',
               'dojo/domReady!'
           ], function (LDBrowser) {
-              new LDBrowser({configPath: "ldb-config.json"}, "ldbrowser");
+              new LDBrowser({configPath: "configs/ldb.json"}, "ldbrowser");
           });
       });
   </script>
   <h1>Minimal LDBrowser instantiation</h1>
   <div id="ldbrowser"></div>
   <hr>
-  <p>The LDBrowser is initialized via a config file <code><a href="ldb-config.json">ldb-config.json</a></code>.<br>
+  <p>The LDBrowser is initialized via a config file <code><a href="configs/ldb.json">configs/ldb.json</a></code>.<br>
   It specifies:<ul>
       <li>an inline RDF graph (in general we would rely on a server side cache.)</li>
       <li>the format the RDF graph is provided in</li>

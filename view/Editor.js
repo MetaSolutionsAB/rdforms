@@ -103,7 +103,17 @@ define(["dojo/_base/declare",
                 this._subEditors[i].report(report);
             }
         },
-
+        getIncludeLevel: function() {
+            return this.includeLevel;
+        },
+        setIncludeLevel: function(includeLevel) {
+            this.includeLevel = includeLevel;
+            if (this.graph == null || this.resource == null || this.template == null) {
+                return;
+            }
+            this.binding = Engine.match(this.graph, this.resource, this.template);
+            this.render();
+        },
         //===================================================
         // Inherited methods
         //===================================================

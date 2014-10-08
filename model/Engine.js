@@ -125,7 +125,11 @@ define([
         var stmt, constr;
         if (item.getProperty() !== undefined) {
             var graph = parentBinding.getGraph();
-            stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), null, false);
+            if (item.getNodetype() === "URI") {
+                stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), {type: "uri", value: system.createURI(item, parentBinding)}, false);
+            } else {
+                stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), null, false);
+            }
             constr = _createStatementsForConstraints(graph, stmt.getValue(), item);
         }
 

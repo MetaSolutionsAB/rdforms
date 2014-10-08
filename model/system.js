@@ -1,5 +1,22 @@
 define(["exports", "rdforms/utils", "dojo/dom-attr"], function(exports, utils, domAttr) {
 
+    var generateUIDNotMoreThan1million = function () {
+        return ("0000" + (Math.random()*Math.pow(36,4) << 0).toString(36)).slice(-4)
+    };
+
+    exports.createURI = function(item, parentBinding) {
+        var parentURI = parentBinding.getChildrenRootUri();
+        var hash = parentURI.lastIndexOf("#");
+        var newURIBase = hash === -1 ? parentURI+"#" : parentURI.substring(0,hash+1);
+        var graph = parentBinding.getGraph()._graph, newURI;
+        while(true) {
+            newURI = newURIBase+generateUIDNotMoreThan1million();
+            if (graph[newURI] == null) {
+                return newURI;
+            }
+        }
+    };
+
     exports.getFallbackChoice = function(item, value, seeAlso, graph) {
         if (item.getNodetype() === "URI" || item.getNodetype() === "RESOURCE") {
             var lmap = utils.getLocalizedMap(graph, value, item.getURIValueLabelProperties());

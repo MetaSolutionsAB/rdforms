@@ -1,3 +1,43 @@
+/* === Colors === */
+.rformsLabel {
+    /*	font-weight:bold;*/
+    color: black;
+}
+
+.compact.rformsEditor .rformsTopLevel>.rformsLabelRow,
+.compact.rformsPresenter .rformsTopLevel>.rformsLabel {
+    border-right: 1px solid #E6E6E6;
+}
+
+/* --- Inverted, background greyish with white separators. --- */
+.inverted.rforms .rformsTopLevel {
+    background: #E6E6E6;
+}
+
+.inverted.compact.rformsEditor .rformsTopLevel>.rformsLabelRow,
+.inverted.compact.rformsPresenter .rformsTopLevel>.rformsLabel {
+    border-right: 1px solid white;
+}
+
+
+/* --- Validation colors --- */
+.rforms .rformsField.errorReport,
+.rforms .rformsGroup.errorReport {
+    border-left: 2px dotted red;
+}
+
+.rforms .rformsField.error,
+.rforms .rformsGroup.error {
+    background: salmon;
+}
+
+.rforms .rformsField.warning,
+.rforms .rformsGroup.warning {
+    background: bisque;
+}
+
+/* === End colors === */
+
 .rformsRow.rformsTopLevel {
  	padding-left: 1%;
  	padding-right: 1%;
@@ -15,39 +55,15 @@
     margin-bottom: 0.15em;
 }
 
-.rformsEditor .rformsTopLevel {
-	background: #E6E6E6;
-}
-
-.rformsLabel {
-/*	font-weight:bold;*/
-	color: black;
-}
-.rforms .rformsField.errorReport,
-.rforms .rformsGroup.errorReport {
-	border-left: 2px dotted red;
-}
-
-.rforms .rformsField.error,
-.rforms .rformsGroup.error {
-	background: salmon;
-}
-
-.rforms .rformsField.warning,
-.rforms .rformsGroup.warning {
-	background: bisque;
-}
-
 .compact.rformsPresenter .rformsTopLevel>.rformsLabel {
 	font-style: normal;
 	width: 10em !important;
-	border-right: 1px solid #E6E6E6;
 }
 
 .compact.rformsEditor .rformsTopLevel>.rformsLabelRow {
 	width: 13em !important;
-	border-right: 1px solid white;
 }
+
 .rformsEditor .rformsTopLevel>.rformsLabelRow>.rformsLabel {
 	max-width: 10em;
 	width: auto;
@@ -146,7 +162,7 @@ a.rformsUrl:hover {
  	border-top: 1px solid #E6E6E6;
 }
  
-.rformsPpresenter .rformsField {
+.rformsPresenter .rformsField {
 	background: white;
 	padding-left: 0.3em;
 	padding-right: 0.3em;
@@ -402,58 +418,6 @@ a.rformsUrl:hover {
 .rforms .action.editExpand {
 	margin-left: 0.5em;
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACJUlEQVQ4jaWTO2hVQRCGv5k959yb+zg3MUQNEt+QwlejkCIRAhEhBGxSWAkWksLGgKWNjTYqEhDS24qgQoJWNhGxMWBjIxYKQTQPE9HknrM7FucmxiiiON0u/3z8/8wu/GfJ5sPA+VQP9pVPlyu6/cu8f3L30se5vwacGu+o9hwpPYoTBuNEiBP5bLkN3x6de/YngAIMjLXXOvfFU1nTBrMmZJmRZ9bQWKbH73f3r4vP3exMJl7vHrs2s+vA+l0E0LEnnsianAQrbImgYqiSxiWZvvywe3jhXf6it690L3gbad/pXgFHNwDNNRsxAzMBDFFQFdSBi6glZZnqOZzMGtLvYsECe3+K0FzjbdY08szIM/AZ5Dn43AjBKJWlJkJ/z35HvaEEozZ6pcNtAL4u+bGsyUKeFU3eG8EbwcO2LkfvsZhDxxMqNUUdmCFtdU03AM8nF2dXl/2QDzbvAwQPIUAwqDaErAmihWXnAINyTX4AAGbuLL5cWwlDwKdiHoXYabEVn7cyu2LU5bo2fgIAPL21MEuwIVHWAJKStGYB3lsLKgjQVvsNACBK9IIIJRGI4laUYFhoOVBAoJJq+gvgzPWuq6JcFCmEqlI0tiIVbwRUoNIoHESbAS4SFyeF9aQkrH4zPrz3LC8IlXqgmipRDC4CdazAls8EcOJsfUdbXTsqqaa1dm1U2zVNO7WRdro07dK0rapp5HjzeHJ58sGNJdva/8/1HRdPyP0VYmT/AAAAAElFTkSuQmCC);
-}
-
-/*---------Validator---------------------*/
-.validator .report td,
-.validator .report th{
-	border: 1px solid lightgrey;
-	padding-left: 0.4em;
-	padding-right: 0.4em;
-}
-.validator .report th{
-	border-bottom: 2px solid lightgrey;
-}
-.validator table.report {
-	border-collapse: collapse;
-	width: 100%;
-	margin-top: 0.3em;
-}
-
-.validator .error td {
-	background: salmon;
-}
-.validator .json,
-.validator .rdfjson,
-.validator .rforms {
-	border: 5px solid lightgrey;
-	margin-top: 1em;
-	padding: 0.3em;
-}
-.validator .instance {
-	border: 3px solid lightgrey;
-	margin-top: 0.3em;
-	padding: 0.3em;
-	margin-left: 1em;
-}
-
-.validator .instanceType {
-	margin-top: 1em;
-	text-decoration: underline;
-}
-.validator .instanceType:FIRST-CHILD {
-	margin-top: 0em;
-}
-.validator .instanceHeading:hover {
-	text-decoration: underline;
-	cursor: pointer;
-}
-.validator .error {
-	border-color: salmon;
-}
-
-.validator .warning td {
-	background: bisque;
 }
 
 .rforms .action.info {

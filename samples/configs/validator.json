@@ -1,0 +1,14 @@
+{
+    "header": "Test configuration of validator",
+    "bundles": ["templateBundle.json"],
+    "type2template": {"http://xmlns.com/foaf/0.1/Document": "test"},
+    "rdfPath": "rdf.json",
+    "namespaces": {
+        "dcat": "http://www.w3.org/ns/dcat#",
+        "foaf": "http://xmlns.com/foaf/0.1/",
+        "adms": "http://www.w3.org/ns/adms#",
+        "vcard": "http://www.w3.org/2006/vcard/ns#",
+        "schema": "http://schema.org/"
+    },
+    "mandatoryTypes": ["http://xmlns.com/foaf/0.1/Document"]
+}

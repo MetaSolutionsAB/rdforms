@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+#Ugly fix to make dbootstrap behave according to the build process of dojo (a package.js is required)
+cp ../package.js ../libs/dbootstrap/
+
 (
 rm -rf ../release-layer
 cd ../libs

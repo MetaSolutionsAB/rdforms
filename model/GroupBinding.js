@@ -145,7 +145,10 @@ define([
 	getPredicate: function() {
 		return this._statement.getPredicate();
 	},
-	
+	CODES: {
+        TOO_FEW_VALUES: 1,
+        TOO_MANY_VALUES: 2
+    },
 	report: function(report) {
 		if (report == null) {
 			report = {errors: [], warnings: []};
@@ -168,12 +171,12 @@ define([
 				var nrOfValid = countValidBindings(bindings);
 				var card = item.getCardinality();
 				if (card.min != null && card.min > nrOfValid) {
-					report.errors.push({parentBinding: this, item: item, message: "Too few valid values"})
+					report.errors.push({parentBinding: this, item: item, code: this.CODES.TOO_FEW_VALUES})
 				} else if (card.pref != null && card.pref > nrOfValid) {
-					report.warnings.push({parentBinding: this, item: item, message: "Too few valid values"})
+					report.warnings.push({parentBinding: this, item: item, code: this.CODES.TOO_FEW_VALUES})
 				}
 				if (card.max != null && card.max < nrOfValid) {
-					report.errors.push({parentBinding: this, item: item, message: "Too many values"})
+					report.errors.push({parentBinding: this, item: item, code: this.CODES.TOO_MANY_VALUES})
 				}
 			}
 

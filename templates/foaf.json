@@ -13,7 +13,9 @@
       "nodetype": "URI",
       "cardinality": {
         "pref": 1
-      }
+      },
+      "pattern": "^[-a-z0-9~!$%^&*_=+}{\\'?]+(\\.[-a-z0-9~!$%^&*_=+}{\\'?]+)*@([a-z0-9_][-a-z0-9_]*(\\.[-a-z0-9_]+)*\\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}))(:[0-9]{1,5})?$",
+      "valueTemplate": "mailto:"
     },
     {
       "id": "foaf:mbox_sha1sum",
@@ -2309,7 +2311,13 @@
       },
       "items": [
         {
-          "id": "foaf:name"
+          "type": "text",
+          "nodetype": "LITERAL",
+          "extends": "foaf:name",
+          "cardinality": {
+            "min": 1,
+            "pref": 0
+          }
         },
         {
           "id": "foaf:homepage"
@@ -2319,6 +2327,10 @@
           "extends": "foaf:mbox",
           "label": {
             "en": "Mailbox"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1
           }
         }
       ]

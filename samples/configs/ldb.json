@@ -4,9 +4,9 @@
         "http://example.com/terms/Thing": "dcterms:BibliographicResource"
     },
     "bundlePaths": [
-        "../templates/dcterms.json",
-        "../templates/foaf.json",
-        "../templates/skos.json"
+        "../../templates/dcterms.json",
+        "../../templates/foaf.json",
+        "../../templates/skos.json"
     ],
     "rdfFormat": "rdf/json",
     "rdf": {

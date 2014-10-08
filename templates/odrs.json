@@ -12,7 +12,7 @@
       "description": {
         "en": "A description of the rights and terms of re-use for a dataset. A rights statement will include a reference to one or more licences copyright notices, and attribution requirements. Where a Rights Statement refers to several licences the intention is that these should separately apply to the data and content associated with the dataset. An individual Rights Statement may be specific to a dataset or could be applied to a number of datasets published by the same organisation or person, where the rights associated with each dataset are identical."
       },
-      "content": [
+      "items": [
         {
           "id": "odrs:attributionText"
         },
@@ -233,7 +233,12 @@
       "label": {
         "en": "Data license"
       },
-      "content": [
+      "cardinality": {
+        "min": 1,
+        "pref": 1,
+        "max": 1
+      },
+      "items": [
         {
           "type": "choice",
           "property": "http://schema.theodi.org/odrs#dataLicense",
@@ -261,12 +266,7 @@
             "max": 1
           }
         }
-      ],
-      "cardinality": {
-        "min": 1,
-        "pref": 1,
-        "max": 1
-      }
+      ]
     },
     {
       "type": "text",
@@ -295,7 +295,7 @@
       "label": {
         "": "Content license"
       },
-      "content": [
+      "items": [
         {
           "type": "choice",
           "property": "http://schema.theodi.org/odrs#contentLicense",
@@ -322,6 +322,45 @@
             "pref": 1,
             "max": 1
           }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "id": "odrs:RightsStatement-short",
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://schema.theodi.org/odrs#RightsStatement"
+      },
+      "label": {
+        "en": "Rights Statement"
+      },
+      "description": {
+        "en": "A description of the rights and terms of re-use for a dataset. A rights statement will include a reference to one or more licences copyright notices, and attribution requirements. Where a Rights Statement refers to several licences the intention is that these should separately apply to the data and content associated with the dataset. An individual Rights Statement may be specific to a dataset or could be applied to a number of datasets published by the same organisation or person, where the rights associated with each dataset are identical."
+      },
+      "items": [
+        {
+          "id": "odrs:attributionText"
+        },
+        {
+          "id": "odrs:attributionURL"
+        },
+        {
+          "id": "odrs:copyrightNotice"
+        },
+        {
+          "id": "odrs:copyrightStatement"
+        },
+        {
+          "id": "odrs:copyrightYear"
+        },
+        {
+          "id": "odrs:copyrightHolder"
+        },
+        {
+          "id": "odrs:jurisdiction"
+        },
+        {
+          "id": "odrs:reuserGuidelines"
         }
       ]
     }

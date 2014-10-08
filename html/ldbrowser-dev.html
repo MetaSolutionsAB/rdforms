@@ -1,7 +1,8 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-      <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+      <link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <!--link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"-->
   </head>
     <body class="claro">
     <script>
@@ -52,7 +53,7 @@
             'rdforms/apps/ldb/LDBrowser',
             'dojo/domReady!'
         ], function(on, domStyle, dom, LDBrowser) {
-            new LDBrowser({configPath: "../samples/ldb-config.json"}, "ldbrowser");
+            new LDBrowser({configPath: "../samples/configs/ldb.json"}, "ldbrowser");
 
             on(dom.byId("ldbrowserButton"), "click", function() {
                 domStyle.set(dom.byId("ldbrowser"), "display", "");

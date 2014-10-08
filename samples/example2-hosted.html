@@ -12,13 +12,13 @@
         'rdforms/template/ItemStore', //Stores all the RDForm templates
         'rdforms/view/Editor',        //The editor User interface
         'dojo/json',
-        'dojo/text!./sampleRDF.json',
-        'dojo/text!./sampleTemplate.json',
+        'dojo/text!./configs/rdf.json',
+        'dojo/text!./configs/templateBundle.json',
         'dojo/domReady!'             //Wait until the dom is ready.
-    ], function(Graph, ItemStore, Editor, json, sampleRDF, sampleTemplate) {
-        var graph = new Graph(json.parse(sampleRDF));
+    ], function(Graph, ItemStore, Editor, json, rdf, templateBundle) {
+        var graph = new Graph(json.parse(rdf));
         var itemStore = new ItemStore();
-        var bundle = itemStore.registerBundle({source: json.parse(sampleTemplate)});
+        var bundle = itemStore.registerBundle({source: json.parse(templateBundle)});
         new Editor({
             graph: graph,
             resource: "http://example.org/about",

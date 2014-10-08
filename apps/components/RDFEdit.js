@@ -3,17 +3,17 @@ define(["dojo/_base/declare",
 	"dojo/_base/lang",
     "dojo/topic",
 	"dojo/json",
-    "dojo/dom-attr",
-	"dijit/layout/_LayoutWidget",
+    "dijit/layout/_LayoutWidget",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
-    "dijit/layout/TabContainer",
-    "dijit/form/SimpleTextarea",
-	"rdfjson/Graph",
+    "dijit/layout/TabContainer"/*NMD:Ignore*/,
+    "dijit/layout/ContentPane"/*NMD:Ignore*/,
+    "rdfjson/Graph",
     "rdfjson/formats/converters",
+    "rdforms/apps/components/RDFDetect",
 	"dojo/text!./RDFEditTemplate.html"
-], function(declare, lang, topic, json, domAttr, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin,
-            TabContainer, SimpleTextarea, Graph, converters, template) {
+], function(declare, lang, topic, json, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin,
+            TabContainer, ContentPane, Graph, converters, RDFDetect, template) {
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
         //===================================================
@@ -25,6 +25,38 @@ define(["dojo/_base/declare",
         //===================================================
         // Public methods
         //===================================================
+
+        /**
+         * @param {rdfjson.Graph|String|Object} rdf supports rdf/xml as a string or rdf/json as a Graph, a string or a Object.
+         * @return {undefined|Object} if undefined everything went well, if a object something went wrong and the report was returned.
+         */
+        setRDF: function(rdf) {
+            var report = RDFDetect(rdf);
+            if (!report.error) {
+                this.setGraph(report.graph);
+            }
+            return report;
+        },
+
+        /**
+         * @return {Object} a report as an object with a graph and if something has gone wrong an error message.
+         */
+        getRDF: function() {
+            try {
+                var graph = this.getGraph();
+                if (graph.validate().valid) {
+                    return {graph: graph, format: this.subView};
+                } else {
+                    return {error: "RDF/JSON is not valid."};
+                }
+            } catch(e) {
+                return {error: "RDF/JSON is invalid"};
+            }
+        },
+
+        /**
+         * @returns {rdfjson.Graph}
+         */
         getGraph: function() {
             switch(this.subView) {
                 case "rdf/xml":
@@ -33,6 +65,12 @@ define(["dojo/_base/declare",
                     return this.getRDFJSON() || this.origGraph;
             }
         },
+        getCurrentSubView : function() {
+            return this.subView;
+        },
+        /**
+         * @param {rdfjson.Graph} graph
+         */
         setGraph: function(graph) {
             this.origGraph = graph;
             switch(this.subView) {
@@ -81,7 +119,8 @@ define(["dojo/_base/declare",
         },
         getRDFJSON: function() {
             if (this.rdfjsonValue.length <= 100000) {
-                return new Graph(json.parse(this._rdfjson.value));
+                var rdfStr = this._rdfjson.value;
+                return new Graph(json.parse(rdfStr == null || rdfStr === "" ? "{}" : rdfStr));
             }
         },
         setRDFJSON: function(graph) {

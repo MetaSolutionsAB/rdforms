@@ -9,9 +9,9 @@
     "amd"
   ],
   "dependencies": {
-    "dojo": "1.9.3",
-    "dijit": "1.9.3",
-    "util": "dojo-util#1.9.3",
+    "dojo": "1.10.1",
+    "dijit": "1.10.1",
+    "util": "dojo-util#1.10.1",
     "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#develop",
     "bootstrap": "3.2.0",
     "dbootstrap": "https://github.com/thesociable/dbootstrap/releases/download/0.1.1/dbootstrap-0.1.1-dojo-1.9.1.zip"

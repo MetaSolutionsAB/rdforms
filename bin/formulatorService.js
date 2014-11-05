@@ -29,10 +29,12 @@ http.createServer(function(req, res) {
     }
 
     if (req.method === "GET") {
-        if (pathname === "/templates" || pathname === "/templates/" || pathname === "/local_templates" || pathname === "/local_templates/") {
+        if (/[\/_]templates\/?$/.test(pathname)) {
             req.on("end", function(){
+                var formulatorpath = "../html/formulator.html?templates=";
                 if (pathname[pathname.length-1] !== "/") {
                     pathname = pathname + "/";
+                    formulatorpath = "./html/formulator.html?templates=";
                 }
                 fnames = fs.readdirSync(".."+pathname);
                 str = "<html><body>";
@@ -48,7 +50,7 @@ http.createServer(function(req, res) {
                     var d = ".." + pathname+fname+".rdf";
                     try {
                         fs.statSync(d); //File exists
-                        str += "<a href=\" ../html/formulator.html?templates="+t+"&rdf="+d+"\">"+fname+"</a><br/>";
+                        str += "<a href=\""+formulatorpath+t+"&rdf="+d+"\">"+fname+"</a><br/>";
                     } catch(e) { //Files does not exist
                         str += "<a href=\" ../html/formulator.html?templates="+t+"\">"+fname+"</a><br/>"
                     }
@@ -61,13 +63,19 @@ http.createServer(function(req, res) {
         } else {
             //Static serve files.
             req.addListener('end', function() {
-                file.serve(req, res, function(err, result) {
-                    if (err) {
+                if (fs.existsSync(".."+pathname) && !fs.lstatSync(".."+pathname).isDirectory()) {
+                    file.serve(req, res, function(err, result) {
+                        if (err) {
 //                console.error('Error serving %s - %s', req.url, err.message);
-                    } else {
+                        } else {
 //                console.log('%s - %s', req.url, res.message);
-                    }
-                });
+                        }
+                    });
+                } else {
+                    res.writeHead(200, { 'Content-Type': 'application/json'});
+                    res.write("{\"templates\": []}");
+                    res.end();
+                }
             });
         }
         req.resume();

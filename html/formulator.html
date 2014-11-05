@@ -1,42 +1,50 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-      <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-  </head>
-    <body class="claro">
+      <link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+ad>
+    <body class="dbootstrap">
         <script src="../release/dojo/dojo.js.uncompressed.js"></script>
-    <style>
-        @import "../release/dijit/themes/claro/claro.css";
-        @import "../release/rdforms/view/resources/rdforms.css";
-        html, body {
-            height: 100%;
-            width: 100%;
-            padding: 0px;
-            margin: 0px;
-        }
-        .icon {
-            float: left;
-            margin-top: 3px;
-            margin-right: 15px;
-            width: 45px;
-        }
-        .dijitDialog *,
-        .storeManager * {
-            -webkit-box-sizing: content-box;
-            box-sizing: content-box;
-        }
-        .main {
-            position: relative;
-            height: 100%;
-        }
-        #content {
-            position: absolute;
-            top: 51px;
-            bottom: 0em;
-            left: 0px;
-            right: 0px;
-        }
-    </style>
+        <style>
+            @import "../release/rdforms/view/resources/rdforms.css";
+            .dbootstrap :focus {
+                outline: 0px;
+            }
+            input[type="text"], input[type="password"] { outline: none; }
+
+            .dbootstrap .dijitDownArrowButton.dijitArrowButtonContainer {
+                height: 16px;
+            }
+
+            html, body {
+                height: 100%;
+                width: 100%;
+                padding: 0px;
+                margin: 0px;
+            }
+            .icon {
+                float: left;
+                margin-top: 3px;
+                margin-right: 15px;
+                width: 45px;
+            }
+            .dijitDialog *,
+            .storeManager * {
+                -webkit-box-sizing: content-box;
+                box-sizing: content-box;
+            }
+            .main {
+                position: relative;
+                height: 100%;
+            }
+            #content {
+                position: absolute;
+                top: 51px;
+                bottom: 0em;
+                left: 0px;
+                right: 0px;
+            }
+        </style>
     <script type="text/javascript">
         var params = window.location.href.match(/\?([^#]*)/)[1].split("&");
         var parobj = {};
@@ -52,6 +60,7 @@
         }
         require(["rdforms/extras"], function() {
             require([
+                'dbootstrap/main',
                 'dojo/on',
                 'dojo/dom',
                 'dojo/dom-style',
@@ -60,7 +69,7 @@
                 'rdfjson/formats/converters',
                 'dojo/json',
                'dojo/domReady!'
-            ],function(on, dom, domStyle, ItemStore, StoreManager, converters, json) {
+            ],function(main, on, dom, domStyle, ItemStore, StoreManager, converters, json) {
                 var itemStore = new ItemStore();
                 var arr = [];
                 var templatescount = parobj.templates ? parobj.templates.length : 0;

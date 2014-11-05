@@ -188,7 +188,7 @@ define(["dojo/_base/declare",
             }
             if (choice.load != null) {
                 choice.load(function () {
-                    domAttr.add(a, "innerHTML", utils.getLocalizedValue(choice.label).value);
+                    domAttr.set(a, "innerHTML", utils.getLocalizedValue(choice.label).value);
                 });
             }
 		}

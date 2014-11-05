@@ -235,6 +235,9 @@ define(["dojo/_base/declare",
         if (item.hasStyle("invisibleGroup")) {
             domClass.add(newRow, "rformsInvisibleGroup")
         }
+        if (item.hasStyle("heading")) {
+            domClass.add(newRow, "rformsHeading")
+        }
 	    var clss = item.getClasses();
 	    for (var e=0;e<clss.length;e++) {
 		if (clss[e].indexOf("rforms") == -1) {

@@ -67,7 +67,9 @@ define([
             });
         } else {
             config.postConfig = lang.hitch(this, postConfig, config);
-            onConfig(config);
+            setTimeout(function() {
+                onConfig(config);
+            },1);
         }
     };
 

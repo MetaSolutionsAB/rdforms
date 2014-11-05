@@ -9,6 +9,12 @@
     border-right: 1px solid #E6E6E6;
 }
 
+/* No border to the right of a heading*/
+.compact.rformsEditor .rformsTopLevel.rformsHeading>.rformsLabelRow,
+.compact.rformsPresenter .rformsTopLevel.rformsHeading>.rformsLabel {
+    border-right-width: 0px;
+}
+
 /* --- Inverted, background greyish with white separators. --- */
 .inverted.rforms .rformsTopLevel {
     background: #E6E6E6;
@@ -55,14 +61,24 @@
     margin-bottom: 0.15em;
 }
 
-.compact.rformsPresenter .rformsTopLevel>.rformsLabel {
+.compact.rformsPresenter .rformsTopLevel>.rformsLabel,
+.compact.rformsPresenter .rformsTopLevel.rformsRow.rformsHeading>.rformsFields>.rformsGroup>.rformsRow>.rformsLabel {
 	font-style: normal;
 	width: 10em !important;
 }
 
-.compact.rformsEditor .rformsTopLevel>.rformsLabelRow {
+.compact.rformsEditor .rformsTopLevel>.rformsLabelRow,
+.compact.rformsEditor .rformsTopLevel.rformsRow.rformsHeading>.rformsFields>.rformsGroup>.rformsRow>.rformsLabelRow {
 	width: 13em !important;
 }
+
+/* No specific width for headings */
+.compact.rformsEditor .rformsTopLevel.rformsHeading>.rformsLabelRow,
+.compact.rformsPresenter .rformsTopLevel.rformsHeading>.rformsLabel {
+    width: auto !important;
+    border-bottom: 1px solid lightgrey;
+}
+
 
 .rformsEditor .rformsTopLevel>.rformsLabelRow>.rformsLabel {
 	max-width: 10em;
@@ -92,9 +108,26 @@ a.rformsUrl:hover {
 .compact .rformsTopLevel.rformsRow.notCompact>div {
 	display: table-cell;
 }
+
+.compact .rformsTopLevel.rformsRow.rformsHeading.notCompact>div {
+    display: block;
+}
+
 .compact .rformsTopLevel.rformsRow.notCompact>.rformsFields>.rformsGroup {
 	margin-left: 0px;
 }
+
+/* compact anyway for first level*/
+.compact .rformsTopLevel.rformsRow.rformsHeading>.rformsFields>.rformsGroup>.rformsRow {
+    display: table;
+    width: 98%;
+}
+
+.compact .rformsTopLevel.rformsRow.rformsHeading>.rformsFields>.rformsGroup>.rformsRow>div {
+    display: table-cell;
+}
+
+
 
 .rformsImage {
     max-width: 100%;
@@ -150,6 +183,10 @@ a.rformsUrl:hover {
     padding-left: 0px;
 }
 
+.rformsHeading>.rformsLabel {
+    font-size: larger;
+    margin: 8px 0px 5px 0px;
+}
 
 .rformsField {
 	margin-left: 2em;

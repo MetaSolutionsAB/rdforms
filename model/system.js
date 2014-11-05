@@ -1,4 +1,9 @@
-define(["exports", "rdforms/utils", "dojo/dom-attr"], function(exports, utils, domAttr) {
+define([
+    "exports",
+    "dojo/on",
+    "rdforms/utils",
+    "dojo/dom-attr"
+], function(exports, on, utils, domAttr) {
 
     var generateUIDNotMoreThan1million = function () {
         return ("0000" + (Math.random()*Math.pow(36,4) << 0).toString(36)).slice(-4)
@@ -88,7 +93,7 @@ define(["exports", "rdforms/utils", "dojo/dom-attr"], function(exports, utils, d
             var choice = binding.getChoice();
             if (choice.onClick) {
                 on(node, "click", function (e) {
-                    event.stop(e);
+                    e.preventDefault();
                     choice.onClick(e);
                 });
             }
@@ -97,5 +102,11 @@ define(["exports", "rdforms/utils", "dojo/dom-attr"], function(exports, utils, d
             }
         }
         //---end deprecated code---
+    };
+
+    exports.hasDnDSupport = function(binding) {
+        return false;
+    };
+    exports.addDnD = function(binding, node, onDrop) {
     };
 });

@@ -1,12 +1,13 @@
 /*global define*/
 define(["dojo/_base/declare", 
 	"dojo/dom-class",
+    "dojo/dom-style",
 	"dijit/_WidgetBase",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
     "rdforms/view/Editor", //in template
 	"dojo/text!./IncludeLevelEditorTemplate.html"
-], function(declare, domClass, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Editor, template) {
+], function(declare, domClass, domStyle, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Editor, template) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
@@ -18,6 +19,7 @@ define(["dojo/_base/declare",
         graph: null,
         compact: true,
         includeLevel: "mandatory",
+        includeLevelControllsVisible: true,
 
         show: function(resource, graph, template) {
             this.resource = resource || this.resource;
@@ -49,6 +51,9 @@ define(["dojo/_base/declare",
 
         postCreate: function () {
             this.inherited("postCreate", arguments);
+            if (this.includeLevelControllsVisible) {
+                domStyle.set(this._cardinalityNode, "display", "");
+            }
             this.show();
         },
 

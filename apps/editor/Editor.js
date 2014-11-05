@@ -29,6 +29,7 @@ define(["dojo/_base/declare",
         graph: null,
         itemStore: null,
         includeLevel: "mandatory",
+        includeLevelControllsVisible: true,
 
         show: function (resource, rdf, template) {
             this.resource = resource || this.resource;
@@ -75,7 +76,7 @@ define(["dojo/_base/declare",
                     ]}});
                 this._rdfInit.startup();
             }
-            this.resize();
+            this.startup();
         },
 
         startup: function () {

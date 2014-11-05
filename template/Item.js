@@ -16,6 +16,7 @@ define([
         //===================================================
         _source: {},
         _styles: [
+            "heading",
             "invisible",
             "invisibleGroup",
             "stars",

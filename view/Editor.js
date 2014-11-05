@@ -23,7 +23,7 @@ define(["dojo/_base/declare",
     "dijit/form/Textarea",
     "dijit/form/FilteringSelect",
     "dijit/form/RadioButton"
-], function (declare, lang, aspect, on, domClass, construct, attr, array, utils, Presenter, TreeOntologyChooser, Memory, DateTime, Duration,
+], function (declare, lang, aspect, on, domClass, domConstruct, domAttr, array, utils, Presenter, TreeOntologyChooser, Memory, DateTime, Duration,
              system, Group, PropertyGroup, Choice, Engine, TitlePane, TextBox, ValidationTextBox, Textarea, FilteringSelect, RadioButton) {
 
     var uniqueRadioButtonNameNr = 0;
@@ -173,7 +173,7 @@ define(["dojo/_base/declare",
         },
 
         addLabel: function (rowDiv, labelDiv, binding, item) {
-            if (item.hasStyle("nonEditable")) {
+            if (item.hasStyle("nonEditable") || item.hasStyle("heading")) {
                 domClass.add(labelDiv, "rformsLabelRow");
                 return this.inherited("addLabel", arguments);
             }
@@ -185,7 +185,7 @@ define(["dojo/_base/declare",
                 l = "";
             }
 
-            var label = construct.create("span", {"innerHTML": l}, labelDiv);
+            var label = domConstruct.create("span", {"innerHTML": l}, labelDiv);
             domClass.add(labelDiv, "rformsLabelRow");
             domClass.add(label, "rformsLabel");
             this.showInfo(item, label);
@@ -216,7 +216,7 @@ define(["dojo/_base/declare",
             var subView;
             if (binding.getItem().hasStyle("expandable")) { //Backwardscompatible.
                 var titlePane = new TitlePane({open: false}, fieldDiv);
-                var node = construct.create("div");
+                var node = domConstruct.create("div");
                 titlePane.set("content", node);
                 subView = new Editor({languages: this.languages, binding: binding, topLevel: false, includeLevel: this.includeLevel}, node);
             } else {
@@ -228,7 +228,7 @@ define(["dojo/_base/declare",
             if (binding.getItem().hasStyle("nonEditable")) {
                 return this.inherited("addText", arguments);
             }
-            var controlDiv = construct.create("div", {"class": "rformsFieldControl"}, fieldDiv);
+            var controlDiv = domConstruct.create("div", {"class": "rformsFieldControl"}, fieldDiv);
             var item = binding.getItem();
             var nodeType = item.getNodetype();
             var datatype = item.getDatatype();
@@ -240,9 +240,9 @@ define(["dojo/_base/declare",
                 //Special editing support implemented for integer, data and duration
 
                 if (datatype === "http://www.w3.org/2001/XMLSchema#date" || datatype === "http://purl.org/dc/terms/W3CDTF") {
-                    tb = new DateTime({binding: binding, item: item}, construct.create("div", null, fieldDiv));
+                    tb = new DateTime({binding: binding, item: item}, domConstruct.create("div", null, fieldDiv));
                 } else if (datatype === "http://www.w3.org/2001/XMLSchema#duration") {
-                    tb = new Duration({disabled: !item.isEnabled(), binding: binding}, construct.create("div", null, fieldDiv));
+                    tb = new Duration({disabled: !item.isEnabled(), binding: binding}, domConstruct.create("div", null, fieldDiv));
                 } else if (datatype === "http://www.w3.org/2001/XMLSchema#integer") {
                     tb = new ValidationTextBox({
                         value: binding.getValue(),
@@ -256,7 +256,7 @@ define(["dojo/_base/declare",
                                 binding.setValue("");
                             }
                         }
-                    }, construct.create("div", null, fieldDiv));
+                    }, domConstruct.create("div", null, fieldDiv));
                 } else if (datatype === "http://www.w3.org/2001/XMLSchema#decimal") {
                     tb = new ValidationTextBox({
                         value: binding.getValue(),
@@ -270,7 +270,7 @@ define(["dojo/_base/declare",
                                 binding.setValue("");
                             }
                         }
-                    }, construct.create("div", null, fieldDiv));
+                    }, domConstruct.create("div", null, fieldDiv));
                 } else if (itemToUse.getPattern() != null) {
                     tb = new ValidationTextBox({
                         value: binding.getGist(),
@@ -279,14 +279,14 @@ define(["dojo/_base/declare",
                         onChange: function () {
                             binding.setGist(this.get("value"));
                         }
-                    }, construct.create("div", null, fieldDiv));
+                    }, domConstruct.create("div", null, fieldDiv));
                 } else {
                     tb = new TextBox({
                         value: binding.getGist(),
                         onChange: function () {
                             binding.setGist(this.get("value"));
                         }
-                    }, construct.create("div", null, fieldDiv));
+                    }, domConstruct.create("div", null, fieldDiv));
                     domClass.add(tb.domNode, "rformsFieldInput");
                 }
             } else {
@@ -298,7 +298,7 @@ define(["dojo/_base/declare",
                         onChange: function () {
                             binding.setGist(this.get("value"));
                         }
-                    }, construct.create("div", null, fieldDiv));
+                    }, domConstruct.create("div", null, fieldDiv));
                     tb.resize(); // To size the area to the value.
                 } else if (itemToUse.getPattern() != null) {
                     tb = new ValidationTextBox({
@@ -308,21 +308,21 @@ define(["dojo/_base/declare",
                         onChange: function () {
                             binding.setGist(this.get("value"));
                         }
-                    }, construct.create("div", null, fieldDiv));
+                    }, domConstruct.create("div", null, fieldDiv));
                 } else {
                     tb = new TextBox({
                         value: binding.getGist(),
                         onChange: function () {
                             binding.setGist(this.get("value"));
                         }
-                    }, construct.create("div", null, fieldDiv));
+                    }, domConstruct.create("div", null, fieldDiv));
                 }
                 domClass.add(tb.domNode, "rformsFieldInput");
             }
 
             //If the language can be set
             if (nodeType === "LANGUAGE_LITERAL" || nodeType === "PLAIN_LITERAL") {
-                var langSpan = construct.create("span", null, controlDiv);
+                var langSpan = domConstruct.create("span", null, controlDiv);
                 var langList = this._getLanguagesList();
                 var langStore = this._getStoreFromArray(langList, binding.getItem(), true);
                 var languageSelector = new FilteringSelect({
@@ -351,13 +351,13 @@ define(["dojo/_base/declare",
                 return this.inherited("addChoice", arguments);
             }
 
-            var controlDiv = construct.create("div", {"class": "rformsFieldControl"}, fieldDiv);
+            var controlDiv = domConstruct.create("div", {"class": "rformsFieldControl"}, fieldDiv);
             var item = binding.getItem();
             if (item.hasChoices()) {
                 var choices = item.getChoices();
                 //			var controlDiv = construct.create("div", null, fieldDiv);
                 //			domClass.add(controlDiv, "rformsFieldControl");
-                var divToUse = construct.create("div", null, fieldDiv);
+                var divToUse = domConstruct.create("div", null, fieldDiv);
 
                 var hierarchy = item.getHierarchyProperty() || item.hasStyle("tree");
                 //Check if radiobuttons can be created, i.e. when few choices and max-cardinality == 1
@@ -368,10 +368,10 @@ define(["dojo/_base/declare",
                     }
                     var buts = [];
                     for (var ind = 0; ind < choices.length; ind++) {
-                        var c = choices[ind], inputToUse = construct.create("input", null, divToUse);
-                        var sp = construct.create("span", { "class": "rformsChoiceLabel", innerHTML: item._getLocalizedValue(c.label).value }, divToUse);
+                        var c = choices[ind], inputToUse = domConstruct.create("input", null, divToUse);
+                        var sp = domConstruct.create("span", { "class": "rformsChoiceLabel", innerHTML: item._getLocalizedValue(c.label).value }, divToUse);
                         if (item.hasStyle("verticalRadioButtons")) {
-                            construct.create("br", null, divToUse);
+                            domConstruct.create("br", null, divToUse);
                         }
                         var rb = new RadioButton({
                             name: "RadioButtonName" + uniqueRadioButtonNameNr,
@@ -407,7 +407,7 @@ define(["dojo/_base/declare",
                     var fSelect, dialog;
                     //Create an ItemFileReadStore with the correct language to use
                     var store = this._createChoiceStore(item);
-                    var spanToUse = construct.create("span", null, divToUse);
+                    var spanToUse = domConstruct.create("span", null, divToUse);
                     fSelect = new FilteringSelect({
                         store: store,
                         query: {selectable: true},
@@ -431,7 +431,7 @@ define(["dojo/_base/declare",
                     //Check if a tree-hierarchy should be created
                     if (hierarchy) {
                         var oc;
-                        var ddButton = construct.create("span", {"class": "action editSearch", "title": "Browse"}, divToUse);
+                        var ddButton = domConstruct.create("span", {"class": "action editSearch", "title": "Browse"}, divToUse);
                         on(ddButton, "click", lang.hitch(this, function () {
                             if (oc == null) {
                                 oc = new TreeOntologyChooser({binding: binding, done: lang.hitch(this, function () {
@@ -453,29 +453,41 @@ define(["dojo/_base/declare",
                     }
                 }
             } else if (system.getChoice != null) {   //Depends on system.getChoice and system.openChoiceSelector methods being available
-                var divToUse = construct.create("div", null, fieldDiv);
-                var cNode = construct.create("div", {"class": "rformsChoiceValue"}, divToUse);
-                var choice = binding.getChoice();//system.getChoice(item, binding.getValue());
-                if (choice != null && choice.mismatch) {
-                    domClass.add(cNode, "mismatch");
-                }
-                if (choice) {
-                    attr.set(cNode, "innerHTML", utils.getLocalizedValue(choice.label).value || "");
-                    if (choice.load != null) {
-                        choice.load(function () {
-                            attr.set(cNode, "innerHTML", utils.getLocalizedValue(choice.label).value || "");
-                        });
+                var divToUse = domConstruct.create("div", null, fieldDiv);
+                var cNode = domConstruct.create("div", {"class": "rformsChoiceValue"}, divToUse);
+                var setChoice = function(choice) {
+                    if (choice) {
+                        domAttr.set(cNode, "innerHTML", utils.getLocalizedValue(choice.label).value || "");
+                        if (choice.mismatch) {
+                            domClass.add(cNode, "mismatch");
+                        } else {
+                            domClass.remove(cNode, "mismatch");
+                        }
+                        if (choice.load != null) {
+                            choice.load(function () {
+                                domAttr.set(cNode, "innerHTML", utils.getLocalizedValue(choice.label).value || "");
+                                if (choice.mismatch) {
+                                    domClass.add(cNode, "mismatch");
+                                } else {
+                                    domClass.remove(cNode, "mismatch");
+                                }
+                            });
+                        }
                     }
+                };
+                setChoice(binding.getChoice());
+                if (system.hasDnDSupport(binding)) {
+                    system.addDnD(binding, cNode, function(dropChoice) {
+                        binding.setChoice(dropChoice);
+                        setChoice(dropChoice);
+                    });
                 }
 
-                var ddButton = construct.create("span", {"class": "action editSearch", "title": "Browse"}, divToUse);
+                var ddButton = domConstruct.create("span", {"class": "action editSearch", "title": "Browse"}, divToUse);
                 on(ddButton, "click", lang.hitch(this, function () {
                     system.openChoiceSelector(binding, function (choice) {
                         binding.setChoice(choice);
-                        if (choice) {
-                            attr.set(cNode, "innerHTML", utils.getLocalizedValue(choice.label).value || "&nbsp;");
-                            domClass.remove(cNode, "mismatch");
-                        }
+                        setChoice(choice);
                     });
                 }));
                 /*Code below is to correctly remove items in the form and their
@@ -484,7 +496,7 @@ define(["dojo/_base/declare",
                 if (noCardinalityButtons !== true) {
                     this._addRemoveButton(fieldDiv, binding, controlDiv, function () {
                         binding.setValue("");
-                        cNode && attr.set(cNode, "innerHTML", "");
+                        cNode && domAttr.set(cNode, "innerHTML", "");
                     });
                 }
             }
@@ -496,21 +508,21 @@ define(["dojo/_base/declare",
             }
 
             var item = firstBinding.getItem(), childItems = item.getChildren();
-            var table = construct.create("table", null, newRow);
+            var table = domConstruct.create("table", null, newRow);
             domClass.add(table, "rformsGroup");
 
-            tHead = construct.create("thead", null, table);
-            tHeadRow = construct.create("tr", null, table);
+            tHead = domConstruct.create("thead", null, table);
+            tHeadRow = domConstruct.create("tr", null, table);
             for (colInd = 0; colInd < childItems.length; colInd++) {
-                var th = construct.create("th", null, tHeadRow);
+                var th = domConstruct.create("th", null, tHeadRow);
                 domClass.add(th, "rformsColumnHeader" + colInd);
-                this.showInfo(item, construct.create("span", {innerHTML: childItems[colInd].getLabel()}, th));
+                this.showInfo(item, domConstruct.create("span", {innerHTML: childItems[colInd].getLabel()}, th));
             }
             if (!firstBinding.getItem().hasStyle("firstcolumnfixedtable")) {
-                var addTh = construct.create("th", {"class": "rformsTableControl"}, tHeadRow);
+                var addTh = domConstruct.create("th", {"class": "rformsTableControl"}, tHeadRow);
                 var parentBinding = firstBinding.getParent();
 
-                var add = construct.create("span", {"class": "action editAdd", "title": "Add"}, addTh);
+                var add = domConstruct.create("span", {"class": "action editAdd", "title": "Add"}, addTh);
                 var cardTr = firstBinding.getCardinalityTracker();
                 on(add, "click", lang.hitch(this, function () {
                     if (!cardTr.isMax()) {
@@ -593,7 +605,7 @@ define(["dojo/_base/declare",
         },
         _addCreateChildButton: function (rowDiv, labelDiv, binding) {
             var parentBinding = binding.getParent(), item = binding.getItem(), cardTr = binding.getCardinalityTracker();
-            var add = construct.create("span", {"class": "action editAdd", "title": "add"}, labelDiv);
+            var add = domConstruct.create("span", {"class": "action editAdd", "title": "add"}, labelDiv);
             on(add, "click", lang.hitch(this, function () {
                 if (!cardTr.isMax()) {
                     var nBinding = Engine.create(parentBinding, item);
@@ -606,8 +618,8 @@ define(["dojo/_base/declare",
         },
         _addGroupButtons: function (rowDiv, labelDiv, binding) {
             var parentBinding = binding.getParent(), item = binding.getItem();
-            var add = construct.create("span", {"class": "action editAdd", "title": "add"}, labelDiv);
-            var remove = construct.create("span", {"class": "action editDelete", "title": "remove"}, labelDiv);
+            var add = domConstruct.create("span", {"class": "action editAdd", "title": "add"}, labelDiv);
+            var remove = domConstruct.create("span", {"class": "action editDelete", "title": "remove"}, labelDiv);
 
             var cardTr = binding.getCardinalityTracker();
             var con = aspect.after(cardTr, "cardinalityChanged", function () {
@@ -637,20 +649,20 @@ define(["dojo/_base/declare",
                         } else {
                             this.addLabelClean(rowDiv, null, item);
                         }
-                        construct.destroy(rowDiv);
+                        domConstruct.destroy(rowDiv);
                     } else {
                         con.remove();
                         addCon.remove();
                         removeCon.remove();
                         //Remove somehow.
                         binding.remove();
-                        construct.destroy(rowDiv);
+                        domConstruct.destroy(rowDiv);
                     }
                 }
             }));
         },
         _addRemoveButton: function (fieldDiv, binding, containerDiv, onReset) {
-            var remove = construct.create("span", {"class": "action editDelete", "title": "remove"}, containerDiv);
+            var remove = domConstruct.create("span", {"class": "action editDelete", "title": "remove"}, containerDiv);
             var cardTr = binding.getCardinalityTracker();
             var con = aspect.after(cardTr, "cardinalityChanged", function () {
                 domClass.toggle(remove, "disabled", cardTr.isMin());
@@ -669,14 +681,14 @@ define(["dojo/_base/declare",
                         con.remove();
                         removeConnect.remove();
                         binding.remove();
-                        construct.destroy(fieldDiv);
+                        domConstruct.destroy(fieldDiv);
                     }
                 }
             });
         },
 
         _addExpandButton: function (rowDiv, labelDiv, item) {
-            var expand = construct.create("span", {"class": "action editExpand", "title": "Expand"}, labelDiv);
+            var expand = domConstruct.create("span", {"class": "action editExpand", "title": "Expand"}, labelDiv);
             var expandCon = on(expand, "click", lang.hitch(this, function () {
                 var nBinding = Engine.create(this.binding, item);
                 if (this.showAsTable(item)) {
@@ -687,7 +699,7 @@ define(["dojo/_base/declare",
                     this._addGroupButtons(rowDiv, labelDiv, nBinding);
                 }
 
-                construct.destroy(expand);
+                domConstruct.destroy(expand);
 
                 expandCon.remove();
             }));
@@ -696,7 +708,7 @@ define(["dojo/_base/declare",
         _addTableRow: function (table, binding) {
             var childItems = binding.getItem().getChildren();
             var groupedBindings = binding.getItemGroupedChildBindings();
-            var trEl = construct.create("tr", null, table);
+            var trEl = domConstruct.create("tr", null, table);
 
             array.forEach(groupedBindings, function (bindings, index) {
                 //Create those columns that are missing:
@@ -705,12 +717,12 @@ define(["dojo/_base/declare",
                 }
             });
             array.forEach(groupedBindings, function (bindings, index) {
-                this.addComponent(construct.create("td", null, trEl), bindings[0], true);
+                this.addComponent(domConstruct.create("td", null, trEl), bindings[0], true);
             }, this);
 
             if (!binding.getItem().hasStyle("firstcolumnfixedtable")) {
-                var lastTd = construct.create("td", {"class": "rformsTableControl"}, trEl);
-                var remove = construct.create("span", {"class": "action editDelete", "title": "Remove"}, lastTd);
+                var lastTd = domConstruct.create("td", {"class": "rformsTableControl"}, trEl);
+                var remove = domConstruct.create("span", {"class": "action editDelete", "title": "Remove"}, lastTd);
                 var cardTr = binding.getCardinalityTracker();
                 var cardConnect1 = aspect.after(cardTr, "cardinalityChanged", function () {
                     domClass.toggle(remove, "disabled", cardTr.isMin());
@@ -725,7 +737,7 @@ define(["dojo/_base/declare",
                         cardConnect1.remove();
                         removeConnect.remove();
                         binding.remove();
-                        construct.destroy(trEl);
+                        domConstruct.destroy(trEl);
                     }
                 }));
             }

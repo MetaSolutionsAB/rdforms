@@ -104,8 +104,8 @@
       },
       "type": "group",
       "automatic": true,
-      "content": [],
-      "nodetype": "RESOURCE"
+      "nodetype": "RESOURCE",
+      "items": []
     },
     {
       "id": "skos:note",
@@ -336,8 +336,8 @@
       },
       "type": "group",
       "automatic": true,
-      "content": [],
-      "nodetype": "RESOURCE"
+      "nodetype": "RESOURCE",
+      "items": []
     },
     {
       "id": "skos:mappingRelation",
@@ -441,8 +441,8 @@
       },
       "type": "group",
       "automatic": true,
-      "content": [],
-      "nodetype": "RESOURCE"
+      "nodetype": "RESOURCE",
+      "items": []
     },
     {
       "id": "skos:Concept",
@@ -453,7 +453,8 @@
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
       },
       "type": "group",
-      "content": [
+      "nodetype": "RESOURCE",
+      "items": [
         {
           "id": "skos:prefLabel"
         },
@@ -491,7 +492,11 @@
           "label": {
             "en": "Labels and annotations"
           },
-          "content": [
+          "nodetype": "RESOURCE",
+          "styles": [
+            "expandable"
+          ],
+          "items": [
             {
               "id": "skos:altLabel"
             },
@@ -513,10 +518,6 @@
             {
               "id": "skos:historyNote"
             }
-          ],
-          "nodetype": "RESOURCE",
-          "styles": [
-            "expandable"
           ]
         },
         {
@@ -532,7 +533,11 @@
           "label": {
             "en": "Additional concept relations"
           },
-          "content": [
+          "nodetype": "RESOURCE",
+          "styles": [
+            "expandable"
+          ],
+          "items": [
             {
               "id": "skos:broaderTransitive"
             },
@@ -557,14 +562,9 @@
             {
               "id": "skos:mappingRelation"
             }
-          ],
-          "nodetype": "RESOURCE",
-          "styles": [
-            "expandable"
           ]
         }
-      ],
-      "nodetype": "RESOURCE"
+      ]
     },
     {
       "id": "skos:ConceptScheme",
@@ -575,12 +575,12 @@
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#ConceptScheme"
       },
       "type": "group",
-      "content": [
+      "nodetype": "RESOURCE",
+      "items": [
         {
           "id": "skos:hasTopConcept"
         }
-      ],
-      "nodetype": "RESOURCE"
+      ]
     },
     {
       "id": "skos:Collection",
@@ -591,7 +591,7 @@
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Collection"
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "skos:member"
         }
@@ -606,12 +606,144 @@
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#OrderedCollection"
       },
       "type": "group",
-      "content": [
+      "items": [
         {
           "id": "skos:memberList"
         },
         {
           "id": "skos:member"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "skos:conceptLabels",
+      "label": {
+        "en": "Labels"
+      },
+      "items": [
+        {
+          "id": "skos:prefLabel"
+        },
+        {
+          "id": "skos:altLabel"
+        },
+        {
+          "id": "skos:hiddenLabel"
+        }
+      ],
+      "styles": [
+        "heading"
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "skos:conceptRelations",
+      "label": {
+        "en": "Relations"
+      },
+      "items": [
+        {
+          "id": "skos:related"
+        },
+        {
+          "id": "skos:broader"
+        },
+        {
+          "id": "skos:broaderTransitive"
+        },
+        {
+          "id": "skos:narrower"
+        },
+        {
+          "id": "skos:narrowerTransitive"
+        }
+      ],
+      "styles": [
+        "heading"
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "skos:conceptDocumentation",
+      "label": {
+        "en": "Documentation"
+      },
+      "items": [
+        {
+          "id": "skos:changeNote"
+        },
+        {
+          "id": "skos:definition"
+        },
+        {
+          "id": "skos:editorialNote"
+        },
+        {
+          "id": "skos:example"
+        },
+        {
+          "id": "skos:historyNote"
+        },
+        {
+          "id": "skos:note"
+        },
+        {
+          "id": "skos:scopeNote"
+        }
+      ],
+      "styles": [
+        "heading"
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "skos:conceptMappings",
+      "label": {
+        "en": "Mappings"
+      },
+      "description": {},
+      "items": [
+        {
+          "id": "skos:broadMatch"
+        },
+        {
+          "id": "skos:closeMatch"
+        },
+        {
+          "id": "skos:exactMatch"
+        },
+        {
+          "id": "skos:narrowMatch"
+        },
+        {
+          "id": "skos:relatedMatch"
+        }
+      ],
+      "styles": [
+        "heading"
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "skos:easyConcept",
+      "items": [
+        {
+          "id": "skos:conceptLabels"
+        },
+        {
+          "id": "skos:conceptDocumentation"
+        },
+        {
+          "id": "skos:conceptRelations"
+        },
+        {
+          "id": "skos:conceptMappings"
         }
       ]
     }

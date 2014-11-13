@@ -431,7 +431,7 @@ define(["dojo/_base/declare",
                     //Check if a tree-hierarchy should be created
                     if (hierarchy) {
                         var oc;
-                        var ddButton = domConstruct.create("span", {"class": "action editSearch", "title": "Browse"}, divToUse);
+                        var ddButton = domConstruct.create("span", {"class": "action editSearch", "title": this.messages.edit_browse}, divToUse);
                         on(ddButton, "click", lang.hitch(this, function () {
                             if (oc == null) {
                                 oc = new TreeOntologyChooser({binding: binding, done: lang.hitch(this, function () {
@@ -483,7 +483,7 @@ define(["dojo/_base/declare",
                     });
                 }
 
-                var ddButton = domConstruct.create("span", {"class": "action editSearch", "title": "Browse"}, divToUse);
+                var ddButton = domConstruct.create("span", {"class": "action editSearch", "title": this.messages.edit_browse}, divToUse);
                 on(ddButton, "click", lang.hitch(this, function () {
                     system.openChoiceSelector(binding, function (choice) {
                         binding.setChoice(choice);
@@ -522,7 +522,7 @@ define(["dojo/_base/declare",
                 var addTh = domConstruct.create("th", {"class": "rformsTableControl"}, tHeadRow);
                 var parentBinding = firstBinding.getParent();
 
-                var add = domConstruct.create("span", {"class": "action editAdd", "title": "Add"}, addTh);
+                var add = domConstruct.create("span", {"class": "action editAdd", "title": this.messages.edit_add}, addTh);
                 var cardTr = firstBinding.getCardinalityTracker();
                 on(add, "click", lang.hitch(this, function () {
                     if (!cardTr.isMax()) {
@@ -605,7 +605,7 @@ define(["dojo/_base/declare",
         },
         _addCreateChildButton: function (rowDiv, labelDiv, binding) {
             var parentBinding = binding.getParent(), item = binding.getItem(), cardTr = binding.getCardinalityTracker();
-            var add = domConstruct.create("span", {"class": "action editAdd", "title": "add"}, labelDiv);
+            var add = domConstruct.create("span", {"class": "action editAdd", "title": this.messages.edit_add}, labelDiv);
             on(add, "click", lang.hitch(this, function () {
                 if (!cardTr.isMax()) {
                     var nBinding = Engine.create(parentBinding, item);
@@ -618,8 +618,8 @@ define(["dojo/_base/declare",
         },
         _addGroupButtons: function (rowDiv, labelDiv, binding) {
             var parentBinding = binding.getParent(), item = binding.getItem();
-            var add = domConstruct.create("span", {"class": "action editAdd", "title": "add"}, labelDiv);
-            var remove = domConstruct.create("span", {"class": "action editDelete", "title": "remove"}, labelDiv);
+            var add = domConstruct.create("span", {"class": "action editAdd", "title": this.messages.edit_add}, labelDiv);
+            var remove = domConstruct.create("span", {"class": "action editDelete", "title": this.messages.edit_remove}, labelDiv);
 
             var cardTr = binding.getCardinalityTracker();
             var con = aspect.after(cardTr, "cardinalityChanged", function () {
@@ -662,7 +662,7 @@ define(["dojo/_base/declare",
             }));
         },
         _addRemoveButton: function (fieldDiv, binding, containerDiv, onReset) {
-            var remove = domConstruct.create("span", {"class": "action editDelete", "title": "remove"}, containerDiv);
+            var remove = domConstruct.create("span", {"class": "action editDelete", "title": this.messages.edit_remove}, containerDiv);
             var cardTr = binding.getCardinalityTracker();
             var con = aspect.after(cardTr, "cardinalityChanged", function () {
                 domClass.toggle(remove, "disabled", cardTr.isMin());
@@ -688,7 +688,7 @@ define(["dojo/_base/declare",
         },
 
         _addExpandButton: function (rowDiv, labelDiv, item) {
-            var expand = domConstruct.create("span", {"class": "action editExpand", "title": "Expand"}, labelDiv);
+            var expand = domConstruct.create("span", {"class": "action editExpand", "title": this.messages.edit_expand}, labelDiv);
             var expandCon = on(expand, "click", lang.hitch(this, function () {
                 var nBinding = Engine.create(this.binding, item);
                 if (this.showAsTable(item)) {
@@ -722,7 +722,7 @@ define(["dojo/_base/declare",
 
             if (!binding.getItem().hasStyle("firstcolumnfixedtable")) {
                 var lastTd = domConstruct.create("td", {"class": "rformsTableControl"}, trEl);
-                var remove = domConstruct.create("span", {"class": "action editDelete", "title": "Remove"}, lastTd);
+                var remove = domConstruct.create("span", {"class": "action editDelete", "title": this.messages.edit_remove}, lastTd);
                 var cardTr = binding.getCardinalityTracker();
                 var cardConnect1 = aspect.after(cardTr, "cardinalityChanged", function () {
                     domClass.toggle(remove, "disabled", cardTr.isMin());

@@ -7,9 +7,8 @@ define([
     "../template/Group",
     "../template/PropertyGroup",
     "../model/Engine",
-    "./Presenter",
-    "rdforms/model/system"
-], function(declare, lang, domClass, construct, Group, PropertyGroup, Engine, Presenter, system) {
+    "./Presenter"
+], function(declare, lang, domClass, domConstruct, Group, PropertyGroup, Engine, Presenter) {
 
     var ValidationPresenter = declare(Presenter, {
 	//===================================================
@@ -95,12 +94,12 @@ define([
 		if (binding.error) {
 			domClass.add(fieldDiv, "error");
             var tmpl = this.messages.validation_min_required_message.split(",")[min === 1 ? 0 : 1];
-			construct.create("div", {"innerHTML": lang.replace(tmpl, {nr: min})}, fieldDiv);
+			domConstruct.create("div", {"innerHTML": lang.replace(tmpl, {nr: min})}, fieldDiv);
 			return true;
 		} else if (binding.warning){
 			domClass.add(fieldDiv, "warning");
             var tmpl = this.messages.validation_min_recommended_message.split(",")[pref === 1 ? 0 : 1];
-			construct.create("div", {"innerHTML": lang.replace(tmpl, {nr: pref})}, fieldDiv);
+			domConstruct.create("div", {"innerHTML": lang.replace(tmpl, {nr: pref})}, fieldDiv);
 			return true;
 		} else {
 			return false;

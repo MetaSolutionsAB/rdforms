@@ -1,4 +1,8 @@
 define({
+    edit_add: "Lägg till",
+    edit_remove: "Ta bort",
+    edit_browse: "Utforska och välj",
+    edit_expand: "Expandera",
     info_label: "Etikett",
     info_property: "Egenskap",
     info_description: "Beskrivning",

@@ -1,5 +1,9 @@
 define({
     root: {
+        edit_add: "Add",
+        edit_remove: "Remove",
+        edit_browse: "Browse and select",
+        edit_expand: "Expand",
         info_label: "Label",
         info_property: "Property",
         info_description: "Description",

@@ -1,13 +1,15 @@
 /*global define*/
 define([
     "dojo/_base/declare",
+    "dojo/_base/lang",
     "dojo/dom-class",
     "dojo/dom-construct",
     "../template/Group",
     "../template/PropertyGroup",
     "../model/Engine",
-    "./Presenter"
-], function(declare, domClass, construct, Group, PropertyGroup, Engine, Presenter) {
+    "./Presenter",
+    "rdforms/model/system"
+], function(declare, lang, domClass, construct, Group, PropertyGroup, Engine, Presenter, system) {
 
     var ValidationPresenter = declare(Presenter, {
 	//===================================================
@@ -92,11 +94,13 @@ define([
 		var min = card.min != null ? card.min : 0, pref = card.pref != null ? card.pref : 0;
 		if (binding.error) {
 			domClass.add(fieldDiv, "error");
-			construct.create("div", {"innerHTML": ""+min+" value"+(min === 1? "": "s")+" is required"}, fieldDiv);
+            var tmpl = this.messages.validation_min_required_message.split(",")[min === 1 ? 0 : 1];
+			construct.create("div", {"innerHTML": lang.replace(tmpl, {nr: min})}, fieldDiv);
 			return true;
 		} else if (binding.warning){
 			domClass.add(fieldDiv, "warning");
-			construct.create("div", {"innerHTML": ""+pref+" value"+(pref === 1? "": "s")+" is recommended."}, fieldDiv);
+            var tmpl = this.messages.validation_min_recommended_message.split(",")[pref === 1 ? 0 : 1];
+			construct.create("div", {"innerHTML": lang.replace(tmpl, {nr: pref})}, fieldDiv);
 			return true;
 		} else {
 			return false;
@@ -105,7 +109,7 @@ define([
 	
 	addGroup: function(fieldDiv, binding) {
 		if (!this.addValidationMarker(fieldDiv, binding)) {
-			new ValidationPresenter({binding: binding, topLevel: false, includeLevel: this.includeLevel}, fieldDiv);
+			new ValidationPresenter({binding: binding, topLevel: false, includeLevel: this.includeLevel, messages: this.messages}, fieldDiv);
 		}
 	},
 

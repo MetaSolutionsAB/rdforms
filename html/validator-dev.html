@@ -5,12 +5,16 @@
   </head>
   <body class="dbootstrap">
     <script>
-    var dojoConfig = {
-	async:true,
-	packages: [
-	    { name: "rdforms", location: "../.."}]
-    };
-   </script>
+        var dojoConfig = {
+            async:true,
+            packages: [
+                { name: "rdforms", location: "../.."}]
+        };
+        var lang = window.location.href.match(/lang=([^&]*)/);
+        if (lang != null && lang.length === 2) {
+            dojoConfig.locale = lang[1];
+        }
+    </script>
     <script src="../libs/dojo/dojo.js"></script>
     <style>
        @import "../view/resources/rdforms.css";

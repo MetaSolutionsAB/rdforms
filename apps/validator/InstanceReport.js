@@ -25,6 +25,7 @@ define(["dojo/_base/declare",
         report: null,
         template: null,
         graph: null,
+        messages: null,
 
 	// Inherited attributes
 	//===================================================
@@ -37,7 +38,7 @@ define(["dojo/_base/declare",
 
 
         //Button in titlebar
-        var node = domConstruct.create("button", {innerHTML: "<span class='glyphicon glyphicon-eye-open'></span>&nbsp;View",
+        var node = domConstruct.create("button", {innerHTML: "<span class='glyphicon glyphicon-eye-open'></span>&nbsp;"+this.messages.view,
             type: "button", "class": "instanceDetails btn btn-primary btn-sm",
             onclick: lang.hitch(this, this._openView)
         });
@@ -47,26 +48,28 @@ define(["dojo/_base/declare",
         if (this.report.errors.length > 0 || this.report.warnings.length > 0) {
 		    var table = domConstruct.create("table", {"class": "report"}, this._reportNode);
 		    var head = domConstruct.create("tr", null, table);
-		    domConstruct.create("th", {innerHTML: "Severity"}, head);
-		    domConstruct.create("th", {innerHTML: "Path"}, head);
-		    domConstruct.create("th", {innerHTML: "Problem"}, head);
+		    domConstruct.create("th", {innerHTML: this.messages.severity}, head);
+		    domConstruct.create("th", {innerHTML: this.messages.path}, head);
+		    domConstruct.create("th", {innerHTML: this.messages.problem}, head);
+            var errorM = this.messages.error.split(",");
+            var warningM = this.messages.warning.split(",");
 		    array.forEach(this.report.errors, function(err) {
                 var row = domConstruct.create("tr", {"class": "error"}, table);
-                domConstruct.create("td", {innerHTML: "Error"}, row);
+                domConstruct.create("td", {innerHTML: errorM[0]}, row);
                 domConstruct.create("td", {innerHTML: err.path}, row);
-                domConstruct.create("td", {innerHTML: err.code}, row);
-            });
+                domConstruct.create("td", {innerHTML: this.messages["report_"+err.code]}, row);
+            }, this);
 		    array.forEach(this.report.warnings, function(warn) {
                 var row = domConstruct.create("tr", {"class": "warning"}, table);
-                domConstruct.create("td", {innerHTML: "Warning"}, row);
+                domConstruct.create("td", {innerHTML: warningM[0]}, row);
                 domConstruct.create("td", {innerHTML: warn.path}, row);
-                domConstruct.create("td", {innerHTML: warn.code}, row);
-            });
+                domConstruct.create("td", {innerHTML: this.messages["report_"+warn.code]}, row);
+            }, this);
             if (this.report.errors.length > 0) {
-                titleStr += " &nbsp;"+this.report.errors.length+" error"+(this.report.errors.length > 1 ? "s" : "");
+                titleStr += " &nbsp;"+this.report.errors.length+" "+(this.report.errors.length > 1 ?  errorM[1]: errorM[0]);
                 domClass.add(this.domNode, "error");
             } else if (this.report.warnings.length > 0) {
-                titleStr += " &nbsp;"+this.report.warnings.length+" warning"+(this.report.warnings.length > 1 ? "s" : "");
+                titleStr += " &nbsp;"+this.report.warnings.length+" "+(this.report.warnings.length > 1 ? warningM[1] : warningM[0]);
                 domClass.add(this.domNode, "warning");
             }
             this._pane.set("title", titleStr);

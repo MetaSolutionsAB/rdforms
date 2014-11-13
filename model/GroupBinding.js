@@ -146,8 +146,8 @@ define([
 		return this._statement.getPredicate();
 	},
 	CODES: {
-        TOO_FEW_VALUES: 1,
-        TOO_MANY_VALUES: 2
+        TOO_FEW_VALUES: "few",
+        TOO_MANY_VALUES: "many"
     },
 	report: function(report) {
 		if (report == null) {

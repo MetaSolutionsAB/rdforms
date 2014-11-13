@@ -218,9 +218,9 @@ define(["dojo/_base/declare",
                 var titlePane = new TitlePane({open: false}, fieldDiv);
                 var node = domConstruct.create("div");
                 titlePane.set("content", node);
-                subView = new Editor({languages: this.languages, binding: binding, topLevel: false, includeLevel: this.includeLevel}, node);
+                subView = new Editor({messages: this.messages, languages: this.languages, binding: binding, topLevel: false, includeLevel: this.includeLevel}, node);
             } else {
-                subView = new Editor({languages: this.languages, binding: binding, topLevel: false, includeLevel: this.includeLevel}, fieldDiv);
+                subView = new Editor({messages: this.messages, languages: this.languages, binding: binding, topLevel: false, includeLevel: this.includeLevel}, fieldDiv);
             }
             this._subEditors.push(subView);
         },

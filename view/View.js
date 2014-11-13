@@ -14,9 +14,10 @@ define(["dojo/_base/declare",
 	"../model/GroupBinding",
 	"../model/ChoiceBinding",
 	"../model/PropertyChoiceBinding",
-	"../template/Group"
+	"../template/Group",
+    "rdforms/model/system"
 ], function(declare, lang, domClass, construct, attr, query, _Widget, focus, TooltipDialog, popup,
-            Engine, ValueBinding, GroupBinding, ChoiceBinding, PropertyChoiceBinding, Group) {
+            Engine, ValueBinding, GroupBinding, ChoiceBinding, PropertyChoiceBinding, Group, system) {
     
     var __currentDomNode;
 
@@ -131,53 +132,63 @@ define(["dojo/_base/declare",
         if (this.binding == null) {
             return;
         }
-		var groupIndex, table, lastRow, table,
-			groupedItemsArr = this.binding.getItem().getChildren(), 
-			groupedBindingsArr = this.binding.getItemGroupedChildBindings(), 
-			bindings, item;
-		this._binding2node = {};
 
-        if ((this.compact || this.binding.getItem().hasStyle("compact")) && !this.binding.getItem().hasStyle("nonCompact")) {
-			domClass.add(this.domNode, "compact");			
-		} else {
-            domClass.remove(this.domNode, "compact");
+        var f = lang.hitch(this, function(messages) {
+            this.messages = this.messages || messages;
+            var groupIndex, table, lastRow, table,
+                groupedItemsArr = this.binding.getItem().getChildren(),
+                groupedBindingsArr = this.binding.getItemGroupedChildBindings(),
+                bindings, item;
+            this._binding2node = {};
+
+            if ((this.compact || this.binding.getItem().hasStyle("compact")) && !this.binding.getItem().hasStyle("nonCompact")) {
+                domClass.add(this.domNode, "compact");
+            } else {
+                domClass.remove(this.domNode, "compact");
+            }
+
+            for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
+                bindings = groupedBindingsArr[groupIndex];
+                item = groupedItemsArr[groupIndex];
+
+                if (!this.showNow(item, bindings)) {
+                    continue;
+                }
+
+                bindings = this.prepareBindings(item, bindings);
+
+                //Table case
+                if (this.showAsTable(item)) {
+                    lastRow = this.addLabelClean(lastRow, bindings[0], item);
+                    if (bindings.length > 0) {
+                        table = this.addTable(lastRow, bindings[0], item);
+                        this.fillTable(table, bindings);
+                    }
+
+                    //Non table case
+                } else {
+                    if (bindings.length > 0) {
+                        for (var i=0;i<bindings.length;i++) {
+                            //Add row with label if first row of same item or the binding is a group.
+                            lastRow = this.addRow(lastRow, bindings[i], i === 0 || bindings[i] instanceof GroupBinding);
+                        }
+                    } else {
+                        lastRow = this.addLabelClean(lastRow, null, item);
+                    }
+                }
+
+                //Activates/deactivates buttons at startup if needed
+                if (bindings.length > 0){
+                    bindings[0].getCardinalityTracker().checkCardinality();
+                }
+            }
+        });
+        //Make sure the messages are loaded.
+        if (this.messages) {
+            f();
+        } else {
+            system.getMessages(f);
         }
-
-		for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
-			bindings = groupedBindingsArr[groupIndex];
-			item = groupedItemsArr[groupIndex];
-
-			if (!this.showNow(item, bindings)) {
-				continue;
-			}
-
-			bindings = this.prepareBindings(item, bindings);
-			
-			//Table case
-			if (this.showAsTable(item)) {
-				lastRow = this.addLabelClean(lastRow, bindings[0], item);
-				if (bindings.length > 0) {
-					table = this.addTable(lastRow, bindings[0], item);
-					this.fillTable(table, bindings);			
-				}
-			
-			//Non table case
-			} else {
-			    if (bindings.length > 0) {
-				for (var i=0;i<bindings.length;i++) {
-                    //Add row with label if first row of same item or the binding is a group.
-				    lastRow = this.addRow(lastRow, bindings[i], i === 0 || bindings[i] instanceof GroupBinding);
-				}
-			    } else {
-				lastRow = this.addLabelClean(lastRow, null, item);
-			    }
-			}
-									
-			//Activates/deactivates buttons at startup if needed
-			if (bindings.length > 0){
-				bindings[0].getCardinalityTracker().checkCardinality();				
-			}
-		}
 	},
 
 	/**
@@ -303,14 +314,14 @@ define(["dojo/_base/declare",
 	    var message = "<div class='rforms itemInfo'><div class='itemInfoTable'>";
 	    var label = item.getLabel() || "";
 	    if (label !== "") {
-		message += "<div><label class='propertyLabel'>Label:&nbsp;</label><span class='propertyValue'>"+label+"</span></div>";
+            message += "<div><label class='propertyLabel'>"+this.messages.info_label+":&nbsp;</label><span class='propertyValue'>"+label+"</span></div>";
 	    }
 	    if (property != null) {
             var ptemp = item.getProperty();
-            message += "<div><label class='propertyLabel'>Property:&nbsp;</label><a class='propertyValue' target='_blank' href='"+ptemp+"'>"+ptemp+"</a></div>";
+            message += "<div><label class='propertyLabel'>"+this.messages.info_property+":&nbsp;</label><a class='propertyValue' target='_blank' href='"+ptemp+"'>"+ptemp+"</a></div>";
 	    }
 	    if (description != null) {
-		message += "<div><label class='descriptionLabel'>Description:&nbsp;</label><span class='descriptionValue'>"+description.replace(/(\r\n|\r|\n)/g, "<br/>")+"</span></div>";
+		message += "<div><label class='descriptionLabel'>"+this.messages.info_description+":&nbsp;</label><span class='descriptionValue'>"+description.replace(/(\r\n|\r|\n)/g, "<br/>")+"</span></div>";
 	    }
 	    message +="</div></div>";
 	    tooltipDialog.setContent(message);

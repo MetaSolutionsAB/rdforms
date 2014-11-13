@@ -9,8 +9,8 @@
                 "nodetype":"LANGUAGE_LITERAL",
                 "property":"http://purl.org/dc/terms/title",
                 "cardinality": {"min": 2, "pref": "4", "max": 5},
-				"label":{"en":"Title"},
-                "description":{"en":"A short title of the resource"}
+				"label":{"en":"Title", "sv": "Titel"},
+                "description":{"en":"A short title of the resource", "sv": "En kort titel för resursen"}
 			}, {
 				"type":"group",
                 "nodetype":"RESOURCE",

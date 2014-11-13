@@ -109,4 +109,8 @@ define([
     };
     exports.addDnD = function(binding, node, onDrop) {
     };
+
+    exports.getMessages = function(callback) {
+        require(["dojo/i18n!rdforms/view/nls/rdforms"], callback);
+    };
 });

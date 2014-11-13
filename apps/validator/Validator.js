@@ -35,14 +35,15 @@ define(["dojo/_base/declare",
         //===================================================
         postConfig: function () {
             this.inherited("postConfig", arguments);
-            domAttr.set(this._headerNode, "innerHTML", this.header || "RDForms Validator");
             for (var cls in this.config.type2template) if (this.config.type2template.hasOwnProperty(cls)) {
                 this.config.type2template[cls] = this.config.itemStore.getTemplate(this.config.type2template[cls]);
             }
-            this._RDFValidation(this._rdfDijit.setRDF(this.config.rdf));
-            this._templateBasedValidation();
-            this._rdfDijit.startup();
-            this._rdfDijit.resize();
+            this._requireLocale(lang.hitch(this, function() {
+                this._RDFValidation(this._rdfDijit.setRDF(this.config.rdf));
+                this._templateBasedValidation();
+                this._rdfDijit.startup();
+                this._rdfDijit.resize();
+            }));
         },
         //===================================================
         // Private methods
@@ -50,6 +51,14 @@ define(["dojo/_base/declare",
         _update: function () {
             this._RDFValidation(this._rdfDijit.getRDF());
             this._templateBasedValidation();
+        },
+        _requireLocale: function(callback) {
+            require(["dojo/i18n!rdforms/apps/nls/validator"], lang.hitch(this, function(validator) {
+                this.messages = validator;
+                domAttr.set(this._headerNode, "innerHTML", this.header || validator.header);
+                domAttr.set(this._validateNode, "innerHTML", validator.validate);
+                callback();
+            }));
         },
         _RDFValidation: function (report) {
             this._rdfReport = report;
@@ -61,7 +70,7 @@ define(["dojo/_base/declare",
             } else {
                 domClass.toggle(this._rdfValidationMessage, "alert-success", true);
                 domClass.toggle(this._rdfValidationMessage, "alert-danger", false);
-                domAttr.set(this._rdfValidationMessage, "innerHTML", "Valid RDF in format " + report.format);
+                domAttr.set(this._rdfValidationMessage, "innerHTML", this.messages.validRDF + report.format);
             }
         },
         _templateBasedValidation: function () {
@@ -74,16 +83,16 @@ define(["dojo/_base/declare",
             if (report.mandatoryError) {
                 domClass.toggle(this._mandatoryErrorMessage, "alert-danger", true);
                 domClass.toggle(this._mandatoryErrorMessage, "alert-success", false);
-                domAttr.set(this._mandatoryErrorMessage, "innerHTML", "Instances missing for the following top-level mandatory classes: " + report.mandatoryError.join(", "));
+                domAttr.set(this._mandatoryErrorMessage, "innerHTML", this.messages.mandatoryMissing + report.mandatoryError.join(", "));
             } else {
                 domClass.toggle(this._mandatoryErrorMessage, "alert-success", true);
                 domClass.toggle(this._mandatoryErrorMessage, "alert-danger", false);
-                domAttr.set(this._mandatoryErrorMessage, "innerHTML", "Instances found for all top-level mandatory classes");
+                domAttr.set(this._mandatoryErrorMessage, "innerHTML", this.messages.mandatoryOk);
             }
             for (var key in type2resourceReports) if (type2resourceReports.hasOwnProperty(key)) {
-                domConstruct.create("h3", {"class": "instanceType", innerHTML: "Instances of class " + key}, this._rformsNode);
+                domConstruct.create("h3", {"class": "instanceType", innerHTML: this.messages.instancesHeader + key}, this._rformsNode);
                 array.forEach(type2resourceReports[key], function (resourceReport) {
-                    new InstanceReport({report: resourceReport, graph: this._graph, template: this.config.type2template[key]},
+                    new InstanceReport({messages: this.messages, report: resourceReport, graph: this._graph, template: this.config.type2template[key]},
                         domConstruct.create("div", {"class": "instance"}, this._rformsNode));
                 }, this);
             }

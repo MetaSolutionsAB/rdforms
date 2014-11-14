@@ -74,7 +74,8 @@ define(["dojo/_base/declare",
             }
             this._pane.set("title", titleStr);
 		} else {
-		    domConstruct.create("div", {"class": "instanceHeading", "innerHTML": "<span class='action info'></span>&nbsp;<b>"+this.instance+"</b> is ok ",
+            var val = lang.replace(this.messages.instanceOk, {instance: this.report.uri});
+		    domConstruct.create("div", {"class": "instanceHeading", "innerHTML": "<span class='action info'></span>&nbsp;"+val,
 					     onclick: lang.hitch(this, this._openView)}, this._reportNode);
             this._pane.set("title", titleStr);
 		}

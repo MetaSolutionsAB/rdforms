@@ -5,6 +5,7 @@ define({
         mandatoryMissing: "Instances missing for the following top-level mandatory classes: ",
         mandatoryOk: "Instances found for all top-level mandatory classes",
         instancesHeader: "Instances of class ",
+        instanceOk: "{instance} is ok",
         validRDF: "Valid RDF in format ",
         view: "View",
         severity: "Severity",

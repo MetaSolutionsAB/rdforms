@@ -2,12 +2,13 @@
 define(["dojo/_base/declare", 
 	"dojo/dom-class",
     "dojo/dom-style",
+    "dojo/dom-attr",
 	"dijit/_WidgetBase",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
     "rdforms/view/Editor", //in template
 	"dojo/text!./IncludeLevelEditorTemplate.html"
-], function(declare, domClass, domStyle, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Editor, template) {
+], function(declare, domClass, domStyle, domAttr, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Editor, template) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
@@ -20,6 +21,7 @@ define(["dojo/_base/declare",
         compact: true,
         includeLevel: "mandatory",
         includeLevelControllsVisible: true,
+        messages: null,
 
         show: function(resource, graph, template) {
             this.resource = resource || this.resource;
@@ -42,6 +44,12 @@ define(["dojo/_base/declare",
                 case "optional":
                     this._optionalClick();
             }
+        },
+        localize: function(messages) {
+            this.messages = messages;
+            domAttr.set(this._mandatoryLabelNode, "innerHTML", this.messages.mandatoryLabel);
+            domAttr.set(this._recommendedLabelNode, "innerHTML", this.messages.recommendedLabel);
+            domAttr.set(this._optionalLabelNode, "innerHTML", this.messages.optionalLabel);
         },
 
         //===================================================

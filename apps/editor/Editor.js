@@ -61,23 +61,42 @@ define(["dojo/_base/declare",
                 this._editor.setIncludeLevel(this.config.includeLevel);
             }
 
-            if (this.header) {
-                domClass.add(this.domNode, "withHeader")
-                domAttr.set(this._headerNode, "innerHTML", this.config.header);
-            }
-            this.template = this.itemStore.getItem(this.type2template[this.mainType]);
-            if (this.rdf && this.resource) {
-                this._initEditor();
-            } else {
-                this._dialog.show();
-                this._rdfInit.setRDF({"http://example.com/about": {
-                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
-                        {type: "uri", value: this.mainType}
-                    ]}});
-                this._rdfInit.startup();
-            }
-            this.startup();
+            this._requireLocale(lang.hitch(this, function() {
+                this.template = this.itemStore.getItem(this.type2template[this.mainType]);
+                if (this.rdf && this.resource) {
+                    this._initEditor();
+                } else {
+                    this._dialog.show();
+                    this._rdfInit.setRDF({"http://example.com/about": {
+                        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+                            {type: "uri", value: this.mainType}
+                        ]}});
+                    this._rdfInit.startup();
+                }
+                this.startup();
+            }));
         },
+
+        _requireLocale: function(callback) {
+            require(["dojo/i18n!rdforms/apps/nls/editor"], lang.hitch(this, function(editor) {
+                this.messages = editor;
+                if (this.header) {
+                    domClass.add(this.domNode, "withHeader")
+                    domAttr.set(this._headerNode, "innerHTML", this.config.header || editor.header);
+                }
+                this._editorTab.set("title", this.messages.editorTab);
+                this._presenterTab.set("title", this.messages.presenterTab);
+                this._rdfTab.set("title", this.messages.rdfTab);
+                this._dialog.set("title", this.messages.initDialogHeader);
+                domAttr.set(this._resourceURIHeader, "innerHTML", this.messages.resourceURIHeader);
+                this._resourceURI.set("placeholder", this.messages.resourceURIPlaceholder);
+                domAttr.set(this._rdfInitHeader, "innerHTML", this.messages.rdfInitHeader);
+                domAttr.set(this._startButton, "innerHTML", this.messages.startButton);
+                this._editor.localize(editor);
+                callback();
+            }));
+        },
+
 
         startup: function () {
             this.inherited("startup", arguments);
@@ -133,9 +152,9 @@ define(["dojo/_base/declare",
                 } else {
                     var stmts = report.graph.find(null, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", {type: "uri", value: this.mainType});
                     if (stmts.length === 0) {
-                        failure("No instances detected!");
+                        failure(this.messages.no_instances);
                     } else if (stmts.length > 1) {
-                        failure("To many instances detected!");
+                        failure(this.messages.too_many_instances);
                     } else {
                         this._dialog.hide();
                         this.resource = stmts[0].getSubject();

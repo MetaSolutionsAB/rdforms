@@ -4,7 +4,13 @@
     <link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body class="dbootstrap">
-    <script src="../release/dojo/dojo.js"></script>
+  <script>
+      var lang = window.location.href.match(/lang=([^&]*)/);
+      if (lang != null && lang.length === 2) {
+          var dojoConfig = {locale: lang[1]};
+      }
+  </script>
+  <script src="../release/dojo/dojo.js"></script>
     <style>
        @import "../release/rdforms/view/resources/rdforms.css";
        @import "../release/rdforms/apps/editor/editor.css";

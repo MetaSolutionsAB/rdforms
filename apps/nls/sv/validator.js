@@ -4,6 +4,7 @@ define({
     mandatoryMissing: "Instanser saknas för följande top-level obligatoriska klasser: ",
     mandatoryOk: "Instanser funna för alla top-level obligatoriska klasser",
     instancesHeader: "Instanser till klass ",
+    instanceOk: "{instance} är ok",
     validRDF: "Korrekt RDF i formatet ",
     view: "Visa",
     severity: "Hur allvarligt",

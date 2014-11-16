@@ -74,7 +74,9 @@ define(["dojo/_base/declare",
 		if (this._formatChooser) {
 			this._formatChooser.destroy();
 		}
-		var options = [{label: "Year", value: "Year"}, {label: "Date", value: "Date"}, {label: "Date and time", value: "DateTime"}];
+		var options = [{label: this.messages.date_year, value: "Year"},
+            {label: this.messages.date_date, value: "Date"},
+            {label: this.messages.date_date_and_time, value: "DateTime"}];
 		array.forEach(options, function(opt) {
 			if (opt.value === option) {
 				opt.selected = true;

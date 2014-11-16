@@ -240,7 +240,7 @@ define(["dojo/_base/declare",
                 //Special editing support implemented for integer, data and duration
 
                 if (datatype === "http://www.w3.org/2001/XMLSchema#date" || datatype === "http://purl.org/dc/terms/W3CDTF") {
-                    tb = new DateTime({binding: binding, item: item}, domConstruct.create("div", null, fieldDiv));
+                    tb = new DateTime({messages: this.messages, binding: binding, item: item}, domConstruct.create("div", null, fieldDiv));
                 } else if (datatype === "http://www.w3.org/2001/XMLSchema#duration") {
                     tb = new Duration({disabled: !item.isEnabled(), binding: binding}, domConstruct.create("div", null, fieldDiv));
                 } else if (datatype === "http://www.w3.org/2001/XMLSchema#integer") {

@@ -191,7 +191,8 @@
       "id": "vc:fn",
       "property": "http://www.w3.org/2006/vcard/ns#fn",
       "label": {
-        "en": "formatted name"
+        "en": "formatted name",
+        "sv": "Namn"
       },
       "description": {
         "en": "The formatted text corresponding to the name of the object"
@@ -231,7 +232,8 @@
       "id": "vc:country-name",
       "property": "http://www.w3.org/2006/vcard/ns#country-name",
       "label": {
-        "en": "country name"
+        "en": "country name",
+        "sv": "Land"
       },
       "description": {
         "en": "The country name associated with the address of the object"
@@ -296,7 +298,8 @@
       "id": "vc:locality",
       "property": "http://www.w3.org/2006/vcard/ns#locality",
       "label": {
-        "en": "locality"
+        "en": "locality",
+        "sv": "Postort"
       },
       "description": {
         "en": "The locality (e.g. city or town) associated with the address of the object"
@@ -313,7 +316,8 @@
       "id": "vc:postal-code",
       "property": "http://www.w3.org/2006/vcard/ns#postal-code",
       "label": {
-        "en": "postal code"
+        "en": "postal code",
+        "sv": "Postkod"
       },
       "description": {
         "en": "The postal code associated with the address of the object"
@@ -342,7 +346,8 @@
       "id": "vc:street-address",
       "property": "http://www.w3.org/2006/vcard/ns#street-address",
       "label": {
-        "en": "street address"
+        "en": "street address",
+        "sv": "Gatuadress"
       },
       "description": {
         "en": "The street address associated with the address of the object"
@@ -696,7 +701,8 @@
       "id": "vc:hasAddress",
       "property": "http://www.w3.org/2006/vcard/ns#hasAddress",
       "label": {
-        "en": "Address"
+        "en": "Address",
+        "sv": "Adress"
       },
       "description": {
         "en": "To specify the components of the delivery address for the object"
@@ -729,7 +735,8 @@
       "id": "vc:hasEmail",
       "property": "http://www.w3.org/2006/vcard/ns#hasEmail",
       "label": {
-        "en": "Email"
+        "en": "Email",
+        "sv": "E-postadress"
       },
       "description": {
         "en": "To specify the electronic mail address for communication with the object"
@@ -826,7 +833,8 @@
       "id": "vc:hasTelephone",
       "property": "http://www.w3.org/2006/vcard/ns#hasTelephone",
       "label": {
-        "en": "Telephone"
+        "en": "Telephone",
+        "sv": "Telefon"
       },
       "description": {
         "en": "To specify the telephone number for telephony communication with the object"
@@ -842,7 +850,8 @@
             "pref": 1
           },
           "label": {
-            "en": "Number"
+            "en": "Number",
+            "sv": "Nummer"
           },
           "description": {
             "": "The telephone number must be given as a valid resource URI, e.g. tel:+4618100000."
@@ -899,7 +908,8 @@
       "id": "vc:vCardType",
       "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
       "label": {
-        "en": "Context"
+        "en": "Context",
+        "sv": "Sammanhang"
       },
       "choices": [
         {
@@ -1017,14 +1027,16 @@
       "id": "vc:telephoneType",
       "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
       "label": {
-        "en": "Type"
+        "en": "Type",
+        "sv": "Typ"
       },
       "description": {},
       "choices": [
         {
           "value": "http://www.w3.org/2006/vcard/ns#Cell",
           "label": {
-            "en": "Cell (mobile)"
+            "en": "Cell (mobile)",
+            "": "Mobiltelefon"
           },
           "description": {
             "en": "Also called mobile telephone."
@@ -1033,7 +1045,8 @@
         {
           "value": "http://www.w3.org/2006/vcard/ns#Fax",
           "label": {
-            "en": "Fax"
+            "en": "Fax",
+            "sv": "Fax"
           },
           "description": {
             "en": "A faxmachine telephone number."
@@ -1042,7 +1055,8 @@
         {
           "value": "http://www.w3.org/2006/vcard/ns#Pager",
           "label": {
-            "en": "Pager"
+            "en": "Pager",
+            "sv": "Sökare"
           },
           "description": {}
         },
@@ -1052,26 +1066,31 @@
             "en": "Also called sms telephone"
           },
           "label": {
-            "en": "Text (sms)"
+            "en": "Text (sms)",
+            "sv": "Textmeddelande (sms)"
           }
         },
         {
           "value": "http://www.w3.org/2006/vcard/ns#TextPhone",
           "label": {
-            "en": "Text phone"
+            "en": "Text phone",
+            "sv": "Texttelefon"
           }
         },
         {
           "value": "http://www.w3.org/2006/vcard/ns#Video",
           "label": {
-            "en": "Video"
+            "en": "Video",
+            "sv": "Video"
           }
         },
         {
           "value": "http://www.w3.org/2006/vcard/ns#Voice",
           "label": {
-            "en": "Voice"
-          }
+            "en": "Voice",
+            "sv": "Röst"
+          },
+          "description": {}
         }
       ],
       "cardinality": {
@@ -1087,7 +1106,8 @@
       "nodetype": "URI",
       "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
       "label": {
-        "en": "Kind"
+        "en": "Kind",
+        "sv": "Typ"
       },
       "choices": [
         {

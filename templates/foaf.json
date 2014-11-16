@@ -7,7 +7,7 @@
         "en": "Personal mailbox"
       },
       "description": {
-        "en": "A \npersonal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a 'static inverse functional property', in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox."
+        "en": "A personal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a 'static inverse functional property', in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox."
       },
       "type": "text",
       "nodetype": "URI",
@@ -279,7 +279,8 @@
       "id": "foaf:name",
       "property": "http://xmlns.com/foaf/0.1/name",
       "label": {
-        "en": "Name"
+        "en": "Name",
+        "sv": "Namn"
       },
       "description": {
         "en": "A name for some thing."
@@ -366,7 +367,8 @@
       "id": "foaf:homepage",
       "property": "http://xmlns.com/foaf/0.1/homepage",
       "label": {
-        "en": "Homepage"
+        "en": "Homepage",
+        "sv": "Hemsida"
       },
       "description": {
         "en": "A homepage for some thing."

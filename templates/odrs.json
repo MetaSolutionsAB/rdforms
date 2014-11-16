@@ -59,7 +59,8 @@
       "id": "odrs:attributionText",
       "property": "http://schema.theodi.org/odrs#attributionText",
       "label": {
-        "en": "Attribution text"
+        "en": "Attribution text",
+        "sv": "Erkännande text"
       },
       "description": {
         "en": "The text to use in an attribution link. This may be the name of the publisher or a reference to a community or group of contributors"
@@ -79,7 +80,8 @@
       "property": "http://schema.theodi.org/odrs#attributionURL",
       "nodetype": "URI",
       "label": {
-        "en": "Attribution URL"
+        "en": "Attribution URL",
+        "sv": "Erkännande URL"
       },
       "description": {
         "en": "The link which should be used when attributing a data source. The URL could be a reference to the dataset or publisher homepage, but may also be a dedicated attribution page. This is useful when providing onward attribution to upstream sources."
@@ -94,7 +96,8 @@
       "id": "odrs:copyrightNotice",
       "property": "http://schema.theodi.org/odrs#copyrightNotice",
       "label": {
-        "en": "Copyright notice"
+        "en": "Copyright notice",
+        "sv": "Meddelande om upphovsrätt"
       },
       "description": {
         "en": "The copyright notice associated with a rights statement. A notice must typically be preserved and displayed when acknowledging the source of some data. This property is expressed as a simple literal value and so is suitable for simple copyright notices. Where a data publisher needs to reference a larger copyright statement and/or related guidance then the copyrightStatement property should be used instead."
@@ -108,7 +111,8 @@
       "type": "text",
       "id": "odrs:reuserGuidelines",
       "label": {
-        "en": "Guidelines for re-users"
+        "en": "Guidelines for re-users",
+        "sv": "Riktlinjer för återanvändning"
       },
       "description": {
         "en": "Link to a document that provides guidelines for re-users of data that is covered by a specific rights statement. The guidelines may include more detail on attribution guidelines, a fuller copyright statement, and general guidance on how the data might be re-used"
@@ -126,7 +130,8 @@
       "property": "http://schema.theodi.org/odrs#copyrightStatement",
       "nodetype": "URI",
       "label": {
-        "en": "Copyright statement"
+        "en": "Copyright statement",
+        "sv": "Upphovsrättsdokument"
       },
       "description": {
         "en": "A link to a document that includes a statement about the copyright status of the content of a dataset. The web page might include both a copyright notice for a dataset, and any relevant guidance for re-users."
@@ -142,7 +147,8 @@
       "property": "http://schema.theodi.org/odrs#copyrightHolder",
       "extends": "foaf:Organization-ref",
       "label": {
-        "en": "Copyright holder"
+        "en": "Copyright holder",
+        "sv": "Ägare av upphovsrätten"
       },
       "description": {
         "en": "A reference to the organization that holds copyright over the content of the dataset"
@@ -174,7 +180,8 @@
       "property": "http://schema.theodi.org/odrs#jurisdiction",
       "nodetype": "URI",
       "label": {
-        "en": "Jurisdiction"
+        "en": "Jurisdiction",
+        "sv": "Jurisdiktion"
       },
       "description": {
         "en": "A reference to the jurisdiction in which copyright and/or database rights have been asserts. It is recommended that this refer to the URI for a country or region."
@@ -190,7 +197,8 @@
       "property": "http://schema.theodi.org/odrs#copyrightYear",
       "nodetype": "ONLY_LITERAL",
       "label": {
-        "en": "Copyright year"
+        "en": "Copyright year",
+        "sv": "Upphovsrättsår"
       },
       "description": {
         "en": "The year from which copyright over the content of the dataset is asserted."
@@ -332,7 +340,8 @@
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://schema.theodi.org/odrs#RightsStatement"
       },
       "label": {
-        "en": "Rights Statement"
+        "en": "Rights Statement",
+        "sv": "Rättigheter"
       },
       "description": {
         "en": "A description of the rights and terms of re-use for a dataset. A rights statement will include a reference to one or more licences copyright notices, and attribution requirements. Where a Rights Statement refers to several licences the intention is that these should separately apply to the data and content associated with the dataset. An individual Rights Statement may be specific to a dataset or could be applied to a number of datasets published by the same organisation or person, where the rights associated with each dataset are identical."

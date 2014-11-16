@@ -1,50 +1,55 @@
 <html>
-  <head>
+<head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-      <link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-ad>
-    <body class="dbootstrap">
-        <script src="../release/dojo/dojo.js.uncompressed.js"></script>
-        <style>
-            @import "../release/rdforms/view/resources/rdforms.css";
-            .dbootstrap :focus {
-                outline: 0px;
-            }
-            input[type="text"], input[type="password"] { outline: none; }
+    <link href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<body class="dbootstrap">
+<script>
+    var lang = window.location.href.match(/lang=([^&]*)/);
+    if (lang != null && lang.length === 2) {
+        var dojoConfig = {locale: lang[1]};
+    }
+</script>
 
-            .dbootstrap .dijitDownArrowButton.dijitArrowButtonContainer {
-                height: 16px;
-            }
+<script src="../release/dojo/dojo.js.uncompressed.js"></script>
+    <style>
+        @import "../release/rdforms/view/resources/rdforms.css";
+        .dbootstrap :focus {
+            outline: 0px;
+        }
+        input[type="text"], input[type="password"] { outline: none; }
+        .dbootstrap .dijitDownArrowButton.dijitArrowButtonContainer {
+            height: 16px;
+        }
 
-            html, body {
-                height: 100%;
-                width: 100%;
-                padding: 0px;
-                margin: 0px;
-            }
-            .icon {
-                float: left;
-                margin-top: 3px;
-                margin-right: 15px;
-                width: 45px;
-            }
-            .dijitDialog *,
-            .storeManager * {
-                -webkit-box-sizing: content-box;
-                box-sizing: content-box;
-            }
-            .main {
-                position: relative;
-                height: 100%;
-            }
-            #content {
-                position: absolute;
-                top: 51px;
-                bottom: 0em;
-                left: 0px;
-                right: 0px;
-            }
-        </style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            padding: 0px;
+            margin: 0px;
+        }
+        .icon {
+            float: left;
+            margin-top: 3px;
+            margin-right: 15px;
+            width: 45px;
+        }
+        .dijitDialog *,
+        .storeManager * {
+            -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+        .main {
+            position: relative;
+            height: 100%;
+        }
+        #content {
+            position: absolute;
+            top: 51px;
+            bottom: 0em;
+            left: 0px;
+            right: 0px;
+        }
+    </style>
     <script type="text/javascript">
         var params = window.location.href.match(/\?([^#]*)/)[1].split("&");
         var parobj = {};

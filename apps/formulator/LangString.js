@@ -57,16 +57,17 @@ define(["dojo/_base/declare",
             }
         },
         getMap: function() {
-            var map = {};
+            var map = {}, empty = true;
             for(var i=0;i<this._rows.length;i++) {
                 var row = this._rows[i];
                 var l = row.lang.get("value") || "";
                 var t = row.text.get("value");
                 if (t != null && t !== "") {
                     map[l] = t;
+                    empty = false;
                 }
             }
-            return map;
+            return empty ? null : map;
         },
         add: function() {
             this._add("", "");

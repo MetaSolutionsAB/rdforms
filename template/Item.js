@@ -7,6 +7,13 @@ define([
 ], function (declare, lang, array, utils) {
     var itemCount = 0;
 
+    var setObjAttr = function(obj, attr, value) {
+        if (value === null || typeof value === "undefined" || value === "" || (lang.isArray(value) && value.length === 0)) {
+            delete obj[attr];
+        } else {
+            obj[attr] = value;
+        }
+    };
     /**
      * Base functionality of Text, Group and Choice item classes.
      */
@@ -46,8 +53,7 @@ define([
             return s.id || s["@id"];
         },
         setId: function (id) {
-            var s = this.getSource(true);
-            s.id = id;
+            setObjAttr(this.getSource(true), "id", id);
             delete s["@id"];
         },
         getType: function (original) {
@@ -55,8 +61,7 @@ define([
             return s.type || s["@type"];
         },
         setType: function (typeStr) {
-            var s = this.getSource(true);
-            s.type = typeStr;
+            setObjAttr(this.getSource(true), "type", typeStr);
             delete s["@type"];
             this.refreshExtends();
         },
@@ -98,7 +103,7 @@ define([
             return this.getSource(original).label;
         },
         setLabelMap: function (map) {
-            this.getSource(true).label = map;
+            setObjAttr(this.getSource(true), "label", map);
             this.refreshExtends();
         },
         getDescription: function (returnDetails, original) {
@@ -114,7 +119,7 @@ define([
             return this.getSource(original).description;
         },
         setDescriptionMap: function(map) {
-            this.getSource(true).description = map;
+            setObjAttr(this.getSource(true), "description", map);
             this.refreshExtends();
         },
 
@@ -126,12 +131,7 @@ define([
         },
 
         setProperty: function(prop) {
-            var s = this.getSource(true);
-            if (prop && prop !== "") {
-                s.property = prop;
-            } else {
-                delete s.property;
-            }
+            setObjAttr(this.getSource(true), "property", prop);
             this.refreshExtends();
         },
 
@@ -152,12 +152,7 @@ define([
             return this.getSource(original).uriValueLabelProperties;
         },
         setURIValueLabelProperties: function (props) {
-            var s = this.getSource(true);
-            if (props) {
-                s.uriValueLabelProperties = props;
-            } else {
-                delete s.uriValueLabelProperties;
-            }
+            setObjAttr(this.getSource(true), "uriValueLabelProperties", props);
             this.refreshExtends();
         },
 
@@ -169,12 +164,7 @@ define([
             return this.getSource(original).constraints;
         },
         setConstraints: function (constr) {
-            var s = this.getSource(true);
-            if (constr) {
-                s.constraints = constr;
-            } else {
-                delete s.constraints;
-            }
+            setObjAttr(this.getSource(true), "constraints", constr);
             this.refreshExtends();
         },
 
@@ -185,24 +175,14 @@ define([
             return this.getSource(original).datatype;
         },
         setDatatype: function (dt) {
-            var s = this.getSource(true);
-            if (dt && dt !== "") {
-                s.datatype = dt;
-            } else {
-                delete s.datatype;
-            }
+            setObjAttr(this.getSource(true), "datatype", dt);
             this.refreshExtends();
         },
         getPattern: function(original) {
             return this.getSource(original).pattern;
         },
         setPattern: function(pattern) {
-            var s = this.getSource(true);
-            if (pattern && pattern !== "") {
-                s.pattern = pattern;
-            } else {
-                delete s.pattern;
-            }
+            setObjAttr(this.getSource(true), "pattern", pattern);
             this.refreshExtends();
         },
         /**
@@ -213,24 +193,14 @@ define([
             return this.getSource(original).language;
         },
         setLanguage: function (lang) {
-            var s = this.getSource(true);
-            if (lang && lang !== "") {
-                s.language = lang;
-            } else {
-                delete s.language;
-            }
+            setObjAttr(this.getSource(true), "language", lang);
             this.refreshExtends();
         },
         getMember: function (original) {
             return this.getSource(original).member;
         },
         setMember: function (member) {
-            var s = this.getSource(true);
-            if (member != null) {
-                s.member = member;
-            } else {
-                delete s.member;
-            }
+            setObjAttr(this.getSource(true), "member", member);
             this.refreshExtends();
         },
         /**
@@ -242,37 +212,21 @@ define([
             return s.nodetype || s.nodeType; //Ugly fix because it is often wrong written in SIRFF.
         },
         setNodetype: function (nt) {
-            var s = this.getSource(true);
-            if (nt) {
-                s.nodetype = nt;
-            } else {
-                delete s.nodetype;
-            }
-            s.nodetype = nt;
+            setObjAttr(this.getSource(true), "nodetype", nt);
             this.refreshExtends();
         },
         getValue: function (original) {
             return this.getSource(original).value;
         },
         setValue: function (value) {
-            var s = this.getSource(true);
-            if (value && value != "") {
-                s.value = value;
-            } else {
-                delete s.value;
-            }
+            setObjAttr(this.getSource(true), "value", value);
             this.refreshExtends();
         },
         getValueTemplate: function(original) {
             return this.getSource(original).valueTemplate;
         },
         setValueTemplate: function(valueTemplate) {
-            var s = this.getSource(true);
-            if (valueTemplate) {
-                s.valueTemplate = valueTemplate;
-            } else {
-                delete s.valueTemplate;
-            }
+            setObjAttr(this.getSource(true), "valueTemplate", valueTemplate);
             this.refreshExtends();
         },
 
@@ -283,12 +237,7 @@ define([
             return this.getSource(original).cardinality || {};
         },
         setCardinality: function (card) {
-            var s = this.getSource(true);
-            if (card) {
-                s.cardinality = card;
-            } else {
-                delete s.cardinality;
-            }
+            setObjAttr(this.getSource(true), "cardinality", card);
             this.refreshExtends();
         },
         isEnabled: function (original) {
@@ -313,12 +262,7 @@ define([
             return this.getSource(original).cls || [];
         },
         setClasses: function(arr) {
-            var s = this.getSource(true);
-            if (arr) {
-                s.cls = arr;
-            } else {
-                delete s.cls;
-            }
+            setObjAttr(this.getSource(true), "cls", arr);
             this.refreshExtends();
         },
 
@@ -355,7 +299,7 @@ define([
             return this.getSource(original).styles || [];
         },
         setStyles: function(arr) {
-            this.getSource(true).styles = arr;
+            setObjAttr(this.getSource(true), "styles", arr);
             this.refreshExtends();
         },
         hasStyle: function (sty, original) {

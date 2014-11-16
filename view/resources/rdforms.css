@@ -611,3 +611,8 @@ a.rformsUrl:hover {
     height: 100%;
     overflow:auto;
 }
+
+/* Fix for dropdownbuttons that have a to small background image, yielding an non-pixel-perfect look.*/
+.dbootstrap .dijitDownArrowButton {
+    height: 28px;
+}

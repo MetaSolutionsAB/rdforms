@@ -307,23 +307,17 @@ a.rformsUrl:hover {
  	font-size: xx-small;
 	margin-left: 1em;
 }
-.rformsEditor .rformsField textarea {
-	font: inherit;
-    box-sizing: content-box !important;
-    padding-right: 0px;
-}
 
 .rformsEditor .langFieldControl .dijitButton {
  	font-size: xx-small;
 	margin-left: 0.2em;
 }
  
- .rformsEditor .rformsFieldInput {
- 	width: 100%;
- 	padding-left: 0.3em;
- }
- 
- .rformsEditor .rformsChoiceValue {
+.rformsEditor .rformsFieldInput {
+    width: 100%;
+}
+
+.rformsEditor .rformsChoiceValue {
  	display: inline-block;
 	zoom:1;
 	background: whitesmoke;

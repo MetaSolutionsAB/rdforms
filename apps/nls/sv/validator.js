@@ -13,5 +13,8 @@ define({
     error: "fel,fel",
     warning: "varning,varningar",
     report_few: "För få värden",
-    report_many: "För många värden"
+    report_many: "För många värden",
+    aboutButton: "Om validatorn",
+    aboutTitle: "Om validatorn",
+    aboutText: "<p>Detta verktyg har tagits fram av <a href=\"http://www.metasolutions.se\" target=\"_blank\">MetaSolutions</a> för att se hur RDF uttryck kan valideras med hjälp av RDForms mallar.</p><p>All kod är licensierad med <a href=\"https://www.gnu.org/licenses/lgpl.html\" target=\"_blank\">LGPLv3</a>.</p><p>Kontakta oss på <a href=\"mailto:info@metasolutions.se\">info@metasolutions.se</a> om du vill veta mer om våra verktyg.</p>"
 });

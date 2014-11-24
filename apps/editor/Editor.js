@@ -9,6 +9,7 @@ define(["dojo/_base/declare",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
     "dijit/Dialog", //in template
+    "rdforms/apps/components/About", //In template
     "rdforms/apps/components/Config",
     "rdforms/apps/editor/IncludeLevelEditor", //in template
     "rdforms/view/Presenter", //in template
@@ -17,7 +18,7 @@ define(["dojo/_base/declare",
     "rdfjson/Graph",
 	"dojo/text!./EditorTemplate.html"
 ], function(declare, lang, topic, domAttr, domClass, domStyle, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin,
-            Dialog, Config, IncludeLevelEditor, Presenter, RDFEdit, ItemStore, Graph, template) {
+            Dialog, About, Config, IncludeLevelEditor, Presenter, RDFEdit, ItemStore, Graph, template) {
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin, Config.Cls], {
 
@@ -80,8 +81,9 @@ define(["dojo/_base/declare",
         _requireLocale: function(callback) {
             require(["dojo/i18n!rdforms/apps/nls/editor"], lang.hitch(this, function(editor) {
                 this.messages = editor;
-                if (this.header) {
-                    domClass.add(this.domNode, "withHeader")
+                this._about.localize(lang.mixin({}, editor, this.config));
+                if (this.config.header) {
+                    domClass.add(this.domNode, "withHeader");
                     domAttr.set(this._headerNode, "innerHTML", this.config.header || editor.header);
                 }
                 this._editorTab.set("title", this.messages.editorTab);
@@ -93,6 +95,7 @@ define(["dojo/_base/declare",
                 domAttr.set(this._rdfInitHeader, "innerHTML", this.messages.rdfInitHeader);
                 domAttr.set(this._startButton, "innerHTML", this.messages.startButton);
                 this._editor.localize(editor);
+                this.resize();
                 callback();
             }));
         },

@@ -13,7 +13,10 @@ define({
         startButton: "Start editing",
         mandatoryLabel: "Mandatory",
         recommendedLabel: "Recommended",
-        optionalLabel: "Optional"
+        optionalLabel: "Optional",
+        aboutButton: "About the editor",
+        aboutTitle: "About the editor",
+        aboutText: "<p>This tool have been developed by <a href=\"http://www.metasolutions.se\" target=\"_blank\">MetaSolutions</a> to allow RDF expressions to be edited using RDForms templates.</p><p>All code is licensed under <a href=\"https://www.gnu.org/licenses/lgpl.html\" target=\"_blank\">LGPLv3</a>.</p><p>Contact us at <a href=\"mailto:info@metasolutions.se\">info@metasolutions.se</a> if you want to know more about our tools.</p>"
     },
     sv: true
 });

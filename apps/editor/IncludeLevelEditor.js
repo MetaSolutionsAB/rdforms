@@ -21,16 +21,24 @@ define(["dojo/_base/declare",
         compact: true,
         includeLevel: "mandatory",
         includeLevelControllsVisible: true,
+        externalEditor: false,
         messages: null,
 
         show: function(resource, graph, template) {
             this.resource = resource || this.resource;
             this.graph = graph || this.graph;
             this.template = template || this.template;
-            this._rdformsDijit.show({resource: this.resource, graph: this.graph, template: this.template, includeLevel: this.includeLevel});
+            if (this._rdformsDijit) {
+                this._rdformsDijit.show({
+                    resource: this.resource,
+                    graph: this.graph,
+                    template: this.template,
+                    includeLevel: this.includeLevel
+                });
+            }
         },
         setIncludeLevel: function(includeLevel) {
-            if (this._rdformsDijit.getIncludeLevel() === includeLevel) {
+            if (this._rdformsDijit != null && this._rdformsDijit.getIncludeLevel() === includeLevel) {
                 return;
             }
             this.includeLevel = includeLevel;
@@ -62,6 +70,17 @@ define(["dojo/_base/declare",
             if (this.includeLevelControllsVisible) {
                 domStyle.set(this._cardinalityNode, "display", "");
             }
+            if (!this.externalEditor) {
+                this._rdformsDijit = new Editor({includeLevel: "mandatory", compact: this.compact}, this._rdformsNode);
+                this.show();
+            }
+        },
+
+        setExternalEditor: function(editor) {
+            if (editor.getIncludeLevel() !== this.includeLevel) {
+                editor.setIncludeLevel(this.includeLevel);
+            }
+            this._rdformsDijit = editor;
             this.show();
         },
 
@@ -96,7 +115,9 @@ define(["dojo/_base/declare",
             this._updateEditor("optional");
         },
         _updateEditor: function(includeLevel) {
-            this._rdformsDijit.setIncludeLevel(includeLevel);
+            if (this._rdformsDijit) {
+                this._rdformsDijit.setIncludeLevel(includeLevel);
+            }
         }
     });
 });

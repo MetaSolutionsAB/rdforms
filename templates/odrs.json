@@ -2,34 +2,12 @@
   "templates": [
     {
       "type": "group",
-      "id": "odrs:RightsStatement",
-      "constraints": {
-        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://schema.theodi.org/odrs#RightsStatement"
-      },
-      "label": {
-        "en": "Rights Statement"
-      },
-      "description": {
-        "en": "A description of the rights and terms of re-use for a dataset. A rights statement will include a reference to one or more licences copyright notices, and attribution requirements. Where a Rights Statement refers to several licences the intention is that these should separately apply to the data and content associated with the dataset. An individual Rights Statement may be specific to a dataset or could be applied to a number of datasets published by the same organisation or person, where the rights associated with each dataset are identical."
-      },
+      "id": "odrs:RightsStatement-long",
+      "label": {},
+      "description": {},
       "items": [
         {
-          "id": "odrs:attributionText"
-        },
-        {
-          "id": "odrs:attributionURL"
-        },
-        {
-          "id": "odrs:copyrightNotice"
-        },
-        {
-          "id": "odrs:copyrightStatement"
-        },
-        {
           "id": "odrs:databaseRightStatement"
-        },
-        {
-          "id": "odrs:copyrightYear"
         },
         {
           "id": "odrs:databaseRightYear"
@@ -52,7 +30,8 @@
         {
           "id": "odrs:contentLicense"
         }
-      ]
+      ],
+      "extends": "odrs:RightsStatement-common"
     },
     {
       "type": "text",
@@ -336,6 +315,24 @@
     {
       "type": "group",
       "id": "odrs:RightsStatement-short",
+      "label": {},
+      "description": {},
+      "items": [
+        {
+          "id": "odrs:copyrightHolder"
+        },
+        {
+          "id": "odrs:jurisdiction"
+        },
+        {
+          "id": "odrs:reuserGuidelines"
+        }
+      ],
+      "extends": "odrs:RightsStatement-common"
+    },
+    {
+      "type": "group",
+      "id": "odrs:RightsStatement-common",
       "constraints": {
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://schema.theodi.org/odrs#RightsStatement"
       },
@@ -361,9 +358,22 @@
         },
         {
           "id": "odrs:copyrightYear"
-        },
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "id": "odrs:RightsStatement-short-agent",
+      "label": {},
+      "description": {},
+      "items": [
         {
-          "id": "odrs:copyrightHolder"
+          "type": "choice",
+          "nodetype": "URI",
+          "extends": "odrs:copyrightHolder",
+          "constraints": {
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Agent"
+          }
         },
         {
           "id": "odrs:jurisdiction"
@@ -371,7 +381,8 @@
         {
           "id": "odrs:reuserGuidelines"
         }
-      ]
+      ],
+      "extends": "odrs:RightsStatement-common"
     }
   ]
 }

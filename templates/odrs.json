@@ -3,8 +3,6 @@
     {
       "type": "group",
       "id": "odrs:RightsStatement-long",
-      "label": {},
-      "description": {},
       "items": [
         {
           "id": "odrs:databaseRightStatement"
@@ -315,8 +313,6 @@
     {
       "type": "group",
       "id": "odrs:RightsStatement-short",
-      "label": {},
-      "description": {},
       "items": [
         {
           "id": "odrs:copyrightHolder"
@@ -364,8 +360,6 @@
     {
       "type": "group",
       "id": "odrs:RightsStatement-short-agent",
-      "label": {},
-      "description": {},
       "items": [
         {
           "type": "choice",

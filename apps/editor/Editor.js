@@ -31,6 +31,7 @@ define(["dojo/_base/declare",
         itemStore: null,
         includeLevel: "mandatory",
         includeLevelControllsVisible: true,
+        aboutButtonVisible: true,
 
         show: function (resource, rdf, template) {
             this.resource = resource || this.resource;
@@ -61,7 +62,10 @@ define(["dojo/_base/declare",
             if (this.config.includeLevel) {
                 this._editor.setIncludeLevel(this.config.includeLevel);
             }
-
+            this.aboutButtonVisible = this.config.aboutButtonVisible || this.aboutButtonVisible;
+            if (this.aboutButtonVisible === true) {
+                domStyle.set(this._about.domNode, "display", "block");
+            }
             this._requireLocale(lang.hitch(this, function() {
                 this.template = this.itemStore.getItem(this.type2template[this.mainType]);
                 if (this.rdf && this.resource) {

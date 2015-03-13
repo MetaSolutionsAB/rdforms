@@ -351,16 +351,33 @@ define([
      *  If there are no constraints to match in the item an empty array is returned.
      */
     var _findStatementsForConstraints = function (graph, uri, item) {
-        var stmts, constr, results = [];
-        if (lang.isObject(item.getConstraints())) {
-            constr = item.getConstraints();
+        var stmts, constr = item.getConstraints(), results = [];
+        var f = function(predicate, object) {
+            stmts = graph.find(uri, predicate, {type: "uri", value: object});
+            if (stmts.length == 1) {
+                results.push(stmts[0]);
+            } else {
+                return false;
+            }
+        }
+        if (lang.isObject(constr)) {
             for (var key in constr) {
                 if (constr.hasOwnProperty(key)) {
-                    stmts = graph.find(uri, key, {type: "uri", value: constr[key]});
-                    if (stmts.length == 1) {
-                        results.push(stmts[0]);
+                    var obj = constr[key];
+                    if (obj instanceof Array) {
+                        var noMatch = true;
+                        array.forEach(obj, function(o) {
+                            if (f(key, o) !== false) {
+                                noMatch = false;
+                            }
+                        });
+                        if (noMatch) {
+                            return;
+                        }
                     } else {
-                        return; //did not find any match for the current constraint == failure.
+                        if (f(key, obj) === false) {
+                            return;
+                        }
                     }
                 }
             }
@@ -376,7 +393,12 @@ define([
             constr = item.getConstraints();
             for (var key in constr) {
                 if (constr.hasOwnProperty(key)) {
-                    results.push(graph.create(uri, key, {type: "uri", value: constr[key]}, false));
+                    var obj = constr[key];
+                    if (obj instanceof Array) {
+                        results.push(graph.create(uri, key, {type: "uri", value: obj[0]}, false));
+                    } else {
+                        results.push(graph.create(uri, key, {type: "uri", value: obj}, false));
+                    }
                 }
             }
             return results;

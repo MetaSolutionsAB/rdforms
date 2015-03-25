@@ -252,8 +252,6 @@ define(["dojo/_base/declare",
                         onChange: function () {
                             if (tb.isValid()) {
                                 binding.setValue(this.get("value"));
-                            } else {
-                                binding.setValue("");
                             }
                         }
                     }, domConstruct.create("div", null, fieldDiv));
@@ -266,8 +264,6 @@ define(["dojo/_base/declare",
                         onChange: function () {
                             if (tb.isValid()) {
                                 binding.setValue(this.get("value"));
-                            } else {
-                                binding.setValue("");
                             }
                         }
                     }, domConstruct.create("div", null, fieldDiv));
@@ -277,7 +273,9 @@ define(["dojo/_base/declare",
                         pattern: itemToUse.getPattern(),
                         invalidMessage: itemToUse.getDescription(),
                         onChange: function () {
-                            binding.setGist(this.get("value"));
+                            if (this.isValid()) {
+                                binding.setGist(this.get("value"));
+                            }
                         }
                     }, domConstruct.create("div", null, fieldDiv));
                 } else {
@@ -306,7 +304,9 @@ define(["dojo/_base/declare",
                         pattern: itemToUse.getPattern(),
                         invalidMessage: itemToUse.getDescription(),
                         onChange: function () {
-                            binding.setGist(this.get("value"));
+                            if (this.isValid()) {
+                                binding.setGist(this.get("value"));
+                            }
                         }
                     }, domConstruct.create("div", null, fieldDiv));
                 } else {
@@ -441,11 +441,8 @@ define(["dojo/_base/declare",
                             oc.show();
                         }));
                     }
-                    //}
 
-                    /*Code below is to correctly remove items in the form and their
-                     * values
-                     */
+                    // Code below is to correctly remove items in the form and their values
                     if (noCardinalityButtons !== true) {
                         this._addRemoveButton(fieldDiv, binding, controlDiv, function () {
                             fSelect && fSelect.set("value", "");
@@ -474,25 +471,21 @@ define(["dojo/_base/declare",
                             });
                         }
                     }
+                    if (binding.getChoice() !== choice) {
+                        binding.setChoice(choice);
+                    }
                 };
                 setChoice(binding.getChoice());
                 if (system.hasDnDSupport(binding)) {
-                    system.addDnD(binding, cNode, function(dropChoice) {
-                        binding.setChoice(dropChoice);
-                        setChoice(dropChoice);
-                    });
+                    system.addDnD(binding, cNode, setChoice);
                 }
 
                 var ddButton = domConstruct.create("span", {"class": "action editSearch", "title": this.messages.edit_browse}, divToUse);
                 on(ddButton, "click", lang.hitch(this, function () {
-                    system.openChoiceSelector(binding, function (choice) {
-                        binding.setChoice(choice);
-                        setChoice(choice);
-                    });
+                    system.openChoiceSelector(binding, setChoice);
                 }));
-                /*Code below is to correctly remove items in the form and their
-                 * values
-                 */
+
+                // Code below is to correctly remove items in the form and their values
                 if (noCardinalityButtons !== true) {
                     this._addRemoveButton(fieldDiv, binding, controlDiv, function () {
                         binding.setValue("");

@@ -12,7 +12,7 @@ define(["dojo/_base/declare",
     "dijit/form/Button",
     "../utils",
     "dojo/text!./ChooserTemplate.html"
-], function (declare, attr, style, window, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
+], function (declare, domAttr, domStyle, window, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
              Dialog, ContentPane, BorderContainer, Button, utils, template) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -25,7 +25,7 @@ define(["dojo/_base/declare",
         show: function () {
             this._selectChoice(this.binding.getChoice());
             var viewport = window.getBox();
-            style.set(this.bc.domNode, {
+            domStyle.set(this.bc.domNode, {
                 width: Math.floor(viewport.w * 0.70) + "px",
                 height: Math.floor(viewport.h * 0.70) + "px",
                 overflow: "auto",
@@ -56,14 +56,14 @@ define(["dojo/_base/declare",
         _selectChoice: function (choice) {
             if (choice == null) {
                 delete this.selected;
-                attr.set(this.uriNode, "innerHTML", "");
-                attr.set(this.labelNode, "innerHTML", "");
-                attr.set(this.descriptionNode, "innerHTML", "");
+                domAttr.set(this.uriNode, "innerHTML", "");
+                domAttr.set(this.labelNode, "innerHTML", "");
+                domAttr.set(this.descriptionNode, "innerHTML", "");
             } else {
                 this.selected = choice;
-                attr.set(this.uriNode, "innerHTML", this.selected.value);
-                attr.set(this.labelNode, "innerHTML", utils.getLocalizedValue(choice.label).value || "(No label given.)");
-                attr.set(this.descriptionNode, "innerHTML", utils.getLocalizedValue(choice.description).value || "");
+                domAttr.set(this.uriNode, "innerHTML", this.selected.value);
+                domAttr.set(this.labelNode, "innerHTML", utils.getLocalizedValue(choice.label).value || "(No label given.)");
+                domAttr.set(this.descriptionNode, "innerHTML", utils.getLocalizedValue(choice.description).value || "");
                 if (choice.selectable !== false && (this.binding.getChoice() == null || this.binding.getChoice().value !== this.selected.value)) {
                     this.doneButton.set("disabled", false);
                 } else {

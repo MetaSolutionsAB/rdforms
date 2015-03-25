@@ -17,7 +17,7 @@
                 "label":{"en":"Creator"},
                 "property":"http://purl.org/dc/terms/creator",
 				"cardinality": {"min": 0, "pref": 1, "max": 5},
-                "constraints":{"http://www.w3.org/TR/rdf-schema/type":"http://xmlns.com/foaf/0.1/Person"},
+                "constraints":{"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person"},
                 "content":[
                     {
                         "type":"text",

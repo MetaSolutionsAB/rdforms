@@ -504,8 +504,9 @@ define(["dojo/_base/declare",
             var table = domConstruct.create("table", null, newRow);
             domClass.add(table, "rformsGroup");
 
-            tHead = domConstruct.create("thead", null, table);
-            tHeadRow = domConstruct.create("tr", null, table);
+            var tHead = domConstruct.create("thead", null, table);
+            var tBody = domConstruct.create("tbody", null, table);
+            var tHeadRow = domConstruct.create("tr", null, tHead);
             for (colInd = 0; colInd < childItems.length; colInd++) {
                 var th = domConstruct.create("th", null, tHeadRow);
                 domClass.add(th, "rformsColumnHeader" + colInd);
@@ -520,14 +521,14 @@ define(["dojo/_base/declare",
                 on(add, "click", lang.hitch(this, function () {
                     if (!cardTr.isMax()) {
                         var nBinding = Engine.create(parentBinding, item);
-                        this._addTableRow(table, nBinding);
+                        this._addTableRow(tBody, nBinding);
                     }
                 }));
                 aspect.after(cardTr, "cardinalityChanged", function () {
                     domClass.toggle(add, "disabled", cardTr.isMax());
                 });
             }
-            return table;
+            return tBody;
         },
         fillTable: function (table, bindings) {
             if (bindings.length === 0) {

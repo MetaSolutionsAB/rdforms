@@ -610,3 +610,40 @@ a.rformsUrl:hover {
 .dbootstrap .dijitDownArrowButton {
     height: 28px;
 }
+
+.dbootstrap table {
+    font-size: 14px;
+}
+.dbootstrap table th {
+    font-weight: normal;
+    padding-bottom: 4px;
+}
+
+.dbootstrap table td {
+    padding-top: 5px;
+}
+
+.dbootstrap table tbody tr:first-child td {
+    padding-top: 8px;
+}
+
+.dbootstrap table tbody tr td:first-child {
+    padding-left: 10px;
+}
+
+.dbootstrap table tbody tr td:first-child {
+    padding-left: 10px;
+}
+
+.dbootstrap table thead tr th:first-child {
+    padding-left: 14px;
+}
+
+.dbootstrap .rformsEditor table.rformsGroup td.rformsTableControl {
+    padding-right: 10px;
+}
+
+.dbootstrap .rformsPresenter table.rformsGgroup th,
+.dbootstrap .rformsEditor table.rformsGroup th {
+    padding-right: 10px;
+}

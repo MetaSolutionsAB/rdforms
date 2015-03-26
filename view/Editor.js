@@ -150,12 +150,12 @@ define(["dojo/_base/declare",
             } else if (card.min > 0) {
                 target = card.min;
             } else if (item instanceof PropertyGroup) {
-                target = 0;
+                target = 1; // Was 0 before, old way. Now regulated via includeLevel and expand style instead.
             } else if (item instanceof Group) {
                 if (item.getProperty() == null) {
                     target = 1;
                 } else {
-                    target = 0;
+                    target = 1; // Was 0 before, old way. Now regulated via includeLevel and expand style instead.
                 }
             } else {
                 target = 1;

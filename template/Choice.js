@@ -1,5 +1,10 @@
 /*global define*/
-define(["dojo/_base/declare", "dojo/_base/lang", "../utils", "./Item"], function (declare, lang, utils, Item) {
+define([
+    "dojo/_base/declare",
+    "dojo/_base/lang",
+    "rdforms/utils",
+    "rdforms/template/Item"
+], function (declare, lang, utils, Item) {
 
     var sortChoices = function (choices) {
         if (choices == null) {

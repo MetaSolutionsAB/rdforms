@@ -6,8 +6,9 @@ define([
     "dojo/_base/array",
 	"dojo/json",
     "rdfjson/formats/converters",
-	"rdforms/template/ItemStore"
-], function(exports, declare, lang, array, json, converters, ItemStore) {
+	"rdforms/template/ItemStore",
+    "rdforms/template/bundleLoader"
+], function(exports, declare, lang, array, json, converters, ItemStore, bundleLoader) {
 
     var onRDF = function(config) {
         if (config.bundles) {
@@ -16,7 +17,7 @@ define([
                     return config._basePath+bpath;
                 });
             }
-            config.itemStore.loadBundles(config.bundles, config.postConfig);
+            bundleLoader(config.itemStore, config.bundles, config.postConfig);
         } else {
             config.postConfig();
         }

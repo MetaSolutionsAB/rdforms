@@ -2,7 +2,7 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/array",
-    "./Item"
+    "rdforms/template/Item"
 ], function(declare, array, Item) {
 
     var sortItems = function(items) {

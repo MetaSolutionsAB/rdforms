@@ -3,7 +3,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/array",
     "dojo/_base/lang",
-    "./Group"
+    "rdforms/template/Group"
 ], function(declare, array, lang, Group) {
 
     /**

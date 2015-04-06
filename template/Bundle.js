@@ -1,5 +1,7 @@
 /*global define*/
-define(["dojo/_base/declare"], function(declare) {
+define([
+    "dojo/_base/declare"
+], function(declare) {
 
     var counter = 0;
     /**

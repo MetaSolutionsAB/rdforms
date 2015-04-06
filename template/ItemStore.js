@@ -3,17 +3,14 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
-    "dojo/request",
-    "dojo/json",
-    "./Bundle",
-    "./Group",
-    "./PropertyGroup",
-    "./Text",
-    "./Choice",
-    "./OntologyStore",
-    "./Converter",
-    "../model/Engine"
-], function (declare, lang, array, request, json, Bundle, Group, PropertyGroup, Text, Choice, OntologyStore, Converter, Engine) {
+    "rdforms/template/Bundle",
+    "rdforms/template/Group",
+    "rdforms/template/PropertyGroup",
+    "rdforms/template/Text",
+    "rdforms/template/Choice",
+    "rdforms/template/OntologyStore",
+    "rdforms/model/Engine"
+], function (declare, lang, array, Bundle, Group, PropertyGroup, Text, Choice, OntologyStore, Engine) {
 
     /**
      * Keeps a registry of templates and reusable items.
@@ -157,32 +154,6 @@ define([
             return this._bundles;
         },
 
-        /**
-         * @param {Array} bundlePaths is an array of paths to bundles that can be understood by require.
-         */
-        loadBundles: function(bundlePaths, callback) {
-            var endsWith = function(str, suffix) {
-                return str.indexOf(suffix, str.length - suffix.length) !== -1;
-            };
-            var bpaths = array.map(bundlePaths, function(p) {
-                return endsWith(p, ".json") ? "dojo/text!"+p : (endsWith(p, ".js") ? p.substring(0, p.length-3) : p);
-            });
-            require(bpaths, lang.hitch(this, function() {
-                var arr = [];
-                var bundles = Array.prototype.slice.call(arguments); //Convert to regular array
-                for (var b=0;b<bundles.length;b++) {
-                    if (endsWith(bundlePaths[b], ".json")) {
-                        arr.push(this.registerBundle({path: bundlePaths[b], source: json.parse(bundles[b])}));
-                    } else if (endsWith(bundlePaths[b], ".js")) {
-                        arr.push(this.registerBundle({path: bundlePaths[b], source: bundles[b]}));
-                    } else {
-                        arr.push(this.registerBundle({path: bundlePaths[b]+".js", source: bundles[b]}));
-                    }
-                }
-                callback && callback(arr);
-            }));
-        },
-
         //Backward compatability
         createTemplate: function (source) {
             var b = this.registerBundle({source: source});
@@ -196,32 +167,6 @@ define([
         },
         setPriorities: function (priorities) {
             this.priorities = priorities;
-        },
-        populate: function (configArr, callback) {
-            var countdown = configArr.length;
-            var down = function () {
-                countdown--;
-                if (countdown === 0) {
-                    callback();
-                }
-            }
-            array.forEach(configArr, function (config) {
-                if(lang.isString(config) || config.type === "sirff") {
-                    var url = lang.isString(config) ? config : config.url;
-                    request.get(url, {
-                        handleAs: "json"
-                    }).then(lang.hitch(this, function (data) {
-                            this.createTemplate(data);
-                            down();
-                        }), down);
-                } else if (config.type === "exhibit") {
-                    var converter;
-                    if (converter == null) {
-                        converter = new Converter(this);
-                    }
-                    converter.convertExhibit(config.url, down);
-                }
-            }, this);
         },
 
         createExtendedSource: function(origSource, extSource) {

@@ -172,7 +172,7 @@ define(["dojo/_base/declare",
         }
         if (item.hasStyle("image")) {
             domConstruct.create("img", {"class": "rformsImage", "src": choice.value, title: desc || choice.value}, fieldDiv);
-        } else if (item.hasStyle("stars") && parseInt(choice.value) != NaN) {
+        } else if (item.hasStyle("stars") && !isNaN(parseInt(choice.value))) {
 			for (var i=parseInt(choice.value);i>0;i--) {
 				domConstruct.create("span", {"class": "rformsStar"}, fieldDiv);
 			}

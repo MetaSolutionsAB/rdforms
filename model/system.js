@@ -2,8 +2,9 @@ define([
     "exports",
     "dojo/on",
     "rdforms/utils",
-    "dojo/dom-attr"
-], function(exports, on, utils, domAttr) {
+    "dojo/dom-attr",
+    "dojo/i18n"
+], function(exports, on, utils, domAttr, i18n) {
 
     var generateUIDNotMoreThan1million = function () {
         return ("0000" + (Math.random()*Math.pow(36,4) << 0).toString(36)).slice(-4)
@@ -111,6 +112,7 @@ define([
     };
 
     exports.getMessages = function(callback) {
-        require(["dojo/i18n!rdforms/view/nls/rdforms"], callback);
+        callback(i18n.getLocalization("rdforms/view", "rdforms"));
+//        require(["dojo/i18n!rdforms/view/nls/rdforms"], callback);
     };
 });

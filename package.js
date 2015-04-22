@@ -2,7 +2,7 @@ var profile = (function(){
     var testResourceRe = /\/tests\//;
     var converters = /\/converters\//;
     var common = /\/common\//;
-    var exclude = /^rdforms\/(node_modules|converters|doc|bin|build|common|html|libs|release|release-layer|samples|templates|local_templates)\//;
+    var exclude = /^rdforms\/(node_modules|converters|doc|bin|build|common|html|libs|release|release-layer|dist|samples|templates|local_templates)\//;
     return {
         resourceTags: {
             ignore: function(filename, mid) {

@@ -9,7 +9,8 @@ define(["dojo/_base/declare",
 	"dijit/form/Select",
 	"dijit/form/DateTextBox", 
 	"dijit/form/NumberSpinner"
-], function(declare, lang, attr, construct, stamp, array, _Widget, Select, DateTextBox, NumberSpinner) {
+], function(declare, lang, domAttr, domConstruct, stamp, array, _Widget, Select,
+            DateTextBox, NumberSpinner) {
 
     return declare(_Widget, {
 	//===================================================
@@ -36,9 +37,9 @@ define(["dojo/_base/declare",
 	// Inherited methods
 	//===================================================
 	buildRendering: function() {
-		this.domNode = this.srcNodeRef || construct.create("div");
-		this.editorNode = construct.create("span", {"class": "rformsDateValue"}, this.domNode);
-		this.formatChooserNode = construct.create("span", null, this.domNode);
+		this.domNode = this.srcNodeRef || domConstruct.create("div");
+		this.editorNode = domConstruct.create("span", {"class": "rdformsDateValue"}, this.domNode);
+		this.formatChooserNode = domConstruct.create("span", null, this.domNode);
 		var data = this.binding.getValue();
 		this._valid = data != null && data != "";
 		if (this._valid) {
@@ -87,7 +88,7 @@ define(["dojo/_base/declare",
 				options: options,
 				onChange: lang.hitch(this, function(item) {
 					this["_show"+item]();
-				})}, construct.create("div", null, this.formatChooserNode));
+				})}, domConstruct.create("div", null, this.formatChooserNode));
 	},
 	_destroyEditors: function() {
 		this._firstTime = false;
@@ -99,7 +100,7 @@ define(["dojo/_base/declare",
 				delete this[a];
 			}
 		}, this);
-		attr.set(this.editorNode, "innerHTML", "");
+		domAttr.set(this.editorNode, "innerHTML", "");
 	},
 
 	_showDate: function() {
@@ -128,7 +129,7 @@ define(["dojo/_base/declare",
 							this.binding.setValue("");
 						}
 					})
-				}, construct.create("div", null, this.editorNode));
+				}, domConstruct.create("div", null, this.editorNode));
 	},
 	_showDateTime: function() {
 		this._destroyEditors();
@@ -159,8 +160,8 @@ define(["dojo/_base/declare",
 				disabled: !this.item.isEnabled(),
 				invalidMessage: "Proper date format is required, value will not be saved",
 				onChange: update
-			}, construct.create("div", null, this.editorNode));
-		construct.create("span", {innerHTML: "&nbsp;H:"}, this.editorNode);
+			}, domConstruct.create("div", null, this.editorNode));
+		domConstruct.create("span", {innerHTML: "&nbsp;H:"}, this.editorNode);
 		this._hourEditor = new NumberSpinner({
 				style: {width: "3em"},
 				editOptions: {pattern: "##"},
@@ -169,8 +170,8 @@ define(["dojo/_base/declare",
 				smallDelta: 1,
 				intermediateChanges: true,
 				onChange: update
-			},construct.create("div", null, this.editorNode));
-		construct.create("span", {innerHTML: "&nbsp;M:"}, this.editorNode);
+			},domConstruct.create("div", null, this.editorNode));
+		domConstruct.create("span", {innerHTML: "&nbsp;M:"}, this.editorNode);
 		this._minuteEditor = new NumberSpinner({
 				style: {width: "3em"},
 				editOptions: {pattern: "##"},
@@ -179,7 +180,7 @@ define(["dojo/_base/declare",
 				smallDelta: 1,
 				intermediateChanges: true,
 				onChange: update
-			},construct.create("div", null, this.editorNode));
+			},domConstruct.create("div", null, this.editorNode));
 	},
 	_showYear: function() {
 		this._destroyEditors();
@@ -208,7 +209,7 @@ define(["dojo/_base/declare",
 						this.binding.setValue("");						
 					}
 				})},
-			construct.create("div", null, this.editorNode));
+			domConstruct.create("div", null, this.editorNode));
 	},
 	_setValueAttr: function(v) {
 		this.binding.setValue(v);

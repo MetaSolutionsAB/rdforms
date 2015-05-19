@@ -2,7 +2,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link type="text/css" href="../release/dijit/themes/claro/claro.css" rel="stylesheet" />
-    <link type="text/css" href="../release/rdforms/view/resources/rdforms.css" rel="stylesheet" />
+    <link type="text/css" href="../release/rdforms/view/dojo/style.css" rel="stylesheet" />
     <script src="../release/dojo/dojo.js"></script>
 </head>
 <body class="claro">
@@ -14,6 +14,7 @@
         'rdforms/apps/components/Experiment',        //The editor User interface
         'rdforms/model/system',
         'dojo/dom-attr',
+        'rdforms/view/dojo/components',
         'dojo/domReady!'             //Wait until the dom is ready.
     ], function(Graph, ItemStore, Experiment, system, domAttr) {
         var graph = new Graph({

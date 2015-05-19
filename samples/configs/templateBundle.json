@@ -1,39 +1,95 @@
 {
-    "root": "test",
-	"templates":[{
-        "id": "test",
-        "type":"group",
-        "content":[
-            {
-                "type":"text",
-                "nodetype":"LANGUAGE_LITERAL",
-                "property":"http://purl.org/dc/terms/title",
-                "cardinality": {"min": 2, "pref": "4", "max": 5},
-				"label":{"en":"Title", "sv": "Titel"},
-                "description":{"en":"A short title of the resource", "sv": "En kort titel för resursen"}
-			}, {
-				"type":"group",
-                "nodetype":"RESOURCE",
-                "label":{"en":"Creator"},
-                "property":"http://purl.org/dc/terms/creator",
-				"cardinality": {"min": 0, "pref": 1, "max": 5},
-                "constraints":{"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person"},
-                "content":[
-                    {
-                        "type":"text",
-                        "nodetype":"ONLY_LITERAL",
-                        "property":"http://xmlns.com/foaf/0.1/firstName",
-                        "cardinality": {"min": 1, "max": 1},
-                        "label":{"en":"First name"}
-                    },{
-                        "type":"text",
-                        "nodetype":"ONLY_LITERAL",
-                        "property":"http://xmlns.com/foaf/0.1/surname",
-                        "cardinality": {"min": 1},
-                        "label":{"en":"Surname"}
-                    }
-                ]
+  "root": "test",
+  "templates":[{
+    "id": "test",
+    "type":"group",
+    "content":[
+      {
+        "type":"text",
+        "nodetype":"LANGUAGE_LITERAL",
+        "property":"http://purl.org/dc/terms/title",
+        "cardinality": {"min": 2, "pref": "4", "max": 5},
+        "label":{"en":"Title", "sv": "Titel"},
+        "description":{"en":"A short title of the resource", "sv": "En kort titel för resursen"}
+      }, {
+        "type":"text",
+        "nodetype":"DATATYPE_LITERAL",
+        "property":"http://purl.org/dc/terms/date",
+        "datatype":"http://www.w3.org/2001/XMLSchema#date",
+        "cardinality": {"min": 1, "pref": "1", "max": 1},
+        "label":{"en":"Date", "sv": "Datum"},
+        "description":{"en":"A date for this resource.", "sv": "Ett datum för denna resurs."}
+      }, {
+        "type":"choice",
+        "nodetype":"URI",
+        "property":"http://purl.org/dc/terms/subject",
+        "cardinality": {"min": 1, "pref": "1", "max": 2},
+        "choices": [
+          {
+            "value": "http://example.com/physics",
+            "label": {
+              "en": "Physics",
+              "sv": "Fysik"
             }
+          }, {
+            "value": "http://example.com/chemistry",
+            "label": {
+              "en": "Chemistry",
+              "sv": "Kemi"
+            }
+          }],
+        "label":{"en":"Subject", "sv": "Ämne"},
+        "description":{"en":"A subject for this resource.", "sv": "Ett ämne för denna resurs."}
+      }, {
+        "type":"choice",
+        "nodetype":"URI",
+        "property":"http://purl.org/dc/terms/license",
+        "cardinality": {"min": 1, "pref": 1, "max": 1},
+        "choices": [
+          {
+            "value": "http://creativecommons.org/licenses/by/4.0/",
+            "label": {
+              "en": "CC BY 4.0 (Attribution)"
+            }
+          }, {
+            "value": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "label": {
+              "en": "CC BY-NC 4.0 (Attribution, Non-Commercial)"
+            }
+          }],
+        "styles": ["verticalRadioButtons"],
+        "label":{"en":"License", "sv": "Licens"},
+        "description":{"en":"A license for this resource.", "sv": "En licens för denna resurs."}
+      }, {
+        "type":"choice",
+        "nodetype":"URI",
+        "property":"http://purl.org/dc/terms/relation",
+        "cardinality": {"min": 1, "pref": 1, "max": 1},
+        "label":{"en":"Relation", "sv": "Relation"},
+        "description":{"en":"A relation to another resource.", "sv": "En relation till en annan resurs."}
+      }, {
+        "type":"group",
+        "nodetype":"RESOURCE",
+        "label":{"en":"Creator"},
+        "property":"http://purl.org/dc/terms/creator",
+        "cardinality": {"min": 0, "pref": 1, "max": 5},
+        "constraints":{"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person"},
+        "content":[
+          {
+            "type":"text",
+            "nodetype":"ONLY_LITERAL",
+            "property":"http://xmlns.com/foaf/0.1/firstName",
+            "cardinality": {"min": 1, "max": 1},
+            "label":{"en":"First name"}
+          },{
+            "type":"text",
+            "nodetype":"ONLY_LITERAL",
+            "property":"http://xmlns.com/foaf/0.1/surname",
+            "cardinality": {"min": 1},
+            "label":{"en":"Surname"}
+          }
         ]
-    }]
+      }
+    ]
+  }]
 }

@@ -13,7 +13,15 @@
     "dijit": "1.10.1",
     "util": "dojo-util#1.10.1",
     "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#develop",
-    "bootstrap": "3.2.0",
+    "bootstrap-amd": "latest",
+    "jquery": "latest",
+    "moment": "latest",
+    "fuelux": "latest",
+    "select2": "4.0.0",
+    "select2-bootstrap-css": "latest",
+    "requirejs": "latest",
+    "requirejs-i18n": "latest",
+    "requirejs-text": "latest",
     "dbootstrap": "https://github.com/ebner/dbootstrap/releases/download/0.1.1-font-fix/dbootstrap.zip"
   },
   "keywords": [

@@ -8,6 +8,7 @@ define(["dojo/_base/declare",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
     "dijit/layout/TabContainer",
+    "dijit/form/SimpleTextarea",
 	"rdfjson/Graph",
 	"rdforms/model/Engine",
 	"rdforms/template/ItemStore",
@@ -15,8 +16,7 @@ define(["dojo/_base/declare",
 	"rdforms/view/Presenter",
     "rdforms/apps/components/RDFEdit",
 	"dojo/text!./ExperimentTemplate.html"
-], function(declare, lang, topic, domConstruct, json, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin,
-            TabContainer, Graph, Engine, ItemStore, Editor, Presenter, RDFEdit, template) {
+], function(declare, lang, topic, domConstruct, json, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin, TabContainer, SimpleTextarea, Graph, Engine, ItemStore, Editor, Presenter, RDFEdit, template) {
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
 	//===================================================

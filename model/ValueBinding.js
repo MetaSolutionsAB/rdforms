@@ -41,7 +41,11 @@ define(["dojo/_base/declare",
                     this._parent.oneChildValidityChanged(true);
                 }
             } else {
-                //Note that we actually do not set the invalid value, just unassert the statement.
+                //If it is a null value, change the statement.
+                if (value === "" || value === null) {
+                    this._statement.setValue("");
+                }
+                //And unassert the statement.
                 this._validObject = false;
                 if (oValidObject !== false && this._validPredicate === true) {
                     this._parent.oneChildValidityChanged(false);

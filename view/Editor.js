@@ -1,32 +1,8 @@
 define(["dojo/_base/declare",
-    "dojo/_base/lang",
-    "dojo/aspect",
-    "dojo/on",
-    "dojo/dom-class",
-    "dojo/dom-construct",
-    "dojo/dom-attr",
-    "dojo/_base/array",
-    "../utils",
-    "./Presenter",
-    "./TreeOntologyChooser",
-    "dojo/store/Memory",
-    "./DateTime",
-    "./Duration",
-    "../model/system",
-    "../template/Group",
-    "../template/PropertyGroup",
-    "../template/Choice",
-    "../model/Engine",
-    "dijit/TitlePane",
-    "dijit/form/TextBox",
-    "dijit/form/ValidationTextBox",
-    "dijit/form/Textarea",
-    "dijit/form/FilteringSelect",
-    "dijit/form/RadioButton"
-], function (declare, lang, aspect, on, domClass, domConstruct, domAttr, array, utils, Presenter, TreeOntologyChooser, Memory, DateTime, Duration,
-             system, Group, PropertyGroup, Choice, Engine, TitlePane, TextBox, ValidationTextBox, Textarea, FilteringSelect, RadioButton) {
-
-    var uniqueRadioButtonNameNr = 0;
+    "rdforms/view/Presenter",
+    "rdforms/model/Engine",
+    "rdforms/view/renderingContext"
+], function (declare, Presenter, Engine, renderingContext) {
 
     var showNow = function (item, bindings, includeLevel) {
         if (item.hasStyle("invisible")) {
@@ -38,7 +14,7 @@ define(["dojo/_base/declare",
             }
 
             //Take care of layout grouping by checking recursively.
-            if (item instanceof Group) {
+            if (item.getType() === "group") {
                 var groupedItemsArr = item.getChildren(),
                     groupedBindingsArr = bindings[0].getItemGroupedChildBindings(),
                     groupIndex, bindings, item;
@@ -70,8 +46,7 @@ define(["dojo/_base/declare",
         // Public attributes
         //===================================================
         filterTranslations: false,
-        styleCls: "rformsEditor",
-        ontologyPopupWidget: null,
+        styleCls: "rdformsEditor",
         includeLevel: "recommended",
 
 
@@ -83,7 +58,7 @@ define(["dojo/_base/declare",
                 report = this.binding.report();
             }
             for (var key in this._binding2node) {
-                domClass.remove(this._binding2node[key], "errorReport");
+                renderingContext.domClassToggle(this._binding2node[key], "errorReport", false);
             }
             for (var j = 0; j < report.errors.length; j++) {
                 if (report.errors[j].parentBinding === this.binding) {
@@ -93,7 +68,7 @@ define(["dojo/_base/declare",
                     for (var k = 0; k < bindings.length && counter > 0; k++) {
                         counter--;
                         if (!bindings[k].isValid()) {
-                            domClass.add(this._binding2node[bindings[k].getHash()], "errorReport");
+                            renderingContext.domClassToggle(this._binding2node[bindings[k].getHash()], "errorReport", true);
                         }
                     }
                 }
@@ -137,6 +112,9 @@ define(["dojo/_base/declare",
         showNow: function (item, bindings) {
             return showNow(item, bindings, this.includeLevel);
         },
+        skipBinding: function (binding) {
+            return false;
+        },
         /**
          * Will add bindings until the min cardinality is reached.
          * @param {Object} item
@@ -149,9 +127,9 @@ define(["dojo/_base/declare",
                 target = card.pref;
             } else if (card.min > 0) {
                 target = card.min;
-            } else if (item instanceof PropertyGroup) {
+            } else if (item.getType() === "propertygroup") {
                 target = 1; // Was 0 before, old way. Now regulated via includeLevel and expand style instead.
-            } else if (item instanceof Group) {
+            } else if (item.getType() === "group") {
                 if (item.getProperty() == null) {
                     target = 1;
                 } else {
@@ -168,641 +146,25 @@ define(["dojo/_base/declare",
             }
             return bindings;
         },
-        skipBinding: function (binding) {
-            return false;
-        },
 
-        addLabel: function (rowDiv, labelDiv, binding, item) {
-            if (item.hasStyle("nonEditable") || item.hasStyle("heading")) {
-                domClass.add(labelDiv, "rformsLabelRow");
-                return this.inherited("addLabel", arguments);
-            }
-            var isGroup = item instanceof Group;
-            var l = item.getLabel();
-            if (l != null && l != "") {
-                l = l.charAt(0).toUpperCase() + l.slice(1);
-            } else {
-                l = "";
-            }
-
-            var label = domConstruct.create("span", {"innerHTML": l}, labelDiv);
-            domClass.add(labelDiv, "rformsLabelRow");
-            domClass.add(label, "rformsLabel");
-            this.showInfo(item, label);
-
-            if (binding == null) {
-                this._addExpandButton(rowDiv, labelDiv, item);
-                return;
-            }
-            //If table, no add or remove buttons.
-            if (this.showAsTable(item)) {
-                return;
-            }
-            var card = item.getCardinality();
-            if (card.max != null && (card.max == card.min || card.max === 1)) {
-                return;
-            }
-            if (isGroup) {
-                this._addGroupButtons(rowDiv, labelDiv, binding);
-            } else {
-                this._addCreateChildButton(rowDiv, labelDiv, binding);
-            }
-        },
-
-        addGroup: function (fieldDiv, binding) {
-            if (binding.getItem().hasStyle("nonEditable")) {
-                return this.inherited("addGroup", arguments);
-            }
-            var subView;
-            if (binding.getItem().hasStyle("expandable")) { //Backwardscompatible.
-                var titlePane = new TitlePane({open: false}, fieldDiv);
-                var node = domConstruct.create("div");
-                titlePane.set("content", node);
-                subView = new Editor({messages: this.messages, languages: this.languages, binding: binding, topLevel: false, includeLevel: this.includeLevel}, node);
-            } else {
-                subView = new Editor({messages: this.messages, languages: this.languages, binding: binding, topLevel: false, includeLevel: this.includeLevel}, fieldDiv);
-            }
-            this._subEditors.push(subView);
-        },
-        addText: function (fieldDiv, binding, noCardinalityButtons) {
-            if (binding.getItem().hasStyle("nonEditable")) {
-                return this.inherited("addText", arguments);
-            }
-            var controlDiv = domConstruct.create("div", {"class": "rformsFieldControl"}, fieldDiv);
-            var item = binding.getItem();
-            var nodeType = item.getNodetype();
-            var datatype = item.getDatatype();
-            var tb;
-
-            //If certain datatype
-            if (nodeType == "DATATYPE_LITERAL" || datatype) {
-
-                //Special editing support implemented for integer, data and duration
-
-                if (datatype === "http://www.w3.org/2001/XMLSchema#date" || datatype === "http://purl.org/dc/terms/W3CDTF") {
-                    tb = new DateTime({messages: this.messages, binding: binding, item: item}, domConstruct.create("div", null, fieldDiv));
-                } else if (datatype === "http://www.w3.org/2001/XMLSchema#duration") {
-                    tb = new Duration({disabled: !item.isEnabled(), binding: binding}, domConstruct.create("div", null, fieldDiv));
-                } else if (datatype === "http://www.w3.org/2001/XMLSchema#integer") {
-                    tb = new ValidationTextBox({
-                        value: binding.getValue(),
-                        disabled: !item.isEnabled(),
-                        invalidMessage: "Only an integer value is allowed, value will not be saved",
-                        regExp: "[0-9]*",
-                        onChange: function () {
-                            if (tb.isValid()) {
-                                binding.setValue(this.get("value"));
-                            }
-                        }
-                    }, domConstruct.create("div", null, fieldDiv));
-                } else if (datatype === "http://www.w3.org/2001/XMLSchema#decimal") {
-                    tb = new ValidationTextBox({
-                        value: binding.getValue(),
-                        disabled: !item.isEnabled(),
-                        invalidMessage: "Only a decimal value is allowed, value will not be saved",
-                        regExp: "[0-9]*.?[0-9]*",
-                        onChange: function () {
-                            if (tb.isValid()) {
-                                binding.setValue(this.get("value"));
-                            }
-                        }
-                    }, domConstruct.create("div", null, fieldDiv));
-                } else if (itemToUse.getPattern() != null) {
-                    tb = new ValidationTextBox({
-                        value: binding.getGist(),
-                        pattern: itemToUse.getPattern(),
-                        invalidMessage: itemToUse.getDescription(),
-                        onChange: function () {
-                            if (this.isValid()) {
-                                binding.setGist(this.get("value"));
-                            }
-                        }
-                    }, domConstruct.create("div", null, fieldDiv));
-                } else {
-                    tb = new TextBox({
-                        value: binding.getGist(),
-                        onChange: function () {
-                            binding.setGist(this.get("value"));
-                        }
-                    }, domConstruct.create("div", null, fieldDiv));
-                    domClass.add(tb.domNode, "rformsFieldInput");
-                }
-            } else {
-                var itemToUse = binding.getItem();
-                //TODO: Sort out if the textarea should be multiline using style or class...
-                if (itemToUse.hasStyle("multiline")) {
-                    tb = new Textarea({
-                        value: binding.getGist(),
-                        onChange: function () {
-                            binding.setGist(this.get("value"));
-                        }
-                    }, domConstruct.create("div", null, fieldDiv));
-                    tb.resize(); // To size the area to the value.
-                } else if (itemToUse.getPattern() != null) {
-                    tb = new ValidationTextBox({
-                        value: binding.getGist(),
-                        pattern: itemToUse.getPattern(),
-                        invalidMessage: itemToUse.getDescription(),
-                        onChange: function () {
-                            if (this.isValid()) {
-                                binding.setGist(this.get("value"));
-                            }
-                        }
-                    }, domConstruct.create("div", null, fieldDiv));
-                } else {
-                    tb = new TextBox({
-                        value: binding.getGist(),
-                        onChange: function () {
-                            binding.setGist(this.get("value"));
-                        }
-                    }, domConstruct.create("div", null, fieldDiv));
-                }
-                domClass.add(tb.domNode, "rformsFieldInput");
-            }
-
-            //If the language can be set
-            if (nodeType === "LANGUAGE_LITERAL" || nodeType === "PLAIN_LITERAL") {
-                var langSpan = domConstruct.create("span", null, controlDiv);
-                var langList = this._getLanguagesList();
-                var langStore = this._getStoreFromArray(langList, binding.getItem(), true);
-                var languageSelector = new FilteringSelect({
-                    store: langStore,
-                    searchAttr: "label"
-                }, langSpan);
-                languageSelector.set("value", binding.getLanguage() || "");
-                on(languageSelector, "change", lang.hitch(this, function () {
-                    binding.setLanguage(languageSelector.getValue());
-                }));
-                domClass.add(langSpan, "rformsLanguage");
-                domClass.add(fieldDiv, "rformsLangcontrolledfield");
-                domClass.add(controlDiv, "rformsLangFieldControl");
-            }
-            if (noCardinalityButtons !== true) {
-                this._addRemoveButton(fieldDiv, binding, controlDiv, function () {
-                    tb.set("value", "");
-                    if (nodeType === "LANGUAGE_LITERAL" || nodeType === "PLAIN_LITERAL") {
-                        languageSelector.set("value", "");
-                    }
-                });
-            }
-        },
-        addChoice: function (fieldDiv, binding, noCardinalityButtons) {
-            if (binding.getItem().hasStyle("nonEditable")) {
-                return this.inherited("addChoice", arguments);
-            }
-
-            var controlDiv = domConstruct.create("div", {"class": "rformsFieldControl"}, fieldDiv);
-            var item = binding.getItem();
-            if (item.hasChoices()) {
-                var choices = item.getChoices();
-                //			var controlDiv = construct.create("div", null, fieldDiv);
-                //			domClass.add(controlDiv, "rformsFieldControl");
-                var divToUse = domConstruct.create("div", null, fieldDiv);
-
-                var hierarchy = item.getHierarchyProperty() || item.hasStyle("tree");
-                //Check if radiobuttons can be created, i.e. when few choices and max-cardinality == 1
-                if (!hierarchy && (!item.hasStyle("dropDown") && (choices.length < 5 || item.hasStyle("verticalRadioButtons") || item.hasStyle("horizontalRadioButtons"))) && item.getCardinality().max === 1) {
-                    if (binding.getChoice() != null && binding.getChoice().mismatch) {
-                        choices = choices.slice(0);
-                        choices.push(binding.getChoice());
-                    }
-                    var buts = [];
-                    for (var ind = 0; ind < choices.length; ind++) {
-                        var c = choices[ind], inputToUse = domConstruct.create("input", null, divToUse);
-                        var sp = domConstruct.create("span", { "class": "rformsChoiceLabel", innerHTML: item._getLocalizedValue(c.label).value }, divToUse);
-                        if (item.hasStyle("verticalRadioButtons")) {
-                            domConstruct.create("br", null, divToUse);
-                        }
-                        var rb = new RadioButton({
-                            name: "RadioButtonName" + uniqueRadioButtonNameNr,
-                            value: c.value,
-                            checked: c.value === binding.getValue()
-                        }, inputToUse);
-                        if (c.mismatch) {
-                            domClass.add(sp, "mismatch");
-                            rb.set("disabled", true);
-                        } else {
-                            on(rb, "change", lang.hitch(this, function (but) {
-                                var val = but.get("value");
-                                if (val !== false) {
-                                    binding.setValue(val);
-                                }
-                            }, rb));
-                        }
-                        buts.push(rb);
-                    }
-                    uniqueRadioButtonNameNr++;
-
-                    /*Code below is to correctly remove items in the form and their
-                     * values
-                     */
-                    if (noCardinalityButtons !== true) {
-                        this._addRemoveButton(fieldDiv, binding, controlDiv, function () {
-                            array.forEach(buts, function (but) {
-                                but.set("value", false);
-                            });
-                        });
-                    }
-                } else {
-                    var fSelect, dialog;
-                    //Create an ItemFileReadStore with the correct language to use
-                    var store = this._createChoiceStore(item);
-                    var spanToUse = domConstruct.create("span", null, divToUse);
-                    fSelect = new FilteringSelect({
-                        store: store,
-                        query: {selectable: true},
-                        searchAttr: "label"
-                    }, spanToUse);
-
-                    //Sets the value if any
-                    if (binding.getValue()) {
-                        if (binding.getChoice().mismatch) {
-                            fSelect.set("displayedValue", binding.getValue());
-                        } else {
-                            fSelect.set("value", binding.getValue());
-                        }
-                    } else {
-                        fSelect.set("value", "");
-                    }
-                    //Callback when the user edits the value
-                    fSelect.onChange = lang.hitch(this, function (newvalue) {
-                        binding.setValue(newvalue);
-                    });
-                    //Check if a tree-hierarchy should be created
-                    if (hierarchy) {
-                        var oc;
-                        var ddButton = domConstruct.create("span", {"class": "action editSearch", "title": this.messages.edit_browse}, divToUse);
-                        on(ddButton, "click", lang.hitch(this, function () {
-                            if (oc == null) {
-                                oc = new TreeOntologyChooser({binding: binding, done: lang.hitch(this, function () {
-                                    fSelect.set("value", binding.getValue());
-                                })});
-                            }
-                            oc.show();
-                        }));
-                    }
-
-                    // Code below is to correctly remove items in the form and their values
-                    if (noCardinalityButtons !== true) {
-                        this._addRemoveButton(fieldDiv, binding, controlDiv, function () {
-                            fSelect && fSelect.set("value", "");
-                        });
-                    }
-                }
-            } else if (system.getChoice != null) {   //Depends on system.getChoice and system.openChoiceSelector methods being available
-                var divToUse = domConstruct.create("div", null, fieldDiv);
-                var cNode = domConstruct.create("div", {"class": "rformsChoiceValue"}, divToUse);
-                var setChoice = function(choice) {
-                    if (choice) {
-                        domAttr.set(cNode, "innerHTML", utils.getLocalizedValue(choice.label).value || "");
-                        if (choice.mismatch) {
-                            domClass.add(cNode, "mismatch");
-                        } else {
-                            domClass.remove(cNode, "mismatch");
-                        }
-                        if (choice.load != null) {
-                            choice.load(function () {
-                                domAttr.set(cNode, "innerHTML", utils.getLocalizedValue(choice.label).value || "");
-                                if (choice.mismatch) {
-                                    domClass.add(cNode, "mismatch");
-                                } else {
-                                    domClass.remove(cNode, "mismatch");
-                                }
-                            });
-                        }
-                    }
-                    if (binding.getChoice() !== choice) {
-                        binding.setChoice(choice);
-                    }
-                };
-                setChoice(binding.getChoice());
-                if (system.hasDnDSupport(binding)) {
-                    system.addDnD(binding, cNode, setChoice);
-                }
-
-                var ddButton = domConstruct.create("span", {"class": "action editSearch", "title": this.messages.edit_browse}, divToUse);
-                on(ddButton, "click", lang.hitch(this, function () {
-                    system.openChoiceSelector(binding, setChoice);
-                }));
-
-                // Code below is to correctly remove items in the form and their values
-                if (noCardinalityButtons !== true) {
-                    this._addRemoveButton(fieldDiv, binding, controlDiv, function () {
-                        binding.setValue("");
-                        cNode && domAttr.set(cNode, "innerHTML", "");
-                    });
-                }
-            }
+        addLabel: function (rowDiv, binding, item) {
+            renderingContext.renderEditorLabel(rowDiv, binding, item, {view: this});
         },
 
         addTable: function (newRow, firstBinding) {
             if (firstBinding.getItem().hasStyle("nonEditable")) {
-                return this.inherited("addGroup", arguments);
+                return this.addComponent(newRow, firstBinding);
             }
-
-            var item = firstBinding.getItem(), childItems = item.getChildren();
-            var table = domConstruct.create("table", null, newRow);
-            domClass.add(table, "rformsGroup");
-
-            var tHead = domConstruct.create("thead", null, table);
-            var tBody = domConstruct.create("tbody", null, table);
-            var tHeadRow = domConstruct.create("tr", null, tHead);
-            for (colInd = 0; colInd < childItems.length; colInd++) {
-                var th = domConstruct.create("th", null, tHeadRow);
-                domClass.add(th, "rformsColumnHeader" + colInd);
-                this.showInfo(item, domConstruct.create("span", {innerHTML: childItems[colInd].getLabel()}, th));
-            }
-            if (!firstBinding.getItem().hasStyle("firstcolumnfixedtable")) {
-                var addTh = domConstruct.create("th", {"class": "rformsTableControl"}, tHeadRow);
-                var parentBinding = firstBinding.getParent();
-
-                var add = domConstruct.create("span", {"class": "action editAdd", "title": this.messages.edit_add}, addTh);
-                var cardTr = firstBinding.getCardinalityTracker();
-                on(add, "click", lang.hitch(this, function () {
-                    if (!cardTr.isMax()) {
-                        var nBinding = Engine.create(parentBinding, item);
-                        this._addTableRow(tBody, nBinding);
-                    }
-                }));
-                aspect.after(cardTr, "cardinalityChanged", function () {
-                    domClass.toggle(add, "disabled", cardTr.isMax());
-                });
-            }
-            return tBody;
+            return renderingContext.addEditorTable(newRow, firstBinding, {view: this});
         },
+
         fillTable: function (table, bindings) {
-            if (bindings.length === 0) {
-                return;
-            }
-            var item = bindings[0].getItem();
-            if (item.hasStyle("nonEditable")) {
-                return this.inherited("addGroup", arguments);
-            }
-
-            if (item.hasStyle("firstcolumnfixedtable")) {
-                bindings = this._createChildBindingsForFirstFixedColumn(bindings);
-            }
-
-            array.forEach(bindings, lang.hitch(this, this._addTableRow, table));
+            renderingContext.fillEditorTable(table, bindings, {view: this});
         },
         //===================================================
         // Private methods
         //===================================================
-        _createChildBindingsForFirstFixedColumn: function (bindings) {
-            //Find choice column
-            //flesh out bindings from choices
-            //mark each fleshed out binding via .setExcludeFromTreeValidityCheck(true);
-            var nb = [];
-            var item = bindings[0].getItem();
-            var firstColumnItem = item.getChildren()[0]; //Must be a choice.
-            var choices = firstColumnItem.getChoices();
-            //Sort the choices goddamit!
-            choices = this._getCopiedLabeledChoices(choices, item);
-            choices.sort(function (a, b) {
-                //This assumes that there is always an "n" to be found (which is correct)
-                if (a.label > b.label) {
-                    return 1;
-                } else if (a.label < b.label) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            });
 
-
-            //index the existing bindings
-            var ebi = {};
-            array.forEach(bindings, function (binding) {
-                var igcb = binding.getItemGroupedChildBindings();
-                if (igcb.length > 0 && igcb[0].length > 0) {
-                    var rowXcol1 = igcb[0][0];
-                    ebi[rowXcol1.getValue()] = binding;
-                }
-            });
-
-            //Create one row for each choice
-            var parentBinding = bindings[0].getParent();
-            array.forEach(choices, function (choice) {
-                if (ebi[choice.value] != null) {
-                    nb.push(ebi[choice.value]);
-                } else {
-                    var newRowBinding = Engine.create(parentBinding, item);
-                    var firstColumnBinding = Engine.create(newRowBinding, firstColumnItem);
-                    firstColumnBinding.setExcludeFromTreeValidityCheck(true);
-                    firstColumnBinding.setAncestorValid(false);
-                    firstColumnBinding.setChoice(choice);
-                    nb.push(newRowBinding);
-                }
-            });
-
-            return nb;
-        },
-        _addCreateChildButton: function (rowDiv, labelDiv, binding) {
-            var parentBinding = binding.getParent(), item = binding.getItem(), cardTr = binding.getCardinalityTracker();
-            var add = domConstruct.create("span", {"class": "action editAdd", "title": this.messages.edit_add}, labelDiv);
-            on(add, "click", lang.hitch(this, function () {
-                if (!cardTr.isMax()) {
-                    var nBinding = Engine.create(parentBinding, item);
-                    this.addRow(rowDiv, nBinding); //not the first binding...
-                }
-            }));
-            var cardMaxCon = aspect.after(cardTr, "cardinalityChanged", function () {
-                domClass.toggle(add, "disabled", cardTr.isMax());
-            });
-        },
-        _addGroupButtons: function (rowDiv, labelDiv, binding) {
-            var parentBinding = binding.getParent(), item = binding.getItem();
-            var add = domConstruct.create("span", {"class": "action editAdd", "title": this.messages.edit_add}, labelDiv);
-            var remove = domConstruct.create("span", {"class": "action editDelete", "title": this.messages.edit_remove}, labelDiv);
-
-            var cardTr = binding.getCardinalityTracker();
-            var con = aspect.after(cardTr, "cardinalityChanged", function () {
-                domClass.toggle(add, "disabled", cardTr.isMax());
-                domClass.toggle(remove, "disabled", cardTr.isMin());
-            });
-
-            var addCon = on(add, "click", lang.hitch(this, function () {
-                if (!cardTr.isMax()) {
-                    var nBinding = Engine.create(parentBinding, item);
-                    this.addRow(rowDiv, nBinding); //not the first binding...
-                }
-            }));
-
-            var removeCon = on(remove, "click", lang.hitch(this, function () {
-                if (!cardTr.isMin()) {
-                    if (cardTr.getCardinality() === 1) {
-                        var parentBinding = binding.getParent(), item = binding.getItem();
-                        con.remove();
-                        addCon.remove();
-                        removeCon.remove();
-                        binding.remove();
-                        var card = item.getCardinality();
-                        if (card.pref > 0 || card.min > 0) {
-                            var nBinding = Engine.create(parentBinding, item);
-                            this.addRow(rowDiv, nBinding); //not the first binding...
-                        } else {
-                            this.addLabelClean(rowDiv, null, item);
-                        }
-                        domConstruct.destroy(rowDiv);
-                    } else {
-                        con.remove();
-                        addCon.remove();
-                        removeCon.remove();
-                        //Remove somehow.
-                        binding.remove();
-                        domConstruct.destroy(rowDiv);
-                    }
-                }
-            }));
-        },
-        _addRemoveButton: function (fieldDiv, binding, containerDiv, onReset) {
-            var remove = domConstruct.create("span", {"class": "action editDelete", "title": this.messages.edit_remove}, containerDiv);
-            var cardTr = binding.getCardinalityTracker();
-            var con = aspect.after(cardTr, "cardinalityChanged", function () {
-                domClass.toggle(remove, "disabled", cardTr.isMin());
-            });
-
-            var removeConnect = on(remove, "click", function () {
-                if (!cardTr.isMin()) {
-                    if (cardTr.getCardinality() === 1) {
-                        if (binding.getItem() instanceof Choice) {
-                            binding.setChoice(null);
-                        } else {
-                            binding.setValue(null);
-                        }
-                        onReset();
-                    } else {
-                        con.remove();
-                        removeConnect.remove();
-                        binding.remove();
-                        domConstruct.destroy(fieldDiv);
-                    }
-                }
-            });
-        },
-
-        _addExpandButton: function (rowDiv, labelDiv, item) {
-            var expand = domConstruct.create("span", {"class": "action editExpand", "title": this.messages.edit_expand}, labelDiv);
-            var expandCon = on(expand, "click", lang.hitch(this, function () {
-                var nBinding = Engine.create(this.binding, item);
-                if (this.showAsTable(item)) {
-                    var table = this.addTable(rowDiv, nBinding, item);
-                    this.fillTable(table, [nBinding]);
-                } else {
-                    this.addRow(rowDiv, nBinding, false); //Label is already added.
-                    this._addGroupButtons(rowDiv, labelDiv, nBinding);
-                }
-
-                domConstruct.destroy(expand);
-
-                expandCon.remove();
-            }));
-        },
-
-        _addTableRow: function (table, binding) {
-            var childItems = binding.getItem().getChildren();
-            var groupedBindings = binding.getItemGroupedChildBindings();
-            var trEl = domConstruct.create("tr", null, table);
-
-            array.forEach(groupedBindings, function (bindings, index) {
-                //Create those columns that are missing:
-                if (bindings.length === 0 && !childItems[index].hasStyle("nonEditable")) {
-                    Engine.create(binding, childItems[index]);
-                }
-            });
-            array.forEach(groupedBindings, function (bindings, index) {
-                this.addComponent(domConstruct.create("td", null, trEl), bindings[0], true);
-            }, this);
-
-            if (!binding.getItem().hasStyle("firstcolumnfixedtable")) {
-                var lastTd = domConstruct.create("td", {"class": "rformsTableControl"}, trEl);
-                var remove = domConstruct.create("span", {"class": "action editDelete", "title": this.messages.edit_remove}, lastTd);
-                var cardTr = binding.getCardinalityTracker();
-                var cardConnect1 = aspect.after(cardTr, "cardinalityChanged", function () {
-                    domClass.toggle(remove, "disabled", cardTr.isMin());
-                });
-                var removeConnect = on(remove, "click", lang.hitch(this, function () {
-                    if (!cardTr.isMin()) {
-                        if (cardTr.getCardinality() === 1) {
-                            var parentBinding = binding.getParent(), item = binding.getItem();
-                            var nBinding = Engine.create(parentBinding, item);
-                            this._addTableRow(table, nBinding);
-                        }
-                        cardConnect1.remove();
-                        removeConnect.remove();
-                        binding.remove();
-                        domConstruct.destroy(trEl);
-                    }
-                }));
-            }
-        },
-
-        _getLabelForChoice: function (binding) {
-            var choice = binding.getChoice();
-            if (choice) {
-                return utils.getLocalizedValue(choice.label).value;
-            }
-        },
-        /*
-         * From a Choice Item the possible values are extracted and added into
-         * a ItemFileReadStore that is returned
-         */
-        _createChoiceStore: function (/*Choice*/ item) {
-            return this._getStoreFromArray(item.getChoices(), item);
-        },
-        /*
-         * From an array of choices that contains value and labels an
-         * DataStore is created and returned. The object inside
-         * the array should have the following structure:
-         *  {"value": "Value",
-         *  "label": {"en": "English-label", "sv": "Svensk label"}
-         * }
-         */
-        _getStoreFromArray: function (/*Array of objects*/objects, /*The item*/ item, noEmptyValue) {
-
-            //Adds an empty choice when min cardinality > 0
-            var itemsArray = this._getCopiedLabeledChoices(objects, item);
-            if (noEmptyValue !== true && !(item.getCardinality().min > 0)) {
-                itemsArray.push({value: "", label: "", top: true});
-            }
-
-            var store = new Memory({
-                data: itemsArray,
-                idProperty: "value",
-                fetchProperties: {sort: [{attribute: "label", descending: true}]}
-            });
-            /*var store = new SortedStore({
-                sortBy: "label",
-                idProperty: "value",
-                data: {
-                    identifier: "value",
-                    label: "label",
-                    items: itemsArray
-                }
-            });*/
-            return store;
-        },
-        _getCopiedLabeledChoices: function (objects, item) {
-            var itemsArray = [];
-            for (var i = 0; i < objects.length; i++) {
-                var o = objects[i];
-                var currentLabel = item._getLocalizedValue(o.label);
-                var obj = {value: o.value, label: currentLabel.value || o.value || ""};
-                if (o.top === true) {
-                    obj.top = true;
-                }
-                if (o.children != null) {
-                    obj.children = lang.clone(o.children);
-                }
-                if (o.selectable === false) {
-                    obj.selectable = false;
-                } else {
-                    obj.selectable = true;
-                }
-                itemsArray.push(obj);
-            }
-            return itemsArray;
-        },
         /*
          *
          * This method returns a list of language-codes and their label (in several translations)
@@ -823,6 +185,13 @@ define(["dojo/_base/declare",
                 ];
             }
             return this.languages;
+        },
+        addComponent: function(fieldDiv, binding) {
+            if (binding.getItem().hasStyle("nonEditable")) {
+                renderingContext.renderPresenter(fieldDiv, binding, {view: this});
+            } else {
+                renderingContext.renderEditor(fieldDiv, binding, {view: this});
+            }
         }
     });
     return Editor;

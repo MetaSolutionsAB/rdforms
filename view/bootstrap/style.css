@@ -1,0 +1,127 @@
+@import "../resources/rdforms.css";
+@import "../../libs/bootstrap/dist/css/bootstrap.css";
+@import "../../libs/fuelux/dist/css/fuelux.min.css";
+@import "../../libs/select2/dist/css/select2.min.css";
+
+.input-group-btn > .form-control {
+    margin-left: -1px;
+    width: auto;
+}
+
+.rdformsEditor .rdformsLanguage {
+    width: 90px;
+    float: none;
+}
+
+.rdformsEditor .rdformsLangFieldControl {
+    width: 146px;
+}
+
+.rdformsLabelRow {
+    vertical-align: top;
+}
+
+.rdformsDateValue .form-control:invalid,
+.rdformsFieldInput:invalid {
+    /* insert your own styles for invalid form input */
+    background-color: lightcoral;
+}
+
+.rdformsDateValue .datepicker {
+    width: 12em;
+    display: inline-block;
+}
+
+.rdformsDateValue .yearInput,
+.rdformsDateValue .timeInput {
+    width: 6em;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.rdformsDateValue .dateControl {
+    width: 10em;
+    display: inline-block;
+    margin-right: 1em;
+    vertical-align: top;
+}
+
+.rdformsDateValue .glyphicon {
+    line-height: 21px;
+}
+
+.rdformsDuration>div {
+    width: 10em;
+    display: inline-block;
+    margin-right: 1em;
+}
+
+.popover strong {
+    color: #808080;
+}
+
+.rdforms .popover {
+    max-width: none;
+}
+
+.rdforms .popover a {
+    color: #808080;
+}
+.rdforms .popover .property {
+    margin-top: 1em;
+    font-size: small;
+}
+
+.rdforms .popover .description {
+    max-width: 300px;
+    font-size: small;
+}
+
+.rdformsFieldControl>.glyphicon.action {
+    float: right;
+    position: initial;
+    margin-top: 8px;
+}
+
+.glyphicon.action.disabled {
+    cursor: default;
+}
+
+.rdformsEditor .rdformsFieldControl {
+    height: 3em;
+}
+
+.rdformsLabelRow>.action.glyphicon {
+    vertical-align: text-bottom;
+}
+
+.rdformsLabelRow>.action.glyphicon-plus {
+    margin-left: 1em;
+}
+
+.input-group-btn .glyphicon {
+    line-height: 20px;
+}
+
+.rdformsField>.select2 {
+    min-width: 12em;
+}
+
+.compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow, .compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel {
+    padding-top: 6px;
+}
+
+.rdformsRow.rdformsTopLevel {
+    padding-bottom: 0.5em;
+}
+
+.rdformsEditor .rdformsField {
+    min-height: 34px;
+}
+
+.rdformsEditor .systemChoice.input-group {
+    max-width: 22em;
+}
+/*.rdformsEditor.compact>.rdformsTopLevel:nth-child(odd) {
+    background: #E6E6E6
+}*/

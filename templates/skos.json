@@ -115,9 +115,6 @@
       },
       "type": "text",
       "nodetype": "LANGUAGE_LITERAL",
-      "cls": [
-        "rformsmultiline"
-      ],
       "styles": [
         "multiline"
       ],
@@ -134,9 +131,6 @@
       },
       "type": "text",
       "nodetype": "LANGUAGE_LITERAL",
-      "cls": [
-        "rformsmultiline"
-      ],
       "styles": [
         "multiline"
       ]
@@ -149,9 +143,6 @@
       },
       "type": "text",
       "nodetype": "LANGUAGE_LITERAL",
-      "cls": [
-        "rformsmultiline"
-      ],
       "styles": [
         "multiline"
       ]
@@ -164,9 +155,6 @@
       },
       "type": "text",
       "nodetype": "LANGUAGE_LITERAL",
-      "cls": [
-        "rformsmultiline"
-      ],
       "styles": [
         "multiline"
       ]
@@ -179,9 +167,6 @@
       },
       "type": "text",
       "nodetype": "LANGUAGE_LITERAL",
-      "cls": [
-        "rformsmultiline"
-      ],
       "styles": [
         "multiline"
       ]
@@ -194,9 +179,6 @@
       },
       "type": "text",
       "nodetype": "LANGUAGE_LITERAL",
-      "cls": [
-        "rformsmultiline"
-      ],
       "styles": [
         "multiline"
       ],
@@ -213,9 +195,6 @@
       },
       "type": "text",
       "nodetype": "LANGUAGE_LITERAL",
-      "cls": [
-        "rformsmultiline"
-      ],
       "styles": [
         "multiline"
       ],
@@ -486,9 +465,6 @@
             "max": 1
           },
           "type": "group",
-          "cls": [
-            "rformsexpandable"
-          ],
           "label": {
             "en": "Labels and annotations"
           },
@@ -527,9 +503,6 @@
             "max": 1
           },
           "type": "group",
-          "cls": [
-            "rformsexpandable"
-          ],
           "label": {
             "en": "Additional concept relations"
           },

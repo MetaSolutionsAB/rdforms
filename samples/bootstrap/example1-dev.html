@@ -1,14 +1,18 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link type="text/css" href="../release/dijit/themes/claro/claro.css" rel="stylesheet" />
-    <link type="text/css" href="../release/rdforms/view/resources/rdforms.css" rel="stylesheet" />
-    <script src="../dist/rdforms.js"></script>
+    <link type="text/css" href="../../view/bootstrap/style.css" rel="stylesheet"/>
+    <script src="../../libs/requirejs/require.js"></script>
+    <script src="requireConfig.js"></script>
 </head>
-<body class="claro">
 <script type="text/javascript">
-    document.body.onload = function() {
-        var graph = new rdfjson_Graph({
+    require([
+            'rdfjson/Graph',             //Rdfjson Graph API
+            'rdforms/template/ItemStore', //Stores all the RDForm templates
+            'rdforms/view/Editor',        //The editor User interface
+            'dojo/domReady!'             //Wait until the dom is ready.
+        ], function (Graph, ItemStore, Editor) {
+        var graph = new Graph({
             "http://example.org/about": {
                 "http://example.com/terms/colorOfHouse": [{
                     type: "uri",
@@ -16,7 +20,7 @@
                 }]
             }
         });
-        var itemStore = new rdforms_template_ItemStore();
+        var itemStore = new ItemStore();
         itemStore.createItem({
             "type": "choice",
             "nodetype": "URI",
@@ -29,15 +33,15 @@
             ],
             "cardinality": {"min": 1, "pref": 1, "max": 1}
         });
-        var editor = new rdforms_view_Editor({
+        new Editor({
             graph: graph,
             resource: "http://example.org/about",
             template: itemStore.createTemplateFromChildren(["ex:color"]),
             compact: true
-        }, document.getElementById("node"));
-        editor.startup();
-    };
+        }, "node");
+    });
 </script>
-<div id="node"></div>
+<body class="fuelux">
+  <div id="node"></div>
 </body>
 </html>

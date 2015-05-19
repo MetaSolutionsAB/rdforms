@@ -99,7 +99,15 @@ define(["dojo/_base/declare"], function(declare) {
 	// Private methods
 	//===================================================	
 	_isValidValue: function(value) {
-		return value !== undefined && value !== null && value !== "";
+        if (typeof value !== "string" && value !== null) {
+            throw "On binding every value need to be a string!";
+        }
+        var pattern = this._item.getPattern()
+        if (pattern) {
+            return value !== undefined && value !== null && value !== "" && (new RegExp(pattern)).test(value);
+        } else {
+            return value !== undefined && value !== null && value !== "";
+        }
 	}
     });
 });

@@ -328,6 +328,23 @@ define([
         getBundle: function() {
             return this._bundle;
         },
+        toStringShort: function() {
+            return "'"+this.getLabel()+"'" + (this.getId() ? " (ID: '"+this.getId()+"')": "");
+        },
+        toString: function() {
+            var detailsArr = [];
+            if (this.getId()) {
+                detailsArr.push("ID: '"+this.getId()+"'");
+            }
+            detailsArr.push("TYPE: '"+this.getType()+"'");
+            if (this.getProperty()) {
+                detailsArr.push("PROPERTY: '"+this.getProperty()+"'");
+            }
+            if (this.getExtends()) {
+                detailsArr.push("EXTENDS: '"+this.getExtends()+"'");
+            }
+            return "'"+this.getLabel() +"' ("+detailsArr.join(", ")+")";
+        },
         //===================================================
         // Inherited methods
         //===================================================

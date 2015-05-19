@@ -1,7 +1,7 @@
 /*global define*/
 define([
     "dojo/_base/declare",
-    "../utils"
+    "rdforms/utils"
 ], function (declare, utils) {
 
     var counter = 0;

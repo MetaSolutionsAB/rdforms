@@ -1,14 +1,15 @@
 /*global define*/
-define(["dojo/_base/declare", 
+define(["dojo/_base/declare",
 	"dojo/_base/lang", 
-	"dijit/_WidgetsInTemplateMixin", 
+	"dijit/_WidgetsInTemplateMixin",
+    "dijit/form/NumberSpinner", //In template
 	"dojo/text!./DurationTemplate.html", 
 	"./DurationPresentation"
-], function(declare, lang,  _WidgetsInTemplateMixin, template, DurationPresentation) {
+], function(declare, lang, _WidgetsInTemplateMixin, NumberSpinner, template, DurationPresentation) {
 
     return declare([DurationPresentation, _WidgetsInTemplateMixin], {
 	templateString: template,
-	regex: /^([\-\+])?P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:([0-9]+(?:\.[0-9]+)?)?S)?)$/,
+	regex: /^([\-\+])?P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:([0-9]+(?:\.[0-9]+)?)?S)?)?$/,
 
 	postCreate: function() {
 	    this.inherited("postCreate", arguments);

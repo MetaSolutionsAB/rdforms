@@ -1,28 +1,22 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link type="text/css" href="../libs/dijit/themes/claro/claro.css" rel="stylesheet" />
-    <link type="text/css" href="../view/dojo/style.css" rel="stylesheet" />
-    <script>
-        var dojoConfig = {
-            async:true,
-            packages: [{name: "rdforms", location: "../.." }]
-        };
-    </script>
-    <script src="../libs/dojo/dojo.js"></script>
+    <link type="text/css" href="../../view/bootstrap/style.css" rel="stylesheet"/>
+    <script src="../../libs/requirejs/require.js"></script>
+    <script src="requireConfig.js"></script>
+    <script src="../../dist-bootstrap/rdforms.js"></script>
 </head>
 
 <script type="text/javascript">
     require([
         'rdfjson/Graph',              //Rdfjson Graph API
         'rdforms/template/ItemStore', //Stores all the RDForm templates
-        'rdforms/view/dojo/components',
         'rdforms/view/Editor',        //The editor User interface
         'dojo/json',                          //Json parser
-        'dojo/text!./configs/rdf.json',         //The sample RDF
-        'dojo/text!./configs/templateBundle.json',    //The sample template
+        'text!../samples/configs/rdf.json',         //The sample RDF
+        'text!../samples/configs/templateBundle.json',    //The sample template
         'dojo/domReady!'             //Wait until the dom is ready.
-    ], function(Graph, ItemStore, components, Editor, json, rdf, templateBundle) {
+    ], function(Graph, ItemStore, Editor, json, rdf, templateBundle) {
         var graph = new Graph(json.parse(rdf));
         var itemStore = new ItemStore();
         var bundle = itemStore.registerBundle({source: json.parse(templateBundle)});
@@ -34,7 +28,7 @@
         }, "node");
     });
 </script>
-<body class="claro">
+<body class="fuelux">
 <div id="node"></div>
 </body>
 </html>

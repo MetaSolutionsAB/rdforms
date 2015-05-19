@@ -14,7 +14,7 @@
         <script src="../libs/dojo/dojo.js"></script>
 	<style>
 		@import "../libs/dijit/themes/tundra/tundra.css"; /* required when dijit */
-		@import "../view/resources/rdforms.css";
+		@import "../view/dojo/style.css";
 	</style>
 	<script type="text/javascript">
 
@@ -74,6 +74,7 @@
 			};
 
 		require(['rdforms/apps/components/Experiment',    // The Experiment UI.
+                'rdforms/view/dojo/components',
 		         'dojo/domReady!'             // Wait until the dom is ready.
 		        ], function(Experiment) {
 		            var e = new Experiment({templateObj: templateSrc, graphObj: rdf, hideTemplate: true}, "container");

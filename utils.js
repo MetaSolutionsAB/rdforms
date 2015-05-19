@@ -47,4 +47,26 @@ define(["exports", "rdforms/model/system"], function(exports, system) {
             }
         }
     };
+
+    exports.cloneArrayWithLabels = function (objects) {
+        var itemsArray = [];
+        for (var i = 0; i < objects.length; i++) {
+            var o = objects[i];
+            var currentLabel = exports.getLocalizedValue(o.label);
+            var obj = {value: o.value, label: currentLabel.value || o.value || ""};
+            if (o.top === true) {
+                obj.top = true;
+            }
+            if (o.children != null) {
+                obj.children = lang.clone(o.children);
+            }
+            if (o.selectable === false) {
+                obj.selectable = false;
+            } else {
+                obj.selectable = true;
+            }
+            itemsArray.push(obj);
+        }
+        return itemsArray;
+    };
 });

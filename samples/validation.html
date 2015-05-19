@@ -15,12 +15,13 @@
     <script src="../libs/dojo/dojo.js"></script>
     <style>
        @import "../libs/dijit/themes/tundra/tundra.css"; /* required when dijit */
-       @import "../view/resources/rdforms.css";
+       @import "../view/dojo/style.css";
        @import "../apps/validator/validator.css";
     </style>
     <script type="text/javascript">
         require(['dbootstrap/main',
             'rdforms/apps/validator/Validator',
+            'rdforms/view/dojo/components',
             'dojo/domReady!'
         ], function(main, Validator) {
 			new Validator({configPath: "configs/validator.json"}, "container");

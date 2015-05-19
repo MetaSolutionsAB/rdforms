@@ -10,7 +10,7 @@ define(["dojo/_base/declare",
     "dijit/layout/ContentPane",
     "dijit/layout/BorderContainer",
     "dijit/form/Button",
-    "../utils",
+    "rdforms/utils",
     "dojo/text!./ChooserTemplate.html"
 ], function (declare, domAttr, domStyle, window, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
              Dialog, ContentPane, BorderContainer, Button, utils, template) {

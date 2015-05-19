@@ -1,6 +1,6 @@
 ({
     baseUrl: "../libs",
-    dir: "../dist/",
+    dir: "../dist-dojo/",
     //out: "../dist/rdforms.js",
     name: "rdforms",
     create: true,
@@ -11,13 +11,14 @@
         "rdforms/template/ItemStore",
         "dojo/dom-attr", //Circular dependency not resolved nicely if not defined first.
         "rdforms/view/Editor",
+        "rdforms/view/dojo/components",
         "dojo/i18n!rdforms/view/nls/rdforms"
     ],
     paths: {
         "rdforms": "..",
         "text": "requirejs-text/text",
         "i18n": "requirejs-i18n/i18n",
-        "di18n": "../di18n"
+        "di18n": "../build/di18n"
     },
     map: {
         "*": {
@@ -30,11 +31,11 @@
     normalizeDirDefines: "skip",
     skipModuleInsertion: false,
     removeCombined: true,
-    fileExclusionRegExp: /^(\.|node_modules|release|dist)/,
+    fileExclusionRegExp: /^(\.|node_modules|release|dist-dojo|dist-bootstrap)/,
     onModuleBundleComplete: function (data) {
         var fs = module.require('fs'),
             amdclean = module.require('amdclean'),
-            outputFile = "../dist/"+data.path,
+            outputFile = "../dist-dojo/"+data.path,
             cleanedCode = amdclean.clean({
                 'filePath': outputFile,
                 'globalModules': [

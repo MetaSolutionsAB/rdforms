@@ -18,7 +18,6 @@
     "moment": "latest",
     "fuelux": "latest",
     "select2": "4.0.0",
-    "select2-bootstrap-css": "latest",
     "requirejs": "latest",
     "requirejs-i18n": "latest",
     "requirejs-text": "latest",

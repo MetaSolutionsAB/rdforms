@@ -72,8 +72,9 @@ define(["dojo/_base/declare",
             if (this.includeLevelControllsVisible) {
                 this._cardinalityNode.style.display = "";
             }
+            this.setIncludeLevel(this.includeLevel);
             if (!this.externalEditor) {
-                this._rdformsDijit = new Editor({includeLevel: "mandatory", compact: this.compact}, this._rdformsNode);
+                this._rdformsDijit = new Editor({includeLevel: this.includeLevel, compact: this.compact}, this._rdformsNode);
                 this.show();
             }
         },

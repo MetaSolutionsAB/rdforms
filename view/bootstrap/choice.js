@@ -43,7 +43,7 @@ define([
         }));
 
     // Presenter for choices.
-    presenters.itemtype("choice").register(choicify(
+    renderingContext.chooserPresenter = choicify(
         function(fieldDiv, binding, choice, desc) {
             var item = binding.getItem();
             if (item.hasStaticChoices() && !item.hasStyle("externalLink")) {
@@ -67,8 +67,9 @@ define([
                     });
                 }
             }
-        }));
+        });
 
+    presenters.itemtype("choice").register(renderingContext.chooserPresenter);
 
     // -------------- Editors ----------------
     var editors = renderingContext.editorRegistry;
@@ -138,7 +139,7 @@ define([
     });
 
     //Depends on system.getChoice and system.openChoiceSelector methods being available
-    editors.itemtype("choice").register(function (fieldDiv, binding, context) {
+    renderingContext.chooserEditor = function (fieldDiv, binding, context) {
         var $divToUse = jquery('<div class="input-group systemChoice">').appendTo(fieldDiv);
         var $input = jquery('<input class="form-control" disabled="disabled">').appendTo($divToUse);
         var $wrap = jquery('<span class="input-group-btn">').appendTo($divToUse);
@@ -172,5 +173,6 @@ define([
         context.clear = function() {
             $input.val("");
         };
-    });
+    };
+    editors.itemtype("choice").choices("none").register(renderingContext.chooserEditor);
 });

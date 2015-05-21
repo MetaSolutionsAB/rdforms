@@ -561,3 +561,8 @@ a.rdformsUrl:hover {
     height: 100%;
     overflow:auto;
 }
+
+.rdforms .cardinality {
+    width: 500px;
+    margin: 0px auto 1em auto;
+}

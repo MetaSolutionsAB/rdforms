@@ -92,6 +92,10 @@ define([
                             return  -1;
                         }
                         break;
+                    case "none":
+                        if (item.hasChoices()) {
+                            return -1;
+                        }
                     case "any":
                     default:
                         if (!item.hasChoices()) {
@@ -179,7 +183,7 @@ define([
         itemtype: function(itemtype) {
             return (new Filter(this)).itemtype(itemtype);
         },
-        choices: function(kindOfChoicesRequired) { //'static', 'dynamic' or 'any', 'any' is default.
+        choices: function(kindOfChoicesRequired) { //'none', 'static', 'dynamic' or 'any', 'any' is default.
             return (new Filter(this)).choices(kindOfChoicesRequired);
         },
         nodetype: function(nodetype) {

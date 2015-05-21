@@ -92,13 +92,13 @@ define([
                 renderingContext.domClassToggle(fieldDiv, "error", true);
                 var tmpl = this.messages.validation_min_required_message.split(",")[min === 1 ? 0 : 1];
                 var n = renderingContext.domCreate("div", fieldDiv);
-                renderingContext.domSetAttr(n, "innerHTML", lang.replace(tmpl, {nr: min}));
+                renderingContext.domText(n, lang.replace(tmpl, {nr: min}));
                 return true;
             } else if (binding.warning) {
                 renderingContext.domClassToggle(fieldDiv, "warning", true);
                 var tmpl = this.messages.validation_min_recommended_message.split(",")[pref === 1 ? 0 : 1];
                 var n = renderingContext.domCreate("div", fieldDiv);
-                renderingContext.domSetAttr(n, "innerHTML", lang.replace(tmpl, {nr: pref}));
+                renderingContext.domText(n, lang.replace(tmpl, {nr: pref}));
                 return true;
             } else {
                 return false;

@@ -116,7 +116,7 @@ define(["dojo/_base/declare",
         },
 
         render: function () {
-            renderingContext.domSetAttr(this.domNode, "innerHTML", "");
+            renderingContext.domText(this.domNode, "");
             if (this.binding == null) {
                 return;
             }

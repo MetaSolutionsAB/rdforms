@@ -24,6 +24,10 @@ define([
         jquery(node).attr(attr, value);
     };
 
+    renderingContext.domText = function(node, text) {
+        jquery(node).text(text);
+    };
+
     renderingContext.domClassToggle = function(node, classStr, addOrRemove) {
         jquery(node).toggleClass(classStr, addOrRemove);
     };

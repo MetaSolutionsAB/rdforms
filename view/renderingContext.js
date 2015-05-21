@@ -19,6 +19,7 @@ define([
         domCreateAfter: function(domStr, node) {},
         domClassToggle: function(node, classStr, addOrRemove) {},
         domSetAttr: function(node, attr, value) {},
+        domText: function(node, text) {},
         presenterRegistry: new Registry(),
         editorRegistry: new Registry(),
         /**

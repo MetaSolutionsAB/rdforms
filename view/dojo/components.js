@@ -22,7 +22,10 @@ define([
         return domConstruct.create(nodeStr, null, parent, "after");
     };
     renderingContext.domSetAttr = function(node, attr, value) {
-        domAttr.set(node, "innerHTML", value);
+        domAttr.set(node, attr, value);
+    };
+    renderingContext.domText = function(node, text) {
+        domAttr.set(node, "innerHTML", text);
     };
 
     renderingContext.domClassToggle = domClass.toggle;

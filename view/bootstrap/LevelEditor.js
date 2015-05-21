@@ -56,9 +56,9 @@ define(["dojo/_base/declare",
         },
         localize: function() {
             renderingContext.getMessages(lang.hitch(this, function(messages) {
-                renderingContext.domSetAttr(this._mandatoryLabelNode, "innerHTML", messages.mandatoryLabel);
-                renderingContext.domSetAttr(this._recommendedLabelNode, "innerHTML", messages.recommendedLabel);
-                renderingContext.domSetAttr(this._optionalLabelNode, "innerHTML", messages.optionalLabel);
+                renderingContext.domText(this._mandatoryLabelNode, messages.mandatoryLabel);
+                renderingContext.domText(this._recommendedLabelNode, messages.recommendedLabel);
+                renderingContext.domText(this._optionalLabelNode, messages.optionalLabel);
             }));
         },
 

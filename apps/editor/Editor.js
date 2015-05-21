@@ -11,14 +11,14 @@ define(["dojo/_base/declare",
     "dijit/Dialog", //in template
     "rdforms/apps/components/About", //In template
     "rdforms/apps/components/Config",
-    "rdforms/apps/editor/IncludeLevelEditor", //in template
+    "rdforms/view/bootstrap/LevelEditor", //in template
     "rdforms/view/Presenter", //in template
     "rdforms/apps/components/RDFEdit", //in template
     "rdforms/template/ItemStore",
     "rdfjson/Graph",
 	"dojo/text!./EditorTemplate.html"
 ], function(declare, lang, topic, domAttr, domClass, domStyle, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin,
-            Dialog, About, Config, IncludeLevelEditor, Presenter, RDFEdit, ItemStore, Graph, template) {
+            Dialog, About, Config, LevelEditor, Presenter, RDFEdit, ItemStore, Graph, template) {
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin, Config.Cls], {
 

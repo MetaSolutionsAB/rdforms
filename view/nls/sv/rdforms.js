@@ -10,5 +10,8 @@ define({
     validation_min_recommended_message: "minst ett värde är rekommenderat,minst {nr} värden rekommenderas",
     date_date: "Datum",
     date_year: "År",
-    date_date_and_time: "Datum och tid"
+    date_date_and_time: "Datum och tid",
+    mandatoryLabel: "Obligatoriskt",
+    recommendedLabel: "Rekommenderat",
+    optionalLabel: "Valfritt"
 });

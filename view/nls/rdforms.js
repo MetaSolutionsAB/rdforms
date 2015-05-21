@@ -11,7 +11,10 @@ define({
         validation_min_recommended_message: "at least one value is recommended,at least {nr} values are recommended",
         date_date: "Date",
         date_year: "Year",
-        date_date_and_time: "Date and time"
+        date_date_and_time: "Date and time",
+        mandatoryLabel: "Mandatory",
+        recommendedLabel: "Recommended",
+        optionalLabel: "Optional"
     },
     sv: true
 });

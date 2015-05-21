@@ -10,7 +10,8 @@
         "rdforms/template/ItemStore",
         "rdforms/view/Editor",
         "rdforms/view/bootstrap/components",
-        "dojo/i18n!rdforms/view/nls/rdforms"
+        "dojo/i18n!rdforms/view/nls/rdforms",
+        "select2/select2/i18n/en"
     ],
     paths: {
         "rdforms": "..",
@@ -113,8 +114,12 @@
                     "loaded(queryForEngine(defaultEngine, NodeList));" +
                     "};" +
                     "dojo._filterQueryResult");
+            case "select2/select2/translation":
+                console.log("eval(\"select2_select2_i18n_\"+path.substr(7))");
+                return contents
+                    .replace("require(path)", "eval(\"select2_select2_i18n_\"+path.substr(7))");
             default:
                 return contents;
         }
     }
-})
+});

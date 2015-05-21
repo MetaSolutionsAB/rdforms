@@ -1,7 +1,8 @@
 define([
     "rdforms/view/Registry",
-    "rdforms/model/system"
-], function(Registry, system) {
+    "rdforms/model/system",
+    "dojo/i18n"
+], function(Registry, system, i18n) {
 
     system.getChoice = function(item, value) {
         var chooser = rc.chooserRegistry.getComponent(item);
@@ -10,6 +11,7 @@ define([
         }
         return chooser.getChoice(item, value);
     };
+    var messages;
 
     var rc = {
         domQuery: function(selector, node) {},
@@ -61,6 +63,17 @@ define([
                 return;
             }
             chooser.show(binding, callback);
+        },
+
+        setMessages: function(msgs) {
+            messages = msgs;
+        },
+        getMessages: function(callback) {
+            if (messages) {
+                callback(messages);
+            } else {
+                callback(i18n.getLocalization("rdforms/view", "rdforms"));
+            }
         },
 
 

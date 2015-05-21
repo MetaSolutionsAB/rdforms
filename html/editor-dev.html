@@ -46,6 +46,7 @@
         require([
             'dbootstrap/main',
             'rdforms/apps/editor/Editor',
+            'rdforms/view/dojo/components',
             'dojo/domReady!'
         ], function(main, Editor) {
             new Editor({configPath: "../samples/configs/editor.json"}, "container").startup();

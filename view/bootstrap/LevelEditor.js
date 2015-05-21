@@ -1,14 +1,14 @@
 /*global define*/
-define(["dojo/_base/declare", 
-	"dojo/dom-class",
-    "dojo/dom-style",
-    "dojo/dom-attr",
+define(["dojo/_base/declare",
+    "dojo/_base/lang",
 	"dijit/_WidgetBase",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
+    "rdforms/view/renderingContext",
     "rdforms/view/Editor", //in template
-	"dojo/text!./IncludeLevelEditorTemplate.html"
-], function(declare, domClass, domStyle, domAttr, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Editor, template) {
+	"dojo/text!./LevelEditorTemplate.html"
+], function(declare, lang, _WidgetBase, _TemplatedMixin,
+            _WidgetsInTemplateMixin, renderingContext, Editor, template) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
@@ -36,6 +36,7 @@ define(["dojo/_base/declare",
                     includeLevel: this.includeLevel
                 });
             }
+            this.localize();
         },
         setIncludeLevel: function(includeLevel) {
             if (this._rdformsDijit != null && this._rdformsDijit.getIncludeLevel() === includeLevel) {
@@ -53,11 +54,12 @@ define(["dojo/_base/declare",
                     this._optionalClick();
             }
         },
-        localize: function(messages) {
-            this.messages = messages;
-            domAttr.set(this._mandatoryLabelNode, "innerHTML", this.messages.mandatoryLabel);
-            domAttr.set(this._recommendedLabelNode, "innerHTML", this.messages.recommendedLabel);
-            domAttr.set(this._optionalLabelNode, "innerHTML", this.messages.optionalLabel);
+        localize: function() {
+            renderingContext.getMessages(lang.hitch(this, function(messages) {
+                renderingContext.domSetAttr(this._mandatoryLabelNode, "innerHTML", messages.mandatoryLabel);
+                renderingContext.domSetAttr(this._recommendedLabelNode, "innerHTML", messages.recommendedLabel);
+                renderingContext.domSetAttr(this._optionalLabelNode, "innerHTML", messages.optionalLabel);
+            }));
         },
 
         //===================================================
@@ -68,7 +70,7 @@ define(["dojo/_base/declare",
         postCreate: function () {
             this.inherited("postCreate", arguments);
             if (this.includeLevelControllsVisible) {
-                domStyle.set(this._cardinalityNode, "display", "");
+                this._cardinalityNode.style.display = "";
             }
             if (!this.externalEditor) {
                 this._rdformsDijit = new Editor({includeLevel: "mandatory", compact: this.compact}, this._rdformsNode);
@@ -85,33 +87,33 @@ define(["dojo/_base/declare",
         },
 
         _mandatoryClick: function() {
-            domClass.add(this._mandatoryLabel, "active");
-            domClass.remove(this._recommendedLabel, "active");
-            domClass.add(this._recommendedLabel, "btn-default");
-            domClass.remove(this._recommendedLabel, "btn-success");
-            domClass.remove(this._optionalLabel, "active");
-            domClass.add(this._optionalLabel, "btn-default");
-            domClass.remove(this._optionalLabel, "btn-success");
+            renderingContext.domClassToggle(this._mandatoryLabel, "active", true);
+            renderingContext.domClassToggle(this._recommendedLabel, "active", false);
+            renderingContext.domClassToggle(this._recommendedLabel, "btn-default", true);
+            renderingContext.domClassToggle(this._recommendedLabel, "btn-success", false);
+            renderingContext.domClassToggle(this._optionalLabel, "active", false);
+            renderingContext.domClassToggle(this._optionalLabel, "btn-default", true);
+            renderingContext.domClassToggle(this._optionalLabel, "btn-success", false);
             this._updateEditor("mandatory");
         },
         _recommendedClick: function() {
-            domClass.add(this._mandatoryLabel, "active");
-            domClass.add(this._recommendedLabel, "active");
-            domClass.add(this._recommendedLabel, "btn-success");
-            domClass.remove(this._recommendedLabel, "btn-default");
-            domClass.remove(this._optionalLabel, "active");
-            domClass.add(this._optionalLabel, "btn-default");
-            domClass.remove(this._optionalLabel, "btn-success");
+            renderingContext.domClassToggle(this._mandatoryLabel, "active", true);
+            renderingContext.domClassToggle(this._recommendedLabel, "active", true);
+            renderingContext.domClassToggle(this._recommendedLabel, "btn-success", true);
+            renderingContext.domClassToggle(this._recommendedLabel, "btn-default", false);
+            renderingContext.domClassToggle(this._optionalLabel, "active", false);
+            renderingContext.domClassToggle(this._optionalLabel, "btn-default", true);
+            renderingContext.domClassToggle(this._optionalLabel, "btn-success", false);
             this._updateEditor("recommended");
         },
         _optionalClick: function() {
-            domClass.add(this._mandatoryLabel, "active");
-            domClass.add(this._recommendedLabel, "active");
-            domClass.add(this._recommendedLabel, "btn-success");
-            domClass.remove(this._recommendedLabel, "btn-default");
-            domClass.add(this._optionalLabel, "active");
-            domClass.add(this._optionalLabel, "btn-success");
-            domClass.remove(this._optionalLabel, "btn-default");
+            renderingContext.domClassToggle(this._mandatoryLabel, "active", true);
+            renderingContext.domClassToggle(this._recommendedLabel, "active", true);
+            renderingContext.domClassToggle(this._recommendedLabel, "btn-success", true);
+            renderingContext.domClassToggle(this._recommendedLabel, "btn-default", false);
+            renderingContext.domClassToggle(this._optionalLabel, "active", true);
+            renderingContext.domClassToggle(this._optionalLabel, "btn-success", true);
+            renderingContext.domClassToggle(this._optionalLabel, "btn-default", false);
             this._updateEditor("optional");
         },
         _updateEditor: function(includeLevel) {

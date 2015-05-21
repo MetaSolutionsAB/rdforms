@@ -121,8 +121,8 @@ define(["dojo/_base/declare",
                 return;
             }
 
-            var f = lang.hitch(this, function (messages) {
-                this.messages = this.messages || messages;
+            renderingContext.getMessages(lang.hitch(this, function (messages) {
+                this.messages = messages;
                 var groupIndex, table, lastRow, table,
                     groupedItemsArr = this.binding.getItem().getChildren(),
                     groupedBindingsArr = this.binding.getItemGroupedChildBindings(),
@@ -170,13 +170,7 @@ define(["dojo/_base/declare",
                         bindings[0].getCardinalityTracker().checkCardinality();
                     }
                 }
-            });
-            //Make sure the messages are loaded.
-            if (this.messages) {
-                f();
-            } else {
-                system.getMessages(f);
-            }
+            }));
         },
 
         /**

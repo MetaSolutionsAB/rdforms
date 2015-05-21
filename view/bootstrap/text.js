@@ -137,7 +137,7 @@ define([
                     binding.setGist($input.val());
                 }
             });
-        if (!binding.getItem.isEnabled()) {
+        if (!binding.getItem().isEnabled()) {
             $input.prop("disabled", true);
         }
     });

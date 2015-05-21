@@ -125,3 +125,8 @@
 /*.rdformsEditor.compact>.rdformsTopLevel:nth-child(odd) {
     background: #E6E6E6
 }*/
+
+.rdforms .cardinality {
+    width: 500px;
+    margin: 0px auto 1em auto;
+}

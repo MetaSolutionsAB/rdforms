@@ -15,5 +15,8 @@ var dojoConfig = {
             //Below is a hack to overcome that dojos define does not handle purely a dependency array
             "jquery/selector": "jquery/selector-sizzle"
         }
-    }
+    },
+    "deps": [
+        'rdforms/view/nls/rdforms',
+        'rdforms/view/bootstrap/all']
 };

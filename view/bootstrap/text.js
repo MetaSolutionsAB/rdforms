@@ -3,12 +3,10 @@ define([
     "rdforms/utils",
     "dojo/_base/array",
     "rdforms/model/system",
-    "rdforms/view/bootstrap/DateTime",
     "rdforms/view/bootstrap/DurationEditor",
     "rdforms/view/bootstrap/DurationPresenter",
     "jquery"
-], function(renderingContext, utils, array, system,
-            DateTime, DurationEditor, DurationPresenter, jquery) {
+], function(renderingContext, utils, array, system, DurationEditor, DurationPresenter, jquery) {
 
     // -------------- Presenters ----------------
     var presenters = renderingContext.presenterRegistry;
@@ -74,20 +72,6 @@ define([
 
     // -------------- Editors ----------------
     var editors = renderingContext.editorRegistry;
-
-    //Editor for dates and dates with time.
-    var dateEditor = function(fieldDiv, binding, context) {
-        var dt = new DateTime({
-            messages: context.view.messages,
-            binding: binding,
-            item: binding.getItem()
-        }, jquery("<div>").appendTo(fieldDiv)[0]);
-        context.clear = function() {
-            dt.clear();
-        }
-    };
-    editors.itemtype("text").datatype("http://www.w3.org/2001/XMLSchema#date").register(dateEditor);
-    editors.itemtype("text").datatype("http://purl.org/dc/terms/W3CDTF").register(dateEditor);
 
     // Editor for duration
     editors.itemtype("text").datatype("http://www.w3.org/2001/XMLSchema#duration").register(function(fieldDiv, binding) {

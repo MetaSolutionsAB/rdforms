@@ -9,7 +9,7 @@
         "rdforms/model/Engine",
         "rdforms/template/ItemStore",
         "rdforms/view/Editor",
-        "rdforms/view/bootstrap/components",
+        "rdforms/view/bootstrap/all",
         "dojo/i18n!rdforms/view/nls/rdforms",
         "select2/select2/i18n/en"
     ],

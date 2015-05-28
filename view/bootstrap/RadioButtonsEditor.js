@@ -2,8 +2,7 @@
 define(["dojo/_base/declare",
 	"dojo/_base/lang", 
     "dijit/_WidgetBase",
-    "jquery",
-    "fuelux/radio",
+    "jquery"
 ], function(declare, lang, _WidgetBase, jquery) {
 
     var uniqueRadioButtonGroupNr = 0;
@@ -29,21 +28,20 @@ define(["dojo/_base/declare",
                 var c = this.choices[ind], $label;
                 if (this.item.hasStyle("verticalRadioButtons")) {
                     var $divWrap = jquery('<div class="radio">').appendTo(this.domNode);
-                    $label = jquery('<label class="radio-custom">').appendTo($divWrap);
+                    $label = jquery('<label>').appendTo($divWrap);
                 } else {
-                    $label = jquery('<label class="radio-custom radio-inline">').appendTo(this.domNode);
+                    $label = jquery('<label class="radio-inline">').appendTo(this.domNode);
                 }
-                var $input = jquery('<input class="sr-only" type="radio">')
+                var $input = jquery('<input type="radio">')
                     .val(c.value)
                     .attr("checked", c.value === currentValue)
                     .attr("name", "rdformsRadio_"+uniqueRadioButtonGroupNr)
                     .appendTo($label);
                 $label.append(this.item._getLocalizedValue(c.label).value);
-                $label.radio();
 
                 if (c.mismatch) {
-                    $label.addClass("mismatch");
-                    $label.radio('disable');
+                    $label.addClass("mismatch disabled");
+                    $input.attr('disabled', true);
                 } else {
                     $label.click(lang.hitch(this, function () {
                         this.binding.setValue($input.val());

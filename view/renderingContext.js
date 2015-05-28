@@ -33,17 +33,8 @@ define([
          *   and has made his selection the onSelect method will be called with the selected choice.)
          */
         chooserRegistry: new Registry(),
-        chooserEditor: null,
-        chooserPresenter: null,
         renderPresenter: function (node, binding, context) {
             var renderer = rc.presenterRegistry.getComponent(binding.getItem());
-            var chooser = rc.chooserRegistry.getComponent(binding.getItem());
-            if (chooser) {
-                rc.prePresenterRenderer(node, binding, context);
-                rc.chooserPresenter(node, binding, context);
-                rc.postPresenterRenderer(node, binding, context);
-            }
-
             if (renderer) {
                 rc.prePresenterRenderer(node, binding, context);
                 renderer(node, binding, context);
@@ -52,12 +43,6 @@ define([
         },
         renderEditor: function (node, binding, context) {
             var renderer = rc.editorRegistry.getComponent(binding.getItem());
-            var chooser = rc.chooserRegistry.getComponent(binding.getItem());
-            if (chooser) {
-                rc.preEditorRenderer(node, binding, context);
-                rc.chooserEditor(node, binding, context);
-                rc.postEditorRenderer(node, binding, context);
-            }
             if (renderer) {
                 rc.preEditorRenderer(node, binding, context);
                 renderer(node, binding, context);

@@ -1,0 +1,13 @@
+<div class="rdformsDateValue rdformsFieldInput" xmlns="http://www.w3.org/1999/html">
+    <div class="input-append date" data-dojo-attach-point="cal">
+        <input type="text" data-dojo-attach-point="datepickerField">
+        <span class="add-on"><i class="icon-th"></i></span>
+    </div>
+    <input type="text" style="display: none" class="form-control timeInput" placeholder="23:59" data-dojo-attach-point="timeInput"/>
+    <input type="text" style="display: none" class="form-control yearInput" placeholder="1999" data-dojo-attach-point="yearInput"/>
+    <select class="form-control dateControl" data-dojo-attach-point="dateControl">
+        <option value="Year">${messages.date_year}</option>
+        <option value="Date" selected="true">${messages.date_date}</option>
+        <option value="DateTime">${messages.date_date_and_time}</option>
+    </select>
+</div>

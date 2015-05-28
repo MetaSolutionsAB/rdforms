@@ -3,9 +3,7 @@ define([
     "rdforms/model/system",
     "rdforms/utils",
     "rdforms/view/bootstrap/RadioButtonsEditor",
-    "jquery",
-    "jquery.mousewheel",
-    "select2/jquery.select2"
+    "jquery"
 ], function(renderingContext, system, utils, RadioButtonsEditor, jquery) {
 
     // -------------- Presenters ----------------
@@ -43,7 +41,7 @@ define([
         }));
 
     // Presenter for choices.
-    renderingContext.chooserPresenter = choicify(
+    presenters.itemtype("choice").register(choicify(
         function(fieldDiv, binding, choice, desc) {
             var item = binding.getItem();
             if (item.hasStaticChoices() && !item.hasStyle("externalLink")) {
@@ -67,9 +65,7 @@ define([
                     });
                 }
             }
-        });
-
-    presenters.itemtype("choice").register(renderingContext.chooserPresenter);
+        }));
 
     // -------------- Editors ----------------
     var editors = renderingContext.editorRegistry;
@@ -139,7 +135,7 @@ define([
     });
 
     //Depends on system.getChoice and system.openChoiceSelector methods being available
-    renderingContext.chooserEditor = function (fieldDiv, binding, context) {
+    editors.itemtype("choice").choices("none").register(function (fieldDiv, binding, context) {
         var $divToUse = jquery('<div class="input-group systemChoice">').appendTo(fieldDiv);
         var $input = jquery('<input class="form-control" disabled="disabled">').appendTo($divToUse);
         var $wrap = jquery('<span class="input-group-btn">').appendTo($divToUse);
@@ -173,6 +169,5 @@ define([
         context.clear = function() {
             $input.val("");
         };
-    };
-    editors.itemtype("choice").choices("none").register(renderingContext.chooserEditor);
+    });
 });

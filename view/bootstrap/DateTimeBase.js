@@ -2,18 +2,14 @@
 define(["dojo/_base/declare",
 	"dojo/_base/lang",
     "dojo/date/stamp",
+    "rdforms/view/renderingContext",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
-	"fuelux/datepicker",
-    "jquery",
-    "bootstrap/tooltip",
-    "bootstrap/popover",
-    "dojo/text!./DateTimeTemplate.html"
-], function(declare, lang, stamp, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
-            datepicker, jquery, tooltip, popover, template) {
-    return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
-        templateString: template,
+    "jquery"
+], function(declare, lang, stamp, renderingContext, _WidgetBase, _TemplatedMixin,
+            _WidgetsInTemplateMixin, jquery) {
+    var DateTimeBase = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
         //===================================================
         // Public attributes
@@ -35,28 +31,9 @@ define(["dojo/_base/declare",
             this.inherited("postCreate", arguments);
 
             //Datepicker
-            var updateDate = lang.hitch(this, function(evt, d) {
-                this._valid = true;
-                this._date.setFullYear(d.getFullYear(), d.getMonth(), d.getDate());
-                var str = stamp.toISOString(d);
-                if (this._excludeTime) {
-                    this.binding.setValue(str.substring(0,str.indexOf('T')));
-                } else {
-                    this.binding.setValue(str);
-                    this.$timeInput.prop("disabled", false);
-                }
-            });
-            this.$datepicker = jquery(this.cal).datepicker({
-                allowPastDates: true,
-                date: null
-            }).on('changed.fu.datepicker', updateDate)
-                .on('dateClicked.fu.datepicker', updateDate);
+            this.initDatePicker();
 
-            if (!this.item.isEnabled()) {
-                this.$datepicker.datepicker("disabled");
-            }
-
-            //Time input
+            //Time input, assumes a this.timeInput input node
             var timePattern = "^([0-1][0-9]|2[0-3]):[0-5][0-9]$";
             this.$timeInput = jquery(this.timeInput).attr("pattern", "^([0-1][0-9]|2[0-3]):[0-5][0-9]$")
                 .change(lang.hitch(this, function() {
@@ -73,7 +50,7 @@ define(["dojo/_base/declare",
                     this.binding.setValue(stamp.toISOString(this._date));
                 }));
 
-            //Year input
+            //Year input, assumes a this.yearInput input node
             this.$yearInput = jquery(this.yearInput).attr("pattern", "^-?[0-9][0-9][0-9][0-9]$")
                 .change(lang.hitch(this, function() {
                     var val = this.$yearInput.val();
@@ -81,13 +58,29 @@ define(["dojo/_base/declare",
                     this.binding.setValue(val);
                 }));
 
-            //Date control
+            //Date control, assumes this.dateControl select node
             this.$dateControl = jquery(this.dateControl).change(lang.hitch(this, function() {
                 var val = this.$dateControl.val();
                 this["_show"+val]();
             }));
 
             this._binding2Gui();
+        },
+
+        initDatePicker: function() {
+        },
+        setDateInPicker: function(d) {
+        },
+        setDateInBinding: function(d) {
+            this._valid = true;
+            this._date.setFullYear(d.getFullYear(), d.getMonth(), d.getDate());
+            var str = stamp.toISOString(d);
+            if (this._excludeTime) {
+                this.binding.setValue(str.substring(0,str.indexOf('T')));
+            } else {
+                this.binding.setValue(str);
+                this.$timeInput.prop("disabled", false);
+            }
         },
 
         clear: function() {
@@ -98,6 +91,7 @@ define(["dojo/_base/declare",
         //===================================================
         // Private methods
         //===================================================
+
         _binding2Gui: function() {
             this._firstTime = true;
             var data = this.binding.getValue();
@@ -133,11 +127,11 @@ define(["dojo/_base/declare",
             this.$timeInput.hide();
             this.$datepicker.show();
             if (this._valid) {
-                this.$datepicker.datepicker("setDate", this._date);
+                this.setDateInPicker(this._date);
                 var str = stamp.toISOString(this._date);
                 !this._firstTime && this.binding.setValue(str.substring(0,str.indexOf('T')));
             } else {
-                this.$datepicker.datepicker("setDate", null);
+                this.setDateInPicker(null);
             }
         },
         _showDateTime: function() {
@@ -156,10 +150,10 @@ define(["dojo/_base/declare",
                 } else {
                     this.$timeInput.val("");
                 }
-                this.$datepicker.datepicker("setDate", this._date);
+                this.setDateInPicker(this._date);
                 !this._firstTime && this.binding.setValue(stamp.toISOString(this._date));
             } else {
-                this.$datepicker.datepicker("setDate", null);
+                this.setDateInPicker(null);
                 this.$timeInput.prop("disabled", true);
                 this.$timeInput.val("");
             }
@@ -180,4 +174,23 @@ define(["dojo/_base/declare",
             this.binding.setValue(v);
         }
     });
+
+    DateTimeBase.register = function(DTCls) {
+        //Editor for dates and dates with time.
+        var dateEditor = function(fieldDiv, binding, context) {
+            var dt = new DTCls({
+                messages: context.view.messages,
+                binding: binding,
+                item: binding.getItem()
+            }, jquery("<div>").appendTo(fieldDiv)[0]);
+            context.clear = function() {
+                dt.clear();
+            }
+        };
+        var editors = renderingContext.editorRegistry;
+        editors.itemtype("text").datatype("http://www.w3.org/2001/XMLSchema#date").register(dateEditor);
+        editors.itemtype("text").datatype("http://purl.org/dc/terms/W3CDTF").register(dateEditor);
+    };
+
+    return DateTimeBase;
 });

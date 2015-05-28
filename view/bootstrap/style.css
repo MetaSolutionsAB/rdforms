@@ -27,7 +27,7 @@
     background-color: lightcoral;
 }
 
-.rdformsDateValue .datepicker {
+.rdformsDateValue .rdformsDatepicker {
     width: 12em;
     display: inline-block;
 }

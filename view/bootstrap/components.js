@@ -1,12 +1,11 @@
 define([
     "rdforms/view/renderingContext",
     "jquery",
-    "sizzle",
     "rdforms/view/bootstrap/labels",
     "rdforms/view/bootstrap/text",
     "rdforms/view/bootstrap/choice",
     "rdforms/view/bootstrap/buttons",
-    "rdforms/view/bootstrap/table"
+    "rdforms/view/bootstrap/table",
 ], function(renderingContext, jquery) {
 
     renderingContext.domQuery = function(selector, node) {

@@ -30,5 +30,7 @@ require.config({
             "dojo/i18n": "di18n"
         }
     },
-    "deps": ["rdforms/view/nls/rdforms", 'rdforms/view/bootstrap/components']
+    "deps": [
+        'rdforms/view/nls/rdforms',
+        'rdforms/view/bootstrap/all']
 });

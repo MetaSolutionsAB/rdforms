@@ -3,7 +3,7 @@ define(["dojo/_base/declare",
 	"dojo/_base/lang",
     "jquery",
     "rdforms/view/bootstrap/DateTimeBase",
-    "dojo/text!./DateTimeFueluxTemplate.html"
+    "dojo/text!./DateTimeBootstrapDatepickerTemplate.html"
 ], function(declare, lang, jquery, DateTimeBase, template) {
     /**
      * A Date and time picker.

@@ -46,7 +46,7 @@ define([
             }
         }));
 
-    renderingContext.chooserPresenter = choicify(
+    presenters.itemtype("choice").register(choicify(
         function(fieldDiv, binding, choice, desc) {
             var item = binding.getItem();
             if (item.hasStaticChoices() && !item.hasStyle("externalLink")) {
@@ -68,10 +68,7 @@ define([
                     });
                 }
             }
-        });
-
-    presenters.itemtype("choice").register(renderingContext.chooserPresenter);
-
+        }));
 
     var radioCheck = function(item) {
         var choices = item.getChoices(),
@@ -171,7 +168,7 @@ define([
     });
 
     //Depends on system.getChoice and system.openChoiceSelector methods being available
-    renderingContext.chooserEditor = function (fieldDiv, binding, context) {
+    editors.itemtype("choice").choices("none").register(function (fieldDiv, binding, context) {
         var divToUse = domConstruct.create("div", null, fieldDiv);
         var cNode = domConstruct.create("div", {"class": "rdformsChoiceValue"}, divToUse);
         var setChoice = function(choice) {
@@ -206,6 +203,5 @@ define([
         on(ddButton, "click", lang.hitch(this, function () {
             renderingContext.openChoiceSelector(binding, setChoice);
         }));
-    };
-    editors.itemtype("choice").choices("none").register(renderingContext.chooserEditor);
+    });
 });

@@ -140,9 +140,11 @@ define(["dojo/_base/declare",
                     item = groupedItemsArr[groupIndex];
 
                     if (!this.showNow(item, bindings)) {
+                        if (item.hasStyle("invisible")) { //In this case, create some bindings anyway
+                            this.prepareBindings(item, bindings);
+                        }
                         continue;
                     }
-
                     bindings = this.prepareBindings(item, bindings);
 
                     //Table case

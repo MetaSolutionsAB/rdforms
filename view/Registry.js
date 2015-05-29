@@ -96,6 +96,7 @@ define([
                         if (item.hasChoices()) {
                             return -1;
                         }
+                        break;
                     case "any":
                     default:
                         if (!item.hasChoices()) {

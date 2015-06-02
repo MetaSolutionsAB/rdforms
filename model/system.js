@@ -2,7 +2,7 @@ define([
     "exports",
     "dojo/on",
     "rdforms/utils",
-    "dojo/dom-attr",
+    "dojo/dom-attr"
 ], function(exports, on, utils, domAttr) {
 
     var generateUIDNotMoreThan1million = function () {

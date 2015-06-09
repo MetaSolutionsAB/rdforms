@@ -1,7 +1,7 @@
 define([
     "rdforms/view/Registry",
     "rdforms/model/system",
-    "dojo/i18n"
+    "di18n/i18n"
 ], function(Registry, system, i18n) {
 
     system.getChoice = function(item, value) {
@@ -67,7 +67,7 @@ define([
             if (messages) {
                 callback(messages);
             } else {
-                callback(i18n.getLocalization("rdforms/view", "rdforms"));
+                i18n.getLocalization("rdforms/view", "rdforms", null, callback);
             }
         },
 

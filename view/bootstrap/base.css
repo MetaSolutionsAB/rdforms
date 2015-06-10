@@ -132,3 +132,7 @@
 /*.rdformsEditor.compact>.rdformsTopLevel:nth-child(odd) {
     background: #E6E6E6
 }*/
+
+.fuelux .rdformsDatepicker>.input-group>.input-group-btn>.dropdown-menu-left {
+    left: -128px;
+}

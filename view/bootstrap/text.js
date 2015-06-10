@@ -152,7 +152,7 @@ define([
             jquery(context.controlDiv).addClass("rdformsLangFieldControl");
             var $lselect = jquery('<select class="form-control rdformsLanguage">')
                 .appendTo(context.controlDiv);
-            var langList = context.view._getLanguagesList();
+            var langList = renderingContext.getLanguageList();
             langList = utils.cloneArrayWithLabels(langList);
             array.forEach(langList, function(lang) {
                 jquery("<option>").html(lang.label).val(lang.value).appendTo($lselect);

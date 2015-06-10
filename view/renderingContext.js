@@ -11,7 +11,33 @@ define([
         }
         return chooser.getChoice(item, value);
     };
-    var messages;
+    var messages, languages, defaultLanguages = [
+        {"value": "", label: {"en": ""}},
+        {"value": "bg", label: {"en": "Bulgarian", "bg": "български"}},
+        {"value": "es", label: {"en": "Spanish", "es": "Español"}},
+        {"value": "cs", label: {"en": "Czech", "cs": "čeština"}},
+        {"value": "da", label: {"en": "Danish", "da": "Dansk"}},
+        {"value": "de", label: {"en": "German", "de": "Deutsch"}},
+        {"value": "et", label: {"en": "Estonian", "et": "Eesti keel"}},
+        {"value": "el", label: {"en": "Greek", "el": "ελληνικά"}},
+        {"value": "en", label: {"en": "English"}},
+        {"value": "fr", label: {"en": "French", "fr": "Français"}},
+        {"value": "ga", label: {"en": "Irish", "ga": "Gaeilge"}},
+        {"value": "hr", label: {"en": "Croatian", "hr": "Hrvatski"}},
+        {"value": "it", label: {"en": "Italian", "it": "Italiano"}},
+        {"value": "lv", label: {"en": "Latvian", "lv": "Latviešu valoda"}},
+        {"value": "lt", label: {"en": "Lithuanian", "lt": "Lietuvių kalba"}},
+        {"value": "hu", label: {"en": "Hungarian", "hu": "Magyar"}},
+        {"value": "mt", label: {"en": "Maltese", "mt": "Malti"}},
+        {"value": "nl", label: {"en": "Dutch", "nl": "Nederlands"}},
+        {"value": "pl", label: {"en": "Polish", "pl": "Polski"}},
+        {"value": "pt", label: {"en": "Portuguese", "pt": "Português"}},
+        {"value": "ro", label: {"en": "Romanian", "ro": "Română"}},
+        {"value": "sk", label: {"en": "Slovak", "sk": "Slovenčina"}},
+        {"value": "sl", label: {"en": "Slovenian", "sl": "Slovenščina"}},
+        {"value": "fi", label: {"en": "Finnish", "fi": "Suomi"}},
+        {"value": "sv", label: {"en": "Swedish", "sv": "Svenska"}}
+    ];
 
     var rc = {
         domQuery: function(selector, node) {},
@@ -70,7 +96,22 @@ define([
                 i18n.getLocalization("rdforms/view", "rdforms", null, callback);
             }
         },
-
+        /**
+         * This method returns a list of language-codes and their labels (in several translations)
+         * An example for English looks like this:
+         * {
+         *   "value": "en",
+         *   "label": {"en": "English", "sv": "Engelska"}
+         * }
+         *
+         * @return {Array} of languages.
+         */
+        getLanguageList: function () { //TODO: Take this list from some kind of configuration
+            return languages || defaultLanguages;
+        },
+        setLanguageList: function(langs) {
+            languages = langs;
+        },
 
     //Override the following methods
         preEditorRenderer: function() {},

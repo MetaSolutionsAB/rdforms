@@ -192,7 +192,7 @@ define([
         var nodeType = item.getNodetype();
         if (nodeType === "LANGUAGE_LITERAL" || nodeType === "PLAIN_LITERAL") {
             var langSpan = domConstruct.create("span", null, context.controlDiv);
-            var langList = context.view._getLanguagesList();
+            var langList = renderingContext.getLanguageList();
             var langStore = new Memory({
                 data: utils.cloneArrayWithLabels(langList),
                 idProperty: "value",

@@ -161,31 +161,7 @@ define(["dojo/_base/declare",
         fillTable: function (table, bindings) {
             renderingContext.fillEditorTable(table, bindings, {view: this});
         },
-        //===================================================
-        // Private methods
-        //===================================================
 
-        /*
-         *
-         * This method returns a list of language-codes and their label (in several translations)
-         * An example for English looks like this:
-         * {"value": "en",
-         *  "label": {"en": "English", "sv": "Engelska"}
-         * }
-         *
-         * @return {Array} of languages.
-         */
-        _getLanguagesList: function () { //TODO: Take this list from some kind of configuration
-            if (this.languages == null) {
-                this.languages = [
-                    {"value": "", label: {"en": "", "sv": ""}},
-                    {"value": "en", label: {"en": "English", "sv": "Engelska"}},
-                    {"value": "de", label: {"en": "German", "sv": "Tyska"}},
-                    {"value": "sv", label: {"en": "Swedish", "sv": "Svenska"}}
-                ];
-            }
-            return this.languages;
-        },
         addComponent: function(fieldDiv, binding) {
             if (binding.getItem().hasStyle("nonEditable")) {
                 renderingContext.renderPresenter(fieldDiv, binding, {view: this});

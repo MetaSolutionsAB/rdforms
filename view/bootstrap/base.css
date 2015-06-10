@@ -5,12 +5,12 @@
     width: auto;
 }
 
-.rdformsEditor .rdformsLanguage {
+.rdformsEditor .rdformsField .rdformsLanguage {
     width: 90px;
     float: none;
 }
 
-.rdformsEditor .rdformsLangFieldControl {
+.rdformsEditor .rdformsField .rdformsLangFieldControl {
     width: 146px;
 }
 

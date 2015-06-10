@@ -1,13 +1,14 @@
 /*global define*/
 define(["dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/event",
 	"dijit/_WidgetBase",
 	"dijit/_TemplatedMixin",
 	"dijit/_WidgetsInTemplateMixin",
     "rdforms/view/renderingContext",
     "rdforms/view/Editor", //in template
 	"dojo/text!./LevelEditorTemplate.html"
-], function(declare, lang, _WidgetBase, _TemplatedMixin,
+], function(declare, lang, event, _WidgetBase, _TemplatedMixin,
             _WidgetsInTemplateMixin, renderingContext, Editor, template) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -87,7 +88,7 @@ define(["dojo/_base/declare",
             this.show();
         },
 
-        _mandatoryClick: function() {
+        _mandatoryClick: function(ev) {
             renderingContext.domClassToggle(this._mandatoryLabel, "active", true);
             renderingContext.domClassToggle(this._recommendedLabel, "active", false);
             renderingContext.domClassToggle(this._recommendedLabel, "btn-default", true);
@@ -96,8 +97,11 @@ define(["dojo/_base/declare",
             renderingContext.domClassToggle(this._optionalLabel, "btn-default", true);
             renderingContext.domClassToggle(this._optionalLabel, "btn-success", false);
             this._updateEditor("mandatory");
+            if (ev) {
+                event.stop(ev);
+            }
         },
-        _recommendedClick: function() {
+        _recommendedClick: function(ev) {
             renderingContext.domClassToggle(this._mandatoryLabel, "active", true);
             renderingContext.domClassToggle(this._recommendedLabel, "active", true);
             renderingContext.domClassToggle(this._recommendedLabel, "btn-success", true);
@@ -106,8 +110,11 @@ define(["dojo/_base/declare",
             renderingContext.domClassToggle(this._optionalLabel, "btn-default", true);
             renderingContext.domClassToggle(this._optionalLabel, "btn-success", false);
             this._updateEditor("recommended");
+            if (ev) {
+                event.stop(ev);
+            }
         },
-        _optionalClick: function() {
+        _optionalClick: function(ev) {
             renderingContext.domClassToggle(this._mandatoryLabel, "active", true);
             renderingContext.domClassToggle(this._recommendedLabel, "active", true);
             renderingContext.domClassToggle(this._recommendedLabel, "btn-success", true);
@@ -116,6 +123,9 @@ define(["dojo/_base/declare",
             renderingContext.domClassToggle(this._optionalLabel, "btn-success", true);
             renderingContext.domClassToggle(this._optionalLabel, "btn-default", false);
             this._updateEditor("optional");
+            if (ev) {
+                event.stop(ev);
+            }
         },
         _updateEditor: function(includeLevel) {
             if (this._rdformsDijit) {

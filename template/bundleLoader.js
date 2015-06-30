@@ -1,9 +1,11 @@
 /*global define*/
 define([
     "dojo/_base/array",
+    "dojo/json",
     "dojo/promise/all",
-    "dojo/request"
-], function (array, all, request) {
+    "dojo/request",
+    "dojo/has"
+], function (array, json, all, request, has) {
 
     var endsWith = function(str, suffix) {
         return str.indexOf(suffix, str.length - suffix.length) !== -1;
@@ -27,12 +29,24 @@ define([
         };
 
         if (endsWith(bundlePaths[0], ".json")) {
-            var promises = array.map(bundlePaths, function (bp) {
-                return request.get(bp, {handleAs: "json"});
-            });
-            all(promises).then(f);
+            if (has('host-node')) {
+                var bps = array.map(bundlePaths, function (bp) {
+                    return "dojo/text!" + bp;
+                });
+                require(bps, function () {
+                    var jsonArr = array.map(Array.prototype.slice.call(arguments), function (text) {
+                        return json.parse(text);
+                    });
+                    f(jsonArr); //Convert to regular array
+                });
+            } else {
+                var promises = array.map(bundlePaths, function (bp) {
+                    return request.get(bp, {handleAs: "json"});
+                });
+                all(promises).then(f);
+            }
         } else {
-            require(bpaths, function () {
+            require(bundlePaths, function () {
                 f(Array.prototype.slice.call(arguments)); //Convert to regular array
             });
         }

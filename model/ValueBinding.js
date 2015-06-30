@@ -34,7 +34,7 @@ define(["dojo/_base/declare",
          */
         setValue: function(value) {
             var oValidObject = this._validObject;
-            if (this._isValidValue(value)) {
+            if (this._isValidObjectValue(value)) {
                 this._statement.setValue(value);
                 this._validObject = true;
                 if (oValidObject !== true && this._validPredicate === true && !this._excludeFromTreeValidityCheck) {
@@ -54,23 +54,11 @@ define(["dojo/_base/declare",
             this.updateAssertions();
         },
         getGist: function () {
-            var v = this.getValue();
-            var vt = this.getItem().getValueTemplate();
-            if (vt) {
-                if (vt.indexOf("$1") === -1) {
-                    vt = vt+"$1";
-                }
-                var r = (vt+'').replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1").replace("\\$1", "(.*)");
-                var e = new RegExp(r).exec(v);
-                if (e != null) {
-                    return e[1];
-                }
-            }
-            return v;
+            return this._extractGist(this.getValue(), this.getItem().getValueTemplate());
         },
         setGist: function (value) {
             var vt = this.getItem().getValueTemplate();
-            if (vt && this._isValidValue(value)) {
+            if (vt) {
                 if (vt.indexOf("$1") === -1) {
                     vt = vt+"$1";
                 }
@@ -90,7 +78,7 @@ define(["dojo/_base/declare",
          */
         setPredicate: function(predicate) {
             var oValidPredicate = this._validPredicate;
-            if (this._isValidValue(predicate)) {
+            if (this._isValidPredicateValue(predicate)) {
                 this._statement.setPredicate(predicate);
                 this._validPredicate = true;
                 if (oValidPredicate !== true && this._validObject === true) {
@@ -138,8 +126,8 @@ define(["dojo/_base/declare",
         //===================================================
         constructor: function() {
             if (this._statement) {
-                this._validPredicate = this._isValidValue(this._statement.getPredicate());
-                this._validObject = this._isValidValue(this._statement.getValue());
+                this._validPredicate = this._isValidPredicateValue(this._statement.getPredicate(), true);
+                this._validObject = this._isValidObjectValue(this._statement.getValue());
             }
         },
         remove: function() {

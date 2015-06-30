@@ -127,7 +127,7 @@ define([
 	},
 	setPredicate: function(predicate) {
 		var oValidPredicate = this._validPredicate;
-		if (this._isValidValue(predicate)) {
+		if (this._isValidPredicateValue(predicate)) {
 			this._statement.setPredicate(predicate);
 			this._validPredicate = true;
 			if (oValidPredicate !== true && this._oneValidChild === true) {
@@ -201,7 +201,7 @@ define([
 		});
 		this._rootUri = args.childrenRootUri;
 		if (this._statement) {
-			this._validPredicate = this._isValidValue(this._statement.getPredicate());
+			this._validPredicate = this._isValidPredicateValue(this._statement.getPredicate());
 		}
 	},
 	remove: function() {

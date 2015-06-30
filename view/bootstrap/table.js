@@ -46,7 +46,7 @@ define([
     renderingContext.addEditorTable = function (newRow, firstBinding, context) {
         var item = firstBinding.getItem(), childItems = item.getChildren();
         var $table = jquery("<table>").appendTo(newRow);
-        jquery($table).addClasS("rdformsGroup");
+        jquery($table).addClass("rdformsGroup");
 
         var $tHead = jquery("<thead>").appendTo($table);
         var $tBody = jquery("<tbody>").appendTo($table);

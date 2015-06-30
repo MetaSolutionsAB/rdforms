@@ -2,8 +2,8 @@
 define([
     "dojo/_base/array",
     "dojo/promise/all",
-    "dojo/request/xhr"
-], function (array, all, xhr) {
+    "dojo/request"
+], function (array, all, request) {
 
     var endsWith = function(str, suffix) {
         return str.indexOf(suffix, str.length - suffix.length) !== -1;
@@ -28,7 +28,7 @@ define([
 
         if (endsWith(bundlePaths[0], ".json")) {
             var promises = array.map(bundlePaths, function (bp) {
-                return xhr.get(bp, {handleAs: "json"});
+                return request.get(bp, {handleAs: "json"});
             });
             all(promises).then(f);
         } else {

@@ -35,6 +35,9 @@
             "jquery": "jquery",
             "jquery/selector": "jquery/selector-sizzle"
         },
+        "rdforms/template/bundleLoader": {
+            "dojo/request": "dojo/request/xhr"
+        },
         "*": {
             "jquery": "jquery/jquery",
             "jquery/selector": "jquery/selector-sizzle",

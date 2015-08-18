@@ -357,6 +357,14 @@ a.rdformsUrl:hover {
 	display: table-cell;
 }
 
+.compact .rdformsRow>.rdformsFields>div {
+    padding-left: 10px;
+}
+
+.compact .rdformsRow.rdformsTopLevel>.rdformsFields>div.rdforms {
+    padding-left: 0px;
+}
+
 .compact .rdformsRow.notCompact {
 	display: block;
 	width: auto;

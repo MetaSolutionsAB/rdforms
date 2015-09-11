@@ -61,12 +61,13 @@
         "sv": "Erkännande URL"
       },
       "description": {
-        "en": "The link which should be used when attributing a data source. The URL could be a reference to the dataset or publisher homepage, but may also be a dedicated attribution page. This is useful when providing onward attribution to upstream sources."
+        "en": "The link (URL) which should be used when attributing a data source. The URL could be a reference to the dataset or publisher homepage, but may also be a dedicated attribution page. This is useful when providing onward attribution to upstream sources."
       },
       "cardinality": {
         "min": 0,
         "pref": 1
-      }
+      },
+      "pattern": "https?://.*"
     },
     {
       "type": "text",
@@ -92,14 +93,15 @@
         "sv": "Riktlinjer för återanvändning"
       },
       "description": {
-        "en": "Link to a document that provides guidelines for re-users of data that is covered by a specific rights statement. The guidelines may include more detail on attribution guidelines, a fuller copyright statement, and general guidance on how the data might be re-used"
+        "en": "Link (URL) to a document that provides guidelines for re-users of data that is covered by a specific rights statement. The guidelines may include more detail on attribution guidelines, a fuller copyright statement, and general guidance on how the data might be re-used"
       },
       "property": "http://schema.theodi.org/odrs#reuserGuidelines",
       "nodetype": "URI",
       "cardinality": {
         "min": 0,
         "pref": 1
-      }
+      },
+      "pattern": "https?://.*"
     },
     {
       "type": "text",
@@ -111,12 +113,13 @@
         "sv": "Upphovsrättsdokument"
       },
       "description": {
-        "en": "A link to a document that includes a statement about the copyright status of the content of a dataset. The web page might include both a copyright notice for a dataset, and any relevant guidance for re-users."
+        "en": "A link (URL) to a document that includes a statement about the copyright status of the content of a dataset. The web page might include both a copyright notice for a dataset, and any relevant guidance for re-users."
       },
       "cardinality": {
         "min": 0,
         "pref": 1
-      }
+      },
+      "pattern": "https?://.*"
     },
     {
       "type": "group",
@@ -161,12 +164,13 @@
         "sv": "Jurisdiktion"
       },
       "description": {
-        "en": "A reference to the jurisdiction in which copyright and/or database rights have been asserts. It is recommended that this refer to the URI for a country or region."
+        "en": "A reference (URI) to the jurisdiction in which copyright and/or database rights have been asserts. It is recommended that this refer to the URI for a country or region."
       },
       "cardinality": {
         "min": 0,
         "pref": 1
-      }
+      },
+      "pattern": "https?://.*"
     },
     {
       "type": "text",

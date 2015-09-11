@@ -80,7 +80,7 @@ define([
         return false;
     };
     editors.itemtype("choice").choices().check(radioCheck).register(function (fieldDiv, binding, context) {
-        new RadioButtonsEditor({binding: binding}, fieldDiv);
+        new RadioButtonsEditor({binding: binding, context: context}, fieldDiv);
     });
 
     editors.itemtype("choice").choices().register(function (fieldDiv, binding, context) {

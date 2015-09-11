@@ -13,7 +13,14 @@ define(["dojo/_base/declare",
             this.item = this.binding.getItem();
             this.choices = this.item.getChoices();
             this.choice = this.binding.getChoice();
+            this.context = args.context;
+            this.context.clear = lang.hitch(this, this.clear);
         },
+
+        clear: function() {
+            jquery(this.domNode).find('input').prop("checked", false);
+        },
+
         buildRendering: function () {
             this.domNode = this.srcNodeRef || jquery('<div>')[0];
 
@@ -43,9 +50,9 @@ define(["dojo/_base/declare",
                     $label.addClass("mismatch disabled");
                     $input.attr('disabled', true);
                 } else {
-                    $label.click(lang.hitch(this, function () {
-                        this.binding.setValue($input.val());
-                    }));
+                    $label.click(lang.hitch(this, function (inp) {
+                        this.binding.setValue(inp.val());
+                    }, $input));
                 }
             }
             uniqueRadioButtonGroupNr++;

@@ -28,10 +28,9 @@ define(["dojo/_base/declare",
     "rdforms/template/Bundle",
     "rdforms/template/Group",
     "rdforms/template/Choice",
-    'rdforms/view/dojo/components',
     "rdforms/apps/components/Experiment",
     "dojo/text!./StoreManagerTemplate.html"
-], function (declare, lang, xhr, on, domClass, domConstruct, domAttr, array, json, registry, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin, DnDSource, TreeDndSource, Tree, Menu, MenuItem, MenuSeparator, ContentPane, TabContainer, BorderContainer, Button, ItemEditor, ItemTreeModel, ChoicesEditor, Bundle, Group, Choice, components, Experiment, template) {
+], function (declare, lang, xhr, on, domClass, domConstruct, domAttr, array, json, registry, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin, DnDSource, TreeDndSource, Tree, Menu, MenuItem, MenuSeparator, ContentPane, TabContainer, BorderContainer, Button, ItemEditor, ItemTreeModel, ChoicesEditor, Bundle, Group, Choice, Experiment, template) {
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
         //===================================================

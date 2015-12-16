@@ -123,6 +123,11 @@ define(["dojo/_base/declare",
 
             renderingContext.getMessages(lang.hitch(this, function (messages) {
                 this.messages = messages;
+                if (this.binding == null) {
+                    //Just in case loading messages takes time
+                    // and someone does a reset of the view meanwhile.
+                    return;
+                }
                 var groupIndex, table, lastRow, table,
                     groupedItemsArr = this.binding.getItem().getChildren(),
                     groupedBindingsArr = this.binding.getItemGroupedChildBindings(),

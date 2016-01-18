@@ -108,7 +108,7 @@ define([
         });
 
     // Editor for decimals
-    var decPattern = "^(\d+\.?\d{0,9}|\.\d{1,9})$";
+    var decPattern = "^(\\d+(\\.\\d+)?)$";
     var decRegex = new RegExp(decPattern);
     editors.itemtype("text").datatype("http://www.w3.org/2001/XMLSchema#decimal").register(function(fieldDiv, binding) {
         var $input = jquery('<input type="text" class="form-control rdformsFieldInput">');

@@ -43,9 +43,10 @@ define([
             return;
         }
         var card = item.getCardinality();
-        if (card.max != null && (card.max == card.min || card.max === 1)) {
+        if (card.max != null && (card.max == card.min)) {
             return;
         }
+
         if (item.getType() === "group") {
             renderingContext.addGroupButtons(rowNode, $labelDiv[0], binding, context);
         } else {

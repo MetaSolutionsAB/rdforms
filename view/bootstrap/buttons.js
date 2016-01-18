@@ -60,32 +60,40 @@ define([
 
     renderingContext.addGroupButtons = function (rowDiv, labelDiv, binding, context) {
         var parentBinding = binding.getParent(), item = binding.getItem();
-        var $add = jquery('<span class="action glyphicon glyphicon-plus ">')
-            .attr("title", context.view.messages.edit_add)
-            .appendTo(labelDiv);
+        var cardTr = binding.getCardinalityTracker();
+        var card = item.getCardinality();
+        var $add;
+        if (card.max !== 1) {
+            $add = jquery('<span class="action glyphicon glyphicon-plus ">')
+                .attr("title", context.view.messages.edit_add)
+                .appendTo(labelDiv);
+            $add.click(function () {
+                if (!cardTr.isMax()) {
+                    var nBinding = Engine.create(parentBinding, item);
+                    context.view.addRow(rowDiv, nBinding); //not the first binding...
+                }
+            });
+        }
         var $remove = jquery('<span class="action glyphicon glyphicon-remove">')
             .attr("title", context.view.messages.edit_remove)
             .appendTo(labelDiv);
 
-        var cardTr = binding.getCardinalityTracker();
+        if (card.max === 1) {
+            $remove.addClass("indentRemove")
+        }
+
         var con = aspect.after(cardTr, "cardinalityChanged", function () {
-            $add.toggleClass("disabled", cardTr.isMax());
+            $add && $add.toggleClass("disabled", cardTr.isMax());
             $remove.toggleClass("disabled", cardTr.isMin());
         });
 
-        $add.click(function () {
-            if (!cardTr.isMax()) {
-                var nBinding = Engine.create(parentBinding, item);
-                context.view.addRow(rowDiv, nBinding); //not the first binding...
-            }
-        });
 
         $remove.click(function () {
             if (!cardTr.isMin()) {
                 if (cardTr.getCardinality() === 1) {
                     var parentBinding = binding.getParent(), item = binding.getItem();
                     con.remove();
-                    $add.unbind("click");
+                    $add && $add.unbind("click");
                     $remove.unbind("click");
                     binding.remove();
                     var card = item.getCardinality();

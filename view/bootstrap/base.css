@@ -92,6 +92,8 @@
     vertical-align: text-bottom;
 }
 
+.rdformsLabelRow>.action.indentRemove.glyphicon-remove,
+.rdformsLabelRow>.action.indentRemove.glyphicons.remove,
 .rdformsLabelRow>.action.glyphicons.plus, /* glyphicons.plus is for backwards compatability*/
 .rdformsLabelRow>.action.glyphicon-plus {
     margin-left: 1em;

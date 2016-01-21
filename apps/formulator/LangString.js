@@ -31,7 +31,8 @@ define(["dojo/_base/declare",
                     {id:"de"},
                     {id:"es"},
                     {id:"fr"},
-                    {id:"it"}
+                    {id:"it"},
+                    {id:"no"}
                 ]
             });
         },

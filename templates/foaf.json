@@ -146,6 +146,12 @@
       },
       "choices": [
         {
+          "value": "Dr",
+          "label": {
+            "en": "Dr"
+          }
+        },
+        {
           "value": "Mr",
           "label": {
             "en": "Mr"
@@ -161,12 +167,6 @@
           "value": "Ms",
           "label": {
             "en": "Ms"
-          }
-        },
-        {
-          "value": "Dr",
-          "label": {
-            "en": "Dr"
           }
         }
       ],
@@ -280,7 +280,8 @@
       "property": "http://xmlns.com/foaf/0.1/name",
       "label": {
         "en": "Name",
-        "sv": "Namn"
+        "sv": "Namn",
+        "no": "Navn"
       },
       "description": {
         "en": "A name for some thing."
@@ -368,7 +369,8 @@
       "property": "http://xmlns.com/foaf/0.1/homepage",
       "label": {
         "en": "Homepage",
-        "sv": "Hemsida"
+        "sv": "Hemsida",
+        "no": "Hjemmeside"
       },
       "description": {
         "en": "A homepage for some thing."
@@ -652,7 +654,8 @@
       "type": "choice",
       "nodetype": "RESOURCE",
       "cardinality": {
-        "pref": 1
+        "min": 0,
+        "pref": 0
       }
     },
     {
@@ -1128,7 +1131,7 @@
           "label": {
             "en": "Online accounts"
           },
-          "content": [
+          "items": [
             {
               "id": "foaf:account"
             },
@@ -1171,7 +1174,7 @@
           "label": {
             "en": "Additional information"
           },
-          "content": [
+          "items": [
             {
               "id": "foaf:page"
             },
@@ -1271,7 +1274,7 @@
           "label": {
             "en": "Online accounts"
           },
-          "content": [
+          "items": [
             {
               "id": "foaf:account"
             },
@@ -1314,7 +1317,7 @@
           "label": {
             "en": "Additional information"
           },
-          "content": [
+          "items": [
             {
               "id": "foaf:page"
             },
@@ -1610,7 +1613,7 @@
           "label": {
             "en": "Online accounts"
           },
-          "content": [
+          "items": [
             {
               "id": "foaf:account"
             },
@@ -1653,7 +1656,7 @@
           "label": {
             "en": "Additional information"
           },
-          "content": [
+          "items": [
             {
               "id": "foaf:page"
             },
@@ -2328,12 +2331,27 @@
           "type": "text",
           "extends": "foaf:mbox",
           "label": {
-            "en": "Mailbox"
+            "en": "Mailbox",
+            "no": "Epost-adresse",
+            "sv": "Epostadress"
           },
           "cardinality": {
             "min": 0,
             "pref": 1
           }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "foaf:PersonName",
+      "items": [
+        {
+          "id": "foaf:givenName"
+        },
+        {
+          "id": "foaf:familyName"
         }
       ]
     }

@@ -192,7 +192,8 @@
       "property": "http://www.w3.org/2006/vcard/ns#fn",
       "label": {
         "en": "formatted name",
-        "sv": "Namn"
+        "sv": "Namn",
+        "no": "Formatert navn"
       },
       "description": {
         "en": "The formatted text corresponding to the name of the object"
@@ -233,7 +234,8 @@
       "property": "http://www.w3.org/2006/vcard/ns#country-name",
       "label": {
         "en": "country name",
-        "sv": "Land"
+        "sv": "Land",
+        "no": "Navn på land"
       },
       "description": {
         "en": "The country name associated with the address of the object"
@@ -299,7 +301,8 @@
       "property": "http://www.w3.org/2006/vcard/ns#locality",
       "label": {
         "en": "locality",
-        "sv": "Postort"
+        "sv": "Postort",
+        "no": "Sted"
       },
       "description": {
         "en": "The locality (e.g. city or town) associated with the address of the object"
@@ -317,7 +320,8 @@
       "property": "http://www.w3.org/2006/vcard/ns#postal-code",
       "label": {
         "en": "postal code",
-        "sv": "Postkod"
+        "sv": "Postkod",
+        "no": "Postnummer"
       },
       "description": {
         "en": "The postal code associated with the address of the object"
@@ -347,7 +351,8 @@
       "property": "http://www.w3.org/2006/vcard/ns#street-address",
       "label": {
         "en": "street address",
-        "sv": "Gatuadress"
+        "sv": "Gatuadress",
+        "no": "Gateadresse"
       },
       "description": {
         "en": "The street address associated with the address of the object"
@@ -702,7 +707,8 @@
       "property": "http://www.w3.org/2006/vcard/ns#hasAddress",
       "label": {
         "en": "Address",
-        "sv": "Adress"
+        "sv": "Adress",
+        "no": "Adresse"
       },
       "description": {
         "en": "To specify the components of the delivery address for the object"
@@ -736,7 +742,8 @@
       "property": "http://www.w3.org/2006/vcard/ns#hasEmail",
       "label": {
         "en": "Email",
-        "sv": "E-postadress"
+        "sv": "E-postadress",
+        "no": "Epost"
       },
       "description": {
         "en": "To specify the electronic mail address for communication with the object"
@@ -834,7 +841,8 @@
       "property": "http://www.w3.org/2006/vcard/ns#hasTelephone",
       "label": {
         "en": "Telephone",
-        "sv": "Telefon"
+        "sv": "Telefon",
+        "no": "Telefon"
       },
       "description": {
         "en": "To specify the telephone number for telephony communication with the object"
@@ -909,13 +917,16 @@
       "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
       "label": {
         "en": "Context",
-        "sv": "Sammanhang"
+        "sv": "Sammanhang",
+        "no": "Kontekst"
       },
       "choices": [
         {
           "value": "http://www.w3.org/2006/vcard/ns#Home",
           "label": {
-            "en": "Home"
+            "en": "Home",
+            "sv": "Hem",
+            "no": "Hjemme"
           },
           "description": {
             "en": "This implies that the property is related to an individual's personal life"
@@ -927,7 +938,9 @@
             "en": "This implies that the property is related to an individual's work place"
           },
           "label": {
-            "en": "Work"
+            "en": "Work",
+            "sv": "Arbete",
+            "no": "Arbeid"
           }
         }
       ],
@@ -1028,7 +1041,8 @@
       "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
       "label": {
         "en": "Type",
-        "sv": "Typ"
+        "sv": "Typ",
+        "no": "Type"
       },
       "description": {},
       "choices": [
@@ -1036,7 +1050,8 @@
           "value": "http://www.w3.org/2006/vcard/ns#Cell",
           "label": {
             "en": "Cell (mobile)",
-            "": "Mobiltelefon"
+            "sv": "Mobiltelefon",
+            "no": "mobil"
           },
           "description": {
             "en": "Also called mobile telephone."
@@ -1046,7 +1061,8 @@
           "value": "http://www.w3.org/2006/vcard/ns#Fax",
           "label": {
             "en": "Fax",
-            "sv": "Fax"
+            "sv": "Fax",
+            "no": "Faks"
           },
           "description": {
             "en": "A faxmachine telephone number."
@@ -1056,7 +1072,8 @@
           "value": "http://www.w3.org/2006/vcard/ns#Pager",
           "label": {
             "en": "Pager",
-            "sv": "Sökare"
+            "sv": "Personsökare",
+            "no": "Personsøker"
           },
           "description": {}
         },
@@ -1067,28 +1084,32 @@
           },
           "label": {
             "en": "Text (sms)",
-            "sv": "Textmeddelande (sms)"
+            "sv": "Textmeddelande (sms)",
+            "no": "Sms"
           }
         },
         {
           "value": "http://www.w3.org/2006/vcard/ns#TextPhone",
           "label": {
             "en": "Text phone",
-            "sv": "Texttelefon"
+            "sv": "Texttelefon",
+            "no": "Teksttelefon"
           }
         },
         {
           "value": "http://www.w3.org/2006/vcard/ns#Video",
           "label": {
             "en": "Video",
-            "sv": "Video"
+            "sv": "Video",
+            "no": "Video"
           }
         },
         {
           "value": "http://www.w3.org/2006/vcard/ns#Voice",
           "label": {
             "en": "Voice",
-            "sv": "Röst"
+            "sv": "Röst",
+            "no": "Stemme"
           },
           "description": {}
         }
@@ -1114,7 +1135,8 @@
           "value": "http://www.w3.org/2006/vcard/ns#Individual",
           "label": {
             "en": "Individual",
-            "sv": "Individ"
+            "sv": "Individ",
+            "no": "Individ"
           },
           "description": {
             "en": "An object representing a single person or entity."
@@ -1124,7 +1146,8 @@
           "value": "http://www.w3.org/2006/vcard/ns#Organization",
           "label": {
             "en": "Organization",
-            "sv": "Organisation"
+            "sv": "Organisation",
+            "": "Organisasjon"
           },
           "description": {
             "en": "An object representing an organization.  An organization is a single entity, and might represent a business or government, a department or division within a business or government, a club, an association, or the like."

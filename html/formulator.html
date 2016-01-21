@@ -7,6 +7,12 @@
     <link type="text/css" href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link type="text/css" href="../libs/dijit/themes/claro/claro.css" rel="stylesheet"/>
     <script>
+        var dojoConfig = {};
+        var lang = window.location.href.match(/lang=([^&]*)/);
+        if (lang != null && lang.length === 2) {
+            dojoConfig.locale = lang[1];
+        }
+
         if (false && document.location.search.indexOf("debug=true") === -1) {
 //            document.write('<link type="text/css" href="../libs/dijit/themes/claro/claro.css" rel="stylesheet"/>');
             //document.write('<link rel="stylesheet" href="release/edit/entryscape-catalog/style.css"/>');
@@ -62,6 +68,10 @@
             left: 0px;
             right: 0px;
         }
+	.cardinality .dijitTextBox {
+	width: 3em;
+	margin-right: 1em;
+	}
     </style>
 
     <script type="text/javascript">

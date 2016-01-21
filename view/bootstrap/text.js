@@ -87,44 +87,31 @@ define([
         }
     });
 
-    // Editor for integers
-    var intPattern = "^\d+$";
-    var intRegex = new RegExp(intPattern);
-    editors.itemtype("text").datatype("http://www.w3.org/2001/XMLSchema#integer")
-        .register(function(fieldDiv, binding) {
-            var $input = jquery('<input type="text" class="form-control rdformsFieldInput">');
-            $input.val(binding.getGist())
-                .attr("pattern", intPattern)
-                .appendTo(fieldDiv)
-                .change(function() {
-                    var val = $input.val();
-                    if (intRegex.test(val)) {
-                        binding.setGist($input.val());
-                    }
-                });
-            if (!binding.getItem.isEnabled()) {
-                $input.prop("disabled", true);
-            }
-        });
-
-    // Editor for decimals
-    var decPattern = "^(\\d+(\\.\\d+)?)$";
-    var decRegex = new RegExp(decPattern);
-    editors.itemtype("text").datatype("http://www.w3.org/2001/XMLSchema#decimal").register(function(fieldDiv, binding) {
-        var $input = jquery('<input type="text" class="form-control rdformsFieldInput">');
-        $input.val(binding.getGist())
-            .attr("pattern", decPattern)
-            .appendTo(fieldDiv)
-            .change(function() {
-                var val = $input.val();
-                if (decRegex.test(val)) {
-                    binding.setGist($input.val());
+    var registerPattern = function(pattern, datatype) {
+        var regex = new RegExp(pattern);
+        editors.itemtype("text").datatype(datatype)
+            .register(function(fieldDiv, binding) {
+                var $input = jquery('<input type="text" class="form-control rdformsFieldInput">');
+                $input.val(binding.getGist())
+                    .attr("pattern", pattern)
+                    .appendTo(fieldDiv)
+                    .change(function() {
+                        var val = $input.val();
+                        if (regex.test(val)) {
+                            binding.setGist($input.val());
+                        }
+                    });
+                if (!binding.getItem().isEnabled()) {
+                    $input.prop("disabled", true);
                 }
             });
-        if (!binding.getItem().isEnabled()) {
-            $input.prop("disabled", true);
-        }
-    });
+    };
+    // Editor for gYear
+    registerPattern("^-?[0-9][0-9][0-9][0-9]$", "http://www.w3.org/2001/XMLSchema#gYear");
+    // Editor for integers
+    registerPattern("^\\d+$", "http://www.w3.org/2001/XMLSchema#integer");
+    // Editor for decimals
+    registerPattern("^(\\d+(\\.\\d+)?)$", "http://www.w3.org/2001/XMLSchema#decimal");
 
     //Editor for text, possibly multiline, possibly with a pattern
     // (supports non-specific datatypes as well).

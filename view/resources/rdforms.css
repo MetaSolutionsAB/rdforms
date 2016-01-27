@@ -296,6 +296,7 @@ a.rdformsUrl:hover {
 
 .rdformsEditor .rdformsFieldInput {
     width: 100%;
+    resize: vertical;
 }
 
 .rdformsEditor .rdformsChoiceValue {

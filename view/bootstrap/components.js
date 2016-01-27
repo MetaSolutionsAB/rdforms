@@ -39,12 +39,14 @@ define([
             jquery(fieldDiv).addClass("rdformsField");
         }
 
-        context.controlDiv = jquery('<div class="rdformsFieldControl">').appendTo(fieldDiv)[0];
+        context.$controlDiv = jquery('<div class="rdformsFieldControl">');
+        context.controlDiv = context.$controlDiv[0];
         if (it !== "group" && context.noCardinalityButtons !== true) {
             renderingContext.addRemoveButton(fieldDiv, binding, context);
         }
     };
 
     renderingContext.postEditorRenderer = function (fieldDiv, binding, context) {
+        context.$controlDiv.appendTo(fieldDiv);
     };
 });

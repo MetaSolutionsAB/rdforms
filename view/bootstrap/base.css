@@ -6,7 +6,7 @@
 }
 
 .rdformsEditor .rdformsField .rdformsLanguage {
-    width: 90px;
+    width: 117px;
     float: none;
 }
 
@@ -86,6 +86,7 @@
 
 .rdformsEditor .rdformsFieldControl {
     height: 3em;
+    top: 0px;
 }
 
 .rdformsLabelRow>.action.glyphicon {
@@ -116,8 +117,12 @@
     padding-bottom: 0.5em;
 }
 
+.rdformsEditor .rdformsField.rdformsLangcontrolledfield {
+    padding-right: 152px;
+}
 .rdformsEditor .rdformsField {
     min-height: 34px;
+    padding-right: 28px;
 }
 
 .rdformsEditor .systemChoice.input-group {

@@ -118,7 +118,8 @@ define(["dojo/_base/declare"], function(declare) {
             var pattern = this._item.getPattern();
             if (pattern) {
                 value = this._extractGist(value, this.getItem().getValueTemplate());
-                return value !== undefined && value !== null && value !== "" && (new RegExp(pattern)).test(value);
+                return value !== undefined && value !== null && value !== "" &&
+					(new RegExp("^"+pattern+"$")).test(value);
             } else {
                 return value !== undefined && value !== null && value !== "";
             }

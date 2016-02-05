@@ -209,7 +209,7 @@ define([
             if (stmts.length > 0) {
                 bindings = [];
                 array.forEach(stmts, function (stmt) {
-                    if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt)) {
+                    if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
                         constStmts = _findStatementsForConstraints(graph, stmt.getValue(), item);
                         if (constStmts !== undefined) {
                             _dibbs(stmt);
@@ -239,7 +239,7 @@ define([
         if (stmts.length > 0) {
             bindings = [];
             array.forEach(stmts, function (stmt) {
-                if (_noDibbs(stmt) && _isNodeTypeMatch(oItem, stmt)) {
+                if (_noDibbs(stmt) && _isNodeTypeMatch(oItem, stmt) && _isPatternMatch(oItem, stmt)) {
                     pChoice = _findChoice(pItem, stmt.getPredicate(), stmt.getGraph());
                     if (pChoice !== undefined) {
                         binding = null;
@@ -282,7 +282,7 @@ define([
         if (stmts.length > 0) {
             bindings = [];
             array.forEach(stmts, function (stmt) {
-                if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt)) {
+                if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
                     _dibbs(stmt);
                     bindings.push(new ValueBinding({item: item, statement: stmt}));
                 }
@@ -300,7 +300,7 @@ define([
         if (stmts.length > 0) {
             bindings = [];
             array.forEach(stmts, function (stmt) {
-                if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt)) {
+                if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
                     choice = _findChoice(item, stmt.getValue(), stmt.getGraph());
                     if (choice !== undefined) {
                         _dibbs(stmt);
@@ -339,6 +339,18 @@ define([
                 return objectType === "bnode";
         }
         return false;
+    };
+
+    var _isPatternMatch = function (item, stmt) {
+        var pattern = item.getPattern();
+        if (typeof pattern !== "undefined") {
+            try {
+                return (new RegExp("^"+pattern+"$")).test(stmt.getValue());
+            } catch (e) {
+                return true;
+            }
+        }
+        return true;
     };
 
     /**

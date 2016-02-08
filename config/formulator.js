@@ -7,6 +7,7 @@ require.config({
         "bootstrap": "bootstrap-amd/lib",
         "select2": "select2/src/js",
         "moment": "moment/moment",
+        "momentl": "moment/locale",
         "i18n": "di18n/i18n",
         "jquery": "jquery/src",
         "sizzle": "jquery/src/sizzle/dist/sizzle",

@@ -14,7 +14,9 @@ define({
         date_date_and_time: "Date and time",
         mandatoryLabel: "Mandatory",
         recommendedLabel: "Recommended",
-        optionalLabel: "Optional"
+        optionalLabel: "Optional",
+        today: "Today"
     },
-    sv: true
+    sv: true,
+    nb: true
 });

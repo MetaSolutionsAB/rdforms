@@ -13,5 +13,6 @@ define({
     date_date_and_time: "Datum och tid",
     mandatoryLabel: "Obligatoriskt",
     recommendedLabel: "Rekommenderat",
-    optionalLabel: "Valfritt"
+    optionalLabel: "Valfritt",
+    today: "Idag"
 });

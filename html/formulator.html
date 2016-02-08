@@ -7,12 +7,6 @@
     <link type="text/css" href="../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link type="text/css" href="../libs/dijit/themes/claro/claro.css" rel="stylesheet"/>
     <script>
-        var dojoConfig = {};
-        var lang = window.location.href.match(/lang=([^&]*)/);
-        if (lang != null && lang.length === 2) {
-            dojoConfig.locale = lang[1];
-        }
-
         if (false && document.location.search.indexOf("debug=true") === -1) {
 //            document.write('<link type="text/css" href="../libs/dijit/themes/claro/claro.css" rel="stylesheet"/>');
             //document.write('<link rel="stylesheet" href="release/edit/entryscape-catalog/style.css"/>');
@@ -90,62 +84,78 @@
 
         setTimeout(function() {
             require([
-                        'dojo/on',
-                        'dojo/dom',
-                        'dojo/dom-style',
-                        'rdforms/template/ItemStore',
-                        'rdforms/apps/formulator/StoreManager',
-                        'rdfjson/formats/converters',
-                        'dojo/json',
-                        'dojo/domReady!'],
-                    function (on, dom, domStyle, ItemStore, StoreManager, converters, json) {
-                        var itemStore = new ItemStore();
-                        var arr = [];
-                        var templatescount = parobj.templates ? parobj.templates.length : 0;
-                        var depscount = parobj.deps ? parobj.deps.length : 0;
-                        for (var i = 0; i < templatescount; i++) {
-                            arr.push("dojo/text!" + parobj.templates[i]);
+                'dojo/on',
+                'dojo/dom',
+                'dojo/dom-style',
+                'rdforms/template/ItemStore',
+                'rdforms/apps/formulator/StoreManager',
+                'rdfjson/formats/converters',
+                'dojo/json',
+                'di18n/locale',
+                'dojo/domReady!'],
+                    function (on, dom, domStyle, ItemStore, StoreManager, converters, json, locale) {
+
+                        var lang = window.location.href.match(/lang=([^&]*)/);
+                        if (lang !== null && lang.length === 2) {
+                            lang = lang[1];
+                        } else {
+                            lang = "en";
                         }
-                        for (var i = 0; i < depscount; i++) {
-                            arr.push("dojo/text!" + parobj.deps[i]);
-                        }
-                        if (parobj.rdf) {
-                            arr.push("dojo/text!" + parobj.rdf);
-                        }
-                        require(arr, function () {
-                            var args = Array.prototype.slice.call(arguments, 0);
-                            for (var i = 0; i < depscount; i++) {
-                                itemStore.registerBundle({
-                                    path: parobj.deps[i],
-                                    source: json.parse(args[i + templatescount]),
-                                    readOnly: true
-                                });
-                            }
+                        locale.addNLSDeps([
+                            "dijit/nls/common",
+                            "dijit/nls/loading",
+                            "dijit/form/nls/validate",
+                            "dojo/cldr/nls/number"
+                        ]);
+                        locale.useMoment();
+                        locale.set(lang, function() {
+                            var itemStore = new ItemStore();
+                            var arr = [];
+                            var templatescount = parobj.templates ? parobj.templates.length : 0;
+                            var depscount = parobj.deps ? parobj.deps.length : 0;
                             for (var i = 0; i < templatescount; i++) {
-                                itemStore.registerBundle({path: parobj.templates[i], source: json.parse(args[i])});
+                                arr.push("dojo/text!" + parobj.templates[i]);
+                            }
+                            for (var i = 0; i < depscount; i++) {
+                                arr.push("dojo/text!" + parobj.deps[i]);
                             }
                             if (parobj.rdf) {
-                                var storeManager = new StoreManager({
-                                    itemStore: itemStore,
-                                    data: converters.rdfxml2graph(args[templatescount + depscount]).exportRDFJSON()
-                                }, "formulator");
-                                storeManager.startup();
-                            } else {
-                                var storeManager = new StoreManager({
-                                    itemStore: itemStore,
-                                    data: {},
-                                    saveDisabled: parobj.saveDisabled === "true"
-                                }, "formulator");
-                                storeManager.startup();
+                                arr.push("dojo/text!" + parobj.rdf);
                             }
-                            ;
-                            on(dom.byId("formulatorButton"), "click", function () {
-                                domStyle.set(dom.byId("formulator"), "display", "");
-                                domStyle.set(dom.byId("about"), "display", "none");
-                            });
-                            on(dom.byId("aboutButton"), "click", function () {
-                                domStyle.set(dom.byId("formulator"), "display", "none");
-                                domStyle.set(dom.byId("about"), "display", "");
+                            require(arr, function () {
+                                var args = Array.prototype.slice.call(arguments, 0);
+                                for (var i = 0; i < depscount; i++) {
+                                    itemStore.registerBundle({
+                                        path: parobj.deps[i],
+                                        source: json.parse(args[i + templatescount]),
+                                        readOnly: true
+                                    });
+                                }
+                                for (var i = 0; i < templatescount; i++) {
+                                    itemStore.registerBundle({path: parobj.templates[i], source: json.parse(args[i])});
+                                }
+                                if (parobj.rdf) {
+                                    var storeManager = new StoreManager({
+                                        itemStore: itemStore,
+                                        data: converters.rdfxml2graph(args[templatescount + depscount]).exportRDFJSON()
+                                    }, "formulator");
+                                    storeManager.startup();
+                                } else {
+                                    var storeManager = new StoreManager({
+                                        itemStore: itemStore,
+                                        data: {},
+                                        saveDisabled: parobj.saveDisabled === "true"
+                                    }, "formulator");
+                                    storeManager.startup();
+                                }
+                                on(dom.byId("formulatorButton"), "click", function () {
+                                    domStyle.set(dom.byId("formulator"), "display", "");
+                                    domStyle.set(dom.byId("about"), "display", "none");
+                                });
+                                on(dom.byId("aboutButton"), "click", function () {
+                                    domStyle.set(dom.byId("formulator"), "display", "none");
+                                    domStyle.set(dom.byId("about"), "display", "");
+                                });
                             });
                         });
                     });

@@ -1,8 +1,9 @@
 define([
     "rdforms/view/Registry",
     "rdforms/model/system",
-    "di18n/i18n"
-], function(Registry, system, i18n) {
+    "di18n/i18n",
+    "di18n/locale"
+], function(Registry, system, i18n, locale) {
 
     system.getChoice = function(item, value) {
         var chooser = rc.chooserRegistry.getComponent(item);
@@ -11,7 +12,7 @@ define([
         }
         return chooser.getChoice(item, value);
     };
-    var messages, languages, defaultLanguages = [
+    var messages, language, languages, defaultLanguages = [
         {"value": "", label: {"en": ""}},
         {"value": "bg", label: {"en": "Bulgarian", "bg": "български"}},
         {"value": "es", label: {"en": "Spanish", "es": "Español"}},
@@ -111,6 +112,14 @@ define([
         },
         setLanguageList: function(langs) {
             languages = langs;
+        },
+
+        setDefaultLanguage: function(newLanguage) {
+            language = newLanguage;
+        },
+
+        getDefaultLanguage: function() {
+            return language || locale.get();
         },
 
     //Override the following methods

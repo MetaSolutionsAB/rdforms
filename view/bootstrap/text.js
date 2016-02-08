@@ -144,6 +144,15 @@ define([
             array.forEach(langList, function(lang) {
                 jquery("<option>").html(lang.label).val(lang.value).appendTo($lselect);
             });
+            if (binding.isValid()) {
+                $lselect.val(binding.getLanguage());
+            } else {
+                var defLang = renderingContext.getDefaultLanguage();
+                if (typeof defLang === "string" && defLang !== "") {
+                    $lselect.val(defLang);
+                    binding.setLanguage(defLang);
+                }
+            }
             $lselect.val(binding.getLanguage()).change(function(ev) {
                 binding.setLanguage($lselect.val());
             });

@@ -69,4 +69,17 @@ define(["exports", "rdforms/model/system"], function(exports, system) {
         }
         return itemsArray;
     };
+    exports.extractGist = function(str, template) {
+        if (template) {
+            if (template.indexOf("$1") === -1) {
+                template = template+"$1";
+            }
+            var r = (template+'').replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1").replace("\\$1", "(.*)");
+            var e = new RegExp(r).exec(str);
+            if (e != null) {
+                return e[1];
+            }
+        }
+        return str;
+    };
 });

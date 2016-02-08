@@ -1,5 +1,8 @@
 /*global define*/
-define(["dojo/_base/declare"], function(declare) {
+define([
+	"dojo/_base/declare",
+	"rdforms/utils"
+], function(declare, utils) {
 
     var counter = 0;
 
@@ -98,26 +101,13 @@ define(["dojo/_base/declare"], function(declare) {
 	//===================================================
 	// Private methods
 	//===================================================
-        _extractGist: function(str, template) {
-            if (template) {
-                if (template.indexOf("$1") === -1) {
-                    template = template+"$1";
-                }
-                var r = (template+'').replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1").replace("\\$1", "(.*)");
-                var e = new RegExp(r).exec(str);
-                if (e != null) {
-                    return e[1];
-                }
-            }
-            return str;
-        },
         _isValidObjectValue: function(value) {
             if (typeof value !== "string" && value !== null) {
                 throw "In a binding every object value need to be a string!";
             }
             var pattern = this._item.getPattern();
             if (pattern) {
-                value = this._extractGist(value, this.getItem().getValueTemplate());
+                value = utils.extractGist(value, this.getItem().getValueTemplate());
                 return value !== undefined && value !== null && value !== "" &&
 					(new RegExp("^"+pattern+"$")).test(value);
             } else {

@@ -343,9 +343,10 @@ define([
 
     var _isPatternMatch = function (item, stmt) {
         var pattern = item.getPattern();
+        var value = utils.extractGist(stmt.getValue(), item.getValueTemplate())
         if (typeof pattern !== "undefined") {
             try {
-                return (new RegExp("^"+pattern+"$")).test(stmt.getValue());
+                return (new RegExp("^"+pattern+"$")).test(value);
             } catch (e) {
                 return true;
             }

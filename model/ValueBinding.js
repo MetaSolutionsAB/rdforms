@@ -1,7 +1,9 @@
 /*global define*/
-define(["dojo/_base/declare", 
-	"./Binding"
-], function(declare, Binding) {
+define([
+    "dojo/_base/declare",
+	"./Binding",
+    "rdforms/utils"
+], function(declare, Binding, utils) {
 
     /**
      * Corresponds to a binding for a Text item type, captures literals, literals with 
@@ -54,7 +56,7 @@ define(["dojo/_base/declare",
             this.updateAssertions();
         },
         getGist: function () {
-            return this._extractGist(this.getValue(), this.getItem().getValueTemplate());
+            return utils.extractGist(this.getValue(), this.getItem().getValueTemplate());
         },
         setGist: function (value) {
             var vt = this.getItem().getValueTemplate();

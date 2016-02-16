@@ -122,6 +122,7 @@ define(["dojo/_base/declare",
             }
 
             renderingContext.getMessages(lang.hitch(this, function (messages) {
+		renderingContext.domText(this.domNode, "");
                 this.messages = messages;
                 if (this.binding == null) {
                     //Just in case loading messages takes time

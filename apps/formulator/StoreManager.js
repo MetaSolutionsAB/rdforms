@@ -29,8 +29,9 @@ define(["dojo/_base/declare",
     "rdforms/template/Group",
     "rdforms/template/Choice",
     "rdforms/apps/components/Experiment",
+    "rdfjson/Graph",
     "dojo/text!./StoreManagerTemplate.html"
-], function (declare, lang, xhr, on, domClass, domConstruct, domAttr, array, json, registry, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin, DnDSource, TreeDndSource, Tree, Menu, MenuItem, MenuSeparator, ContentPane, TabContainer, BorderContainer, Button, ItemEditor, ItemTreeModel, ChoicesEditor, Bundle, Group, Choice, Experiment, template) {
+], function (declare, lang, xhr, on, domClass, domConstruct, domAttr, array, json, registry, _LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin, DnDSource, TreeDndSource, Tree, Menu, MenuItem, MenuSeparator, ContentPane, TabContainer, BorderContainer, Button, ItemEditor, ItemTreeModel, ChoicesEditor, Bundle, Group, Choice, Experiment, Graph, template) {
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
         //===================================================
@@ -297,7 +298,22 @@ define(["dojo/_base/declare",
             } else {
                 template = this.itemStore.createTemplateFromChildren([this.item]);
             }
-            this._editorDijit = new Experiment({gutters: false, hideTemplate: true, template: template, graphObj: this.data}, domConstruct.create("div", null, this._previewNode));
+            var uri = "http://example.com/about";
+            var graph = new Graph(this.data || {});
+            var constr = template.getConstraints();
+            if (constr) {
+                for (var p in constr) if (constr.hasOwnProperty(p)) {
+                    graph.add(uri, p, constr[p]);
+                }
+            }
+
+            this._editorDijit = new Experiment({
+                gutters: false,
+                hideTemplate: true,
+                template: template,
+                resource: uri,
+                graph: graph},
+                domConstruct.create("div", null, this._previewNode));
             this._editorDijit.startup();
             this._bcDijit.resize();
         },

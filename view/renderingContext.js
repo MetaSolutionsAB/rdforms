@@ -141,16 +141,20 @@ define([
     };
 
 
-    rc.presenterRegistry.itemtype("group").register(function(fieldDiv, binding, context) {
+
+    var groupPresenter = function(fieldDiv, binding, context) {
         var cls = context.view.constructor;
         new cls({
             messages: context.view.messages,
             binding: binding,
             topLevel: false,
             includeLevel: this.includeLevel}, fieldDiv);
-    });
+    };
+    rc.presenterRegistry.itemtype("group").register(groupPresenter);
+    rc.presenterRegistry.itemtype("propertygroup").register(groupPresenter);
 
-    rc.editorRegistry.itemtype("group").register(function(fieldDiv, binding, context) {
+
+    var groupEditor = function(fieldDiv, binding, context) {
         var cls = context.view.constructor;
         var subView = new cls({messages: context.view.messages,
             languages: context.view.languages,
@@ -158,7 +162,9 @@ define([
             topLevel: false,
             includeLevel: context.view.includeLevel}, fieldDiv);
         context.view._subEditors.push(subView);
-    });
+    };
+    rc.editorRegistry.itemtype("group").register(groupEditor);
+    rc.editorRegistry.itemtype("propertygroup").register(groupEditor);
 
     return rc;
 });

@@ -1,13 +1,14 @@
 /*global define*/
 define(["dojo/_base/declare",
 	"dojo/_base/lang",
+    "dojo/dom-class",
     "jquery",
     "fuelux/datepicker",
     "di18n/locale",
     "moment",
     "rdforms/view/bootstrap/DateTimeBase",
     "dojo/text!./DateTimeFueluxTemplate.html"
-], function(declare, lang, jquery, datepicker, locale, moment, DateTimeBase, template) {
+], function(declare, lang, domClass, jquery, datepicker, locale, moment, DateTimeBase, template) {
     /**
      * A Date and time picker.
      */
@@ -52,6 +53,9 @@ define(["dojo/_base/declare",
         },
         setDateInPicker: function(d) {
             this.$datepicker.datepicker("setDate", d);
+        },
+        datetimeButtonClick: function() {
+            domClass.toggle(this.menuBlock, "open");
         }
     });
 

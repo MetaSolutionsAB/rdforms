@@ -303,7 +303,11 @@ define(["dojo/_base/declare",
             var constr = template.getConstraints();
             if (constr) {
                 for (var p in constr) if (constr.hasOwnProperty(p)) {
-                    graph.add(uri, p, constr[p]);
+                    if (lang.isArray(constr[p])) {
+                        graph.add(uri, p, constr[p][0]);
+                    } else {
+                        graph.add(uri, p, constr[p]);
+                    }
                 }
             }
 

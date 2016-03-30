@@ -168,6 +168,32 @@ define(["dojo/_base/declare",
             } else {
                 renderingContext.renderEditor(fieldDiv, binding, {view: this});
             }
+        },
+        createRowNode: function (lastRowNode, binding, item) {
+            var newNode = this.inherited(arguments);
+            var path = item.getDeps();
+            if (path) {
+                var f = function(match) {
+                    if (!match) {
+                        if (binding.isValid()) {
+                            renderingContext.domClassToggle(newNode, "missingDepsWithValue", true);
+                        } else {
+                            renderingContext.domClassToggle(newNode, "missingDeps", true);
+                        }
+                    } else {
+                        renderingContext.domClassToggle(newNode, "missingDepsWithValue", false);
+                        renderingContext.domClassToggle(newNode, "missingDeps", false);
+                    }
+                };
+                var fromBinding = Engine.findBindingRelativeToBinding(binding, path);
+                if (!Engine.matchPathBelowBinding(fromBinding, path)) {
+                    f(false);
+                }
+                fromBinding.addListener(function(changedBinding) {
+                    f(Engine.matchPathBelowBinding(fromBinding, path));
+                });
+            }
+            return newNode;
         }
     });
     return Editor;

@@ -230,7 +230,7 @@ define([
 	},
 	updateAssertions: function() {
 		if(this._oneValidChild === undefined){
-			this.isValid()
+			this.isValid();
 		}
 		var assert = this._ancestorValid && this._oneValidChild && this._validPredicate;
 		if (this._statement !== undefined) {

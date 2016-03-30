@@ -75,6 +75,7 @@ define([
             this._prefDijit.set("value", card.pref || "");
             this._maxDijit.set("value", card.max || "");
             this._constrDijit.set("value", json.stringify(this.item.getConstraints(true) || {}));
+            this._depsDijit.set("value", json.stringify(this.item.getDeps(true) || []));
             this._clsDijit.set("value", this.item.getClasses(true).join(", "));
             setTimeout(lang.hitch(this, function() {
                 this.lock = false;
@@ -215,7 +216,7 @@ define([
                 "min": this._minDijit.get("value") || 0,
                 "pref": this._prefDijit.get("value") || 0,
                 "max": this._maxDijit.get("value") || -1
-            }
+            };
             if (card.max === -1) {
                 delete card.max;
             }
@@ -233,6 +234,22 @@ define([
                 } else {
                     var obj = json.parse(val);
                     this.item.setConstraints(obj);
+                }
+                this.itemChanged();
+            } catch(e) {
+            }
+        },
+        _changeDeps: function() {
+            if (this.lock) {
+                return;
+            }
+            try {
+                var val = this._depsDijit.get("value");
+                if (val === "[]" || val === "") {
+                    this.item.setDeps();
+                } else {
+                    var obj = json.parse(val);
+                    this.item.setDeps(obj);
                 }
                 this.itemChanged();
             } catch(e) {

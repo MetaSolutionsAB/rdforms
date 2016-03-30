@@ -169,6 +169,26 @@ define([
         },
 
         /**
+         * Deps is an array of strings corresponding to predicates, "*" may be used to match
+         * anything. The final string in the path may correspond to the object,
+         * e.g. a literal or uri.
+         * By default, the dependency is given relative to the current items parent.
+         * If dependency path should start higher up it can be indicated by providing one or more
+         * initial strings with value "..".
+         *
+         * @return {Object} dependency path that must exist for this item to be visible.
+         *
+         */
+        getDeps: function (original) {
+            return this.getSource(original).deps;
+        },
+        setDeps: function (deps) {
+            setObjAttr(this.getSource(true), "deps", deps);
+            this.refreshExtends();
+        },
+
+
+        /**
          * @return {String} a URI indicating the datatype, for example: "http://www.w3.org/2001/XMLSchema.xsd#date".
          */
         getDatatype: function (original) {

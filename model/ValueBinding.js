@@ -140,6 +140,7 @@ define([
         updateAssertions: function() {
             var assert = this._ancestorValid && this._validObject && this._validPredicate;
             this._statement.setAsserted(assert);
+            this.bindingChange(this);
         },
         isValid: function() {
             return this._validObject && this._validPredicate && !this._excludeFromTreeValidityCheck;

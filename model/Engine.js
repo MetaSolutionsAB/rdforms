@@ -407,7 +407,7 @@ define([
             for (var key in constr) {
                 if (constr.hasOwnProperty(key)) {
                     var obj = constr[key];
-                    if (obj instanceof Array) {
+                    if (lang.isArray(obj)) {
                         results.push(graph.create(uri, key, {type: "uri", value: obj[0]}, false));
                     } else {
                         results.push(graph.create(uri, key, {type: "uri", value: obj}, false));
@@ -519,6 +519,64 @@ define([
         }
     };
 
+    var matchPathBelowBinding = function(bindingTree, path) {
+        var gb = bindingTree.getItemGroupedChildBindings();
+        var pred = path[0];
+        for (var i=0;i<gb.length;i++) {
+            var bindings = gb[i], res;
+            for (var j=0;j<bindings.length; j++) {
+                var b = bindings[j];
+                if (!b.isValid()) {
+                    continue;
+                }
+                var item = b.getItem();
+                if (item.getType() === "propertygroup") {
+                    b = b.getObjectBinding();
+                    item = b.getItem();
+                } else if (typeof item.getProperty() === "undefined") {
+                    res = exports.matchPathInBindingTree(b, path);
+                    if (res) {
+                        return res;
+                    }
+                }
+                if (pred === "*" || pred === b.getPredicate()) {
+                    if (item.getType() === "group") {
+                        res = exports.matchPathInBindingTree(b, path.slice(1));
+                        if (res) {
+                            return res;
+                        }
+                    } else {
+                        if (path.length === 1 || path[1] === "*"
+                            || path[1] === b.getValue()) {
+                            return b;
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    var findBindingRelativeToBinding = function(fromBinding, path) {
+        var first = path[0], b = fromBinding;
+        if (first === "/") {
+            while (b.getParent()) {
+                b = b.getParent();
+            }
+            return b;
+        } else if (first === "..") {
+            for (var i=0;i<path.length;i++) {
+                if (path[i] === ".." && b.getParent()) {
+                    b = b.getParent();
+                } else {
+                    return b;
+                }
+            }
+            return b;
+        } else {
+            return fromBinding.getParent();
+        }
+    };
+
     //===============================================
     //Public API for matching and creation engine
     //===============================================
@@ -537,6 +595,9 @@ define([
          * @return an rforms.model.GroupBinding which is the root of binding tree.
          */
         match: match,
+
+        matchPathBelowBinding: matchPathBelowBinding,
+        findBindingRelativeToBinding: findBindingRelativeToBinding,
 
         /**
          * Constructs a template by finding an item per outgoing property for provided graph and resource starting point.

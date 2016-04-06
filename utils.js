@@ -67,7 +67,10 @@ define([
                     return {"": valueArr.join(" ")};
                 }
             } else {
-                return f(graph, subject, props);
+                var value = f(graph, subject, props);
+                if (value) {
+                    return value;
+                }
             }
         }
     };

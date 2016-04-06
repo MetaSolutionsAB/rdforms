@@ -556,8 +556,8 @@ define([
         }
     };
 
-    var findBindingRelativeToBinding = function(fromBinding, path) {
-        var first = path[0], b = fromBinding;
+    var findBindingRelativeToParentBinding = function(parentBinding, path) {
+        var first = path[0], b = parentBinding;
         if (first === "/") {
             while (b.getParent()) {
                 b = b.getParent();
@@ -573,9 +573,68 @@ define([
             }
             return b;
         } else {
-            return fromBinding.getParent();
+            return parentBinding;
         }
     };
+
+    var createReport = function(groupbinding, report) {
+        if (report == null) {
+            report = {errors: [], warnings: []};
+        }
+        var groupitem = groupbinding.getItem();
+        var path = groupitem.getDeps();
+        if (path && groupbinding.getParent() != null) {
+            var fromBinding = findBindingRelativeToParentBinding(groupbinding.getParent(), path);
+            if (!matchPathBelowBinding(fromBinding, path)) {
+                return;
+            }
+        }
+
+        if (groupbinding.isValid()) {
+            var childrenItems = groupitem.getChildren();
+            var countValidBindings = function (bindings) {
+                var counter = 0;
+                for (var i = 0; i < bindings.length; i++) {
+                    if (bindings[i].isValid()) {
+                        counter++;
+                    }
+                }
+                return counter;
+            };
+            array.forEach(groupbinding.getItemGroupedChildBindings(), function (bindings, index) {
+                var item = childrenItems[index];
+                var path = item.getDeps();
+                if (path) {
+                    var fromBinding = findBindingRelativeToParentBinding(groupbinding, path);
+                    if (!matchPathBelowBinding(fromBinding, path)) {
+                        return;
+                    }
+                }
+
+                if (item.getProperty() != null) {
+                    var nrOfValid = countValidBindings(bindings);
+                    var card = item.getCardinality();
+                    if (card.min != null && card.min > nrOfValid) {
+                        report.errors.push({parentBinding: groupbinding, item: item, code: engine.CODES.TOO_FEW_VALUES})
+                    } else if (card.pref != null && card.pref > nrOfValid) {
+                        report.warnings.push({parentBinding: groupbinding, item: item, code: engine.CODES.TOO_FEW_VALUES})
+                    }
+                    if (card.max != null && card.max < nrOfValid) {
+                        report.errors.push({parentBinding: groupbinding, item: item, code: engine.CODES.TOO_MANY_VALUES})
+                    }
+                }
+
+                // if (item instanceof GroupBinding){
+                if (item.getType() === "group") {
+                    array.forEach(bindings, function (binding) {
+                        createReport(binding, report);
+                    });
+                }
+            }, this);
+        }
+        return report;
+    };
+
 
     //===============================================
     //Public API for matching and creation engine
@@ -597,7 +656,7 @@ define([
         match: match,
 
         matchPathBelowBinding: matchPathBelowBinding,
-        findBindingRelativeToBinding: findBindingRelativeToBinding,
+        findBindingRelativeToParentBinding: findBindingRelativeToParentBinding,
 
         /**
          * Constructs a template by finding an item per outgoing property for provided graph and resource starting point.
@@ -636,7 +695,14 @@ define([
          *
          * @return {ValueBinding}
          */
-        findFirstValueBinding: findFirstValueBinding
+        findFirstValueBinding: findFirstValueBinding,
+
+        report: createReport,
+
+        CODES: {
+            TOO_FEW_VALUES: "few",
+            TOO_MANY_VALUES: "many"
+        }
     };
 
     return engine;

@@ -4,8 +4,9 @@ define([
     "dojo/_base/array",
     "dojo/_base/declare",
     "./Binding",
+	"./Engine",
     "./CardinalityTracker"
-], function(lang, array, declare, Binding, CardinalityTracker) {
+], function(lang, array, declare, Binding, Engine, CardinalityTracker) {
 
     /**
      * Corresponds to a binding for a Group item type.
@@ -145,52 +146,7 @@ define([
 	getPredicate: function() {
 		return this._statement.getPredicate();
 	},
-	CODES: {
-        TOO_FEW_VALUES: "few",
-        TOO_MANY_VALUES: "many"
-    },
-	report: function(report) {
-		if (report == null) {
-			report = {errors: [], warnings: []};
-		}
-		if (this.isValid()) {
-            var childrenItems = this.getItem().getChildren();
-            var countValidBindings = function (bindings) {
-                var counter = 0;
-                for (var i = 0; i < bindings.length; i++) {
-                    if (bindings[i].isValid()) {
-                        counter++;
-                    }
-                }
-                return counter;
-            };
-            array.forEach(this.getItemGroupedChildBindings(), function (bindings, index) {
-                var item = childrenItems[index];
 
-                if (item.getProperty() != null) {
-                    var nrOfValid = countValidBindings(bindings);
-                    var card = item.getCardinality();
-                    if (card.min != null && card.min > nrOfValid) {
-                        report.errors.push({parentBinding: this, item: item, code: this.CODES.TOO_FEW_VALUES})
-                    } else if (card.pref != null && card.pref > nrOfValid) {
-                        report.warnings.push({parentBinding: this, item: item, code: this.CODES.TOO_FEW_VALUES})
-                    }
-                    if (card.max != null && card.max < nrOfValid) {
-                        report.errors.push({parentBinding: this, item: item, code: this.CODES.TOO_MANY_VALUES})
-                    }
-                }
-
-                // if (item instanceof GroupBinding){
-                if (item.getType() === "group") {
-                    array.forEach(bindings, function (binding) {
-                        binding.report(report);
-                    });
-                }
-            }, this);
-        }
-		return report;
-	},
-	
 	//===================================================
 	// Inherited methods
 	//===================================================

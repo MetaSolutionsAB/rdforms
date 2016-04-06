@@ -1,16 +1,21 @@
 /*global define*/
-define(["exports", "rdforms/model/system"], function(exports, system) {
+define([
+    "exports",
+    "dojo/_base/lang",
+    "dojo/_base/kernel",
+    "rdforms/model/system"
+], function(exports, lang, kernel, system) {
     exports.getLocalizedValue = function(hash) {
         if (hash == null) {
             return {precision: "none"};
-        } else if (dojo.isString(hash)) {
+        } else if (lang.isString(hash)) {
             return {value: hash, precision: "nolang", lang: ""};
-        } else if (hash.hasOwnProperty(dojo.locale)) {
-            return {value: hash[dojo.locale], precision: "exact", lang: dojo.locale};
+        } else if (hash.hasOwnProperty(kernel.locale)) {
+            return {value: hash[kernel.locale], precision: "exact", lang: kernel.locale};
         } else {
-            var pos = dojo.locale.indexOf("_");
-            if (pos > -1 && hash.hasOwnProperty(dojo.locale.substr(0,2))) {
-            return {value: hash[dojo.locale.substr(0,2)], precision: "coarsen", lang: dojo.locale.substr(0,2)};
+            var pos = kernel.locale.indexOf("_");
+            if (pos > -1 && hash.hasOwnProperty(kernel.locale.substr(0,2))) {
+            return {value: hash[kernel.locale.substr(0,2)], precision: "coarsen", lang: kernel.locale.substr(0,2)};
             } else if (hash.hasOwnProperty("en")) {
             return {value: hash["en"], precision: "default", lang: "en"};
             } else if (hash.hasOwnProperty("")) {
@@ -23,6 +28,18 @@ define(["exports", "rdforms/model/system"], function(exports, system) {
             }
         }
     };
+
+    var f = function(graph, subject, prop) {
+        var stmts = graph.find(subject, prop);
+        if (stmts.length > 0) {
+            var obj = {};
+            for (var s=0;s<stmts.length;s++) {
+                obj[stmts[s].getLanguage() || ""] = stmts[s].getValue();
+            }
+            return obj;
+        }
+    };
+
     exports.getLocalizedMap = function(graphOrBinding, subject, propArr) {
         var graph;
         if (graphOrBinding.getItem) { //graphOrBinding is a Binding
@@ -37,13 +54,20 @@ define(["exports", "rdforms/model/system"], function(exports, system) {
         }
         var stmts;
         for (var i=0;i<propArr.length;i++) {
-            stmts = graph.find(subject, propArr[i]);
-            if (stmts.length > 0) {
-                var obj = {};
-                for (var s=0;s<stmts.length;s++) {
-                    obj[stmts[s].getLanguage() || ""] = stmts[s].getValue();
+            var props = propArr[i];
+            if (lang.isArray(props)) {
+                var valueArr = [];
+                for (var j = 0;j< props.length;j++) {
+                    var value = f(graph, subject, props[j]);
+                    if (value) {
+                        valueArr.push(exports.getLocalizedValue(value).value);
+                    }
                 }
-                return obj;
+                if (valueArr.length > 0) {
+                    return {"": valueArr.join(" ")};
+                }
+            } else {
+                return f(graph, subject, props);
             }
         }
     };

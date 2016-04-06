@@ -55,7 +55,7 @@ define(["dojo/_base/declare",
         //===================================================
         report: function (report) {
             if (!report) {
-                report = this.binding.report();
+                report = Engine.report(this.binding);
             }
             for (var key in this._binding2node) {
                 renderingContext.domClassToggle(this._binding2node[key], "errorReport", false);
@@ -185,7 +185,7 @@ define(["dojo/_base/declare",
                         renderingContext.domClassToggle(newNode, "missingDeps", false);
                     }
                 };
-                var fromBinding = Engine.findBindingRelativeToBinding(binding, path);
+                var fromBinding = Engine.findBindingRelativeToParentBinding(binding.getParent(), path);
                 if (!Engine.matchPathBelowBinding(fromBinding, path)) {
                     f(false);
                 }

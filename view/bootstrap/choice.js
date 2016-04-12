@@ -1,10 +1,11 @@
 define([
+    "dojo/_base/array",
     "rdforms/view/renderingContext",
     "rdforms/model/system",
     "rdforms/utils",
     "rdforms/view/bootstrap/RadioButtonsEditor",
     "jquery"
-], function(renderingContext, system, utils, RadioButtonsEditor, jquery) {
+], function(array, renderingContext, system, utils, RadioButtonsEditor, jquery) {
 
     // -------------- Presenters ----------------
     var presenters = renderingContext.presenterRegistry;
@@ -88,11 +89,17 @@ define([
             choices = item.getChoices(),
             $select = jquery('<select>').appendTo(fieldDiv).append("<option></option>");
 
+        choices = array.map(choices, function(c) {
+            return {choice: c, label: item._getLocalizedValue(c.label).value};
+        });
+        choices.sort(function(c1, c2) {
+            return c1.label < c2.label ? -1 : 1;
+        });
         for (var i=0;i<choices.length;i++) {
-            var choice = choices[i];
+            var c = choices[i];
             jquery('<option>')
-                .val(choice.value)
-                .text(item._getLocalizedValue(choice.label).value)
+                .val(c.choice.value)
+                .text(c.label)
                 .appendTo($select);
         }
 

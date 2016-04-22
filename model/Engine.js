@@ -578,6 +578,10 @@ define([
     };
 
     var createReport = function(groupbinding, report) {
+        return _createReport(groupbinding, report, true);
+    };
+    
+    var _createReport = function(groupbinding, report, firstLevel) {
         if (report == null) {
             report = {errors: [], warnings: []};
         }
@@ -590,7 +594,7 @@ define([
             }
         }
 
-        if (groupbinding.isValid()) {
+        if (firstLevel === true || groupbinding.isValid()) {
             var childrenItems = groupitem.getChildren();
             var countValidBindings = function (bindings) {
                 var counter = 0;
@@ -627,7 +631,7 @@ define([
                 // if (item instanceof GroupBinding){
                 if (item.getType() === "group") {
                     array.forEach(bindings, function (binding) {
-                        createReport(binding, report);
+                        _createReport(binding, report);
                     });
                 }
             }, this);

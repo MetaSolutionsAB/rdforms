@@ -580,7 +580,7 @@ define([
     var createReport = function(groupbinding, report) {
         return _createReport(groupbinding, report, true);
     };
-    
+
     var _createReport = function(groupbinding, report, firstLevel) {
         if (report == null) {
             report = {errors: [], warnings: []};

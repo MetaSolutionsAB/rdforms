@@ -1,21 +1,15 @@
 /*global define*/
 define(["dojo/_base/declare", 
 	"dojo/_base/lang",
-    "dojo/topic",
+    "dojo/on",
 	"dojo/json",
-    "dijit/layout/_LayoutWidget",
-	"dijit/_TemplatedMixin",
-	"dijit/_WidgetsInTemplateMixin",
-    "dijit/layout/TabContainer"/*NMD:Ignore*/,
-    "dijit/layout/ContentPane"/*NMD:Ignore*/,
     "rdfjson/Graph",
     "rdfjson/formats/converters",
-    "rdforms/apps/components/RDFDetect",
-	"dojo/text!./RDFEditTemplate.html"
-], function(declare, lang, topic, json, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin,
-            TabContainer, ContentPane, Graph, converters, RDFDetect, template) {
+    "rdforms/apps/components/RDFDetect"
+], function(declare, lang, on, json, Graph, converters, RDFDetect) {
 
-    return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
+    //Assumes _rdfxml and _rdfjson to be textareas in the template.
+    return declare([], {
         //===================================================
         // Public attributes
         //===================================================
@@ -27,8 +21,10 @@ define(["dojo/_base/declare",
         //===================================================
 
         /**
-         * @param {rdfjson.Graph|String|Object} rdf supports rdf/xml as a string or rdf/json as a Graph, a string or a Object.
-         * @return {undefined|Object} if undefined everything went well, if a object something went wrong and the report was returned.
+         * @param {rdfjson.Graph|String|Object} rdf supports rdf/xml as a string or
+         * rdf/json as a Graph, a string or a Object.
+         * @return {undefined|Object} if undefined everything went well,
+         * if a object something went wrong and the report was returned.
          */
         setRDF: function(rdf) {
             var report = RDFDetect(rdf);
@@ -50,7 +46,12 @@ define(["dojo/_base/declare",
                     return {error: "RDF/JSON is not valid."};
                 }
             } catch(e) {
-                return {error: "RDF/JSON is invalid"};
+                switch(this.subView) {
+                    case "rdf/xml":
+                        return {error: "RDF/XML is invalid"};
+                    case "rdf/json":
+                        return {error: "RDF/JSON is invalid"};
+                }
             }
         },
 
@@ -83,27 +84,26 @@ define(["dojo/_base/declare",
             }
         },
 
-        //===================================================
-        // Inherited attributes
-        //===================================================
-        templateString: template,
+        /**
+         * Called everytime the RDF is edited (after a delay of 400 milliseconds).
+         */
+        onRDFChange: function() {
+        },
 
         //===================================================
-        // Inherited methods
+        // Private methods
         //===================================================
-        startup: function() {
-            this.inherited("startup", arguments);
-            topic.subscribe(this._tabContainer.id+"-selectChild", lang.hitch(this, this._selectChild));
+        postCreate: function() {
+            this.inherited(arguments);
+            var timer,
+                onRDFChange = lang.hitch(this, this.onRDFChange),
+                onRDFChangeFunc = function() {
+                    clearTimeout(timer);
+                    timer = setTimeout(onRDFChange, 400);
+                };
+            on(this._rdfjson, "keyup", onRDFChangeFunc);
+            on(this._rdfxml, "keyup", onRDFChangeFunc);
         },
-        resize: function( ){
-            this.inherited("resize", arguments);
-            if (this._tabContainer) {
-                this._tabContainer.resize();
-            }
-        },
-	//===================================================
-	// Private methods
-	//===================================================	
         getRDFXML: function() {
             if (this.rdfxmlValue.length <= 100000) {
                 return converters.rdfxml2graph(this._rdfxml.value);
@@ -130,16 +130,6 @@ define(["dojo/_base/declare",
             } else {
                 this._rdfjson.value = this.rdfjsonValue;
             }
-        },
-
-        _selectChild: function(child) {
-            var graph = this.getGraph();
-            if(child === this._rdfxmlTab) {
-                this.subView = "rdf/xml";
-            } else if(child === this._rdfjsonTab) {
-                this.subView = "rdf/json";
-            }
-            this.setGraph(graph);
         }
     });
 });

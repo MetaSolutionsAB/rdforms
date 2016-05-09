@@ -1,0 +1,22 @@
+<div class="rdfEdit">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"
+            data-dojo-attach-point="rdfxmlTab"
+            data-dojo-attach-event="click:rdfxmlClicked">
+            <a role="tab" data-toggle="tab">RDF/XML</a></li>
+        <li role="presentation"
+            data-dojo-attach-point="rdfjsonTab"
+            data-dojo-attach-event="click:rdfjsonClicked">
+            <a role="tab" data-toggle="tab">RDF/JSON</a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" data-dojo-attach-point="rdfxmlTabContent">
+            <textarea data-dojo-attach-point='_rdfxml' class="form-control"></textarea>
+        </div>
+        <div role="tabpanel" class="tab-pane" data-dojo-attach-point="rdfjsonTabContent">
+            <textarea data-dojo-attach-point='_rdfjson' class="form-control"></textarea>
+        </div>
+    </div>
+</div>

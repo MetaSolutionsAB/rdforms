@@ -9,14 +9,14 @@
             <div data-dojo-type="rdforms/view/Presenter" data-dojo-attach-point="_presenter" data-dojo-props="compact: true"></div>
         </div>
 
-        <div data-dojo-type='rdforms/apps/components/RDFEdit' data-dojo-attach-point='_rdfTab'></div>
+        <div data-dojo-type='rdforms/apps/components/RDFEditDijit' data-dojo-attach-point='_rdfTab'></div>
     </div>
     <div data-dojo-type="dijit/Dialog" data-dojo-attach-point="_dialog">
         <div class="startEditingContainer">
             <h4 data-dojo-attach-point="_resourceURIHeader"></h4>
             <div data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_resourceURI"></div>
             <h4 data-dojo-attach-point="_rdfInitHeader"></h4>
-            <div data-dojo-type='rdforms/apps/components/RDFEdit' data-dojo-attach-point='_rdfInit' data-dojo-props="nested: true"></div>
+            <div data-dojo-type='rdforms/apps/components/RDFEditDijit' data-dojo-attach-point='_rdfInit' data-dojo-props="nested: true"></div>
             <div style="display: none" class="alert alert-danger" role="alert" data-dojo-attach-point="_errorMessage"></div>
             <button type="button" class="btn btn-primary pull-right" data-dojo-attach-point="_startButton" data-dojo-attach-event="onclick: _startEditing"></button>
         </div>

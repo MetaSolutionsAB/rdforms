@@ -73,7 +73,7 @@ define([
 
     var getResourceReport = function(resource, graph, template, ignoreResources) {
         var binding = Engine.match(graph, resource, template);
-        var report = binding.report();
+        var report = Engine.report(binding);
         filterReport(report, resource, ignoreResources || {});
         simplifyReport(report);
         return report;

@@ -11,12 +11,11 @@ define(["dojo/_base/declare",
 	"dijit/_WidgetsInTemplateMixin",
     "rdforms/apps/components/About", //In template
     "rdforms/apps/validator/validate",
-    "rdforms/apps/components/RDFEdit"/*NMD:Ignore*/, //In template
+    "rdforms/apps/components/RDFEditDijit"/*NMD:Ignore*/, //In template
     "rdforms/apps/validator/InstanceReport",
     "rdforms/apps/components/Config",
 	"dojo/text!./ValidatorTemplate.html"
-], function(declare, lang, array, on, domClass, domConstruct, domAttr, _WidgetBase, _TemplatedMixin,
-            _WidgetsInTemplateMixin, About, validate, RDFEdit, InstanceReport, Config, template) {
+], function(declare, lang, array, on, domClass, domConstruct, domAttr, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, About, validate, RDFEditDijit, InstanceReport, Config, template) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Config.Cls], {
         //===================================================

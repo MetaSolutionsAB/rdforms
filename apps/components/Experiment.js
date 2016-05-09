@@ -14,9 +14,9 @@ define(["dojo/_base/declare",
 	"rdforms/template/ItemStore",
 	"rdforms/view/Editor",
 	"rdforms/view/Presenter",
-    "rdforms/apps/components/RDFEdit",
+    "rdforms/apps/components/RDFEditDijit",
 	"dojo/text!./ExperimentTemplate.html"
-], function(declare, lang, topic, domConstruct, json, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin, TabContainer, SimpleTextarea, Graph, Engine, ItemStore, Editor, Presenter, RDFEdit, template) {
+], function(declare, lang, topic, domConstruct, json, _LayoutWidget,  _TemplatedMixin, _WidgetsInTemplateMixin, TabContainer, SimpleTextarea, Graph, Engine, ItemStore, Editor, Presenter, RDFEditDijit, template) {
 
     return declare([_LayoutWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
 	//===================================================

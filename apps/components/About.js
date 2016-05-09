@@ -1,21 +1,14 @@
 /*global define*/
 define(["dojo/_base/declare",
     "dojo/_base/lang",
-    "dojo/_base/array",
     "dojo/on",
-    "dojo/dom-class",
-    "dojo/dom-construct",
     "dojo/dom-attr",
     "dijit/Dialog", //In template
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
-    "rdforms/apps/validator/validate",
-    "rdforms/apps/components/RDFEdit"/*NMD:Ignore*/, //In template
-    "rdforms/apps/validator/InstanceReport",
     "dojo/text!./AboutTemplate.html"
-], function(declare, lang, array, on, domClass, domConstruct, domAttr, Dialog, _WidgetBase, _TemplatedMixin,
-            _WidgetsInTemplateMixin, validate, RDFEdit, InstanceReport, template) {
+], function(declare, lang, on, domAttr, Dialog, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
         //===================================================

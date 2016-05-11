@@ -2,10 +2,11 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "di18n/localize",
     "rdforms/model/Engine",
     "rdforms/view/Presenter",
     "rdforms/view/renderingContext"
-], function(declare, lang, Engine, Presenter, renderingContext) {
+], function(declare, lang, localize, Engine, Presenter, renderingContext) {
 
     return declare(Presenter, {
         //===================================================
@@ -24,6 +25,9 @@ define([
             }
             if (bindings.length > 0) {
                 return true;
+            }
+            if (item.hasStyle("deprecated")) {
+                return false;
             }
             var card = item.getCardinality();
             switch (this.includeLevel) {
@@ -66,14 +70,17 @@ define([
             } else {
                 target = 0;
             }
-            if (target > bindings.length) {
+            var noDisjointHinder = !this.binding.getItem().hasStyle("disjoint") ||
+                this.binding.error === Engine.CODES.TOO_FEW_VALUES ||
+                this.binding.warning === Engine.CODES.TOO_FEW_VALUES;
+            if (target > bindings.length && noDisjointHinder) {
                 bindings = bindings.concat([]);
                 while (target > bindings.length) {
                     var binding = Engine.create(this.binding, item);
                     if (bindings.length < min) {
-                        binding.error = true;
+                        binding.error = Engine.CODES.TOO_FEW_VALUES;
                     } else if (bindings.length < pref) {
-                        binding.warning = true;
+                        binding.warning = Engine.CODES.TOO_FEW_VALUES;
                     }
                     bindings.push(binding);
                 }
@@ -85,20 +92,37 @@ define([
             return false;
         },
 
+        _handleParams: function (params) {
+            this.inherited(arguments);
+            if (this.binding) {
+                Engine.report(this.binding);
+            }
+        },
+
         addValidationMarker: function (fieldDiv, binding) {
-            var card = binding.getItem().getCardinality();
+            var item = binding.getItem(), card = item.getCardinality();
             var min = card.min != null ? card.min : 0, pref = card.pref != null ? card.pref : 0;
             if (binding.error) {
                 renderingContext.domClassToggle(fieldDiv, "error", true);
-                var tmpl = this.messages.validation_min_required_message.split(",")[min === 1 ? 0 : 1];
+                var tmpl;
+                if (binding.error === Engine.CODES.TOO_FEW_VALUES) {
+                    tmpl = localize(this.messages, "validation_min_required", min);
+                } else if (binding.error === Engine.CODES.TOO_MANY_VALUES) {
+                    tmpl = localize(this.messages, "validation_max", card.max || 1);
+                }
                 var n = renderingContext.domCreate("div", fieldDiv);
-                renderingContext.domText(n, lang.replace(tmpl, {nr: min}));
+                renderingContext.domText(n, ">> "+tmpl+" <<");
                 return true;
             } else if (binding.warning) {
                 renderingContext.domClassToggle(fieldDiv, "warning", true);
-                var tmpl = this.messages.validation_min_recommended_message.split(",")[pref === 1 ? 0 : 1];
+                var tmpl = localize(this.messages, "validation_min_recommended", pref);
                 var n = renderingContext.domCreate("div", fieldDiv);
-                renderingContext.domText(n, lang.replace(tmpl, {nr: pref}));
+                renderingContext.domText(n, ">> "+tmpl+" <<");
+                return true;
+            } else if (item.hasStyle("deprecated")) {
+                renderingContext.domClassToggle(fieldDiv, "deprecated", true);
+                var n = renderingContext.domCreate("div", fieldDiv);
+                renderingContext.domText(n, ">> "+this.messages.validation_deprecated+" <<");
                 return true;
             } else {
                 return false;

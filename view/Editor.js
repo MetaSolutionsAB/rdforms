@@ -8,6 +8,9 @@ define(["dojo/_base/declare",
         if (item.hasStyle("invisible")) {
             return false;
         }
+        if (item.hasStyle("deprecated") && bindings.length === 0) {
+            return false;
+        }
         if (bindings.length > 0) {
             if (item.getProperty()) {
                 return true;

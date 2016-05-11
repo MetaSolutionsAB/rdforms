@@ -594,7 +594,7 @@ define([
             }
         }
 
-        if (firstLevel === true || groupbinding.isValid()) {
+        if (firstLevel === true || groupbinding.isValid() || groupitem.getProperty() == null) {
             var childrenItems = groupitem.getChildren();
             var countValidBindings = function (bindings) {
                 var counter = 0;
@@ -605,36 +605,95 @@ define([
                 }
                 return counter;
             };
-            array.forEach(groupbinding.getItemGroupedChildBindings(), function (bindings, index) {
-                var item = childrenItems[index];
-                var path = item.getDeps();
-                if (path) {
-                    var fromBinding = findBindingRelativeToParentBinding(groupbinding, path);
-                    if (!matchPathBelowBinding(fromBinding, path)) {
-                        return;
-                    }
-                }
 
-                if (item.getProperty() != null) {
-                    var nrOfValid = countValidBindings(bindings);
-                    var card = item.getCardinality();
-                    if (card.min != null && card.min > nrOfValid) {
-                        report.errors.push({parentBinding: groupbinding, item: item, code: engine.CODES.TOO_FEW_VALUES})
-                    } else if (card.pref != null && card.pref > nrOfValid) {
-                        report.warnings.push({parentBinding: groupbinding, item: item, code: engine.CODES.TOO_FEW_VALUES})
-                    }
-                    if (card.max != null && card.max < nrOfValid) {
-                        report.errors.push({parentBinding: groupbinding, item: item, code: engine.CODES.TOO_MANY_VALUES})
-                    }
-                }
-
-                // if (item instanceof GroupBinding){
-                if (item.getType() === "group") {
-                    array.forEach(bindings, function (binding) {
-                        _createReport(binding, report);
+            if (groupitem.hasStyle("disjoint")) {
+                var bindings = groupbinding.getChildBindings();
+                var nrOfValid = countValidBindings(bindings);
+                var childItem = groupitem.getChildren()[0];
+                var card = childItem.getCardinality();
+                if (card.min != null && card.min > nrOfValid) {
+                    groupbinding.error = engine.CODES.TOO_FEW_VALUES;
+                    report.errors.push({
+                        parentBinding: groupbinding,
+                        item: childItem,
+                        code: engine.CODES.TOO_FEW_VALUES
+                    });
+                } else if (card.pref != null && card.pref > nrOfValid) {
+                    groupbinding.warning = engine.CODES.TOO_FEW_VALUES;
+                    report.warnings.push({
+                        parentBinding: groupbinding,
+                        item: childItem,
+                        code: engine.CODES.TOO_FEW_VALUES
                     });
                 }
-            }, this);
+                if (card.max != null && card.max < nrOfValid) {
+                    report.errors.push({
+                        parentBinding: groupbinding,
+                        item: childItem,
+                        code: engine.CODES.TOO_MANY_VALUES
+                    });
+                    var disjointCounter = 0;
+                    array.forEach(bindings, function(binding) {
+                        if (binding.isValid()) {
+                            disjointCounter++;
+                            if (disjointCounter > card.max) {
+                                binding.error = engine.CODES.TOO_MANY_VALUES;
+                            }
+                        }
+                    });
+                }
+            } else {
+                array.forEach(groupbinding.getItemGroupedChildBindings(), function (bindings, index) {
+                    var item = childrenItems[index];
+                    var path = item.getDeps();
+                    if (path) {
+                        var fromBinding = findBindingRelativeToParentBinding(groupbinding, path);
+                        if (!matchPathBelowBinding(fromBinding, path)) {
+                            return;
+                        }
+                    }
+
+                    if (item.getProperty() != null) {
+                        var nrOfValid = countValidBindings(bindings);
+                        var card = item.getCardinality();
+                        if (card.min != null && card.min > nrOfValid) {
+                            report.errors.push({
+                                parentBinding: groupbinding,
+                                item: item,
+                                code: engine.CODES.TOO_FEW_VALUES
+                            });
+                        } else if (card.pref != null && card.pref > nrOfValid) {
+                            report.warnings.push({
+                                parentBinding: groupbinding,
+                                item: item,
+                                code: engine.CODES.TOO_FEW_VALUES
+                            });
+                        }
+                        if (card.max != null && card.max < nrOfValid) {
+                            report.errors.push({
+                                parentBinding: groupbinding,
+                                item: item,
+                                code: engine.CODES.TOO_MANY_VALUES
+                            });
+                            var counter = 0;
+                            array.forEach(bindings, function (binding) {
+                                if (binding.isValid()) {
+                                    counter++;
+                                    if (counter > card.max) {
+                                        binding.error = engine.CODES.TOO_MANY_VALUES;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    // if (item instanceof GroupBinding){
+                    if (item.getType() === "group") {
+                        array.forEach(bindings, function (binding) {
+                            _createReport(binding, report);
+                        });
+                    }
+                }, this);
+            }
         }
         return report;
     };

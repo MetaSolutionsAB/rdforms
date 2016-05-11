@@ -40,6 +40,10 @@
     background: bisque;
 }
 
+.rdforms .deprecated {
+    background: lightblue;
+}
+
 /* === End colors === */
 
 .rdformsRow.rdformsTopLevel {

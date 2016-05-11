@@ -22,6 +22,9 @@ define(["dojo/_base/declare",
          * @param {Object} bindings
          */
         showNow: function(item, bindings) {
+            if (item.hasStyle("deprecated") && bindings.length === 0) {
+                return false;
+            }
             return bindings.length > 0 && !item.hasStyle("invisible");
         },
 

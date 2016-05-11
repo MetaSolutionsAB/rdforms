@@ -5,10 +5,9 @@ define(["dojo/_base/declare",
 	"dijit/_Widget",
     "rdforms/model/Engine",
 	"rdforms/model/GroupBinding",
-    "rdforms/model/system",
     "rdforms/view/renderingContext"
 ], function(declare, lang, array, _Widget,
-            Engine, GroupBinding, system, renderingContext) {
+            Engine, GroupBinding, renderingContext) {
     
 
     return declare(_Widget, {

@@ -578,13 +578,17 @@ define([
     };
 
     var createReport = function(groupbinding, report) {
+        if (report == null) {
+            report = {errors: [], warnings: [], deprecated: []};
+        } else {
+            report.errors = report.errors || [];
+            report.warnings = report.warnings || [];
+            report.deprecated = report.deprecated || [];
+        }
         return _createReport(groupbinding, report, true);
     };
 
     var _createReport = function(groupbinding, report, firstLevel) {
-        if (report == null) {
-            report = {errors: [], warnings: []};
-        }
         var groupitem = groupbinding.getItem();
         var path = groupitem.getDeps();
         if (path && groupbinding.getParent() != null) {
@@ -642,8 +646,20 @@ define([
                         }
                     });
                 }
+                array.forEach(bindings, function(binding) {
+                    var item = binding.getItem();
+                    if (item.hasStyle("deprecated")) {
+                        report.deprecated.push(binding);
+                    }
+                });
             } else {
                 array.forEach(groupbinding.getItemGroupedChildBindings(), function (bindings, index) {
+                    array.forEach(bindings, function(binding) {
+                        var item = binding.getItem();
+                        if (item.hasStyle("deprecated")) {
+                            report.deprecated.push(binding);
+                        }
+                    });
                     var item = childrenItems[index];
                     var path = item.getDeps();
                     if (path) {

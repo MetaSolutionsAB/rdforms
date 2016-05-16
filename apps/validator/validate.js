@@ -58,11 +58,17 @@ define([
         return path.join(" > ");
     };
 
+    var createDepPath = function(dep) {
+        return createPath(dep.getParent(), dep.getItem()) + " > " + dep.getValue();
+    };
+
     var simplifyReport = function(report) {
         report.errors = array.map(report.errors, function(err) {
             return {path: createPath(err.parentBinding, err.item), code: err.code}});
         report.warnings = array.map(report.warnings, function(warn) {
             return {path: createPath(warn.parentBinding, warn.item), code: warn.code}});
+        report.deprecated = array.map(report.deprecated, function(dep) {
+            return createDepPath(dep)});
     };
 
     var findResources = function(graph, cls) {
@@ -88,7 +94,7 @@ define([
      */
     exports.generateReport = function(graph, type2template, mandatoryTypes) {
         var resources, type2resources = {}, allResources = {}, cls, template, resourceReport,
-            report = {errors: 0, warnings: 0, resources: []};
+            report = {errors: 0, warnings: 0, deprecated: 0, resources: []};
         for (cls in type2template) if (type2template.hasOwnProperty(cls)) {
             resources = type2resources[cls] = findResources(graph, cls);
             array.forEach(resources, function(resource) {allResources[resource] = true});
@@ -104,6 +110,7 @@ define([
                 report.resources.push(resourceReport);
                 report.errors += resourceReport.errors.length;
                 report.warnings += resourceReport.warnings.length;
+                report.deprecated += resourceReport.deprecated.length;
             });
         }
 

@@ -29,6 +29,7 @@ define(["dojo/_base/declare",
         setRDF: function(rdf) {
             var report = RDFDetect(rdf);
             if (!report.error) {
+                this.subView = report.format;
                 this.setGraph(report.graph);
             }
             return report;

@@ -29,10 +29,32 @@ define(["dojo/_base/declare",
         setRDF: function(rdf) {
             var report = RDFDetect(rdf);
             if (!report.error) {
-                this.subView = report.format;
-                this.setGraph(report.graph);
+                this.switchState(report.format, report.graph);
             }
             return report;
+        },
+
+        switchState: function(format, graph) {
+            if (this.switchRDF(format, graph)) {
+                this.switchTab(format);
+            }
+        },
+
+        switchTab: function(syntax) {
+            //Implement me
+        },
+
+        switchRDF: function(syntax, graph) {
+            try {
+                graph = graph || this.getGraph();
+                this.subView = syntax;
+                if (graph) {
+                    this.setGraph(graph);
+                    return true;
+                }
+            } catch (err) {
+            }
+            return false;
         },
 
         /**

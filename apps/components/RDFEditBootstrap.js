@@ -9,31 +9,25 @@ define(["dojo/_base/declare",
     return declare([_WidgetBase, _TemplatedMixin, RDFEdit], {
         templateString: template,
 
-        switchTo: function(syntax) {
-            var graph;
-            try {
-                graph = this.getGraph();
-            } catch (err) {
-            }
-            this.subView = syntax;
-            if (graph) {
-                this.setGraph(graph);
+        switchTab: function(syntax) {
+            if (syntax === "rdf/json") {
+                domClass.remove(this.rdfxmlTab, "active");
+                domClass.add(this.rdfjsonTab, "active");
+                domClass.remove(this.rdfxmlTabContent, "active");
+                domClass.add(this.rdfjsonTabContent, "active");
+            } else {
+                domClass.remove(this.rdfjsonTab, "active");
+                domClass.add(this.rdfxmlTab, "active");
+                domClass.remove(this.rdfjsonTabContent, "active");
+                domClass.add(this.rdfxmlTabContent, "active");
             }
         },
 
         rdfjsonClicked: function() {
-            domClass.remove(this.rdfxmlTab, "active");
-            domClass.add(this.rdfjsonTab, "active");
-            domClass.remove(this.rdfxmlTabContent, "active");
-            domClass.add(this.rdfjsonTabContent, "active");
-            this.switchTo("rdf/json");
+            this.switchState("rdf/json");
         },
         rdfxmlClicked: function() {
-            domClass.remove(this.rdfjsonTab, "active");
-            domClass.add(this.rdfxmlTab, "active");
-            domClass.remove(this.rdfjsonTabContent, "active");
-            domClass.add(this.rdfxmlTabContent, "active");
-            this.switchTo("rdf/xml");
+            this.switchState("rdf/xml");
         }
     });
 });

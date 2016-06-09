@@ -16,6 +16,7 @@
     "di18n": "https://bitbucket.org/metasolutions/di18n.git#master",
     "bootstrap-amd": "latest",
     "jquery": "latest",
+    "sizzle": "~2.3.0",
     "moment": "latest",
     "fuelux": "latest",
     "select2": "4.0.0",

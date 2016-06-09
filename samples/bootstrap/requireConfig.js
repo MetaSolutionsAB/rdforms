@@ -8,15 +8,16 @@ require.config({
         "bootstrap": "bootstrap-amd/lib",
         "select2": "select2/src/js",
         "moment": "moment/moment",
-        "di18n": "../build/di18n",
+        "i18n": "di18n/i18n",
         "jquery": "jquery/src",
-        "sizzle": "jquery/src/sizzle/dist/sizzle",
+        "sizzle": "sizzle/dist/sizzle",
         "jquery.mousewheel": "select2/src/js/jquery.mousewheel.shim"
     },
     map: {
         "jquery": {
             "jquery" : "jquery",
-            "jquery/selector": "jquery/selector-sizzle"
+            "jquery/selector": "jquery/selector-sizzle",
+            "external/sizzle/dist/sizzle": "sizzle"
         },
         "bootstrap": {
             "jquery": "jquery",
@@ -27,7 +28,8 @@ require.config({
             "jquery/selector": "jquery/selector-sizzle",
             "has": "dojo/has",
             "dojo/text": "text",
-            "dojo/i18n": "di18n"
+            "dojo/i18n": "di18n",
+	    "di18n/i18n": "i18n"
         }
     },
     "deps": [

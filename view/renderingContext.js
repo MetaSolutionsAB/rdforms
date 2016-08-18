@@ -18,6 +18,7 @@ define([
         {"value": "es", label: {"en": "Spanish", "es": "Español"}},
         {"value": "cs", label: {"en": "Czech", "cs": "čeština"}},
         {"value": "da", label: {"en": "Danish", "da": "Dansk"}},
+        {"value": "no", label: {"en": "Norwegian", "no": "Norsk"}},
         {"value": "de", label: {"en": "German", "de": "Deutsch"}},
         {"value": "et", label: {"en": "Estonian", "et": "Eesti keel"}},
         {"value": "el", label: {"en": "Greek", "el": "ελληνικά"}},

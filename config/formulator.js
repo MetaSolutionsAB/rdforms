@@ -10,13 +10,14 @@ require.config({
         "momentl": "moment/locale",
         "i18n": "di18n/i18n",
         "jquery": "jquery/src",
-        "sizzle": "jquery/src/sizzle/dist/sizzle",
+        "sizzle": "sizzle/dist/sizzle",
         "jquery.mousewheel": "select2/src/js/jquery.mousewheel.shim"
     },
     map: {
         "jquery": {
             "jquery" : "jquery",
-            "jquery/selector": "jquery/selector-sizzle"
+            "jquery/selector": "jquery/selector-sizzle",
+            "external/sizzle/dist/sizzle": "sizzle"
         },
         "bootstrap": {
             "jquery": "jquery",

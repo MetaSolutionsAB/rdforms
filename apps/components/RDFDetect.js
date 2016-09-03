@@ -9,8 +9,8 @@ define([
     return function(rdf) {
         var report = {};
         if (typeof rdf === "string") {
-            var taste = rdf.substr(0,100);
-            if (taste.substr(0,100).toLowerCase().indexOf("<rdf:rdf") !== -1) {
+            var taste = rdf.substr(0,200);
+            if (taste.toLowerCase().indexOf("<rdf:rdf") !== -1) {
                 report.format = "rdf/xml";
                 try {
                     report.graph = converters.rdfxml2graph(rdf);

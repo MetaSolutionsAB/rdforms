@@ -149,6 +149,11 @@ define([
             }
             this.refreshExtends();
         },
+
+        getLabelProperties: function(original) {
+            return this.getSource(original).labelProperties ||
+                ["http://www.w3.org/2000/01/rdf-schema#label"];
+        },
         getParentProperty: function (original) {
             return this.getSource(original).parentProperty;
         },

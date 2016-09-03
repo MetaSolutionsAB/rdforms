@@ -384,6 +384,7 @@
       "items": [
         {
           "type": "choice",
+          "labelProperties": ["http://xmlns.com/foaf/0.1/name"],
           "nodetype": "URI",
           "extends": "odrs:copyrightHolder",
           "constraints": {

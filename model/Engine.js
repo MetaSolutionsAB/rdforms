@@ -433,7 +433,7 @@ define([
                 return {value: obj, label: {"": obj}, mismatch: true};
             }
         } else {
-            var label = utils.getLocalizedMap(graph, obj, [ChoiceBinding.label]);
+            var label = utils.getLocalizedMap(graph, obj, item.getLabelProperties());
             var sa = graph.findFirstValue(obj, ChoiceBinding.seeAlso);
             if (label != null) {
                 var choice = {label: label, value: obj};

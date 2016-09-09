@@ -1,0 +1,22 @@
+<div class="rdfEdit rdfView">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"
+            data-dojo-attach-point="rdfxmlTab"
+            data-dojo-attach-event="click:rdfxmlClicked">
+            <a role="tab" data-toggle="tab">RDF/XML</a></li>
+        <li role="presentation"
+            data-dojo-attach-point="rdfjsonTab"
+            data-dojo-attach-event="click:rdfjsonClicked">
+            <a role="tab" data-toggle="tab">RDF/JSON</a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" data-dojo-attach-point="rdfxmlTabContent">
+            <xmp class="rdfViewRDF" data-dojo-attach-point='_rdfxml'></xmp>
+        </div>
+        <div role="tabpanel" class="tab-pane" data-dojo-attach-point="rdfjsonTabContent">
+            <xmp class="rdfViewRDF" data-dojo-attach-point='_rdfjson'></xmp>
+        </div>
+    </div>
+</div>

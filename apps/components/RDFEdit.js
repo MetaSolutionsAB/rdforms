@@ -129,29 +129,35 @@ define(["dojo/_base/declare",
         },
         getRDFXML: function() {
             if (this.rdfxmlValue.length <= 100000) {
-                return converters.rdfxml2graph(this._rdfxml.value);
+                return converters.rdfxml2graph(this.getValueFromNode(this._rdfxml));
             }
         },
         setRDFXML: function(graph) {
             this.rdfxmlValue = converters.rdfjson2rdfxml(graph);
             if (this.rdfxmlValue.length > 100000) {
-                this._rdfxml.value = this.rdfxmlValue.substring(0,100000)+ "\n    ----- \n RDF to large, truncating it. \n   ------";
+                this.setValueToNode(this._rdfxml, this.rdfxmlValue.substring(0,100000)+ "\n    ----- \n RDF to large, truncating it. \n   ------");
             } else {
-                this._rdfxml.value = this.rdfxmlValue;
+                this.setValueToNode(this._rdfxml, this.rdfxmlValue);
             }
+        },
+        setValueToNode: function(node, value) {
+            node.value = value;
+        },
+        getValueFromNode: function(node) {
+            return node.value;
         },
         getRDFJSON: function() {
             if (this.rdfjsonValue.length <= 100000) {
-                var rdfStr = this._rdfjson.value;
+                var rdfStr = this.getValueFromNode(this._rdfjson);
                 return new Graph(json.parse(rdfStr == null || rdfStr === "" ? "{}" : rdfStr));
             }
         },
         setRDFJSON: function(graph) {
             this.rdfjsonValue = json.stringify(graph.exportRDFJSON(), 0, 2);
             if (this.rdfjsonValue.length > 100000) {
-                this._rdfjson.value = this.rdfjsonValue.substring(0,100000)+ "\n    ----- \n RDF to large, truncating it. \n   ------";
+                this.setValueToNode(this._rdfjson, this.rdfjsonValue.substring(0,100000)+ "\n    ----- \n RDF to large, truncating it. \n   ------");
             } else {
-                this._rdfjson.value = this.rdfjsonValue;
+                this.setValueToNode(this._rdfjson, this.rdfjsonValue);
             }
         }
     });

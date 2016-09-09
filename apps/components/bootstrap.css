@@ -22,3 +22,8 @@
     border-top-right-radius: 0px;
     overflow: auto;
 }
+
+.rdfView .rdfViewRDF {
+    white-space: pre-wrap;
+    word-break: break-all;
+}

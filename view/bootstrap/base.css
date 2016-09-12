@@ -57,19 +57,19 @@
     color: #808080;
 }
 
-.rdforms .popover {
-    max-width: none;
-}
-
-.rdforms .popover a {
+.popover a {
     color: #808080;
 }
-.rdforms .popover .property {
+.popover .property {
     margin-top: 1em;
     font-size: small;
 }
 
-.rdforms .popover .description {
+.popover .property>a {
+    word-wrap: break-word;
+}
+
+.popover .description {
     max-width: 300px;
     font-size: small;
 }

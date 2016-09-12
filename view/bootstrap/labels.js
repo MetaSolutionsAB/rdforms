@@ -77,13 +77,21 @@ define([
             propinfo = '<div class="property"><a target="_blank" href="'+item.getProperty()+'">'
             +item.getProperty()+'</a></div>';
         }
+
+        var label = item.getLabel();
+        if (label != null && label != "") {
+            label = label.charAt(0).toUpperCase() + label.slice(1);
+        } else {
+            label = "";
+        }
+
         var popoverOptions = {
             html: true,
             container: "body",
             placement: "auto",
             template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
             trigger: "click",
-            title: item.getLabel() || "",
+            title: label,
             content: '<div class="description">' +
             description.replace(/(\r\n|\r|\n)/g, "<br/>") +
             '</div>'+propinfo

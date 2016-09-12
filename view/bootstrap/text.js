@@ -119,6 +119,8 @@ define([
         var item = binding.getItem(), $input;
         if (item.hasStyle("multiline")) {
             $input = jquery('<textarea class="form-control rdformsFieldInput">');
+        } else if (item.hasStyle("email")) {
+            $input = jquery('<input type="email" class="form-control rdformsFieldInput">');
         } else {
             $input = jquery('<input type="text" class="form-control rdformsFieldInput">');
         }

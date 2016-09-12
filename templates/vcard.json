@@ -754,7 +754,9 @@
       "type": "text",
       "automatic": true,
       "valueTemplate": "mailto:",
-	"styles": ["email"],	
+      "styles": [
+        "email"
+      ],
       "nodetype": "URI",
       "cardinality": {
         "min": 1,
@@ -838,6 +840,41 @@
     },
     {
       "id": "vc:hasTelephone",
+      "property": "http://www.w3.org/2006/vcard/ns#hasTelephone",
+      "label": {
+        "en": "Telephone",
+        "sv": "Telefon",
+        "no": "Telefon"
+      },
+      "description": {
+        "en": "The telephone number should be given including country calling code, e.g. +4618100000."
+      },
+      "type": "group",
+      "automatic": true,
+      "items": [
+        {
+          "type": "text",
+          "nodetype": "URI",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "description": {
+            "": "The telephone number must be given as a valid resource URI, e.g. tel:+4618100000."
+          },
+          "property": "http://www.w3.org/2006/vcard/ns#hasValue",
+          "pattern": "\\+?[0-9]*",
+          "valueTemplate": "tel:$1"
+        }
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "vc:hasTelephone_complete",
       "property": "http://www.w3.org/2006/vcard/ns#hasTelephone",
       "label": {
         "en": "Telephone",

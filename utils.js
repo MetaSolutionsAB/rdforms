@@ -94,6 +94,9 @@ define([
             }
             itemsArray.push(obj);
         }
+        itemsArray.sort(function(o1, o2) {
+            return o1.label > o2.label ? 1 : -1;
+        });
         return itemsArray;
     };
     exports.extractGist = function(str, template) {

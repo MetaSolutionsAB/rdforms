@@ -42,7 +42,9 @@ define([
             "externalLink",
             "image",
             "label",
-            "strictmatch"
+            "strictmatch",
+            "viewAllTranslations",
+            "email"
         ],
 
         //===================================================

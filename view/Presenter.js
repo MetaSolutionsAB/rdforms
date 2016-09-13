@@ -44,7 +44,7 @@ define(["dojo/_base/declare",
          */
         prepareBindings: function(item, bindings) {
             var alts = {}, index;
-            if (!this.filterTranslations || item.getNodetype() !== "LANGUAGE_LITERAL") {
+            if (!this.filterTranslations || item.getNodetype() !== "LANGUAGE_LITERAL" || item.hasStyle("viewAllTranslations")) {
                 return bindings;
             }
             for (index =0;index<bindings.length;index++) {

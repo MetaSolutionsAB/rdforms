@@ -146,6 +146,7 @@ define([
     var groupPresenter = function(fieldDiv, binding, context) {
         var cls = context.view.constructor;
         new cls({
+            parentView: context.view,
             messages: context.view.messages,
             binding: binding,
             topLevel: false,
@@ -157,7 +158,9 @@ define([
 
     var groupEditor = function(fieldDiv, binding, context) {
         var cls = context.view.constructor;
-        var subView = new cls({messages: context.view.messages,
+        var subView = new cls({
+            parentView: context.view,
+            messages: context.view.messages,
             languages: context.view.languages,
             binding: binding,
             topLevel: false,

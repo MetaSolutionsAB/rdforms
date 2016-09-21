@@ -578,7 +578,7 @@ a.rdformsUrl:hover {
     margin: 0px auto 1em auto;
 }
 
-.rdformsRow.missingDeps {
+.rdformsRow.missingDeps, .rdformsRow.hiddenProperty {
     display: none !important;
 }
 

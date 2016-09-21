@@ -21,6 +21,7 @@ define(["dojo/_base/declare",
         topLevel: true,
         compact: false,
         styleCls: "",
+        filterPredicates: null,
 
         //===================================================
         // Public API
@@ -241,6 +242,15 @@ define(["dojo/_base/declare",
 
             this.addLabel(rowNode, binding, item);
             return rowNode;
+        },
+        filterBinding: function(binding) {
+            if (this.parentView) {
+                return this.parentView.filterBinding(binding);
+            } else if (this.filterPredicates != null) {
+                var stmt = binding.getStatement();
+                return stmt != null && this.filterPredicates[stmt.getPredicate()] === true;
+            }
+            return false;
         }
     });
 });

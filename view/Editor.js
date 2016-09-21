@@ -196,6 +196,9 @@ define(["dojo/_base/declare",
                     f(Engine.matchPathBelowBinding(fromBinding, path));
                 });
             }
+            if (this.filterBinding(binding)) {
+                renderingContext.domClassToggle(newNode, "hiddenProperty", true);
+            }
             return newNode;
         }
     });

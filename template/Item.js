@@ -44,7 +44,9 @@ define([
             "label",
             "strictmatch",
             "viewAllTranslations",
-            "email"
+            "email",
+            "disjoint",
+            "deprecated"
         ],
 
         //===================================================

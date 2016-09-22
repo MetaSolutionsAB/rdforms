@@ -47,6 +47,7 @@ define([
             var item = binding.getItem();
             if (item.hasStaticChoices() && !item.hasStyle("externalLink")) {
                 jquery('<div>')
+                    .attr("title", desc || choice.seeAlso || choice.value)
                     .html(utils.getLocalizedValue(choice.label).value)
                     .appendTo(fieldDiv);
             } else {
@@ -97,8 +98,14 @@ define([
         });
         for (var i=0;i<choices.length;i++) {
             var c = choices[i];
+            var desc;
+            if (c.description) {
+                desc = utils.getLocalizedValue(c.description).value;
+            }
+
             jquery('<option>')
                 .val(c.choice.value)
+                .attr("title", desc || c.seeAlso || c.value)
                 .text(c.label)
                 .appendTo($select);
         }

@@ -39,6 +39,11 @@ define(["dojo/_base/declare",
                 } else {
                     $label = jquery('<label class="radio-inline">').appendTo(this.domNode);
                 }
+                if (c.description) {
+                    $label.attr("title", this.item._getLocalizedValue(c.description).value
+                        || c.seeAlso || c.value);
+                }
+
                 var $input = jquery('<input type="radio">')
                     .val(c.value)
                     .attr("checked", c.value === currentValue)

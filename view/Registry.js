@@ -17,7 +17,8 @@ define([
             return false;
         }
         for (var key in constr) if (constr.hasOwnProperty(key)) {
-            if (constraints[key] !== constr[key]) {
+            var c = constraints[key];
+            if (c !== "" && c !== constr[key]) {
                 match = false;
                 break;
             }

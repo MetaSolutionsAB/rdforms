@@ -18,7 +18,7 @@ define([
         }
         for (var key in constr) if (constr.hasOwnProperty(key)) {
             var c = constraints[key];
-            if (c !== "" && c !== constr[key]) {
+            if (c !== "" && c!== "*" && c !== constr[key]) {
                 match = false;
                 break;
             }

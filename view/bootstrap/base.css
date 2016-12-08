@@ -43,7 +43,7 @@
     vertical-align: top;
 }
 
-.rdformsDateValue .glyphicon {
+.rdformsDateValue .fa {
     line-height: 21px;
 }
 
@@ -74,13 +74,13 @@
     font-size: small;
 }
 
-.rdformsFieldControl>.glyphicon.action {
+.rdformsFieldControl>.fa.action {
     float: right;
     position: initial;
     margin-top: 8px;
 }
 
-.glyphicon.action.disabled {
+.fa.action.disabled {
     cursor: default;
 }
 
@@ -89,18 +89,16 @@
     top: 0px;
 }
 
-.rdformsLabelRow>.action.glyphicon {
+.rdformsLabelRow>.action.fa {
     vertical-align: text-bottom;
 }
 
-.rdformsLabelRow>.action.indentRemove.glyphicon-remove,
-.rdformsLabelRow>.action.indentRemove.glyphicons.remove,
-.rdformsLabelRow>.action.glyphicons.plus, /* glyphicons.plus is for backwards compatability*/
-.rdformsLabelRow>.action.glyphicon-plus {
+.rdformsLabelRow>.action.indentRemove.fa-remove,
+.rdformsLabelRow>.action.fa-plus {
     margin-left: 1em;
 }
 
-.input-group-btn .glyphicon {
+.input-group-btn .fa {
     line-height: 20px;
 }
 

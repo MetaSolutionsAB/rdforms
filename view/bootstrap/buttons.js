@@ -6,7 +6,7 @@ define([
 ], function(renderingContext, aspect, Engine, jquery) {
 
     renderingContext.addRemoveButton = function (fieldDiv, binding, context) {
-        var $remove = jquery('<span class="glyphicon glyphicon-remove action">')
+        var $remove = jquery('<span class="fa fa-remove action">')
             .attr("title", context.view.messages.edit_remove)
             .appendTo(context.controlDiv);
         var cardTr = binding.getCardinalityTracker();
@@ -42,7 +42,7 @@ define([
     };
 
     renderingContext.addExpandButton = function (rowDiv, labelDiv, item, context) {
-        var $expand = jquery('<span class="glyphicon glyphicon-plus action">')
+        var $expand = jquery('<span class="fa fa-plus action">')
             .attr("title", context.view.messages.edit_expand)
             .appendTo(labelDiv)
             .click(function () {
@@ -64,7 +64,7 @@ define([
         var card = item.getCardinality();
         var $add;
         if (card.max !== 1) {
-            $add = jquery('<span class="action glyphicon glyphicon-plus ">')
+            $add = jquery('<span class="action fa fa-plus ">')
                 .attr("title", context.view.messages.edit_add)
                 .appendTo(labelDiv);
             $add.click(function () {
@@ -74,7 +74,7 @@ define([
                 }
             });
         }
-        var $remove = jquery('<span class="action glyphicon glyphicon-remove">')
+        var $remove = jquery('<span class="action fa fa-remove">')
             .attr("title", context.view.messages.edit_remove)
             .appendTo(labelDiv);
 
@@ -118,7 +118,7 @@ define([
     renderingContext.addCreateChildButton = function (rowDiv, labelDiv, binding, context) {
         var parentBinding = binding.getParent(), item = binding.getItem(),
             cardTr = binding.getCardinalityTracker();
-        var $add = jquery('<span class="action glyphicon glyphicon-plus">')
+        var $add = jquery('<span class="action fa fa-plus">')
             .attr("title", context.view.messages.edit_add)
             .appendTo(labelDiv)
             .click(function () {

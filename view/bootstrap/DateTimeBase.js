@@ -125,7 +125,7 @@ define(["dojo/_base/declare",
             this._excludeTime = true;
             this.$yearInput.hide();
             this.$timeInput.hide();
-            this.$datepicker.show();
+            this.$datepicker.parent().show();
             if (this._valid) {
                 this.setDateInPicker(this._date);
                 var str = stamp.toISOString(this._date);
@@ -138,7 +138,7 @@ define(["dojo/_base/declare",
             this._excludeTime = false;
             this.$yearInput.hide();
             this.$timeInput.show();
-            this.$datepicker.show();
+            this.$datepicker.parent().show();
 
             if (this._valid) {
                 if (this._date.getHours() !== 0 || this._date.getMinutes() !== 0) {
@@ -161,7 +161,7 @@ define(["dojo/_base/declare",
         _showYear: function() {
             this.$yearInput.show();
             this.$timeInput.hide();
-            this.$datepicker.hide();
+            this.$datepicker.parent().hide();
 
             if (this._valid) {
                 this.$yearInput.val(this._date.getFullYear());

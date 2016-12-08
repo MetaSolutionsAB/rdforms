@@ -156,7 +156,7 @@ define([
         var $search = jquery('<button class="btn btn-default" type="button">')
             .attr("title", context.view.messages.edit_browse)
             .appendTo($wrap);
-        jquery('<span class="glyphicon glyphicon-search" aria-hidden="true">').appendTo($search);
+        jquery('<span class="fa fa-search" aria-hidden="true">').appendTo($search);
 
         var setChoice = function(choice) {
             if (choice) {

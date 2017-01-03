@@ -93,6 +93,7 @@
                 'rdfjson/formats/converters',
                 'dojo/json',
                 'di18n/locale',
+                'di18n/moment',
                 'dojo/domReady!'],
                     function (on, dom, domStyle, ItemStore, StoreManager, converters, json, locale) {
 
@@ -108,7 +109,6 @@
                             "dijit/form/nls/validate",
                             "dojo/cldr/nls/number"
                         ]);
-                        locale.useMoment();
                         locale.set(lang, function() {
                             var itemStore = new ItemStore();
                             var arr = [];

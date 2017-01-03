@@ -6,13 +6,17 @@ require.config({
         "fuelux": "fuelux/js",
         "bootstrap": "bootstrap-amd/lib",
         "select2": "select2/src/js",
-        "moment": "moment/moment",
-        "momentl": "moment/locale",
         "i18n": "di18n/i18n",
         "jquery": "jquery/src",
         "sizzle": "sizzle/dist/sizzle",
         "jquery.mousewheel": "select2/src/js/jquery.mousewheel.shim"
     },
+    packages: [ //Config defined using packages to allow for main.js when requiring just config.
+        {
+            name: "moment",
+            main: "moment"
+        }
+    ],
     map: {
         "jquery": {
             "jquery" : "jquery",
@@ -41,6 +45,7 @@ require.config({
         'rdforms/view/Editor',        //The editor User interface
         'rdforms/view/nls/rdforms',
         'rdforms/view/bootstrap/all',
+        'moment/locale/sv',
         'dojo/domReady'
     ]
 });

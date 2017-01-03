@@ -3,9 +3,9 @@ define(["dojo/_base/declare",
 	"dojo/_base/lang",
     "dojo/dom-class",
     "jquery",
-    "fuelux/datepicker",
+    "fuelux/datepicker", //Used as a jquery plugin
     "di18n/locale",
-    "moment",
+    "di18n/moment",
     "rdforms/view/bootstrap/DateTimeBase",
     "dojo/text!./DateTimeFueluxTemplate.html"
 ], function(declare, lang, domClass, jquery, datepicker, locale, moment, DateTimeBase, template) {
@@ -20,8 +20,6 @@ define(["dojo/_base/declare",
         //===================================================
 
         initDatePicker: function() {
-            var loca = locale.get();
-            moment.locale(loca);
             var updateDate = lang.hitch(this, function(evt, d) {
                 this.setDateInBinding(d);
             });
@@ -41,7 +39,7 @@ define(["dojo/_base/declare",
                 allowPastDates: true,
                 date: null,
                 momentConfig: {
-                    culture: loca,
+                    culture: locale.getCurrentMomentLocale(),
                     format: 'L'
                 }
             });

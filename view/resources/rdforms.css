@@ -2,11 +2,13 @@
 .rdformsLabel {
     /*	font-weight:bold;*/
     color: black;
+    border-bottom: 1px solid #E6E6E6;
 }
 
 .compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow,
 .compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel {
-    border-right: 1px solid #E6E6E6;
+/*    border-right: 1px solid #E6E6E6;*/
+    border-bottom-width: 0px;
 }
 
 /* No border to the right of a heading*/

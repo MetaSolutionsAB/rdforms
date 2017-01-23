@@ -2,6 +2,9 @@
 .rdformsLabel {
     /*	font-weight:bold;*/
     color: black;
+}
+
+.rdformsPresenter .rdformsLabel {
     border-bottom: 1px solid #E6E6E6;
 }
 

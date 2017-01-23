@@ -161,9 +161,6 @@ a.rdformsUrl:hover {
 .rdforms .itemInfoTable>*>* {
 	display: table-cell;
 }
-.rdforms label {
-	font-weight: bold;
-}
 
 .rdformsGroup {
 	margin-left: 1em;

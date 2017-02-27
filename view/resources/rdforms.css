@@ -144,6 +144,11 @@ a.rdformsUrl:hover {
 	cursor: pointer;
 }
 
+.rdformsLabel.noPointer:hover {
+    text-decoration: none;
+    cursor: default;
+}
+
 .rdformsPresenter th span:hover,
 .rdformsEditor th span:hover,
 .rdformsLabel.hasInfo:hover {

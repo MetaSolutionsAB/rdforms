@@ -5,7 +5,6 @@ define([
 
     renderingContext.renderPresenterLabel = function (rowNode, binding, item, context, labelRow) {
         var label = item.getLabel();
-        var isGroup = item.getType() === "group";
         if (label != null && label != "") {
             label = label.charAt(0).toUpperCase() + label.slice(1);
         } else {
@@ -15,9 +14,6 @@ define([
         var $labelDiv = jquery('<div class="rdformsLabel">').text(label).appendTo(rowNode);
         if (labelRow) {
             $labelDiv.addClass("rdformsLabelRow");
-        }
-        if (isGroup) {
-            $labelDiv.addClass("noPointer");
         }
         renderingContext.attachItemInfo(item, $labelDiv[0], context);
     };
@@ -72,6 +68,7 @@ define([
 
     renderingContext.attachItemInfo = function (item, aroundNode, context) {
         if (item == null || (item.getProperty() == null && item.getDescription() == null)) {
+            jquery(aroundNode).addClass("noPointer");
             return;
         }
 

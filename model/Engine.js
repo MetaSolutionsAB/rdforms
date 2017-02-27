@@ -250,7 +250,7 @@ define([
                                 binding = new PropertyGroupBinding({item: item, statement: stmt, constraints: constStmts});
                                 _matchGroupItemChildren(binding.getObjectBinding()); //Recursive call
                             }
-                        } else if (oItem instanceof Choice) {
+                        } else if (oItem instanceof ChoiceBinding) {
                             oChoice = _findChoice(oItem, stmt.getValue(), stmt.getGraph());
                             if (oChoice !== undefined) {
                                 _dibbs(stmt);

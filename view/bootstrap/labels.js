@@ -3,8 +3,9 @@ define([
     "jquery"
 ], function(renderingContext, jquery) {
 
-    renderingContext.renderPresenterLabel = function (rowNode, binding, item, context, labelRow, noPointer) {
+    renderingContext.renderPresenterLabel = function (rowNode, binding, item, context, labelRow) {
         var label = item.getLabel();
+        var isGroup = item.getType() === "group";
         if (label != null && label != "") {
             label = label.charAt(0).toUpperCase() + label.slice(1);
         } else {
@@ -15,7 +16,7 @@ define([
         if (labelRow) {
             $labelDiv.addClass("rdformsLabelRow");
         }
-        if (noPointer) {
+        if (isGroup) {
             $labelDiv.addClass("noPointer");
         }
         renderingContext.attachItemInfo(item, $labelDiv[0], context);
@@ -23,12 +24,7 @@ define([
 
     renderingContext.renderEditorLabel = function (rowNode, binding, item, context) {
         if (item.hasStyle("nonEditable") || item.hasStyle("heading")) {
-            if (item.getSource().type === "group") {
-                return renderingContext.renderPresenterLabel(rowNode, binding, item, context, true, true);
-            }
-            else {
-                return renderingContext.renderPresenterLabel(rowNode, binding, item, context, true, false);
-            }
+            return renderingContext.renderPresenterLabel(rowNode, binding, item, context, true);
         }
 
         var label = item.getLabel();

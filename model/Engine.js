@@ -613,36 +613,19 @@ define([
             if (groupitem.hasStyle("disjoint")) {
                 var bindings = groupbinding.getChildBindings();
                 var nrOfValid = countValidBindings(bindings);
-                var childItem = groupitem.getChildren()[0];
-                var card = childItem.getCardinality();
-                if (card.min != null && card.min > nrOfValid) {
-                    groupbinding.error = engine.CODES.TOO_FEW_VALUES;
+                if (nrOfValid > 1) {
+                    groupbinding.error = engine.CODES.TOO_MANY_VALUES;
                     report.errors.push({
                         parentBinding: groupbinding,
-                        item: childItem,
-                        code: engine.CODES.TOO_FEW_VALUES
+                        code: engine.CODES.TOO_MANY_VALUES_DISJOINT
                     });
-                } else if (card.pref != null && card.pref > nrOfValid) {
-                    groupbinding.warning = engine.CODES.TOO_FEW_VALUES;
-                    report.warnings.push({
-                        parentBinding: groupbinding,
-                        item: childItem,
-                        code: engine.CODES.TOO_FEW_VALUES
-                    });
-                }
-                if (card.max != null && card.max < nrOfValid) {
-                    report.errors.push({
-                        parentBinding: groupbinding,
-                        item: childItem,
-                        code: engine.CODES.TOO_MANY_VALUES
-                    });
-                    var disjointCounter = 0;
-                    array.forEach(bindings, function(binding) {
+                    var counter = 0;
+                    array.forEach(bindings, function(binding, idx) {
                         if (binding.isValid()) {
-                            disjointCounter++;
-                            if (disjointCounter > card.max) {
-                                binding.error = engine.CODES.TOO_MANY_VALUES;
+                            if (counter > 0) {
+                                binding.error = engine.CODES.TOO_MANY_VALUES_DISJOINT;
                             }
+                            counter++;
                         }
                     });
                 }
@@ -780,7 +763,8 @@ define([
 
         CODES: {
             TOO_FEW_VALUES: "few",
-            TOO_MANY_VALUES: "many"
+            TOO_MANY_VALUES: "many",
+            TOO_MANY_VALUES_DISJOINT: "disjoint"
         }
     };
 

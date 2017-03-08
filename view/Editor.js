@@ -64,14 +64,26 @@ define(["dojo/_base/declare",
                 renderingContext.domClassToggle(this._binding2node[key], "errorReport", false);
             }
             for (var j = 0; j < report.errors.length; j++) {
-                if (report.errors[j].parentBinding === this.binding) {
-                    var item = report.errors[j].item;
-                    var bindings = this.binding.getChildBindingsFor(item);
-                    var counter = item.getCardinality().min;
-                    for (var k = 0; k < bindings.length && counter > 0; k++) {
-                        counter--;
-                        if (!bindings[k].isValid()) {
-                            renderingContext.domClassToggle(this._binding2node[bindings[k].getHash()], "errorReport", true);
+                var err = report.errors[j];
+                if (err.parentBinding === this.binding) {
+                    if (err.code === Engine.CODES.TOO_FEW_VALUES) {
+                        var item = err.item;
+                        var bindings = this.binding.getChildBindingsFor(item);
+                        var counter = item.getCardinality().min;
+                        for (var k = 0; k < bindings.length && counter > 0; k++) {
+                            counter--;
+                            if (!bindings[k].isValid()) {
+                                renderingContext.domClassToggle(this._binding2node[bindings[k].getHash()], "errorReport", true);
+                            }
+                        }
+                    } else if (err.code === Engine.CODES.TOO_MANY_VALUES_DISJOINT) {
+                        var bindings = this.binding.getChildBindings();
+                        //var counter = item.getCardinality().max;
+                        for (var k = 0; k < bindings.length; k++) {
+                            //counter--;
+                            if (bindings[k].error) {
+                                renderingContext.domClassToggle(this._binding2node[bindings[k].getHash()], "errorReport", true);
+                            }
                         }
                     }
                 }

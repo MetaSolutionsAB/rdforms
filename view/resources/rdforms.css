@@ -169,6 +169,7 @@ a.rdformsUrl:hover {
 
 .rdformsGroup {
 	margin-left: 1em;
+    position: relative;
  }
 
 .compact .rdformsRow.rdformsInvisibleGroup>.rdformsLabelRow,

@@ -78,8 +78,8 @@
 }
 
 /* No specific width for headings */
-.compact.rdformsEditor .rdformsTopLevel.rdformsHeading>.rdformsLabelRow,
-.compact.rdformsPresenter .rdformsTopLevel.rdformsHeading>.rdformsLabel {
+.rdformsEditor .rdformsTopLevel.rdformsHeading>.rdformsLabelRow,
+.rdformsPresenter .rdformsTopLevel.rdformsHeading>.rdformsLabel {
     width: auto !important;
     border-bottom: 1px solid lightgrey;
 }

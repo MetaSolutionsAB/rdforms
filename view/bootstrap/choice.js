@@ -117,9 +117,9 @@ define([
 
         //Sets the value if any
         if (binding.getValue()) {
-            if (binding.getChoice().mismatch) {
-                //fSelect.set("displayedValue", binding.getValue());
-            }
+            /*if (binding.getChoice().mismatch) {
+                fSelect.set("displayedValue", binding.getValue());
+            }*/
             $select.val(binding.getValue()).trigger("change");
         }
 

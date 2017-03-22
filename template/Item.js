@@ -46,7 +46,8 @@ define([
             "viewAllTranslations",
             "email",
             "disjoint",
-            "deprecated"
+            "deprecated",
+            "noLabelInPresent"
         ],
 
         //===================================================

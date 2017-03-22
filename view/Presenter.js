@@ -64,7 +64,11 @@ define(["dojo/_base/declare",
         },
 
         addLabel: function (rowDiv, binding, item) {
-            renderingContext.renderPresenterLabel(rowDiv, binding, item, {view: this});
+            if (item.hasStyle("noLabelInPresent")) {
+                renderingContext.domClassToggle(rowDiv, "rdformsInvisibleGroup", true);
+            } else {
+                renderingContext.renderPresenterLabel(rowDiv, binding, item, {view: this});
+            }
         },
         addTable: function(newRow, firstBinding) {
             return renderingContext.addPresenterTable(newRow, firstBinding, {view: this});

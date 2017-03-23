@@ -40,7 +40,7 @@ define([
 
     var createPath = function(binding, item) {
         var path = [];
-        if (item.getProperty() != null) {
+        if (item != null && item.getProperty() != null) {
             path.push(nsify(item.getProperty()));
         }
         while(true) {

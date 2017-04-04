@@ -9,6 +9,7 @@ define({
     validation_min_required: "{{PLURAL:$1|minst ett värde|minst $1 värden}} krävs",
     validation_min_recommended: "{{PLURAL:$1|minst ett värde är rekommenderat|minst $1 värden rekommenderas}}",
     validation_max: "{{PLURAL:$1|max ett värde är tillåtet|max $1 värden är tillåtna}}",
+    validation_disjoint: "Max ett värde är tillåtet",
     date_date: "Datum",
     date_year: "År",
     date_date_and_time: "Datum och tid",

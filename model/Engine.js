@@ -617,6 +617,7 @@ define([
                     groupbinding.error = engine.CODES.TOO_MANY_VALUES;
                     report.errors.push({
                         parentBinding: groupbinding,
+                        item: bindings[0].getItem(),
                         code: engine.CODES.TOO_MANY_VALUES_DISJOINT
                     });
                     var counter = 0;

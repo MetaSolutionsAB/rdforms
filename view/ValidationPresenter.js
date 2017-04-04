@@ -109,6 +109,8 @@ define([
                     tmpl = localize(this.messages, "validation_min_required", min);
                 } else if (binding.error === Engine.CODES.TOO_MANY_VALUES) {
                     tmpl = localize(this.messages, "validation_max", card.max || 1);
+                } else if (binding.error === Engine.CODES.TOO_MANY_VALUES_DISJOINT) {
+                    tmpl = this.messages.validation_disjoint;
                 }
                 var n = renderingContext.domCreate("div", fieldDiv);
                 renderingContext.domText(n, ">> "+tmpl+" <<");

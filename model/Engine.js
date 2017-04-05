@@ -638,13 +638,13 @@ define([
                 });
             } else {
                 array.forEach(groupbinding.getItemGroupedChildBindings(), function (bindings, index) {
-                    array.forEach(bindings, function(binding) {
-                        var item = binding.getItem();
-                        if (item.hasStyle("deprecated")) {
-                            report.deprecated.push(binding);
-                        }
-                    });
                     var item = childrenItems[index];
+                    if (item.hasStyle("deprecated")) {
+                        array.forEach(bindings, function(binding) {
+                            report.deprecated.push(binding);
+                        });
+                        return;
+                    }
                     var path = item.getDeps();
                     if (path) {
                         var fromBinding = findBindingRelativeToParentBinding(groupbinding, path);

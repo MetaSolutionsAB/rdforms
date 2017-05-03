@@ -40,6 +40,7 @@ define([
             "firstcolumnfixedtable",
             "tree",
             "externalLink",
+            "internalLink",
             "image",
             "label",
             "strictmatch",

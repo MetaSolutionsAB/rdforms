@@ -2,8 +2,6 @@
 .idea
 /node_modules
 *~
-/local_templates/*
-/release/*
-/release-layer/*
-/dist-dojo/*
-/dist-bootstrap/*
+/dist
+*.iml
+/release

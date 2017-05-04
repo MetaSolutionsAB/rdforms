@@ -1,33 +1,36 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link type="text/css" href="../release/dijit/themes/claro/claro.css" rel="stylesheet" />
-    <link type="text/css" href="../release/rdforms/view/dojo/style.css" rel="stylesheet" />
-    <script src="../release/dojo/dojo.js"></script>
+    <link type="text/css" href="../release/style.css" rel="stylesheet"/>
+    <link type="text/css" href="../libs/fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <link type="text/css" href="example.css" rel="stylesheet"/>
+    <script src="../release/all.js"></script>
+    <script>
+        require([
+            'rdfjson/Graph',              //Rdfjson Graph API
+            'rdforms/template/ItemStore', //Stores all the RDForm templates
+            'rdforms/view/Editor',        //The editor User interface
+            'dojo/json',                          //Json parser
+            'text!../samples/rdf.json',         //The sample RDF
+            'text!../samples/templateBundle.json',    //The sample template
+            'dojo/domReady!'             //Wait until the dom is ready.
+        ], function(Graph, ItemStore, Editor, json, rdf, templateBundle) {
+            var graph = new Graph(json.parse(rdf));
+            var itemStore = new ItemStore();
+            var bundle = itemStore.registerBundle({source: json.parse(templateBundle)});
+            new Editor({
+                graph: graph,
+                resource: "http://example.org/about",
+                template: bundle.getRoot(),
+                compact: true
+            }, "node");
+        });
+    </script>
 </head>
-<body class="claro">
-<script type="text/javascript">
-    require([
-        'rdfjson/Graph',              //Rdfjson Graph API
-        'rdforms/template/ItemStore', //Stores all the RDForm templates
-        'rdforms/view/Editor',        //The editor User interface
-        'dojo/json',                          //Json parser
-        'dojo/text!./configs/rdf.json',         //The sample RDF
-        'dojo/text!./configs/templateBundle.json',    //The sample template
-        'rdforms/view/dojo/components',
-        'dojo/domReady!'             //Wait until the dom is ready.
-    ], function(Graph, ItemStore, Editor, json, rdf, templateBundle) {
-        var graph = new Graph(json.parse(rdf));
-        var itemStore = new ItemStore();
-        var bundle = itemStore.registerBundle({source: json.parse(templateBundle)});
-        new Editor({
-            graph: graph,
-            resource: "http://example.org/about",
-            template: bundle.getRoot(),
-            compact: true
-        }, "node");
-    });
-</script>
-<div id="node"></div>
+<body>
+<div>
+    <h1>Example 2</h1>
+    <div id="node"></div>
+</div>
 </body>
 </html>

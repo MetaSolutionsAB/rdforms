@@ -1,14 +1,11 @@
 {
-  "name": "rdforms",
-  "version": "4.1.0",
   "dependencies": {
-    "requirejs": "~2.1.11",
-    "amdefine": "~0.1.0",
-    "xml2js": "~0.4.2",
-    "node-static": "~0.7.3",
-    "xmldom": "~0.1.19"
-  },
-  "description": "RDForms is a library for generating forms for RDF.",
-  "homepage": "https://bitbucket.org/metasolutions/rdforms",
-  "dojoBuild": "package.js"
+    "bower": "^1.8.0",
+    "grunt": "1.0.1",
+    "grunt-available-tasks": "^0.6.3",
+    "grunt-contrib-requirejs": "^1.0.0",
+    "grunt-contrib-uglify": "^2.3.0",
+    "load-grunt-tasks": "^3.5.2",
+    "q": "^1.5.0"
+  }
 }

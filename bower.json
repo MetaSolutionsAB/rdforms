@@ -1,6 +1,6 @@
 {
   "name": "rdforms",
-  "version": "4.1.0",
+  "version": "5.0.0-SNAPSHOT",
   "authors": [
     "Matthias Palmér <matthias@metasolutions.se>"
   ],
@@ -9,12 +9,12 @@
     "amd"
   ],
   "dependencies": {
-    "dojo": "1.10.1",
-    "dijit": "1.10.1",
-    "util": "dojo-util#1.10.1",
+    "dojo": "1.12.2",
+    "dijit": "1.12.2",
     "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#develop",
-    "di18n": "https://bitbucket.org/metasolutions/di18n.git#master",
+    "di18n": "https://bitbucket.org/metasolutions/di18n.git#develop",
     "bootstrap-amd": "latest",
+    "fontawesome": "latest",
     "jquery": "latest",
     "sizzle": "~2.3.0",
     "moment": "latest",
@@ -22,8 +22,7 @@
     "select2": "4.0.0",
     "requirejs": "latest",
     "requirejs-i18n": "latest",
-    "requirejs-text": "latest",
-    "dbootstrap": "https://github.com/ebner/dbootstrap/releases/download/0.1.1-font-fix/dbootstrap.zip"
+    "requirejs-text": "latest"
   },
   "keywords": [
     "rdf",
@@ -33,11 +32,15 @@
     "HTML forms",
     "template driven"
   ],
-  "license": "GPL",
+  "license": "LGPL",
   "homepage": "http://rdforms.com",
   "private": true,
   "ignore": [
     "node_modules",
-    "bower_components"
-  ]
+    "libs"
+  ],
+  "resolutions": {
+    "dojo": "1.12.2",
+    "dijit": "1.12.2"
+  }
 }

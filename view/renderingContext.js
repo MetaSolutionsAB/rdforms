@@ -12,7 +12,7 @@ define([
         }
         return chooser.getChoice(item, value);
     };
-    var messages, language, languages, defaultLanguages = [
+    var messages, language, languages, primaryLanguageCodes, primaryLanguages, nonPrimaryLanguages, defaultLanguages = [
         {"value": "", label: {"en": ""}},
         {"value": "bg", label: {"en": "Bulgarian", "bg": "български"}},
         {"value": "es", label: {"en": "Spanish", "es": "Español"}},
@@ -115,6 +115,75 @@ define([
         getLanguageList: function () { //TODO: Take this list from some kind of configuration
             return languages || defaultLanguages;
         },
+
+        /**
+         * @return {Array} of languages, subset of getLanguageList.
+         */
+        getPrimaryLanguageList: function() {
+            if (!primaryLanguages) {
+                var langs = rc.getLanguageList();
+                var pLangs = primaryLanguageCodes || [];
+                var filteredPrimaryLangs = [];
+                var empty;
+                for (var i = 0; i < langs.length; i++) {
+                    var val = langs[i].value;
+                    var idx = pLangs.indexOf(val);
+                    if (val === "") {
+                        empty = langs[i];
+                    }
+                    if (idx !== -1) {
+                        //Sets in position to preserve order of primary languages
+                        filteredPrimaryLangs[idx] = langs[i];
+                    }
+                }
+                primaryLanguages = [];
+                for (var j = 0; j < filteredPrimaryLangs.length; j++) {
+                    if (typeof filteredPrimaryLangs[j] === "object") {
+                        primaryLanguages.push(filteredPrimaryLangs[j]);
+                    }
+                }
+                if (primaryLanguages.length > 0 && empty) {
+                    primaryLanguages.splice(0, 0, empty);
+                }
+            }
+            return primaryLanguages;
+        },
+
+        /**
+         * @return {Array} of languages, subset of getLanguageList.
+         */
+        getNonPrimaryLanguageList: function() {
+            if (!nonPrimaryLanguages) {
+                var pl = rc.getPrimaryLanguageList();
+                var excludeEmpty = pl.length > 0;
+                var langs = rc.getLanguageList();
+                var pLangs = primaryLanguageCodes || [];
+                nonPrimaryLanguages = [];
+                for (var i = 0; i < langs.length; i++) {
+                    var val = langs[i].value;
+                    if (pLangs.indexOf(val) === -1) {
+                        if (!excludeEmpty ||  val !== "") {
+                            nonPrimaryLanguages.push(langs[i]);
+                        }
+                    }
+                }
+            }
+            return nonPrimaryLanguages;
+        },
+
+        /**
+         * Set a subset of languages that are going to be treated as primary languages,
+         * typically displayed at the top of dropdowns.
+         *
+         * @param {string[]} primaryLangs is an array of language codes,
+         * any languages not being a subset of the full language list is discardeed.
+         */
+        setPrimaryLanguageCodes: function (primaryLangCodes) {
+            nonPrimaryLanguages = null;
+            primaryLanguages = null;
+            primaryLanguageCodes = primaryLangCodes;
+        },
+
         setLanguageList: function(langs) {
             languages = langs;
         },

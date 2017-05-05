@@ -75,7 +75,7 @@ define([
         }
     };
 
-    exports.cloneArrayWithLabels = function (objects) {
+    exports.cloneArrayWithLabels = function (objects, noSort) {
         var itemsArray = [];
         for (var i = 0; i < objects.length; i++) {
             var o = objects[i];
@@ -94,9 +94,11 @@ define([
             }
             itemsArray.push(obj);
         }
-        itemsArray.sort(function(o1, o2) {
-            return o1.label > o2.label ? 1 : -1;
-        });
+        if (noSort !== true) {
+            itemsArray.sort(function(o1, o2) {
+                return o1.label > o2.label ? 1 : -1;
+            });
+        }
         return itemsArray;
     };
     exports.extractGist = function(str, template) {

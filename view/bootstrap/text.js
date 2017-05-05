@@ -141,11 +141,24 @@ define([
             jquery(context.controlDiv).addClass("rdformsLangFieldControl");
             var $lselect = jquery('<select class="form-control rdformsLanguage">')
                 .appendTo(context.controlDiv);
-            var langList = renderingContext.getLanguageList();
+            var primaryLangs = renderingContext.getPrimaryLanguageList();
+            var langList = renderingContext.getNonPrimaryLanguageList();
             langList = utils.cloneArrayWithLabels(langList);
-            array.forEach(langList, function(lang) {
-                jquery("<option>").html(lang.label).val(lang.value).appendTo($lselect);
-            });
+            if (primaryLangs.length === 0) {
+                array.forEach(langList, function(lang) {
+                    jquery("<option>").html(lang.label).val(lang.value).appendTo($lselect);
+                });
+            } else {
+                primaryLangs = utils.cloneArrayWithLabels(primaryLangs, true);
+                array.forEach(primaryLangs, function(lang) {
+                    jquery("<option>").html(lang.label).val(lang.value).appendTo($lselect);
+                });
+                jquery("<option>").html("─────").attr("disabled", "disabled").appendTo($lselect);
+
+                array.forEach(langList, function(lang) {
+                    jquery("<option>").html(lang.label).val(lang.value).appendTo($lselect);
+                });
+            }
             if (binding.isValid()) {
                 $lselect.val(binding.getLanguage());
             } else {

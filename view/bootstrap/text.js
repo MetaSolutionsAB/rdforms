@@ -87,6 +87,28 @@ define([
         }
     });
 
+    var addChangeListener = function(inp, binding, regex) {
+      var to = null;
+      var s = function() {
+        to = null;
+        var val = inp.val();
+        if (regex) {
+          if (regex.test(val)) {
+            binding.setGist(val);
+          };
+        } else {
+          binding.setGist(val);
+        }
+      };
+      var c = function() {
+        if (to != null) {
+          clearTimeout(to);
+        }
+        to = setTimeout(s, 200);
+      }
+      inp.on("keyup paste", c);
+    };
+
     var registerPattern = function(pattern, datatype) {
         var regex = new RegExp(pattern);
         editors.itemtype("text").datatype(datatype)
@@ -94,13 +116,8 @@ define([
                 var $input = jquery('<input type="text" class="form-control rdformsFieldInput">');
                 $input.val(binding.getGist())
                     .attr("pattern", pattern)
-                    .appendTo(fieldDiv)
-                    .change(function() {
-                        var val = $input.val();
-                        if (regex.test(val)) {
-                            binding.setGist($input.val());
-                        }
-                    });
+                    .appendTo(fieldDiv);
+                addChangeListener($input, binding, regex);
                 if (!binding.getItem().isEnabled()) {
                     $input.prop("disabled", true);
                 }
@@ -125,10 +142,8 @@ define([
             $input = jquery('<input type="text" class="form-control rdformsFieldInput">');
         }
         $input.val(binding.getGist())
-            .appendTo(fieldDiv)
-            .change(function() {
-                binding.setGist($input.val());
-            });
+            .appendTo(fieldDiv);
+        addChangeListener($input, binding);
 
         if (item.getPattern() != null) {
             $input.attr("pattern", item.getPattern());

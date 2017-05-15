@@ -698,6 +698,53 @@ define([
         return report;
     };
 
+    var _levelProfile = function(profile, item, ignoreTopLevelGroup) {
+       var card = item.getCardinality();
+       if (!ignoreTopLevelGroup || item.getType() !== "group") {
+           if (card != null) {
+               if (card.min > 0) {
+                   profile.mandatory += 1;
+               } else if (card.pref > 0) {
+                   profile.recommended += 1;
+               } else {
+                   profile.optional += 1;
+               }
+           } else {
+               profile.optional += 1;
+           }
+       }
+      if (item.getType() === "group") {
+        array.forEach(item.getChildren(), lang.hitch(this, _levelProfile, profile));
+      }
+      return profile;
+    }
+
+    var levelProfile = function(item) {
+      var profile = _levelProfile({mandatory: 0, recommended: 0, optional: -1}, item, true);
+      profile.itemCount = profile.mandatory + profile.recommended + profile.optional;
+      return profile;
+    }
+
+    var detectLevel = function(profile) {
+        if (profile.mandatory > 0) {
+            if  (profile.recommended === 0 && profile.optional === 0) {
+              return "mandatory";
+            } else if (profile.optional === 0) {
+                return "mixed_mandatory_recommended";
+            } else if (profile.recommended === 0) {
+                return "mixed_mandatory_optional";
+            }
+        } else if (profile.recommended > 0) {
+          if (profile.optional === 0) {
+            return "recommended";
+          } else {
+              return "mixed_recommended_optional";
+          }
+        } else if (profile.recommended === 0 && profile.recommended > 0 && profile.optional === 0) {
+            return "optional";
+        }
+      return "mixed_all";
+    }
 
     //===============================================
     //Public API for matching and creation engine
@@ -761,6 +808,28 @@ define([
         findFirstValueBinding: findFirstValueBinding,
 
         report: createReport,
+
+        /**
+         * Calculates the level profile, i.e. the amount of items on mandatory, recommended and optional level in a given template.
+         *
+         * @param {rdforms/template/Item} item
+         * @return {Object} with keys mandatory, recommended and optional, each pointing to an integer.
+         */
+        levelProfile: levelProfile,
+
+      /**
+       * Investigates a level profile and provides the following responses:
+       * * mandatory   - only mandatory items
+       * * recommended - only recommended items
+       * * optional    - only optional items
+       * * mixed_all   - a mix of all items
+       * * mixed_mandatory_recommended - only mandatory and recommended items
+       * * mixed_mandatory_optional    - only mandatory and optional items
+       * * mixed_recommended_optional  - only recommended and optional items
+       * @param {object} profile as provided by the levelProfile function.
+       * @return {string} one of the responses outlined
+       */
+      detectLevel: detectLevel,
 
         CODES: {
             TOO_FEW_VALUES: "few",

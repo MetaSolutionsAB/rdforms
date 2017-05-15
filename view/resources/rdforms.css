@@ -51,7 +51,7 @@
 
 .rdforms .rdformsMandatoryMark {
     color: red;
-    padding-left: 4px;
+    vertical-align: text-bottom;
     font-weight: bold;
 }
 

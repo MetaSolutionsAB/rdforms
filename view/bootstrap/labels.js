@@ -31,6 +31,10 @@ define([
         }
         var $labelDiv = jquery('<div class="rdformsLabelRow">').appendTo(rowNode);
         var $label = jquery('<span class="rdformsLabel">').text(label).appendTo($labelDiv);
+        var card = item.getCardinality();
+        if (card.min > 0) {
+          jquery('<span class="rdformsMandatoryMark">').text('*').appendTo($labelDiv);
+        }
 
         renderingContext.attachItemInfo(item, $label[0], context);
 
@@ -42,7 +46,6 @@ define([
         if (context.view.showAsTable(item)) {
             return;
         }
-        var card = item.getCardinality();
         if (card.max != null && (card.max == card.min)) {
             return;
         }

@@ -49,6 +49,12 @@
     background: lightskyblue;
 }
 
+.rdforms .rdformsMandatoryMark {
+    color: red;
+    padding-left: 4px;
+    font-weight: bold;
+}
+
 /* === End colors === */
 
 .rdformsRow.rdformsTopLevel {
@@ -86,7 +92,7 @@
 
 
 .rdformsEditor .rdformsTopLevel>.rdformsLabelRow>.rdformsLabel {
-	max-width: 10em;
+	max-width: 15em;
 	width: auto;
 	overflow: hidden;
 	text-overflow: ellipsis;

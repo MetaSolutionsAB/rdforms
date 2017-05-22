@@ -60,7 +60,7 @@ define([
         },
         setGist: function (value) {
             var vt = this.getItem().getValueTemplate();
-            if (vt) {
+            if (vt && value.length > 0) {
                 if (vt.indexOf("$1") === -1) {
                     vt = vt+"$1";
                 }

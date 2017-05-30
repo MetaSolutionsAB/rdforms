@@ -20,9 +20,6 @@ define(["dojo/_base/declare",
         //===================================================
 
         initDatePicker: function() {
-            var updateDate = lang.hitch(this, function(evt, d) {
-                this.setDateInBinding(d);
-            });
             var month, months = moment.months();
             for (i=0;i<12;i++) {
                 month = months[i];
@@ -43,16 +40,13 @@ define(["dojo/_base/declare",
                     format: 'L'
                 }
             });
-            var $input = this.$datepicker.find('input');
 
-            this.$datepicker.on('changed.fu.datepicker', updateDate
-            ).on('dateClicked.fu.datepicker', lang.hitch(this, function(evt, d) {
-                updateDate(evt, d);
-                $input.blur();
-            }));
-            $input.on('blur.fu.datepicker', lang.hitch(this, function() {
-                this.blurringTime = new Date().getTime();
-            }));
+          var updateDate = lang.hitch(this, function(evt, d) {
+            this.setDateInBinding(d);
+          });
+            this.$datepicker
+              .on('changed.fu.datepicker', updateDate)
+              .on('dateClicked.fu.datepicker', updateDate);
 
             if (!this.item.isEnabled()) {
                 this.$datepicker.datepicker("disabled");
@@ -61,17 +55,6 @@ define(["dojo/_base/declare",
         setDateInPicker: function(d) {
             this.$datepicker.datepicker("setDate", d);
         },
-        datetimeButtonClick: function() {
-            if (new Date().getTime() - this.blurringTime < 200) {
-                return;
-            }
-            var $input = this.$datepicker.find('input');
-            if (domClass.contains(this.menuBlock, "open")) {
-                $input.blur();
-            } else {
-                $input.focus();
-            }
-        }
     });
 
     DateTimeBase.register(DateTimeFuelux);

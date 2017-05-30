@@ -720,7 +720,7 @@ define([
     }
 
     var levelProfile = function(item) {
-      var profile = _levelProfile({mandatory: 0, recommended: 0, optional: -1}, item, true);
+      var profile = _levelProfile({mandatory: 0, recommended: 0, optional: 0}, item, true);
       profile.itemCount = profile.mandatory + profile.recommended + profile.optional;
       return profile;
     }

@@ -21,8 +21,6 @@ define([
         {"value": "no", label: {"en": "Norwegian", "no": "Norsk", "nb": "Norsk", "nn": "Norsk nynorsk"}},
         {"value": "nb", label: {"en": "Norwegian (bokmål)", "nb": "Norsk bokmål", "no": "Norsk bokmål", "nn": "Norsk bokmål"}},
         {"value": "nn", label: {"en": "Norwegian (nynorsk)", "nb": "Norsk nynorsk", "no": "Norsk nynorsk", "nn": "Norsk nynorsk"}},
-        {"value": "no", label: {"en": "Norwegian", "no": "Norsk"}},
-        {"value": "no", label: {"en": "Norwegian", "no": "Norsk"}},
         {"value": "de", label: {"en": "German", "de": "Deutsch"}},
         {"value": "et", label: {"en": "Estonian", "et": "Eesti keel"}},
         {"value": "el", label: {"en": "Greek", "el": "ελληνικά"}},

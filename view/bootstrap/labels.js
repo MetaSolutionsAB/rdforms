@@ -32,7 +32,7 @@ define([
         var $labelDiv = jquery('<div class="rdformsLabelRow">').appendTo(rowNode);
         var $label = jquery('<span class="rdformsLabel">').text(label).appendTo($labelDiv);
         var card = item.getCardinality();
-        if (card.min > 0) {
+        if (card.min > 0 && item.getProperty() != null) {
           jquery('<span class="rdformsMandatoryMark">').text('*').appendTo($labelDiv);
         }
 

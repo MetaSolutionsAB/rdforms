@@ -97,11 +97,15 @@ define([
                     $remove.unbind("click");
                     binding.remove();
                     var card = item.getCardinality();
-                    if (card.pref > 0 || card.min > 0) {
-                        var nBinding = Engine.create(parentBinding, item);
-                        context.view.addRow(rowDiv, nBinding); //not the first binding...
-                    } else {
-                        context.view.createRowNode(rowDiv, null, item);
+                    if (context.view.showNow(item, [])) {
+                        // If we are removing a single row, prepareBindings will only create a
+                        // maximum of one row.
+                        var nBindings = context.view.prepareBindings(item, []);
+                        // The bindings may be of length 0, e.g. if the view is currently showing
+                        // only mandatory fields and the row is optional.
+                        if (nBindings.length > 0) {
+                          context.view.addRow(rowDiv, nBindings[0]);
+                        }
                     }
                     jquery(rowDiv).remove();
                 } else {

@@ -2,6 +2,6 @@
 .idea
 /node_modules
 *~
-/local_templates/*
-/release/*
-/release-layer/*
+/dist
+*.iml
+/release

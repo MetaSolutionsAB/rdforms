@@ -1,5 +1,10 @@
 /*global define*/
-define(["dojo/_base/declare", "./Group"], function(declare, Group) {
+define([
+    "dojo/_base/declare",
+    "dojo/_base/array",
+    "dojo/_base/lang",
+    "rdforms/template/Group"
+], function(declare, array, lang, Group) {
 
     /**
      * A PropertyGroup captures the special case when both the predicate and object of a
@@ -17,8 +22,8 @@ define(["dojo/_base/declare", "./Group"], function(declare, Group) {
                 var override = {getCardinality: function() {
                     return {"min": 1, "max": 1, "pref": 1};
                 }};
-                this._delegatedChildren = dojo.map(this.inherited("getChildren", arguments), function(child) {
-                    return dojo.delegate(child, override);
+                this._delegatedChildren = array.map(this.inherited("getChildren", arguments), function(child) {
+                    return lang.delegate(child, override);
                 });
             }
             return this._delegatedChildren;

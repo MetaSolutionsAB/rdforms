@@ -1,42 +1,16 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link type="text/css" href="../release/dijit/themes/claro/claro.css" rel="stylesheet" />
-    <link type="text/css" href="../release/rdforms/view/resources/rdforms.css" rel="stylesheet" />
-    <script src="../release/dojo/dojo.js"></script>
+    <link type="text/css" href="../release/style.css" rel="stylesheet"/>
+    <link type="text/css" href="../libs/fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <link type="text/css" href="example.css" rel="stylesheet"/>
+    <script src="../release/all.js"></script>
+    <script src="example1.js"></script>
 </head>
-<body class="claro">
-<script type="text/javascript">
-    require([
-        'rdfjson/Graph',             //Rdfjson Graph API
-        'rdforms/template/ItemStore', //Stores all the RDForm templates
-        'rdforms/view/Editor',        //The editor User interface
-        'dojo/domReady!'             //Wait until the dom is ready.
-    ], function(Graph, ItemStore, Editor) {
-        var graph = new Graph({
-            "http://example.org/about": {"http://example.com/terms/colorOfHouse": [{type: "uri", value: "http://example.com/color/blue"}]}
-        });
-        var itemStore = new ItemStore();
-        itemStore.createItem({
-            "type": "choice",
-            "nodetype": "URI",
-            "id": "ex:color",
-                "property": "http://example.com/terms/colorOfHouse",
-                "label": {"en": "Color of house", "sv": "Färg på huset"},
-            "choices": [
-                { "value": "http://example.com/color/blue", "label": {"en": "Blue"}},
-                { "value": "http://example.com/color/red", "label": {"en": "Red"}}
-            ],
-            "cardinality": {"min": 1, "pref": 1, "max": 1}
-        });
-        new Editor({
-            graph: graph,
-            resource: "http://example.org/about",
-            template: itemStore.createTemplateFromChildren(["ex:color"]),
-            compact: true
-        }, "node");
-    });
-</script>
-<div id="node"></div>
+<body>
+<div>
+    <h1>Example 1</h1>
+    <div id="node"></div>
+</div>
 </body>
 </html>

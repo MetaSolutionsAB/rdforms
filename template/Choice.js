@@ -1,5 +1,10 @@
 /*global define*/
-define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, Item) {
+define([
+    "dojo/_base/declare",
+    "dojo/_base/lang",
+    "rdforms/utils",
+    "rdforms/template/Item"
+], function (declare, lang, utils, Item) {
 
     var sortChoices = function (choices) {
         if (choices == null) {
@@ -58,6 +63,10 @@ define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, I
             return s.ontologyUrl != null || s.choices != null;
         },
 
+        hasStaticChoices: function(original) {
+            var s = this.getSource(original);
+            return s.choices != null;
+        },
         /**
          * @return {Array} of choices defined manually in the Template.
          */
@@ -110,7 +119,7 @@ define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, I
                     sortChoices(this._dynamicChoices);
                     return this._dynamicChoices;
                 } else {
-                    this._ontologyStore.getChoices(this, dojo.hitch(this, function (choices) {
+                    this._ontologyStore.getChoices(this, lang.hitch(this, function (choices) {
                         sortChoices(choices);
                         if (this._dynamicChoices == null) {
                             console.log("Failed lookup of choices for " + this.getLabel());
@@ -139,6 +148,11 @@ define(["dojo/_base/declare", "../utils", "./Item"], function (declare, utils, I
                 s.ontologyUrl = url;
             }
             this.refreshExtends();
+        },
+
+        getLabelProperties: function(original) {
+            return this.getSource(original).labelProperties ||
+                ["http://www.w3.org/2000/01/rdf-schema#label"];
         },
         getParentProperty: function (original) {
             return this.getSource(original).parentProperty;

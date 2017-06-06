@@ -1,5 +1,12 @@
 /*global define*/
-define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(declare, Binding, CardinalityTracker) {
+define([
+    "dojo/_base/lang",
+    "dojo/_base/array",
+    "dojo/_base/declare",
+    "./Binding",
+	"./Engine",
+    "./CardinalityTracker"
+], function(lang, array, declare, Binding, Engine, CardinalityTracker) {
 
     /**
      * Corresponds to a binding for a Group item type.
@@ -25,6 +32,10 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 	//===================================================
 	// Public API
 	//===================================================
+
+    getValue: function() {
+        return this.getChildrenRootUri();
+    },
 	oneChildValidityChanged: function(valid) {
 		if (valid === this._oneValidChild) {
 			return;
@@ -61,7 +72,7 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 	},
 	addChildBindings: function(bindings) {
 		this._cachedChildBindings = null;
-		if (!dojo.isArray(bindings) || bindings.length === 0) {
+		if (!lang.isArray(bindings) || bindings.length === 0) {
 			return;
 		}
 		var item = bindings[0].getItem(), children = this._item.getChildren();
@@ -71,7 +82,7 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 						this._childBindings[i][0].getCardinalityTracker() :
 						new CardinalityTracker(item);
 				this._childBindings[i] = this._childBindings[i].concat(bindings);
-				dojo.forEach(bindings, function(binding) {
+				array.forEach(bindings, function(binding) {
 					binding.setParent(this);
 					binding.setCardinalityTracker(cardTracker);
 					cardTracker.increment();
@@ -85,7 +96,7 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 		var children = this._item.getChildren();
 		for (var i=children.length;i>=0;i--) {
 			if (binding.getItem() === children[i]) {
-				this._childBindings[i].splice(dojo.indexOf(this._childBindings[i], binding), 1);
+				this._childBindings[i].splice(array.indexOf(this._childBindings[i], binding), 1);
 				delete binding._parent;
 				binding.getCardinalityTracker().decrement();
 				break;
@@ -117,7 +128,7 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 	},
 	setPredicate: function(predicate) {
 		var oValidPredicate = this._validPredicate;
-		if (this._isValidValue(predicate)) {
+		if (this._isValidPredicateValue(predicate)) {
 			this._statement.setPredicate(predicate);
 			this._validPredicate = true;
 			if (oValidPredicate !== true && this._oneValidChild === true) {
@@ -135,60 +146,19 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 	getPredicate: function() {
 		return this._statement.getPredicate();
 	},
-	
-	report: function(report) {
-		if (report == null) {
-			report = {errors: [], warnings: []};
-		}
-		
-		var childrenItems = this.getItem().getChildren();
-		var countValidBindings = function(bindings) {
-			var counter = 0;
-			for (var i=0;i<bindings.length;i++) {
-				if (bindings[i].isValid()) {
-					counter++;
-				}
-			}
-			return counter;
-		};
-		dojo.forEach(this.getItemGroupedChildBindings(), function(bindings, index) {
-			var item = childrenItems[index];
 
-			if (item.getProperty() != null) {
-				var nrOfValid = countValidBindings(bindings);
-				var card = item.getCardinality();
-				if (card.min != null && card.min > nrOfValid) {
-					report.errors.push({parentBinding: this, item: item, message: "Too few valid values"})
-				} else if (card.pref != null && card.pref > nrOfValid) {
-					report.warnings.push({parentBinding: this, item: item, message: "Too few valid values"})
-				}
-				if (card.max != null && card.max < nrOfValid) {
-					report.errors.push({parentBinding: this, item: item, message: "Too many values"})
-				}
-			}
-
-			// if (item instanceof GroupBinding){
-			if (item.getType() === "group") {
-				dojo.forEach(bindings, function(binding) {
-					binding.report(report);
-				});
-			}
-		}, this);
-		return report;
-	},
-	
 	//===================================================
 	// Inherited methods
 	//===================================================
 	constructor: function(args) {
 		this._constraints = args.constraints || [];
 		//Generates an array of arrays, one array for each child item.
-		this._childBindings = dojo.map(this._item.getChildren(), function(child) {
+		this._childBindings = array.map(this._item.getChildren(), function(child) {
 			return [];
 		});
 		this._rootUri = args.childrenRootUri;
 		if (this._statement) {
-			this._validPredicate = this._isValidValue(this._statement.getPredicate());
+			this._validPredicate = this._isValidPredicateValue(this._statement.getPredicate());
 		}
 	},
 	remove: function() {
@@ -208,24 +178,24 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 	setAncestorValid: function(valid) {
 		this._ancestorValid = valid;
 		this.updateAssertions();
-		dojo.forEach(this._childBindings, function(bindingArr) {
-			dojo.forEach(bindingArr, function(binding) {
+		array.forEach(this._childBindings, function(bindingArr) {
+			array.forEach(bindingArr, function(binding) {
 				binding.setAncestorValid(valid && this._oneValidChild && this._validPredicate);
 			}, this);
 		}, this);
 	},
 	updateAssertions: function() {
 		if(this._oneValidChild === undefined){
-			this.isValid()
+			this.isValid();
 		}
 		var assert = this._ancestorValid && this._oneValidChild && this._validPredicate;
 		if (this._statement !== undefined) {
 			this._statement.setAsserted(assert);
 		}
-		dojo.forEach(this._constraints, function(constraintStmt) {
+		array.forEach(this._constraints, function(constraintStmt) {
 			constraintStmt.setAsserted(assert);
 		});
-        dojo.forEach(this.getChildBindings(), function(binding) {
+        array.forEach(this.getChildBindings(), function(binding) {
             binding.updateAssertions();
         })
 	},
@@ -234,8 +204,8 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 	// Private methods
 	//===================================================
 	_forceOneValidChildCheck: function() {
-		return dojo.some(this._childBindings, function(arr) {
-			return dojo.some(arr, function(binding) {
+		return array.some(this._childBindings, function(arr) {
+			return array.some(arr, function(binding) {
 				return binding.isValid();
 			});
 		});
@@ -244,8 +214,8 @@ define(["dojo/_base/declare", "./Binding", "./CardinalityTracker"], function(dec
 		if (!this._parent || !this._parent.oneChildValidityChanged(newValidity)) {
 			//We can reuse the setAncestorValid method by setting the current value.
 			this.updateAssertions();
-			dojo.forEach(this._childBindings, function(bindingArr) {
-				dojo.forEach(bindingArr, function(binding) {
+			array.forEach(this._childBindings, function(bindingArr) {
+				array.forEach(bindingArr, function(binding) {
 					binding.setAncestorValid(newValidity);
 				});
 			});

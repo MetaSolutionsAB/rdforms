@@ -1,7 +1,19 @@
 /*global define*/
-define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
+define([
+    "dojo/_base/declare",
+    "dojo/_base/lang",
+    "dojo/_base/array",
+    "rdforms/utils"
+], function (declare, lang, array, utils) {
     var itemCount = 0;
 
+    var setObjAttr = function(obj, attr, value) {
+        if (value === null || typeof value === "undefined" || value === "" || (lang.isArray(value) && value.length === 0)) {
+            delete obj[attr];
+        } else {
+            obj[attr] = value;
+        }
+    };
     /**
      * Base functionality of Text, Group and Choice item classes.
      */
@@ -11,6 +23,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
         //===================================================
         _source: {},
         _styles: [
+            "heading",
             "invisible",
             "invisibleGroup",
             "stars",
@@ -27,7 +40,15 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             "firstcolumnfixedtable",
             "tree",
             "externalLink",
-            "image"
+            "internalLink",
+            "image",
+            "label",
+            "strictmatch",
+            "viewAllTranslations",
+            "email",
+            "disjoint",
+            "deprecated",
+            "noLabelInPresent"
         ],
 
         //===================================================
@@ -38,8 +59,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             return s.id || s["@id"];
         },
         setId: function (id) {
-            var s = this.getSource(true);
-            s.id = id;
+            setObjAttr(this.getSource(true), "id", id);
             delete s["@id"];
         },
         getType: function (original) {
@@ -47,8 +67,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             return s.type || s["@type"];
         },
         setType: function (typeStr) {
-            var s = this.getSource(true);
-            s.type = typeStr;
+            setObjAttr(this.getSource(true), "type", typeStr);
             delete s["@type"];
             this.refreshExtends();
         },
@@ -90,7 +109,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             return this.getSource(original).label;
         },
         setLabelMap: function (map) {
-            this.getSource(true).label = map;
+            setObjAttr(this.getSource(true), "label", map);
             this.refreshExtends();
         },
         getDescription: function (returnDetails, original) {
@@ -106,7 +125,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             return this.getSource(original).description;
         },
         setDescriptionMap: function(map) {
-            this.getSource(true).description = map;
+            setObjAttr(this.getSource(true), "description", map);
             this.refreshExtends();
         },
 
@@ -118,12 +137,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
         },
 
         setProperty: function(prop) {
-            var s = this.getSource(true);
-            if (prop && prop !== "") {
-                s.property = prop;
-            } else {
-                delete s.property;
-            }
+            setObjAttr(this.getSource(true), "property", prop);
             this.refreshExtends();
         },
 
@@ -144,12 +158,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             return this.getSource(original).uriValueLabelProperties;
         },
         setURIValueLabelProperties: function (props) {
-            var s = this.getSource(true);
-            if (props) {
-                s.uriValueLabelProperties = props;
-            } else {
-                delete s.uriValueLabelProperties;
-            }
+            setObjAttr(this.getSource(true), "uriValueLabelProperties", props);
             this.refreshExtends();
         },
 
@@ -161,31 +170,29 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             return this.getSource(original).constraints;
         },
         setConstraints: function (constr) {
-            var s = this.getSource(true);
-            if (constr) {
-                s.constraints = constr;
-            } else {
-                delete s.constraints;
-            }
+            setObjAttr(this.getSource(true), "constraints", constr);
             this.refreshExtends();
         },
 
         /**
-         * @return {Object} never available for Text item type.
-         * The property value pairs corresponds to predicate and objects in required tripples.
+         * Deps is an array of strings corresponding to predicates, "*" may be used to match
+         * anything. The final string in the path may correspond to the object,
+         * e.g. a literal or uri.
+         * By default, the dependency is given relative to the current items parent.
+         * If dependency path should start higher up it can be indicated by providing one or more
+         * initial strings with value "..".
+         *
+         * @return {Object} dependency path that must exist for this item to be visible.
+         *
          */
-        getConstraints: function (original) {
-            return this.getSource(original).constraints;
+        getDeps: function (original) {
+            return this.getSource(original).deps;
         },
-        setConstraints: function (constr) {
-            var s = this.getSource(true);
-            if (constr) {
-                s.constraints = constr;
-            } else {
-                delete s.constraints;
-            }
+        setDeps: function (deps) {
+            setObjAttr(this.getSource(true), "deps", deps);
             this.refreshExtends();
         },
+
 
         /**
          * @return {String} a URI indicating the datatype, for example: "http://www.w3.org/2001/XMLSchema.xsd#date".
@@ -194,24 +201,14 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             return this.getSource(original).datatype;
         },
         setDatatype: function (dt) {
-            var s = this.getSource(true);
-            if (dt && dt !== "") {
-                s.datatype = dt;
-            } else {
-                delete s.datatype;
-            }
+            setObjAttr(this.getSource(true), "datatype", dt);
             this.refreshExtends();
         },
         getPattern: function(original) {
             return this.getSource(original).pattern;
         },
         setPattern: function(pattern) {
-            var s = this.getSource(true);
-            if (pattern && pattern !== "") {
-                s.pattern = pattern;
-            } else {
-                delete s.pattern;
-            }
+            setObjAttr(this.getSource(true), "pattern", pattern);
             this.refreshExtends();
         },
         /**
@@ -222,24 +219,14 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             return this.getSource(original).language;
         },
         setLanguage: function (lang) {
-            var s = this.getSource(true);
-            if (lang && lang !== "") {
-                s.language = lang;
-            } else {
-                delete s.language;
-            }
+            setObjAttr(this.getSource(true), "language", lang);
             this.refreshExtends();
         },
         getMember: function (original) {
             return this.getSource(original).member;
         },
         setMember: function (member) {
-            var s = this.getSource(true);
-            if (member != null) {
-                s.member = member;
-            } else {
-                delete s.member;
-            }
+            setObjAttr(this.getSource(true), "member", member);
             this.refreshExtends();
         },
         /**
@@ -251,27 +238,24 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             return s.nodetype || s.nodeType; //Ugly fix because it is often wrong written in SIRFF.
         },
         setNodetype: function (nt) {
-            var s = this.getSource(true);
-            if (nt) {
-                s.nodetype = nt;
-            } else {
-                delete s.nodetype;
-            }
-            s.nodetype = nt;
+            setObjAttr(this.getSource(true), "nodetype", nt);
             this.refreshExtends();
         },
         getValue: function (original) {
             return this.getSource(original).value;
         },
         setValue: function (value) {
-            var s = this.getSource(true);
-            if (value && value != "") {
-                s.value = value;
-            } else {
-                delete s.value;
-            }
+            setObjAttr(this.getSource(true), "value", value);
             this.refreshExtends();
         },
+        getValueTemplate: function(original) {
+            return this.getSource(original).valueTemplate;
+        },
+        setValueTemplate: function(valueTemplate) {
+            setObjAttr(this.getSource(true), "valueTemplate", valueTemplate);
+            this.refreshExtends();
+        },
+
         /**
          * @return {Object} containing max, min, and preferred properties.
          */
@@ -279,12 +263,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             return this.getSource(original).cardinality || {};
         },
         setCardinality: function (card) {
-            var s = this.getSource(true);
-            if (card) {
-                s.cardinality = card;
-            } else {
-                delete s.cardinality;
-            }
+            setObjAttr(this.getSource(true), "cardinality", card);
             this.refreshExtends();
         },
         isEnabled: function (original) {
@@ -309,12 +288,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             return this.getSource(original).cls || [];
         },
         setClasses: function(arr) {
-            var s = this.getSource(true);
-            if (arr) {
-                s.cls = arr;
-            } else {
-                delete s.cls;
-            }
+            setObjAttr(this.getSource(true), "cls", arr);
             this.refreshExtends();
         },
 
@@ -331,7 +305,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             if (s.cls === undefined) {
                 return false;
             }
-            return dojo.some(s.cls, function (c) {
+            return array.some(s.cls, function (c) {
                 return c.toLowerCase() === cls.toLowerCase();
             });
         },
@@ -351,7 +325,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             return this.getSource(original).styles || [];
         },
         setStyles: function(arr) {
-            this.getSource(true).styles = arr;
+            setObjAttr(this.getSource(true), "styles", arr);
             this.refreshExtends();
         },
         hasStyle: function (sty, original) {
@@ -359,7 +333,7 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
             if (s.styles === undefined) {
                 return false;
             }
-            return dojo.some(s.styles, function (s) {
+            return array.some(s.styles, function (s) {
                 return s.toLowerCase() === sty.toLowerCase();
             });
         },
@@ -380,6 +354,23 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
         getBundle: function() {
             return this._bundle;
         },
+        toStringShort: function() {
+            return "'"+this.getLabel()+"'" + (this.getId() ? " (ID: '"+this.getId()+"')": "");
+        },
+        toString: function() {
+            var detailsArr = [];
+            if (this.getId()) {
+                detailsArr.push("ID: '"+this.getId()+"'");
+            }
+            detailsArr.push("TYPE: '"+this.getType()+"'");
+            if (this.getProperty()) {
+                detailsArr.push("PROPERTY: '"+this.getProperty()+"'");
+            }
+            if (this.getExtends()) {
+                detailsArr.push("EXTENDS: '"+this.getExtends()+"'");
+            }
+            return "'"+this.getLabel() +"' ("+detailsArr.join(", ")+")";
+        },
         //===================================================
         // Inherited methods
         //===================================================
@@ -396,13 +387,13 @@ define(["dojo/_base/declare" , "rdforms/utils"], function (declare, utils) {
 
         _setLangHash: function (hash, value, lang) {
             hash = hash || {};
-            if (dojo.isString(value)) {
-                if (dojo.isString(lang)) {
+            if (lang.isString(value)) {
+                if (lang.isString(lang)) {
                     hash[lang] = value;
                 } else {
                     hash[""] = value;
                 }
-            } else if (dojo.isObject(value)) {
+            } else if (lang.isObject(value)) {
                 return value;
             }
             return hash;

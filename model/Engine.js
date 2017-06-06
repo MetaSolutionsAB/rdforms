@@ -1,5 +1,8 @@
 /*global define*/
 define([
+    "dojo/_base/array",
+    "dojo/_base/lang",
+    "dojo/_base/kernel",
     "../template/Text",
     "../template/Group",
     "../template/Choice",
@@ -10,7 +13,7 @@ define([
     "./ChoiceBinding",
     "./system",
     "../utils"
-], function (Text, Group, Choice, PropertyGroup, GroupBinding, PropertyGroupBinding, ValueBinding, ChoiceBinding, system, utils) {
+], function (array, lang, kernel, Text, Group, Choice, PropertyGroup, GroupBinding, PropertyGroupBinding, ValueBinding, ChoiceBinding, system, utils) {
 
     //See public API at the bottom of this file.
 
@@ -30,7 +33,7 @@ define([
                 if (item.getProperty() != null) {
                     fixedProps[item.getProperty()] = true;
                 } else if (item instanceof Group) {
-                    dojo.forEach(item.getChildren(), addProperty);
+                    array.forEach(item.getChildren(), addProperty);
                 }
             };
             var addItem = function (item) {
@@ -39,11 +42,11 @@ define([
                     items.push(item);
                 }
             };
-            dojo.forEach(requiredItems, function (id) {
+            array.forEach(requiredItems, function (id) {
                 var item = itemStore.getItem(id);
                 if (item != null) {
                     if (item instanceof Group && item.getProperty() == null) {
-                        dojo.forEach(item.getChildren(), addItem);
+                        array.forEach(item.getChildren(), addItem);
                     } else {
                         addItem(item);
                     }
@@ -58,7 +61,7 @@ define([
                 }
             });
         }
-        dojo.forEach(props, function (prop) {
+        array.forEach(props, function (prop) {
             if (fixedProps[prop]) {
                 return;
             }
@@ -122,7 +125,11 @@ define([
         var stmt, constr;
         if (item.getProperty() !== undefined) {
             var graph = parentBinding.getGraph();
-            stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), null, false);
+            if (item.getNodetype() === "URI") {
+                stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), {type: "uri", value: system.createURI(item, parentBinding)}, false);
+            } else {
+                stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), null, false);
+            }
             constr = _createStatementsForConstraints(graph, stmt.getValue(), item);
         }
 
@@ -141,7 +148,7 @@ define([
         }
         //Do not create substructures directly, let the view model and user interaction decide when to create children.
         /*
-         dojo.forEach(item.getChildren(), function(childItem) {
+         array.forEach(item.getChildren(), function(childItem) {
          create(nBinding, childItem, parentItems);
          });*/
         return nBinding;
@@ -163,7 +170,7 @@ define([
         var nBinding = new PropertyGroupBinding({item: item, statement: stmt, constraints: constr});
         parentBinding.addChildBinding(nBinding);
         if (oItem instanceof Group) {
-            dojo.forEach(oItem.getChildren(), function (childItem) {
+            array.forEach(oItem.getChildren(), function (childItem) {
                 create(nBinding.getObjectBinding(), childItem);
             });
         }
@@ -176,7 +183,7 @@ define([
 
 
     var _matchGroupItemChildren = function (pb) {
-        dojo.forEach(pb.getItem().getChildren(), function (item) {
+        array.forEach(pb.getItem().getChildren(), function (item) {
             _matchItem(pb, item);
         });
     };
@@ -201,8 +208,8 @@ define([
             stmts = graph.find(pb.getChildrenRootUri(), item.getProperty());
             if (stmts.length > 0) {
                 bindings = [];
-                dojo.forEach(stmts, function (stmt) {
-                    if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt)) {
+                array.forEach(stmts, function (stmt) {
+                    if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
                         constStmts = _findStatementsForConstraints(graph, stmt.getValue(), item);
                         if (constStmts !== undefined) {
                             _dibbs(stmt);
@@ -231,8 +238,8 @@ define([
         stmts = graph.find(pb.getChildrenRootUri());
         if (stmts.length > 0) {
             bindings = [];
-            dojo.forEach(stmts, function (stmt) {
-                if (_noDibbs(stmt) && _isNodeTypeMatch(oItem, stmt)) {
+            array.forEach(stmts, function (stmt) {
+                if (_noDibbs(stmt) && _isNodeTypeMatch(oItem, stmt) && _isPatternMatch(oItem, stmt)) {
                     pChoice = _findChoice(pItem, stmt.getPredicate(), stmt.getGraph());
                     if (pChoice !== undefined) {
                         binding = null;
@@ -243,7 +250,7 @@ define([
                                 binding = new PropertyGroupBinding({item: item, statement: stmt, constraints: constStmts});
                                 _matchGroupItemChildren(binding.getObjectBinding()); //Recursive call
                             }
-                        } else if (oItem instanceof ChoiceBinding) {
+                        } else if (oItem instanceof Choice) {
                             oChoice = _findChoice(oItem, stmt.getValue(), stmt.getGraph());
                             if (oChoice !== undefined) {
                                 _dibbs(stmt);
@@ -274,8 +281,8 @@ define([
         stmts = pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty());
         if (stmts.length > 0) {
             bindings = [];
-            dojo.forEach(stmts, function (stmt) {
-                if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt)) {
+            array.forEach(stmts, function (stmt) {
+                if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
                     _dibbs(stmt);
                     bindings.push(new ValueBinding({item: item, statement: stmt}));
                 }
@@ -292,8 +299,8 @@ define([
         stmts = pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty());
         if (stmts.length > 0) {
             bindings = [];
-            dojo.forEach(stmts, function (stmt) {
-                if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt)) {
+            array.forEach(stmts, function (stmt) {
+                if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
                     choice = _findChoice(item, stmt.getValue(), stmt.getGraph());
                     if (choice !== undefined) {
                         _dibbs(stmt);
@@ -334,6 +341,19 @@ define([
         return false;
     };
 
+    var _isPatternMatch = function (item, stmt) {
+        var pattern = item.getPattern();
+        var value = utils.extractGist(stmt.getValue(), item.getValueTemplate())
+        if (typeof pattern !== "undefined") {
+            try {
+                return (new RegExp("^"+pattern+"$")).test(value);
+            } catch (e) {
+                return true;
+            }
+        }
+        return true;
+    };
+
     /**
      * Matches constraints in the item to statements in the graph with the given uri as subject.
      *
@@ -344,16 +364,33 @@ define([
      *  If there are no constraints to match in the item an empty array is returned.
      */
     var _findStatementsForConstraints = function (graph, uri, item) {
-        var stmts, constr, results = [];
-        if (dojo.isObject(item.getConstraints())) {
-            constr = item.getConstraints();
+        var stmts, constr = item.getConstraints(), results = [];
+        var f = function(predicate, object) {
+            stmts = graph.find(uri, predicate, {type: "uri", value: object});
+            if (stmts.length == 1) {
+                results.push(stmts[0]);
+            } else {
+                return false;
+            }
+        }
+        if (lang.isObject(constr)) {
             for (var key in constr) {
                 if (constr.hasOwnProperty(key)) {
-                    stmts = graph.find(uri, key, {type: "uri", value: constr[key]});
-                    if (stmts.length == 1) {
-                        results.push(stmts[0]);
+                    var obj = constr[key];
+                    if (obj instanceof Array) {
+                        var noMatch = true;
+                        array.forEach(obj, function(o) {
+                            if (f(key, o) !== false) {
+                                noMatch = false;
+                            }
+                        });
+                        if (noMatch) {
+                            return;
+                        }
                     } else {
-                        return; //did not find any match for the current constraint == failure.
+                        if (f(key, obj) === false) {
+                            return;
+                        }
                     }
                 }
             }
@@ -365,11 +402,16 @@ define([
 
     var _createStatementsForConstraints = function (graph, uri, item) {
         var stmts, constr, results = [];
-        if (dojo.isObject(item.getConstraints())) {
+        if (lang.isObject(item.getConstraints())) {
             constr = item.getConstraints();
             for (var key in constr) {
                 if (constr.hasOwnProperty(key)) {
-                    results.push(graph.create(uri, key, {type: "uri", value: constr[key]}, false));
+                    var obj = constr[key];
+                    if (lang.isArray(obj)) {
+                        results.push(graph.create(uri, key, {type: "uri", value: obj[0]}, false));
+                    } else {
+                        results.push(graph.create(uri, key, {type: "uri", value: obj}, false));
+                    }
                 }
             }
             return results;
@@ -387,9 +429,11 @@ define([
                     return choices[index];
                 }
             }
-            return {value: obj, label: {"": obj}, mismatch: true};
+            if (!item.hasStyle("strictmatch")) {
+                return {value: obj, label: {"": obj}, mismatch: true};
+            }
         } else {
-            var label = utils.getLocalizedMap(graph, obj, [ChoiceBinding.label]);
+            var label = utils.getLocalizedMap(graph, obj, item.getLabelProperties());
             var sa = graph.findFirstValue(obj, ChoiceBinding.seeAlso);
             if (label != null) {
                 var choice = {label: label, value: obj};
@@ -445,9 +489,9 @@ define([
                         if (lang == null) {
                             result.emptyLanguageValue = vbs[i];
                         } else {
-                            if (lang === dojo.locale) {
+                            if (lang === kernel.locale) {
                                 result.perfectLocaleLanguageValue = vbs[i];
-                            } else if (lang.substring(0, 1) === dojo.locale.substring(0, 1)) {
+                            } else if (lang.substring(0, 1) === kernel.locale.substring(0, 1)) {
                                 result.localeLanguageValue = vbs[i];
                             } else if (lang.indexOf("en") !== -1) {
                                 result.defaultLanguageValue = vbs[i];
@@ -467,13 +511,240 @@ define([
             } else if (createIfMissing) {
                 var b = create(binding, childItem, {});
                 if (b instanceof ValueBinding) {
-                    b.setLanguage(dojo.locale);
+                    b.setLanguage(kernel.locale);
                     return b;
                 }
                 return findFirstValueBinding(b, true);
             }
         }
     };
+
+    var matchPathBelowBinding = function(bindingTree, path) {
+        var gb = bindingTree.getItemGroupedChildBindings();
+        var pred = path[0];
+        for (var i=0;i<gb.length;i++) {
+            var bindings = gb[i], res;
+            for (var j=0;j<bindings.length; j++) {
+                var b = bindings[j];
+                if (!b.isValid()) {
+                    continue;
+                }
+                var item = b.getItem();
+                if (item.getType() === "propertygroup") {
+                    b = b.getObjectBinding();
+                    item = b.getItem();
+                } else if (typeof item.getProperty() === "undefined") {
+                    res = exports.matchPathInBindingTree(b, path);
+                    if (res) {
+                        return res;
+                    }
+                }
+                if (pred === "*" || pred === b.getPredicate()) {
+                    if (item.getType() === "group") {
+                        res = exports.matchPathInBindingTree(b, path.slice(1));
+                        if (res) {
+                            return res;
+                        }
+                    } else {
+                        if (path.length === 1 || path[1] === "*"
+                            || path[1] === b.getValue()) {
+                            return b;
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    var findBindingRelativeToParentBinding = function(parentBinding, path) {
+        var first = path[0], b = parentBinding;
+        if (first === "/") {
+            while (b.getParent()) {
+                b = b.getParent();
+            }
+            return b;
+        } else if (first === "..") {
+            for (var i=0;i<path.length;i++) {
+                if (path[i] === ".." && b.getParent()) {
+                    b = b.getParent();
+                } else {
+                    return b;
+                }
+            }
+            return b;
+        } else {
+            return parentBinding;
+        }
+    };
+
+    var createReport = function(groupbinding, report) {
+        if (report == null) {
+            report = {errors: [], warnings: [], deprecated: []};
+        } else {
+            report.errors = report.errors || [];
+            report.warnings = report.warnings || [];
+            report.deprecated = report.deprecated || [];
+        }
+        return _createReport(groupbinding, report, true);
+    };
+
+    var _createReport = function(groupbinding, report, firstLevel) {
+        var groupitem = groupbinding.getItem();
+        var path = groupitem.getDeps();
+        if (path && groupbinding.getParent() != null) {
+            var fromBinding = findBindingRelativeToParentBinding(groupbinding.getParent(), path);
+            if (!matchPathBelowBinding(fromBinding, path)) {
+                return;
+            }
+        }
+
+        if (firstLevel === true || groupbinding.isValid() || groupitem.getProperty() == null) {
+            var childrenItems = groupitem.getChildren();
+            var countValidBindings = function (bindings) {
+                var counter = 0;
+                for (var i = 0; i < bindings.length; i++) {
+                    if (bindings[i].isValid()) {
+                        counter++;
+                    }
+                }
+                return counter;
+            };
+
+            if (groupitem.hasStyle("disjoint")) {
+                var bindings = groupbinding.getChildBindings();
+                var nrOfValid = countValidBindings(bindings);
+                if (nrOfValid > 1) {
+                    groupbinding.error = engine.CODES.TOO_MANY_VALUES;
+                    report.errors.push({
+                        parentBinding: groupbinding,
+                        item: bindings[0].getItem(),
+                        code: engine.CODES.TOO_MANY_VALUES_DISJOINT
+                    });
+                    var counter = 0;
+                    array.forEach(bindings, function(binding, idx) {
+                        if (binding.isValid()) {
+                            if (counter > 0) {
+                                binding.error = engine.CODES.TOO_MANY_VALUES_DISJOINT;
+                            }
+                            counter++;
+                        }
+                    });
+                }
+                array.forEach(bindings, function(binding) {
+                    var item = binding.getItem();
+                    if (item.hasStyle("deprecated")) {
+                        report.deprecated.push(binding);
+                    }
+                });
+            } else {
+                array.forEach(groupbinding.getItemGroupedChildBindings(), function (bindings, index) {
+                    var item = childrenItems[index];
+                    if (item.hasStyle("deprecated")) {
+                        array.forEach(bindings, function(binding) {
+                            report.deprecated.push(binding);
+                        });
+                        return;
+                    }
+                    var path = item.getDeps();
+                    if (path) {
+                        var fromBinding = findBindingRelativeToParentBinding(groupbinding, path);
+                        if (!matchPathBelowBinding(fromBinding, path)) {
+                            return;
+                        }
+                    }
+
+                    if (item.getProperty() != null) {
+                        var nrOfValid = countValidBindings(bindings);
+                        var card = item.getCardinality();
+                        if (card.min != null && card.min > nrOfValid) {
+                            report.errors.push({
+                                parentBinding: groupbinding,
+                                item: item,
+                                code: engine.CODES.TOO_FEW_VALUES
+                            });
+                        } else if (card.pref != null && card.pref > nrOfValid) {
+                            report.warnings.push({
+                                parentBinding: groupbinding,
+                                item: item,
+                                code: engine.CODES.TOO_FEW_VALUES
+                            });
+                        }
+                        if (card.max != null && card.max < nrOfValid) {
+                            report.errors.push({
+                                parentBinding: groupbinding,
+                                item: item,
+                                code: engine.CODES.TOO_MANY_VALUES
+                            });
+                            var counter = 0;
+                            array.forEach(bindings, function (binding) {
+                                if (binding.isValid()) {
+                                    counter++;
+                                    if (counter > card.max) {
+                                        binding.error = engine.CODES.TOO_MANY_VALUES;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    // if (item instanceof GroupBinding){
+                    if (item.getType() === "group") {
+                        array.forEach(bindings, function (binding) {
+                            _createReport(binding, report);
+                        });
+                    }
+                }, this);
+            }
+        }
+        return report;
+    };
+
+    var _levelProfile = function(profile, item, ignoreTopLevelGroup) {
+       var card = item.getCardinality();
+       if (!ignoreTopLevelGroup || item.getType() !== "group") {
+           if (card != null) {
+               if (card.min > 0) {
+                   profile.mandatory += 1;
+               } else if (card.pref > 0) {
+                   profile.recommended += 1;
+               } else {
+                   profile.optional += 1;
+               }
+           } else {
+               profile.optional += 1;
+           }
+       }
+      if (item.getType() === "group") {
+        array.forEach(item.getChildren(), lang.hitch(this, _levelProfile, profile));
+      }
+      return profile;
+    }
+
+    var levelProfile = function(item) {
+      var profile = _levelProfile({mandatory: 0, recommended: 0, optional: 0}, item, true);
+      profile.itemCount = profile.mandatory + profile.recommended + profile.optional;
+      return profile;
+    }
+
+    var detectLevel = function(profile) {
+        if (profile.mandatory > 0) {
+            if  (profile.recommended === 0 && profile.optional === 0) {
+              return "mandatory";
+            } else if (profile.optional === 0) {
+                return "mixed_mandatory_recommended";
+            } else if (profile.recommended === 0) {
+                return "mixed_mandatory_optional";
+            }
+        } else if (profile.recommended > 0) {
+          if (profile.optional === 0) {
+            return "recommended";
+          } else {
+              return "mixed_recommended_optional";
+          }
+        } else if (profile.recommended === 0 && profile.recommended > 0 && profile.optional === 0) {
+            return "optional";
+        }
+      return "mixed_all";
+    }
 
     //===============================================
     //Public API for matching and creation engine
@@ -493,6 +764,9 @@ define([
          * @return an rforms.model.GroupBinding which is the root of binding tree.
          */
         match: match,
+
+        matchPathBelowBinding: matchPathBelowBinding,
+        findBindingRelativeToParentBinding: findBindingRelativeToParentBinding,
 
         /**
          * Constructs a template by finding an item per outgoing property for provided graph and resource starting point.
@@ -531,7 +805,37 @@ define([
          *
          * @return {ValueBinding}
          */
-        findFirstValueBinding: findFirstValueBinding
+        findFirstValueBinding: findFirstValueBinding,
+
+        report: createReport,
+
+        /**
+         * Calculates the level profile, i.e. the amount of items on mandatory, recommended and optional level in a given template.
+         *
+         * @param {rdforms/template/Item} item
+         * @return {Object} with keys mandatory, recommended and optional, each pointing to an integer.
+         */
+        levelProfile: levelProfile,
+
+      /**
+       * Investigates a level profile and provides the following responses:
+       * * mandatory   - only mandatory items
+       * * recommended - only recommended items
+       * * optional    - only optional items
+       * * mixed_all   - a mix of all items
+       * * mixed_mandatory_recommended - only mandatory and recommended items
+       * * mixed_mandatory_optional    - only mandatory and optional items
+       * * mixed_recommended_optional  - only recommended and optional items
+       * @param {object} profile as provided by the levelProfile function.
+       * @return {string} one of the responses outlined
+       */
+      detectLevel: detectLevel,
+
+        CODES: {
+            TOO_FEW_VALUES: "few",
+            TOO_MANY_VALUES: "many",
+            TOO_MANY_VALUES_DISJOINT: "disjoint"
+        }
     };
 
     return engine;

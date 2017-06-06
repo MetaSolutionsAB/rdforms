@@ -1,0 +1,91 @@
+@import "../resources/rdforms.css";
+
+.rdformsEditor .rdformsLangFieldControl .dijitTextBox {
+    width: 6.4em;
+}
+.rdformsEditor .rdformsFieldControl .dijitButton {
+    font-size: xx-small;
+    float:right;
+}
+.rdformsEditor .rdformsLabelRow .dijitButton,
+.rdformsEditor .rdformsField .dijitButton {
+    font-size: xx-small;
+    margin-left: 0.7em;
+}
+.rdformsEditor .rdformsTableControl .dijitButton {
+    font-size: xx-small;
+    margin-left: 1em;
+}
+
+.rdformsEditor .langFieldControl .dijitButton {
+    font-size: xx-small;
+    margin-left: 0.2em;
+}
+
+.dijitTooltipDialog {
+    outline: none;
+}
+
+.formulatorTable .row .cardinality .dijitTextBox {
+    width: 2em;
+    margin-left: 0.5em;
+    margin-right: 1em;
+}
+
+.ldbrowser.managedHeight>div>.dijitTabContainer {
+    position:absolute;
+    top:45px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.ldbrowser.managedHeight.examples>div>.dijitTabContainer {
+    position:absolute;
+    top:55px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+/* Fix for dropdownbuttons that have a to small background image, yielding an non-pixel-perfect look.*/
+.dbootstrap .dijitDownArrowButton {
+    height: 28px;
+}
+
+.dbootstrap table {
+    font-size: 14px;
+}
+.dbootstrap table th {
+    font-weight: normal;
+    padding-bottom: 4px;
+}
+
+.dbootstrap table td {
+    padding-top: 5px;
+}
+
+.dbootstrap table tbody tr:first-child td {
+    padding-top: 8px;
+}
+
+.dbootstrap table tbody tr td:first-child {
+    padding-left: 10px;
+}
+
+.dbootstrap table tbody tr td:first-child {
+    padding-left: 10px;
+}
+
+.dbootstrap table thead tr th:first-child {
+    padding-left: 14px;
+}
+
+.dbootstrap .rdformsEditor table.rdformsGroup td.rdformsTableControl {
+    padding-right: 10px;
+}
+
+.dbootstrap .rdformsPresenter table.rdformsGgroup th,
+.dbootstrap .rdformsEditor table.rdformsGroup th {
+    padding-right: 10px;
+}

@@ -1,8 +1,12 @@
 /*global define*/
-define(["dojo/_base/declare", "./Item"], function(declare, Item) {
+define([
+    "dojo/_base/declare",
+    "dojo/_base/array",
+    "rdforms/template/Item"
+], function(declare, array, Item) {
 
     var sortItems = function(items) {
-        dojo.forEach(items, function(item) {
+        array.forEach(items, function(item) {
             item.__label = (item.getLabel() || "").toLowerCase();
         });
         items.sort(function(o1, o2) {

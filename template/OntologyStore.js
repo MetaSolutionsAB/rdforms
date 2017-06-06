@@ -1,5 +1,9 @@
 /*global define*/
-define(["dojo/_base/declare"], function(declare) {
+define([
+    "dojo/_base/declare",
+    "dojo/_base/lang",
+    "dojo/json"
+], function(declare, lang, json) {
 
     /**
      * Simple store of ontologies to allow reuse across templates and items. 
@@ -14,7 +18,7 @@ define(["dojo/_base/declare"], function(declare) {
 	// Public API
 	//===================================================	
 	importRegistry: function(registry) {
-		dojo.mixin(this._registry, registry);
+		lang.mixin(this._registry, registry);
 	},
 	getChoices: function(choiceItem, callback) {
 		var choices = this._findChoices(choiceItem);
@@ -58,7 +62,7 @@ define(["dojo/_base/declare"], function(declare) {
 		for (var key in obj1) {
 			if (obj1.hasOwnProperty(key)) {
 				var val1 = obj1[key], val2 = obj2[key];
-				if (dojo.isObject(val1) && dojo.isObject(val2)) {
+				if (lang.isObject(val1) && lang.isObject(val2)) {
 					if (!this._objEqual(val1, val2)) {
 						return false;
 					}
@@ -71,7 +75,7 @@ define(["dojo/_base/declare"], function(declare) {
 		for (var key in obj2) {
 			if (keys[key] !== true && obj2.hasOwnProperty(key)) {
 				var val1 = obj1[key], val2 = obj2[key];
-				if (dojo.isObject(val1) && dojo.isObject(val2)) {
+				if (lang.isObject(val1) && lang.isObject(val2)) {
 					if (!this._objEqual(val1, val2)) {
 						return false;
 					}
@@ -84,7 +88,7 @@ define(["dojo/_base/declare"], function(declare) {
 	},
 	_constructLoadUrl: function(choiceItem) {
 		var params = [];
-		params.push("constr="+encodeURIComponent(dojo.toJson(choiceItem.getConstraints())));
+		params.push("constr="+encodeURIComponent(json.serialize(choiceItem.getConstraints())));
 		if (choiceItem.getParentProperty() != null) {
 			var pp = choiceItem.isParentPropertyInverted() === true ? "ipp=" : "pp=";
 			params.push(pp+encodeURIComponent(choiceItem.getParentProperty()));

@@ -1,17 +1,16 @@
 /*global define*/
-define(["dojo/_base/declare",
+define([
+    "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
-    "dojo/request",
-    "./Bundle",
-    "./Group",
-    "./PropertyGroup",
-    "./Text",
-    "./Choice",
-    "./OntologyStore",
-    "./Converter",
-    "../model/Engine"
-], function (declare, lang, array, request, Bundle, Group, PropertyGroup, Text, Choice, OntologyStore, Converter, Engine) {
+    "rdforms/template/Bundle",
+    "rdforms/template/Group",
+    "rdforms/template/PropertyGroup",
+    "rdforms/template/Text",
+    "rdforms/template/Choice",
+    "rdforms/template/OntologyStore",
+    "rdforms/model/Engine"
+], function (declare, lang, array, Bundle, Group, PropertyGroup, Text, Choice, OntologyStore, Engine) {
 
     /**
      * Keeps a registry of templates and reusable items.
@@ -168,32 +167,6 @@ define(["dojo/_base/declare",
         },
         setPriorities: function (priorities) {
             this.priorities = priorities;
-        },
-        populate: function (configArr, callback) {
-            var countdown = configArr.length;
-            var down = function () {
-                countdown--;
-                if (countdown === 0) {
-                    callback();
-                }
-            }
-            array.forEach(configArr, function (config) {
-                if(lang.isString(config) || config.type === "sirff") {
-                    var url = lang.isString(config) ? config : config.url;
-                    request.get(url, {
-                        handleAs: "json"
-                    }).then(lang.hitch(this, function (data) {
-                            this.createTemplate(data);
-                            down();
-                        }), down);
-                } else if (config.type === "exhibit") {
-                    var converter;
-                    if (converter == null) {
-                        converter = new Converter(this);
-                    }
-                    converter.convertExhibit(config.url, down);
-                }
-            }, this);
         },
 
         createExtendedSource: function(origSource, extSource) {

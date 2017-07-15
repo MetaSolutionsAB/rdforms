@@ -1,0 +1,28 @@
+@import "../bootstrap/base.css";
+@import "../../libs/bootstrap/dist/css/bootstrap.min.css";
+@import "../../libs/bmd/dist/css/bootstrap-material-design.css";
+@import "../../libs/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css";
+@import "../../libs/select2/dist/css/select2.min.css";
+
+.rdforms .form-group {
+    display: inline;
+}
+.rdforms select.rdformsLanguage {
+    display: inline;
+}
+.rdforms.rdformsEditor .rdformsFieldControl {
+    height: auto;
+}
+.popover a {
+    color: #ececec;
+}
+.popover .popover-title {
+    color: black;
+    font-weight: bold;
+    border-radius: 0px;
+}
+
+.rdformsDatepicker input {
+    display: inline-block;
+    width: 12em;
+}

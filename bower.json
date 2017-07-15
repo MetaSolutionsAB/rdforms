@@ -22,7 +22,9 @@
     "select2": "4.0.0",
     "requirejs": "latest",
     "requirejs-i18n": "latest",
-    "requirejs-text": "latest"
+    "requirejs-text": "latest",
+    "bmd": "https://github.com/FezVrasta/bootstrap-material-design.git#v0.5.10",
+    "bootstrap-material-datetimepicker": "#gh-pages"
   },
   "keywords": [
     "rdf",
@@ -41,6 +43,7 @@
   ],
   "resolutions": {
     "dojo": "1.12.2",
-    "dijit": "1.12.2"
+    "dijit": "1.12.2",
+    "jquery": ">= 2.1.0"
   }
 }

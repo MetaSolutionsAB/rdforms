@@ -1,8 +1,8 @@
 define(["dojo/_base/declare",
     "rdforms/view/Presenter",
-    "rdforms/model/Engine",
+    "rdforms/model/engine",
     "rdforms/view/renderingContext"
-], function (declare, Presenter, Engine, renderingContext) {
+], function (declare, Presenter, engine, renderingContext) {
 
     var showNow = function (item, bindings, includeLevel) {
         if (item.hasStyle("invisible")) {
@@ -58,7 +58,7 @@ define(["dojo/_base/declare",
         //===================================================
         report: function (report) {
             if (!report) {
-                report = Engine.report(this.binding);
+                report = engine.report(this.binding);
             }
             for (var key in this._binding2node) {
                 renderingContext.domClassToggle(this._binding2node[key], "errorReport", false);
@@ -66,7 +66,7 @@ define(["dojo/_base/declare",
             for (var j = 0; j < report.errors.length; j++) {
                 var err = report.errors[j];
                 if (err.parentBinding === this.binding) {
-                    if (err.code === Engine.CODES.TOO_FEW_VALUES) {
+                    if (err.code === engine.CODES.TOO_FEW_VALUES) {
                         var item = err.item;
                         var bindings = this.binding.getChildBindingsFor(item);
                         var counter = item.getCardinality().min;
@@ -76,7 +76,7 @@ define(["dojo/_base/declare",
                                 renderingContext.domClassToggle(this._binding2node[bindings[k].getHash()], "errorReport", true);
                             }
                         }
-                    } else if (err.code === Engine.CODES.TOO_MANY_VALUES_DISJOINT) {
+                    } else if (err.code === engine.CODES.TOO_MANY_VALUES_DISJOINT) {
                         var bindings = this.binding.getChildBindings();
                         //var counter = item.getCardinality().max;
                         for (var k = 0; k < bindings.length; k++) {
@@ -101,7 +101,7 @@ define(["dojo/_base/declare",
             if (this.graph == null || this.resource == null || this.template == null) {
                 return;
             }
-            this.binding = Engine.match(this.graph, this.resource, this.template);
+            this.binding = engine.match(this.graph, this.resource, this.template);
             this.render();
         },
         //===================================================
@@ -156,7 +156,7 @@ define(["dojo/_base/declare",
             if (target > bindings.length) {
                 bindings = bindings.concat([]);
                 while (target > bindings.length) {
-                    bindings.push(Engine.create(this.binding, item));
+                    bindings.push(engine.create(this.binding, item));
                 }
             }
             return bindings;
@@ -200,12 +200,12 @@ define(["dojo/_base/declare",
                         renderingContext.domClassToggle(newNode, "missingDeps", false);
                     }
                 };
-                var fromBinding = Engine.findBindingRelativeToParentBinding(binding.getParent(), path);
-                if (!Engine.matchPathBelowBinding(fromBinding, path)) {
+                var fromBinding = engine.findBindingRelativeToParentBinding(binding.getParent(), path);
+                if (!engine.matchPathBelowBinding(fromBinding, path)) {
                     f(false);
                 }
                 fromBinding.addListener(function(changedBinding) {
-                    f(Engine.matchPathBelowBinding(fromBinding, path));
+                    f(engine.matchPathBelowBinding(fromBinding, path));
                 });
             }
             if (this.filterBinding(binding)) {

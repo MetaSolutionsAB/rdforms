@@ -577,127 +577,6 @@ define([
         }
     };
 
-    var createReport = function(groupbinding, report) {
-        if (report == null) {
-            report = {errors: [], warnings: [], deprecated: []};
-        } else {
-            report.errors = report.errors || [];
-            report.warnings = report.warnings || [];
-            report.deprecated = report.deprecated || [];
-        }
-        return _createReport(groupbinding, report, true);
-    };
-
-    var _createReport = function(groupbinding, report, firstLevel) {
-        var groupitem = groupbinding.getItem();
-        var path = groupitem.getDeps();
-        if (path && groupbinding.getParent() != null) {
-            var fromBinding = findBindingRelativeToParentBinding(groupbinding.getParent(), path);
-            if (!matchPathBelowBinding(fromBinding, path)) {
-                return;
-            }
-        }
-
-        if (firstLevel === true || groupbinding.isValid() || groupitem.getProperty() == null) {
-            var childrenItems = groupitem.getChildren();
-            var countValidBindings = function (bindings) {
-                var counter = 0;
-                for (var i = 0; i < bindings.length; i++) {
-                    if (bindings[i].isValid()) {
-                        counter++;
-                    }
-                }
-                return counter;
-            };
-
-            if (groupitem.hasStyle("disjoint")) {
-                var bindings = groupbinding.getChildBindings();
-                var nrOfValid = countValidBindings(bindings);
-                if (nrOfValid > 1) {
-                    groupbinding.error = engine.CODES.TOO_MANY_VALUES;
-                    report.errors.push({
-                        parentBinding: groupbinding,
-                        item: bindings[0].getItem(),
-                        code: engine.CODES.TOO_MANY_VALUES_DISJOINT
-                    });
-                    var counter = 0;
-                    array.forEach(bindings, function(binding, idx) {
-                        if (binding.isValid()) {
-                            if (counter > 0) {
-                                binding.error = engine.CODES.TOO_MANY_VALUES_DISJOINT;
-                            }
-                            counter++;
-                        }
-                    });
-                }
-                array.forEach(bindings, function(binding) {
-                    var item = binding.getItem();
-                    if (item.hasStyle("deprecated")) {
-                        report.deprecated.push(binding);
-                    }
-                });
-            } else {
-                array.forEach(groupbinding.getItemGroupedChildBindings(), function (bindings, index) {
-                    var item = childrenItems[index];
-                    if (item.hasStyle("deprecated")) {
-                        array.forEach(bindings, function(binding) {
-                            report.deprecated.push(binding);
-                        });
-                        return;
-                    }
-                    var path = item.getDeps();
-                    if (path) {
-                        var fromBinding = findBindingRelativeToParentBinding(groupbinding, path);
-                        if (!matchPathBelowBinding(fromBinding, path)) {
-                            return;
-                        }
-                    }
-
-                    if (item.getProperty() != null) {
-                        var nrOfValid = countValidBindings(bindings);
-                        var card = item.getCardinality();
-                        if (card.min != null && card.min > nrOfValid) {
-                            report.errors.push({
-                                parentBinding: groupbinding,
-                                item: item,
-                                code: engine.CODES.TOO_FEW_VALUES
-                            });
-                        } else if (card.pref != null && card.pref > nrOfValid) {
-                            report.warnings.push({
-                                parentBinding: groupbinding,
-                                item: item,
-                                code: engine.CODES.TOO_FEW_VALUES
-                            });
-                        }
-                        if (card.max != null && card.max < nrOfValid) {
-                            report.errors.push({
-                                parentBinding: groupbinding,
-                                item: item,
-                                code: engine.CODES.TOO_MANY_VALUES
-                            });
-                            var counter = 0;
-                            array.forEach(bindings, function (binding) {
-                                if (binding.isValid()) {
-                                    counter++;
-                                    if (counter > card.max) {
-                                        binding.error = engine.CODES.TOO_MANY_VALUES;
-                                    }
-                                }
-                            });
-                        }
-                    }
-                    // if (item instanceof GroupBinding){
-                    if (item.getType() === "group") {
-                        array.forEach(bindings, function (binding) {
-                            _createReport(binding, report);
-                        });
-                    }
-                }, this);
-            }
-        }
-        return report;
-    };
-
     var _levelProfile = function(profile, item, ignoreTopLevelGroup) {
        var card = item.getCardinality();
        if (!ignoreTopLevelGroup || item.getType() !== "group") {
@@ -806,9 +685,7 @@ define([
          * @return {ValueBinding}
          */
         findFirstValueBinding: findFirstValueBinding,
-
-        report: createReport,
-
+      
         /**
          * Calculates the level profile, i.e. the amount of items on mandatory, recommended and optional level in a given template.
          *

@@ -1,13 +1,13 @@
 /*global define*/
 define(["dojo/_base/declare", 
-	"dojo/_base/lang",
+	  "dojo/_base/lang",
     "dojo/_base/array",
-	"dijit/_Widget",
-    "rdforms/model/Engine",
-	"rdforms/model/GroupBinding",
+	  "dijit/_Widget",
+    "rdforms/model/engine",
+	  "rdforms/model/GroupBinding",
     "rdforms/view/renderingContext"
 ], function(declare, lang, array, _Widget,
-            Engine, GroupBinding, renderingContext) {
+            engine, GroupBinding, renderingContext) {
     
 
     return declare(_Widget, {
@@ -95,7 +95,7 @@ define(["dojo/_base/declare",
                 if (this.graph == null || this.resource == null || this.template == null) {
                     return;
                 }
-                this.binding = Engine.match(this.graph, this.resource, this.template);
+                this.binding = engine.match(this.graph, this.resource, this.template);
             }
         },
 

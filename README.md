@@ -48,3 +48,32 @@ Similar to example1.html but loads the RDForms framework in non-built version. T
 ## samples/example2.html
 
 Different from example1 in the sense that it loads the graph and template from separate files.
+
+## samples/example3.html
+
+Different from example2 in how it loads the template form a separate file and how to depend on files not part of the build.
+See the next section for a longer explanation about the build.
+
+# A note on how to use the built version
+The build process uses r.js and works like this:
+
+1. All needed files are copied over to the release folder
+2. Files are transpiled if needed (converting ES6 to ES5)
+3. Depended files are bundled together into release/all.js and then removed as standalone files in the release folder
+
+So you should be able to use rdforms by simply including the all.js. (see samples/example1.html).
+
+However, if you need files that are not bundled in all.js there are two alternatives:
+
+1. Change in config/deps.js to include the additional files you need.
+2. Provide a suitable fallback to load missing files from the release folder
+
+To achieve alternative 2 you add the following before you load any rdforms files via require.
+
+    require.config({
+        baseUrl: "../release"
+    });
+
+The path (baseUrl) need to be relative to your main html file. You can see an example of this in samples/example3.html.
+
+Note: a baseUrl is already given in the config/deps.js which is also included in all.js. However, in most production environments this value is wrong as it points to the libs directory (not transpiled). In many cases it is also the wrong relative path from your html file.)

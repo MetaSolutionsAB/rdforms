@@ -23,8 +23,8 @@
     "requirejs": "latest",
     "requirejs-i18n": "latest",
     "requirejs-text": "latest",
-    "bmd": "https://github.com/FezVrasta/bootstrap-material-design.git#v0.5.10",
-    "bootstrap-material-datetimepicker": "#gh-pages"
+    "bmd": "https://bitbucket.org/metasolutions/bootstrap-material-design.git#amd",
+    "bootstrap-material-datetimepicker": "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#amd"
   },
   "keywords": [
     "rdf",

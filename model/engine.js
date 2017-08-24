@@ -534,14 +534,14 @@ define([
                     b = b.getObjectBinding();
                     item = b.getItem();
                 } else if (typeof item.getProperty() === "undefined") {
-                    res = exports.matchPathInBindingTree(b, path);
+                    res = matchPathBelowBinding(b, path);
                     if (res) {
                         return res;
                     }
                 }
                 if (pred === "*" || pred === b.getPredicate()) {
                     if (item.getType() === "group") {
-                        res = exports.matchPathInBindingTree(b, path.slice(1));
+                        res = matchPathBelowBinding(b, path.slice(1));
                         if (res) {
                             return res;
                         }

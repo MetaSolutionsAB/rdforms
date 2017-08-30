@@ -40,9 +40,33 @@ define(["dojo/_base/declare",
           if (!this.item.isEnabled()) {
             this.$datepicker.prop("disabled", true);
           }
+          // time
+          this.$timepicker = jquery(this.timeInput).bootstrapMaterialDatePicker({
+            format:'HH:mm',
+            time: true,
+            date: false,
+            triggerEvent: 'none',
+            switchOnClick: true,
+          });
+
+          jquery(this.timeButton).click(() => {
+            this.$timepicker.bootstrapMaterialDatePicker("_fireCalendar");
+          });
+          var updateDate = lang.hitch(this, function(evt, m) {
+            this.setDateInBinding(m.toDate());
+          });
+          this.$timepicker.on('change', updateDate).on('dateSelected', lang.hitch(this, function() {
+            this.$timepicker.bootstrapMaterialDatePicker("setElementValue");
+          }));
+
+          if (!this.item.isEnabled()) {
+            this.$timepicker.prop("disabled", true);
+          }
+
         },
         setDateInPicker: function(d) {
             this.$datepicker.bootstrapMaterialDatePicker("setDate", d);
+            this.$timepicker.bootstrapMaterialDatePicker("setTime", d);
         },
     });
 

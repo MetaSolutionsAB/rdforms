@@ -36,6 +36,10 @@
     vertical-align: top;
 }
 
+.rdformsDateValue .input {
+    padding-right: 15px;
+}
+
 .rdformsDateValue .dateControl {
     width: 10em;
     display: inline-block;

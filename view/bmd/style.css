@@ -1,7 +1,9 @@
 @import "../bootstrap/base.css";
 @import "../../libs/bootstrap/dist/css/bootstrap.min.css";
 @import "../../libs/bmd/dist/css/bootstrap-material-design.css";
+@import "../../libs/bmd/dist/css/ripples.css";
 @import "../../libs/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css";
+
 
 .rdforms .form-group {
     display: inline;

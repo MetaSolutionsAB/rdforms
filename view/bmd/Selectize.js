@@ -1,8 +1,9 @@
 define([
   'rdforms/view/renderingContext',
   'jquery',
+  "rdforms/utils",
   'selectize',
-], function(renderingContext, jquery) {
+], function(renderingContext, jquery, utils) {
 
   renderingContext.renderSelect = function(fieldDiv, binding, context) {
     var choices = context.choices;

@@ -12,7 +12,10 @@ require.config({
         "sizzle": "sizzle/dist/sizzle",
         "jquery.mousewheel": "select2/src/js/jquery.mousewheel.shim",
         "requireLib": 'requirejs/require',
-        "bmd": "bmd/dist/js"
+        "bmd": "bmd/dist/js",
+        "selectize": "selectize/js/selectize",
+        "microplugin": "microplugin/src/microplugin",
+        "sifter": "sifter/sifter"
     },
     packages: [ //Config defined using packages to allow for main.js when requiring just config.
         {

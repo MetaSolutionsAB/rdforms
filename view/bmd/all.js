@@ -5,7 +5,7 @@ define([
   'bmd/material',
   'bmd/ripples',
   "jquery.mousewheel",
-  "select2/jquery.select2",
+  "rdforms/view/bmd/Selectize",
   "sizzle",
   "bootstrap/tooltip",
   "bootstrap/popover",

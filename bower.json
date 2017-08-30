@@ -23,6 +23,7 @@
     "requirejs": "latest",
     "requirejs-i18n": "latest",
     "requirejs-text": "latest",
+    "selectize": "https://github.com/selectize/selectize.js.git#gh-pages",
     "bmd": "https://bitbucket.org/metasolutions/bootstrap-material-design.git#amd",
     "bootstrap-material-datetimepicker": "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#amd"
   },

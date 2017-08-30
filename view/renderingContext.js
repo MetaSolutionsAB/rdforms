@@ -79,6 +79,7 @@ define([
                 rc.postEditorRenderer(node, binding, context);
             }
         },
+        renderSelect: function(fieldDiv, binding, context) {},
         getChoice: system.getChoice,
         openChoiceSelector: function(binding, callback) {
             var chooser = rc.chooserRegistry.getComponent(binding.getItem());

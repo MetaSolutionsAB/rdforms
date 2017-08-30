@@ -6,7 +6,7 @@ require.config({
         "fuelux": "fuelux/js",
         "bootstrap": "bootstrap-amd/lib",
         "bmddtp": "bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker",
-        "select2": "select2/src/js",
+        "selectize": "selectize/js/selectize",
         "i18n": "di18n/i18n",
         "jquery": "jquery/src",
         "sizzle": "sizzle/dist/sizzle",
@@ -23,7 +23,12 @@ require.config({
             name: 'config',
             location: '../config',
             main: 'main'
-        }
+        },
+       {
+           name: 'select2',
+           location: 'select2/src/js',
+           main: "jquery.select2"
+       }
     ],
     map: {
         "jquery": {

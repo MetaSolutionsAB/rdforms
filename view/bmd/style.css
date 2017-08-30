@@ -2,7 +2,6 @@
 @import "../../libs/bootstrap/dist/css/bootstrap.min.css";
 @import "../../libs/bmd/dist/css/bootstrap-material-design.css";
 @import "../../libs/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css";
-@import "../../libs/select2/dist/css/select2.min.css";
 
 .rdforms .form-group {
     display: inline;
@@ -25,4 +24,11 @@
 .rdformsDatepicker input {
     display: inline-block;
     width: 12em;
+}
+
+.rdforms .form-group.selectizeException {
+    display: block;
+}
+.selectize-control.single .selectize-dropdown .active, .selectize-control.multi .selectize-dropdown .active {
+    background-color: #b8b8b8 !important;
 }

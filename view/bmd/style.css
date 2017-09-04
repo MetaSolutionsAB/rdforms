@@ -28,9 +28,22 @@
     width: 12em;
 }
 
+.rdforms .selectize-dropdown-content>.option {
+    min-height: 42px;
+}
+
 .rdforms .form-group.selectizeException {
     display: block;
 }
 .selectize-control.single .selectize-dropdown .active, .selectize-control.multi .selectize-dropdown .active {
-    background-color: #b8b8b8 !important;
+    background-color: #EEEEEE !important;
+}
+
+.selectize-control.single .selectize-dropdown .selected {
+    background-color: inherit;
+}
+
+.selectize-control.single .selectize-input input,
+.selectize-control.single .selectize-input {
+    font-size: 16px !important;
 }

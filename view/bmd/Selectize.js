@@ -10,7 +10,10 @@ define([
     var formgroup = jquery('<div class="form-group selectizeException">').appendTo(fieldDiv);
     var $select = jquery('<div class="form-control">').appendTo(formgroup);
 
-    var choices = [];
+    var choices = [{
+      label: ' ',
+      value: ''
+    }];
     for (var i = 0; i < context.choices.length; i++) {
       var c = context.choices[i];
       var desc;
@@ -31,7 +34,8 @@ define([
       valueField: 'value',
       labelField: 'label',
       sortField: 'label',
-      allowEmptyOption: true,
+      searchField: 'label',
+      allowEmptyOption: false,
       maxItems: 1,
       mode: 'single',
       onChange: function(value) {

@@ -241,6 +241,9 @@ define(["dojo/_base/declare",
             renderingContext.domClassToggle(rowNode, "notCompact", item.getType() === "group");
 
             this.addLabel(rowNode, binding, item);
+            if (this.filterBinding(binding)) {
+                renderingContext.domClassToggle(rowNode, "hiddenProperty", true);
+            }
             return rowNode;
         },
         filterBinding: function(binding) {

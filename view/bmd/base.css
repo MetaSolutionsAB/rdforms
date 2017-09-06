@@ -1,3 +1,7 @@
+@import "/libs/bmd/dist/css/bootstrap-material-design.css";
+@import "/libs/bmd/dist/css/ripples.css";
+@import "/ibs/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css";
+
 .rdforms .form-group {
     display: inline;
 }

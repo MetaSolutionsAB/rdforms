@@ -3,10 +3,11 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "di18n/localize",
-    "rdforms/model/Engine",
+    "rdforms/model/engine",
+    "rdforms/model/validate",
     "rdforms/view/Presenter",
     "rdforms/view/renderingContext"
-], function(declare, lang, localize, Engine, Presenter, renderingContext) {
+], function(declare, lang, localize, engine, validate, Presenter, renderingContext) {
 
     return declare(Presenter, {
         //===================================================
@@ -71,16 +72,16 @@ define([
                 target = 0;
             }
             var noDisjointHinder = !this.binding.getItem().hasStyle("disjoint") ||
-                this.binding.error === Engine.CODES.TOO_FEW_VALUES ||
-                this.binding.warning === Engine.CODES.TOO_FEW_VALUES;
+                this.binding.error === engine.CODES.TOO_FEW_VALUES ||
+                this.binding.warning === engine.CODES.TOO_FEW_VALUES;
             if (target > bindings.length && noDisjointHinder) {
                 bindings = bindings.concat([]);
                 while (target > bindings.length) {
-                    var binding = Engine.create(this.binding, item);
+                    var binding = engine.create(this.binding, item);
                     if (bindings.length < min) {
-                        binding.error = Engine.CODES.TOO_FEW_VALUES;
+                        binding.error = engine.CODES.TOO_FEW_VALUES;
                     } else if (bindings.length < pref) {
-                        binding.warning = Engine.CODES.TOO_FEW_VALUES;
+                        binding.warning = engine.CODES.TOO_FEW_VALUES;
                     }
                     bindings.push(binding);
                 }
@@ -95,7 +96,7 @@ define([
         _handleParams: function (params) {
             this.inherited(arguments);
             if (this.binding) {
-                Engine.report(this.binding);
+                validate.bindingReport(this.binding);
             }
         },
 
@@ -105,11 +106,11 @@ define([
             if (binding.error) {
                 renderingContext.domClassToggle(fieldDiv, "error", true);
                 var tmpl;
-                if (binding.error === Engine.CODES.TOO_FEW_VALUES) {
+                if (binding.error === engine.CODES.TOO_FEW_VALUES) {
                     tmpl = localize(this.messages, "validation_min_required", min);
-                } else if (binding.error === Engine.CODES.TOO_MANY_VALUES) {
+                } else if (binding.error === engine.CODES.TOO_MANY_VALUES) {
                     tmpl = localize(this.messages, "validation_max", card.max || 1);
-                } else if (binding.error === Engine.CODES.TOO_MANY_VALUES_DISJOINT) {
+                } else if (binding.error === engine.CODES.TOO_MANY_VALUES_DISJOINT) {
                     tmpl = this.messages.validation_disjoint;
                 }
                 var n = renderingContext.domCreate("div", fieldDiv);

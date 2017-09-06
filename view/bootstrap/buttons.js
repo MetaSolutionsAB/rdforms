@@ -1,9 +1,9 @@
 define([
     "rdforms/view/renderingContext",
     "dojo/aspect",
-    "rdforms/model/Engine",
+    "rdforms/model/engine",
     "jquery"
-], function(renderingContext, aspect, Engine, jquery) {
+], function(renderingContext, aspect, engine, jquery) {
 
     renderingContext.addRemoveButton = function (fieldDiv, binding, context) {
         var $remove = jquery('<span class="fa fa-remove action">')
@@ -46,7 +46,7 @@ define([
             .attr("title", context.view.messages.edit_expand)
             .appendTo(labelDiv)
             .click(function () {
-                var nBinding = Engine.create(context.view.binding, item);
+                var nBinding = engine.create(context.view.binding, item);
                 if (context.view.showAsTable(item)) {
                     var table = context.view.addTable(rowDiv, nBinding, item);
                     context.view.fillTable(table, [nBinding]);
@@ -69,7 +69,7 @@ define([
                 .appendTo(labelDiv);
             $add.click(function () {
                 if (!cardTr.isMax()) {
-                    var nBinding = Engine.create(parentBinding, item);
+                    var nBinding = engine.create(parentBinding, item);
                     context.view.addRow(rowDiv, nBinding); //not the first binding...
                 }
             });
@@ -127,7 +127,7 @@ define([
             .appendTo(labelDiv)
             .click(function () {
                 if (!cardTr.isMax()) {
-                    var nBinding = Engine.create(parentBinding, item);
+                    var nBinding = engine.create(parentBinding, item);
                     context.view.addRow(rowDiv, nBinding); //not the first binding...
                 }
             });

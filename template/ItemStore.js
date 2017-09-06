@@ -9,8 +9,8 @@ define([
     "rdforms/template/Text",
     "rdforms/template/Choice",
     "rdforms/template/OntologyStore",
-    "rdforms/model/Engine"
-], function (declare, lang, array, Bundle, Group, PropertyGroup, Text, Choice, OntologyStore, Engine) {
+    "rdforms/model/engine"
+], function (declare, lang, array, Bundle, Group, PropertyGroup, Text, Choice, OntologyStore, engine) {
 
     /**
      * Keeps a registry of templates and reusable items.
@@ -124,7 +124,7 @@ define([
             return this._registryByProperty[property];
         },
         detectTemplate: function (graph, uri, requiredItems) {
-            return Engine.constructTemplate(graph, uri, this, requiredItems);
+            return engine.constructTemplate(graph, uri, this, requiredItems);
         },
 
         /**

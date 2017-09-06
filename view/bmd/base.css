@@ -1,0 +1,42 @@
+.rdforms .form-group {
+    display: inline;
+}
+.rdforms select.rdformsLanguage {
+    display: inline;
+}
+.rdforms.rdformsEditor .rdformsFieldControl {
+    height: auto;
+}
+.popover a {
+    color: #ececec;
+}
+.popover .popover-title {
+    color: black;
+    font-weight: bold;
+    border-radius: 0px;
+}
+
+.rdformsDatepicker input {
+    display: inline-block;
+    width: 12em;
+}
+
+.rdforms .selectize-dropdown-content>.option {
+    min-height: 42px;
+}
+
+.rdforms .form-group.selectizeException {
+    display: block;
+}
+.selectize-control.single .selectize-dropdown .active, .selectize-control.multi .selectize-dropdown .active {
+    background-color: #EEEEEE !important;
+}
+
+.selectize-control.single .selectize-dropdown .selected {
+    background-color: inherit;
+}
+
+.selectize-control.single .selectize-input input,
+.selectize-control.single .selectize-input {
+    font-size: 16px !important;
+}

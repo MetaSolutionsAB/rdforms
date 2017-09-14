@@ -5,17 +5,15 @@ define([
   'selectize',
 ], (renderingContext, jquery, utils) => {
   renderingContext.renderSelect = function (fieldDiv, binding, context) {
-    var choices = context.choices;
     const formgroup = jquery('<div class="form-group selectizeException">').appendTo(fieldDiv);
     const $select = jquery('<div class="form-control">').appendTo(formgroup);
-
-    var choices = [{
+    const choices = [{
       label: ' ',
       value: '',
     }];
     for (let i = 0; i < context.choices.length; i++) {
       const c = context.choices[i];
-      var desc;
+      let desc;
       if (c.description) {
         desc = utils.getLocalizedValue(c.description).value;
       }
@@ -37,7 +35,7 @@ define([
       allowEmptyOption: false,
       maxItems: 1,
       mode: 'single',
-      onChange(value) {
+      onChange(/* value */) {
         binding.setValue($select.val());
       },
     });

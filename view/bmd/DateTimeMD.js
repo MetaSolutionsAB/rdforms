@@ -1,75 +1,95 @@
-/*global define*/
-define(["dojo/_base/declare",
-	"dojo/_base/lang",
-  "dojo/dom-class",
-  "jquery",
-  "bmddtp",
-  "di18n/locale",
-  "di18n/moment",
-  "rdforms/view/bootstrap/DateTimeBase",
-  "dojo/text!./DateTimeMDTemplate.html"
-], function(declare, lang, domClass, jquery, bmddtp, locale, moment, DateTimeBase, template) {
+/* global define */
+define(['dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/dom-class',
+  'jquery',
+  'bmddtp',
+  'di18n/locale',
+  'di18n/moment',
+  'rdforms/view/bootstrap/DateTimeBase',
+  'dojo/text!./DateTimeMDTemplate.html',
+], (declare, lang, domClass, jquery, bmddtp, locale, moment, DateTimeBase, template) => {
     /**
      * A Date and time picker.
      */
-    var DTMD = declare([DateTimeBase], {
-        templateString: template,
-
-        //===================================================
+  const DTMD = declare([DateTimeBase], {
+    templateString: template,
+    tpdate: null,
+    dpdate: null,
+        //= ==================================================
         // Inherited methods
-        //===================================================
+        //= ==================================================
 
-        initDatePicker: function() {
-          this.$datepicker = jquery(this.cal).bootstrapMaterialDatePicker({
-            time: false,
-            date: true,
-            triggerEvent: 'none',
-            switchOnClick: true,
-          });
+    initDatePicker() {
+      this.$datepicker = jquery(this.cal).bootstrapMaterialDatePicker({
+        time: false,
+        date: true,
+        triggerEvent: 'none',
+        switchOnClick: true,
+      });
 
-          jquery(this.dateButton).click(() => {
-            this.$datepicker.bootstrapMaterialDatePicker("_fireCalendar");
-          });
-          var updateDate = lang.hitch(this, function(evt, m) {
-            this.setDateInBinding(m.toDate());
-          });
-          this.$datepicker.on('change', updateDate).on('dateSelected', lang.hitch(this, function() {
-            this.$datepicker.bootstrapMaterialDatePicker("setElementValue");
-          }));
+      // time
+      this.$timepicker = jquery(this.timeInput).bootstrapMaterialDatePicker({
+        format: 'HH:mm',
+        time: true,
+        date: false,
+        triggerEvent: 'none',
+        switchOnClick: true,
+      });
 
-          if (!this.item.isEnabled()) {
-            this.$datepicker.prop("disabled", true);
+      jquery(this.dateButton).click(() => {
+        this.$datepicker.bootstrapMaterialDatePicker('_fireCalendar');
+      });
+      this.$datepicker.on('change', lang.hitch(this, (evt, m) => {
+        if (m) {
+          if (this.tpdate) {
+            const tpd = moment(this.tpdate);
+            m.minute(tpd.minute());
+            m.hour(tpd.hour());
           }
-          // time
-          this.$timepicker = jquery(this.timeInput).bootstrapMaterialDatePicker({
-            format:'HH:mm',
-            time: true,
-            date: false,
-            triggerEvent: 'none',
-            switchOnClick: true,
-          });
+          this.dpdate = m.toDate();
+          this.setDateInBinding(this.dpdate);
+        } else {
+          this.$datepicker.bootstrapMaterialDatePicker('setElementValue');
+        }
+      }));
 
-          jquery(this.timeButton).click(() => {
-            this.$timepicker.bootstrapMaterialDatePicker("_fireCalendar");
-          });
-          var updateDate = lang.hitch(this, function(evt, m) {
-            this.setDateInBinding(m.toDate());
-          });
-          this.$timepicker.on('change', updateDate).on('dateSelected', lang.hitch(this, function() {
-            this.$timepicker.bootstrapMaterialDatePicker("setElementValue");
-          }));
+      if (!this.item.isEnabled()) {
+        this.$datepicker.prop('disabled', true);
+      }
 
-          if (!this.item.isEnabled()) {
-            this.$timepicker.prop("disabled", true);
+      jquery(this.timeButton).click(() => {
+        this.$timepicker.bootstrapMaterialDatePicker('_fireCalendar');
+      });
+
+      this.$timepicker.on('change', lang.hitch(this, (evt, m) => {
+        if (m) {
+          if (this.dpdate != null) {
+            const dpd = moment(this.dpdate);
+            dpd.minute(m.minute());
+            dpd.hour(m.hour());
+            this.tpdate = dpd.toDate();
+            this.setDateInBinding(this.tpdate);
+          } else {
+            this.tpdate = m.toDate();
           }
+        } else {
+          this.$timepicker.bootstrapMaterialDatePicker('setElementValue');
+        }
+      }));
 
-        },
-        setDateInPicker: function(d) {
-            this.$datepicker.bootstrapMaterialDatePicker("setDate", d);
-            this.$timepicker.bootstrapMaterialDatePicker("setTime", d);
-        },
-    });
+      if (!this.item.isEnabled()) {
+        this.$timepicker.prop('disabled', true);
+      }
+    },
+    setDateInPicker(d) {
+      this.$datepicker.bootstrapMaterialDatePicker('setDate', d);
+      this.$timepicker.bootstrapMaterialDatePicker('setTime', d);
+      this.dpdate = d;
+      this.tpdate = d;
+    },
+  });
 
-    DateTimeBase.register(DTMD);
-    return DTMD;
+  DateTimeBase.register(DTMD);
+  return DTMD;
 });

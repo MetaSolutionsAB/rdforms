@@ -1,21 +1,20 @@
 define([
   'rdforms/view/renderingContext',
   'jquery',
-  "rdforms/utils",
+  'rdforms/utils',
   'selectize',
-], function(renderingContext, jquery, utils) {
-
-  renderingContext.renderSelect = function(fieldDiv, binding, context) {
+], (renderingContext, jquery, utils) => {
+  renderingContext.renderSelect = function (fieldDiv, binding, context) {
     var choices = context.choices;
-    var formgroup = jquery('<div class="form-group selectizeException">').appendTo(fieldDiv);
-    var $select = jquery('<div class="form-control">').appendTo(formgroup);
+    const formgroup = jquery('<div class="form-group selectizeException">').appendTo(fieldDiv);
+    const $select = jquery('<div class="form-control">').appendTo(formgroup);
 
     var choices = [{
       label: ' ',
-      value: ''
+      value: '',
     }];
-    for (var i = 0; i < context.choices.length; i++) {
-      var c = context.choices[i];
+    for (let i = 0; i < context.choices.length; i++) {
+      const c = context.choices[i];
       var desc;
       if (c.description) {
         desc = utils.getLocalizedValue(c.description).value;
@@ -28,7 +27,7 @@ define([
       });
     }
 
-    //new Select2($select, {placeholder: ""});
+    // new Select2($select, {placeholder: ""});
     $select.selectize({
       options: choices,
       valueField: 'value',
@@ -38,17 +37,17 @@ define([
       allowEmptyOption: false,
       maxItems: 1,
       mode: 'single',
-      onChange: function(value) {
+      onChange(value) {
         binding.setValue($select.val());
-      }
+      },
     });
 
-    //Sets the value if any
+    // Sets the value if any
     if (binding.getValue()) {
-      /*if (binding.getChoice().mismatch) {
+      /* if (binding.getChoice().mismatch) {
        fSelect.set("displayedValue", binding.getValue());
        }*/
-      $select.val(binding.getValue()).trigger("change");
+      $select.val(binding.getValue()).trigger('change');
     }
 
 /*    $select.change(function () {
@@ -56,7 +55,7 @@ define([
     });*/
 
     context.clear = function () {
-      $select.val(null).trigger("change");
+      $select.val(null).trigger('change');
     };
   };
 });

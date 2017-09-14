@@ -246,14 +246,33 @@ define(["dojo/_base/declare",
             }
             return rowNode;
         },
+
+        _getFilterPredicates: function() {
+            return this.parentView ? this.parentView._getFilterPredicates() : this.filterPredicates;
+        },
         filterBinding: function(binding) {
-            if (this.parentView) {
-                return this.parentView.filterBinding(binding);
-            } else if (this.filterPredicates != null) {
-                var stmt = binding.getStatement();
-                return stmt != null && this.filterPredicates[stmt.getPredicate()] === true;
+            var fp = this._getFilterPredicates();
+            var stmt = binding.getStatement();
+            var item = binding.getItem();
+            if (fp && stmt) {
+              return fp[stmt.getPredicate()] === true;
+            }
+            if (fp && item.getType() === "group" && !item.getProperty()) {
+              // Checks one level below if there is a child that is visible
+                var childBindings = item.getChildren() || [];
+                var hasNonFilteredChild = false;
+                childBindings.forEach(function(child) {
+                  if (fp[child.getProperty()] === true) {
+                      hasNonFilteredChild = true;
+                  }
+                });
+                return hasNonFilteredChild;
             }
             return false;
-        }
+        },
+        filterProperty: function(property) {
+          var fp = this._getFilterPredicates() || {};
+          return fp[property] === true;
+        },
     });
 });

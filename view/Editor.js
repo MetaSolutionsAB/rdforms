@@ -12,8 +12,9 @@ define(["dojo/_base/declare",
             return false;
         }
         if (bindings.length > 0) {
-            if (item.getProperty()) {
-                return true;
+            var prop = item.getProperty();
+            if (prop) {
+                return this.filterProperty(prop);
             }
 
             //Take care of layout grouping by checking recursively.
@@ -32,6 +33,7 @@ define(["dojo/_base/declare",
                 return true;
             }
         }
+
         var card = item.getCardinality();
         switch (includeLevel) {
             case "mandatory":

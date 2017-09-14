@@ -123,8 +123,8 @@ define(["dojo/_base/declare",
 
         _showDate: function() {
             this._excludeTime = true;
-            this.$yearInput.hide();
-            this.$timeInput.hide();
+            this.$yearInput.parent().hide();
+            this.$timeInput.parent().hide();
             this.$datepicker.parent().show();
             if (this._valid) {
                 this.setDateInPicker(this._date);
@@ -136,8 +136,8 @@ define(["dojo/_base/declare",
         },
         _showDateTime: function() {
             this._excludeTime = false;
-            this.$yearInput.hide();
-            this.$timeInput.show();
+            this.$yearInput.parent().hide();
+            this.$timeInput.parent().show();
             this.$datepicker.parent().show();
 
             if (this._valid) {
@@ -154,13 +154,13 @@ define(["dojo/_base/declare",
                 !this._firstTime && this.binding.setValue(stamp.toISOString(this._date));
             } else {
                 this.setDateInPicker(null);
-                this.$timeInput.prop("disabled", true);
+                // this.$timeInput.prop("disabled", true);
                 this.$timeInput.val("");
             }
         },
         _showYear: function() {
-            this.$yearInput.show();
-            this.$timeInput.hide();
+            this.$yearInput.parent().show();
+            this.$timeInput.parent().hide();
             this.$datepicker.parent().hide();
 
             if (this._valid) {

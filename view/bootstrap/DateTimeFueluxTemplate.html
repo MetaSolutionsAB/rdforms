@@ -78,7 +78,9 @@
             </div>
         </div>
     </div>
-    <input type="text" style="display: none" class="form-control timeInput" placeholder="23:59" data-dojo-attach-point="timeInput"/>
+    <span style="display: none">
+        <input type="text" class="form-control timeInput" placeholder="23:59" data-dojo-attach-point="timeInput"/>
+    </span>
     <input type="text" style="display: none" class="form-control yearInput" placeholder="1999" data-dojo-attach-point="yearInput"/>
     <select class="form-control dateControl" data-dojo-attach-point="dateControl">
         <option value="Year">${messages.date_year}</option>

@@ -1,0 +1,67 @@
+@import "../bootstrap/base.css";
+
+.rdforms .form-group {
+    display: inline;
+}
+
+.rdforms select.rdformsLanguage {
+    display: inline;
+}
+
+.rdforms.rdformsEditor .rdformsFieldControl {
+    height: auto;
+}
+
+.rdforms .cardinality .btn {
+    background-color: #333;
+    color: #fff !important;
+    font-size: 14px;
+}
+
+.rdforms .cardinality .btn:hover {
+    background-color: #626262 !important;
+}
+
+.rdforms .cardinality .btn.active {
+    background-color: #00a946;
+}
+
+.rdforms .cardinality .btn.active:hover {
+    background-color: #00b85c !important;
+}
+
+.popover a {
+    color: #ececec;
+}
+
+.popover .popover-title {
+    color: black;
+    font-weight: bold;
+    border-radius: 0px;
+}
+
+.rdformsDatepicker input {
+    display: inline-block;
+    width: 12em;
+}
+
+.rdforms .selectize-dropdown-content > .option {
+    min-height: 42px;
+}
+
+.rdforms .form-group.selectizeException {
+    display: block;
+}
+
+.selectize-control.single .selectize-dropdown .active, .selectize-control.multi .selectize-dropdown .active {
+    background-color: #EEEEEE !important;
+}
+
+.selectize-control.single .selectize-dropdown .selected {
+    background-color: inherit;
+}
+
+.selectize-control.single .selectize-input input,
+.selectize-control.single .selectize-input {
+    font-size: 16px !important;
+}

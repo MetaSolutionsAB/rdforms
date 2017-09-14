@@ -87,8 +87,7 @@ define([
 
     editors.itemtype("choice").choices().register(function (fieldDiv, binding, context) {
         var item = binding.getItem(),
-            choices = item.getChoices(),
-            $select = jquery('<select>').appendTo(fieldDiv).append("<option></option>");
+            choices = item.getChoices();
 
         choices = array.map(choices, function(c) {
             return {choice: c, label: item._getLocalizedValue(c.label).value};
@@ -96,40 +95,8 @@ define([
         choices.sort(function(c1, c2) {
             return c1.label < c2.label ? -1 : 1;
         });
-        for (var i=0;i<choices.length;i++) {
-            var c = choices[i];
-            var desc;
-            if (c.description) {
-                desc = utils.getLocalizedValue(c.description).value;
-            }
-
-            jquery('<option>')
-                .val(c.choice.value)
-                .attr("title", desc || c.seeAlso || c.value)
-                .text(c.label)
-                .appendTo($select);
-        }
-
-        //new Select2($select, {placeholder: ""});
-        $select.select2({
-            placeholder: ""
-        });
-
-        //Sets the value if any
-        if (binding.getValue()) {
-            /*if (binding.getChoice().mismatch) {
-                fSelect.set("displayedValue", binding.getValue());
-            }*/
-            $select.val(binding.getValue()).trigger("change");
-        }
-
-        $select.change(function () {
-            binding.setValue($select.val());
-        });
-
-        context.clear = function() {
-            $select.val(null).trigger("change");
-        };
+        context.choices = choices;
+        renderingContext.renderSelect(fieldDiv, binding, context);
 
         //TODO support for TreeOntologyChooser
         //Check if a tree-hierarchy should be created

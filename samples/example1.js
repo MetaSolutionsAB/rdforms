@@ -1,8 +1,9 @@
 require([
-    'rdfjson/Graph',             //Rdfjson Graph API
-    'rdforms/template/ItemStore', //Stores all the RDForm templates
-    'rdforms/view/Editor',        //The editor User interface
-    'dojo/domReady!'             //Wait until the dom is ready.
+    'rdfjson/Graph',                //Rdfjson Graph API
+    'rdforms/template/ItemStore',   //Stores all the RDForm templates
+    'rdforms/view/Editor',          //The editor User interface
+    'rdforms/view/bootstrap/all',   //Depend on the bootstrap view
+    'dojo/domReady!'                //Wait until the dom is ready.
 ], function (Graph, ItemStore, Editor) {
     var graph = new Graph({
         "http://example.org/about": {

@@ -4,7 +4,7 @@ define(["dojo/_base/declare",
     "rdforms/view/renderingContext"
 ], function (declare, Presenter, engine, renderingContext) {
 
-    var showNow = function (item, bindings, includeLevel) {
+    var showNow = function (editor, item, bindings, includeLevel) {
         if (item.hasStyle("invisible")) {
             return false;
         }
@@ -14,7 +14,7 @@ define(["dojo/_base/declare",
         if (bindings.length > 0) {
             var prop = item.getProperty();
             if (prop) {
-                return this.filterProperty(prop);
+                return editor.filterProperty(prop);
             }
 
             //Take care of layout grouping by checking recursively.
@@ -25,7 +25,7 @@ define(["dojo/_base/declare",
                 for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
                     bindings = groupedBindingsArr[groupIndex];
                     item = groupedItemsArr[groupIndex];
-                    if (showNow(item, bindings, includeLevel)) {       //Recursive call
+                    if (showNow(editor, item, bindings, includeLevel)) {       //Recursive call
                         return true;
                     }
                 }
@@ -127,7 +127,7 @@ define(["dojo/_base/declare",
          * @param {Object} bindings
          */
         showNow: function (item, bindings) {
-            return showNow(item, bindings, this.includeLevel);
+            return showNow(this, item, bindings, this.includeLevel);
         },
         skipBinding: function (binding) {
             return false;

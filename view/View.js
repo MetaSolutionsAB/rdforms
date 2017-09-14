@@ -262,11 +262,11 @@ define(["dojo/_base/declare",
                 var childBindings = item.getChildren() || [];
                 var hasNonFilteredChild = false;
                 childBindings.forEach(function(child) {
-                  if (fp[child.getProperty()] === true) {
+                  if (fp[child.getProperty()] !== true) {
                       hasNonFilteredChild = true;
                   }
                 });
-                return hasNonFilteredChild;
+                return !hasNonFilteredChild;
             }
             return false;
         },

@@ -14,7 +14,7 @@ define(["dojo/_base/declare",
         if (bindings.length > 0) {
             var prop = item.getProperty();
             if (prop) {
-                return editor.filterProperty(prop);
+                return !editor.filterProperty(prop);
             }
 
             //Take care of layout grouping by checking recursively.

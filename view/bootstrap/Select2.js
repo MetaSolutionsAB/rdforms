@@ -2,7 +2,7 @@ define([
   'rdforms/view/renderingContext',
   'jquery',
   'rdforms/utils',
-  'select2',
+  'select2/jquery.select2',
 ], (renderingContext, jquery, utils) => {
   renderingContext.renderSelect = (fieldDiv, binding, context) => {
     const choices = context.choices;

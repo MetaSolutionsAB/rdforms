@@ -6,12 +6,13 @@ define([
 ], function(declare, Binding, utils) {
 
     /**
-     * Corresponds to a binding for a Text item type, captures literals, literals with 
+     * Corresponds to a binding for a Text item type, captures literals, literals with
      * language, datatyped literals, or non blank resources, that is, URI's.
      * Validity is determined by a valid predicate and object.
      * The statement is asserted when the parents are valid and this ValueBinding is valid.
-     * 
-     * @see rforms.template.Text
+     * @exports {rdforms/model/ValueBinding}
+     * @class
+     * @see rforms/template/Text
      */
     return declare(Binding, {
         //===================================================

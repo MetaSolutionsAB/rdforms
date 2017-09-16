@@ -1,7 +1,6 @@
 /* global define*/
 define([
   'exports',
-  'dojo/_base/array',
   'dojo/_base/lang',
   'dojo/_base/kernel',
   '../template/Text',
@@ -15,39 +14,46 @@ define([
   './system',
   '../utils',
   './validate',
-], (exports, array, lang, kernel, Text, Group, Choice, PropertyGroup, GroupBinding, PropertyGroupBinding, ValueBinding, ChoiceBinding, system, utils, validate) => {
+], (exports, lang, kernel, Text, Group, Choice, PropertyGroup, GroupBinding,
+    PropertyGroupBinding, ValueBinding, ChoiceBinding, system, utils, validate) => {
     // See public API at the bottom of this file.
 
-  const match = function (graph, uri, template) {
+  let _matchGroupItemChildren;
+  let _clearDibbs;
+  let _noDibbs;
+  let _dibbs;
+  let _createStatementsForConstraints;
+
+  const match = (graph, uri, template) => {
     const rootBinding = new GroupBinding({ item: template, childrenRootUri: uri, graph });
     _matchGroupItemChildren(rootBinding);
     _clearDibbs(rootBinding);
     return rootBinding;
   };
 
-  const constructTemplate = function (graph, uri, itemStore, requiredItems) {
+  const constructTemplate = (graph, uri, itemStore, requiredItems) => {
     const props = graph.findProperties(uri);
     const items = [];
     const fixedProps = {};
     if (requiredItems != null) {
-      var addProperty = function (item) {
+      const addProperty = (item) => {
         if (item.getProperty() != null) {
           fixedProps[item.getProperty()] = true;
         } else if (item instanceof Group) {
-          array.forEach(item.getChildren(), addProperty);
+          item.getChildren().forEach(addProperty);
         }
       };
-      const addItem = function (item) {
+      const addItem = (item) => {
         if (item != null) {
           addProperty(item);
           items.push(item);
         }
       };
-      array.forEach(requiredItems, (id) => {
+      requiredItems.forEach((id) => {
         let item = itemStore.getItem(id);
         if (item != null) {
           if (item instanceof Group && item.getProperty() == null) {
-            array.forEach(item.getChildren(), addItem);
+            item.getChildren().forEach(addItem);
           } else {
             addItem(item);
           }
@@ -62,7 +68,7 @@ define([
         }
       });
     }
-    array.forEach(props, (prop) => {
+    props.forEach((prop) => {
       if (fixedProps[prop]) {
         return;
       }
@@ -71,34 +77,22 @@ define([
         items.push(item);
       }
     }, this);
-        // TODO sort according to priority.
+    // TODO sort according to priority.
     return itemStore.createTemplateFromChildren(items);
   };
 
+  //= ==============================================
+  // Core creation engine
+  //= ==============================================
+  let create;
 
-  const create = function (parentBinding, item, parentItems) {
-    if (item instanceof Text) {
-      return _createTextItem(parentBinding, item);
-    } else if (item instanceof PropertyGroup) {
-      return _createPropertyGroupItem(parentBinding, item);
-    } else if (item instanceof Group) {
-      return _createGroupItem(parentBinding, item, parentItems || {});
-    } else if (item instanceof Choice) {
-      return _createChoiceItem(parentBinding, item);
-    }
-  };
-
-
-    //= ==============================================
-    // Core creation engine
-    //= ==============================================
-  var _createTextItem = function (parentBinding, item) {
+  const _createTextItem = (parentBinding, item) => {
     const graph = parentBinding.getGraph();
     const nt = item.getNodetype();
     const obj = { value: '', type: 'literal' };
-    if (item.getNodetype() === 'URI') {
+    if (nt === 'URI') {
       obj.type = 'uri';
-    } else if (item.getNodetype() === 'DATATYPE_LITERAL') {
+    } else if (nt === 'DATATYPE_LITERAL') {
       obj.datatype = item.getDatatype();
     }
     const stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), obj, false);
@@ -107,7 +101,7 @@ define([
     return nbinding;
   };
 
-  var _createChoiceItem = function (parentBinding, item) {
+  const _createChoiceItem = (parentBinding, item) => {
     const graph = parentBinding.getGraph();
     const nt = item.getNodetype();
     const obj = { type: 'literal', value: '' };
@@ -122,9 +116,9 @@ define([
     return nbinding;
   };
 
-  var _createGroupItem = function (parentBinding, item, parentItems) {
-    let stmt,
-      constr;
+  const _createGroupItem = (parentBinding, item, parentItems) => {
+    let stmt;
+    let constr;
     if (item.getProperty() !== undefined) {
       const graph = parentBinding.getGraph();
       if (item.getNodetype() === 'URI') {
@@ -138,7 +132,8 @@ define([
     const nBinding = new GroupBinding({ item, statement: stmt, constraints: constr });
     parentBinding.addChildBinding(nBinding);
 
-        // Only do loop detection for items that are stored in the itemStore and hence are used in more than one place.
+    // Only do loop detection for items that are stored in the itemStore and hence are
+    // used in more than one place.
     const itemId = item._source['@id'];
     if (itemId) {
             // If loop stop.
@@ -147,17 +142,18 @@ define([
       }
       parentItems[itemId] = true;
     }
-        // Do not create substructures directly, let the view model and user interaction decide when to create children.
-        /*
-         array.forEach(item.getChildren(), function(childItem) {
+    // Do not create substructures directly, let the view model and user interaction decide
+    // when to create children.
+    /*
+    array.forEach(item.getChildren(), function(childItem) {
          create(nBinding, childItem, parentItems);
-         });*/
+    });*/
     return nBinding;
   };
 
-  var _createPropertyGroupItem = function (parentBinding, item) {
-    let stmt,
-      constr;
+  const _createPropertyGroupItem = (parentBinding, item) => {
+    let stmt;
+    let constr;
     const oItem = item.getChildren()[1];
     const graph = parentBinding.getGraph();
     if (oItem instanceof Group) {
@@ -172,48 +168,53 @@ define([
     const nBinding = new PropertyGroupBinding({ item, statement: stmt, constraints: constr });
     parentBinding.addChildBinding(nBinding);
     if (oItem instanceof Group) {
-      array.forEach(oItem.getChildren(), (childItem) => {
+      oItem.getChildren().forEach((childItem) => {
         create(nBinding.getObjectBinding(), childItem);
       });
     }
     return nBinding;
   };
+  create = (parentBinding, item, parentItems) => {
+    if (item instanceof Text) {
+      return _createTextItem(parentBinding, item);
+    } else if (item instanceof PropertyGroup) {
+      return _createPropertyGroupItem(parentBinding, item);
+    } else if (item instanceof Group) {
+      return _createGroupItem(parentBinding, item, parentItems || {});
+    } else if (item instanceof Choice) {
+      return _createChoiceItem(parentBinding, item);
+    }
+    return undefined;
+  };
 
-    //= ==============================================
-    // Core matching engine
-    //= ==============================================
+  // ===============================================
+  // Core matching engine
+  // ===============================================
 
+  let _matchItem;
+  let _isNodeTypeMatch;
+  let _isPatternMatch;
+  let _findChoice;
+  let _findStatementsForConstraints;
 
-  var _matchGroupItemChildren = function (pb) {
-    array.forEach(pb.getItem().getChildren(), (item) => {
+  _matchGroupItemChildren = (pb) => {
+    pb.getItem().getChildren().forEach((item) => {
       _matchItem(pb, item);
     });
   };
 
-  var _matchItem = function (pb, item) {
-    if (item instanceof Text) {
-      _matchTextItem(pb, item);
-    } else if (item instanceof PropertyGroup) {
-      _matchPropertyGroupItem(pb, item);
-    } else if (item instanceof Group) {
-      _matchGroupItem(pb, item);
-    } else if (item instanceof Choice) {
-      _matchChoiceItem(pb, item);
-    }
-  };
-
-  var _matchGroupItem = function (pb, item) {
-    let stmts,
-      bindings,
-      constStmts,
-      groupBinding;
+  const _matchGroupItem = (pb, item) => {
+    let stmts;
+    let bindings;
+    let constStmts;
+    let groupBinding;
     const graph = pb.getGraph();
         // Case 1: there is a property in the item
     if (item.getProperty() !== undefined) {
       stmts = graph.find(pb.getChildrenRootUri(), item.getProperty());
       if (stmts.length > 0) {
         bindings = [];
-        array.forEach(stmts, (stmt) => {
+        stmts.forEach((stmt) => {
           if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
             constStmts = _findStatementsForConstraints(graph, stmt.getValue(), item);
             if (constStmts !== undefined) {
@@ -234,109 +235,114 @@ define([
     }
   };
 
-  var _matchPropertyGroupItem = function (pb, item) {
-    let stmts,
-      constStmts;
-    let bindings,
-      binding,
-      pChoice,
-      oChoice;
-    let pItem = item.getPropertyItem(),
-      oItem = item.getObjectItem();
+  const _matchPropertyGroupItem = (pb, item) => {
+    const pItem = item.getPropertyItem();
+    const oItem = item.getObjectItem();
     const graph = pb.getGraph();
-
-    stmts = graph.find(pb.getChildrenRootUri());
-    if (stmts.length > 0) {
-      bindings = [];
-      array.forEach(stmts, (stmt) => {
-        if (_noDibbs(stmt) && _isNodeTypeMatch(oItem, stmt) && _isPatternMatch(oItem, stmt)) {
-          pChoice = _findChoice(pItem, stmt.getPredicate(), stmt.getGraph());
-          if (pChoice !== undefined) {
-            binding = null;
-            if (oItem instanceof Group) {
-              constStmts = _findStatementsForConstraints(graph, stmt.getValue(), oItem);
-              if (constStmts !== undefined) {
-                _dibbs(stmt);
-                binding = new PropertyGroupBinding({ item, statement: stmt, constraints: constStmts });
-                _matchGroupItemChildren(binding.getObjectBinding()); // Recursive call
-              }
-            } else if (oItem instanceof Choice) {
-              oChoice = _findChoice(oItem, stmt.getValue(), stmt.getGraph());
-              if (oChoice !== undefined) {
-                _dibbs(stmt);
-                binding = new PropertyGroupBinding({ item, statement: stmt });
-                binding.getObjectBinding().setChoice(oChoice);
-              }
-            } else {
+    let constStmts;
+    let binding;
+    let pChoice;
+    let oChoice;
+    const bindings = [];
+    graph.find(pb.getChildrenRootUri()).forEach((stmt) => {
+      if (_noDibbs(stmt) && _isNodeTypeMatch(oItem, stmt) && _isPatternMatch(oItem, stmt)) {
+        pChoice = _findChoice(pItem, stmt.getPredicate(), stmt.getGraph());
+        if (pChoice !== undefined) {
+          binding = null;
+          if (oItem instanceof Group) {
+            constStmts = _findStatementsForConstraints(graph, stmt.getValue(), oItem);
+            if (constStmts !== undefined) {
+              _dibbs(stmt);
+              binding = new PropertyGroupBinding({
+                item,
+                statement: stmt,
+                constraints: constStmts,
+              });
+              _matchGroupItemChildren(binding.getObjectBinding()); // Recursive call
+            }
+          } else if (oItem instanceof Choice) {
+            oChoice = _findChoice(oItem, stmt.getValue(), stmt.getGraph());
+            if (oChoice !== undefined) {
               _dibbs(stmt);
               binding = new PropertyGroupBinding({ item, statement: stmt });
+              binding.getObjectBinding().setChoice(oChoice);
             }
-
-            if (binding !== null) {
-              binding.getPredicateBinding().setChoice(pChoice);
-              bindings.push(binding);
-            }
-          }
-        }
-      });
-      pb.addChildBindings(bindings);
-    }
-  };
-
-  var _matchTextItem = function (pb, item) {
-    let stmts,
-      bindings,
-      constStmts;
-    if (item.getProperty() == null) {
-      return;
-    }
-    stmts = pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty());
-    if (stmts.length > 0) {
-      bindings = [];
-      array.forEach(stmts, (stmt) => {
-        if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
-          _dibbs(stmt);
-          bindings.push(new ValueBinding({ item, statement: stmt }));
-        }
-      });
-      pb.addChildBindings(bindings);
-    }
-  };
-
-  var _matchChoiceItem = function (pb, item) {
-    let stmts,
-      bindings,
-      choice;
-    if (item.getProperty() == null) {
-      return;
-    }
-    stmts = pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty());
-    if (stmts.length > 0) {
-      bindings = [];
-      array.forEach(stmts, (stmt) => {
-        if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
-          choice = _findChoice(item, stmt.getValue(), stmt.getGraph());
-          if (choice !== undefined) {
+          } else {
             _dibbs(stmt);
-            bindings.push(new ChoiceBinding({ item, statement: stmt, choice }));
+            binding = new PropertyGroupBinding({ item, statement: stmt });
+          }
+
+          if (binding !== null) {
+            binding.getPredicateBinding().setChoice(pChoice);
+            bindings.push(binding);
           }
         }
-      });
+      }
+    });
+    if (bindings.length > 0) {
       pb.addChildBindings(bindings);
     }
   };
 
-    //= ==============================================
-    // Utility functions used for matching purposes
-    //= ==============================================
+  const _matchTextItem = (pb, item) => {
+    if (item.getProperty() == null) {
+      return;
+    }
+    const bindings = [];
+    pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
+      if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
+        _dibbs(stmt);
+        bindings.push(new ValueBinding({ item, statement: stmt }));
+      }
+    });
+    if (bindings.length > 0) {
+      pb.addChildBindings(bindings);
+    }
+  };
 
-    /**
-     * Compares the the type specified in the item and the type of the statements object.
-     * @param {rforms.template.Item} item
-     * @param {jsonrdf.Statement} stmt
-     */
-  var _isNodeTypeMatch = function (item, stmt) {
+  const _matchChoiceItem = (pb, item) => {
+    if (item.getProperty() == null) {
+      return;
+    }
+    const bindings = [];
+    pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
+      if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
+        const choice = _findChoice(item, stmt.getValue(), stmt.getGraph());
+        if (choice !== undefined) {
+          _dibbs(stmt);
+          bindings.push(new ChoiceBinding({ item, statement: stmt, choice }));
+        }
+      }
+    });
+    if (bindings.length > 0) {
+      pb.addChildBindings(bindings);
+    }
+  };
+
+  _matchItem = (pb, item) => {
+    if (item instanceof Text) {
+      _matchTextItem(pb, item);
+    } else if (item instanceof PropertyGroup) {
+      _matchPropertyGroupItem(pb, item);
+    } else if (item instanceof Group) {
+      _matchGroupItem(pb, item);
+    } else if (item instanceof Choice) {
+      _matchChoiceItem(pb, item);
+    }
+  };
+
+  // ===============================================
+  // Utility functions used for matching purposes
+  // ===============================================
+
+  /**
+   * Compares the the type specified in the item and the type of the statements object.
+   * @param {rdforms/template/Item} item
+   * @param {jsonrdf/Statement} stmt
+   */
+  _isNodeTypeMatch = (item, stmt) => {
     const objectType = stmt.getType();
+// eslint-disable-next-line default-case
     switch (item.getNodetype()) {
       case 'LITERAL':      // Any form of literal
       case 'ONLY_LITERAL':  // No language, no datatype
@@ -355,7 +361,7 @@ define([
     return false;
   };
 
-  var _isPatternMatch = function (item, stmt) {
+  _isPatternMatch = (item, stmt) => {
     const pattern = item.getPattern();
     const value = utils.extractGist(stmt.getValue(), item.getValueTemplate());
     if (typeof pattern !== 'undefined') {
@@ -368,44 +374,44 @@ define([
     return true;
   };
 
-    /**
-     * Matches constraints in the item to statements in the graph with the given uri as subject.
-     *
-     * @param {rdfjson.Graph} graph containing all available statements to match against.
-     * @param {String} uri the subject to start matching from
-     * @param {rforms.template.Item} item containing the constraints.
-     * @return an array of statements on success, undefined on failure.
-     *  If there are no constraints to match in the item an empty array is returned.
-     */
-  var _findStatementsForConstraints = function (graph, uri, item) {
-    let stmts,
-      constr = item.getConstraints(),
-      results = [];
-    const f = function (predicate, object) {
+  /**
+   * Matches constraints in the item to statements in the graph with the given uri as subject.
+   *
+   * @param {rdfjson/Graph} graph containing all available statements to match against.
+   * @param {String} uri the subject to start matching from
+   * @param {rdforms/template/Item} item containing the constraints.
+   * @return an array of statements on success, undefined on failure.
+   *  If there are no constraints to match in the item an empty array is returned.
+   */
+  _findStatementsForConstraints = (graph, uri, item) => {
+    let stmts;
+    const constr = item.getConstraints();
+    const results = [];
+    const f = (predicate, object) => {
       stmts = graph.find(uri, predicate, { type: 'uri', value: object });
-      if (stmts.length == 1) {
+      if (stmts.length === 1) {
         results.push(stmts[0]);
-      } else {
-        return false;
+        return undefined;
       }
+      return false;
     };
     if (lang.isObject(constr)) {
-      for (var key in constr) {
-        if (constr.hasOwnProperty(key)) {
-          const obj = constr[key];
-          if (obj instanceof Array) {
-            var noMatch = true;
-            array.forEach(obj, (o) => {
-              if (f(key, o) !== false) {
-                noMatch = false;
-              }
-            });
-            if (noMatch) {
-              return;
+      const keys = Object.keys(constr);
+      for (let idx = 0; idx < keys.length; idx++) {
+        const key = keys[idx];
+        const obj = constr[key];
+        if (obj instanceof Array) {
+          let noMatch = true;
+          obj.forEach((o) => {
+            if (f(key, o) !== false) {
+              noMatch = false;
             }
-          } else if (f(key, obj) === false) {
-            return;
+          });
+          if (noMatch) {
+            return undefined;
           }
+        } else if (f(key, obj) === false) {
+          return undefined;
         }
       }
       return results;
@@ -413,30 +419,25 @@ define([
     return [];
   };
 
-  var _createStatementsForConstraints = function (graph, uri, item) {
-    let stmts,
-      constr,
-      results = [];
+  _createStatementsForConstraints = (graph, uri, item) => {
+    const results = [];
     if (lang.isObject(item.getConstraints())) {
-      constr = item.getConstraints();
-      for (const key in constr) {
-        if (constr.hasOwnProperty(key)) {
-          const obj = constr[key];
-          if (lang.isArray(obj)) {
-            results.push(graph.create(uri, key, { type: 'uri', value: obj[0] }, false));
-          } else {
-            results.push(graph.create(uri, key, { type: 'uri', value: obj }, false));
-          }
+      const constr = item.getConstraints();
+      Object.keys(constr).forEach((key) => {
+        const obj = constr[key];
+        if (lang.isArray(obj)) {
+          results.push(graph.create(uri, key, { type: 'uri', value: obj[0] }, false));
+        } else {
+          results.push(graph.create(uri, key, { type: 'uri', value: obj }, false));
         }
-      }
-      return results;
+      });
     }
-    return [];
+    return results;
   };
 
-  var _findChoice = function (item, obj, graph) {
-    let index,
-      choices;
+  _findChoice = (item, obj, graph) => {
+    let index;
+    let choices;
     if (item.hasChoices()) {
       choices = item.getChoices();
       for (index = 0; index < choices.length; index++) {
@@ -460,21 +461,20 @@ define([
         return system.getChoice(item, obj, sa, graph);
       }
     }
+    return undefined;
   };
 
-  var _dibbs = function (stmt) {
+  _dibbs = (stmt) => {
     stmt._dibbs = true;
   };
 
-  var _noDibbs = function (stmt) {
-    return stmt._dibbs !== true;
-  };
+  _noDibbs = stmt => stmt._dibbs !== true;
 
-  var _clearDibbs = function (groupBinding) {
-    let i,
-      j,
-      arr,
-      arrarr = groupBinding.getItemGroupedChildBindings() || [];
+  _clearDibbs = (groupBinding) => {
+    let i;
+    let j;
+    let arr;
+    const arrarr = groupBinding.getItemGroupedChildBindings() || [];
     for (i = 0; i < arrarr.length; i++) {
       arr = arrarr[i];
       for (j = 0; j < arr.length; j++) {
@@ -489,7 +489,7 @@ define([
     }
   };
 
-  var findFirstValueBinding = function (binding, createIfMissing) {
+  const findFirstValueBinding = (binding, createIfMissing) => {
     if (binding instanceof ValueBinding) {
       return binding;
     }
@@ -503,18 +503,18 @@ define([
         } else if (childItem.getNodetype() === 'LANGUAGE_LITERAL') {
           const result = { firstValue: vbs[0] };
           for (let i = 0; i < vbs.length; i++) {
-            const lang = vbs[i].getLanguage();
-            if (lang == null) {
+            const l = vbs[i].getLanguage();
+            if (l == null) {
               result.emptyLanguageValue = vbs[i];
-            } else if (lang === kernel.locale) {
+            } else if (l === kernel.locale) {
               result.perfectLocaleLanguageValue = vbs[i];
-            } else if (lang.substring(0, 1) === kernel.locale.substring(0, 1)) {
+            } else if (l.substring(0, 1) === kernel.locale.substring(0, 1)) {
               result.localeLanguageValue = vbs[i];
-            } else if (lang.indexOf('en') !== -1) {
-                  result.defaultLanguageValue = vbs[i];
-                } else {
-                  result.anyLanguageValue = vbs[i];
-                }
+            } else if (l.indexOf('en') !== -1) {
+              result.defaultLanguageValue = vbs[i];
+            } else {
+              result.anyLanguageValue = vbs[i];
+            }
           }
           return result.perfectLocaleLanguageValue ||
                         result.localeLanguageValue ||
@@ -532,17 +532,19 @@ define([
         return findFirstValueBinding(b, true);
       }
     }
+    return undefined;
   };
 
-  var matchPathBelowBinding = function (bindingTree, path) {
+  const matchPathBelowBinding = (bindingTree, path) => {
     const gb = bindingTree.getItemGroupedChildBindings();
     const pred = path[0];
     for (let i = 0; i < gb.length; i++) {
-      var bindings = gb[i],
-        res;
+      const bindings = gb[i];
+      let res;
       for (let j = 0; j < bindings.length; j++) {
         let b = bindings[j];
         if (!b.isValid()) {
+// eslint-disable-next-line no-continue
           continue;
         }
         let item = b.getItem();
@@ -568,11 +570,12 @@ define([
         }
       }
     }
+    return undefined;
   };
 
-  const findBindingRelativeToParentBinding = function (parentBinding, path) {
-    let first = path[0],
-      b = parentBinding;
+  const findBindingRelativeToParentBinding = (parentBinding, path) => {
+    const first = path[0];
+    let b = parentBinding;
     if (first === '/') {
       while (b.getParent()) {
         b = b.getParent();
@@ -591,7 +594,7 @@ define([
     return parentBinding;
   };
 
-  var _levelProfile = function (profile, item, ignoreTopLevelGroup) {
+  const _levelProfile = (profile, item, ignoreTopLevelGroup) => {
     const card = item.getCardinality();
     if (!ignoreTopLevelGroup || item.getType() !== 'group') {
       if (card != null) {
@@ -607,18 +610,18 @@ define([
       }
     }
     if (item.getType() === 'group') {
-      array.forEach(item.getChildren(), lang.hitch(this, _levelProfile, profile));
+      item.getChildren().forEach(lang.hitch(this, _levelProfile, profile));
     }
     return profile;
   };
 
-  const levelProfile = function (item) {
+  const levelProfile = (item) => {
     const profile = _levelProfile({ mandatory: 0, recommended: 0, optional: 0 }, item, true);
     profile.itemCount = profile.mandatory + profile.recommended + profile.optional;
     return profile;
   };
 
-  const detectLevel = function (profile) {
+  const detectLevel = (profile) => {
     if (profile.mandatory > 0) {
       if (profile.recommended === 0 && profile.optional === 0) {
         return 'mandatory';
@@ -649,10 +652,10 @@ define([
    * are matched into the tree.
    * The tree is represented as a binding tree.
    *
-   * @param {rdfjson.Graph} graph
+   * @param {rdfjson/Graph} graph
    * @param {String} uri
-   * @param {rforms.template.Template} template
-   * @return an rforms.model.GroupBinding which is the root of binding tree.
+   * @param {rdforms/template/Item} template
+   * @return {rdforms/model/GroupBinding} which is the root of binding tree.
    */
   exports.match = match;
 
@@ -665,14 +668,15 @@ define([
   exports.report = validate.bindingReport;
 
   /**
-   * Constructs a template by finding an item per outgoing property for provided graph and resource starting point.
+   * Constructs a template by finding an item per outgoing property for provided graph and
+   * resource starting point.
    *
    * @param {Object} graph
    * @param {Object} uri
    * @param {Object} itemStore
-   * @param {Array} requiredItems an array of required items specified by id or property that will be
-   * enforced independent of corresponding property exists in the graph or not.
-   * @return {rforms.template.Template} the constructed template.
+   * @param {Array} requiredItems an array of required items specified by id or property that
+   * will be enforced independent of corresponding property exists in the graph or not.
+   * @return {rdforms/template/Item} the constructed template.
    */
   exports.constructTemplate = constructTemplate;
 
@@ -682,8 +686,8 @@ define([
    * empty predicate or object. The item must be a direct child of the item
    * of the parentBinding.
    *
-   * @param {rforms.model.Binding} parentBinding
-   * @param {rforms.template.Item} item
+   * @param {rdforms/model/Binding} parentBinding
+   * @param {rdforms/template/Item} item
    * @param {Object} parentItems is a hash of parent Items to use for loop detection.
    */
   exports.create = create;
@@ -699,12 +703,13 @@ define([
    * 4) any literal with a language set found
    * 5) the first literal found
    *
-   * @return {ValueBinding}
+   * @return {rdforms/model/ValueBinding}
    */
   exports.findFirstValueBinding = findFirstValueBinding;
 
   /**
-   * Calculates the level profile, i.e. the amount of items on mandatory, recommended and optional level in a given template.
+   * Calculates the level profile, i.e. the amount of items on mandatory, recommended
+   * and optional level in a given template.
    *
    * @param {rdforms/template/Item} item
    * @return {Object} with keys mandatory, recommended and optional, each pointing to an integer.

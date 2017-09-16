@@ -10,11 +10,11 @@ define([
             .appendTo(context.controlDiv);
     const cardTr = binding.getCardinalityTracker();
     const con = aspect.after(cardTr, 'cardinalityChanged', () => {
-      $remove.toggleClass('disabled', cardTr.isMin());
+      $remove.toggleClass('disabled', cardTr.isMin() && cardTr.isDepsOk());
     });
 
     $remove.click(() => {
-      if (!cardTr.isMin()) {
+      if (!cardTr.isMin() || !cardTr.isDepsOk()) {
         if (cardTr.getCardinality() === 1) {
           if (binding.getItem().getType() === 'choice') {
             binding.setChoice(null);
@@ -86,12 +86,12 @@ define([
       if ($add) {
         $add.toggleClass('disabled', cardTr.isMax());
       }
-      $remove.toggleClass('disabled', cardTr.isMin());
+      $remove.toggleClass('disabled', cardTr.isMin() && cardTr.isDepsOk());
     });
 
 
     $remove.click(() => {
-      if (!cardTr.isMin()) {
+      if (!cardTr.isMin() || !cardTr.isDepsOk()) {
         if (cardTr.getCardinality() === 1) {
           con.remove();
           if ($add) {

@@ -14,11 +14,11 @@ define([
         }, context.controlDiv);
         var cardTr = binding.getCardinalityTracker();
         var con = aspect.after(cardTr, "cardinalityChanged", function () {
-            domClass.toggle(remove, "disabled", cardTr.isMin());
+            domClass.toggle(remove, "disabled", cardTr.isMin() && cardTr.isDepsOk());
         });
 
         var removeConnect = on(remove, "click", function () {
-            if (!cardTr.isMin()) {
+            if (!cardTr.isMin() || !cardTr.isDepsOk()) {
                 if (cardTr.getCardinality() === 1) {
                     if (binding.getItem() instanceof Choice) {
                         binding.setChoice(null);
@@ -62,7 +62,7 @@ define([
         var cardTr = binding.getCardinalityTracker();
         var con = aspect.after(cardTr, "cardinalityChanged", function () {
             domClass.toggle(add, "disabled", cardTr.isMax());
-            domClass.toggle(remove, "disabled", cardTr.isMin());
+            domClass.toggle(remove, "disabled", cardTr.isMin() && cardTr.isDepsOk());
         });
 
         var addCon = on(add, "click", function () {
@@ -73,7 +73,7 @@ define([
         });
 
         var removeCon = on(remove, "click", function () {
-            if (!cardTr.isMin()) {
+            if (!cardTr.isMin() || !cardTr.isDepsOk()) {
                 if (cardTr.getCardinality() === 1) {
                     var parentBinding = binding.getParent(), item = binding.getItem();
                     con.remove();

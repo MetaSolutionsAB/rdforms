@@ -69,3 +69,7 @@
 .selectize-control.single .selectize-input {
     font-size: 16px !important;
 }
+
+.selectize-control.single .selectize-dropdown {
+    z-index:1001 !important;
+}

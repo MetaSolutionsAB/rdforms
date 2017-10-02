@@ -2,11 +2,13 @@ define([
   'rdforms/view/renderingContext',
   'rdforms/utils',
   'dojo/_base/array',
+  'dojo/date/stamp',
+  'dojo/date/locale',
   'rdforms/model/system',
   'rdforms/view/bootstrap/DurationEditor',
   'rdforms/view/bootstrap/DurationPresenter',
   'jquery',
-], (renderingContext, utils, array, system, DurationEditor, DurationPresenter, jquery) => {
+], (renderingContext, utils, array, stamp, locale, system, DurationEditor, DurationPresenter, jquery) => {
     // -------------- Presenters ----------------
   const presenters = renderingContext.presenterRegistry;
 
@@ -63,19 +65,53 @@ define([
   });
 
     // Presenter for duration
-  presenters.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#duration').register((fieldDiv, binding) => {
+  presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding) => {
 // eslint-disable-next-line no-new
     new DurationPresenter({
       value: binding.getValue(),
     }, jquery('<div>').appendTo(fieldDiv)[0]);
   });
 
+  const datePresenter = (fieldDiv, binding, context) => {
+    let data = binding.getValue();
+    const item = binding.getItem();
+    const node = jquery('<div>');
+    if (context.inEditor) {
+      // autoDate
+      if (data == null || data === '') {
+        if (item.hasStyle('autoInitDate') || item.hasStyle('autoUpdateDate')) {
+          data = stamp.toISOString(new Date());
+          binding.setValue(data, true);
+        }
+      } else if (item.hasStyle('autoUpdateDate')) {
+        data = stamp.toISOString(new Date());
+        binding.setValue(data, true);
+      }
+      node.addClass('rdformsField');
+    }
+
+    if (data != null && data !== '') {
+      const d = stamp.fromISOString(data);
+      let str;
+      if (data.indexOf('T') > 0) {
+        str = locale.format(d);
+      } else if (data.length > 4) {
+        str = locale.format(d, { selector: 'date'});
+      } else {
+        str = locale.format(d, {selector: 'date', datePattern: 'yyy'});
+      }
+      node.html(str).appendTo(fieldDiv);
+    }
+  };
+  presenters.itemtype('text').datatype('xsd:date').register(datePresenter);
+  presenters.itemtype('text').datatype('dcterms:W3CDTF').register(datePresenter);
+
 
     // -------------- Editors ----------------
   const editors = renderingContext.editorRegistry;
 
     // Editor for duration
-  editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#duration').register((fieldDiv, binding) => {
+  editors.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding) => {
     const tb = new DurationEditor({
       disabled: !binding.getItem().isEnabled(),
       value: binding.getValue(),
@@ -125,11 +161,11 @@ define([
             });
   };
     // Editor for gYear
-  registerPattern('^-?[0-9][0-9][0-9][0-9]$', 'http://www.w3.org/2001/XMLSchema#gYear');
+  registerPattern('^-?[0-9][0-9][0-9][0-9]$', 'xsd:gYear');
     // Editor for integers
-  registerPattern('^\\d+$', 'http://www.w3.org/2001/XMLSchema#integer');
+  registerPattern('^\\d+$', 'xsd:integer');
     // Editor for decimals
-  registerPattern('^(\\d+(\\.\\d+)?)$', 'http://www.w3.org/2001/XMLSchema#decimal');
+  registerPattern('^(\\d+(\\.\\d+)?)$', 'xsd:decimal');
 
     // Editor for text, possibly multiline, possibly with a pattern
     // (supports non-specific datatypes as well).

@@ -1,8 +1,9 @@
 /*global define*/
 define([
     "dojo/_base/declare",
-    "dojo/_base/array"
-], function(declare, array) {
+    "dojo/_base/array",
+    "rdfjson/namespaces"
+], function(declare, array, namespaces) {
 
     var matchRdfType = function(item, type) {
         var constr= item.getConstraints();
@@ -48,9 +49,23 @@ define([
 
     array.forEach(filterMethods, function(meth) {
         Filter.prototype[meth] = function(value) {
-            this.filterObj[meth] = value || true;
-            return this;
-        }
+          switch (meth) {
+            case 'constraint':
+              const cstr = {};
+              Object.keys(value).forEach(function (key) {
+                cstr[namespaces.expand(key)] = namespaces.expand(value[key]);
+              });
+              this.filterObj[meth] = cstr;
+            case 'predicate':
+            case 'rdftype':
+            case 'datatype':
+              this.filterObj[meth] = namespaces.expand(value);
+              break;
+            default:
+              this.filterObj[meth] = value || true;
+          }
+          return this;
+        };
     });
 
 	return declare(null, {

@@ -181,7 +181,7 @@ define(["dojo/_base/declare",
 
         addComponent: function(fieldDiv, binding) {
             if (binding.getItem().hasStyle("nonEditable")) {
-                renderingContext.renderPresenter(fieldDiv, binding, {view: this});
+                renderingContext.renderPresenter(fieldDiv, binding, {view: this, inEditor: true});
             } else {
                 renderingContext.renderEditor(fieldDiv, binding, {view: this});
             }

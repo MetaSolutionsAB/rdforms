@@ -79,3 +79,20 @@
 .selectize-control.single .selectize-dropdown {
     z-index:1001 !important;
 }
+
+.rdforms .rdformsDateValue .dateInput {
+    width: 5.7em;
+}
+
+.rdforms .rdformsDateValue .yearInput,
+.rdforms .rdformsDateValue .timeInput {
+    width: 3em;
+}
+
+.rdforms .rdformsDateValue .dateControl {
+    margin-right: 3px;
+}
+
+.rdforms .rdformsDateValue>.form-group {
+    margin-right: 2em;
+}

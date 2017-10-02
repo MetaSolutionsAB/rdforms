@@ -56,6 +56,7 @@ define([
                 cstr[namespaces.expand(key)] = namespaces.expand(value[key]);
               });
               this.filterObj[meth] = cstr;
+              break;
             case 'predicate':
             case 'rdftype':
             case 'datatype':

@@ -3,6 +3,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
+    "rdfjson/namespaces",
     "rdforms/template/Bundle",
     "rdforms/template/Group",
     "rdforms/template/PropertyGroup",
@@ -10,7 +11,7 @@ define([
     "rdforms/template/Choice",
     "rdforms/template/OntologyStore",
     "rdforms/model/engine"
-], function (declare, lang, array, Bundle, Group, PropertyGroup, Text, Choice, OntologyStore, engine) {
+], function (declare, lang, array, namespaces, Bundle, Group, PropertyGroup, Text, Choice, OntologyStore, engine) {
 
     /**
      * Keeps a registry of templates and reusable items.
@@ -139,6 +140,10 @@ define([
             bundle.itemStore = this;
             var b = new Bundle(bundle);
             this._bundles.push(b);
+
+            if (bundle.source.namespaces) {
+                namespaces.add(bundle.source.namespaces);
+            }
 
             var templates = bundle.source.templates || bundle.source.auxilliary;
             if (templates instanceof Array) {

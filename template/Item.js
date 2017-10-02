@@ -3,8 +3,9 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
+    "rdfjson/namespaces",
     "rdforms/utils"
-], function (declare, lang, array, utils) {
+], function (declare, lang, array, namespaces, utils) {
     var itemCount = 0;
 
     var setObjAttr = function(obj, attr, value) {
@@ -48,7 +49,9 @@ define([
             "email",
             "disjoint",
             "deprecated",
-            "noLabelInPresent"
+            "noLabelInPresent",
+            "autoInitDate",
+            "autoUpdateDate"
         ],
 
         //===================================================
@@ -133,7 +136,11 @@ define([
          * @return {String} as a URI, may be undefined for Groups, never undefined for Text or choice item types.
          */
         getProperty: function (original) {
-            return this.getSource(original).property;
+            let p = this.getSource(original).property;
+            if (p != null && p !== '') {
+                p = namespaces.expand(p);
+            }
+            return p;
         },
 
         setProperty: function(prop) {
@@ -155,7 +162,13 @@ define([
          * The property value pairs corresponds to predicate and objects in required tripples.
          */
         getURIValueLabelProperties: function (original) {
-            return this.getSource(original).uriValueLabelProperties;
+            let arr = this.getSource(original).uriValueLabelProperties;
+            if (arr != null) {
+                return arr.map(function(uri) {
+                    return namespaces.expand(uri);
+                });
+            }
+            return arr;
         },
         setURIValueLabelProperties: function (props) {
             setObjAttr(this.getSource(true), "uriValueLabelProperties", props);
@@ -167,7 +180,15 @@ define([
          * The property value pairs corresponds to predicate and objects in required tripples.
          */
         getConstraints: function (original) {
-            return this.getSource(original).constraints;
+            const constr = this.getSource(original).constraints;
+            if (constr != null) {
+                const nc = {};
+                Object.keys(constr).forEach(function(key) {
+                    nc[namespaces.expand(key)] = namespaces.expand(constr[key]);
+                });
+                return nc;
+            }
+            return constr;
         },
         setConstraints: function (constr) {
             setObjAttr(this.getSource(true), "constraints", constr);
@@ -186,7 +207,16 @@ define([
          *
          */
         getDeps: function (original) {
-            return this.getSource(original).deps;
+            let deps = this.getSource(original).deps;
+            if (deps != null) {
+                return deps.map(function(d) {
+                  if (d !== '*' && d !== '..') {
+                      return namespaces.expand(d);
+                  }
+                  return d;
+                });
+            }
+            return deps;
         },
         setDeps: function (deps) {
             setObjAttr(this.getSource(true), "deps", deps);
@@ -198,7 +228,11 @@ define([
          * @return {String} a URI indicating the datatype, for example: "http://www.w3.org/2001/XMLSchema.xsd#date".
          */
         getDatatype: function (original) {
-            return this.getSource(original).datatype;
+            const dt = this.getSource(original).datatype;
+            if (dt != null && dt != '') {
+                return namespaces.expand(dt);
+            }
+            return dt;
         },
         setDatatype: function (dt) {
             setObjAttr(this.getSource(true), "datatype", dt);

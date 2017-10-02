@@ -2,13 +2,19 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "rdfjson/namespaces",
     "rdforms/utils",
     "rdforms/template/Item"
-], function (declare, lang, utils, Item) {
+], function (declare, lang, namespaces, utils, Item) {
 
-    var sortChoices = function (choices) {
+    var sortChoices = function (choices, expand) {
         if (choices == null) {
             return;
+        }
+        if (expand) {
+          choices.forEach(function(c) {
+            c.value = namespaces.expand(c.value);
+          });
         }
         choices.sort(function (c1, c2) {
             var lab1 = utils.getLocalizedValue(c1.label).value || c1.value;
@@ -73,14 +79,15 @@ define([
         getStaticChoices: function (original) {
             var s = this.getSource(original);
             if (s.choices) {
+                const isURI = this.getNodetype().indexOf('LITERAL') === -1;
                 if (original && this.isExtention()) {
                     if (!this._origStaticIsSorted) {
-                        sortChoices(s.choices);
+                        sortChoices(s.choices, isURI);
                         this._origStaticIsSorted = true;
                     }
                 } else {
                     if (!this._staticIsSorted) {
-                        sortChoices(s.choices);
+                        sortChoices(s.choices, isURI);
                         this._staticIsSorted = true;
                     }
                 }
@@ -138,7 +145,11 @@ define([
             }
         },
         getOntologyUrl: function (original) {
-            return this.getSource(original).ontologyUrl;
+            const ou = this.getSource(original).ontologyUrl;
+            if (ou != null && ou !== '') {
+                return namespaces.expand(ou);
+            }
+            return ou;
         },
         setOntologyUrl: function (url) {
             var s = this.getSource(true);
@@ -155,7 +166,11 @@ define([
                 ["http://www.w3.org/2000/01/rdf-schema#label"];
         },
         getParentProperty: function (original) {
-            return this.getSource(original).parentProperty;
+            const pp = this.getSource(original).parentProperty;
+            if (pp != null && pp !== '') {
+                return namespaces.expand(pp);
+            }
+            return pp;
         },
         setParentProperty: function (prop) {
             var s = this.getSource(true);
@@ -167,7 +182,11 @@ define([
             this.refreshExtends();
         },
         getHierarchyProperty: function (original) {
-            return this.getSource(original).hierarchyProperty;
+            const hp = this.getSource(original).hierarchyProperty;
+            if (hp != null && hp !== '') {
+                return namespaces.expand(hp);
+            }
+            return hp;
         },
         setHierarchyProperty: function (prop) {
             var s = this.getSource(true);

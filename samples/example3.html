@@ -18,14 +18,13 @@
             'rdfjson/Graph',              //Rdfjson Graph API
             'rdforms/template/ItemStore', //Stores all the RDForm templates
             'rdforms/view/Editor',        //The editor User interface
-            'dojo/json',                          //Json parser
-            'text!../samples/rdf.json',         //The sample RDF
+            'rdforms/samples/rdf',         //The sample RDF
             'rdforms/template/bundleLoader', //To load bundles of templates
             'dojo/domReady!',             //Wait until the dom is ready.
-        ], function(Graph, ItemStore, Editor, json, rdf, bundleLoader) {
-            var graph = new Graph(json.parse(rdf));
+        ], function(Graph, ItemStore, Editor, rdf, bundleLoader) {
+            var graph = new Graph(rdf);
             var itemStore = new ItemStore();
-            bundleLoader(itemStore, ["./templateBundle.json"], function() {
+            bundleLoader(itemStore, ["./templateBundle.js"], function() {
               new Editor({
                 graph: graph,
                 resource: "http://example.org/about",
@@ -37,8 +36,8 @@
     </script>
 </head>
 <body>
-<div>
-    <h1>Example 2</h1>
+<div class="main">
+    <h1>Example 3</h1>
     <div id="node"></div>
 </div>
 </body>

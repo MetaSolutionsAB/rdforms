@@ -1,4 +1,4 @@
-{
+define({
     "http://example.org/about" : {
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"	  : [ { "value" : "http://xmlns.com/foaf/0.1/Document", "type" : "uri"}],
         "http://purl.org/dc/terms/title"   : [ { "value" : "Anna's Homepage", "type" : "literal", "lang" : "en" } ] ,
@@ -12,4 +12,4 @@
     "http://example.org/about2" : {
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"	  : [ { "value" : "http://xmlns.com/foaf/0.1/Document", "type" : "uri"}]
     }
-}
+});

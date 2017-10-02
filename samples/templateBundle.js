@@ -1,4 +1,4 @@
-{
+define({
   "root": "test",
   "templates":[{
     "id": "test",
@@ -92,4 +92,4 @@
       }
     ]
   }]
-}
+});

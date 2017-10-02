@@ -65,3 +65,9 @@
 .selectize-control.single .selectize-input {
     font-size: 16px !important;
 }
+
+.rdforms .selectize-dropdown-content {
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}

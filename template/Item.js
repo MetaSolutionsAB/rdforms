@@ -184,7 +184,14 @@ define([
             if (constr != null) {
                 const nc = {};
                 Object.keys(constr).forEach(function(key) {
-                    nc[namespaces.expand(key)] = namespaces.expand(constr[key]);
+                    const val = constr[key];
+                    if (Array.isArray(val)) {
+                      nc[namespaces.expand(key)] = val.map(function(v) {
+                          return namespaces.expand(v);
+                      });
+                    } else {
+                      nc[namespaces.expand(key)] = namespaces.expand(val);
+                    }
                 });
                 return nc;
             }

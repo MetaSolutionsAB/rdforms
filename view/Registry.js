@@ -53,7 +53,14 @@ define([
             case 'constraint':
               const cstr = {};
               Object.keys(value).forEach(function (key) {
-                cstr[namespaces.expand(key)] = namespaces.expand(value[key]);
+                const vv = value[key];
+                if (Array.isArray(vv)) {
+                  cstr[namespaces.expand(key)] = vv.map(function(v) {
+                      return namespaces.expand(v);
+                  });
+                } else {
+                  cstr[namespaces.expand(key)] = namespaces.expand();
+                }
               });
               this.filterObj[meth] = cstr;
               break;

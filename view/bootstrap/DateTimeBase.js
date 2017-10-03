@@ -186,18 +186,6 @@ define([
   DateTimeBase.register = (DTCls) => {
         // Editor for dates and dates with time.
     const dateEditor = (fieldDiv, binding, context) => {
-      let data = binding.getValue();
-      const item = binding.getItem();
-      //autoDate
-      if (data == null || data === '') {
-        if (item.hasStyle('autoInitDate')) {
-          data = stamp.toISOString(new Date());
-          binding.setValue(data, true);
-        }
-      } else if (item.hasStyle('autoUpdateDate')) {
-        data = stamp.toISOString(new Date());
-        binding.setValue(data, true);
-      }
       const dt = new DTCls({
         messages: context.view.messages,
         binding,

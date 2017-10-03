@@ -60,7 +60,7 @@ define([
                 .appendTo(fieldDiv);
       system.attachLinkBehaviour($a[0], parentBinding);
     } else {
-      jquery('<div>').html(text).appendTo(fieldDiv);
+      jquery('<div>').toggleClass('rdformsField', context.inEditor).html(text).appendTo(fieldDiv);
     }
   });
 
@@ -73,34 +73,18 @@ define([
   });
 
   const datePresenter = (fieldDiv, binding, context) => {
-    let data = binding.getValue();
-    const item = binding.getItem();
-    const node = jquery('<div>');
-    if (context.inEditor) {
-      // autoDate
-      if (data == null || data === '') {
-        if (item.hasStyle('autoInitDate') || item.hasStyle('autoUpdateDate')) {
-          data = stamp.toISOString(new Date());
-          binding.setValue(data, true);
-        }
-      } else if (item.hasStyle('autoUpdateDate')) {
-        data = stamp.toISOString(new Date());
-        binding.setValue(data, true);
-      }
-      node.addClass('rdformsField');
-    }
-
+    const data = binding.getValue();
     if (data != null && data !== '') {
       const d = stamp.fromISOString(data);
       let str;
       if (data.indexOf('T') > 0) {
         str = locale.format(d);
       } else if (data.length > 4) {
-        str = locale.format(d, { selector: 'date'});
+        str = locale.format(d, { selector: 'date' });
       } else {
-        str = locale.format(d, {selector: 'date', datePattern: 'yyy'});
+        str = locale.format(d, { selector: 'date', datePattern: 'yyy' });
       }
-      node.html(str).appendTo(fieldDiv);
+      jquery('<div>').html(str).toggleClass('rdformsField', context.inEditor).appendTo(fieldDiv);
     }
   };
   presenters.itemtype('text').datatype('xsd:date').register(datePresenter);

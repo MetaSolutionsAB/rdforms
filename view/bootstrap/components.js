@@ -6,6 +6,7 @@ define([
   'rdforms/view/bootstrap/choice',
   'rdforms/view/bootstrap/buttons',
   'rdforms/view/bootstrap/table',
+  'rdforms/view/bootstrap/auto',
 ], (renderingContext, jquery) => {
   renderingContext.domQuery = (selector, node) => jquery(selector, node)[0];
 

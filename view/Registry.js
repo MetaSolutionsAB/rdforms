@@ -187,12 +187,29 @@ define([
             return prio;
         },
 
-        getComponent: function(item) {
+        getPriority: function(item, component) {
+          for (var i=0;i<this.components.length;i++) {
+            if (this.components[i].component === component) {
+              const prio = this.calculatePriority(item, this.components[i].filter);
+              if (prio >= 0) {
+                  return prio;
+              }
+            }
+          }
+          return 0;
+        },
+
+        getComponentBefore: function(item, component) {
+          const limitprio = this.getPriority(item, component);
+          return this.getComponent(item, limitprio);
+        },
+
+        getComponent: function(item, limitPrio) {
             var bestComponent, bestPrio = -1, prio, component;
             for (var i=0;i<this.components.length;i++) {
                 component = this.components[i];
                 prio = this.calculatePriority(item, component.filter);
-                if (prio > bestPrio) {
+                if (prio > bestPrio && (typeof limitPrio === 'undefined' || prio < limitPrio)) {
                     bestComponent = component;
                     bestPrio = prio;
                 }

@@ -59,7 +59,7 @@ define([
                       return namespaces.expand(v);
                   });
                 } else {
-                  cstr[namespaces.expand(key)] = namespaces.expand();
+                  cstr[namespaces.expand(key)] = namespaces.expand(vv);
                 }
               });
               this.filterObj[meth] = cstr;

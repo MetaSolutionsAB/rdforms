@@ -57,14 +57,10 @@ define([
     return undefined;
   };
 
-  jquery('body').on('click', (e) => {
-    jquery('[data-toggle="popover"]').each(() => {
-            // the 'is' for buttons that trigger popups
-            // the 'has' for icons within a button that triggers a popup
-      if (!jquery(this).is(e.target)
-                && jquery(this).has(e.target).length === 0
-                && jquery('.popover').has(e.target).length === 0) {
-        jquery(this).popover('hide');
+  jquery('body').on('show.bs.popover click', function (e) {
+    jquery('[data-toggle="popover"]').each((node, a) => {
+      if (e.target.innerHTML !== a.innerHTML) {
+        jquery(a).popover('hide');
       }
     });
   });

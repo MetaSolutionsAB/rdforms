@@ -10,6 +10,13 @@ define({
     "content":[
       {
         "type":"text",
+        "nodetype":"LITERAL",
+        "property":"dcterms:identifier",
+        "cardinality": {"min": 1, "max": 1},
+        "label":{"en":"Identifier", "sv": "Identifierare"},
+        "styles": ["autoUUID", "nonEditable"]
+      }, {
+        "type":"text",
         "nodetype":"LANGUAGE_LITERAL",
         "property":"dcterms:title",
         "cardinality": {"min": 2, "pref": "4", "max": 5},

@@ -6,12 +6,13 @@ define([
 ], function(declare, Binding, utils) {
 
     /**
-     * Corresponds to a binding for a Text item type, captures literals, literals with 
+     * Corresponds to a binding for a Text item type, captures literals, literals with
      * language, datatyped literals, or non blank resources, that is, URI's.
      * Validity is determined by a valid predicate and object.
      * The statement is asserted when the parents are valid and this ValueBinding is valid.
-     * 
-     * @see rforms.template.Text
+     * @exports {rdforms/model/ValueBinding}
+     * @class
+     * @see rforms/template/Text
      */
     return declare(Binding, {
         //===================================================
@@ -34,10 +35,10 @@ define([
         /**
          * @param {String} value
          */
-        setValue: function(value) {
+        setValue: function(value, silent) {
             var oValidObject = this._validObject;
             if (this._isValidObjectValue(value)) {
-                this._statement.setValue(value);
+                this._statement.setValue(value, silent);
                 this._validObject = true;
                 if (oValidObject !== true && this._validPredicate === true && !this._excludeFromTreeValidityCheck) {
                     this._parent.oneChildValidityChanged(true);
@@ -45,7 +46,7 @@ define([
             } else {
                 //If it is a null value, change the statement.
                 if (value === "" || value === null) {
-                    this._statement.setValue("");
+                    this._statement.setValue("", silent);
                 }
                 //And unassert the statement.
                 this._validObject = false;

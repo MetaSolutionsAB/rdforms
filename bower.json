@@ -1,6 +1,6 @@
 {
   "name": "rdforms",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "authors": [
     "Matthias Palmér <matthias@metasolutions.se>"
   ],
@@ -11,7 +11,7 @@
   "dependencies": {
     "dojo": "1.12.2",
     "dijit": "1.12.2",
-    "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#1.1",
+    "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#1.2",
     "di18n": "https://bitbucket.org/metasolutions/di18n.git#0.4",
     "bootstrap-amd": "latest",
     "fontawesome": "latest",
@@ -22,7 +22,10 @@
     "select2": "4.0.0",
     "requirejs": "latest",
     "requirejs-i18n": "latest",
-    "requirejs-text": "latest"
+    "requirejs-text": "latest",
+    "selectize": "https://github.com/selectize/selectize.js.git#gh-pages",
+    "bmd": "https://bitbucket.org/metasolutions/bootstrap-material-design.git#amd",
+    "bootstrap-material-datetimepicker": "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#amd"
   },
   "keywords": [
     "rdf",
@@ -41,6 +44,7 @@
   ],
   "resolutions": {
     "dojo": "1.12.2",
-    "dijit": "1.12.2"
+    "dijit": "1.12.2",
+    "jquery": ">= 2.1.0"
   }
 }

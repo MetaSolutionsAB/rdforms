@@ -1,13 +1,13 @@
 /*global define*/
 define(["dojo/_base/declare", 
-	"dojo/_base/lang",
+	  "dojo/_base/lang",
     "dojo/_base/array",
-	"dijit/_Widget",
-    "rdforms/model/Engine",
-	"rdforms/model/GroupBinding",
+	  "dijit/_Widget",
+    "rdforms/model/engine",
+	  "rdforms/model/GroupBinding",
     "rdforms/view/renderingContext"
 ], function(declare, lang, array, _Widget,
-            Engine, GroupBinding, renderingContext) {
+            engine, GroupBinding, renderingContext) {
     
 
     return declare(_Widget, {
@@ -95,7 +95,7 @@ define(["dojo/_base/declare",
                 if (this.graph == null || this.resource == null || this.template == null) {
                     return;
                 }
-                this.binding = Engine.match(this.graph, this.resource, this.template);
+                this.binding = engine.match(this.graph, this.resource, this.template);
             }
         },
 
@@ -241,16 +241,38 @@ define(["dojo/_base/declare",
             renderingContext.domClassToggle(rowNode, "notCompact", item.getType() === "group");
 
             this.addLabel(rowNode, binding, item);
+            if (this.filterBinding(binding)) {
+                renderingContext.domClassToggle(rowNode, "hiddenProperty", true);
+            }
             return rowNode;
         },
+
+        _getFilterPredicates: function() {
+            return this.parentView ? this.parentView._getFilterPredicates() : this.filterPredicates;
+        },
         filterBinding: function(binding) {
-            if (this.parentView) {
-                return this.parentView.filterBinding(binding);
-            } else if (this.filterPredicates != null) {
-                var stmt = binding.getStatement();
-                return stmt != null && this.filterPredicates[stmt.getPredicate()] === true;
+            var fp = this._getFilterPredicates();
+            var stmt = binding.getStatement();
+            var item = binding.getItem();
+            if (fp && stmt) {
+              return fp[stmt.getPredicate()] === true;
+            }
+            if (fp && item.getType() === "group" && !item.getProperty()) {
+              // Checks one level below if there is a child that is visible
+                var childBindings = item.getChildren() || [];
+                var hasNonFilteredChild = false;
+                childBindings.forEach(function(child) {
+                  if (fp[child.getProperty()] !== true) {
+                      hasNonFilteredChild = true;
+                  }
+                });
+                return !hasNonFilteredChild;
             }
             return false;
-        }
+        },
+        filterProperty: function(property) {
+          var fp = this._getFilterPredicates() || {};
+          return fp[property] === true;
+        },
     });
 });

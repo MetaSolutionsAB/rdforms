@@ -1,10 +1,10 @@
 define(["dojo/_base/declare",
     "rdforms/view/Presenter",
-    "rdforms/model/Engine",
+    "rdforms/model/engine",
     "rdforms/view/renderingContext"
-], function (declare, Presenter, Engine, renderingContext) {
+], function (declare, Presenter, engine, renderingContext) {
 
-    var showNow = function (item, bindings, includeLevel) {
+    var showNow = function (editor, item, bindings, includeLevel) {
         if (item.hasStyle("invisible")) {
             return false;
         }
@@ -12,8 +12,9 @@ define(["dojo/_base/declare",
             return false;
         }
         if (bindings.length > 0) {
-            if (item.getProperty()) {
-                return true;
+            var prop = item.getProperty();
+            if (prop) {
+                return !editor.filterProperty(prop);
             }
 
             //Take care of layout grouping by checking recursively.
@@ -24,7 +25,7 @@ define(["dojo/_base/declare",
                 for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
                     bindings = groupedBindingsArr[groupIndex];
                     item = groupedItemsArr[groupIndex];
-                    if (showNow(item, bindings, includeLevel)) {       //Recursive call
+                    if (showNow(editor, item, bindings, includeLevel)) {       //Recursive call
                         return true;
                     }
                 }
@@ -32,6 +33,7 @@ define(["dojo/_base/declare",
                 return true;
             }
         }
+
         var card = item.getCardinality();
         switch (includeLevel) {
             case "mandatory":
@@ -58,7 +60,7 @@ define(["dojo/_base/declare",
         //===================================================
         report: function (report) {
             if (!report) {
-                report = Engine.report(this.binding);
+                report = engine.report(this.binding);
             }
             for (var key in this._binding2node) {
                 renderingContext.domClassToggle(this._binding2node[key], "errorReport", false);
@@ -66,7 +68,7 @@ define(["dojo/_base/declare",
             for (var j = 0; j < report.errors.length; j++) {
                 var err = report.errors[j];
                 if (err.parentBinding === this.binding) {
-                    if (err.code === Engine.CODES.TOO_FEW_VALUES) {
+                    if (err.code === engine.CODES.TOO_FEW_VALUES) {
                         var item = err.item;
                         var bindings = this.binding.getChildBindingsFor(item);
                         var counter = item.getCardinality().min;
@@ -76,7 +78,7 @@ define(["dojo/_base/declare",
                                 renderingContext.domClassToggle(this._binding2node[bindings[k].getHash()], "errorReport", true);
                             }
                         }
-                    } else if (err.code === Engine.CODES.TOO_MANY_VALUES_DISJOINT) {
+                    } else if (err.code === engine.CODES.TOO_MANY_VALUES_DISJOINT) {
                         var bindings = this.binding.getChildBindings();
                         //var counter = item.getCardinality().max;
                         for (var k = 0; k < bindings.length; k++) {
@@ -101,7 +103,7 @@ define(["dojo/_base/declare",
             if (this.graph == null || this.resource == null || this.template == null) {
                 return;
             }
-            this.binding = Engine.match(this.graph, this.resource, this.template);
+            this.binding = engine.match(this.graph, this.resource, this.template);
             this.render();
         },
         //===================================================
@@ -125,7 +127,7 @@ define(["dojo/_base/declare",
          * @param {Object} bindings
          */
         showNow: function (item, bindings) {
-            return showNow(item, bindings, this.includeLevel);
+            return showNow(this, item, bindings, this.includeLevel);
         },
         skipBinding: function (binding) {
             return false;
@@ -156,7 +158,7 @@ define(["dojo/_base/declare",
             if (target > bindings.length) {
                 bindings = bindings.concat([]);
                 while (target > bindings.length) {
-                    bindings.push(Engine.create(this.binding, item));
+                    bindings.push(engine.create(this.binding, item));
                 }
             }
             return bindings;
@@ -179,9 +181,9 @@ define(["dojo/_base/declare",
 
         addComponent: function(fieldDiv, binding) {
             if (binding.getItem().hasStyle("nonEditable")) {
-                renderingContext.renderPresenter(fieldDiv, binding, {view: this});
+                renderingContext.renderPresenter(fieldDiv, binding, {view: this, inEditor: true});
             } else {
-                renderingContext.renderEditor(fieldDiv, binding, {view: this});
+                renderingContext.renderEditor(fieldDiv, binding, {view: this, inEditor: true});
             }
         },
         createRowNode: function (lastRowNode, binding, item) {
@@ -192,20 +194,22 @@ define(["dojo/_base/declare",
                     if (!match) {
                         if (binding.isValid()) {
                             renderingContext.domClassToggle(newNode, "missingDepsWithValue", true);
+                            binding.getCardinalityTracker().setDepsOk(false);
                         } else {
                             renderingContext.domClassToggle(newNode, "missingDeps", true);
                         }
                     } else {
                         renderingContext.domClassToggle(newNode, "missingDepsWithValue", false);
+                        binding.getCardinalityTracker().setDepsOk(true);
                         renderingContext.domClassToggle(newNode, "missingDeps", false);
                     }
                 };
-                var fromBinding = Engine.findBindingRelativeToParentBinding(binding.getParent(), path);
-                if (!Engine.matchPathBelowBinding(fromBinding, path)) {
+                var fromBinding = engine.findBindingRelativeToParentBinding(binding.getParent(), path);
+                if (!engine.matchPathBelowBinding(fromBinding, path)) {
                     f(false);
                 }
                 fromBinding.addListener(function(changedBinding) {
-                    f(Engine.matchPathBelowBinding(fromBinding, path));
+                    f(engine.matchPathBelowBinding(fromBinding, path));
                 });
             }
             if (this.filterBinding(binding)) {

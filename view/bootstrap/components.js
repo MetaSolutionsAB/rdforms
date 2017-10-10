@@ -1,52 +1,50 @@
 define([
-    "rdforms/view/renderingContext",
-    "jquery",
-    "rdforms/view/bootstrap/labels",
-    "rdforms/view/bootstrap/text",
-    "rdforms/view/bootstrap/choice",
-    "rdforms/view/bootstrap/buttons",
-    "rdforms/view/bootstrap/table"
-], function(renderingContext, jquery) {
+  'rdforms/view/renderingContext',
+  'jquery',
+  'rdforms/view/bootstrap/labels',
+  'rdforms/view/bootstrap/text',
+  'rdforms/view/bootstrap/choice',
+  'rdforms/view/bootstrap/buttons',
+  'rdforms/view/bootstrap/table',
+  'rdforms/view/bootstrap/auto',
+], (renderingContext, jquery) => {
+  renderingContext.domQuery = (selector, node) => jquery(selector, node)[0];
 
-    renderingContext.domQuery = function(selector, node) {
-        return jquery(selector, node)[0];
-    };
-    renderingContext.domCreate = function(nodeStr, parent) {
-        return jquery("<"+nodeStr+">").appendTo(parent)[0];
-    };
-    renderingContext.domCreateAfter = function(nodeStr, sibling) {
-        var node = jquery("<"+nodeStr+">");
-        jquery(sibling).after(node);
-        return node;
-    };
-    renderingContext.domSetAttr = function(node, attr, value) {
-        jquery(node).attr(attr, value);
-    };
+  renderingContext.domCreate = (nodeStr, parent) => jquery(`<${nodeStr}>`).appendTo(parent)[0];
 
-    renderingContext.domText = function(node, text) {
-        jquery(node).text(text);
-    };
+  renderingContext.domCreateAfter = (nodeStr, sibling) => {
+    const node = jquery(`<${nodeStr}>`);
+    jquery(sibling).after(node);
+    return node;
+  };
+  renderingContext.domSetAttr = (node, attr, value) => {
+    jquery(node).attr(attr, value);
+  };
 
-    renderingContext.domClassToggle = function(node, classStr, addOrRemove) {
-        jquery(node).toggleClass(classStr, addOrRemove);
-    };
+  renderingContext.domText = (node, text) => {
+    jquery(node).text(text);
+  };
 
-    renderingContext.preEditorRenderer =function (fieldDiv, binding, context) {
-        var it = binding.getItem().getType();
-        if (it === "group") {
-            jquery(fieldDiv).addClass("rdformsGroup");
-        } else {
-            jquery(fieldDiv).addClass("rdformsField");
-        }
+  renderingContext.domClassToggle = (node, classStr, addOrRemove) => {
+    jquery(node).toggleClass(classStr, addOrRemove);
+  };
 
-        context.$controlDiv = jquery('<div class="rdformsFieldControl">');
-        context.controlDiv = context.$controlDiv[0];
-        if (it !== "group" && context.noCardinalityButtons !== true) {
-            renderingContext.addRemoveButton(fieldDiv, binding, context);
-        }
-    };
+  renderingContext.preEditorRenderer = (fieldDiv, binding, context) => {
+    const it = binding.getItem().getType();
+    if (it === 'group') {
+      jquery(fieldDiv).addClass('rdformsGroup');
+    } else {
+      jquery(fieldDiv).addClass('rdformsField');
+    }
 
-    renderingContext.postEditorRenderer = function (fieldDiv, binding, context) {
-        context.$controlDiv.appendTo(fieldDiv);
-    };
+    context.$controlDiv = jquery('<div class="rdformsFieldControl">');
+    context.controlDiv = context.$controlDiv[0];
+    if (it !== 'group' && context.noCardinalityButtons !== true) {
+      renderingContext.addRemoveButton(fieldDiv, binding, context);
+    }
+  };
+
+  renderingContext.postEditorRenderer = (fieldDiv, binding, context) => {
+    context.$controlDiv.appendTo(fieldDiv);
+  };
 });

@@ -7,11 +7,11 @@ define([
     "dojo/dom-construct",
     "dojo/_base/lang",
     "dojo/_base/array",
-    "rdforms/model/Engine",
+    "rdforms/model/engine",
     "dijit/focus",
     "dijit/TooltipDialog",
     "dijit/popup"
-], function(renderingContext, utils, on, aspect, domClass, domConstruct, lang, array, Engine, focus, TooltipDialog, popup) {
+], function(renderingContext, utils, on, aspect, domClass, domConstruct, lang, array, engine, focus, TooltipDialog, popup) {
 
     renderingContext.addPresenterTable = function(newRow, firstBinding, context) {
         var item = firstBinding.getItem(), childItems = item.getChildren();
@@ -70,7 +70,7 @@ define([
             var cardTr = firstBinding.getCardinalityTracker();
             on(add, "click", function () {
                 if (!cardTr.isMax()) {
-                    var nBinding = Engine.create(parentBinding, item);
+                    var nBinding = engine.create(parentBinding, item);
                     addTableRow(tBody, nBinding, context);
                 }
             });
@@ -106,7 +106,7 @@ define([
         array.forEach(groupedBindings, function (bindings, index) {
             //Create those columns that are missing:
             if (bindings.length === 0 && !childItems[index].hasStyle("nonEditable")) {
-                Engine.create(binding, childItems[index]);
+                engine.create(binding, childItems[index]);
             }
         });
         array.forEach(groupedBindings, function (bindings, index) {
@@ -126,7 +126,7 @@ define([
                 if (!cardTr.isMin()) {
                     if (cardTr.getCardinality() === 1) {
                         var parentBinding = binding.getParent(), item = binding.getItem();
-                        var nBinding = Engine.create(parentBinding, item);
+                        var nBinding = engine.create(parentBinding, item);
                         addTableRow(table, nBinding, context);
                     }
                     cardConnect1.remove();
@@ -175,8 +175,8 @@ define([
             if (ebi[choice.value] != null) {
                 nb.push(ebi[choice.value]);
             } else {
-                var newRowBinding = Engine.create(parentBinding, item);
-                var firstColumnBinding = Engine.create(newRowBinding, firstColumnItem);
+                var newRowBinding = engine.create(parentBinding, item);
+                var firstColumnBinding = engine.create(newRowBinding, firstColumnItem);
                 firstColumnBinding.setExcludeFromTreeValidityCheck(true);
                 firstColumnBinding.setAncestorValid(false);
                 firstColumnBinding.setChoice(choice);

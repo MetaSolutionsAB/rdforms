@@ -5,12 +5,14 @@ require.config({
         "text": "requirejs-text/text",
         "fuelux": "fuelux/js",
         "bootstrap": "bootstrap-amd/lib",
-        "select2": "select2/src/js",
+        "bmddtp": "bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker",
+        "selectize": "selectize/js/selectize",
         "i18n": "di18n/i18n",
         "jquery": "jquery/src",
         "sizzle": "sizzle/dist/sizzle",
         "jquery.mousewheel": "select2/src/js/jquery.mousewheel.shim",
-        requireLib: 'requirejs/require'
+        "requireLib": 'requirejs/require',
+        "bmd": "bmd/dist",
     },
     packages: [ //Config defined using packages to allow for main.js when requiring just config.
         {
@@ -21,7 +23,12 @@ require.config({
             name: 'config',
             location: '../config',
             main: 'main'
-        }
+        },
+       {
+           name: 'select2',
+           location: 'select2/src/js',
+           main: "jquery.select2"
+       }
     ],
     map: {
         "jquery": {
@@ -50,7 +57,6 @@ require.config({
         'rdforms/template/ItemStore', //Stores all the RDForm templates
         'rdforms/view/Editor',        //The editor User interface
         'rdforms/view/nls/rdforms',
-        'rdforms/view/bootstrap/all',
         'moment/locale/sv', //English is loaded by default
         'dojo/domReady'
     ]

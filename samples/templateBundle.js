@@ -1,24 +1,45 @@
-{
+define({
   "root": "test",
+  "namespaces": {
+    "ex": "http://example.com/",
+    "cc": "http://creativecommons.org/licenses/"
+  },
   "templates":[{
     "id": "test",
     "type":"group",
     "content":[
       {
         "type":"text",
+        "nodetype":"LITERAL",
+        "property":"dcterms:identifier",
+        "cardinality": {"min": 1, "max": 1},
+        "label":{"en":"Identifier", "sv": "Identifierare"},
+        "styles": ["autoUUID", "nonEditable"]
+      }, {
+        "type":"text",
         "nodetype":"LANGUAGE_LITERAL",
-        "property":"http://purl.org/dc/terms/title",
+        "property":"dcterms:title",
         "cardinality": {"min": 2, "pref": "4", "max": 5},
         "label":{"en":"Title", "sv": "Titel"},
         "description":{"en":"A short title of the resource", "sv": "En kort titel för resursen"}
       }, {
         "type":"text",
         "nodetype":"DATATYPE_LITERAL",
-        "property":"http://purl.org/dc/terms/date",
-        "datatype":"http://www.w3.org/2001/XMLSchema#date",
+        "property":"dcterms:modified",
+        "datatype":"xsd:date",
         "cardinality": {"min": 1, "pref": "1", "max": 1},
         "label":{"en":"Date", "sv": "Datum"},
-        "description":{"en":"A date for this resource.", "sv": "Ett datum för denna resurs."}
+        "description":{"en":"A date when this resource was modified.", "sv": "Ett datum när denna resurs modifierades."},
+        "styles": ["autoUpdateDate", "nonEditable"]
+      }, {
+        "type":"text",
+        "nodetype":"DATATYPE_LITERAL",
+        "property":"dcterms:date",
+        "datatype":"xsd:date",
+        "cardinality": {"min": 1, "pref": "1", "max": 1},
+        "label":{"en":"Date", "sv": "Datum"},
+        "description":{"en":"A date for this resource.", "sv": "Ett datum för denna resurs."},
+        "styles": ["autoInitDate"]
       }, {
         "type":"choice",
         "nodetype":"URI",
@@ -26,7 +47,7 @@
         "cardinality": {"min": 1, "pref": "1", "max": 2},
         "choices": [
           {
-            "value": "http://example.com/physics",
+            "value": "ex:physics",
             "label": {
               "en": "Physics",
               "sv": "Fysik"
@@ -47,12 +68,12 @@
         "cardinality": {"min": 1, "pref": 1, "max": 1},
         "choices": [
           {
-            "value": "http://creativecommons.org/licenses/by/4.0/",
+            "value": "cc:by/4.0/",
             "label": {
               "en": "CC BY 4.0 (Attribution)"
             }
           }, {
-            "value": "http://creativecommons.org/licenses/by-nc/4.0/",
+            "value": "cc:by-nc/4.0/",
             "label": {
               "en": "CC BY-NC 4.0 (Attribution, Non-Commercial)"
             }
@@ -73,7 +94,7 @@
         "label":{"en":"Creator"},
         "property":"http://purl.org/dc/terms/creator",
         "cardinality": {"min": 0, "pref": 1, "max": 5},
-        "constraints":{"http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Person"},
+        "constraints":{"rdf:type": "foaf:Person"},
         "content":[
           {
             "type":"text",
@@ -92,4 +113,4 @@
       }
     ]
   }]
-}
+});

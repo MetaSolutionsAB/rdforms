@@ -4,8 +4,8 @@ define([
     "dojo/aspect",
     "dojo/dom-class",
     "dojo/dom-construct",
-    "rdforms/model/Engine"
-], function(renderingContext, on, aspect, domClass, domConstruct, Engine) {
+    "rdforms/model/engine"
+], function(renderingContext, on, aspect, domClass, domConstruct, engine) {
 
     renderingContext.addRemoveButton = function (fieldDiv, binding, context, onReset) {
         var remove = domConstruct.create("span", {
@@ -14,11 +14,11 @@ define([
         }, context.controlDiv);
         var cardTr = binding.getCardinalityTracker();
         var con = aspect.after(cardTr, "cardinalityChanged", function () {
-            domClass.toggle(remove, "disabled", cardTr.isMin());
+            domClass.toggle(remove, "disabled", cardTr.isMin() && cardTr.isDepsOk());
         });
 
         var removeConnect = on(remove, "click", function () {
-            if (!cardTr.isMin()) {
+            if (!cardTr.isMin() || !cardTr.isDepsOk()) {
                 if (cardTr.getCardinality() === 1) {
                     if (binding.getItem() instanceof Choice) {
                         binding.setChoice(null);
@@ -39,7 +39,7 @@ define([
     renderingContext.addExpandButton = function (rowDiv, labelDiv, item, context) {
         var expand = domConstruct.create("span", {"class": "action editExpand", "title": context.view.messages.edit_expand}, labelDiv);
         var expandCon = on(expand, "click", function () {
-            var nBinding = Engine.create(context.view.binding, item);
+            var nBinding = engine.create(context.view.binding, item);
             if (context.view.showAsTable(item)) {
                 var table = context.view.addTable(rowDiv, nBinding, item);
                 context.view.fillTable(table, [nBinding]);
@@ -62,18 +62,18 @@ define([
         var cardTr = binding.getCardinalityTracker();
         var con = aspect.after(cardTr, "cardinalityChanged", function () {
             domClass.toggle(add, "disabled", cardTr.isMax());
-            domClass.toggle(remove, "disabled", cardTr.isMin());
+            domClass.toggle(remove, "disabled", cardTr.isMin() && cardTr.isDepsOk());
         });
 
         var addCon = on(add, "click", function () {
             if (!cardTr.isMax()) {
-                var nBinding = Engine.create(parentBinding, item);
+                var nBinding = engine.create(parentBinding, item);
                 context.view.addRow(rowDiv, nBinding); //not the first binding...
             }
         });
 
         var removeCon = on(remove, "click", function () {
-            if (!cardTr.isMin()) {
+            if (!cardTr.isMin() || !cardTr.isDepsOk()) {
                 if (cardTr.getCardinality() === 1) {
                     var parentBinding = binding.getParent(), item = binding.getItem();
                     con.remove();
@@ -82,7 +82,7 @@ define([
                     binding.remove();
                     var card = item.getCardinality();
                     if (card.pref > 0 || card.min > 0) {
-                        var nBinding = Engine.create(parentBinding, item);
+                        var nBinding = engine.create(parentBinding, item);
                         context.view.addRow(rowDiv, nBinding); //not the first binding...
                     } else {
                         context.view.createRowNode(rowDiv, null, item);
@@ -105,7 +105,7 @@ define([
         var add = domConstruct.create("span", {"class": "action editAdd", "title": context.view.messages.edit_add}, labelDiv);
         on(add, "click", function () {
             if (!cardTr.isMax()) {
-                var nBinding = Engine.create(parentBinding, item);
+                var nBinding = engine.create(parentBinding, item);
                 context.view.addRow(rowDiv, nBinding); //not the first binding...
             }
         });

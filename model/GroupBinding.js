@@ -4,9 +4,8 @@ define([
     "dojo/_base/array",
     "dojo/_base/declare",
     "./Binding",
-	"./Engine",
     "./CardinalityTracker"
-], function(lang, array, declare, Binding, Engine, CardinalityTracker) {
+], function(lang, array, declare, Binding, CardinalityTracker) {
 
     /**
      * Corresponds to a binding for a Group item type.

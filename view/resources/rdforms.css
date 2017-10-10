@@ -55,6 +55,15 @@
     font-weight: bold;
 }
 
+.rdformsMandatoryMark {
+    display: none;
+}
+
+.rdformsTopLevel>.rdformsLabelRow>.rdformsMandatoryMark,
+.rdformsTopLevel.rdformsHeading>.rdformsFields>.rdformsGroup>.rdformsRow>.rdformsLabelRow>.rdformsMandatoryMark {
+    display: inline;
+}
+
 /* === End colors === */
 
 .rdformsRow.rdformsTopLevel {

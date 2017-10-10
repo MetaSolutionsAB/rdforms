@@ -51,7 +51,8 @@ define([
             "deprecated",
             "noLabelInPresent",
             "autoInitDate",
-            "autoUpdateDate"
+            "autoUpdateDate",
+            "autoUUID"
         ],
 
         //===================================================

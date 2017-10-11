@@ -1,3 +1,4 @@
 {
-    "directory": "libs"
+    "directory": "libs",
+    "registry": "https://raw.githubusercontent.com/bower/components/1.0.0"
 }

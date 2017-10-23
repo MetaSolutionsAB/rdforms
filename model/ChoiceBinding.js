@@ -31,6 +31,7 @@ define(["dojo/_base/declare", "./ValueBinding"], function (declare, ValueBinding
         //===================================================
         constructor: function (args) {
             this._choice = args.choice;
+            this._validPredicate = args.item.getProperty() != null;
         },
         remove: function () {
             this.setValue(null);

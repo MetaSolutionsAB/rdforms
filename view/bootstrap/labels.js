@@ -31,8 +31,18 @@ define([
     const $labelDiv = jquery('<div class="rdformsLabelRow">').appendTo(rowNode);
     const $label = jquery('<span class="rdformsLabel">').text(label).appendTo($labelDiv);
     const card = item.getCardinality();
-    if (card.min > 0 && item.getProperty() != null) {
-      jquery('<span class="rdformsMandatoryMark">').text('*').appendTo($labelDiv);
+    const b = context.view.messages;
+    if (item.getProperty() != null) {
+      if (card.min > 0 && item.getProperty() != null) {
+        jquery('<span class="rdformsMark rdformsMandatoryMark">').text(b.mandatoryMark)
+          .appendTo($labelDiv);
+      } else if (card.pref > 0) {
+        jquery('<span class="rdformsMark rdformsRecommendedMark">').text(b.recommendedMark)
+          .appendTo($labelDiv);
+      } else {
+        jquery('<span class="rdformsMark rdformsOptionalMark">').text(b.optionalMark)
+          .appendTo($labelDiv);
+      }
     }
 
     renderingContext.attachItemInfo(item, $label[0], context);

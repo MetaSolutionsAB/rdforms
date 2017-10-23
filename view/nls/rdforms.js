@@ -18,7 +18,10 @@ define({
         mandatoryLabel: "Mandatory",
         recommendedLabel: "Recommended",
         optionalLabel: "Optional",
-        today: "Today"
+        today: "Today",
+        mandatoryMark: "*",
+        recommendedMark: "(Recommended)",
+        optionalMark: "(Optional)"
     },
     sv: true,
     nb: true

@@ -16,5 +16,8 @@ define({
     mandatoryLabel: "Obligatoriskt",
     recommendedLabel: "Rekommenderat",
     optionalLabel: "Valfritt",
-    today: "Idag"
+    today: "Idag",
+    mandatoryMark: "*",
+    recommendedMark: "(Rekommenderad)",
+    optionalMark: "(Valfri)"
 });

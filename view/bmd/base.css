@@ -96,3 +96,14 @@
 .rdforms .rdformsDateValue>.form-group {
     margin-right: 2em;
 }
+
+.cardgroup>.rdformsFields>.rdformsGroup {
+    border-radius: 2px;
+    color: rgba(0,0,0, 0.87);
+    background: #fff;
+    -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 7px 10px 3px 10px;
+    margin-top: 10px;
+    margin-right: -10px;
+}

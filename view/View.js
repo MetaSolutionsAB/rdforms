@@ -1,278 +1,283 @@
-/*global define*/
-define(["dojo/_base/declare", 
-	  "dojo/_base/lang",
-    "dojo/_base/array",
-	  "dijit/_Widget",
-    "rdforms/model/engine",
-	  "rdforms/model/GroupBinding",
-    "rdforms/view/renderingContext"
-], function(declare, lang, array, _Widget,
-            engine, GroupBinding, renderingContext) {
-    
+/* global define*/
+define([
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'dijit/_Widget',
+  'rdforms/model/engine',
+  'rdforms/model/GroupBinding',
+  'rdforms/view/renderingContext',
+], (declare, lang, _Widget, engine, GroupBinding, renderingContext) =>
+  declare(_Widget, {
+    // ===================================================
+    // Public attributes
+    // ===================================================
+    binding: null,
+    template: null,
+    graph: null,
+    resource: '',
+    topLevel: true,
+    compact: false,
+    styleCls: '',
+    filterPredicates: null,
 
-    return declare(_Widget, {
-        //===================================================
-        // Public attributes
-        //===================================================
-        binding: null,
-        template: null,
-        graph: null,
-        resource: "",
-        topLevel: true,
-        compact: false,
-        styleCls: "",
-        filterPredicates: null,
+    // ===================================================
+    // Public API
+    // ===================================================
 
-        //===================================================
-        // Public API
-        //===================================================
+    /**
+     * Tells wether something should be shown for the provided bindings and belonging item.
+     * @param {Object} item
+     * @param {Object} bindings
+     * @return {Boolean} true if something should be shown.
+     */
+    showNow(/* item,  bindings */) {
+      return true;
+    },
 
-        /**
-         * Tells wether something should be shown for the provided bindings and belonging item.
-         * @param {Object} item
-         * @param {Object} bindings
-         * @return {Boolean} true if something should be shown.
-         */
-        showNow: function (item, bindings) {
-            return true;
-        },
+    skipBinding(/* binding */) {
+      return false;
+    },
 
-        skipBinding: function (binding) {
-            return false;
-        },
+    /**
+     * This function may change the array of bindings, for instance remove all but
+     * the best language or complement the existing bindings
+     * until the min cardinality is reached.
+     *
+     * @param {Object} item
+     * @param {Array} bindings
+     * @return {Array} of bindings
+     */
+    prepareBindings(/* item, bindings */) {
+    },
 
-        /**
-         * This function may change the array of bindings, for instance remove all but
-         * the best language or complement the existing bindings
-         * until the min cardinality is reached.
-         *
-         * @param {Object} item
-         * @param {Array} bindings
-         * @return {Array} of bindings
-         */
-        prepareBindings: function (item, bindings) {
-        },
+    /**
+     * Adds a table with headers for the given firstBinding.
+     * @param {Node} lastRow if provided it is the last row as a DOM element.
+     * @param {Object} firstBinding the first binding to show in this table.
+     */
+    addTable(/* lastRow, firstBinding */) {
+    },
 
-        /**
-         * Adds a table with headers for the given firstBinding.
-         * @param {Node} lastRow if provided it is the last row as a DOM element.
-         * @param {Object} firstBinding the first binding to show in this table.
-         */
-        addTable: function (lastRow, firstBinding) {
-        },
+    /**
+     * Fills the table with one row for each binding in bindings.
+     *
+     * @param {Object} table a table DOM element
+     * @param {Array} bindings an array of bindings
+     */
+    fillTable(/* table, bindings */) {
+    },
 
-        /**
-         * Fills the table with one row for each binding in bindings.
-         *
-         * @param {Object} table a table DOM element
-         * @param {Array} bindings an array of bindings
-         */
-        fillTable: function (table, bindings) {
-        },
+    addLabel(/* rowDiv, labelDiv, binding */) {
+    },
 
-        addLabel: function (rowDiv, labelDiv, binding) {
-        },
+    addComponent(/* fieldDiv, binding, noCardinalityButtons */) {
+    },
 
-        addComponent: function (fieldDiv, binding, noCardinalityButtons) {
-        },
-        showAsTable: function (item) {
-            return item.getType() === "group" && (item.hasStyle("table") || item.hasClass("rdformsTable"));
-        },
-        //===================================================
-        // Inherited methods
-        //===================================================
-        constructor: function (params) {
-            this._handleParams(params);
-        },
+    showAsTable(item) {
+      return item.getType() === 'group' && (item.hasStyle('table') || item.hasClass('rdformsTable'));
+    },
+    // ===================================================
+    // Inherited methods
+    // ===================================================
+    constructor(params) {
+      this._handleParams(params);
+    },
 
-        _handleParams: function (params) {
-            if (params.binding) {
-                this.binding = params.binding;
-            } else {
-                this.template = params.template || this.template;
-                this.graph = params.graph || this.graph;
-                this.resource = params.resource || this.resource;
-                if (this.graph == null || this.resource == null || this.template == null) {
-                    return;
-                }
-                this.binding = engine.match(this.graph, this.resource, this.template);
+    _handleParams(params) {
+      if (params.binding) {
+        this.binding = params.binding;
+      } else {
+        this.template = params.template || this.template;
+        this.graph = params.graph || this.graph;
+        this.resource = params.resource || this.resource;
+        if (this.graph == null || this.resource == null || this.template == null) {
+          return;
+        }
+        this.binding = engine.match(this.graph, this.resource, this.template);
+      }
+    },
+
+    /**
+     * Builds the user interface by iterating over the child bindings of the current binding
+     * and recursively creates new views for all groupbindings.
+     */
+    buildRendering() {
+      this.domNode = this.srcNodeRef;
+      renderingContext.domClassToggle(this.domNode, 'rdforms', true);
+      renderingContext.domClassToggle(this.domNode, this.styleCls, true);
+      this.render();
+    },
+
+    show(params) {
+      this._handleParams(params);
+      this.render();
+    },
+
+    render() {
+      renderingContext.domText(this.domNode, '');
+      if (this.binding == null) {
+        return;
+      }
+
+      renderingContext.getMessages(lang.hitch(this, (messages) => {
+        renderingContext.domText(this.domNode, '');
+        this.messages = messages;
+        if (this.binding == null) {
+          // Just in case loading messages takes time
+          // and someone does a reset of the view meanwhile.
+          return;
+        }
+        let groupIndex;
+        let table;
+        let lastRow;
+        const groupedItemsArr = this.binding.getItem().getChildren();
+        const groupedBindingsArr = this.binding.getItemGroupedChildBindings();
+        let bindings;
+        let item;
+        this._binding2node = {};
+
+        if ((this.compact || this.binding.getItem().hasStyle('compact')) &&
+          !this.binding.getItem().hasStyle('nonCompact')) {
+          renderingContext.domClassToggle(this.domNode, 'compact', true);
+        } else {
+          renderingContext.domClassToggle(this.domNode, 'compact', false);
+        }
+
+        for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
+          bindings = groupedBindingsArr[groupIndex];
+          item = groupedItemsArr[groupIndex];
+
+          if (!this.showNow(item, bindings)) {
+            if (item.hasStyle('invisible')) { // In this case, create some bindings anyway
+              this.prepareBindings(item, bindings);
             }
-        },
+// eslint-disable-next-line no-continue
+            continue;
+          }
+          bindings = this.prepareBindings(item, bindings);
 
-        /**
-         * Builds the user interface by iterating over the child bindings of the current binding and recursively
-         * creates new views for all groupbindings.
-         */
-        buildRendering: function () {
-            this.domNode = this.srcNodeRef;
-            renderingContext.domClassToggle(this.domNode, "rdforms", true);
-            renderingContext.domClassToggle(this.domNode, this.styleCls, true);
-            this.render();
-        },
-
-        show: function (params) {
-            this._handleParams(params);
-            this.render();
-        },
-
-        render: function () {
-            renderingContext.domText(this.domNode, "");
-            if (this.binding == null) {
-                return;
-            }
-
-            renderingContext.getMessages(lang.hitch(this, function (messages) {
-		renderingContext.domText(this.domNode, "");
-                this.messages = messages;
-                if (this.binding == null) {
-                    //Just in case loading messages takes time
-                    // and someone does a reset of the view meanwhile.
-                    return;
-                }
-                var groupIndex, table, lastRow, table,
-                    groupedItemsArr = this.binding.getItem().getChildren(),
-                    groupedBindingsArr = this.binding.getItemGroupedChildBindings(),
-                    bindings, item;
-                this._binding2node = {};
-
-                if ((this.compact || this.binding.getItem().hasStyle("compact")) && !this.binding.getItem().hasStyle("nonCompact")) {
-                    renderingContext.domClassToggle(this.domNode, "compact", true);
-                } else {
-                    renderingContext.domClassToggle(this.domNode, "compact", false);
-                }
-
-                for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
-                    bindings = groupedBindingsArr[groupIndex];
-                    item = groupedItemsArr[groupIndex];
-
-                    if (!this.showNow(item, bindings)) {
-                        if (item.hasStyle("invisible")) { //In this case, create some bindings anyway
-                            this.prepareBindings(item, bindings);
-                        }
-                        continue;
-                    }
-                    bindings = this.prepareBindings(item, bindings);
-
-                    //Table case
-                    if (this.showAsTable(item)) {
-                        lastRow = this.createRowNode(lastRow, bindings[0], item);
-                        if (bindings.length > 0) {
-                            table = this.addTable(lastRow, bindings[0], item);
-                            this.fillTable(table, bindings);
-                        }
-
-                        //Non table case
-                    } else {
-                        if (bindings.length > 0) {
-                            for (var i = 0; i < bindings.length; i++) {
-                                //Add row with label if first row of same item or the binding is a group.
-                                lastRow = this.addRow(lastRow, bindings[i], i === 0 || bindings[i] instanceof GroupBinding);
-                            }
-                        } else {
-                            lastRow = this.createRowNode(lastRow, null, item);
-                        }
-                    }
-
-                    //Activates/deactivates buttons at startup if needed
-                    if (bindings.length > 0) {
-                        bindings[0].getCardinalityTracker().checkCardinality();
-                    }
-                }
-            }));
-        },
-
-        /**
-         * Adds a single row corresponding to a binding.
-         *
-         * @param {Object} lastRow last row that was added
-         * @param {Object} binding the binding to add a row for
-         * @param {Boolean} includeLabel, tells if a label should be added, if undefined a label is added only when the binding is a GroupBinding.
-         */
-        addRow: function (lastRow, binding, includeLabel) {
-            var fieldDiv, newRow, item = binding.getItem();
-
-            if (this.skipBinding(binding)) {
-                return;
+          // Table case
+          if (this.showAsTable(item)) {
+            lastRow = this.createRowNode(lastRow, bindings[0], item);
+            if (bindings.length > 0) {
+              table = this.addTable(lastRow, bindings[0], item);
+              this.fillTable(table, bindings);
             }
 
-            if (includeLabel == null) {
-                includeLabel = binding instanceof GroupBinding;
+            // Non table case
+          } else if (bindings.length > 0) {
+            for (let i = 0; i < bindings.length; i++) {
+              // Add row with label if first row of same item or the binding is a group.
+              lastRow = this.addRow(lastRow, bindings[i], i === 0 ||
+                bindings[i] instanceof GroupBinding);
             }
+          } else {
+            lastRow = this.createRowNode(lastRow, null, item);
+          }
 
-            //Taking care of dom node structure plus label.
-            if (includeLabel === true) {
-                newRow = this.createRowNode(lastRow, binding, item);
-                var n = renderingContext.domCreate("div", newRow);
-                renderingContext.domClassToggle(n, "rdformsFields", true);
-                fieldDiv = renderingContext.domCreate("div", n);
-            } else {
-                //No new rowDiv since we have a repeated value under the same label.
-                var rdformsFields = renderingContext.domQuery(".rdformsFields", lastRow);
-                if (rdformsFields != null) {
-                    fieldDiv = renderingContext.domCreate("div", rdformsFields);
-                    renderingContext.domClassToggle(fieldDiv, "rdformsRepeatedValue", true);
-                } else { //Unless we have an non-expanded row.
-                    var n = renderingContext.domCreate("div", lastRow);
-                    renderingContext.domClassToggle(n, "rdformsFields", true);
-                    fieldDiv = renderingContext.domCreate("div", n);
-                }
-            }
-            this._binding2node[binding.getHash()] = fieldDiv;
-            this.addComponent(fieldDiv, binding);
-            return newRow || lastRow;
-        },
-        createRowNode: function (lastRowNode, binding, item) {
-            var rowNode;
+          // Activates/deactivates buttons at startup if needed
+          if (bindings.length > 0) {
+            bindings[0].getCardinalityTracker().checkCardinality();
+          }
+        }
+      }));
+    },
 
-            //New rowDiv since we have a label
-            if (lastRowNode === undefined) {
-                rowNode = renderingContext.domCreate("div", this.domNode);
-            } else {
-                rowNode = renderingContext.domCreateAfter("div", lastRowNode);
-            }
+    /**
+     * Adds a single row corresponding to a binding.
+     *
+     * @param {Object} lastRow last row that was added
+     * @param {Object} binding the binding to add a row for
+     * @param {Boolean} includeLabel, tells if a label should be added, if undefined a label is
+     * added only when the binding is a GroupBinding.
+     */
+    addRow(lastRow, binding, includeLabel) {
+      let _includeLabel = includeLabel;
+      let fieldDiv;
+      let newRow;
+      const item = binding.getItem();
 
-            array.forEach(item.getClasses(), function(cls) {
-                renderingContext.domClassToggle(rowNode, cls, true);
-            });
-            renderingContext.domClassToggle(rowNode, "rdformsRow", true);
-            renderingContext.domClassToggle(rowNode, "rdformsTopLevel", this.topLevel);
-            renderingContext.domClassToggle(rowNode, "rdformsInvisibleGroup", item.hasStyle("invisibleGroup"));
-            renderingContext.domClassToggle(rowNode, "rdformsHeading", item.hasStyle("heading"));
-            renderingContext.domClassToggle(rowNode, "notCompact", item.getType() === "group");
+      if (this.skipBinding(binding)) {
+        return undefined;
+      }
 
-            this.addLabel(rowNode, binding, item);
-            if (this.filterBinding(binding)) {
-                renderingContext.domClassToggle(rowNode, "hiddenProperty", true);
-            }
-            return rowNode;
-        },
+      if (_includeLabel == null) {
+        _includeLabel = binding instanceof GroupBinding;
+      }
 
-        _getFilterPredicates: function() {
-            return this.parentView ? this.parentView._getFilterPredicates() : this.filterPredicates;
-        },
-        filterBinding: function(binding) {
-            var fp = this._getFilterPredicates();
-            var stmt = binding.getStatement();
-            var item = binding.getItem();
-            if (fp && stmt) {
-              return fp[stmt.getPredicate()] === true;
-            }
-            if (fp && item.getType() === "group" && !item.getProperty()) {
-              // Checks one level below if there is a child that is visible
-                var childBindings = item.getChildren() || [];
-                var hasNonFilteredChild = false;
-                childBindings.forEach(function(child) {
-                  if (fp[child.getProperty()] !== true) {
-                      hasNonFilteredChild = true;
-                  }
-                });
-                return !hasNonFilteredChild;
-            }
-            return false;
-        },
-        filterProperty: function(property) {
-          var fp = this._getFilterPredicates() || {};
-          return fp[property] === true;
-        },
-    });
-});
+      // Taking care of dom node structure plus label.
+      if (_includeLabel === true) {
+        newRow = this.createRowNode(lastRow, binding, item);
+        const n = renderingContext.domCreate('div', newRow);
+        renderingContext.domClassToggle(n, 'rdformsFields', true);
+        fieldDiv = renderingContext.domCreate('div', n);
+      } else {
+        // No new rowDiv since we have a repeated value under the same label.
+        const rdformsFields = renderingContext.domQuery('.rdformsFields', lastRow);
+        if (rdformsFields != null) {
+          fieldDiv = renderingContext.domCreate('div', rdformsFields);
+          renderingContext.domClassToggle(fieldDiv, 'rdformsRepeatedValue', true);
+        } else { // Unless we have an non-expanded row.
+          const n = renderingContext.domCreate('div', lastRow);
+          renderingContext.domClassToggle(n, 'rdformsFields', true);
+          fieldDiv = renderingContext.domCreate('div', n);
+        }
+      }
+      this._binding2node[binding.getHash()] = fieldDiv;
+      this.addComponent(fieldDiv, binding);
+      return newRow || lastRow;
+    },
+    createRowNode(lastRowNode, binding, item) {
+      let rowNode;
+
+      // New rowDiv since we have a label
+      if (lastRowNode === undefined) {
+        rowNode = renderingContext.domCreate('div', this.domNode);
+      } else {
+        rowNode = renderingContext.domCreateAfter('div', lastRowNode);
+      }
+
+      item.getClasses().forEach((cls) => {
+        renderingContext.domClassToggle(rowNode, cls, true);
+      });
+      renderingContext.domClassToggle(rowNode, 'rdformsRow', true);
+      renderingContext.domClassToggle(rowNode, 'rdformsTopLevel', this.topLevel);
+      renderingContext.domClassToggle(rowNode, 'rdformsInvisibleGroup', item.hasStyle('invisibleGroup'));
+      renderingContext.domClassToggle(rowNode, 'rdformsHeading', item.hasStyle('heading'));
+      renderingContext.domClassToggle(rowNode, 'notCompact', item.getType() === 'group');
+
+      this.addLabel(rowNode, binding, item);
+      if (this.filterBinding(binding)) {
+        renderingContext.domClassToggle(rowNode, 'hiddenProperty', true);
+      }
+      return rowNode;
+    },
+
+    _getFilterPredicates() {
+      return this.parentView ? this.parentView._getFilterPredicates() : this.filterPredicates;
+    },
+    filterBinding(binding) {
+      const fp = this._getFilterPredicates();
+      const stmt = binding.getStatement();
+      const item = binding.getItem();
+      if (fp && stmt) {
+        return fp[stmt.getPredicate()] === true;
+      }
+      if (fp && item.getType() === 'group' && !item.getProperty()) {
+        // Checks one level below if there is a child that is visible
+        const childBindings = item.getChildren() || [];
+        let hasNonFilteredChild = false;
+        childBindings.forEach((child) => {
+          if (fp[child.getProperty()] !== true) {
+            hasNonFilteredChild = true;
+          }
+        });
+        return !hasNonFilteredChild;
+      }
+      return false;
+    },
+    filterProperty(property) {
+      const fp = this._getFilterPredicates() || {};
+      return fp[property] === true;
+    },
+  }));

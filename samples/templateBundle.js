@@ -41,9 +41,10 @@ define({
         "description":{"en":"A date for this resource.", "sv": "Ett datum för denna resurs."},
         "styles": ["autoInitDate"]
       }, {
+        "id": "subject",
         "type":"choice",
         "nodetype":"URI",
-        "property":"http://purl.org/dc/terms/subject",
+//        "property":"http://purl.org/dc/terms/subject",
         "cardinality": {"min": 1, "pref": "1", "max": 2},
         "choices": [
           {
@@ -95,6 +96,8 @@ define({
         "property":"http://purl.org/dc/terms/creator",
         "cardinality": {"min": 0, "pref": 1, "max": 5},
         "constraints":{"rdf:type": "foaf:Person"},
+        "cls": ["cardgroup"],
+        "deps": ["subject", "http://example.com/chemistry"],
         "content":[
           {
             "type":"text",

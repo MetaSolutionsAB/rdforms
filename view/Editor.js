@@ -183,6 +183,12 @@ define(['dojo/_base/declare',
     },
     createRowNode(lastRowNode, binding, item) {
       const newNode = this.inherited(arguments);
+      if (item.getType() === 'choice' && typeof item.getProperty() === 'undefined') {
+        const popular = engine.findPopularChoice(item, binding.getParent());
+        if (popular) {
+          binding.setChoice(popular);
+        }
+      }
       const path = item.getDeps();
       if (path) {
         const f = (match) => {

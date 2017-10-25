@@ -602,6 +602,40 @@ define([
     return parentBinding;
   };
 
+  const findPopularChoice = (choiceItem, rootBinding) => {
+    const id = choiceItem.getId();
+    const values = {};
+    const val2choice = {};
+    choiceItem.getChoices().forEach((choice) => {
+      values[choice.value] = 0;
+      val2choice[choice.value] = choice;
+    });
+    const recurse = (groupB) => {
+      groupB.getChildBindings().forEach((cb) => {
+        const deps = cb.getItem().getDeps();
+        if (deps && (deps[0] === id || (deps[0] === '/' && deps[1] === id))) {
+          const val = deps[0] === '/' ? deps[2] : deps[1];
+          const counter = values[val];
+          if (typeof counter !== 'undefined') {
+            values[val] = counter + 1;
+          }
+        }
+      });
+    };
+    recurse(rootBinding);
+
+    let popularCount = 0;
+    let value;
+    Object.keys(values).forEach((val) => {
+      if (!value || values[val] > popularCount) {
+        value = val;
+        popularCount = values[val];
+      }
+    });
+    return val2choice[value];
+  };
+
+
   const _levelProfile = (profile, item, ignoreTopLevelGroup) => {
     const card = item.getCardinality();
     if (!ignoreTopLevelGroup || item.getType() !== 'group') {
@@ -669,6 +703,14 @@ define([
 
   exports.matchPathBelowBinding = matchPathBelowBinding;
   exports.findBindingRelativeToParentBinding = findBindingRelativeToParentBinding;
+
+  /**
+   * Finds the choice in a choice item that are the most popular, i.e. the choice that most
+   * valid bindings hava a dependency to.
+   * @param {rdforms/template/Choice} choiceItem
+   * @param {rdforms/model/GroupBinding} rootBinding
+   */
+  exports.findPopularChoice = findPopularChoice;
 
   /**
    * @deprecated use rdforms/model/validator.bindingReport instead.

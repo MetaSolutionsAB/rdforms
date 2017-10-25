@@ -196,8 +196,9 @@ a.rdformsUrl:hover {
 }
 
 .rdformsGroup {
-	margin-left: 1em;
+	margin-left: 13px;
     position: relative;
+    margin-top: 10px;
  }
 
 .compact .rdformsRow.rdformsInvisibleGroup>.rdformsLabelRow,

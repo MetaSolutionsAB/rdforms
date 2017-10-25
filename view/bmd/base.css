@@ -55,6 +55,7 @@
 
 .rdforms .form-group.selectizeException {
     display: block;
+    margin: 0px;
 }
 
 .selectize-control.single .selectize-dropdown .active, .selectize-control.multi .selectize-dropdown .active {

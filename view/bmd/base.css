@@ -71,6 +71,19 @@
     font-size: 16px !important;
 }
 
+.selectize-input {
+    cursor: pointer;
+}
+
+.rdformsEditor .rdformsFieldControl {
+    width: auto !important;
+}
+
+.selectize-control.single .selectize-input:after,
+.selectize-control.single .selectize-input.input-active:after {
+    cursor: pointer;
+}
+
 .rdforms .selectize-dropdown-content {
     max-height: 200px;
     overflow-x: hidden;

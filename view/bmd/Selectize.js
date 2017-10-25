@@ -24,10 +24,16 @@ define([
         value: c.choice.value,
       });
     }
+    const items = [];
+    // Sets the value if any
+    if (binding.getValue()) {
+      items.push(binding.getValue());
+    }
 
     // new Select2($select, {placeholder: ""});
     $select.selectize({
       options: choices,
+      items,
       valueField: 'value',
       labelField: 'label',
       sortField: 'label',
@@ -37,16 +43,9 @@ define([
       mode: 'single',
       onChange(/* value */) {
         binding.setValue($select.val());
+        this.clearCache();
       },
     });
-
-    // Sets the value if any
-    if (binding.getValue()) {
-      /* if (binding.getChoice().mismatch) {
-       fSelect.set("displayedValue", binding.getValue());
-       }*/
-      $select.val(binding.getValue()).trigger('change');
-    }
 
 /*    $select.change(function () {
       binding.setValue($select.val());

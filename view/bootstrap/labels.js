@@ -95,7 +95,7 @@ define([
 
     const popoverOptions = {
       html: true,
-      container: 'body',
+      container: renderingContext.getPopoverContainer(),
       placement: 'auto',
       template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
       trigger: 'click',

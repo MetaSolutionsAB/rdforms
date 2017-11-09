@@ -12,6 +12,7 @@ define([
     }
     return chooser.getChoice(item, value);
   };
+  let popoverContainer = 'body';
   let messages;
   let language;
   let languages;
@@ -221,6 +222,14 @@ define([
 
     getDefaultLanguage() {
       return language || locale.get();
+    },
+
+    setPopoverContainer(container) {
+      popoverContainer = container;
+    },
+
+    getPopoverContainer() {
+      return popoverContainer;
     },
 
     // Override the following methods

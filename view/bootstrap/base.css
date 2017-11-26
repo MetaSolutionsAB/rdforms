@@ -111,8 +111,17 @@
     min-width: 12em;
 }
 
-.compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow, .compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel {
+.compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow,
+.compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel {
     padding-top: 6px;
+}
+
+.rdformsLabelRow.rdformsLabel {
+    display: inline-block;
+}
+
+.compact .rdformsLabelRow.rdformsLabel {
+    display: block;
 }
 
 .rdformsRow.rdformsTopLevel {
@@ -129,6 +138,10 @@
 
 .rdformsEditor .systemChoice.input-group {
     max-width: 22em;
+}
+
+.rdformsEditor .browseChoices {
+    margin-left: 4px;
 }
 
 .rdformsDateValue.rdformsDatepicker {

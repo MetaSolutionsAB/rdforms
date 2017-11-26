@@ -133,7 +133,24 @@ define([
             this.refreshExtends();
         },
 
-        /**
+      getPlaceholder: function (returnDetails, original) {
+        var s = this.getSource(original);
+        return returnDetails ? this._getLocalizedValue(s.placeholder) : this._getLocalizedValue(s.placeholder).value;
+      },
+      setPlaceholder: function (value, lang) {
+        var s = this.getSource(true);
+        s.placeholder = this._setLangHash(s.placeholder, value, lang);
+        this.refreshExtends();
+      },
+      getPlaceholderMap: function (original) {
+        return this.getSource(original).placeholder;
+      },
+      setPlaceholderMap: function (map) {
+        setObjAttr(this.getSource(true), "placeholder", map);
+        this.refreshExtends();
+      },
+
+      /**
          * @return {String} as a URI, may be undefined for Groups, never undefined for Text or choice item types.
          */
         getProperty: function (original) {

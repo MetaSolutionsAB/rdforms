@@ -54,8 +54,15 @@
 }
 
 .rdforms .form-group.selectizeException {
-    display: block;
+    display: inline-block;
+    min-width: 300px;
     margin: 0px;
+    vertical-align: top;
+}
+
+.rdforms .browseChoices.btn.btn-fab.btn-fab-mini {
+    margin-top: -5px;
+    margin-left: 13px;
 }
 
 .selectize-control.single .selectize-dropdown .active, .selectize-control.multi .selectize-dropdown .active {

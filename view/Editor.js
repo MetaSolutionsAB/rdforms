@@ -11,8 +11,8 @@ define(['dojo/_base/declare',
     if (item.hasStyle('deprecated') && bindings.length === 0) {
       return false;
     }
+    const prop = item.getProperty();
     if (bindings.length > 0) {
-      const prop = item.getProperty();
       if (prop) {
         return !editor.filterProperty(prop);
       }
@@ -23,6 +23,9 @@ define(['dojo/_base/declare',
         if (bindings[0].getItemGroupedChildBindings().find((childBindings, idx) =>
             showNow(editor, groupedItemsArr[idx], childBindings, includeLevel))) {
           return true;
+        }
+        if (!prop) {
+          return false;
         }
       } else {
         return true;

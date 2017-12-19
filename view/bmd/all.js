@@ -14,15 +14,18 @@ define([
 ], (renderingContext, jquery, util) => {
 
   // initializeMaterial is not called more than once per X ms
-  const initializeMaterial = util.throttle(() => {
+  const updateMaterial = (node) => {
     if (jquery.material) {
-      jquery.material.init();
+      jquery.material.ripples(node);
+      jquery.material.input(node);
+      jquery.material.checkbox(node);
+      jquery.material.radio(node);
+      jquery.material.togglebutton(node);
     }
-  }, 300, { leading: false });
-
+  };
 
   renderingContext.postEditorRenderer = function (fieldDiv, binding, context) {
     context.$controlDiv.appendTo(fieldDiv);
-    initializeMaterial();
+    updateMaterial(fieldDiv);
   };
 });

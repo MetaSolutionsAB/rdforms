@@ -4,10 +4,12 @@ require([
   'rdforms/view/Editor',               // The editor User interface
   'rdforms/samples/rdf',               // The sample RDF
   'rdforms/samples/templateBundle',    // The sample template
+  'jquery',
   'rdforms/view/bmd/all',              // Depend on the material design view
   'rdforms/samples/chooser',           // Dummy chooser
   'dojo/domReady!',                    // Wait until the dom is ready.
-], (Graph, ItemStore, Editor, rdf, templateBundle) => {
+], (Graph, ItemStore, Editor, rdf, templateBundle, jquery) => {
+  jquery.material.init();
   const graph = new Graph(rdf);
   const itemStore = new ItemStore();
   const bundle = itemStore.registerBundle({ source: templateBundle });

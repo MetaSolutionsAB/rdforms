@@ -494,9 +494,9 @@ define([
       return binding;
     }
     const cbs = binding.getItemGroupedChildBindings();
-    if (cbs.length > 0) {
-      const childItem = binding.getItem().getChildren()[0];
-      const vbs = cbs[0];
+    for (let idx = 0; idx < cbs.length; idx++) {
+      const vbs = cbs[idx];
+      const childItem = binding.getItem().getChildren()[idx];
       if (vbs.length !== 0) {
         if (!(childItem instanceof Text)) {
           return findFirstValueBinding(vbs[0]);
@@ -536,35 +536,43 @@ define([
   };
 
   const matchPathBelowBinding = (bindingTree, path) => {
+    const _path = path[0] === '/' ? path.slice(1) : path;
     const gb = bindingTree.getItemGroupedChildBindings();
-    const pred = path[0];
+    const pred = _path[0];
     for (let i = 0; i < gb.length; i++) {
       const bindings = gb[i];
       let res;
       for (let j = 0; j < bindings.length; j++) {
         let b = bindings[j];
+        let item = b.getItem();
+        // Empty property choices.
+        if (item instanceof Choice
+        && typeof item.getProperty() === 'undefined'
+        && pred === item.getId()
+        && (_path.length === 2 && _path[1] === b.getValue())) {
+          return b;
+        }
         if (!b.isValid()) {
 // eslint-disable-next-line no-continue
           continue;
         }
-        let item = b.getItem();
         if (item.getType() === 'propertygroup') {
           b = b.getObjectBinding();
           item = b.getItem();
         } else if (typeof item.getProperty() === 'undefined') {
-          res = matchPathBelowBinding(b, path);
+          res = matchPathBelowBinding(b, _path);
           if (res) {
             return res;
           }
         }
         if (pred === '*' || pred === b.getPredicate()) {
           if (item.getType() === 'group') {
-            res = matchPathBelowBinding(b, path.slice(1));
+            res = matchPathBelowBinding(b, _path.slice(1));
             if (res) {
               return res;
             }
-          } else if (path.length === 1 || path[1] === '*'
-                            || path[1] === b.getValue()) {
+          } else if (_path.length === 1 || _path[1] === '*'
+                            || _path[1] === b.getValue()) {
             return b;
           }
         }
@@ -593,6 +601,40 @@ define([
     }
     return parentBinding;
   };
+
+  const findPopularChoice = (choiceItem, rootBinding) => {
+    const id = choiceItem.getId();
+    const values = {};
+    const val2choice = {};
+    choiceItem.getChoices().forEach((choice) => {
+      values[choice.value] = 0;
+      val2choice[choice.value] = choice;
+    });
+    const recurse = (groupB) => {
+      groupB.getChildBindings().forEach((cb) => {
+        const deps = cb.getItem().getDeps();
+        if (deps && (deps[0] === id || (deps[0] === '/' && deps[1] === id))) {
+          const val = deps[0] === '/' ? deps[2] : deps[1];
+          const counter = values[val];
+          if (typeof counter !== 'undefined') {
+            values[val] = counter + 1;
+          }
+        }
+      });
+    };
+    recurse(rootBinding);
+
+    let popularCount = 0;
+    let value;
+    Object.keys(values).forEach((val) => {
+      if (!value || values[val] > popularCount) {
+        value = val;
+        popularCount = values[val];
+      }
+    });
+    return val2choice[value];
+  };
+
 
   const _levelProfile = (profile, item, ignoreTopLevelGroup) => {
     const card = item.getCardinality();
@@ -661,6 +703,14 @@ define([
 
   exports.matchPathBelowBinding = matchPathBelowBinding;
   exports.findBindingRelativeToParentBinding = findBindingRelativeToParentBinding;
+
+  /**
+   * Finds the choice in a choice item that are the most popular, i.e. the choice that most
+   * valid bindings hava a dependency to.
+   * @param {rdforms/template/Choice} choiceItem
+   * @param {rdforms/model/GroupBinding} rootBinding
+   */
+  exports.findPopularChoice = findPopularChoice;
 
   /**
    * @deprecated use rdforms/model/validator.bindingReport instead.

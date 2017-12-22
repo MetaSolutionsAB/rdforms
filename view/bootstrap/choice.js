@@ -85,69 +85,50 @@ define([
   editors.itemtype('choice').choices().register((fieldDiv, binding, context) => {
     const item = binding.getItem();
     const choices = item.getChoices().map(c => ({
+      id: c.value,
+      text: item._getLocalizedValue(c.label).value,
       choice: c,
-      label: item._getLocalizedValue(c.label).value,
     }));
 // eslint-disable-next-line arrow-body-style
     choices.sort((c1, c2) => {
-      return c1.label < c2.label ? -1 : 1;
+      return c1.text < c2.text ? -1 : 1;
     });
     context.choices = choices;
     renderingContext.renderSelect(fieldDiv, binding, context);
-
-    // TODO support for TreeOntologyChooser
-    // Check if a tree-hierarchy should be created
-    /*  var hierarchy = item.getHierarchyProperty() || item.hasStyle("tree");
-        if (hierarchy) {
-            var oc;
-            var ddButton = domConstruct.create("span", {"class": "action editSearch",
-            "title": this.messages.edit_browse}, divToUse);
-            on(ddButton, "click", lang.hitch(this, function () {
-                if (oc == null) {
-                    oc = new TreeOntologyChooser({binding: binding,
-                    done: lang.hitch(this, function () {
-                        fSelect.set("value", binding.getValue());
-                    })});
-                }
-                oc.show();
-            }));
-        }*/
   });
 
     // Depends on system.getChoice and system.openChoiceSelector methods being available
   editors.itemtype('choice').choices('none').register((fieldDiv, binding, context) => {
-    const $divToUse = jquery('<div class="input-group systemChoice">').appendTo(fieldDiv);
-    const $input = jquery('<input class="form-control" disabled="disabled">').appendTo($divToUse);
-    const $wrap = jquery('<span class="input-group-btn">').appendTo($divToUse);
-    const $search = jquery('<button class="btn btn-default" type="button">')
+    context.chooser = renderingContext.chooserRegistry.getComponent(binding.getItem());
+    renderingContext.renderSelect(fieldDiv, binding, context);
+    const $search = jquery('<button class="btn btn-default btn-fab btn-fab-mini browseChoices" type="button">')
             .attr('title', context.view.messages.edit_browse)
-            .appendTo($wrap);
+            .appendTo(fieldDiv);
     jquery('<span class="fa fa-search" aria-hidden="true">').appendTo($search);
 
     const setChoice = (choice) => {
       if (choice) {
-        $input.val(utils.getLocalizedValue(choice.label).value || '')
-                    .toggleClass('mismatch', choice.mismatch === true);
+        binding.setChoice(choice);
         if (choice.load != null) {
           choice.load(() => {
-            $input.val(utils.getLocalizedValue(choice.label).value || '')
-                            .toggleClass('mismatch', choice.mismatch === true);
+            context.setValue(choice);
           });
+        } else {
+          context.setValue(choice);
         }
-      }
-      if (binding.getChoice() !== choice) {
-        binding.setChoice(choice);
+      } else {
+        binding.setChoice(null);
       }
     };
-    $search.click(() => {
-      renderingContext.openChoiceSelector(binding, setChoice);
-    });
-    setChoice(binding.getChoice());
+    if (context.chooser && typeof context.chooser.show === 'function') {
+      $search.click(() => {
+        renderingContext.openChoiceSelector(binding, setChoice);
+      });
+    } else {
+      $search.addClass('disabled');
+    }
     if (system.hasDnDSupport(binding)) {
       system.addDnD(binding, cNode, setChoice);
     }
-    context.clear = () => {
-      $input.val('');
-    };
   });
 });

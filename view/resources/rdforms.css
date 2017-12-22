@@ -55,14 +55,27 @@
     font-weight: bold;
 }
 
-.rdformsMandatoryMark {
+.rdforms .rdformsRecommendedMark,
+.rdforms .rdformsOptionalMark {
+    padding-left: 10px;
+    font-size: 12px;
+    color: grey;
+}
+
+.rdformsMark {
     display: none;
 }
 
-.rdformsTopLevel>.rdformsLabelRow>.rdformsMandatoryMark,
-.rdformsTopLevel.rdformsHeading>.rdformsFields>.rdformsGroup>.rdformsRow>.rdformsLabelRow>.rdformsMandatoryMark {
+.rdformsTopLevel>.rdformsLabelRow>.rdformsMark,
+.rdformsTopLevel.rdformsHeading>.rdformsFields>.rdformsGroup>.rdformsRow>.rdformsLabelRow>.rdformsMark {
     display: inline;
 }
+
+.compact .rdformsTopLevel>.rdformsLabelRow>.rdformsMark,
+.compact .rdformsTopLevel.rdformsHeading>.rdformsFields>.rdformsGroup>.rdformsRow>.rdformsLabelRow>.rdformsMark {
+    display: none;
+}
+
 
 /* === End colors === */
 
@@ -183,8 +196,9 @@ a.rdformsUrl:hover {
 }
 
 .rdformsGroup {
-	margin-left: 1em;
+	margin-left: 13px;
     position: relative;
+    margin-top: 10px;
  }
 
 .compact .rdformsRow.rdformsInvisibleGroup>.rdformsLabelRow,

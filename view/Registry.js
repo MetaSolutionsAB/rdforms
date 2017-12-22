@@ -1,256 +1,259 @@
-/*global define*/
+/* global define*/
 define([
-    "dojo/_base/declare",
-    "dojo/_base/array",
-    "rdfjson/namespaces"
-], function(declare, array, namespaces) {
-
-    var matchRdfType = function(item, type) {
-        var constr= item.getConstraints();
-        return constr != null && constr[rdfType] === type;
-    };
-    var matchConstraint = function(item, constraints) {
-        if (constraints == null) {
-            return true;
-        }
-        var constr = item.getConstraints(), match = true;
-        if (constr == null) {
-            return false;
-        }
-        for (var key in constr) if (constr.hasOwnProperty(key)) {
-            var c = constraints[key];
-            if (c !== "" && c!== "*" && c !== constr[key]) {
-                match = false;
-                break;
-            }
-        }
-        return match;
-    };
-
-    var filterMethods = [
-        "itemtype",
-        "choices",
-        "nodetype",
-        "datatype",
-        "rdftype",
-        "constraint",
-        "predicate",
-        "style",
-        "item",
-        "check"];
-    var Filter = function(registry) {
-        this.filterObj = {};
-        this.registry = registry;
-    };
-
-    Filter.prototype.register = function(component) {
-        this.registry.register(this.filterObj, component);
-    };
-
-    array.forEach(filterMethods, function(meth) {
-        Filter.prototype[meth] = function(value) {
-          switch (meth) {
-            case 'constraint':
-              const cstr = {};
-              Object.keys(value).forEach(function (key) {
-                const vv = value[key];
-                if (Array.isArray(vv)) {
-                  cstr[namespaces.expand(key)] = vv.map(function(v) {
-                      return namespaces.expand(v);
-                  });
-                } else {
-                  cstr[namespaces.expand(key)] = namespaces.expand(vv);
-                }
-              });
-              this.filterObj[meth] = cstr;
-              break;
-            case 'predicate':
-            case 'rdftype':
-            case 'datatype':
-              this.filterObj[meth] = namespaces.expand(value);
-              break;
-            default:
-              this.filterObj[meth] = value || true;
-          }
-          return this;
-        };
+  'dojo/_base/declare',
+  'dojo/_base/array',
+  'rdfjson/namespaces',
+], (declare, array, namespaces) => {
+  const matchRdfType = (item, type) => {
+    const constr = item.getConstraints();
+    return constr != null && constr[rdfType] === type;
+  };
+  const matchConstraint = (item, constraints) => {
+    if (constraints == null) {
+      return true;
+    }
+    const constr = item.getConstraints();
+    let match = true;
+    if (constr == null) {
+      return false;
+    }
+    Object.keys(constr).find((key) => {
+      const c = constraints[key];
+      if (c !== '' && c !== '*' && c !== constr[key]) {
+        match = false;
+        return true;
+      }
+      return false;
     });
+    return match;
+  };
 
-	return declare(null, {
-        components: [],
-        priorities: {
-            CHECK: 1,
-            ITEMTYPE: 2,
-            CHOICES: 4,
-            NODETYPE: 8,
-            DATATYPE: 16,
-            RDFTYPE: 32,
-            CONSTRAINT: 64,
-            PREDICATE: 128,
-            STYLE: 256,
-            ITEM: 512
-        },
-        constructor: function() {
-            this.components = [];
-        },
+  const filterMethods = [
+    'itemtype',
+    'choices',
+    'nodetype',
+    'datatype',
+    'rdftype',
+    'constraint',
+    'predicate',
+    'style',
+    'item',
+    'check'];
+  const Filter = function (registry) {
+    this.filterObj = {};
+    this.registry = registry;
+  };
 
-        calculatePriority: function(item, filter) {
-            var prio = 0;
-            if (filter.itemtype) {
-                prio += this.priorities.ITEMTYPE;
-                if (item.getType() !== filter.itemtype) {
-                    return -1;
-                }
+  Filter.prototype.register = function (component) {
+    this.registry.register(this.filterObj, component);
+  };
+
+  filterMethods.forEach((meth) => {
+    Filter.prototype[meth] = function (value) {
+      const cstr = {};
+      switch (meth) {
+        case 'constraint':
+          Object.keys(value).forEach((key) => {
+            const vv = value[key];
+            if (Array.isArray(vv)) {
+              cstr[namespaces.expand(key)] = vv.map(v => namespaces.expand(v));
+            } else {
+              cstr[namespaces.expand(key)] = namespaces.expand(vv);
             }
+          });
+          this.filterObj[meth] = cstr;
+          break;
+        case 'predicate':
+        case 'rdftype':
+        case 'datatype':
+          this.filterObj[meth] = namespaces.expand(value);
+          break;
+        default:
+          this.filterObj[meth] = value || true;
+      }
+      return this;
+    };
+  });
 
-            if (filter.choices) {
-                prio += this.priorities.CHOICES;
-                switch (filter.choices) {
-                    case "static":
-                        if (!item.hasStaticChoices()) {
-                            return  -1;
-                        }
-                        break;
-                    case "dynamic":
-                        if (!item.hasChoices() || item.hasStaticChoices()) {
-                            return  -1;
-                        }
-                        break;
-                    case "none":
-                        if (item.hasChoices()) {
-                            return -1;
-                        }
-                        break;
-                    case "any":
-                    default:
-                        if (!item.hasChoices()) {
-                            return  -1;
-                        }
-                }
+  return declare(null, {
+    components: [],
+    priorities: {
+      CHECK: 1,
+      ITEMTYPE: 2,
+      CHOICES: 4,
+      NODETYPE: 8,
+      DATATYPE: 16,
+      RDFTYPE: 32,
+      CONSTRAINT: 64,
+      PREDICATE: 128,
+      STYLE: 256,
+      ITEM: 512,
+    },
+    constructor() {
+      this.components = [];
+    },
+
+    calculatePriority(item, filter) {
+      let prio = 0;
+      if (filter.itemtype) {
+        prio += this.priorities.ITEMTYPE;
+        if (item.getType() !== filter.itemtype) {
+          return -1;
+        }
+      }
+
+      if (filter.choices) {
+        prio += this.priorities.CHOICES;
+        switch (filter.choices) {
+          case 'static':
+            if (!item.hasStaticChoices()) {
+              return -1;
             }
-
-            if (filter.nodetype) {
-                prio += this.priorities.NODETYPE;
-                if (item.getNodetype() !== filter.nodetype) {
-                    return -1;
-                }
+            break;
+          case 'dynamic':
+            if (!item.hasChoices() || item.hasStaticChoices()) {
+              return -1;
             }
-
-            if (filter.datatype) {
-                prio += this.priorities.DATATYPE;
-                if (item.getDatatype() !== filter.datatype) {
-                    return -1;
-                }
+            break;
+          case 'none':
+            if (item.hasChoices()) {
+              return -1;
             }
-
-            if (filter.rdftype) {
-                prio += this.priorities.RDFTYPE;
-                if (!matchRdfType(item, filter.rdftype)) {
-                    return -1;
-                }
+            break;
+          case 'any':
+          default:
+            if (!item.hasChoices()) {
+              return -1;
             }
+        }
+      }
 
-            if (filter.constraint) {
-                prio += this.priorities.CONSTRAINT;
-                if (!matchConstraint(item, filter.constraint)) {
-                    return -1;
-                }
-            }
+      if (filter.nodetype) {
+        prio += this.priorities.NODETYPE;
+        if (item.getNodetype() !== filter.nodetype) {
+          return -1;
+        }
+      }
 
-            if (filter.predicate) {
-                prio += this.priorities.PREDICATE;
-                if (item.getProperty() !== filter.predicate) {
-                    return -1;
-                }
-            }
+      if (filter.datatype) {
+        prio += this.priorities.DATATYPE;
+        if (item.getDatatype() !== filter.datatype) {
+          return -1;
+        }
+      }
 
-            if (filter.style) {
-                prio += this.priorities.STYLE;
-                if (!item.hasStyle(filter.style)) {
-                    return -1;
-                }
-            }
+      if (filter.rdftype) {
+        prio += this.priorities.RDFTYPE;
+        if (!matchRdfType(item, filter.rdftype)) {
+          return -1;
+        }
+      }
 
-            if (filter.item) {
-                prio += this.priorities.ITEM;
-                if (item !== filter.item && (!filter.item.getId || item.getId() !== filter.item.getId())) {
-                    return -1;
-                }
-            }
+      if (filter.constraint) {
+        prio += this.priorities.CONSTRAINT;
+        if (!matchConstraint(item, filter.constraint)) {
+          return -1;
+        }
+      }
 
-            if (filter.check) {
-                if (!filter.check(item)) {
-                    return -1;
-                }
-            }
+      if (filter.predicate) {
+        prio += this.priorities.PREDICATE;
+        if (item.getProperty() !== filter.predicate) {
+          return -1;
+        }
+      }
 
+      if (filter.style) {
+        prio += this.priorities.STYLE;
+        if (!item.hasStyle(filter.style)) {
+          return -1;
+        }
+      }
+
+      if (filter.item) {
+        prio += this.priorities.ITEM;
+        if (item !== filter.item && (!filter.item.getId || item.getId() !== filter.item.getId())) {
+          return -1;
+        }
+      }
+
+      if (filter.check) {
+        if (!filter.check(item)) {
+          return -1;
+        }
+      }
+
+      return prio;
+    },
+
+    getPriority(item, component) {
+      for (let i = 0; i < this.components.length; i++) {
+        if (this.components[i].component === component) {
+          const prio = this.calculatePriority(item, this.components[i].filter);
+          if (prio >= 0) {
             return prio;
-        },
-
-        getPriority: function(item, component) {
-          for (var i=0;i<this.components.length;i++) {
-            if (this.components[i].component === component) {
-              const prio = this.calculatePriority(item, this.components[i].filter);
-              if (prio >= 0) {
-                  return prio;
-              }
-            }
           }
-          return 0;
-        },
-
-        getComponentBefore: function(item, component) {
-          const limitprio = this.getPriority(item, component);
-          return this.getComponent(item, limitprio);
-        },
-
-        getComponent: function(item, limitPrio) {
-            var bestComponent, bestPrio = -1, prio, component;
-            for (var i=0;i<this.components.length;i++) {
-                component = this.components[i];
-                prio = this.calculatePriority(item, component.filter);
-                if (prio > bestPrio && (typeof limitPrio === 'undefined' || prio < limitPrio)) {
-                    bestComponent = component;
-                    bestPrio = prio;
-                }
-            }
-            if (bestComponent) {
-                return bestComponent.component;
-            }
-        },
-
-        register: function(filter, component) {
-            this.components.push({component: component, filter: filter});
-        },
-        itemtype: function(itemtype) {
-            return (new Filter(this)).itemtype(itemtype);
-        },
-        choices: function(kindOfChoicesRequired) { //'none', 'static', 'dynamic' or 'any', 'any' is default.
-            return (new Filter(this)).choices(kindOfChoicesRequired);
-        },
-        nodetype: function(nodetype) {
-            return (new Filter(this)).nodetype(nodetype);
-        },
-        datatype: function(datatype) {
-            return (new Filter(this)).datatype(datatype);
-        },
-        rdftype: function(rdftype) {
-            return (new Filter(this)).rdftype(rdftype);
-        },
-        constraint: function(constraint) {
-            return (new Filter(this)).constraint(constraint);
-        },
-        predicate: function(predicate) {
-            return (new Filter(this)).predicate(predicate);
-        },
-        style: function(style) {
-            return (new Filter(this)).style(style);
-        },
-        item: function(item) {
-            return (new Filter(this)).item(item);
-        },
-        check: function(func) {
-            return (new Filter(this)).check(func);
         }
-    });
+      }
+      return 0;
+    },
+
+    getComponentBefore(item, component) {
+      const limitprio = this.getPriority(item, component);
+      return this.getComponent(item, limitprio);
+    },
+
+    getComponent(item, limitPrio) {
+      let bestComponent;
+      let bestPrio = -1;
+      let prio;
+      let component;
+      for (let i = 0; i < this.components.length; i++) {
+        component = this.components[i];
+        prio = this.calculatePriority(item, component.filter);
+        if (prio > bestPrio && (typeof limitPrio === 'undefined' || prio < limitPrio)) {
+          bestComponent = component;
+          bestPrio = prio;
+        }
+      }
+      if (bestComponent) {
+        return bestComponent.component;
+      }
+      return undefined;
+    },
+
+    register(filter, component) {
+      this.components.push({ component, filter });
+    },
+    itemtype(itemtype) {
+      return (new Filter(this)).itemtype(itemtype);
+    },
+    choices(kindOfChoicesRequired) { // 'none', 'static', 'dynamic' or 'any', 'any' is default.
+      return (new Filter(this)).choices(kindOfChoicesRequired);
+    },
+    nodetype(nodetype) {
+      return (new Filter(this)).nodetype(nodetype);
+    },
+    datatype(datatype) {
+      return (new Filter(this)).datatype(datatype);
+    },
+    rdftype(rdftype) {
+      return (new Filter(this)).rdftype(rdftype);
+    },
+    constraint(constraint) {
+      return (new Filter(this)).constraint(constraint);
+    },
+    predicate(predicate) {
+      return (new Filter(this)).predicate(predicate);
+    },
+    style(style) {
+      return (new Filter(this)).style(style);
+    },
+    item(item) {
+      return (new Filter(this)).item(item);
+    },
+    check(func) {
+      return (new Filter(this)).check(func);
+    },
+  });
 });

@@ -1,58 +1,80 @@
 define([
   'rdforms/view/renderingContext',
   'jquery',
+  'rdforms/model/system',
   'rdforms/utils',
   'selectize',
-], (renderingContext, jquery, utils) => {
+], (renderingContext, jquery, system, utils) => {
   renderingContext.renderSelect = function (fieldDiv, binding, context) {
     const formgroup = jquery('<div class="form-group selectizeException">').appendTo(fieldDiv);
     const $select = jquery('<div class="form-control">').appendTo(formgroup);
-    const choices = [{
-      label: ' ',
-      value: '',
-    }];
-    for (let i = 0; i < context.choices.length; i++) {
-      const c = context.choices[i];
-      let desc;
-      if (c.description) {
-        desc = utils.getLocalizedValue(c.description).value;
-      }
-
-      choices.push({
-        label: c.label,
-        title: desc || c.seeAlso || c.value,
-        value: c.choice.value,
-      });
-    }
     const items = [];
     // Sets the value if any
     if (binding.getValue()) {
       items.push(binding.getValue());
     }
-
-    // new Select2($select, {placeholder: ""});
-    $select.selectize({
-      options: choices,
+    let sel;
+    const settings = {
       items,
-      valueField: 'value',
-      labelField: 'label',
-      sortField: 'label',
-      searchField: 'label',
+      valueField: 'id',
+      labelField: 'text',
+      sortField: 'text',
+      searchField: 'text',
       allowEmptyOption: false,
+      preload: 'focus',
       maxItems: 1,
       mode: 'single',
-      onChange(/* value */) {
-        binding.setValue($select.val());
+      onChange(value) {
+        const op = sel.options[value];
+        binding.setChoice(op ? op.choice : null);
         this.clearCache();
       },
-    });
+    };
+    let disable = true;
+    if (context.choices && context.choices.length > 0) {
+      disable = false;
+      settings.options = context.choices;
+    } else if (context.chooser && typeof context.chooser.search === 'function') {
+      disable = false;
+      settings.load = (query, callback) => {
+        context.chooser.search(binding.getItem(), query).then((choices) => {
+          callback(choices.map(c => ({
+            id: c.value,
+            text: utils.getLocalizedValue(c.label).value || '',
+            choice: c,
+          })));
+        });
+      };
+    }
+    sel = $select.selectize(settings)[0].selectize;
 
-/*    $select.change(function () {
-      binding.setValue($select.val());
-    });*/
+    if (disable) {
+      sel.disable();
+    }
 
-    context.clear = function () {
+    context.clear = () => {
       $select.val(null).trigger('change');
     };
+    context.setValue = (choice) => {
+      $select.toggleClass('mismatch', choice.mismatch === true);
+      const label = utils.getLocalizedValue(choice.label).value || '';
+      const op = sel.options[choice.value];
+      if (!op) {
+        sel.addOption({ id: choice.value, text: label, choice });
+      }
+      sel.addItem(choice.value, true);
+      // $select.val(choice.value).trigger('change');
+    };
+    // Sets the value if any
+    const c = binding.getChoice();
+    if (c) {
+      if (c.load != null) {
+        c.load(() => {
+          context.setValue(c);
+        });
+      } else {
+        context.setValue(c);
+      }
+    }
   };
 });

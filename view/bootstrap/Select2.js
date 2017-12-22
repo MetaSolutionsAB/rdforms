@@ -2,45 +2,67 @@ define([
   'rdforms/view/renderingContext',
   'jquery',
   'rdforms/utils',
+  'select2/select2/data/array',
+  './Select2QueryAdapter',
   'select2/jquery.select2',
-], (renderingContext, jquery, utils) => {
+], (renderingContext, jquery, utils, ArrayAdapter, Select2QueryAdapter) => {
   renderingContext.renderSelect = (fieldDiv, binding, context) => {
     const choices = context.choices;
     const $select = jquery('<select>').appendTo(fieldDiv).append('<option></option>');
 
-    for (let i = 0; i < choices.length; i++) {
-      const c = choices[i];
-      let desc;
-      if (c.description) {
-        desc = utils.getLocalizedValue(c.description).value;
-      }
-
-      jquery('<option>')
-        .val(c.choice.value)
-        .attr('title', desc || c.seeAlso || c.value)
-        .text(c.label)
-        .appendTo($select);
+    const options = {
+      placeholder: binding.getItem().getPlaceholder() || '',
+      rdformsItem: binding.getItem(),
+      chooser: context.chooser,
+    };
+    if (choices && choices.length > 0) {
+      options.data = choices;
+      options.dataAdapter = ArrayAdapter;
+    } else {
+      options.dataAdapter = Select2QueryAdapter;
+      $select.prop('disabled', !context.chooser || typeof context.chooser.search !== 'function');
     }
-
-    // new Select2($select, {placeholder: ""});
-    $select.select2({
-      placeholder: '',
-    });
-
-    // Sets the value if any
-    if (binding.getValue()) {
-      /* if (binding.getChoice().mismatch) {
-       fSelect.set("displayedValue", binding.getValue());
-       }*/
-      $select.val(binding.getValue()).trigger('change');
-    }
-
-    $select.change(() => {
-      binding.setValue($select.val());
-    });
+    $select.select2(options);
 
     context.clear = () => {
       $select.val(null).trigger('change');
     };
+    context.setValue = (choice) => {
+      $select.toggleClass('mismatch', choice.mismatch === true);
+      const label = utils.getLocalizedValue(choice.label).value || '';
+      if ($select.find(`option[value='${choice.value}']`).length === 0) {
+        $select.append(new Option(label, choice.value, true, true)).trigger('change');
+        $select.trigger({
+          type: 'select2:select',
+          params: {
+            data: { id: choice.val, text: label, choice },
+          },
+        });
+      } else {
+        $select.val(choice.value).trigger('change');
+      }
+    };
+
+    // Sets the value if any
+    const c = binding.getChoice();
+    if (c) {
+      if (c.load != null) {
+        c.load(() => {
+          context.setValue(c);
+        });
+      } else {
+        context.setValue(c);
+      }
+    }
+
+    $select.on('select2:select', (params) => {
+      const choice = params.params.data.choice;
+      binding.setChoice(choice);
+      $select.toggleClass('mismatch', choice.mismatch);
+      const $node = $select.next().find('.select2-selection__rendered');
+      if (choice.description) {
+        $node.attr('title', utils.getLocalizedValue(choice.description).value);
+      }
+    });
   };
 });

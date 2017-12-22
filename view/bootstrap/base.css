@@ -94,7 +94,7 @@
 }
 
 .rdformsLabelRow>.action.fa {
-    vertical-align: text-bottom;
+    vertical-align: middle;
 }
 
 .rdformsLabelRow>.action.indentRemove.fa-remove,
@@ -111,8 +111,17 @@
     min-width: 12em;
 }
 
-.compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow, .compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel {
+.compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow,
+.compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel {
     padding-top: 6px;
+}
+
+.rdformsLabelRow.rdformsLabel {
+    display: inline-block;
+}
+
+.compact .rdformsLabelRow.rdformsLabel {
+    display: block;
 }
 
 .rdformsRow.rdformsTopLevel {
@@ -131,6 +140,10 @@
     max-width: 22em;
 }
 
+.rdformsEditor .browseChoices {
+    margin-left: 4px;
+}
+
 .rdformsDateValue.rdformsDatepicker {
     display: inline-block;
 }
@@ -144,4 +157,13 @@
 
 .fuelux .rdformsDatepicker>.input-group>.input-group-btn>.dropdown-menu-left {
     left: -128px;
+}
+
+.cardgroup>.rdformsFields>.rdformsGroup {
+    padding: 2px 5px 5px 10px;
+    margin-right: -5px;
+    margin-bottom: 14px;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
 }

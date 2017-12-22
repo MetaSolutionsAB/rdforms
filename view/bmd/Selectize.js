@@ -20,7 +20,7 @@ define([
       labelField: 'text',
       sortField: 'text',
       searchField: 'text',
-      allowEmptyOption: true,
+      allowEmptyOption: false,
       preload: 'focus',
       maxItems: 1,
       mode: 'single',

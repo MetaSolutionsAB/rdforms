@@ -26,7 +26,7 @@ define([
       mode: 'single',
       onChange(value) {
         const op = sel.options[value];
-        binding.setChoice(op.choice);
+        binding.setChoice(op ? op.choice : null);
         this.clearCache();
       },
     };

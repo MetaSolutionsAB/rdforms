@@ -59,6 +59,9 @@ define(['dojo/_base/declare'], declare =>
        this._counter -= 1;
        this._checkCounter();
      },
+     getCounter() {
+       return this._counter;
+     },
      checkCardinality() {
        this._checkCounter();
      },

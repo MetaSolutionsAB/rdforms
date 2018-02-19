@@ -5,9 +5,11 @@ define(['dojo/_base/declare',
   'rdforms/view/renderingContext',
 ], (declare, Presenter, engine, validate, renderingContext) => {
   const showNow = (editor, item, bindings, includeLevel) => {
-    if (item.hasStyle('invisible')) {
+    // Invisible should be created as components and hidden using display: none
+    // Otherwise certain extentions such as autoUUID does not work.
+    /*if (item.hasStyle('invisible')) {
       return false;
-    }
+    }*/
     if (item.hasStyle('deprecated') && bindings.length === 0) {
       return false;
     }

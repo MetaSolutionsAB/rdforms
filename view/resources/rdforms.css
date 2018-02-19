@@ -79,6 +79,10 @@
 
 /* === End colors === */
 
+.rdformsInvisible {
+    display: none;
+}
+
 .rdformsRow.rdformsTopLevel {
  	padding-top: 0.3em;
  	padding-bottom: 0.3em;

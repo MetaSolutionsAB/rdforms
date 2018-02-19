@@ -148,9 +148,10 @@ define([
           item = groupedItemsArr[groupIndex];
 
           if (!this.showNow(item, bindings)) {
-            if (item.hasStyle('invisible')) { // In this case, create some bindings anyway
+            // Invisible not not part of showNow check due to things like autoUUID
+            /*if (item.hasStyle('invisible')) { // In this case, create some bindings anyway
               this.prepareBindings(item, bindings);
-            }
+            }*/
 // eslint-disable-next-line no-continue
             continue;
           }
@@ -225,6 +226,9 @@ define([
       }
       this._binding2node[binding.getHash()] = fieldDiv;
       this.addComponent(fieldDiv, binding);
+      if (item.hasStyle('invisible')) {
+        renderingContext.domClassToggle(newRow || lastRow, 'rdformsInvisible', true);
+      }
       return newRow || lastRow;
     },
     createRowNode(lastRowNode, binding, item) {

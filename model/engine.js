@@ -128,7 +128,7 @@ define([
     const defaultValue = item.getValue();
     const cardTracker = nbinding.getCardinalityTracker();
     if (defaultValue != null && cardTracker.getCounter() === 1) {
-      nbinding.setValue(defaultValue, _findChoice(item, defaultValue, graph), true);
+      nbinding.setChoice(_findChoice(item, defaultValue, graph), true);
     }
     return nbinding;
   };

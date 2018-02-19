@@ -14,12 +14,12 @@ define(["dojo/_base/declare", "./ValueBinding"], function (declare, ValueBinding
         //===================================================
         // Public API
         //===================================================
-        setChoice: function (choice) {
+        setChoice: function (choice, silent) {
             this._choice = choice;
             if (choice == null) {
-                this.setValue(null);
+                this.setValue(null, null, silent);
             } else if (this.getValue() != choice.value) {
-                this.setValue(choice.value, choice);
+                this.setValue(choice.value, choice, silent);
             }
         },
         getChoice: function () {

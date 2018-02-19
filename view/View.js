@@ -224,6 +224,12 @@ define([
           fieldDiv = renderingContext.domCreate('div', n);
         }
       }
+      if (item.getType() === 'group') {
+        renderingContext.domClassToggle(fieldDiv, 'rdformsGroup', true);
+      } else {
+        renderingContext.domClassToggle(fieldDiv, 'rdformsField', true);
+      }
+
       this._binding2node[binding.getHash()] = fieldDiv;
       this.addComponent(fieldDiv, binding);
       if (item.hasStyle('invisible')) {

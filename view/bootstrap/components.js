@@ -30,13 +30,6 @@ define([
   };
 
   renderingContext.preEditorRenderer = (fieldDiv, binding, context) => {
-    const it = binding.getItem().getType();
-    if (it === 'group') {
-      jquery(fieldDiv).addClass('rdformsGroup');
-    } else {
-      jquery(fieldDiv).addClass('rdformsField');
-    }
-
     context.$controlDiv = jquery('<div class="rdformsFieldControl">');
     context.controlDiv = context.$controlDiv[0];
     if (it !== 'group' && context.noCardinalityButtons !== true) {

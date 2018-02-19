@@ -32,6 +32,7 @@ define([
   renderingContext.preEditorRenderer = (fieldDiv, binding, context) => {
     context.$controlDiv = jquery('<div class="rdformsFieldControl">');
     context.controlDiv = context.$controlDiv[0];
+    const it = binding.getItem().getType();
     if (it !== 'group' && context.noCardinalityButtons !== true) {
       renderingContext.addRemoveButton(fieldDiv, binding, context);
     }

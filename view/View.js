@@ -257,7 +257,7 @@ define([
       renderingContext.domClassToggle(rowNode, 'notCompact', item.getType() === 'group');
 
       this.addLabel(rowNode, binding, item);
-      if (this.filterBinding(binding)) {
+      if (binding && this.filterBinding(binding)) {
         renderingContext.domClassToggle(rowNode, 'hiddenProperty', true);
       }
       return rowNode;

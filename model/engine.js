@@ -24,6 +24,50 @@ define([
   let _dibbs;
   let _createStatementsForConstraints;
 
+
+  const sortStatements = (stmts) => {
+    // ng to integer
+    const ng2i = new Map();
+    let lastIdx = 1;
+    return stmts.sort((stmt1, stmt2) => {
+      const ng1 = stmt1.getNamedGraph();
+      const ng2 = stmt2.getNamedGraph();
+
+      const i1 = ng1 ? (ng2i.get(ng1) || -1) : 0; // 0 means default graph, -1 new external graph
+      const i2 = ng2 ? (ng2i.get(ng2) || -1) : 0; // 0 means default graph, -1 new external graph
+
+      if (i1 === -1) {
+        ng2i.set(ng1, lastIdx);
+        lastIdx += 1;
+      }
+
+      if (i2 === -1) {
+        ng2i.set(ng2, lastIdx);
+        lastIdx += 1;
+      }
+
+      // check if it's default graph or named
+      const comp1 = ng2i.has(ng1) ? ng2i.get(ng1) : 0;
+      const comp2 = ng2i.has(ng2) ? ng2i.get(ng2) : 0;
+
+      return comp2 - comp1;
+    })
+  };
+
+  /**
+   * Get grouped statements by named graph.
+   * The sorting is random but the statements in the empty named graph are placed last.
+   *
+   * @param graph
+   * @param uri
+   * @param property
+   * @return {*}
+   */
+  const getSortedStatements = (graph, uri, property = null) => {
+    const stmts = graph.find(uri, property);
+    return sortStatements(stmts);
+  }
+
   const match = (graph, uri, template) => {
     const rootBinding = new GroupBinding({ item: template, childrenRootUri: uri, graph });
     _matchGroupItemChildren(rootBinding);

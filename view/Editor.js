@@ -169,7 +169,7 @@ define(['dojo/_base/declare',
     },
 
     addTable(newRow, firstBinding) {
-      if (firstBinding.getItem().hasStyle('nonEditable')) {
+      if (firstBinding.getItem().hasStyle('nonEditable') || firstBinding.isReadOnly()) {
         return this.addComponent(newRow, firstBinding);
       }
       return renderingContext.addEditorTable(newRow, firstBinding, { view: this });
@@ -180,7 +180,7 @@ define(['dojo/_base/declare',
     },
 
     addComponent(fieldDiv, binding) {
-      if (binding.getItem().hasStyle('nonEditable')) {
+      if (binding.getItem().hasStyle('nonEditable') || binding.isReadOnly()) {
         renderingContext.renderPresenter(fieldDiv, binding, { view: this, inEditor: true });
       } else {
         renderingContext.renderEditor(fieldDiv, binding, { view: this, inEditor: true });

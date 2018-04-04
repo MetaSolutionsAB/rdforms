@@ -13,6 +13,7 @@ require.config({
         "jquery.mousewheel": "select2/src/js/jquery.mousewheel.shim",
         "requireLib": 'requirejs/require',
         "bmd": "bmd/dist",
+        "md5": 'md5/js/md5.min',
     },
     packages: [ //Config defined using packages to allow for main.js when requiring just config.
         {

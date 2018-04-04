@@ -236,6 +236,29 @@ a.rdformsUrl:hover {
 /*	word-break: break-all;*/
 }
 
+.rdformsField.rdformsExternal {
+    background-color: #f9f9f9;
+    display: grid;
+    grid-template-columns: 5fr 1fr [last-col] 1fr;
+    align-content: space-between;
+    align-items: center;
+    justify-items: center;
+}
+
+.rdformsEditor .rdformsField.rdformsExternal .rdformsLanguage {
+    min-height: initial;
+    padding-right: initial;
+    width: auto;
+}
+
+.rdformsEditor .rdformsField.rdformsExternal .rdformsField {
+    justify-self: left;
+}
+
+.rdformsEditor .rdformsField.rdformsExternal .rdformsExternalInfo {
+    grid-column: last-col;
+}
+
 .rdformsPresenter .rdformsRepeatedValue {
  	border-top: 1px solid #E6E6E6;
 }
@@ -312,8 +335,9 @@ a.rdformsUrl:hover {
  	padding-right: 55px;
 	position: relative;
  }
- 
- .rdformsEditor .rdformsField .rdformsChoiceLabel {
+
+
+.rdformsEditor .rdformsField .rdformsChoiceLabel {
  	margin-left: 0.2em;
  	margin-right: 1em;
  }

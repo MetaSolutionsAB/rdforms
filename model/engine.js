@@ -16,14 +16,13 @@ define([
   './validate',
 ], (exports, lang, kernel, Text, Group, Choice, PropertyGroup, GroupBinding,
     PropertyGroupBinding, ValueBinding, ChoiceBinding, system, utils, validate) => {
-    // See public API at the bottom of this file.
+  // See public API at the bottom of this file.
 
   let _matchGroupItemChildren;
   let _clearDibbs;
   let _noDibbs;
   let _dibbs;
   let _createStatementsForConstraints;
-
 
   const sortStatements = (stmts) => {
     // ng to integer
@@ -107,7 +106,7 @@ define([
             addItem(item);
           } else {
             console.warn(`Warning, when autodetecting a template: Required item '${id
-                            }' is neither an id for a loaded item or a property for a loaded item, ignoring.`);
+              }' is neither an id for a loaded item or a property for a loaded item, ignoring.`);
           }
         }
       });
@@ -183,7 +182,10 @@ define([
     if (item.getProperty() !== undefined) {
       const graph = parentBinding.getGraph();
       if (item.getNodetype() === 'URI') {
-        stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), { type: 'uri', value: system.createURI(item, parentBinding) }, false);
+        stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), {
+          type: 'uri',
+          value: system.createURI(item, parentBinding)
+        }, false);
       } else {
         stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), null, false);
       }
@@ -197,7 +199,7 @@ define([
     // used in more than one place.
     const itemId = item._source['@id'];
     if (itemId) {
-            // If loop stop.
+      // If loop stop.
       if (parentItems[itemId]) {
         return nBinding;
       }
@@ -221,9 +223,15 @@ define([
       stmt = graph.create(parentBinding.getChildrenRootUri(), '', null, false);
       constr = _createStatementsForConstraints(graph, stmt.getSubject(), oItem);
     } else if (oItem instanceof Choice) {
-      stmt = graph.create(parentBinding.getChildrenRootUri(), '', { type: 'uri', value: '' }, false);
+      stmt = graph.create(parentBinding.getChildrenRootUri(), '', {
+        type: 'uri',
+        value: ''
+      }, false);
     } else {
-      stmt = graph.create(parentBinding.getChildrenRootUri(), '', { type: 'literal', value: '' }, false);
+      stmt = graph.create(parentBinding.getChildrenRootUri(), '', {
+        type: 'literal',
+        value: ''
+      }, false);
     }
 
     const nBinding = new PropertyGroupBinding({ item, statement: stmt, constraints: constr });
@@ -270,7 +278,7 @@ define([
     let constStmts;
     let groupBinding;
     const graph = pb.getGraph();
-        // Case 1: there is a property in the item
+    // Case 1: there is a property in the item
     if (item.getProperty() !== undefined) {
       stmts = graph.find(pb.getChildrenRootUri(), item.getProperty());
       if (stmts.length > 0) {
@@ -288,7 +296,7 @@ define([
         });
         pb.addChildBindings(bindings);
       }
-            // Case 2: there is no property in the item, i.e. a layout item.
+      // Case 2: there is no property in the item, i.e. a layout item.
     } else {
       groupBinding = new GroupBinding({ item });
       pb.addChildBindings([groupBinding]);
@@ -350,7 +358,7 @@ define([
       return;
     }
     const bindings = [];
-    pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
+    getSortedStatements(pb.getGraph(), pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
       if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
         _dibbs(stmt);
         bindings.push(new ValueBinding({ item, statement: stmt }));
@@ -366,7 +374,7 @@ define([
       return;
     }
     const bindings = [];
-    pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
+    getSortedStatements(pb.getGraph(), pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
       if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
         const choice = _findChoice(item, stmt.getValue(), stmt.getGraph());
         if (choice !== undefined) {
@@ -578,10 +586,10 @@ define([
             }
           }
           return result.perfectLocaleLanguageValue ||
-                        result.localeLanguageValue ||
-                        result.defaultLanguageValue ||
-                        result.anyLanguageValue ||
-                        result.firstValue;
+            result.localeLanguageValue ||
+            result.defaultLanguageValue ||
+            result.anyLanguageValue ||
+            result.firstValue;
         }
         return vbs[0];
       } else if (createIfMissing) {
@@ -608,9 +616,9 @@ define([
         let item = b.getItem();
         // Empty property choices.
         if (item instanceof Choice
-        && typeof item.getProperty() === 'undefined'
-        && pred === item.getId()
-        && (_path.length === 2 && _path[1] === b.getValue())) {
+          && typeof item.getProperty() === 'undefined'
+          && pred === item.getId()
+          && (_path.length === 2 && _path[1] === b.getValue())) {
           return b;
         }
         if (!b.isValid()) {
@@ -633,7 +641,7 @@ define([
               return res;
             }
           } else if (_path.length === 1 || _path[1] === '*'
-                            || _path[1] === b.getValue()) {
+            || _path[1] === b.getValue()) {
             return b;
           }
         }
@@ -695,7 +703,6 @@ define([
     });
     return val2choice[value];
   };
-
 
   const _levelProfile = (profile, item, ignoreTopLevelGroup) => {
     const card = item.getCardinality();

@@ -8,6 +8,8 @@ define([
     const $remove = jquery('<span class="fa fa-remove action">')
             .attr('title', context.view.messages.edit_remove)
             .appendTo(context.controlDiv);
+
+
     const cardTr = binding.getCardinalityTracker();
     const con = aspect.after(cardTr, 'cardinalityChanged', () => {
       $remove.toggleClass('disabled', cardTr.isMin() && cardTr.isDepsOk());
@@ -74,51 +76,55 @@ define([
         }
       });
     }
-    const $remove = jquery('<span class="action fa fa-remove">')
-            .attr('title', context.view.messages.edit_remove)
-            .appendTo(labelDiv);
 
-    if (card.max === 1) {
-      $remove.addClass('indentRemove');
+    let $remove;
+    if (!binding.isReadOnly()) {
+      $remove = jquery('<span class="action fa fa-remove">')
+        .attr('title', context.view.messages.edit_remove)
+        .appendTo(labelDiv);
+
+      if (card.max === 1) {
+        $remove.addClass('indentRemove');
+        }
+      $remove.click(() => {
+        if (!cardTr.isMin() || !cardTr.isDepsOk()) {
+          if (cardTr.getCardinality() === 1) {
+            con.remove();
+            if ($add) {
+              $add.unbind('click');
+            }
+            $remove.unbind('click');
+            binding.remove();
+            if (context.view.showNow(item, [])) {
+                          // If we are removing a single row, prepareBindings will only create a
+                          // maximum of one row.
+              const nBindings = context.view.prepareBindings(item, []);
+                          // The bindings may be of length 0, e.g. if the view is currently showing
+                          // only mandatory fields and the row is optional.
+              if (nBindings.length > 0) {
+                context.view.addRow(rowDiv, nBindings[0]);
+              }
+            }
+            jquery(rowDiv).remove();
+          } else {
+            con.remove();
+            if ($add) {
+              $add.unbind('click');
+            }
+            $remove.unbind('click');
+            binding.remove();
+            jquery(rowDiv).remove();
+          }
+        }
+      });
     }
 
     const con = aspect.after(cardTr, 'cardinalityChanged', () => {
       if ($add) {
         $add.toggleClass('disabled', cardTr.isMax());
       }
-      $remove.toggleClass('disabled', cardTr.isMin() && cardTr.isDepsOk());
-    });
-
-
-    $remove.click(() => {
-      if (!cardTr.isMin() || !cardTr.isDepsOk()) {
-        if (cardTr.getCardinality() === 1) {
-          con.remove();
-          if ($add) {
-            $add.unbind('click');
-          }
-          $remove.unbind('click');
-          binding.remove();
-          if (context.view.showNow(item, [])) {
-                        // If we are removing a single row, prepareBindings will only create a
-                        // maximum of one row.
-            const nBindings = context.view.prepareBindings(item, []);
-                        // The bindings may be of length 0, e.g. if the view is currently showing
-                        // only mandatory fields and the row is optional.
-            if (nBindings.length > 0) {
-              context.view.addRow(rowDiv, nBindings[0]);
-            }
-          }
-          jquery(rowDiv).remove();
-        } else {
-          con.remove();
-          if ($add) {
-            $add.unbind('click');
-          }
-          $remove.unbind('click');
-          binding.remove();
-          jquery(rowDiv).remove();
-        }
+      if ($remove) {
+        $remove.toggleClass('disabled', cardTr.isMin() && cardTr.isDepsOk());
       }
     });
   };

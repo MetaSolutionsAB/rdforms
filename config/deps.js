@@ -1,5 +1,5 @@
 require.config({
-    baseUrl: "../libs", //Path relative to bootstrapping html file.
+    baseUrl: "../../libs", //Path relative to bootstrapping html file.
     paths: {   //Paths relative baseUrl, only those that deviate from baseUrl/{modulename} are explicitly listed.
         "rdforms": "..",
         "text": "requirejs-text/text",
@@ -14,6 +14,7 @@ require.config({
         "requireLib": 'requirejs/require',
         "bmd": "bmd/dist",
         "md5": 'md5/js/md5.min',
+        "templates": 'rdforms-templates',
     },
     packages: [ //Config defined using packages to allow for main.js when requiring just config.
         {

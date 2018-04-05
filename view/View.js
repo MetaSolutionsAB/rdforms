@@ -173,7 +173,7 @@ define([
                 bindings[i] instanceof GroupBinding);
             }
           } else {
-            lastRow = this.createRowNode(lastRow, null, item);
+            //lastRow = this.createRowNode(lastRow, null, item);
           }
 
           // Activates/deactivates buttons at startup if needed

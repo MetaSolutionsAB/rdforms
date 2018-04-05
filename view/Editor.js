@@ -138,7 +138,10 @@ define(['dojo/_base/declare',
       let _bindings = bindings;
       const card = item.getCardinality();
       let target;
-      if (card.pref > 0) {
+
+      if (this.binding.isReadOnly()) {
+        target = 0;
+      } else if (card.pref > 0) {
         target = card.pref;
       } else if (card.min > 0) {
         target = card.min;

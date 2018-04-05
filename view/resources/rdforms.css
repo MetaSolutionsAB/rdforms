@@ -236,13 +236,17 @@ a.rdformsUrl:hover {
 /*	word-break: break-all;*/
 }
 
-.rdformsField.rdformsExternal {
+.rdformsEditor .rdformsField.rdformsExternal,
+.rdformsPresenter .rdformsField.rdformsExternal {
     background-color: #f9f9f9;
     display: grid;
     grid-template-columns: 5fr 1fr [last-col] 1fr;
     align-content: space-between;
     align-items: center;
     justify-items: center;
+    padding: 3px 5px;
+    min-height: unset;
+    font-size: 16px;
 }
 
 .rdformsEditor .rdformsField.rdformsExternal .rdformsLanguage {
@@ -251,12 +255,19 @@ a.rdformsUrl:hover {
     width: auto;
 }
 
-.rdformsEditor .rdformsField.rdformsExternal .rdformsField {
+.rdformsEditor .rdformsField.rdformsExternal .rdformsField,
+.rdformsPresenter .rdformsField.rdformsExternal .rdformsField,
+.rdformsEditor .rdformsField.rdformsExternal .rdformsUrl,
+.rdformsPresenter .rdformsField.rdformsExternal .rdformsUrl {
     justify-self: left;
+    margin-left: 0;
+    padding-left: 0;
+    min-height: unset;
 }
 
 .rdformsEditor .rdformsField.rdformsExternal .rdformsExternalInfo {
     grid-column: last-col;
+    justify-self: right;
 }
 
 .rdformsPresenter .rdformsRepeatedValue {

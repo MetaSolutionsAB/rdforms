@@ -66,7 +66,7 @@ define([
   };
 
   jquery('body').on('show.bs.popover click', function (e) {
-    jquery('[data-toggle="popover"]').each((node, a) => {
+    jquery('.rdformsLabel[data-toggle="popover"]').each((node, a) => {
       if (e.target.innerHTML !== a.innerHTML) {
         jquery(a).popover('hide');
       }

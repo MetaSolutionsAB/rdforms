@@ -12,6 +12,7 @@
     "dojo": "1.12.2",
     "dijit": "1.12.2",
     "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#ldsv",
+    "rdforms-templates": "https://bitbucket.org/metasolutions/rdforms-templates.git",
     "di18n": "https://bitbucket.org/metasolutions/di18n.git#0.4",
     "bootstrap-amd": "latest",
     "fontawesome": "latest",

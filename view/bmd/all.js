@@ -44,17 +44,27 @@ define([
     const newA = document.createElement('a');
     newA.setAttribute('href', '#');
     newA.setAttribute('data-toggle', 'popover');
+    newA.setAttribute('data-container', 'body');
+  //<button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">Left</button>
+
     newA.setAttribute('title', 'Source'); // nls
-    newA.setAttribute('data-content', `The original source is \n ${binding._statement.getNamedGraph()}`); // nls
+    newA.setAttribute('data-content', `<a href="${binding._statement.getNamedGraph()}">DBPedia</a>`); // nls
 
     const newI = document.createElement('i');
-    newI.classList.add('fa', 'fa-info-circle');
+    newI.classList.add('fa', 'fa-info');
     newA.appendChild(newI);
     newDiv.appendChild(newA);
 
     node.appendChild(newDiv);
 
-    jquery('[data-toggle="popover"]').popover();
+    jquery(newA).popover({
+      html: true,
+      placement: 'auto',
+      template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3' +
+      ' class="popover-title"></h3><div class="popover-content"><a></a></div></div>',
+      trigger: 'focus',
+      title: 'Source',
+    });
   };
 
   renderingContext.postEditorRenderer = function (fieldDiv, binding, context) {

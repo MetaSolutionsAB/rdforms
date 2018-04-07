@@ -19,6 +19,7 @@ define([
         _id: null,
         _modified: false,
         _readOnly: false,
+        _scope: null,
 
         //===================================================
         // Public API
@@ -44,6 +45,11 @@ define([
         getPath: function() {
             return this._path;
         },
+
+        getScope: function() {
+            return this._scope;
+        },
+
 
         getItems: function() {
             return this._items;
@@ -80,6 +86,7 @@ define([
             this._items = [];
             counter++;
             this._id = "_bundle_"+counter;
+            this._scope = params.source.scope;
         }
     });
 });

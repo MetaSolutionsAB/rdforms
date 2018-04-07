@@ -617,11 +617,6 @@ define({
       "datatype": "http://www.w3.org/2001/XMLSchema#date"
     }],
     "http://dbpedia.org/ontology/deathDate": [{
-      "type": "literal",
-      "value": "1519-5-2",
-      "datatype": "http://www.w3.org/2001/XMLSchema#date"
-    },
-      {
         "type": "literal",
         "value": "1519-05-02",
         "datatype": "http://www.w3.org/2001/XMLSchema#date"

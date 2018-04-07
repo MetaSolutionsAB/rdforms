@@ -14,15 +14,7 @@ require([
 
   const prepareGraphs = (ng) => {
     const externalGraph = new Graph(rdf);
-    const internalGraph = new Graph({
-      "http://dbpedia.org/resource/Leonardo_da_Vinci": {
-        "http://dbpedia.org/ontology/birthName": [{
-          "type": "literal",
-          "value": "Leonardo da Vinci",
-          "lang": "en"
-        }],
-      }
-    });
+    const internalGraph = new Graph();
 
     internalGraph.addAll(externalGraph, ng);
 
@@ -38,6 +30,7 @@ require([
     'templates/foaf/foaf',
     'templates/vcard/vcard',
     'templates/dcterms/dcterms',
+    'templates/dbp/dbpo-properties',
     'templates/dbp/dbo-merge',
   ];
 

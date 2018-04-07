@@ -48,7 +48,7 @@ define([
   //<button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">Left</button>
 
     newA.setAttribute('title', 'Source'); // nls
-    newA.setAttribute('data-content', `<a href="${binding._statement.getNamedGraph()}">DBPedia</a>`); // nls
+    newA.setAttribute('data-content', `<a href="${binding._statement.getNamedGraph()}" target="_blank">DBPedia</a>`); // nls
 
     const newI = document.createElement('i');
     newI.classList.add('fa', 'fa-info');

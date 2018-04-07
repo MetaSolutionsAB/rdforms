@@ -93,6 +93,9 @@ define([
       label = '';
     }
 
+    const scope = item.getBundle().getScope();
+    label = `<span>${label}</span> <span class="label label-info pull-right">${scope}</span>`;
+
     const popoverOptions = {
       html: true,
       container: renderingContext.getPopoverContainer(),

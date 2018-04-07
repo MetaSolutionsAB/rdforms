@@ -263,6 +263,7 @@ a.rdformsUrl:hover {
     margin-left: 0;
     padding-left: 0;
     min-height: unset;
+    color: #333;
 }
 
 .rdformsEditor .rdformsField.rdformsExternal .rdformsExternalInfo {

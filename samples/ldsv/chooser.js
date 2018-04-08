@@ -57,7 +57,7 @@ require([
                     data-label="${res.name.value}" data-ruri="${res.art.value}">Select</a>
             </div>
         </div>`;
-        jquery('#myModal .wrapper').append(html);
+        jquery('#artWroks .wrapper').append(html);
       });
 
       jquery('.select-work').click((e) => {
@@ -66,9 +66,9 @@ require([
           label: { en: jquery(e.target).data('label') }
         });
         jquery('.select-work').off();
-        jquery('#myModal').modal('hide');
+        jquery('#artWroks').modal('hide');
       });
-      jquery('#myModal').modal('show');
+      jquery('#artWroks').modal('show');
     },
     getChoice(item, value) {
       return {
@@ -103,7 +103,7 @@ require([
     show(binding, onSelect) {
     },
     getChoice(item, value) {
-      const label = getPeople().find(p => p.value === value);
+      const { label } = getPeople().find(p => p.value === value);
       return { value, label };
     },
     search(item, term) {

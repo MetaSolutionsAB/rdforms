@@ -3,14 +3,20 @@ require([
   'rdforms/template/ItemStore',        // Stores all the RDForm templates
   'rdforms/template/bundleLoader',
   'rdforms/view/Editor',               // The editor User interface
+  'rdforms/view/Presenter',               // The editor User interface
   'rdforms/samples/ldsv/graphs/LeonardoDaVinci',               // The sample RDF
   'jquery',
   'rdforms/view/bmd/all',              // Depend on the material design view
   './chooser.js',
   'dojo/domReady!',                    // Wait until the dom is ready.
-], (Graph, ItemStore, bundleLoader, Editor, rdf, jquery) => {
+], (Graph, ItemStore, bundleLoader, Editor, Presenter, rdf, jquery) => {
 
   jquery.material.init();
+
+  jquery('#exportGraph').on('show.bs.modal', function () {
+    const newG = JSON.stringify(graph.exportRDFJSON());
+    jquery('#exportGraph textarea').val(newG);
+  })
 
   const prepareGraphs = (ng) => {
     const externalGraph = new Graph(rdf);
@@ -22,7 +28,7 @@ require([
   }
 
   const daVinciResource = 'http://dbpedia.org/resource/Leonardo_da_Vinci';
-  const graph = prepareGraphs(daVinciResource);
+  graph = prepareGraphs(daVinciResource);
 
   const itemStore = new ItemStore();
   const bundles = [
@@ -42,4 +48,5 @@ require([
       compact: false,
     }, 'node');
   });
+
 });

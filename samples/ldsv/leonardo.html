@@ -24,8 +24,42 @@
     </blockquote>
 
     <div id="node"></div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    <a type="button" class="btn btn-default">Reset
+                        <div class="ripple-container"></div>
+                    </a>
+                    <a class="btn btn-primary btn-raised" data-toggle="modal"
+                       data-target="#exportGraph">Export Graph</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exportGraph" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!--<div class="modal-header">-->
+                    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                    <!--<h4 class="modal-title">Merged graph</h4>-->
+                <!--</div>-->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exportedGraph">RDF JSON Graph</label>
+                        <textarea class="form-control" rows="20" id="exportedGraph"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-raised">Copy
+                    to clipboard</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal fade" id="artWorks" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -42,13 +76,6 @@
                 </button>
             </div>
         </div>
-        <$('.searchbox-input').on('keyup',function () {
-        console.log(filter);
-        //$('.card').show();
-        var filter = $(this).val(); // get the value of the input, which we filter on
-        console.log(filter);
-        $('.container').find(".card-title:not(:contains(" + filter + "))").parent().css('display','none');
-        });
     </div>
 </div>
 </body>

@@ -30,7 +30,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
+                    <h4 class="modal-title">Art Work (1452 - 1512)</h4>
                 </div>
                 <div class="modal-body">
                     <div class="wrapper">
@@ -42,6 +42,13 @@
                 </button>
             </div>
         </div>
+        <$('.searchbox-input').on('keyup',function () {
+        console.log(filter);
+        //$('.card').show();
+        var filter = $(this).val(); // get the value of the input, which we filter on
+        console.log(filter);
+        $('.container').find(".card-title:not(:contains(" + filter + "))").parent().css('display','none');
+        });
     </div>
 </div>
 </body>

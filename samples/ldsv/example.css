@@ -42,6 +42,12 @@ blockquote {
     grid-column-gap: 20px;
     grid-row-gap: 20px;
 }
+
+.wrapper .card .select-work {
+    /* width: 100%; */
+}
+
+
 /**
     BOOTSTRAP V4 CARD
  */
@@ -86,7 +92,7 @@ blockquote {
 }
 
 .card-title {
-    margin-bottom: 0.75rem;
+    /* margin-bottom: 0.75rem; */
 }
 
 .card-subtitle {

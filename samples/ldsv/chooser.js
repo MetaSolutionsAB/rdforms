@@ -57,7 +57,7 @@ require([
                     data-label="${res.name.value}" data-ruri="${res.art.value}">Select</a>
             </div>
         </div>`;
-        jquery('#artWroks .wrapper').append(html);
+        jquery('#artWorks .wrapper').append(html);
       });
 
       jquery('.select-work').click((e) => {
@@ -66,9 +66,9 @@ require([
           label: { en: jquery(e.target).data('label') }
         });
         jquery('.select-work').off();
-        jquery('#artWroks').modal('hide');
+        jquery('#artWorks').modal('hide');
       });
-      jquery('#artWroks').modal('show');
+      jquery('#artWorks').modal('show');
     },
     getChoice(item, value) {
       return {

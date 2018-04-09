@@ -1,5 +1,6 @@
 define([
   'rdforms/view/renderingContext',
+  'rdforms/view/Presenter',
   'jquery',
   './util',
   'rdforms/view/bootstrap/components',
@@ -11,7 +12,7 @@ define([
   'bootstrap/tooltip',
   'bootstrap/popover',
   'rdforms/view/bmd/DateTimeMD',
-], (renderingContext, jquery, util) => {
+], (renderingContext, Presenter, jquery, util) => {
 
   // initializeMaterial is not called more than once per X ms
   const updateMaterial = (node) => {
@@ -48,7 +49,8 @@ define([
   //<button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">Left</button>
 
     newA.setAttribute('title', 'Source'); // nls
-    newA.setAttribute('data-content', `<a href="${binding._statement.getNamedGraph()}" target="_blank">DBPedia</a>`); // nls
+    const bindSource = binding.isReadOnly() ? 'DBPedia' : 'Local';
+    newA.setAttribute('data-content', `${bindSource === 'Local' ? '<span>Local</span>' : `<a href="${binding._statement.getNamedGraph()}" style="cursor:pointer" target="_blank">${bindSource}</a>`}`); // nls
 
     const newI = document.createElement('i');
     newI.classList.add('fa', 'fa-info');
@@ -59,12 +61,16 @@ define([
 
     jquery(newA).popover({
       html: true,
-      placement: 'auto',
       template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3' +
       ' class="popover-title"></h3><div class="popover-content"><a></a></div></div>',
       trigger: 'focus',
       title: 'Source',
     });
+
+    jquery(newA).on('click', function (e) {
+      e.preventDefault();
+    });
+
   };
 
   renderingContext.postEditorRenderer = function (fieldDiv, binding, context) {
@@ -74,7 +80,7 @@ define([
 
 
   renderingContext.postPresenterRenderer = function (fieldDiv, binding, context) {
-    if (binding.isReadOnly()) {
+    if (context.view instanceof Presenter || binding.isReadOnly()) {
       updateExternalGraphUI(fieldDiv, binding);
     }
   };

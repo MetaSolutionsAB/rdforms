@@ -50,6 +50,7 @@ define(['dojo/_base/declare',
           this.dpdate = m.toDate();
           this.setDateInBinding(this.dpdate);
         } else {
+          this.$datepicker.bootstrapMaterialDatePicker('setDate', moment(evt.target.value));
           this.$datepicker.bootstrapMaterialDatePicker('setElementValue');
         }
       }));

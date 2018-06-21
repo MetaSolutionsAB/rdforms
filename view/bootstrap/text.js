@@ -9,6 +9,19 @@ define([
   'rdforms/view/bootstrap/DurationPresenter',
   'jquery',
 ], (renderingContext, utils, array, stamp, locale, system, DurationEditor, DurationPresenter, jquery) => {
+
+  /**
+   * Try to guess the number of rows needed for a textarea element by looking at the value of the element
+   * @param text
+   * @param charsInLine
+   * @return {Number}
+   */
+  const countLines = (text, charsInLine = 70) => {
+    let rows = text.split('\n').length; // for each explicit new line character add a row
+    rows += Number.parseInt((text.length / charsInLine));
+    return rows;
+  }
+
     // -------------- Presenters ----------------
   const presenters = renderingContext.presenterRegistry;
 
@@ -157,7 +170,7 @@ define([
     const item = binding.getItem();
     let $input;
     if (item.hasStyle('multiline')) {
-      $input = jquery('<textarea class="form-control rdformsFieldInput">');
+      $input = jquery(`<textarea class="form-control rdformsFieldInput" rows="${countLines(binding.getGist())}">`);
     } else if (item.hasStyle('email')) {
       $input = jquery('<input type="email" class="form-control rdformsFieldInput">');
     } else {

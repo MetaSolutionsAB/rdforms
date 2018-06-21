@@ -4,10 +4,6 @@
     display: inline;
 }
 
-.rdforms .rdformsFields textarea.form-control {
-    height: 38px;
-}
-
 .rdforms select.rdformsLanguage {
     display: inline;
 }

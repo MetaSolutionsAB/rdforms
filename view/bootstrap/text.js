@@ -18,7 +18,7 @@ define([
    */
   const countLines = (text, charsInLine = 70) => {
     let rows = text.split('\n').length; // for each explicit new line character add a row
-    rows += Number.parseInt((text.length / charsInLine));
+    rows += Number.parseInt((text.length / charsInLine), 10);
     return rows;
   }
 

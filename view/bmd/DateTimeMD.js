@@ -41,7 +41,10 @@ define(['dojo/_base/declare',
         this.$datepicker.bootstrapMaterialDatePicker('_fireCalendar');
       });
       this.$datepicker.on('change', lang.hitch(this, (evt, m) => {
-        if (m) {
+        if(!m) {
+          m = moment(evt.target.value);
+        }
+
           if (this.tpdate) {
             const tpd = moment(this.tpdate);
             m.minute(tpd.minute());
@@ -49,9 +52,6 @@ define(['dojo/_base/declare',
           }
           this.dpdate = m.toDate();
           this.setDateInBinding(this.dpdate);
-        } else {
-          this.$datepicker.bootstrapMaterialDatePicker('setElementValue');
-        }
       }));
 
       if (!this.item.isEnabled()) {
@@ -63,7 +63,10 @@ define(['dojo/_base/declare',
       });
 
       this.$timepicker.on('change', lang.hitch(this, (evt, m) => {
-        if (m) {
+        if(!m) {
+          m = moment(evt.target.value);
+        }
+
           if (this.dpdate != null) {
             const dpd = moment(this.dpdate);
             dpd.minute(m.minute());
@@ -73,9 +76,6 @@ define(['dojo/_base/declare',
           } else {
             this.tpdate = m.toDate();
           }
-        } else {
-          this.$timepicker.bootstrapMaterialDatePicker('setElementValue');
-        }
       }));
 
       if (!this.item.isEnabled()) {

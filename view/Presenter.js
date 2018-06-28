@@ -76,6 +76,10 @@ define(['dojo/_base/declare',
     fillTable(table, bindings) {
       return renderingContext.fillPresenterTable(table, bindings, { view: this });
     },
+    preRenderView() {
+      renderingContext.prePresenterViewRenderer(this.domNode, this.binding,
+        { view: this, topLevel: this.topLevel });
+    },
     addComponent(fieldDiv, binding) {
       renderingContext.renderPresenter(fieldDiv, binding, { view: this });
     },

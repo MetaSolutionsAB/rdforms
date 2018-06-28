@@ -143,6 +143,8 @@ define([
           renderingContext.domClassToggle(this.domNode, 'compact', false);
         }
 
+        this.preRenderView();
+
         for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
           bindings = groupedBindingsArr[groupIndex];
           item = groupedItemsArr[groupIndex];

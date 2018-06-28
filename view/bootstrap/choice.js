@@ -95,40 +95,102 @@ define([
     });
     context.choices = choices;
     renderingContext.renderSelect(fieldDiv, binding, context);
+
+    // Sets the value if any using the setValue defined in renderSelect
+    const c = binding.getChoice();
+    if (c) {
+      if (c.load != null) {
+        c.load(() => {
+          context.setValue(c);
+        });
+      } else {
+        context.setValue(c);
+      }
+    }
   });
 
     // Depends on system.getChoice and system.openChoiceSelector methods being available
   editors.itemtype('choice').choices('none').register((fieldDiv, binding, context) => {
     context.chooser = renderingContext.chooserRegistry.getComponent(binding.getItem());
-    renderingContext.renderSelect(fieldDiv, binding, context);
-    const $search = jquery('<button class="btn btn-default btn-fab btn-fab-mini browseChoices" type="button">')
-            .attr('title', context.view.messages.edit_browse)
-            .appendTo(fieldDiv);
-    jquery('<span class="fa fa-search" aria-hidden="true">').appendTo($search);
 
-    const setChoice = (choice) => {
-      if (choice) {
-        binding.setChoice(choice);
-        if (choice.load != null) {
-          choice.load(() => {
-            context.setValue(choice);
-          });
-        } else {
-          context.setValue(choice);
-        }
+    const renderSelect = () => {
+      renderingContext.renderSelect(fieldDiv, binding, context);
+      const $search = jquery('<button class="btn btn-default btn-fab btn-fab-mini browseChoices" type="button">')
+        .attr('title', context.view.messages.edit_browse)
+        .appendTo(fieldDiv);
+      if (context.chooser.supportsInlineCreate &&
+        context.chooser.supportsInlineCreate(binding)) {
+        const $stack = jquery('<span class="fa-stack">').appendTo($search);
+        jquery('<span class="fa fa-search fa-stack-1x" aria-hidden="true">').appendTo($stack);
+        jquery('<span class="fa fa-plus fa-stack-1x" aria-hidden="true">').appendTo($stack);
       } else {
-        binding.setChoice(null);
+        jquery('<span class="fa fa-search" aria-hidden="true">').appendTo($search);
+      }
+
+      const setChoice = (choice) => {
+        if (choice) {
+          binding.setChoice(choice);
+          if (choice.load != null) {
+            choice.load(() => {
+              context.setValue(choice);
+            });
+          } else {
+            context.setValue(choice);
+          }
+        } else {
+          binding.setChoice(null);
+        }
+      };
+      if (context.chooser && typeof context.chooser.show === 'function') {
+        $search.click(() => {
+          renderingContext.openChoiceSelector(binding, setChoice);
+        });
+      } else {
+        $search.addClass('disabled');
+      }
+      if (system.hasDnDSupport(binding)) {
+        system.addDnD(binding, cNode, setChoice);
       }
     };
-    if (context.chooser && typeof context.chooser.show === 'function') {
-      $search.click(() => {
-        renderingContext.openChoiceSelector(binding, setChoice);
-      });
+
+    // Sets the value if any using the setValue defined in renderSelect
+    const c = binding.getChoice();
+    if (c) {
+      if (c.load != null) {
+        const $uri = jquery('<div class="form-group rdforms-upgrade">')
+          .appendTo(fieldDiv);
+        jquery('<input type="text" disabled class="form-control rdformsFieldInput">')
+          .val(c.value)
+          .appendTo($uri);
+
+        c.load(() => {
+          // If the value can be upgraded into its own entity.
+          if (c.upgrade) {
+            const $button = jquery('<button class="btn btn-default btn-fab btn-fab-mini' +
+              ' browseChoices" type="button">')
+              .attr('title', context.view.messages.edit_upgrade)
+              .click(() => {
+                c.upgrade(binding, (updatedChoice) => {
+                  $uri.remove();
+                  $button.remove();
+                  renderSelect();
+                  context.setValue(updatedChoice);
+                  binding.setChoice(updatedChoice);
+                });
+              }).insertAfter($uri);
+            jquery('<span class="fa fa-magic" aria-hidden="true">').appendTo($button);
+          } else {
+            $uri.remove();
+            renderSelect();
+            context.setValue(c);
+          }
+        });
+      } else {
+        renderSelect();
+        context.setValue(c);
+      }
     } else {
-      $search.addClass('disabled');
-    }
-    if (system.hasDnDSupport(binding)) {
-      system.addDnD(binding, cNode, setChoice);
+      renderSelect();
     }
   });
 });

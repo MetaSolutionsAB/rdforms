@@ -233,6 +233,10 @@ define([
     },
 
     // Override the following methods
+    preEditorViewRenderer(viewNode, binding) {
+    },
+    prePresenterViewRenderer(viewNode, binding) {
+    },
     preEditorRenderer() {
     },
     postEditorRenderer() {

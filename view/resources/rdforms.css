@@ -401,6 +401,7 @@ a.rdformsUrl:hover {
 	display: table-cell;
 }
 
+.compact .rdformsRow>.rdformsFields>a,
 .compact .rdformsRow>.rdformsFields>div {
     padding-left: 10px;
 }

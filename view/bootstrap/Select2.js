@@ -43,18 +43,6 @@ define([
       }
     };
 
-    // Sets the value if any
-    const c = binding.getChoice();
-    if (c) {
-      if (c.load != null) {
-        c.load(() => {
-          context.setValue(c);
-        });
-      } else {
-        context.setValue(c);
-      }
-    }
-
     $select.on('select2:select', (params) => {
       const choice = params.params.data.choice;
       binding.setChoice(choice);

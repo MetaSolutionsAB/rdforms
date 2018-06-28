@@ -52,6 +52,7 @@ define(['dojo/_base/declare',
     filterTranslations: false,
     styleCls: 'rdformsEditor',
     includeLevel: 'recommended',
+    hideAddress: false, // For instance when you expose address in surrounding application
 
     //= ==================================================
     // Public methods
@@ -179,6 +180,10 @@ define(['dojo/_base/declare',
       renderingContext.fillEditorTable(table, bindings, { view: this });
     },
 
+    preRenderView() {
+      renderingContext.preEditorViewRenderer(this.domNode, this.binding,
+        { view: this, inEditor: true, topLevel: this.topLevel, hideAddress: this.hideAddress });
+    },
     addComponent(fieldDiv, binding) {
       if (binding.getItem().hasStyle('nonEditable')) {
         renderingContext.renderPresenter(fieldDiv, binding, { view: this, inEditor: true });

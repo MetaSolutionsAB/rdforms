@@ -65,16 +65,5 @@ define([
       sel.addItem(choice.value, true);
       // $select.val(choice.value).trigger('change');
     };
-    // Sets the value if any
-    const c = binding.getChoice();
-    if (c) {
-      if (c.load != null) {
-        c.load(() => {
-          context.setValue(c);
-        });
-      } else {
-        context.setValue(c);
-      }
-    }
   };
 });

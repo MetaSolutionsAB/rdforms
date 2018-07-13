@@ -5,9 +5,11 @@ define(['dojo/_base/declare',
   'rdforms/view/renderingContext',
 ], (declare, Presenter, engine, validate, renderingContext) => {
   const showNow = (editor, item, bindings, includeLevel) => {
-    if (item.hasStyle('invisible')) {
+    // Invisible should be created as components and hidden using display: none
+    // Otherwise certain extentions such as autoUUID does not work.
+    /*if (item.hasStyle('invisible')) {
       return false;
-    }
+    }*/
     if (item.hasStyle('deprecated') && bindings.length === 0) {
       return false;
     }
@@ -50,6 +52,7 @@ define(['dojo/_base/declare',
     filterTranslations: false,
     styleCls: 'rdformsEditor',
     includeLevel: 'recommended',
+    hideAddress: false, // For instance when you expose address in surrounding application
 
     //= ==================================================
     // Public methods
@@ -177,6 +180,10 @@ define(['dojo/_base/declare',
       renderingContext.fillEditorTable(table, bindings, { view: this });
     },
 
+    preRenderView() {
+      renderingContext.preEditorViewRenderer(this.domNode, this.binding,
+        { view: this, inEditor: true, topLevel: this.topLevel, hideAddress: this.hideAddress });
+    },
     addComponent(fieldDiv, binding) {
       if (binding.getItem().hasStyle('nonEditable')) {
         renderingContext.renderPresenter(fieldDiv, binding, { view: this, inEditor: true });

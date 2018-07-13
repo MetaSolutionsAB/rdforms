@@ -1,6 +1,6 @@
 {
   "name": "rdforms",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "authors": [
     "Matthias Palmér <matthias@metasolutions.se>"
   ],
@@ -11,8 +11,8 @@
   "dependencies": {
     "dojo": "1.12.2",
     "dijit": "1.12.2",
-    "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#1.3",
-    "di18n": "https://bitbucket.org/metasolutions/di18n.git#0.4",
+    "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#1.4",
+    "di18n": "https://bitbucket.org/metasolutions/di18n.git#0.5",
     "bootstrap-amd": "latest",
     "fontawesome": "latest",
     "jquery": "latest",

@@ -7,7 +7,9 @@ define([
 ], (renderingContext, jquery, system, utils) => {
   renderingContext.renderSelect = function (fieldDiv, binding, context) {
     const formgroup = jquery('<div class="form-group selectizeException">').appendTo(fieldDiv);
-    const $select = jquery('<div class="form-control">').appendTo(formgroup);
+    const formcontrol = jquery('<div class="form-control">').appendTo(formgroup);
+    const $select = jquery('<input type="text">').appendTo(formcontrol);
+
     const items = [];
     // Sets the value if any
     if (binding.getValue()) {
@@ -65,16 +67,5 @@ define([
       sel.addItem(choice.value, true);
       // $select.val(choice.value).trigger('change');
     };
-    // Sets the value if any
-    const c = binding.getChoice();
-    if (c) {
-      if (c.load != null) {
-        c.load(() => {
-          context.setValue(c);
-        });
-      } else {
-        context.setValue(c);
-      }
-    }
   };
 });

@@ -55,7 +55,11 @@ define([
         },
         getItem: function (id) {
             if (id != null) {
-                return this._registry[id];
+                const item = this._registry[id];
+                if (!item) {
+                    throw new Error(`Could not find RDForms template with id ${id}, forgot to load a bundle?`);
+                }
+                return item;
             }
         },
         getItems: function () {

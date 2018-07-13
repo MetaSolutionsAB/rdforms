@@ -79,6 +79,10 @@
 
 /* === End colors === */
 
+.rdformsInvisible {
+    display: none;
+}
+
 .rdformsRow.rdformsTopLevel {
  	padding-top: 0.3em;
  	padding-bottom: 0.3em;
@@ -397,6 +401,7 @@ a.rdformsUrl:hover {
 	display: table-cell;
 }
 
+.compact .rdformsRow>.rdformsFields>a,
 .compact .rdformsRow>.rdformsFields>div {
     padding-left: 10px;
 }

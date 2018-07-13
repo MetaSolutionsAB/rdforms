@@ -143,14 +143,17 @@ define([
           renderingContext.domClassToggle(this.domNode, 'compact', false);
         }
 
+        this.preRenderView();
+
         for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
           bindings = groupedBindingsArr[groupIndex];
           item = groupedItemsArr[groupIndex];
 
           if (!this.showNow(item, bindings)) {
-            if (item.hasStyle('invisible')) { // In this case, create some bindings anyway
+            // Invisible not not part of showNow check due to things like autoUUID
+            /*if (item.hasStyle('invisible')) { // In this case, create some bindings anyway
               this.prepareBindings(item, bindings);
-            }
+            }*/
 // eslint-disable-next-line no-continue
             continue;
           }
@@ -223,8 +226,17 @@ define([
           fieldDiv = renderingContext.domCreate('div', n);
         }
       }
+      if (item.getType() === 'group') {
+        renderingContext.domClassToggle(fieldDiv, 'rdformsGroup', true);
+      } else {
+        renderingContext.domClassToggle(fieldDiv, 'rdformsField', true);
+      }
+
       this._binding2node[binding.getHash()] = fieldDiv;
       this.addComponent(fieldDiv, binding);
+      if (item.hasStyle('invisible')) {
+        renderingContext.domClassToggle(newRow || lastRow, 'rdformsInvisible', true);
+      }
       return newRow || lastRow;
     },
     createRowNode(lastRowNode, binding, item) {
@@ -247,7 +259,7 @@ define([
       renderingContext.domClassToggle(rowNode, 'notCompact', item.getType() === 'group');
 
       this.addLabel(rowNode, binding, item);
-      if (this.filterBinding(binding)) {
+      if (binding && this.filterBinding(binding)) {
         renderingContext.domClassToggle(rowNode, 'hiddenProperty', true);
       }
       return rowNode;

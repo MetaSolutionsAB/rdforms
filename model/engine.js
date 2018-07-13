@@ -98,6 +98,18 @@ define([
     const stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), obj, false);
     const nbinding = new ValueBinding({ item, statement: stmt });
     parentBinding.addChildBinding(nbinding);
+    const defaultValue = item.getValue();
+    const cardTracker = nbinding.getCardinalityTracker();
+    if (defaultValue != null && cardTracker.getCounter() === 1) {
+      stmt.setValue(defaultValue, true);
+      const dt = item.getDatatype();
+      const la = item.getLanguage();
+      if (dt != null) {
+        stmt.setDatatype(dt, true);
+      } else if (la != null) {
+        stmt.setLanguage(la, true);
+      }
+    }
     return nbinding;
   };
 
@@ -113,6 +125,11 @@ define([
     const stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), obj, false);
     const nbinding = new ChoiceBinding({ item, statement: stmt });
     parentBinding.addChildBinding(nbinding);
+    const defaultValue = item.getValue();
+    const cardTracker = nbinding.getCardinalityTracker();
+    if (defaultValue != null && cardTracker.getCounter() === 1) {
+      nbinding.setChoice(_findChoice(item, defaultValue, graph), true);
+    }
     return nbinding;
   };
 

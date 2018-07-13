@@ -52,7 +52,9 @@ define([
             "noLabelInPresent",
             "autoInitDate",
             "autoUpdateDate",
-            "autoUUID"
+            "autoUUID",
+            "showURI",
+            "showLink",
         ],
 
         //===================================================

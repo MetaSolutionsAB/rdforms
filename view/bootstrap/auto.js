@@ -1,27 +1,17 @@
 define([
   'rdforms/view/renderingContext',
   'dojo/date/stamp',
-], (renderingContext, stamp) => {
+  'rdforms/utils',
+], (renderingContext, stamp, utils) => {
   const pr = renderingContext.presenterRegistry;
   const er = renderingContext.editorRegistry;
-  const generateUUID = () => { // Public Domain/MIT
-    let d = new Date().getTime();
-    if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
-      d += performance.now(); //use high-precision timer if available
-    }
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      let r = (d + Math.random() * 16) % 16 | 0;
-      d = Math.floor(d / 16);
-      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-  };
 
   const uuidFactory = (reg) => {
     const uuid = (fieldDiv, binding, context) => {
       const data = binding.getValue();
       if (context.inEditor) {
         if (data == null || data === '') {
-          binding.setValue(generateUUID());
+          binding.setValue(utils.generateUUID());
         }
       }
       reg.getComponentBefore(binding.getItem(), uuid)(fieldDiv, binding, context);

@@ -28,7 +28,11 @@ define(['dojo/_base/declare',
     },
 
     skipBinding(binding) {
-      return binding.getItem().getType() === 'group' && binding.getChildBindings().length === 0;
+      const item = binding.getItem();
+      if (!item.getProperty() && item.getChildren().length === 0) {
+        return false; // Corresponds to an extention or pure heading, since no children.
+      }
+      return item.getType() === 'group' && binding.getChildBindings().length === 0;
     },
 
     /**
@@ -67,7 +71,7 @@ define(['dojo/_base/declare',
       if (item.hasStyle('noLabelInPresent')) {
         renderingContext.domClassToggle(rowDiv, 'rdformsInvisibleGroup', true);
       } else {
-        renderingContext.renderPresenterLabel(rowDiv, binding, item, { view: this });
+        renderingContext.renderPresenterLabel(rowDiv, binding, item, this.context);
       }
     },
     addTable(newRow, firstBinding) {
@@ -77,10 +81,9 @@ define(['dojo/_base/declare',
       return renderingContext.fillPresenterTable(table, bindings, { view: this });
     },
     preRenderView() {
-      renderingContext.prePresenterViewRenderer(this.domNode, this.binding,
-        { view: this, topLevel: this.topLevel });
+      renderingContext.prePresenterViewRenderer(this.domNode, this.binding, { view: this, topLevel: this.topLevel });
     },
     addComponent(fieldDiv, binding) {
-      renderingContext.renderPresenter(fieldDiv, binding, { view: this });
+      renderingContext.renderPresenter(fieldDiv, binding, this.context);
     },
   }));

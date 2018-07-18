@@ -14,6 +14,7 @@ define([
     if (labelRow) {
       $labelDiv.addClass('rdformsLabelRow');
     }
+    context.labelNode = $labelDiv[0];
     renderingContext.attachItemInfo(item, $labelDiv[0], context);
   };
 
@@ -29,6 +30,7 @@ define([
       label = '';
     }
     const $labelDiv = jquery('<div class="rdformsLabelRow">').appendTo(rowNode);
+    context.labelNode = $labelDiv[0];
     const $label = jquery('<span class="rdformsLabel">').text(label).appendTo($labelDiv);
     const card = item.getCardinality();
     const b = context.view.messages;

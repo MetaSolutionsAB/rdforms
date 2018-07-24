@@ -1,85 +1,68 @@
-/*global define*/
-define([
-    "dojo/_base/declare"
-], function(declare) {
+let counter = 0;
+export default class Bundle {
+  /**
+   * A Bundle corresponds to a set of items typically managed in a single file.
+   */
+  constructor({itemStore, source, path, readOnly = false}) {
+    this._itemStore = itemStore;
+    this._source = source;
+    this._path = path;
+    this._readOnly = readOnly;
+    this._items = [];
+    counter++;
+    this._id = "_bundle_" + counter;
 
-    var counter = 0;
-    /**
-     * A Bundle corresponds to a set of items typically managed in a single file.
-     */
-    return declare(null, {
-        //===================================================
-        // Private attributes
-        //===================================================
-        _itemStore: null,
-        _source: null,
-        _path: null,
-        _items: null,
-        _root: null,
-        _id: null,
-        _modified: false,
-        _readOnly: false,
+    this._root = null;
+    this._modified = false;
+  }
 
-        //===================================================
-        // Public API
-        //===================================================
-        getInternalId: function() {
-            return this._id;
-        },
+  getInternalId() {
+    return this._id;
+  }
 
-        getSource: function() {
-            return this._source;
-        },
-        setRoot: function(itemId) {
-            return this._source.root = itemId;
-        },
-        getRoot: function() {
-            if (this._source.root) {
-                return this._itemStore.getItem(this._source.root);
-            }
-        },
-        getItemStore: function() {
-            return this._itemStore;
-        },
-        getPath: function() {
-            return this._path;
-        },
+  getSource() {
+    return this._source;
+  }
 
-        getItems: function() {
-            return this._items;
-        },
+  setRoot(itemId) {
+    return this._source.root = itemId;
+  }
 
-        addItem: function(item) {
-            this._items.push(item);
-        },
+  getRoot() {
+    if (this._source.root) {
+      return this._itemStore.getItem(this._source.root);
+    }
+  }
 
-        removeItem: function(item) {
-            this._items.splice(this._items.indexOf(item), 1);
-        },
+  getItemStore() {
+    return this._itemStore;
+  }
 
-        isModified: function() {
-           return this._modified;
-        },
+  getPath() {
+    return this._path;
+  }
 
-        setModified: function(modified) {
-            this._modified = modified;
-        },
+  getItems() {
+    return this._items;
+  }
 
-        isReadOnly: function() {
-            return this._readOnly || this._path == null;
-        },
+  addItem(item) {
+    this._items.push(item);
+  }
 
-        //===================================================
-        // Inherited methods
-        //===================================================
-        constructor: function(params) {
-            this._itemStore = params.itemStore;
-            this._source = params.source;
-            this._path = params.path;
-            this._readOnly = params.readOnly;
-            this._items = [];
-            counter++;
-            this._id = "_bundle_"+counter;
-        }
-    });
-});
+  removeItem(item) {
+    this._items.splice(this._items.indexOf(item), 1);
+  }
+
+  isModified() {
+    return this._modified;
+  }
+
+  setModified(modified) {
+    this._modified = modified;
+  }
+
+  isReadOnly() {
+    return this._readOnly || this._path == null;
+  }
+};

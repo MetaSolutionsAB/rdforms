@@ -1,304 +1,307 @@
-/*global define*/
-define([
-    "dojo/_base/declare",
-    "dojo/_base/lang",
-    "dojo/_base/array",
-    "rdfjson/namespaces",
-    "rdforms/template/Bundle",
-    "rdforms/template/Group",
-    "rdforms/template/PropertyGroup",
-    "rdforms/template/Text",
-    "rdforms/template/Choice",
-    "rdforms/template/OntologyStore",
-    "rdforms/model/engine"
-], function (declare, lang, array, namespaces, Bundle, Group, PropertyGroup, Text, Choice, OntologyStore, engine) {
+import {default as PropertyGroup} from "./PropertyGroup";
+import {default as Group} from "./Group";
+import {default as Text} from "./Text";
+import {default as Choice} from "./Choice";
+import {default as OntologyStore} from "./OntologyStore";
+import {constructTemplate} from "../model/engine";
+import {default as Bundle} from "./Bundle";
+import {add} from 'rdfjson';
 
-    /**
-     * Keeps a registry of templates and reusable items.
-     * Use the createTemplate method to create templates from a source
-     * json structure, if the structure contains reusable items they are
-     * created and stored separately as well.
-     */
-    return declare(null, {
-        automaticSortAllowed: true,
-        ignoreMissingItems: true,
-        //===================================================
-        // Private Attributes
-        //===================================================
-        _bundles: null,
-        _registry: null,
-        _registryByProperty: null,
-        _ontologyStore: null,
+export default class ItemStore {
+  /**
+   * Keeps a registry of templates and reusable items.
+   * Use the createTemplate method to create templates from a source
+   * json structure, if the structure contains reusable items they are
+   * created and stored separately as well.
+   */
+  constructor(ontologyStore) {
+    this.automaticSortAllowed = true;
+    this.ignoreMissingItems = true;
 
-        //===================================================
-        // Public API
-        //===================================================
-        getTemplate: function (id) {
-            return this.getItem(id);
-        },
-        getChildren: function (group, original) {
-            if (group == null) {
-                return [];
-            }
-            var origSource = group.getSource(true);
-            var origSourceContent = origSource.content || origSource.items || [];
-            if (original) {
-                return this._createItems(origSourceContent, group._forceChildrenClones, group.getBundle());
-            } else {
-                var ext = this.getItem(origSource["extends"]);
-                if (ext) {
-                    return ext.getChildren().concat(group.getChildren(true));
-                } else {
-                    return group.getChildren(true);
-                }
-            }
-        },
-        getItem: function (id) {
-            if (id != null) {
-                const item = this._registry[id];
-                if (!item) {
-                    throw new Error(`Could not find RDForms template with id ${id}, forgot to load a bundle?`);
-                }
-                return item;
-            }
-        },
-        getItems: function () {
-            var arr = [];
-            for (var key in this._registry) {
-                if (this._registry.hasOwnProperty(key)) {
-                    arr.push(this._registry[key]);
-                }
-            }
-          /*  for (var key in this._registryByProperty) {
-                if (this._registryByProperty.hasOwnProperty(key)) {
-                    var item = this._registryByProperty[key]
-                    if (item.getId() == null) {
-                        arr.push(item);
-                    }
-                }
-            }*/
-            return arr;
-        },
-        renameItem: function(from, to) {
-            if (this._registry[to]) {
-                throw "Cannot rename to "+ to + " since an item with that id already exists.";
-            }
-            if (to === "" || to === null) {
-                throw "Cannot give an item an empty string or null as id.";
-            }
-            var item = this._registry[from];
-            if (item) {
-                delete this._registry[from];
-                this._registry[to] = item;
-                item.setId(to);
-            }
-            var renameInGroup = function(source) {
-                var children = source.content;
-                if (children) {
-                    for (var j=0;j<children.length;j++) {
-                        var child = children[j];
-                        if (child.id === from || child["@id"] === from) {
-                            child.id = to;
-                            delete child["@id"]; //Clean up backward compatability.
-                        }
-                        if (child.content) {
-                            renameInGroup(child);
-                        }
-                    }
-                }
-            }
+    //==================================================;
+    // Private Attribute;
+    //==================================================;
+    this._bundles = [];
+    this._registry = {};
+    this._registryByProperty = {};
+    this._ontologyStore = ontologyStore || new OntologyStore();
 
-            var items = this.getItems();
-            for (var i=0;i<items.length;i++) {
-                var childItem = items[i];
-                if (childItem instanceof Group) {
-                    renameInGroup(childItem._source);
-                }
-            }
-        },
-        getItemIds: function () {
-            var arr = [];
-            for (var key in this._registry) {
-                if (this._registry.hasOwnProperty(key)) {
-                    arr.push(key);
-                }
-            }
-            return arr;
-        },
-        getItemByProperty: function (property) {
-            return this._registryByProperty[property];
-        },
-        detectTemplate: function (graph, uri, requiredItems) {
-            return engine.constructTemplate(graph, uri, this, requiredItems);
-        },
+  }
 
-        /**
-         * Bundle is an object containing:
-         * path - can be a relative or absolute path to where the templates are/will be loaded from, optional.
-         * source - a RDForms template object, mandatory.
-         *
-         * @param {Object} bundleSrc
-         * @return {Bundle} the created bundle.
-         */
-        registerBundle: function(bundle) {
-            bundle.itemStore = this;
-            var b = new Bundle(bundle);
-            this._bundles.push(b);
+  //===================================================
+  // Public API
+  //===================================================
+  getTemplate(id) {
+    return this.getItem(id);
+  }
 
-            if (bundle.source.namespaces) {
-                namespaces.add(bundle.source.namespaces);
-            }
+  getChildren(group, original) {
+    if (group == null) {
+      return [];
+    }
+    let origSource = group.getSource(true);
+    let origSourceContent = origSource.content || origSource.items || [];
+    if (original) {
+      return this._createItems(origSourceContent, group._forceChildrenClones, group.getBundle());
+    } else {
+      let ext = this.getItem(origSource["extends"]);
+      if (ext) {
+        return ext.getChildren().concat(group.getChildren(true));
+      } else {
+        return group.getChildren(true);
+      }
+    }
+  }
 
-            var templates = bundle.source.templates || bundle.source.auxilliary;
-            if (templates instanceof Array) {
-                this._createItems(templates, false, b);
-            }
-            if (typeof bundle.source.cachedChoices === "object") {
-                this._ontologyStore.importRegistry(bundle.source.cachedChoices);
-            }
+  getItem(id) {
+    if (id != null) {
+      return this._registry[id];
+    }
+  }
 
-            return b;
-        },
-        getBundles: function() {
-            return this._bundles;
-        },
+  getItems() {
+    let arr = [];
+    for (let key in this._registry) {
+      if (this._registry.hasOwnProperty(key)) {
+        arr.push(this._registry[key]);
+      }
+    }
+    /*  for (let key in this._registryByProperty) {
+          if (this._registryByProperty.hasOwnProperty(key)) {
+              let item = this._registryByProperty[key]
+              if (item.getId() == null) {
+                  arr.push(item);
+              }
+          }
+      }*/
+    return arr;
+  }
 
-        //Backward compatability
-        createTemplate: function (source) {
-            var b = this.registerBundle({source: source});
-            return b.getRoot();
-        },
-        createTemplateFromChildren: function (children) {
-            var childrenObj = array.map(children || [], function (child) {
-                return typeof child === "string" ? this.getItem(child) : child;
-            }, this);
-            return new Group({source: {}, children: childrenObj, itemStore: this});
-        },
-        setPriorities: function (priorities) {
-            this.priorities = priorities;
-        },
-
-        createExtendedSource: function(origSource, extSource) {
-            var newSource = lang.mixin(lang.clone(origSource), extSource);
-            newSource["_extendedSource"] = extSource;
-            newSource["extends"] = null; //Avoid infinite recursion when creating the fleshed out item.
-            delete newSource["children"];
-            return newSource;
-        },
-
-        /**
-         * At a minimum the source must contain a type, the rest can be changed later.
-         *
-         * @param source
-         * @returns {*}
-         */
-        createItem: function (source, forceClone, skipRegistration, bundle) {
-            var item, id = source.id || source["@id"], type = source["type"] || source["@type"];
-            if (source["extends"]) {
-                //Explicit extends given
-                var extItem = this._registry[source["extends"]];
-                if (extItem == null && !this.ignoreMissingItems) {
-                    throw "Cannot find item to extend with id: " + source["extends"];
-                }
-                if (extItem) {
-                    var newSource = this.createExtendedSource(extItem.getSource(), source);
-                    return this.createItem(newSource, false, false, bundle);
-                }
-            }
-
-            if (type != null) {
-                //If there is a type in the source then it means that the object is a new item.
-                switch (type) {
-                    case "text":
-                        item = new Text({source: source, itemStore: this, bundle: bundle});
-                        break;
-                    case "choice":
-                        item = new Choice({source: source, itemStore: this, ontologyStore: this._ontologyStore, bundle: bundle});
-                        break;
-                    case "group":
-                        item = new Group({source: source, children: null, itemStore: this, bundle: bundle}); //Lazy loading of children.
-                        break;
-                    case "propertygroup":
-                        item = new PropertyGroup({source: source, children: null, itemStore: this, bundle: bundle}); //Lazy loading of children.
-                        break;
-                }
-                if (skipRegistration !== true) {
-                    if (source.property != null) {
-                        this._registryByProperty[source.property] = item;
-                        if (this.priorities && this.priorities[source.property] != null) {
-                            item.priority = this.priorities[source.property];
-                        }
-                    }
-                    if (id != null && this._registry[id] == null) {
-                        this._registry[id] = item;
-                        if (bundle != null) {
-                            bundle.addItem(item);
-                        }
-                    }
-                }
-                return item;
-            } else {
-                //No type means it is a reference, check that the referred item (via id) exists
-                if (id === undefined) {
-                    throw "Cannot create subitem, 'type' for creating new or 'id' for referencing external are required.";
-                }
-                if (this._registry[id] === undefined) {
-                    throw "Cannot find referenced subitem using identifier: " + id;
-                }
-                //Check if there are any overlay properties, if so force clone mode.
-                for (var key in source) {
-                    if (source.hasOwnProperty(key) && (key !== "id" && key !== "@id")) {
-                        forceClone = true;
-                        break;
-                    }
-                }
-
-                if (forceClone === true) {
-                    var newSource = lang.mixin(lang.clone(this._registry[id]._source), source);
-                    return this.createItem(newSource, false, true);
-                } else {
-                    return this._registry[id];
-                }
-            }
-        },
-        removeItem: function(item, removereferences) {
-            var b = item.getBundle();
-            if (b != null) {
-                b.removeItem(item);
-            }
-            if (item.getId() != null) {
-                delete this._registry[item.getId()];
-            }
-            var prop = item.getProperty();
-            if (prop != null && this._registryByProperty[prop] === item) {
-                delete this._registryByProperty[prop];
-            }
-            if (removereferences) {
-                //TODO
-
-            }
-        },
-
-        //===================================================
-        // Inherited methods
-        //===================================================
-        constructor: function (ontologyStore) {
-            this._bundles = [];
-            this._registry = {};
-            this._registryByProperty = {};
-            this._ontologyStore = ontologyStore || new OntologyStore();
-        },
-
-        //===================================================
-        // Private methods
-        //===================================================
-        _createItems: function (sourceArray, forceClone, bundle) {
-            return array.map(sourceArray, function (child, index) {
-                if (lang.isString(child)) {  //If child is not a object but a direct string reference, create a object.
-                    child = sourceArray[index] = {id: child};
-                }
-                return this.createItem(child, forceClone, false, bundle);
-            }, this);
+  renameItem(from, to) {
+    if (this._registry[to]) {
+      throw "Cannot rename to " + to + " since an item with that id already exists.";
+    }
+    if (to === "" || to === null) {
+      throw "Cannot give an item an empty string or null as id.";
+    }
+    let item = this._registry[from];
+    if (item) {
+      delete this._registry[from];
+      this._registry[to] = item;
+      item.setId(to);
+    }
+    let renameInGroup = function (source) {
+      let children = source.content;
+      if (children) {
+        for (let j = 0; j < children.length; j++) {
+          let child = children[j];
+          if (child.id === from || child["@id"] === from) {
+            child.id = to;
+            delete child["@id"]; //Clean up backward compatability.
+          }
+          if (child.content) {
+            renameInGroup(child);
+          }
         }
-    });
-});
+      }
+    }
+
+    let items = this.getItems();
+    for (let i = 0; i < items.length; i++) {
+      let childItem = items[i];
+      if (childItem instanceof Group) {
+        renameInGroup(childItem._source);
+      }
+    }
+  }
+
+  getItemIds() {
+    let arr = [];
+    for (let key in this._registry) {
+      if (this._registry.hasOwnProperty(key)) {
+        arr.push(key);
+      }
+    }
+    return arr;
+  }
+
+  getItemByProperty(property) {
+    return this._registryByProperty[property];
+  }
+
+  detectTemplate(graph, uri, requiredItems) {
+    return constructTemplate(graph, uri, this, requiredItems);
+  }
+
+  /**
+   * Bundle is an object containing:
+   * path - can be a relative or absolute path to where the templates are/will be loaded from, optional.
+   * source - a RDForms template object, mandatory.
+   *
+   * @param {Object} bundleSrc
+   * @return {Bundle} the created bundle.
+   */
+  registerBundle(bundle) {
+    bundle.itemStore = this;
+    let b = new Bundle(bundle);
+    this._bundles.push(b);
+
+    if (bundle.source.namespaces) {
+      add(bundle.source.namespaces);
+    }
+
+    let templates = bundle.source.templates || bundle.source.auxilliary;
+    if (templates instanceof Array) {
+      this._createItems(templates, false, b);
+    }
+    if (typeof bundle.source.cachedChoices === "object") {
+      this._ontologyStore.importRegistry(bundle.source.cachedChoices);
+    }
+
+    return b;
+  }
+
+  getBundles() {
+    return this._bundles;
+  }
+
+  //Backward compatability
+  createTemplate(source) {
+    let b = this.registerBundle({source: source});
+    return b.getRoot();
+  }
+
+  createTemplateFromChildren(children) {
+    let childrenObj = (children || []).map(child => typeof child === "string" ? this.getItem(child) : child, this);
+    return new Group({source: {}, children: childrenObj, itemStore: this});
+  }
+
+  setPriorities(priorities) {
+    this.priorities = priorities;
+  }
+
+  createExtendedSource(origSource, extSource) {
+    let newSource = Object.assign(Object.assign({}, origSource), extSource);
+    newSource["_extendedSource"] = extSource;
+    newSource["extends"] = null; //Avoid infinite recursion when creating the fleshed out item.
+    delete newSource["children"];
+    return newSource;
+  }
+
+  /**
+   * At a minimum the source must contain a type, the rest can be changed later.
+   *
+   * @param source
+   * @returns {*}
+   */
+  createItem(source, forceClone, skipRegistration, bundle) {
+    let item, id = source.id || source["@id"], type = source["type"] || source["@type"];
+    if (source["extends"]) {
+      //Explicit extends given
+      let extItem = this._registry[source["extends"]];
+      if (extItem == null && !this.ignoreMissingItems) {
+        throw "Cannot find item to extend with id: " + source["extends"];
+      }
+      if (extItem) {
+        let newSource = this.createExtendedSource(extItem.getSource(), source);
+        return this.createItem(newSource, false, false, bundle);
+      }
+    }
+
+    if (type != null) {
+      //If there is a type in the source then it means that the object is a new item.
+      switch (type) {
+        case "text":
+          item = new Text({source: source, itemStore: this, bundle: bundle});
+          break;
+        case "choice":
+          item = new Choice({
+            source: source,
+            itemStore: this,
+            ontologyStore: this._ontologyStore,
+            bundle: bundle
+          });
+          break;
+        case "group":
+          item = new Group({source: source, children: null, itemStore: this, bundle: bundle}); //Lazy loading of children.
+          break;
+        case "propertygroup":
+          item = new PropertyGroup({
+            source: source,
+            children: null,
+            itemStore: this,
+            bundle: bundle
+          }); //Lazy loading of children.
+          break;
+      }
+      if (skipRegistration !== true) {
+        if (source.property != null) {
+          this._registryByProperty[source.property] = item;
+          if (this.priorities && this.priorities[source.property] != null) {
+            item.priority = this.priorities[source.property];
+          }
+        }
+        if (id != null && this._registry[id] == null) {
+          this._registry[id] = item;
+          if (bundle != null) {
+            bundle.addItem(item);
+          }
+        }
+      }
+      return item;
+    } else {
+      //No type means it is a reference, check that the referred item (via id) exists
+      if (id === undefined) {
+        throw "Cannot create subitem, 'type' for creating new or 'id' for referencing external are required.";
+      }
+      if (this._registry[id] === undefined) {
+        throw "Cannot find referenced subitem using identifier: " + id;
+      }
+      //Check if there are any overlay properties, if so force clone mode.
+      for (let key in source) {
+        if (source.hasOwnProperty(key) && (key !== "id" && key !== "@id")) {
+          forceClone = true;
+          break;
+        }
+      }
+
+      if (forceClone === true) {
+        let newSource = Object.assign(Object.assign({}, this._registry[id]._source), source);
+        return this.createItem(newSource, false, true);
+      } else {
+        return this._registry[id];
+      }
+    }
+  }
+
+  removeItem(item, removereferences) {
+    let b = item.getBundle();
+    if (b != null) {
+      b.removeItem(item);
+    }
+    if (item.getId() != null) {
+      delete this._registry[item.getId()];
+    }
+    let prop = item.getProperty();
+    if (prop != null && this._registryByProperty[prop] === item) {
+      delete this._registryByProperty[prop];
+    }
+    if (removereferences) {
+      //TODO
+
+    }
+  }
+
+  //===================================================
+  // Private methods
+  //===================================================
+  _createItems(sourceArray, forceClone, bundle) {
+    return sourceArray.map((child, index) => {
+      if (typeof child === 'string') {  //If child is not a object but a direct string reference,
+        // create a object.
+        child = sourceArray[index] = {id: child};
+      }
+      return this.createItem(child, forceClone, false, bundle);
+    }, this);
+  }
+};

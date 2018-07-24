@@ -17,11 +17,11 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new DojoWebpackPlugin({
-      loaderConfig: require("./config/dojoConfing"),
+      loaderConfig: require("./config/dojoConfig"),
       locales: ["en"],
-      environment: {dojoRoot: "dist"},	// used at run time for non-packed resources (e.g.
+      environment: { dojoRoot: "dist" },	// used at run time for non-packed resources (e.g.
       // blank.gif)
-      buildEnvironment: {dojoRoot: "node_modules"}, // used at build time
+      buildEnvironment: { dojoRoot: "node_modules" }, // used at build time
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',

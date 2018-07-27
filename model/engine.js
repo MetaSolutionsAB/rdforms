@@ -6,7 +6,7 @@ import {default as GroupBinding} from "./GroupBinding";
 import {default as ValueBinding} from "./ValueBinding";
 import {default as ChoiceBinding} from "./ChoiceBinding";
 import {extractGist, getLocalizedMap} from '../utils';
-import {system} from './system';
+import system from './system';
 import {add} from 'rdfjson';
 
 const kernel = require('dojo/_base/kernel');

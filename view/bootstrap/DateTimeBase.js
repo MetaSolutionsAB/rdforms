@@ -1,66 +1,65 @@
-/* global define*/
+import renderingContext from 'rdforms/view/renderingContext';
+
 define([
   'dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/date/stamp',
-  'rdforms/view/renderingContext',
   'dijit/_WidgetBase',
   'dijit/_TemplatedMixin',
   'dijit/_WidgetsInTemplateMixin',
   'jquery',
-], (declare, lang, stamp, renderingContext, _WidgetBase, _TemplatedMixin,
-            _WidgetsInTemplateMixin, jquery) => {
+], (declare, lang, stamp, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, jquery) => {
   const DateTimeBase = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
-        //= ==================================================
-        // Public attributes
-        //= ==================================================
+    //= ==================================================
+    // Public attributes
+    //= ==================================================
     binding: null,
     item: null,
 
-        //= ==================================================
-        // Private attributes
-        //= ==================================================
+    //= ==================================================
+    // Private attributes
+    //= ==================================================
     _date: null,
     _valid: false,
     _excludeTime: true,
 
-        //= ==================================================
-        // Inherited methods
-        //= ==================================================
+    //= ==================================================
+    // Inherited methods
+    //= ==================================================
     postCreate() {
       this.inherited('postCreate', arguments);
 
-            // Datepicker
+      // Datepicker
       this.initDatePicker();
 
-            // Time input, assumes a this.timeInput input node
+      // Time input, assumes a this.timeInput input node
       const timePattern = '^([0-1][0-9]|2[0-3]):[0-5][0-9]$';
       this.$timeInput = jquery(this.timeInput).attr('pattern', '^([0-1][0-9]|2[0-3]):[0-5][0-9]$')
-                .change(lang.hitch(this, () => {
-                  const val = this.$timeInput.val();
-                  if (typeof this.$timeInput[0].checkValidity === 'function') {
-                    if (!this.$timeInput[0].checkValidity()) {
-                      return;
-                    }
-                  } else if ((new RegExp(timePattern)).test(val)) {
-                    return;
-                  }
+        .change(lang.hitch(this, () => {
+          const val = this.$timeInput.val();
+          if (typeof this.$timeInput[0].checkValidity === 'function') {
+            if (!this.$timeInput[0].checkValidity()) {
+              return;
+            }
+          } else if ((new RegExp(timePattern)).test(val)) {
+            return;
+          }
 
-                  this._date.setHours(parseInt(val.substr(0, 2), 10),
-                    parseInt(val.substr(3, 2), 10));
-                  this.binding.setValue(stamp.toISOString(this._date));
-                }));
+          this._date.setHours(parseInt(val.substr(0, 2), 10),
+            parseInt(val.substr(3, 2), 10));
+          this.binding.setValue(stamp.toISOString(this._date));
+        }));
 
-            // Year input, assumes a this.yearInput input node
+      // Year input, assumes a this.yearInput input node
       this.$yearInput = jquery(this.yearInput).attr('pattern', '^-?[0-9][0-9][0-9][0-9]$')
-                .change(lang.hitch(this, () => {
-                  const val = this.$yearInput.val();
-                  this._date.setYear(parseInt(val, 10));
-                  this.binding.setValue(val);
-                }));
+        .change(lang.hitch(this, () => {
+          const val = this.$yearInput.val();
+          this._date.setYear(parseInt(val, 10));
+          this.binding.setValue(val);
+        }));
 
-            // Date control, assumes this.dateControl select node
+      // Date control, assumes this.dateControl select node
       this.$dateControl = jquery(this.dateControl).change(lang.hitch(this, function () {
         const val = this.$dateControl.val();
         this[`_show${val}`]();
@@ -90,9 +89,9 @@ define([
       jquery(this.domNode).find('input').val('');
     },
 
-        //= ==================================================
-        // Private methods
-        //= ==================================================
+    //= ==================================================
+    // Private methods
+    //= ==================================================
 
     _binding2Gui() {
       this._firstTime = true;
@@ -160,7 +159,7 @@ define([
         }
       } else {
         this.setDateInPicker(null);
-                // this.$timeInput.prop("disabled", true);
+        // this.$timeInput.prop("disabled", true);
         this.$timeInput.val('');
       }
     },
@@ -184,7 +183,7 @@ define([
   });
 
   DateTimeBase.register = (DTCls) => {
-        // Editor for dates and dates with time.
+    // Editor for dates and dates with time.
     const dateEditor = (fieldDiv, binding, context) => {
       const dt = new DTCls({
         messages: context.view.messages,

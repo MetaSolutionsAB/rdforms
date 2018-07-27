@@ -100,7 +100,7 @@ const attachLinkBehaviour = (node, binding) => {
 const hasDnDSupport = binding => false
 const addDnD = (binding, node, onDrop) => ({});
 
-export const system = {
+export default {
   hasDnDSupport,
   addDnD,
   attachExternalLinkBehaviour,

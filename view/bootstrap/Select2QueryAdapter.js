@@ -1,6 +1,6 @@
 define([
-  'select2/select2/data/array',
-  'select2/select2/utils',
+  'select2/src/js/select2/data/array',
+  'select2/src/js/select2/utils',
   'rdforms/utils',
 ], (ArrayAdapter, Utils, rutils) => {
   const AjaxAdapter = function ($element, options) {

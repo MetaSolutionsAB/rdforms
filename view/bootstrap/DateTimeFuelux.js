@@ -4,12 +4,11 @@ define([
   'dojo/_base/lang',
   'dojo/dom-class',
   'jquery',
-  'fuelux/datepicker', // Used as a jquery plugin
-  'di18n/locale',
-  'di18n/moment',
+  'fuelux/js/datepicker',
+  'moment',
   'rdforms/view/bootstrap/DateTimeBase',
   'dojo/text!./DateTimeFueluxTemplate.html',
-], (declare, lang, domClass, jquery, datepicker, locale, moment, DateTimeBase, template) => {
+], (declare, lang, domClass, jquery, datepicker, moment, DateTimeBase, template) => {
     /**
      * A Date and time picker.
      */
@@ -38,7 +37,7 @@ define([
         allowPastDates: true,
         date: null,
         momentConfig: {
-          culture: locale.getCurrentMomentLocale(),
+          culture: 'en',
           format: 'L',
         },
       });

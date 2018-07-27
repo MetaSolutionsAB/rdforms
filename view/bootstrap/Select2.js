@@ -1,11 +1,12 @@
+import renderingContext from 'rdforms/view/renderingContext';
+
 define([
-  'rdforms/view/renderingContext',
   'jquery',
   'rdforms/utils',
-  'select2/select2/data/array',
+  'select2/src/js/select2/data/array',
   './Select2QueryAdapter',
-  'select2/jquery.select2',
-], (renderingContext, jquery, utils, ArrayAdapter, Select2QueryAdapter) => {
+  'select2/src/js/jquery.select2',
+], (jquery, utils, ArrayAdapter, Select2QueryAdapter) => {
   renderingContext.renderSelect = (fieldDiv, binding, context) => {
     const choices = context.choices;
     const $select = jquery('<select>').appendTo(fieldDiv).append('<option></option>');

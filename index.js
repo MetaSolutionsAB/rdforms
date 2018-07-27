@@ -1,5 +1,6 @@
-import './view/bootstrap/all';
+import 'rdforms/view/bootstrap/all';
 import {default as ItemStore} from './template/ItemStore';
 import {default as Editor} from './view/Editor';
+import {Graph} from 'rdfjson';
 
-export {ItemStore, Editor};
+export {Graph, ItemStore, Editor};

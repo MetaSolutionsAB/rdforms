@@ -1,4 +1,4 @@
-define({
+module.exports = {
   "root": "test",
   "namespaces": {
     "ex": "http://example.com/",
@@ -21,7 +21,7 @@ define({
         "property":"dcterms:title",
         "cardinality": {"min": 2, "pref": "4", "max": 5},
         "label":{"en":"Title", "sv": "Titel"},
-        "description":{"en":"A short title of the resource", "sv": "En kort titel för resursen"}
+        "description":{"en":"A short title of the resource", "sv": "En kort titel fÃ¶r resursen"}
       }, {
         "type":"text",
         "nodetype":"DATATYPE_LITERAL",
@@ -29,7 +29,7 @@ define({
         "datatype":"xsd:date",
         "cardinality": {"min": 1, "pref": "1", "max": 1},
         "label":{"en":"Date", "sv": "Datum"},
-        "description":{"en":"A date when this resource was modified.", "sv": "Ett datum när denna resurs modifierades."},
+        "description":{"en":"A date when this resource was modified.", "sv": "Ett datum nÃ¤r denna resurs modifierades."},
         "styles": ["autoUpdateDate", "nonEditable"]
       }, {
         "type":"text",
@@ -38,7 +38,7 @@ define({
         "datatype":"xsd:date",
         "cardinality": {"min": 1, "pref": "1", "max": 1},
         "label":{"en":"Date", "sv": "Datum"},
-        "description":{"en":"A date for this resource.", "sv": "Ett datum för denna resurs."},
+        "description":{"en":"A date for this resource.", "sv": "Ett datum fÃ¶r denna resurs."},
         "styles": ["autoInitDate"]
       }, {
         "id": "subject",
@@ -60,8 +60,8 @@ define({
               "sv": "Kemi"
             }
           }],
-        "label":{"en":"Subject", "sv": "Ämne"},
-        "description":{"en":"A subject for this resource.", "sv": "Ett ämne för denna resurs."}
+        "label":{"en":"Subject", "sv": "Ã„mne"},
+        "description":{"en":"A subject for this resource.", "sv": "Ett Ã¤mne fÃ¶r denna resurs."}
       }, {
         "type":"choice",
         "nodetype":"URI",
@@ -81,7 +81,7 @@ define({
           }],
         "styles": ["verticalRadioButtons"],
         "label":{"en":"License", "sv": "Licens"},
-        "description":{"en":"A license for this resource.", "sv": "En licens för denna resurs."}
+        "description":{"en":"A license for this resource.", "sv": "En licens fÃ¶r denna resurs."}
       }, {
         "type":"choice",
         "nodetype":"URI",
@@ -117,4 +117,4 @@ define({
       }
     ]
   }]
-});
+};

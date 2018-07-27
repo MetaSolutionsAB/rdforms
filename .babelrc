@@ -1,0 +1,17 @@
+{
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "targets": {
+          "browsers": [
+            "ie >= 11"
+          ]
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    ["@babel/plugin-transform-modules-commonjs", {"strictMode": false}]
+  ]
+}

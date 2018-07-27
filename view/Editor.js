@@ -1,9 +1,11 @@
-define(['dojo/_base/declare',
-  'rdforms/view/Presenter',
-  'rdforms/model/engine',
-  'rdforms/model/validate',
-  'rdforms/view/renderingContext',
-], (declare, Presenter, engine, validate, renderingContext) => {
+import renderingContext from 'rdforms/view/renderingContext';
+import Presenter from './Presenter';
+
+const engine = require('rdforms/model/engine');
+const validate = require('rdforms/model/validate');
+const declare = require('dojo/_base/declare');
+
+define([], () => {
   const showNow = (editor, item, bindings, includeLevel) => {
     // Invisible should be created as components and hidden using display: none
     // Otherwise certain extentions such as autoUUID does not work.
@@ -29,7 +31,7 @@ define(['dojo/_base/declare',
           return true; // Corresponds to an extention or pure heading, since no children.
         }
         if (bindings[0].getItemGroupedChildBindings().find((childBindings, idx) =>
-            showNow(editor, groupedItemsArr[idx], childBindings, includeLevel))) {
+          showNow(editor, groupedItemsArr[idx], childBindings, includeLevel))) {
           return true;
         }
         if (!prop) {
@@ -179,16 +181,17 @@ define(['dojo/_base/declare',
       if (firstBinding.getItem().hasStyle('nonEditable')) {
         return this.addComponent(newRow, firstBinding);
       }
-      return renderingContext.addEditorTable(newRow, firstBinding, { view: this });
+      return renderingContext.addEditorTable(newRow, firstBinding, {view: this});
     },
 
     fillTable(table, bindings) {
-      renderingContext.fillEditorTable(table, bindings, { view: this });
+      renderingContext.fillEditorTable(table, bindings, {view: this});
     },
 
     preRenderView() {
       renderingContext.preEditorViewRenderer(this.domNode, this.binding, {
-        view: this, inEditor: true, topLevel: this.topLevel, hideAddres: this.hideAddress });
+        view: this, inEditor: true, topLevel: this.topLevel, hideAddres: this.hideAddress
+      });
     },
     addComponent(fieldDiv, binding) {
       this.context.inEditor = true;

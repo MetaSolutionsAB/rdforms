@@ -5,7 +5,7 @@ define([
   'rdforms/view/bootstrap/components',
   'bmd/js/material',
   'bmd/js/ripples',
-  'jquery.mousewheel',
+  'jquery-mousewheel',
   'rdforms/view/bmd/Selectize',
   'sizzle',
   'bootstrap/tooltip',

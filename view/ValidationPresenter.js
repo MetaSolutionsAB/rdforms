@@ -1,12 +1,16 @@
+import renderingContext from 'rdforms/view/renderingContext';
+const GroupBindig = require('rdforms/model/GroupBindig');
+const engine = require('rdforms/model/engine');
+const validate = require('rdforms/model/validate');
+
 define([
   'dojo/_base/declare',
   'di18n/localize',
-  'rdforms/model/engine',
-  'rdforms/model/validate',
   'rdforms/view/Presenter',
-  'rdforms/view/renderingContext',
-], (declare, localize, engine, validate, Presenter, renderingContext) =>
-  declare(Presenter, {
+], (declare, localize, Presenter) => {
+
+
+  return declare(Presenter, {
     //= ==================================================
     // Public attributes
     //= ==================================================
@@ -139,4 +143,5 @@ define([
       this.addValidationMarker(fieldDiv, binding);
     },
 
-  }));
+  })
+});

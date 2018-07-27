@@ -19,9 +19,9 @@ module.exports = {
     new DojoWebpackPlugin({
       loaderConfig: require("./config/dojoConfig"),
       locales: ["en"],
-      environment: { dojoRoot: "dist" },	// used at run time for non-packed resources (e.g.
+      environment: {dojoRoot: "dist"},	// used at run time for non-packed resources (e.g.
       // blank.gif)
-      buildEnvironment: { dojoRoot: "node_modules" }, // used at build time
+      buildEnvironment: {dojoRoot: "node_modules"}, // used at build time
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -38,10 +38,6 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-          }
-
         }
       },
       {
@@ -52,6 +48,16 @@ module.exports = {
         test: /\.html$/,
         use: ['raw-loader']
       },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'fonts/'
+          }
+        }]
+      },
     ]
   },
   node: {
@@ -61,7 +67,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      jquery: path.resolve(path.join(__dirname, 'node_modules', 'jquery'))
+      jquery: path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
+      rdforms: path.resolve(path.join(__dirname)),
     }
 
   },

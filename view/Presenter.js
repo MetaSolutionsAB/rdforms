@@ -1,10 +1,10 @@
-/* global define*/
-define(['dojo/_base/declare',
-  'dojo/_base/kernel',
-  'rdforms/view/View',
-  'rdforms/view/renderingContext',
-], (declare, kernel, View, renderingContext) =>
-  declare(View, {
+import View from './View';
+import renderingContext from 'rdforms/view/renderingContext';
+const declare = require('dojo/_base/declare');
+const kernel = require('dojo/_base/kernel');
+
+define([], () => {
+  return declare(View, {
     // ===================================================
     // Public attributes
     // ===================================================
@@ -75,15 +75,18 @@ define(['dojo/_base/declare',
       }
     },
     addTable(newRow, firstBinding) {
-      return renderingContext.addPresenterTable(newRow, firstBinding, { view: this });
+      return renderingContext.addPresenterTable(newRow, firstBinding, {view: this});
     },
     fillTable(table, bindings) {
-      return renderingContext.fillPresenterTable(table, bindings, { view: this });
+      return renderingContext.fillPresenterTable(table, bindings, {view: this});
     },
     preRenderView() {
-      renderingContext.prePresenterViewRenderer(this.domNode, this.binding, { view: this, topLevel: this.topLevel });
+      renderingContext.prePresenterViewRenderer(this.domNode, this.binding, {view: this, topLevel: this.topLevel});
     },
     addComponent(fieldDiv, binding) {
       renderingContext.renderPresenter(fieldDiv, binding, this.context);
     },
-  }));
+  });
+});
+
+

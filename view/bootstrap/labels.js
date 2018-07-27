@@ -1,7 +1,8 @@
+import renderingContext from 'rdforms/view/renderingContext';
+
 define([
-  'rdforms/view/renderingContext',
   'jquery',
-], (renderingContext, jquery) => {
+], (jquery) => {
   renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelRow) => {
     let label = item.getLabel();
     if (label != null && label !== '') {
@@ -51,7 +52,7 @@ define([
       renderingContext.addExpandButton(rowNode, $labelDiv[0], item, context);
       return undefined;
     }
-        // If table, no add or remove buttons.
+    // If table, no add or remove buttons.
     if (context.view.showAsTable(item)) {
       return undefined;
     }
@@ -85,7 +86,7 @@ define([
     let propinfo = '';
     if (item.getProperty()) {
       propinfo = `<div class="property"><a target="_blank" href="${item.getProperty()}">${
-            item.getProperty()}</a></div>`;
+        item.getProperty()}</a></div>`;
     }
 
     let label = item.getLabel();
@@ -103,8 +104,8 @@ define([
       trigger: 'click',
       title: label,
       content: `<div class="description">${
-            description.replace(/(\r\n|\r|\n)/g, '<br/>')
-            }</div>${propinfo}`,
+        description.replace(/(\r\n|\r|\n)/g, '<br/>')
+        }</div>${propinfo}`,
     };
     jquery(aroundNode).popover(popoverOptions).attr('data-toggle', 'popover');
   };

@@ -1,11 +1,12 @@
+import renderingContext from 'rdforms/view/renderingContext';
+
 define([
-  'rdforms/view/renderingContext',
   'rdforms/utils',
   'dojo/aspect',
   'jquery',
   'dojo/_base/array',
   'rdforms/model/engine',
-], (renderingContext, utils, aspect, jquery, array, engine) => {
+], (utils, aspect, jquery, array, engine) => {
   const createChildBindingsForFirstFixedColumn = (bindings/* , context*/) => {
     // Find choice column
     // flesh out bindings from choices

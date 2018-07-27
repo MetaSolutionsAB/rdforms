@@ -1,13 +1,12 @@
-/* global define*/
-define([
-  'dojo/_base/declare',
-  'dojo/_base/lang',
-  'dijit/_Widget',
-  'rdforms/model/engine',
-  'rdforms/model/GroupBinding',
-  'rdforms/view/renderingContext',
-], (declare, lang, _Widget, engine, GroupBinding, renderingContext) =>
-  declare(_Widget, {
+import renderingContext from 'rdforms/view/renderingContext';
+
+const GroupBinding = require('rdforms/model/GroupBinding');
+const engine = require('rdforms/model/engine');
+const declare = require('dojo/_base/declare');
+const _Widget = require('dijit/_Widget');
+
+define([], () => {
+  return declare(_Widget, {
     // ===================================================
     // Public attributes
     // ===================================================
@@ -119,7 +118,7 @@ define([
         return;
       }
 
-      renderingContext.getMessages(lang.hitch(this, (messages) => {
+      renderingContext.getMessages((messages) => {
         renderingContext.domText(this.domNode, '');
         this.messages = messages;
         if (this.binding == null) {
@@ -171,7 +170,7 @@ define([
           } else if (bindings.length > 0) {
             for (let i = 0; i < bindings.length; i++) {
               // Add row with label if first row of same item or the binding is a group.
-              this.context = { view: this };
+              this.context = {view: this};
               lastRow = this.addRow(lastRow, bindings[i], i === 0 ||
                 bindings[i] instanceof GroupBinding);
             }
@@ -184,7 +183,7 @@ define([
             bindings[0].getCardinalityTracker().checkCardinality();
           }
         }
-      }));
+      });
     },
 
     /**
@@ -293,4 +292,5 @@ define([
       const fp = this._getFilterPredicates() || {};
       return fp[property] === true;
     },
-  }));
+  });
+})

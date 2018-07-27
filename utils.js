@@ -1,14 +1,14 @@
 /* global define*/
+const _ = require('lodash');
 define([
   'exports',
-  'dojo/_base/lang',
   'dojo/_base/kernel',
   'rdforms/model/system',
-], (exports, lang, kernel, system) => {
+], (exports, kernel, system) => {
   exports.getLocalizedValue = function (hash) {
     if (hash == null) {
       return { precision: 'none' };
-    } else if (lang.isString(hash)) {
+    } else if (typeof hash === 'string') {
       return { value: hash, precision: 'nolang', lang: '' };
     } else if (hash.hasOwnProperty(kernel.locale)) {
       return { value: hash[kernel.locale], precision: 'exact', lang: kernel.locale };
@@ -57,7 +57,7 @@ define([
     let stmts;
     for (let i = 0; i < propArr.length; i++) {
       const props = propArr[i];
-      if (lang.isArray(props)) {
+      if (Array.isArray(props)) {
         const valueArr = [];
         for (let j = 0; j < props.length; j++) {
           var value = f(graph, subject, props[j]);
@@ -87,7 +87,7 @@ define([
         obj.top = true;
       }
       if (o.children != null) {
-        obj.children = lang.clone(o.children);
+        obj.children = _.cloneDeep(o.children);
       }
       if (o.selectable === false) {
         obj.selectable = false;

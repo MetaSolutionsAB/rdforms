@@ -1,14 +1,14 @@
+import renderingContext from 'rdforms/view/renderingContext';
+import {cloneArrayWithLabels, getLocalizedMap, getLocalizedValue} from 'rdforms/utils';
+const system = require('rdforms/model/system');
+
 define([
-  'rdforms/view/renderingContext',
-  'rdforms/utils',
-  'dojo/_base/array',
   'dojo/date/stamp',
   'dojo/date/locale',
-  'rdforms/model/system',
   'rdforms/view/bootstrap/DurationEditor',
   'rdforms/view/bootstrap/DurationPresenter',
   'jquery',
-], (renderingContext, utils, array, stamp, locale, system, DurationEditor, DurationPresenter, jquery) => {
+], (stamp, locale, DurationEditor, DurationPresenter, jquery) => {
 
   /**
    * Try to guess the number of rows needed for a textarea element by looking at the value of the element
@@ -20,18 +20,18 @@ define([
     let rows = text.split('\n').length; // for each explicit new line character add a row
     rows += Number.parseInt((text.length / charsInLine), 10);
     return rows;
-  }
+  };
 
-    // -------------- Presenters ----------------
+  // -------------- Presenters ----------------
   const presenters = renderingContext.presenterRegistry;
 
-    // Presenter for URIs.
+  // Presenter for URIs.
   presenters.itemtype('text').nodetype('URI').register((fieldDiv, binding/* , context */) => {
     const vmap = utils.getLocalizedMap(binding);
     const $a = jquery('<a class="rdformsUrl">')
-                .attr('title', binding.getValue())
-                .attr('href', binding.getValue())
-                .appendTo(fieldDiv);
+      .attr('title', binding.getValue())
+      .attr('href', binding.getValue())
+      .appendTo(fieldDiv);
     if (vmap) {
       $a.text(utils.getLocalizedValue(vmap).value);
     } else {
@@ -44,40 +44,40 @@ define([
     }
   });
 
-    // Presenter for images.
+  // Presenter for images.
   presenters.itemtype('text').nodetype('URI').style('image')
     .register((fieldDiv, binding/* , context */) => {
       jquery('<img class="rdformsImage">').attr('src', binding.getGist()).appendTo(fieldDiv);
     });
 
-    // Presenter for text.
+  // Presenter for text.
   presenters.itemtype('text').register((fieldDiv, binding, context) => {
     if (context.view.showLanguage && binding.getLanguage()) {
       jquery('<div class="rdformsLanguage">').text(binding.getLanguage()).appendTo(fieldDiv);
     }
     const text = binding.getGist().replace('<', '&lt;').replace('>', '&gt;').replace(/(\r\n|\r|\n)/g, '<br/>');
 
-        // The text is shown as a link to the parents bindings URI if:
-        // 1) The current item is indicated to be a label.
-        // 2) The presenter is not at topLevel.
-        // 3) The current item is first in the parents list of children.
-        // 4) The parent binding corresponds to a URI.
+    // The text is shown as a link to the parents bindings URI if:
+    // 1) The current item is indicated to be a label.
+    // 2) The presenter is not at topLevel.
+    // 3) The current item is first in the parents list of children.
+    // 4) The parent binding corresponds to a URI.
     const parentBinding = binding.getParent();
     if (binding.getItem().hasStyle('label')
       && this.topLevel !== true
       && parentBinding != null && parentBinding.getItem().getChildren()[0] === binding.getItem()
       && parentBinding.getStatement() != null && parentBinding.getStatement().getType() === 'uri') {
       const $a = jquery('<a class="rdformsUrl">')
-                .attr('href', parentBinding.getStatement().getValue())
-                .html(text)
-                .appendTo(fieldDiv);
+        .attr('href', parentBinding.getStatement().getValue())
+        .html(text)
+        .appendTo(fieldDiv);
       system.attachLinkBehaviour($a[0], parentBinding);
     } else {
       jquery('<div>').toggleClass('rdformsField', context.inEditor).html(text).appendTo(fieldDiv);
     }
   });
 
-    // Presenter for duration
+  // Presenter for duration
   presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding) => {
 // eslint-disable-next-line no-new
     new DurationPresenter({
@@ -94,9 +94,9 @@ define([
         if (data.indexOf('T') > 0) {
           str = locale.format(d);
         } else if (data.length > 4) {
-          str = locale.format(d, { selector: 'date' });
+          str = locale.format(d, {selector: 'date'});
         } else {
-          str = locale.format(d, { selector: 'date', datePattern: 'yyy' });
+          str = locale.format(d, {selector: 'date', datePattern: 'yyy'});
         }
         jquery('<div>').html(str).toggleClass('rdformsField', context.inEditor).appendTo(fieldDiv);
       } catch (e) {
@@ -108,10 +108,10 @@ define([
   presenters.itemtype('text').datatype('dcterms:W3CDTF').register(datePresenter);
 
 
-    // -------------- Editors ----------------
+  // -------------- Editors ----------------
   const editors = renderingContext.editorRegistry;
 
-    // Editor for duration
+  // Editor for duration
   editors.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding) => {
     const tb = new DurationEditor({
       disabled: !binding.getItem().isEnabled(),
@@ -150,26 +150,26 @@ define([
   const registerPattern = (pattern, datatype) => {
     const regex = new RegExp(pattern);
     editors.itemtype('text').datatype(datatype)
-            .register((fieldDiv, binding) => {
-              const $input = jquery('<input type="text" class="form-control rdformsFieldInput">');
-              $input.val(binding.getGist())
-                    .attr('pattern', pattern)
-                    .appendTo(fieldDiv);
-              addChangeListener($input, binding, regex);
-              if (!binding.getItem().isEnabled()) {
-                $input.prop('disabled', true);
-              }
-            });
+      .register((fieldDiv, binding) => {
+        const $input = jquery('<input type="text" class="form-control rdformsFieldInput">');
+        $input.val(binding.getGist())
+          .attr('pattern', pattern)
+          .appendTo(fieldDiv);
+        addChangeListener($input, binding, regex);
+        if (!binding.getItem().isEnabled()) {
+          $input.prop('disabled', true);
+        }
+      });
   };
-    // Editor for gYear
+  // Editor for gYear
   registerPattern('^-?[0-9][0-9][0-9][0-9]$', 'xsd:gYear');
-    // Editor for integers
+  // Editor for integers
   registerPattern('^\\d+$', 'xsd:integer');
-    // Editor for decimals
+  // Editor for decimals
   registerPattern('^(\\d+(\\.\\d+)?)$', 'xsd:decimal');
 
-    // Editor for text, possibly multiline, possibly with a pattern
-    // (supports non-specific datatypes as well).
+  // Editor for text, possibly multiline, possibly with a pattern
+  // (supports non-specific datatypes as well).
   editors.itemtype('text').register((fieldDiv, binding, context) => {
     const item = binding.getItem();
     let $input;
@@ -181,35 +181,35 @@ define([
       $input = jquery('<input type="text" class="form-control rdformsFieldInput">');
     }
     $input.val(binding.getGist())
-            .appendTo(fieldDiv);
+      .appendTo(fieldDiv);
     addChangeListener($input, binding);
 
     if (item.getPattern() != null) {
       $input.attr('pattern', item.getPattern());
     }
 
-        // If language control should be present
+    // If language control should be present
     const nodeType = item.getNodetype();
     if (nodeType === 'LANGUAGE_LITERAL' || nodeType === 'PLAIN_LITERAL') {
       jquery(fieldDiv).addClass('rdformsLangcontrolledfield');
       jquery(context.controlDiv).addClass('rdformsLangFieldControl');
       const $lselect = jquery('<select class="form-control rdformsLanguage">')
-                .appendTo(context.controlDiv);
+        .appendTo(context.controlDiv);
       let primaryLangs = renderingContext.getPrimaryLanguageList();
       let langList = renderingContext.getNonPrimaryLanguageList();
       langList = utils.cloneArrayWithLabels(langList);
       if (primaryLangs.length === 0) {
-        array.forEach(langList, (lang) => {
+        langList.forEach((lang) => {
           jquery('<option>').html(lang.label).val(lang.value).appendTo($lselect);
         });
       } else {
         primaryLangs = utils.cloneArrayWithLabels(primaryLangs, true);
-        array.forEach(primaryLangs, (lang) => {
+        primaryLangs.forEach((lang) => {
           jquery('<option>').html(lang.label).val(lang.value).appendTo($lselect);
         });
         jquery('<option>').html('─────').attr('disabled', 'disabled').appendTo($lselect);
 
-        array.forEach(langList, (lang) => {
+        langList.forEach((lang) => {
           jquery('<option>').html(lang.label).val(lang.value).appendTo($lselect);
         });
       }

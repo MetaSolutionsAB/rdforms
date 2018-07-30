@@ -17,7 +17,7 @@
     "dojo": "1.12.2",
     "dojo-util": "1.13.0",
     "dojo-webpack-plugin": "^2.7.2",
-    i
+    "di18n": "https://bitbucket.org/metasolutions/di18n#webpack",
     "file-loader": "^1.1.11",
     "fontawesome": "^4.7.2",
     "fuelux": "^3.16.6",

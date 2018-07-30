@@ -1,4 +1,4 @@
-define({
+export default {
     root: {
         edit_add: "Add",
         edit_remove: "Remove",
@@ -27,4 +27,4 @@ define({
     },
     sv: true,
     nb: true
-});
+};

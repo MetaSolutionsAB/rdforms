@@ -1,5 +1,9 @@
 import Registry from './Registry';
+
+import * as di18n from 'di18n';
+
 const system = require('rdforms/model/system');
+
 
 let renderingContext;
 system.getChoice = function (item, value) {
@@ -126,8 +130,7 @@ renderingContext = {
     if (messages) {
       callback(messages);
     } else {
-      return '';
-      // i18n.getLocalization('rdforms/view', 'rdforms', null, callback);
+      return di18n.i18n.getLocalization('rdforms/view', 'rdforms', null, callback);
     }
   },
   /**

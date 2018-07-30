@@ -69,6 +69,9 @@ module.exports = {
     alias: {
       jquery: path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
       rdforms: path.resolve(path.join(__dirname)),
+      di18n: path.resolve(path.join(__dirname, 'node_modules', 'di18n')),
+      moment: path.resolve(path.join(__dirname, 'node_modules', 'moment')),
+
     }
 
   },

@@ -1,24 +1,24 @@
 /* global define */
+const  {locale, moment} = require('di18n');
+
 define(['dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/dom-class',
   'jquery',
   'bmddtp',
-  'di18n/locale',
-  'di18n/moment',
   'rdforms/view/bootstrap/DateTimeBase',
   'dojo/text!./DateTimeMDTemplate.html',
-], (declare, lang, domClass, jquery, bmddtp, locale, moment, DateTimeBase, template) => {
-    /**
-     * A Date and time picker.
-     */
+], (declare, lang, domClass, jquery, bmddtp, DateTimeBase, template) => {
+  /**
+   * A Date and time picker.
+   */
   const DTMD = declare([DateTimeBase], {
     templateString: template,
     tpdate: null,
     dpdate: null,
-        //= ==================================================
-        // Inherited methods
-        //= ==================================================
+    //= ==================================================
+    // Inherited methods
+    //= ==================================================
 
     initDatePicker() {
       this.$datepicker = jquery(this.cal).bootstrapMaterialDatePicker({
@@ -41,17 +41,17 @@ define(['dojo/_base/declare',
         this.$datepicker.bootstrapMaterialDatePicker('_fireCalendar');
       });
       this.$datepicker.on('change', lang.hitch(this, (evt, m) => {
-        if(!m) {
+        if (!m) {
           m = moment(evt.target.value);
         }
 
-          if (this.tpdate) {
-            const tpd = moment(this.tpdate);
-            m.minute(tpd.minute());
-            m.hour(tpd.hour());
-          }
-          this.dpdate = m.toDate();
-          this.setDateInBinding(this.dpdate);
+        if (this.tpdate) {
+          const tpd = moment(this.tpdate);
+          m.minute(tpd.minute());
+          m.hour(tpd.hour());
+        }
+        this.dpdate = m.toDate();
+        this.setDateInBinding(this.dpdate);
       }));
 
       if (!this.item.isEnabled()) {
@@ -63,19 +63,19 @@ define(['dojo/_base/declare',
       });
 
       this.$timepicker.on('change', lang.hitch(this, (evt, m) => {
-        if(!m) {
+        if (!m) {
           m = moment(evt.target.value);
         }
 
-          if (this.dpdate != null) {
-            const dpd = moment(this.dpdate);
-            dpd.minute(m.minute());
-            dpd.hour(m.hour());
-            this.tpdate = dpd.toDate();
-            this.setDateInBinding(this.tpdate);
-          } else {
-            this.tpdate = m.toDate();
-          }
+        if (this.dpdate != null) {
+          const dpd = moment(this.dpdate);
+          dpd.minute(m.minute());
+          dpd.hour(m.hour());
+          this.tpdate = dpd.toDate();
+          this.setDateInBinding(this.tpdate);
+        } else {
+          this.tpdate = m.toDate();
+        }
       }));
 
       if (!this.item.isEnabled()) {

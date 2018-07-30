@@ -1,6 +1,8 @@
+import renderingContext from 'rdforms/view/renderingContext';
+
+const system = require('rdforms/model/system');
+
 define([
-  'rdforms/model/system',
-  'rdforms/view/renderingContext',
   'jquery',
   'rdforms/view/bootstrap/labels',
   'rdforms/view/bootstrap/text',
@@ -8,7 +10,7 @@ define([
   'rdforms/view/bootstrap/buttons',
   'rdforms/view/bootstrap/table',
   'rdforms/view/bootstrap/auto',
-], (system, renderingContext, jquery) => {
+], (jquery) => {
   renderingContext.domQuery = (selector, node) => jquery(selector, node)[0];
 
   renderingContext.domCreate = (nodeStr, parent) => jquery(`<${nodeStr}>`).appendTo(parent)[0];

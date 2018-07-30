@@ -1,10 +1,10 @@
-import {default as PropertyGroup} from "../template/PropertyGroup";
-import {default as Text} from "../template/Text";
-import {default as Choice} from "../template/Choice";
-import {default as PropertyGroupBinding} from "./PropertyGroupBinding";
-import {default as GroupBinding} from "./GroupBinding";
-import {default as ValueBinding} from "./ValueBinding";
-import {default as ChoiceBinding} from "./ChoiceBinding";
+import PropertyGroup from "../template/PropertyGroup";
+import Text from "../template/Text";
+import Choice from "../template/Choice";
+import PropertyGroupBinding from "./PropertyGroupBinding";
+import GroupBinding from "./GroupBinding";
+import ValueBinding from "./ValueBinding";
+import ChoiceBinding from "./ChoiceBinding";
 import {extractGist, getLocalizedMap} from '../utils';
 import system from './system';
 import {add} from 'rdfjson';

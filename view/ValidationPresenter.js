@@ -1,13 +1,13 @@
 import renderingContext from 'rdforms/view/renderingContext';
+import {localize} from 'di18n';
 const GroupBindig = require('rdforms/model/GroupBindig');
 const engine = require('rdforms/model/engine');
 const validate = require('rdforms/model/validate');
 
 define([
   'dojo/_base/declare',
-  'di18n/localize',
   'rdforms/view/Presenter',
-], (declare, localize, Presenter) => {
+], (declare, Presenter) => {
 
 
   return declare(Presenter, {

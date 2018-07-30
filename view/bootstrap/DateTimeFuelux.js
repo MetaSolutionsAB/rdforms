@@ -1,23 +1,23 @@
-/* global define*/
+import {locale, moment} from 'di18n';
+
 define([
   'dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/dom-class',
   'jquery',
   'fuelux/js/datepicker',
-  'moment',
   'rdforms/view/bootstrap/DateTimeBase',
   'dojo/text!./DateTimeFueluxTemplate.html',
-], (declare, lang, domClass, jquery, datepicker, moment, DateTimeBase, template) => {
-    /**
-     * A Date and time picker.
-     */
+], (declare, lang, domClass, jquery, datepicker, DateTimeBase, template) => {
+  /**
+   * A Date and time picker.
+   */
   const DateTimeFuelux = declare([DateTimeBase], {
     templateString: template,
 
-        //= ==================================================
-        // Inherited methods
-        //= ==================================================
+    //= ==================================================
+    // Inherited methods
+    //= ==================================================
 
     initDatePicker() {
       let month;
@@ -37,7 +37,7 @@ define([
         allowPastDates: true,
         date: null,
         momentConfig: {
-          culture: 'en',
+          culture: locale.getCurrentMomentLocale(),
           format: 'L',
         },
       });
@@ -46,8 +46,8 @@ define([
         this.setDateInBinding(d);
       });
       this.$datepicker
-              .on('changed.fu.datepicker', updateDate)
-              .on('dateClicked.fu.datepicker', updateDate);
+        .on('changed.fu.datepicker', updateDate)
+        .on('dateClicked.fu.datepicker', updateDate);
 
       if (!this.item.isEnabled()) {
         this.$datepicker.datepicker('disabled');

@@ -1,6 +1,6 @@
 import Registry from './Registry';
 
-import * as di18n from 'di18n';
+import {i18n, locale} from 'di18n';
 
 const system = require('rdforms/model/system');
 
@@ -130,7 +130,7 @@ renderingContext = {
     if (messages) {
       callback(messages);
     } else {
-      return di18n.i18n.getLocalization('rdforms/view', 'rdforms', null, callback);
+      return i18n.getLocalization('rdforms/view', 'rdforms', null, callback);
     }
   },
   /**

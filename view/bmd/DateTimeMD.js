@@ -1,5 +1,4 @@
-/* global define */
-const  {locale, moment} = require('di18n');
+import {moment} from 'di18n';
 
 define(['dojo/_base/declare',
   'dojo/_base/lang',

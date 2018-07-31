@@ -1,12 +1,11 @@
 import renderingContext from 'rdforms/view/renderingContext';
-
-const system = require('rdforms/model/system');
+import system from 'rdforms/model/system';
+import RadioButtonsEditor from 'rdforms/view/bootstrap/RadioButtonsEditor';
 
 define([
   'rdforms/utils',
-  'rdforms/view/bootstrap/RadioButtonsEditor',
   'jquery',
-], (utils, RadioButtonsEditor, jquery) => {
+], (utils, jquery) => {
   // -------------- Presenters ----------------
   const presenters = renderingContext.presenterRegistry;
 

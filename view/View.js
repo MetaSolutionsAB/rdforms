@@ -1,11 +1,11 @@
 import renderingContext from 'rdforms/view/renderingContext';
+import GroupBinding from 'rdforms/model/GroupBinding';
+import engine from 'rdforms/model/engine';
 
-const GroupBinding = require('rdforms/model/GroupBinding');
-const engine = require('rdforms/model/engine');
-const declare = require('dojo/_base/declare');
-const _Widget = require('dijit/_Widget');
-
-define([], () => {
+define([
+  'dojo/_base/declare',
+  'dijit/_Widget'
+], (declare, _Widget) => {
   return declare(_Widget, {
     // ===================================================
     // Public attributes

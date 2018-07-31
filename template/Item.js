@@ -52,6 +52,7 @@ export default class Item {
       "autoUpdateDate",
       "autoUUID"
     ];
+    this._getLocalizedValue = getLocalizedValue;
   }
 
   //===================================================

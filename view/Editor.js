@@ -1,11 +1,12 @@
 import renderingContext from 'rdforms/view/renderingContext';
 import Presenter from './Presenter';
 
-const engine = require('rdforms/model/engine');
-const validate = require('rdforms/model/validate');
-const declare = require('dojo/_base/declare');
+import engine from 'rdforms/model/engine';
+import validate from 'rdforms/model/validate';
 
-define([], () => {
+define([
+  'dojo/_base/declare'
+], declare => {
   const showNow = (editor, item, bindings, includeLevel) => {
     // Invisible should be created as components and hidden using display: none
     // Otherwise certain extentions such as autoUUID does not work.

@@ -2653,7 +2653,7 @@ detect-node@^2.0.3:
 
 "di18n@https://bitbucket.org/metasolutions/di18n#webpack":
   version "1.0.0"
-  resolved "https://bitbucket.org/metasolutions/di18n#9ce084699017b7265256a4b0762e32923ee6b7ee"
+  resolved "https://bitbucket.org/metasolutions/di18n#3aa5df4d1020f6d6903d59c80f1dcc049112b5d9"
   dependencies:
     lodash "^4.17.10"
     webpack "^4.16.3"

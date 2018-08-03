@@ -2670,11 +2670,11 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
-dijit@1.12.2:
-  version "1.12.2"
-  resolved "https://registry.yarnpkg.com/dijit/-/dijit-1.12.2.tgz#4891b0d045051773216d3f0b7175699f173456a6"
+dijit@^1.13.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/dijit/-/dijit-1.13.0.tgz#42eceed26d5785d06323aa459306017684e74907"
   dependencies:
-    dojo "1.12.2"
+    dojo "1.13.0"
 
 dir-glob@^2.0.0:
   version "2.0.0"
@@ -2696,7 +2696,7 @@ doctrine@^2.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dojo-util@1.13.0:
+dojo-util@^1.13.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/dojo-util/-/dojo-util-1.13.0.tgz#58e74023d4848e1eedeeaac485337fcaffaed61e"
 
@@ -2710,9 +2710,9 @@ dojo-webpack-plugin@^2.7.2:
     raw-loader "0.5.1"
     tmp "0.0.30"
 
-dojo@1.12.2:
-  version "1.12.2"
-  resolved "https://registry.yarnpkg.com/dojo/-/dojo-1.12.2.tgz#64a863d0c28b6318656cfd8a8fd5748b07aa4fda"
+dojo@1.13.0, dojo@^1.13.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/dojo/-/dojo-1.13.0.tgz#62a7c53628f4f7acfa791a96924c67f39cd5861b"
 
 domain-browser@^1.1.1:
   version "1.2.0"

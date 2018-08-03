@@ -19,12 +19,12 @@ itemStore.createItem({
   'nodetype': 'URI',
   'id': 'ex:color',
   'property': 'http://example.com/terms/colorOfHouse',
-  'label': { 'en': 'Color of house', 'sv': 'FÃ¤rg pÃ¥ huset' },
+  'label': {'en': 'Color of house', 'sv': 'FÃ¤rg pÃ¥ huset'},
   'choices': [
-    { 'value': 'http://example.com/color/blue', 'label': { 'en': 'Blue' } },
-    { 'value': 'http://example.com/color/red', 'label': { 'en': 'Red' } }
+    {'value': 'http://example.com/color/blue', 'label': {'en': 'Blue'}},
+    {'value': 'http://example.com/color/red', 'label': {'en': 'Red'}}
   ],
-  'cardinality': { 'min': 1, 'pref': 1, 'max': 1 }
+  'cardinality': {'min': 1, 'pref': 1, 'max': 1}
 });
 
 new rdforms.Editor({

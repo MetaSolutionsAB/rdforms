@@ -5,8 +5,8 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const DojoWebpackPlugin = require('dojo-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
-  entry: './index.js',
+  mode: 'production',
+  entry: './index.bootstrap.js',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: "rdforms.js",
@@ -68,12 +68,10 @@ module.exports = {
   resolve: {
     alias: {
       jquery: path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
-      rdforms: path.resolve(path.join(__dirname)),
+      rdforms: path.resolve(path.join(__dirname), 'src'),
       di18n: path.resolve(path.join(__dirname, 'node_modules', 'di18n')),
       moment: path.resolve(path.join(__dirname, 'node_modules', 'moment')),
-
     }
-
   },
   context: __dirname, // string (absolute path!)
 };

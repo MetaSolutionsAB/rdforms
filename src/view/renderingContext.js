@@ -331,4 +331,16 @@ renderingContext.editorRegistry.itemtype('propertygroup').register(groupEditor);
 };
 renderingContext.setMessages(bundle);
 
+renderingContext.chooserRegistry.itemtype('choice').register({
+  show(binding, onSelect) {
+    onSelect( {value: 'http://example.com/1', label: {en: 'Example 1'}, description: {en: 'hoppla'}});
+  },
+  search(item, term) {
+    return new Promise(success => success([
+      {value: 'http://example.com/1', label: {en: 'Example 1'}, description: {en: 'hoppla'}},
+      {value: 'http://example.com/2', label: {en: 'Example 2'}},
+    ]));
+  },
+});
+
 export default renderingContext;

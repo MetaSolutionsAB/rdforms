@@ -5,7 +5,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const DojoWebpackPlugin = require('dojo-webpack-plugin');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: './index.bootstrap.js',
   output: {
     path: path.join(__dirname, 'dist'),

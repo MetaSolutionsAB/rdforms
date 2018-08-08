@@ -1,11 +1,11 @@
 import renderingContext from 'rdforms/view/renderingContext';
-import system from 'rdforms/model/system';
-import RadioButtonsEditor from 'rdforms/view/bootstrap/RadioButtonsEditor';
+import * as system from 'rdforms/model/system';
+import {default as RadioButtonsEditor} from 'rdforms/view/bootstrap/RadioButtonsEditor';
+import {getLocalizedValue} from 'rdforms/utils';
 
 define([
-  'rdforms/utils',
   'jquery',
-], (utils, jquery) => {
+], (jquery) => {
   // -------------- Presenters ----------------
   const presenters = renderingContext.presenterRegistry;
 
@@ -16,7 +16,7 @@ define([
       return;
     }
     if (choice.description) {
-      desc = utils.getLocalizedValue(choice.description).value;
+      desc = getLocalizedValue(choice.description).value;
     }
     func(fieldDiv, binding, choice, desc);
   };
@@ -45,13 +45,13 @@ define([
       if (item.hasStaticChoices() && !item.hasStyle('externalLink')) {
         jquery('<div>')
           .attr('title', desc || choice.seeAlso || choice.value)
-          .html(utils.getLocalizedValue(choice.label).value)
+          .html(getLocalizedValue(choice.label).value)
           .appendTo(fieldDiv);
       } else {
         const $a = jquery('<a class="rdformsUrl">')
           .attr('href', choice.seeAlso || choice.value)
           .attr('title', desc || choice.seeAlso || choice.value)
-          .html(utils.getLocalizedValue(choice.label).value)
+          .html(getLocalizedValue(choice.label).value)
           .appendTo(fieldDiv);
         if (item.hasStyle('externalLink')) {
           system.attachExternalLinkBehaviour($a[0], binding);
@@ -60,7 +60,7 @@ define([
         }
         if (choice.load != null) {
           choice.load(() => {
-            $a.html(utils.getLocalizedValue(choice.label).value);
+            $a.html(getLocalizedValue(choice.label).value);
           });
         }
       }
@@ -78,7 +78,7 @@ define([
           || item.hasStyle('horizontalRadioButtons')));
   };
   editors.itemtype('choice').choices().check(radioCheck).register((fieldDiv, binding, context) => {
-// eslint-disable-next-line no-new
+    // eslint-disable-next-line no-new
     new RadioButtonsEditor({binding, context}, fieldDiv);
   });
 

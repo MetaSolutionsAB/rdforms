@@ -1,9 +1,11 @@
 /* global define*/
+
 const _ = require('lodash');
+import * as system from 'rdforms/model/system';
+
 define([
   'exports',
   'dojo/_base/kernel',
-  'rdforms/model/system',
 ], (exports, kernel, system) => {
   exports.getLocalizedValue = function (hash) {
     if (hash == null) {

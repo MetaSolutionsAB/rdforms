@@ -1,4 +1,5 @@
-import {locale, moment} from 'di18n';
+import moment from 'moment';
+import {locale} from 'di18n';
 import template from './DateTimeFueluxTemplate.html';
 define([
   'dojo/_base/declare',
@@ -35,7 +36,7 @@ define([
         allowPastDates: true,
         date: null,
         momentConfig: {
-          culture: locale.getCurrentMomentLocale(),
+          culture: 'en',//locale.getCurrentMomentLocale(),
           format: 'L',
         },
       });

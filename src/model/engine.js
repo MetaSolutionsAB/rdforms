@@ -1,4 +1,4 @@
-import system from './system';
+import * as system from 'rdforms/model/system';
 import PropertyGroup from "../template/PropertyGroup";
 import Text from "../template/Text";
 import Choice from "../template/Choice";

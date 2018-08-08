@@ -1,5 +1,5 @@
 import renderingContext from 'rdforms/view/renderingContext';
-import * as system from 'rdforms/model/system';
+import system from 'rdforms/model/system';
 import {default as RadioButtonsEditor} from 'rdforms/view/bootstrap/RadioButtonsEditor';
 import {getLocalizedValue} from 'rdforms/utils';
 

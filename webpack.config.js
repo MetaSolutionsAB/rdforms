@@ -3,6 +3,7 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const DojoWebpackPlugin = require('dojo-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
   mode: 'development',
@@ -15,6 +16,7 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   plugins: [
+    new BundleAnalyzerPlugin(),
     new CleanWebpackPlugin(),
     new DojoWebpackPlugin({
       loaderConfig: require("./config/dojoConfig"),

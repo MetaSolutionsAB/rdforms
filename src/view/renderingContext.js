@@ -1,11 +1,7 @@
 import Registry from './Registry';
-
+import system from 'rdforms/model/system';
 import {i18n, locale} from 'di18n';
 
-const system = require('rdforms/model/system');
-
-
-let renderingContext;
 system.getChoice = function (item, value) {
   const chooser = renderingContext.chooserRegistry.getComponent(item);
   if (chooser == null) {
@@ -67,7 +63,7 @@ const defaultLanguages = [
   {value: 'sv', label: {en: 'Swedish', sv: 'Svenska'}},
 ];
 
-renderingContext = {
+const renderingContext = {
   domQuery(/* selector, node */) {
   },
   domCreate(/* domStr, node */) {
@@ -301,39 +297,39 @@ const groupEditor = (fieldDiv, binding, context) => {
 };
 renderingContext.editorRegistry.itemtype('group').register(groupEditor);
 renderingContext.editorRegistry.itemtype('propertygroup').register(groupEditor);
- const bundle = {
+const bundle = {
 
-    edit_add: "Add",
-    edit_remove: "Remove",
-    edit_browse: "Browse and select",
-    edit_expand: "Expand",
-    edit_upgrade: "Provide additional information for this web address",
-    info_label: "Label",
-    info_property: "Property",
-    info_description: "Description",
-    address_label: "Address",
-    validation_min_required: "{{PLURAL:$1|at least one value is|a minimum of $1 values is}} required",
-    validation_min_recommended: "{{PLURAL:$1|at least one value is|a minimum of $1 values is}} recommended",
-    validation_max: "{{PLURAL:$1|at most one value is|a maximum of $1 values are}} allowed",
-    validation_disjoint: "A maximum of one value is allowed",
-    validation_deprecated: "This field is deprecated",
-    date_date: "Date",
-    date_year: "Year",
-    date_date_and_time: "Date and time",
-    mandatoryLabel: "Mandatory",
-    recommendedLabel: "Recommended",
-    optionalLabel: "Optional",
-    today: "Today",
-    mandatoryMark: "*",
-    recommendedMark: "(Recommended)",
-    optionalMark: "(Optional)"
+  edit_add: "Add",
+  edit_remove: "Remove",
+  edit_browse: "Browse and select",
+  edit_expand: "Expand",
+  edit_upgrade: "Provide additional information for this web address",
+  info_label: "Label",
+  info_property: "Property",
+  info_description: "Description",
+  address_label: "Address",
+  validation_min_required: "{{PLURAL:$1|at least one value is|a minimum of $1 values is}} required",
+  validation_min_recommended: "{{PLURAL:$1|at least one value is|a minimum of $1 values is}} recommended",
+  validation_max: "{{PLURAL:$1|at most one value is|a maximum of $1 values are}} allowed",
+  validation_disjoint: "A maximum of one value is allowed",
+  validation_deprecated: "This field is deprecated",
+  date_date: "Date",
+  date_year: "Year",
+  date_date_and_time: "Date and time",
+  mandatoryLabel: "Mandatory",
+  recommendedLabel: "Recommended",
+  optionalLabel: "Optional",
+  today: "Today",
+  mandatoryMark: "*",
+  recommendedMark: "(Recommended)",
+  optionalMark: "(Optional)"
 
 };
 renderingContext.setMessages(bundle);
 
 renderingContext.chooserRegistry.itemtype('choice').register({
   show(binding, onSelect) {
-    onSelect( {value: 'http://example.com/1', label: {en: 'Example 1'}, description: {en: 'hoppla'}});
+    onSelect({value: 'http://example.com/1', label: {en: 'Example 1'}, description: {en: 'hoppla'}});
   },
   search(item, term) {
     return new Promise(success => success([

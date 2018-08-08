@@ -1,19 +1,16 @@
-/* global define*/
-
-const _ = require('lodash');
-import * as system from 'rdforms/model/system';
+import system from 'rdforms/model/system';
+import cloneDeep from 'lodash-es/cloneDeep';
 
 define([
-  'exports',
   'dojo/_base/kernel',
-], (exports, kernel, system) => {
-  exports.getLocalizedValue = function (hash) {
+], (kernel) => {
+  const getLocalizedValue = function (hash) {
     if (hash == null) {
-      return { precision: 'none' };
+      return {precision: 'none'};
     } else if (typeof hash === 'string') {
-      return { value: hash, precision: 'nolang', lang: '' };
+      return {value: hash, precision: 'nolang', lang: ''};
     } else if (hash.hasOwnProperty(kernel.locale)) {
-      return { value: hash[kernel.locale], precision: 'exact', lang: kernel.locale };
+      return {value: hash[kernel.locale], precision: 'exact', lang: kernel.locale};
     }
     const pos = kernel.locale.indexOf('_');
     if (pos > -1 && hash.hasOwnProperty(kernel.locale.substr(0, 2))) {
@@ -23,17 +20,17 @@ define([
         lang: kernel.locale.substr(0, 2),
       };
     } else if (hash.hasOwnProperty('en')) {
-      return { value: hash.en, precision: 'default', lang: 'en' };
+      return {value: hash.en, precision: 'default', lang: 'en'};
     } else if (hash.hasOwnProperty('')) {
-      return { value: hash[''], precision: 'nolang', lang: '' };
+      return {value: hash[''], precision: 'nolang', lang: ''};
     }
     for (const prop in hash) {
-      return { value: hash[prop], precision: 'any', lang: prop };
+      return {value: hash[prop], precision: 'any', lang: prop};
     }
-    return { precision: 'none' };
+    return {precision: 'none'};
   };
 
-  const f = function (graph, subject, prop) {
+  const f = (graph, subject, prop) => {
     const stmts = graph.find(subject, prop);
     if (stmts.length > 0) {
       const obj = {};
@@ -44,7 +41,7 @@ define([
     }
   };
 
-  exports.getLocalizedMap = function (graphOrBinding, subject, propArr) {
+  const getLocalizedMap = (graphOrBinding, subject, propArr) => {
     let graph;
     if (graphOrBinding.getItem) { // graphOrBinding is a Binding
       graph = graphOrBinding.getGraph();
@@ -64,11 +61,11 @@ define([
         for (let j = 0; j < props.length; j++) {
           var value = f(graph, subject, props[j]);
           if (value) {
-            valueArr.push(exports.getLocalizedValue(value).value);
+            valueArr.push(getLocalizedValue(value).value);
           }
         }
         if (valueArr.length > 0) {
-          return { '': valueArr.join(' ') };
+          return {'': valueArr.join(' ')};
         }
       } else {
         var value = f(graph, subject, props);
@@ -79,17 +76,17 @@ define([
     }
   };
 
-  exports.cloneArrayWithLabels = function (objects, noSort) {
+  const cloneArrayWithLabels = (objects, noSort) => {
     const itemsArray = [];
     for (let i = 0; i < objects.length; i++) {
       const o = objects[i];
-      const currentLabel = exports.getLocalizedValue(o.label);
-      const obj = { value: o.value, label: currentLabel.value || o.value || '' };
+      const currentLabel = getLocalizedValue(o.label);
+      const obj = {value: o.value, label: currentLabel.value || o.value || ''};
       if (o.top === true) {
         obj.top = true;
       }
       if (o.children != null) {
-        obj.children = _.cloneDeep(o.children);
+        obj.children = cloneDeep(o.children);
       }
       if (o.selectable === false) {
         obj.selectable = false;
@@ -103,7 +100,7 @@ define([
     }
     return itemsArray;
   };
-  exports.extractGist = function (str, template) {
+  const extractGist = (str, template) => {
     if (template) {
       if (template.indexOf('$1') === -1) {
         template += '$1';
@@ -117,19 +114,20 @@ define([
     return str;
   };
 
-  exports.findFirstValue = (engine, graph, uri, template) => {
+  const findFirstValue = (engine, graph, uri, template) => {
     const fvb = engine.findFirstValueBinding(engine.match(graph, uri, template), false);
     if (!fvb) {
       return undefined;
     }
     if (fvb.getChoice) {
-      return exports.getLocalizedValue(fvb.getChoice().label).value;
+      return getLocalizedValue(fvb.getChoice().label).value;
     }
     return fvb.getGist();
   };
-  exports.generateUUID = () => { // Public Domain/MIT
+
+  const generateUUID = () => { // Public Domain/MIT
     let d = new Date().getTime();
-    if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
+    if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
       d += performance.now(); //use high-precision timer if available
     }
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -138,4 +136,13 @@ define([
       return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
   };
+
+  return {
+    getLocalizedValue,
+    getLocalizedMap,
+    cloneArrayWithLabels,
+    extractGist,
+    findFirstValue,
+    generateUUID
+  }
 });

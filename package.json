@@ -25,9 +25,7 @@
     "imports-loader": "^0.8.0",
     "jquery": "^3.3.1",
     "jquery-mousewheel": "^3.1.13",
-    "lodash": "^4.17.10",
-    "lodash.isequal": "^4.5.0",
-    "lodash.throttle": "^4.1.1",
+    "lodash-es": "^4.17.10",
     "moment": "^2.22.2",
     "popper.js": "^1.12.9",
     "raw-loader": "^0.5.1",
@@ -37,7 +35,8 @@
     "sizzle": "^2.3.3",
     "style-loader": "^0.20.3",
     "svg-inline-loader": "^0.8.0",
-    "ttf-loader": "^1.0.2"
+    "ttf-loader": "^1.0.2",
+    "webpack-bundle-analyzer": "^2.13.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.54",
@@ -60,6 +59,6 @@
     "webpack-node-externals": "^1.6.0"
   },
   "scripts": {
-    "build": "webpack --config webpack.config.js --env production"
+    "build": "webpack --config webpack.config.js --display-modules --env production"
   }
 }

@@ -1,4 +1,4 @@
-const isEqual = require('lodash.isequal');
+import isEqual from 'lodash-es/isEqual';
 
 export default class OntologyStore {
   /**

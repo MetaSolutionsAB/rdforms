@@ -1,6 +1,6 @@
 import renderingContext from 'rdforms/view/renderingContext';
 import {cloneArrayWithLabels, getLocalizedMap, getLocalizedValue} from 'rdforms/utils';
-import * as system from 'rdforms/model/system';
+import system from 'rdforms/model/system';
 
 define([
   'dojo/date/stamp',

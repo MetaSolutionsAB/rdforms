@@ -1,15 +1,15 @@
 import renderingContext from 'rdforms/view/renderingContext';
-import * as system from 'rdforms/model/engine';
+import system from 'rdforms/model/system';
 
+import './auto';
 import './labels';
 import './text';
+import './choice';
+import './buttons';
+import './table';
 
 define([
   'jquery',
-  'rdforms/view/bootstrap/choice',
-  'rdforms/view/bootstrap/buttons',
-  'rdforms/view/bootstrap/table',
-  'rdforms/view/bootstrap/auto',
 ], (jquery) => {
   renderingContext.domQuery = (selector, node) => jquery(selector, node)[0];
 

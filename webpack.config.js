@@ -1,20 +1,21 @@
 const webpack = require('webpack');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const DojoWebpackPlugin = require('dojo-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
-  mode: 'development',
-  entry: './index.bootstrap.js',
+  mode: 'production',
+  entry: {
+    bootstrap: './index.bootstrap.js',
+    bmd: './index.bmd.js',
+  },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: "rdforms.js",
+    filename: "[name].rdforms.js",
     library: 'rdforms',
     libraryTarget: "umd"
   },
-  devtool: 'inline-source-map',
   plugins: [
     new BundleAnalyzerPlugin(),
     new CleanWebpackPlugin(),
@@ -31,7 +32,8 @@ module.exports = {
       jquery: 'jquery',
       //'window.jquery': 'jquery',
       Popper: ['popper.js', 'default'],
-    })
+    }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ],
   module: {
     rules: [
@@ -73,6 +75,7 @@ module.exports = {
       rdforms: path.resolve(path.join(__dirname), 'src'),
       di18n: path.resolve(path.join(__dirname, 'node_modules', 'di18n')),
       moment: path.resolve(path.join(__dirname, 'node_modules', 'moment')),
+      bmd: path.resolve(path.join(__dirname, 'node_modules', 'bmd', 'dist')),
     }
   },
   context: __dirname, // string (absolute path!)

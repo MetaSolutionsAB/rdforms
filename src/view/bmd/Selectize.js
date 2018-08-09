@@ -1,10 +1,11 @@
+import renderingContext from 'rdforms/view/renderingContext';
+import system from 'rdforms/model/system';
+import {getLocalizedValue} from 'rdforms/utils';
+
 define([
-  'rdforms/view/renderingContext',
   'jquery',
-  'rdforms/model/system',
-  'rdforms/utils',
   'selectize',
-], (renderingContext, jquery, system, utils) => {
+],  (jquery) => {
   renderingContext.renderSelect = function (fieldDiv, binding, context) {
     const formgroup = jquery('<div class="form-group selectizeException">').appendTo(fieldDiv);
     const formcontrol = jquery('<div class="form-control">').appendTo(formgroup);
@@ -42,7 +43,7 @@ define([
         context.chooser.search(binding.getItem(), query).then((choices) => {
           callback(choices.map(c => ({
             id: c.value,
-            text: utils.getLocalizedValue(c.label).value || '',
+            text: getLocalizedValue(c.label).value || '',
             choice: c,
           })));
         });
@@ -59,7 +60,7 @@ define([
     };
     context.setValue = (choice) => {
       $select.toggleClass('mismatch', choice.mismatch === true);
-      const label = utils.getLocalizedValue(choice.label).value || '';
+      const label = getLocalizedValue(choice.label).value || '';
       const op = sel.options[choice.value];
       if (!op) {
         sel.addOption({ id: choice.value, text: label, choice });

@@ -1,13 +1,13 @@
-import {moment} from 'di18n';
+import moment from 'moment';
 import template from './DateTimeMDTemplate.html';
+import DateTimeBase from 'rdforms/view/bootstrap/DateTimeBase';
+import bmddtp from 'bootstrap-material-datetimepicker';
 
-define(['dojo/_base/declare',
+define([
+  'dojo/_base/declare',
   'dojo/_base/lang',
-  'dojo/dom-class',
   'jquery',
-  'bmddtp',
-  'rdforms/view/bootstrap/DateTimeBase',
-], (declare, lang, domClass, jquery, bmddtp, DateTimeBase) => {
+], (declare, lang, jquery) => {
   /**
    * A Date and time picker.
    */

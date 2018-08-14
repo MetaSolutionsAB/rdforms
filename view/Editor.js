@@ -10,7 +10,10 @@ define(['dojo/_base/declare',
     /*if (item.hasStyle('invisible')) {
       return false;
     }*/
-    if (item.hasStyle('deprecated') && bindings.length === 0) {
+    if (item.hasStyle('presenterOnly')) {
+      return false;
+    }
+    if ((item.hasStyle('deprecated') || item.hasStyle('nonEditable')) && bindings.length === 0) {
       return false;
     }
     const prop = item.getProperty();
@@ -22,6 +25,9 @@ define(['dojo/_base/declare',
       // Take care of layout grouping by checking recursively.
       if (item.getType() === 'group') {
         const groupedItemsArr = item.getChildren();
+        if (groupedItemsArr.length === 0) {
+          return true; // Corresponds to an extention or pure heading, since no children.
+        }
         if (bindings[0].getItemGroupedChildBindings().find((childBindings, idx) =>
             showNow(editor, groupedItemsArr[idx], childBindings, includeLevel))) {
           return true;
@@ -166,7 +172,7 @@ define(['dojo/_base/declare',
     },
 
     addLabel(rowDiv, binding, item) {
-      renderingContext.renderEditorLabel(rowDiv, binding, item, { view: this });
+      renderingContext.renderEditorLabel(rowDiv, binding, item, this.context);
     },
 
     addTable(newRow, firstBinding) {
@@ -181,14 +187,15 @@ define(['dojo/_base/declare',
     },
 
     preRenderView() {
-      renderingContext.preEditorViewRenderer(this.domNode, this.binding,
-        { view: this, inEditor: true, topLevel: this.topLevel, hideAddress: this.hideAddress });
+      renderingContext.preEditorViewRenderer(this.domNode, this.binding, {
+        view: this, inEditor: true, topLevel: this.topLevel, hideAddres: this.hideAddress });
     },
     addComponent(fieldDiv, binding) {
+      this.context.inEditor = true;
       if (binding.getItem().hasStyle('nonEditable')) {
-        renderingContext.renderPresenter(fieldDiv, binding, { view: this, inEditor: true });
+        renderingContext.renderPresenter(fieldDiv, binding, this.context);
       } else {
-        renderingContext.renderEditor(fieldDiv, binding, { view: this, inEditor: true });
+        renderingContext.renderEditor(fieldDiv, binding, this.context);
       }
     },
     createRowNode(lastRowNode, binding, item) {

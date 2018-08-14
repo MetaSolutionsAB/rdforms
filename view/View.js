@@ -171,6 +171,7 @@ define([
           } else if (bindings.length > 0) {
             for (let i = 0; i < bindings.length; i++) {
               // Add row with label if first row of same item or the binding is a group.
+              this.context = { view: this };
               lastRow = this.addRow(lastRow, bindings[i], i === 0 ||
                 bindings[i] instanceof GroupBinding);
             }

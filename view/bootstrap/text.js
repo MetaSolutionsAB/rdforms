@@ -88,16 +88,20 @@ define([
   const datePresenter = (fieldDiv, binding, context) => {
     const data = binding.getValue();
     if (data != null && data !== '') {
-      const d = stamp.fromISOString(data);
-      let str;
-      if (data.indexOf('T') > 0) {
-        str = locale.format(d);
-      } else if (data.length > 4) {
-        str = locale.format(d, { selector: 'date' });
-      } else {
-        str = locale.format(d, { selector: 'date', datePattern: 'yyy' });
+      try {
+        const d = stamp.fromISOString(data);
+        let str;
+        if (data.indexOf('T') > 0) {
+          str = locale.format(d);
+        } else if (data.length > 4) {
+          str = locale.format(d, { selector: 'date' });
+        } else {
+          str = locale.format(d, { selector: 'date', datePattern: 'yyy' });
+        }
+        jquery('<div>').html(str).toggleClass('rdformsField', context.inEditor).appendTo(fieldDiv);
+      } catch (e) {
+        console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 (potentially with time given after a 'T' character as well) but found '${data}' instead.`);
       }
-      jquery('<div>').html(str).toggleClass('rdformsField', context.inEditor).appendTo(fieldDiv);
     }
   };
   presenters.itemtype('text').datatype('xsd:date').register(datePresenter);

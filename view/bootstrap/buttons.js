@@ -92,6 +92,9 @@ define([
 
     $remove.click(() => {
       if (!cardTr.isMin() || !cardTr.isDepsOk()) {
+        if (context.clear) {
+          context.clear();
+        }
         if (cardTr.getCardinality() === 1) {
           con.remove();
           if ($add) {

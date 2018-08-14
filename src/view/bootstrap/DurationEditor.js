@@ -1,12 +1,11 @@
+import DurationPresenter from './DurationPresenter';
 import template from './DurationEditorTemplate.html';
 
 define([
   'dojo/_base/declare',
   'dojo/_base/lang',
   'dijit/_WidgetsInTemplateMixin',
-  'jquery',
-  './DurationPresenter',
-], (declare, lang, _WidgetsInTemplateMixin, jquery, DurationPresenter) =>
+], (declare, lang, _WidgetsInTemplateMixin) =>
   declare([DurationPresenter, _WidgetsInTemplateMixin], {
     templateString: template,
     regex: /^([\-\+])?P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:([0-9]+(?:\.[0-9]+)?)?S)?)?$/,

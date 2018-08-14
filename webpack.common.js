@@ -5,10 +5,9 @@ const DojoWebpackPlugin = require('dojo-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
-  mode: 'production',
   entry: {
-    bootstrap: './index.bootstrap.js',
-    bmd: './index.bmd.js',
+    bootstrap: 'index.bootstrap.js',
+    bmd: 'index.bmd.js',
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -17,7 +16,6 @@ module.exports = {
     libraryTarget: "umd"
   },
   plugins: [
-    new BundleAnalyzerPlugin(),
     new CleanWebpackPlugin(),
     new DojoWebpackPlugin({
       loaderConfig: require("./config/dojoConfig"),
@@ -72,10 +70,9 @@ module.exports = {
   resolve: {
     alias: {
       jquery: path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
-      rdforms: path.resolve(path.join(__dirname), 'src'),
       di18n: path.resolve(path.join(__dirname, 'node_modules', 'di18n')),
       moment: path.resolve(path.join(__dirname, 'node_modules', 'moment')),
-      bmd: path.resolve(path.join(__dirname, 'node_modules', 'bmd', 'dist')),
+      bmd: path.resolve(path.join(__dirname, 'node_modules', 'bootstrap-material-design')),
     }
   },
   context: __dirname, // string (absolute path!)

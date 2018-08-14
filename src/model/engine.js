@@ -1,12 +1,12 @@
-import * as system from 'rdforms/model/system';
-import PropertyGroup from "../template/PropertyGroup";
-import Text from "../template/Text";
-import Choice from "../template/Choice";
-import Group from "../template/Group";
-import PropertyGroupBinding from "./PropertyGroupBinding";
-import GroupBinding from "./GroupBinding";
-import ValueBinding from "./ValueBinding";
-import ChoiceBinding from "./ChoiceBinding";
+import * as system from './system';
+import PropertyGroup from '../template/PropertyGroup';
+import Text from '../template/Text';
+import Choice from '../template/Choice';
+import Group from '../template/Group';
+import PropertyGroupBinding from './PropertyGroupBinding';
+import GroupBinding from './GroupBinding';
+import ValueBinding from './ValueBinding';
+import ChoiceBinding from './ChoiceBinding';
 import {extractGist, getLocalizedMap} from '../utils';
 import {add} from 'rdfjson';
 
@@ -412,7 +412,7 @@ _findStatementsForConstraints = (graph, uri, item) => {
     }
     return false;
   };
-  if ((typeof constr === "object") && (constr !== null)) {
+  if ((typeof constr === 'object') && (constr !== null)) {
     const keys = Object.keys(constr);
     for (let idx = 0; idx < keys.length; idx++) {
       const key = keys[idx];
@@ -439,7 +439,7 @@ _findStatementsForConstraints = (graph, uri, item) => {
 _createStatementsForConstraints = (graph, uri, item) => {
   const results = [];
   const constr = item.getConstraints()
-  if ((typeof constr === "object") && (constr !== null)) {
+  if ((typeof constr === 'object') && (constr !== null)) {
     Object.keys(constr).forEach((key) => {
       const obj = constr[key];
       if (Array.isArray(obj)) {

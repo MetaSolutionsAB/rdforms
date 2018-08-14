@@ -1,4 +1,4 @@
-import renderingContext from 'rdforms/view/renderingContext';
+import renderingContext from './renderingContext';
 import View from './View';
 
 define([

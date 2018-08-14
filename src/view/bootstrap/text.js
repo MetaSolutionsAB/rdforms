@@ -1,14 +1,13 @@
-import renderingContext from 'rdforms/view/renderingContext';
-import {cloneArrayWithLabels, getLocalizedMap, getLocalizedValue} from 'rdforms/utils';
-import system from 'rdforms/model/system';
+import DurationEditor from './DurationEditor';
+import DurationPresenter from './DurationPresenter';
+import renderingContext from '../renderingContext';
+import {cloneArrayWithLabels, getLocalizedMap, getLocalizedValue} from '../../utils';
+import system from '../../model/system';
 
 define([
   'dojo/date/stamp',
   'dojo/date/locale',
-  'rdforms/view/bootstrap/DurationEditor',
-  'rdforms/view/bootstrap/DurationPresenter',
-  'jquery',
-], (stamp, locale, DurationEditor, DurationPresenter, jquery) => {
+], (stamp, locale) => {
 
   /**
    * Try to guess the number of rows needed for a textarea element by looking at the value of the element

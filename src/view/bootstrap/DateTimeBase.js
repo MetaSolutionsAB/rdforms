@@ -1,4 +1,4 @@
-import renderingContext from 'rdforms/view/renderingContext';
+import renderingContext from '../renderingContext';
 
 define([
   'dojo/_base/declare',
@@ -7,8 +7,7 @@ define([
   'dijit/_WidgetBase',
   'dijit/_TemplatedMixin',
   'dijit/_WidgetsInTemplateMixin',
-  'jquery',
-], (declare, lang, stamp, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, jquery) => {
+], (declare, lang, stamp, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin) => {
   const DateTimeBase = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
     //= ==================================================

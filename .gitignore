@@ -2,7 +2,6 @@
 .idea
 /node_modules
 *~
-/dist
 *.iml
 /release
 yarn-error.log

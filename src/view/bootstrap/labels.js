@@ -1,4 +1,4 @@
-import renderingContext from 'rdforms/view/renderingContext';
+import renderingContext from '../renderingContext';
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelRow) => {
   let label = item.getLabel();

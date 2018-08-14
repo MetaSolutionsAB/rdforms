@@ -1,9 +1,9 @@
-import renderingContext from 'rdforms/view/renderingContext';
-import Presenter from 'rdforms/view/Presenter';
+import renderingContext from './renderingContext';
+import Presenter from './Presenter';
+import GroupBindig from '../model/GroupBindig';
+import engine from '../model/engine';
+import validate from '../model/validate';
 import {localize} from 'di18n';
-import GroupBindig from 'rdforms/model/GroupBindig';
-import engine from 'rdforms/model/engine';
-import validate from 'rdforms/model/validate';
 
 define([
   'dojo/_base/declare',

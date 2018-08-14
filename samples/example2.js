@@ -1,6 +1,5 @@
 import rdfGraph from './rdf.mjs';
 import templateBundle from './templateBundle.mjs';
-// import './chooser.mjs';
 
 const graph = new rdforms.Graph(rdfGraph);
 

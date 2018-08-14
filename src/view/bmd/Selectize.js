@@ -1,11 +1,10 @@
-import renderingContext from 'rdforms/view/renderingContext';
-import system from 'rdforms/model/system';
-import {getLocalizedValue} from 'rdforms/utils';
+import renderingContext from '../renderingContext';
+import system from '../../model/system';
+import {getLocalizedValue} from '../../utils';
 
 define([
-  'jquery',
   'selectize',
-],  (jquery) => {
+], () => {
   renderingContext.renderSelect = function (fieldDiv, binding, context) {
     const formgroup = jquery('<div class="form-group selectizeException">').appendTo(fieldDiv);
     const formcontrol = jquery('<div class="form-control">').appendTo(formgroup);
@@ -63,7 +62,7 @@ define([
       const label = getLocalizedValue(choice.label).value || '';
       const op = sel.options[choice.value];
       if (!op) {
-        sel.addOption({ id: choice.value, text: label, choice });
+        sel.addOption({id: choice.value, text: label, choice});
       }
       sel.addItem(choice.value, true);
       // $select.val(choice.value).trigger('change');

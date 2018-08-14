@@ -1,10 +1,10 @@
+import DateTimeBase from './DateTimeBase';
 import template from './DateTimeBootstrapDatepickerTemplate.html';
+
 define([
   'dojo/_base/declare',
   'dojo/_base/lang',
-  'jquery',
-  'rdforms/view/bootstrap/DateTimeBase',
-], (declare, lang, jquery, DateTimeBase) => {
+], (declare, lang) => {
   /**
    * A Date and time picker.
    */

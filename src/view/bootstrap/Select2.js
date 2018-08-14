@@ -1,12 +1,11 @@
-import renderingContext from 'rdforms/view/renderingContext';
+import renderingContext from '../renderingContext';
+import {getLocalizedValue} from '../../utils';
 
 define([
-  'jquery',
-  'rdforms/utils',
   'select2/src/js/select2/data/array',
   './Select2QueryAdapter',
   'select2/src/js/jquery.select2',
-], (jquery, utils, ArrayAdapter, Select2QueryAdapter) => {
+], (ArrayAdapter, Select2QueryAdapter) => {
   renderingContext.renderSelect = (fieldDiv, binding, context) => {
     const choices = context.choices;
     const $select = jquery('<select>').appendTo(fieldDiv).append('<option></option>');
@@ -30,13 +29,13 @@ define([
     };
     context.setValue = (choice) => {
       $select.toggleClass('mismatch', choice.mismatch === true);
-      const label = utils.getLocalizedValue(choice.label).value || '';
+      const label = getLocalizedValue(choice.label).value || '';
       if ($select.find(`option[value='${choice.value}']`).length === 0) {
         $select.append(new Option(label, choice.value, true, true)).trigger('change');
         $select.trigger({
           type: 'select2:select',
           params: {
-            data: { id: choice.val, text: label, choice },
+            data: {id: choice.val, text: label, choice},
           },
         });
       } else {
@@ -50,7 +49,7 @@ define([
       $select.toggleClass('mismatch', choice.mismatch);
       const $node = $select.next().find('.select2-selection__rendered');
       if (choice.description) {
-        $node.attr('title', utils.getLocalizedValue(choice.description).value);
+        $node.attr('title', getLocalizedValue(choice.description).value);
       }
     });
   };

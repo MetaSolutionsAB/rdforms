@@ -1,10 +1,9 @@
-import renderingContext from 'rdforms/view/renderingContext';
-import * as engine from 'rdforms/model/engine';
+import renderingContext from '../renderingContext';
+import * as engine from '../../model/engine';
 
 define([
   'dojo/aspect',
-  'jquery',
-], (aspect, jquery) => {
+], (aspect) => {
   renderingContext.addRemoveButton = (fieldDiv, binding, context) => {
     const $remove = jquery('<span class="fa fa-remove action">')
             .attr('title', context.view.messages.edit_remove)

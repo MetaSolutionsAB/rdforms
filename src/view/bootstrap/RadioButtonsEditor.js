@@ -3,8 +3,7 @@ define([
   'dojo/_base/declare',
   'dojo/_base/lang',
   'dijit/_WidgetBase',
-  'jquery',
-], (declare, lang, _WidgetBase, jquery) => {
+], (declare, lang, _WidgetBase) => {
   let uniqueRadioButtonGroupNr = 0;
   return declare([_WidgetBase], {
 
@@ -24,7 +23,7 @@ define([
     buildRendering() {
       this.domNode = this.srcNodeRef || jquery('<div>')[0];
 
-            // Add mismatched choice to copy of choice list.
+      // Add mismatched choice to copy of choice list.
       if (this.choice != null && this.choice.mismatch) {
         this.choices = this.choices.slice(0);
         this.choices.push(this.choice);
@@ -42,14 +41,14 @@ define([
         }
         if (c.description) {
           $label.attr('title', this.item._getLocalizedValue(c.description).value
-                        || c.seeAlso || c.value);
+            || c.seeAlso || c.value);
         }
 
         const $input = jquery('<input type="radio">')
-                    .val(c.value)
-                    .attr('checked', c.value === currentValue)
-                    .attr('name', `rdformsRadio_${uniqueRadioButtonGroupNr}`)
-                    .appendTo($label);
+          .val(c.value)
+          .attr('checked', c.value === currentValue)
+          .attr('name', `rdformsRadio_${uniqueRadioButtonGroupNr}`)
+          .appendTo($label);
         $label.append(this.item._getLocalizedValue(c.label).value);
 
         if (c.mismatch) {

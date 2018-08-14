@@ -1,13 +1,12 @@
 import moment from 'moment';
-import template from './DateTimeMDTemplate.html';
-import DateTimeBase from 'rdforms/view/bootstrap/DateTimeBase';
 import bmddtp from 'bootstrap-material-datetimepicker';
+import DateTimeBase from '../bootstrap/DateTimeBase';
+import template from './DateTimeMDTemplate.html';
 
 define([
   'dojo/_base/declare',
   'dojo/_base/lang',
-  'jquery',
-], (declare, lang, jquery) => {
+], (declare, lang) => {
   /**
    * A Date and time picker.
    */

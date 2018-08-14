@@ -1,5 +1,5 @@
-import renderingContext from 'rdforms/view/renderingContext';
-import utils from 'rdforms/utils';
+import renderingContext from '../renderingContext';
+import utils from '../../utils';
 import stamp from 'dojo/date/stamp';
 
 const pr = renderingContext.presenterRegistry;

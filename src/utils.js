@@ -1,4 +1,4 @@
-import system from 'rdforms/model/system';
+import system from './model/system';
 import cloneDeep from 'lodash-es/cloneDeep';
 
 define([

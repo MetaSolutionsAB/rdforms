@@ -1,6 +1,6 @@
-import renderingContext from 'rdforms/view/renderingContext';
-import GroupBinding from 'rdforms/model/GroupBinding';
-import * as engine from 'rdforms/model/engine';
+import renderingContext from './renderingContext';
+import GroupBinding from '../model/GroupBinding';
+import * as engine from '../model/engine';
 
 define([
   'dojo/_base/declare',
@@ -83,6 +83,7 @@ define([
     },
 
     _handleParams(params) {
+      console.log(params);
       if (params.binding) {
         this.binding = params.binding;
       } else {

@@ -1,13 +1,13 @@
 import moment from 'moment';
 import {locale} from 'di18n';
 import template from './DateTimeFueluxTemplate.html';
+import 'fuelux/js/datepicker';
+import DateTimeBase from './DateTimeBase';
+
 define([
   'dojo/_base/declare',
   'dojo/_base/lang',
-  'jquery',
-  'fuelux/js/datepicker',
-  'rdforms/view/bootstrap/DateTimeBase',
-], (declare, lang, jquery, datepicker, DateTimeBase) => {
+], (declare, lang) => {
   /**
    * A Date and time picker.
    */

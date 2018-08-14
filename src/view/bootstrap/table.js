@@ -1,11 +1,10 @@
-import renderingContext from 'rdforms/view/renderingContext';
-import * as engine from 'rdforms/model/engine';
-import {cloneArrayWithLabels} from 'rdforms/utils';
+import renderingContext from '../renderingContext';
+import * as engine from '../../model/engine';
+import {cloneArrayWithLabels} from '../../utils';
 
 define([
   'dojo/aspect',
-  'jquery',
-], (aspect, jquery) => {
+], (aspect) => {
   const createChildBindingsForFirstFixedColumn = (bindings/* , context*/) => {
     // Find choice column
     // flesh out bindings from choices

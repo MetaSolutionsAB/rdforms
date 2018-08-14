@@ -1,8 +1,8 @@
-import renderingContext from 'rdforms/view/renderingContext';
+import renderingContext from './renderingContext';
 import Presenter from './Presenter';
 
-import * as engine from 'rdforms/model/engine';
-import validate from 'rdforms/model/validate';
+import * as engine from '../model/engine';
+import {bindingReport} from '../model/validate';
 
 define([
   'dojo/_base/declare'
@@ -67,7 +67,7 @@ define([
     // Public methods
     //= ==================================================
     report(report) {
-      const _report = report || validate.bindingReport(this.binding);
+      const _report = report || bindingReport(this.binding);
 
       Object.keys(this._binding2node).forEach((key) => {
         renderingContext.domClassToggle(this._binding2node[key], 'errorReport', false);

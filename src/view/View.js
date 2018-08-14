@@ -83,7 +83,6 @@ define([
     },
 
     _handleParams(params) {
-      console.log(params);
       if (params.binding) {
         this.binding = params.binding;
       } else {

@@ -134,7 +134,7 @@ export default class ValueBinding extends Binding {
   remove() {
     this.setValue(null);
     this._parent.removeChildBinding(this);
-    this.inherited("remove", arguments);
+    this.inherited(arguments);
   }
 
   updateAssertions() {

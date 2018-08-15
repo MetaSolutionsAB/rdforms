@@ -1,3 +1,134 @@
-@import './base.css';
-@import '../../../node_modules/bootstrap-material-design/dist/css/bootstrap-material-design.css';
-@import '../../../node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css';
+@import '../bootstrap/style.css';
+
+.rdforms .form-group {
+    display: inline;
+}
+
+.rdforms .rdformsFields textarea.form-control {
+    max-height: 200px;
+}
+
+.rdforms .rdformsFields textarea.form-control:focus {
+    min-height: 60px;
+}
+
+.rdforms select.rdformsLanguage {
+    display: inline;
+}
+
+.rdforms.rdformsEditor .rdformsFieldControl {
+    height: auto;
+}
+
+.rdforms .cardinality .btn {
+    background-color: #333;
+    color: #fff !important;
+    font-size: 14px;
+}
+
+.rdforms .cardinality .btn:hover {
+    background-color: #626262 !important;
+}
+
+.rdforms .cardinality .btn.active {
+    background-color: #00a946;
+}
+
+.rdforms .cardinality .btn.active:hover {
+    background-color: #00b85c !important;
+}
+
+.popover a {
+    color: #ececec;
+}
+
+.popover .popover-title {
+    color: black;
+    font-weight: bold;
+    border-radius: 0px;
+}
+
+.rdformsDatepicker input {
+    display: inline-block;
+    width: 12em;
+}
+
+.rdforms .selectize-dropdown-content > .option {
+    min-height: 42px;
+}
+
+.rdforms .form-group.selectizeException {
+    display: inline-block;
+    min-width: 300px;
+    margin: 0px;
+    vertical-align: top;
+}
+
+.rdforms .browseChoices.btn.btn-fab.btn-fab-mini {
+    margin-top: -5px;
+    margin-left: 13px;
+}
+
+.selectize-control.single .selectize-dropdown .active, .selectize-control.multi .selectize-dropdown .active {
+    background-color: #EEEEEE !important;
+}
+
+.selectize-control.single .selectize-dropdown .selected {
+    background-color: inherit;
+}
+
+.selectize-control.single .selectize-input input,
+.selectize-control.single .selectize-input {
+    font-size: 16px !important;
+}
+
+.selectize-input {
+    cursor: pointer;
+}
+
+.rdformsEditor .rdformsFieldControl {
+    width: auto !important;
+}
+
+.selectize-control.single .selectize-input:after,
+.selectize-control.single .selectize-input.input-active:after {
+    cursor: pointer;
+}
+
+.rdforms .selectize-dropdown-content {
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.selectize-control.single .selectize-dropdown {
+    z-index:1001 !important;
+}
+
+.rdforms .rdformsDateValue .dateInput {
+    width: 5.7em;
+}
+
+.rdforms .rdformsDateValue .yearInput,
+.rdforms .rdformsDateValue .timeInput {
+    width: 3em;
+}
+
+.rdforms .rdformsDateValue .dateControl {
+    margin-right: 3px;
+}
+
+.rdforms .rdformsDateValue>.form-group {
+    margin-right: 2em;
+}
+
+.cardgroup>.rdformsFields>.rdformsGroup {
+    border-radius: 2px;
+    color: rgba(0,0,0, 0.87);
+    background: #fff;
+    -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 7px 10px 10px 10px;
+    margin-top: 10px;
+    margin-right: -10px;
+}

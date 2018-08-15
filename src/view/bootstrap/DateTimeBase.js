@@ -27,7 +27,7 @@ define([
     // Inherited methods
     //= ==================================================
     postCreate() {
-      this.inherited('postCreate', arguments);
+      this.inherited(arguments);
 
       // Datepicker
       this.initDatePicker();

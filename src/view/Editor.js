@@ -123,7 +123,7 @@ define([
 
     show(/* params */) {
       this._subEditors = [];
-      this.inherited('show', arguments);
+      this.inherited(arguments);
     },
 
     /**

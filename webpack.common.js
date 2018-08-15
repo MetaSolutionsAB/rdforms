@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const DojoWebpackPlugin = require('dojo-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
   entry: {
@@ -28,7 +27,7 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
       jquery: 'jquery',
-      //'window.jquery': 'jquery',
+      'window.jquery': 'jquery',
       Popper: ['popper.js', 'default'],
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
@@ -56,8 +55,9 @@ module.exports = {
           loader: 'file-loader',
           options: {
             name: '[name].[ext]',
-            outputPath: 'fonts/'
-          }
+            outputPath: 'fonts/',
+            publicPath: '../dist/fonts', // relative to HTML page (samples)
+          },
         }]
       },
     ]

@@ -7,9 +7,7 @@ import './choice';
 import './buttons';
 import './table';
 
-renderingContext.domQuery = (selector, node) => {
-  return jquery(selector, node)[0];
-}
+renderingContext.domQuery = (selector, node) => jquery(selector, node)[0];
 
 renderingContext.domCreate = (nodeStr, parent) => jquery(`<${nodeStr}>`).appendTo(parent)[0];
 

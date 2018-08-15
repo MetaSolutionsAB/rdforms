@@ -163,7 +163,7 @@ export default class GroupBinding extends Binding {
     if (this._parent !== undefined) {
       this._parent.removeChildBinding(this);
     }
-    this.inherited('remove', arguments);
+    this.inherited(arguments);
   }
 
   isValid() {

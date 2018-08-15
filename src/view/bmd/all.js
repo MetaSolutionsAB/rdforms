@@ -1,12 +1,24 @@
-import 'bmd';
+import renderingContext from '../renderingContext';
+// bootstrap + rdforms components + bmd
+import 'bootstrap';
 import '../bootstrap/components';
-import 'bmd/dist/css/bootstrap-material-design.css';
+import 'arrive/src/arrive';
+import 'bootstrap-material-design/dist/js/material';
+import 'bootstrap-material-design/dist/js/ripples';
+
 import './DateTimeMD';
 import './Selectize';
-import './style.css';
-import renderingContext from '../renderingContext';
 
-// initializeMaterial is not called more than once per X ms
+import 'bootstrap-material-design/dist/css/bootstrap-material-design.css';
+import 'bootstrap-material-design/dist/css/ripples.css';
+import 'bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css';
+import 'font-awesome/css/font-awesome.css';
+import './style.css';
+
+
+// TODO revisit the below strategy. Perhaps use arrive.js as suggested by bmd
+// https://github.com/FezVrasta/bootstrap-material-design/tree/v3#arrivejs-support
+// updateMaterial called only by postEditorRender
 const updateMaterial = (node) => {
   if (jquery.material) {
     jquery(node).find(jquery.material.options.withRipples).each((idx, el) => {
@@ -31,4 +43,3 @@ renderingContext.postEditorRenderer = function (fieldDiv, binding, context) {
   context.$controlDiv.appendTo(fieldDiv);
   updateMaterial(fieldDiv);
 };
-

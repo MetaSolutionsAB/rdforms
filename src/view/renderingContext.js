@@ -1,6 +1,8 @@
 import Registry from './Registry';
 import system from '../model/system';
-import {i18n, locale} from 'di18n';
+
+const i18n = require('di18n').default.i18n;
+const locale = require('di18n').default.locale;
 
 system.getChoice = function (item, value) {
   const chooser = renderingContext.chooserRegistry.getComponent(item);
@@ -220,8 +222,7 @@ const renderingContext = {
   },
 
   getDefaultLanguage() {
-    const language = 'en'; // TODO remove this. Was added when di18n was not webpackified yets
-    return language || locale.get();
+    return locale.get();
   },
 
   setPopoverContainer(container) {

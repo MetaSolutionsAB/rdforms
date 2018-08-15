@@ -1,4 +1,4 @@
-import {expand} from 'rdfjson';
+import {namespaces as ns} from 'rdfjson';
 
 const matchRdfType = (item, type) => {
   const constr = item.getConstraints();
@@ -52,9 +52,9 @@ filterMethods.forEach((meth) => {
         Object.keys(value).forEach((key) => {
           const vv = value[key];
           if (Array.isArray(vv)) {
-            cstr[expand(key)] = vv.map(v => expand(v));
+            cstr[ns.expand(key)] = vv.map(v => ns.expand(v));
           } else {
-            cstr[expand(key)] = expand(vv);
+            cstr[ns.expand(key)] = ns.expand(vv);
           }
         });
         this.filterObj[meth] = cstr;
@@ -62,7 +62,7 @@ filterMethods.forEach((meth) => {
       case 'predicate':
       case 'rdftype':
       case 'datatype':
-        this.filterObj[meth] = expand(value);
+        this.filterObj[meth] = ns.expand(value);
         break;
       default:
         this.filterObj[meth] = value || true;

@@ -6,7 +6,7 @@ import OntologyStore from "./OntologyStore";
 import Bundle from "./Bundle";
 
 import {constructTemplate} from "../model/engine";
-import {add} from 'rdfjson';
+import {namespaces as ns} from 'rdfjson';
 
 export default class ItemStore {
   /**
@@ -148,7 +148,7 @@ export default class ItemStore {
     this._bundles.push(b);
 
     if (bundle.source.namespaces) {
-      add(bundle.source.namespaces);
+      ns.add(bundle.source.namespaces);
     }
 
     let templates = bundle.source.templates || bundle.source.auxilliary;

@@ -1,5 +1,5 @@
 import * as engine from './engine';
-import {shorten} from 'rdfjson';
+import {namespaces as ns} from 'rdfjson';
 
 /**
  * Generates a report for the given binding. Below is an example of a report:
@@ -259,11 +259,11 @@ const _simplifyReport = (report) => {
 const _createPath = (binding, item) => {
   let path = [];
   if (item.getProperty() != null) {
-    path.push(shorten(item.getProperty()));
+    path.push(ns.shorten(item.getProperty()));
   }
   while (true) {
     if (binding.getItem().getProperty() != null) {
-      path.push(shorten(binding.getItem().getProperty()));
+      path.push(ns.shorten(binding.getItem().getProperty()));
     }
 
     if (binding.getParent() == null) {

@@ -2,7 +2,8 @@ body {
     background: #f1f1f1;
     height: 100%;
 }
-body>div.main {
+
+body > div.main {
     margin: auto;
     height: 100%;
     width: 800px;
@@ -12,6 +13,7 @@ body>div.main {
     border-right: 1px solid lightgrey;
     overflow-y: auto;
 }
+
 h1 {
     border-bottom: 2px solid darkgrey;
     color: darkgrey;

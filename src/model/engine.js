@@ -8,7 +8,6 @@ import GroupBinding from './GroupBinding';
 import ValueBinding from './ValueBinding';
 import ChoiceBinding from './ChoiceBinding';
 import {extractGist, getLocalizedMap} from '../utils';
-import {add} from 'rdfjson';
 
 const kernel = require('dojo/_base/kernel');
 

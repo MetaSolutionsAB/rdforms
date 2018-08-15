@@ -1,5 +1,4 @@
-/*global define*/
-import {expand} from 'rdfjson';
+import {namespaces as ns} from 'rdfjson';
 import {getLocalizedValue} from '../utils';
 
 var itemCount = 0;
@@ -178,7 +177,7 @@ export default class Item {
     if (source) {
       p = source.property;
       if (p != null && p !== '') {
-        p = expand(p);
+        p = ns.expand(p);
       }
     }
 
@@ -207,7 +206,7 @@ export default class Item {
     let arr = this.getSource(original).uriValueLabelProperties;
     if (arr != null) {
       return arr.map(function (uri) {
-        return expand(uri);
+        return ns.expand(uri);
       });
     }
     return arr;
@@ -229,11 +228,11 @@ export default class Item {
       Object.keys(constr).forEach(function (key) {
         const val = constr[key];
         if (Array.isArray(val)) {
-          nc[expand(key)] = val.map(function (v) {
-            return expand(v);
+          nc[ns.expand(key)] = val.map(function (v) {
+            return ns.expand(v);
           });
         } else {
-          nc[expand(key)] = expand(val);
+          nc[ns.expand(key)] = ns.expand(val);
         }
       });
       return nc;
@@ -262,7 +261,7 @@ export default class Item {
     if (deps != null) {
       return deps.map(function (d) {
         if (d !== '*' && d !== '..') {
-          return expand(d);
+          return ns.expand(d);
         }
         return d;
       });
@@ -281,7 +280,7 @@ export default class Item {
   getDatatype(original) {
     const dt = this.getSource(original).datatype;
     if (dt != null && dt != '') {
-      return expand(dt);
+      return ns.expand(dt);
     }
     return dt;
   }

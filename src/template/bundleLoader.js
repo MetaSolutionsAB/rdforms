@@ -1,39 +1,45 @@
+import {endsWith} from 'lodash-es';
+
 const isNode = require('detect-node');
-const request = require('dojo/request');
 
-let endsWith = (str, suffix) => str.indexOf(suffix, str.length - suffix.length) !== -1;
+const fetchBundle = b => fetch(b).then(r => r.json()).catch(e => console.log(`Fetching template bundle ${b} failed`, e))
 
-export default function (itemStore, bundlePaths, callback) {
+export default (itemStore, bundlePaths = [], callback = null) => {
   if (bundlePaths.length === 0) {
     callback && callback([]);
-    return;
+    return; // TODO consitent return
   }
 
-  let f = (bundlesJSON) => {
-    let bundles = bundlesJSON.map((bundle, idx) => {
+  const registerBundles = (bundlesJSON = []) => {
+    const bundles = bundlesJSON.map((bundle, idx) => {
       let path = bundlePaths[idx];
-      if (!endsWith(path, ".json")) {
-        path += ".js";
+      if (!endsWith(path, '.json')) {
+        path += '.js';
       }
-      return itemStore.registerBundle({ path, source: bundle });
+      return itemStore.registerBundle({path, source: bundle});
     });
     callback && callback(bundles);
   };
 
-  if (endsWith(bundlePaths[0], ".json")) {
+  // json in node | x
+  // json in browser | x
+  // js in node | ? import()
+  // js in browser | ? import()
+
+  if (endsWith(bundlePaths[0], '.json')) {
     if (isNode) {
-      let bps = bundlePaths.map(bp => "dojo/text!" + bp);
-      require(bps, () => {
-        let jsonArr = Array.prototype.slice.call(arguments).map(JSON.parse);
-        f(jsonArr); //Convert to regular array
-      });
+      const bundles = bundlePaths.map(b => require(b));
+      registerBundle(bundles);
     } else {
-      let promises = bundlePaths.map(bp => request.get(bp, { handleAs: 'json' }));
-      Promise.all(promises).then(f);
+      const bundlePromises = bundlePaths.map(fetchBundle);
+      Promise.all(bundlePromises).then(registerBundle);
     }
-  } else {
-    require(bundlePaths, () => {
-      f(Array.prototype.slice.call(arguments)); //Convert to regular array
-    });
   }
-}
+  // } else {
+  //   const bundlePromises = bundlePaths.map(fetchBundle);
+  //   Promise.all(bundlePromises).then(registerBundle);
+  //   // require(bundlePaths, (bundles) => {
+  //   //   registerBundle(Array.prototype.slice.call(arguments)); //Convert to regular array
+  //   // });
+  // }
+};

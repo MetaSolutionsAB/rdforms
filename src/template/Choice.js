@@ -1,5 +1,5 @@
 import Item from './Item';
-import {expand} from 'rdfjson';
+import {namespaces as ns} from 'rdfjson';
 import {getLocalizedValue} from '../utils';
 
 const sortChoices = (choices, shouldExpand) => {
@@ -7,7 +7,7 @@ const sortChoices = (choices, shouldExpand) => {
     return;
   }
   if (shouldExpand) {
-    choices.forEach(c => c.value = expand(c.value));
+    choices.forEach(c => c.value = ns.expand(c.value));
   }
   choices.sort(function (c1, c2) {
     var lab1 = getLocalizedValue(c1.label).value || c1.value;
@@ -141,7 +141,7 @@ export default class Choice extends Item {
   getOntologyUrl(original) {
     const ou = this.getSource(original).ontologyUrl;
     if (ou != null && ou !== '') {
-      return expand(ou);
+      return ns.expand(ou);
     }
     return ou;
   }
@@ -165,7 +165,7 @@ export default class Choice extends Item {
   getParentProperty(original) {
     const pp = this.getSource(original).parentProperty;
     if (pp != null && pp !== '') {
-      return expand(pp);
+      return ns.expand(pp);
     }
     return pp;
   }
@@ -183,7 +183,7 @@ export default class Choice extends Item {
   getHierarchyProperty(original) {
     const hp = this.getSource(original).hierarchyProperty;
     if (hp != null && hp !== '') {
-      return expand(hp);
+      return ns.expand(hp);
     }
     return hp;
   }

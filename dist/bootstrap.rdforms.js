@@ -274,7 +274,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			'dojo/dom-class':43,
 /******/ 			'dojo/Deferred':44,
 /******/ 			'dojo/promise/Promise':45,
-/******/ 			// !../../../style-loader/lib/addStyles.js = 46
+/******/ 			// !../../style-loader/lib/addStyles.js = 46
 /******/ 			// ./_getAllKeys.js = 47
 /******/ 			'dojo/global':48,
 /******/ 			'dojo/date/stamp':49,
@@ -351,7 +351,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			// ../../js/scrollspy.js = 119
 /******/ 			// ../../js/tab.js = 120
 /******/ 			// ../../js/affix.js = 121
-/******/ 			// ../bootstrap/components = 122
+/******/ 			// ./components = 122
 /******/ 			// ./Registry = 123
 /******/ 			// ./auto = 124
 /******/ 			// ./labels = 125
@@ -398,7 +398,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			// ./CardinalityTracker = 165
 /******/ 			// ./table = 166
 /******/ 			// ./../webpack/buildin/module.js = 167
-/******/ 			// ../bootstrap/DateTimeBase = 168
+/******/ 			// ./DateTimeBase = 168
 /******/ 			// ./urls = 169
 /******/ 			// font-awesome/css/font-awesome.css = 170
 /******/ 			// !!../../css-loader/index.js!./font-awesome.css = 171
@@ -427,7 +427,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			'dijit/hccss':194,
 /******/ 			'dojo/hccss':195,
 /******/ 			// ../model/validate = 196
-/******/ 			// /var/folders/vg/7w5l0f7x4zvfxcmnxglyd84w0000gn/T/tmp-4651OMCSLIbmQlSo/dojo/dojo.js = 197
+/******/ 			// /var/folders/vg/7w5l0f7x4zvfxcmnxglyd84w0000gn/T/tmp-51191E1n2sTo4pGE/dojo/dojo.js = 197
 /******/ 			// undefined = 198
 /******/ 			// undefined = 199
 /******/ 			'select2/src/js/select2/data/select':200,
@@ -27176,6 +27176,10 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
@@ -27362,7 +27366,7 @@ function (_Binding) {
 
       this._parent.removeChildBinding(this);
 
-      this.inherited(arguments);
+      _get(_getPrototypeOf(ValueBinding.prototype), "remove", this).call(this, arguments);
     }
   }, {
     key: "updateAssertions",
@@ -27412,6 +27416,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
@@ -27626,7 +27634,7 @@ function (_Binding) {
         this._parent.removeChildBinding(this);
       }
 
-      this.inherited(arguments);
+      _get(_getPrototypeOf(GroupBinding.prototype), "remove", this).call(this, arguments);
     }
   }, {
     key: "isValid",

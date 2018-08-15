@@ -273,7 +273,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			'dojo/dom-class':43,
 /******/ 			'dojo/Deferred':44,
 /******/ 			'dojo/promise/Promise':45,
-/******/ 			// !../../../style-loader/lib/addStyles.js = 46
+/******/ 			// !../../style-loader/lib/addStyles.js = 46
 /******/ 			// ./_getAllKeys.js = 47
 /******/ 			'dojo/global':48,
 /******/ 			'dojo/date/stamp':49,
@@ -348,7 +348,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			// ../../js/scrollspy.js = 119
 /******/ 			// ../../js/tab.js = 120
 /******/ 			// ../../js/affix.js = 121
-/******/ 			// ../bootstrap/components = 122
+/******/ 			// ./components = 122
 /******/ 			// ./Registry = 123
 /******/ 			// ./auto = 124
 /******/ 			// ./labels = 125
@@ -395,7 +395,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			// ./CardinalityTracker = 165
 /******/ 			// ./table = 166
 /******/ 			// ./../webpack/buildin/module.js = 167
-/******/ 			// ../bootstrap/DateTimeBase = 168
+/******/ 			// ./DateTimeBase = 168
 /******/ 			// ./urls = 169
 /******/ 			// font-awesome/css/font-awesome.css = 170
 /******/ 			// !!../../css-loader/index.js!./font-awesome.css = 171
@@ -424,29 +424,28 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			'dijit/hccss':194,
 /******/ 			'dojo/hccss':195,
 /******/ 			// ../model/validate = 196
-/******/ 			// /var/folders/vg/7w5l0f7x4zvfxcmnxglyd84w0000gn/T/tmp-4651OMCSLIbmQlSo/dojo/dojo.js = 197
+/******/ 			// /var/folders/vg/7w5l0f7x4zvfxcmnxglyd84w0000gn/T/tmp-51191E1n2sTo4pGE/dojo/dojo.js = 197
 /******/ 			// undefined = 198
 /******/ 			// undefined = 199
 /******/ 			'index.bmd.js':255,
 /******/ 			// ./src/view/bmd/all = 256
-/******/ 			// arrive/src/arrive = 257
-/******/ 			// bootstrap-material-design/dist/js/material = 258
-/******/ 			// bootstrap-material-design/dist/js/ripples = 259
-/******/ 			// ./DateTimeMD = 260
-/******/ 			// bootstrap-material-datetimepicker = 261
-/******/ 			// ./DateTimeMDTemplate.html = 262
-/******/ 			// ./Selectize = 263
-/******/ 			// selectize = 264
-/******/ 			'sifter':265,
-/******/ 			'microplugin':266
-/******/ 			// bootstrap-material-design/dist/css/bootstrap-material-design.css = 267
-/******/ 			// !!../../../css-loader/index.js!./bootstrap-material-design.css = 268
-/******/ 			// bootstrap-material-design/dist/css/ripples.css = 269
-/******/ 			// !!../../../css-loader/index.js!./ripples.css = 270
-/******/ 			// bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css = 271
-/******/ 			// !!../../css-loader/index.js!./bootstrap-material-datetimepicker.css = 272
-/******/ 			// ./style.css = 273
-/******/ 			// !!../../../node_modules/css-loader/index.js!./style.css = 274
+/******/ 			// bootstrap-material-design/dist/js/material = 257
+/******/ 			// bootstrap-material-design/dist/js/ripples = 258
+/******/ 			// ./DateTimeMD = 259
+/******/ 			// bootstrap-material-datetimepicker = 260
+/******/ 			// ./DateTimeMDTemplate.html = 261
+/******/ 			// ./Selectize = 262
+/******/ 			// selectize = 263
+/******/ 			'sifter':264,
+/******/ 			'microplugin':265
+/******/ 			// bootstrap-material-design/dist/css/bootstrap-material-design.css = 266
+/******/ 			// !!../../../css-loader/index.js!./bootstrap-material-design.css = 267
+/******/ 			// bootstrap-material-design/dist/css/ripples.css = 268
+/******/ 			// !!../../../css-loader/index.js!./ripples.css = 269
+/******/ 			// bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css = 270
+/******/ 			// !!../../css-loader/index.js!./bootstrap-material-datetimepicker.css = 271
+/******/ 			// ./style.css = 272
+/******/ 			// !!../../../node_modules/css-loader/index.js!./style.css = 273
 /******/ 		});
 /******/
 /******/ 		globalObj.require = req;
@@ -26795,6 +26794,10 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
@@ -26981,7 +26984,7 @@ function (_Binding) {
 
       this._parent.removeChildBinding(this);
 
-      this.inherited(arguments);
+      _get(_getPrototypeOf(ValueBinding.prototype), "remove", this).call(this, arguments);
     }
   }, {
     key: "updateAssertions",
@@ -27031,6 +27034,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
@@ -27245,7 +27252,7 @@ function (_Binding) {
         this._parent.removeChildBinding(this);
       }
 
-      this.inherited(arguments);
+      _get(_getPrototypeOf(GroupBinding.prototype), "remove", this).call(this, arguments);
     }
   }, {
     key: "isValid",
@@ -52652,19 +52659,17 @@ __webpack_require__(258);
 
 __webpack_require__(259);
 
-__webpack_require__(260);
+__webpack_require__(262);
 
-__webpack_require__(263);
+__webpack_require__(266);
 
-__webpack_require__(267);
+__webpack_require__(268);
 
-__webpack_require__(269);
-
-__webpack_require__(271);
+__webpack_require__(270);
 
 __webpack_require__(170);
 
-__webpack_require__(273);
+__webpack_require__(272);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52702,480 +52707,12 @@ _renderingContext.default.postEditorRenderer = function (fieldDiv, binding, cont
 /* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(jQuery) {/*globals jQuery,Window,HTMLElement,HTMLDocument,HTMLCollection,NodeList,MutationObserver */
-/*exported Arrive*/
-/*jshint latedef:false */
-
-/*
- * arrive.js
- * v2.4.1
- * https://github.com/uzairfarooq/arrive
- * MIT licensed
- *
- * Copyright (c) 2014-2017 Uzair Farooq
- */
-var Arrive = (function(window, $, undefined) {
-
-  "use strict";
-
-  if(!window.MutationObserver || typeof HTMLElement === 'undefined'){
-    return; //for unsupported browsers
-  }
-
-  var arriveUniqueId = 0;
-
-  var utils = (function() {
-    var matches = HTMLElement.prototype.matches || HTMLElement.prototype.webkitMatchesSelector || HTMLElement.prototype.mozMatchesSelector
-                  || HTMLElement.prototype.msMatchesSelector;
-
-    return {
-      matchesSelector: function(elem, selector) {
-        return elem instanceof HTMLElement && matches.call(elem, selector);
-      },
-      // to enable function overloading - By John Resig (MIT Licensed)
-      addMethod: function (object, name, fn) {
-        var old = object[ name ];
-        object[ name ] = function(){
-          if ( fn.length == arguments.length ) {
-            return fn.apply( this, arguments );
-          }
-          else if ( typeof old == 'function' ) {
-            return old.apply( this, arguments );
-          }
-        };
-      },
-      callCallbacks: function(callbacksToBeCalled, registrationData) {
-        if (registrationData && registrationData.options.onceOnly && registrationData.firedElems.length == 1) {
-          // as onlyOnce param is true, make sure we fire the event for only one item
-          callbacksToBeCalled = [callbacksToBeCalled[0]];
-        }
-
-        for (var i = 0, cb; (cb = callbacksToBeCalled[i]); i++) {
-          if (cb && cb.callback) {
-            cb.callback.call(cb.elem, cb.elem);
-          }
-        }
-
-        if (registrationData && registrationData.options.onceOnly && registrationData.firedElems.length == 1) {
-          // unbind event after first callback as onceOnly is true.
-          registrationData.me.unbindEventWithSelectorAndCallback.call(
-            registrationData.target, registrationData.selector, registrationData.callback);
-        }
-      },
-      // traverse through all descendants of a node to check if event should be fired for any descendant
-      checkChildNodesRecursively: function(nodes, registrationData, matchFunc, callbacksToBeCalled) {
-        // check each new node if it matches the selector
-        for (var i=0, node; (node = nodes[i]); i++) {
-          if (matchFunc(node, registrationData, callbacksToBeCalled)) {
-            callbacksToBeCalled.push({ callback: registrationData.callback, elem: node });
-          }
-
-          if (node.childNodes.length > 0) {
-            utils.checkChildNodesRecursively(node.childNodes, registrationData, matchFunc, callbacksToBeCalled);
-          }
-        }
-      },
-      mergeArrays: function(firstArr, secondArr){
-        // Overwrites default options with user-defined options.
-        var options = {},
-            attrName;
-        for (attrName in firstArr) {
-          if (firstArr.hasOwnProperty(attrName)) {
-            options[attrName] = firstArr[attrName];
-          }
-        }
-        for (attrName in secondArr) {
-          if (secondArr.hasOwnProperty(attrName)) {
-            options[attrName] = secondArr[attrName];
-          }
-        }
-        return options;
-      },
-      toElementsArray: function (elements) {
-        // check if object is an array (or array like object)
-        // Note: window object has .length property but it's not array of elements so don't consider it an array
-        if (typeof elements !== "undefined" && (typeof elements.length !== "number" || elements === window)) {
-          elements = [elements];
-        }
-        return elements;
-      }
-    };
-  })();
-
-
-  // Class to maintain state of all registered events of a single type
-  var EventsBucket = (function() {
-    var EventsBucket = function() {
-      // holds all the events
-
-      this._eventsBucket    = [];
-      // function to be called while adding an event, the function should do the event initialization/registration
-      this._beforeAdding    = null;
-      // function to be called while removing an event, the function should do the event destruction
-      this._beforeRemoving  = null;
-    };
-
-    EventsBucket.prototype.addEvent = function(target, selector, options, callback) {
-      var newEvent = {
-        target:             target,
-        selector:           selector,
-        options:            options,
-        callback:           callback,
-        firedElems:         []
-      };
-
-      if (this._beforeAdding) {
-        this._beforeAdding(newEvent);
-      }
-
-      this._eventsBucket.push(newEvent);
-      return newEvent;
-    };
-
-    EventsBucket.prototype.removeEvent = function(compareFunction) {
-      for (var i=this._eventsBucket.length - 1, registeredEvent; (registeredEvent = this._eventsBucket[i]); i--) {
-        if (compareFunction(registeredEvent)) {
-          if (this._beforeRemoving) {
-              this._beforeRemoving(registeredEvent);
-          }
-
-          // mark callback as null so that even if an event mutation was already triggered it does not call callback
-          var removedEvents = this._eventsBucket.splice(i, 1);
-          if (removedEvents && removedEvents.length) {
-            removedEvents[0].callback = null;
-          }
-        }
-      }
-    };
-
-    EventsBucket.prototype.beforeAdding = function(beforeAdding) {
-      this._beforeAdding = beforeAdding;
-    };
-
-    EventsBucket.prototype.beforeRemoving = function(beforeRemoving) {
-      this._beforeRemoving = beforeRemoving;
-    };
-
-    return EventsBucket;
-  })();
-
-
-  /**
-   * @constructor
-   * General class for binding/unbinding arrive and leave events
-   */
-  var MutationEvents = function(getObserverConfig, onMutation) {
-    var eventsBucket    = new EventsBucket(),
-        me              = this;
-
-    var defaultOptions = {
-      fireOnAttributesModification: false
-    };
-
-    // actual event registration before adding it to bucket
-    eventsBucket.beforeAdding(function(registrationData) {
-      var
-        target    = registrationData.target,
-        observer;
-
-      // mutation observer does not work on window or document
-      if (target === window.document || target === window) {
-        target = document.getElementsByTagName("html")[0];
-      }
-
-      // Create an observer instance
-      observer = new MutationObserver(function(e) {
-        onMutation.call(this, e, registrationData);
-      });
-
-      var config = getObserverConfig(registrationData.options);
-
-      observer.observe(target, config);
-
-      registrationData.observer = observer;
-      registrationData.me = me;
-    });
-
-    // cleanup/unregister before removing an event
-    eventsBucket.beforeRemoving(function (eventData) {
-      eventData.observer.disconnect();
-    });
-
-    this.bindEvent = function(selector, options, callback) {
-      options = utils.mergeArrays(defaultOptions, options);
-
-      var elements = utils.toElementsArray(this);
-
-      for (var i = 0; i < elements.length; i++) {
-        eventsBucket.addEvent(elements[i], selector, options, callback);
-      }
-    };
-
-    this.unbindEvent = function() {
-      var elements = utils.toElementsArray(this);
-      eventsBucket.removeEvent(function(eventObj) {
-        for (var i = 0; i < elements.length; i++) {
-          if (this === undefined || eventObj.target === elements[i]) {
-            return true;
-          }
-        }
-        return false;
-      });
-    };
-
-    this.unbindEventWithSelectorOrCallback = function(selector) {
-      var elements = utils.toElementsArray(this),
-          callback = selector,
-          compareFunction;
-
-      if (typeof selector === "function") {
-        compareFunction = function(eventObj) {
-          for (var i = 0; i < elements.length; i++) {
-            if ((this === undefined || eventObj.target === elements[i]) && eventObj.callback === callback) {
-              return true;
-            }
-          }
-          return false;
-        };
-      }
-      else {
-        compareFunction = function(eventObj) {
-          for (var i = 0; i < elements.length; i++) {
-            if ((this === undefined || eventObj.target === elements[i]) && eventObj.selector === selector) {
-              return true;
-            }
-          }
-          return false;
-        };
-      }
-      eventsBucket.removeEvent(compareFunction);
-    };
-
-    this.unbindEventWithSelectorAndCallback = function(selector, callback) {
-      var elements = utils.toElementsArray(this);
-      eventsBucket.removeEvent(function(eventObj) {
-          for (var i = 0; i < elements.length; i++) {
-            if ((this === undefined || eventObj.target === elements[i]) && eventObj.selector === selector && eventObj.callback === callback) {
-              return true;
-            }
-          }
-          return false;
-      });
-    };
-
-    return this;
-  };
-
-
-  /**
-   * @constructor
-   * Processes 'arrive' events
-   */
-  var ArriveEvents = function() {
-    // Default options for 'arrive' event
-    var arriveDefaultOptions = {
-      fireOnAttributesModification: false,
-      onceOnly: false,
-      existing: false
-    };
-
-    function getArriveObserverConfig(options) {
-      var config = {
-        attributes: false,
-        childList: true,
-        subtree: true
-      };
-
-      if (options.fireOnAttributesModification) {
-        config.attributes = true;
-      }
-
-      return config;
-    }
-
-    function onArriveMutation(mutations, registrationData) {
-      mutations.forEach(function( mutation ) {
-        var newNodes    = mutation.addedNodes,
-            targetNode = mutation.target,
-            callbacksToBeCalled = [],
-            node;
-
-        // If new nodes are added
-        if( newNodes !== null && newNodes.length > 0 ) {
-          utils.checkChildNodesRecursively(newNodes, registrationData, nodeMatchFunc, callbacksToBeCalled);
-        }
-        else if (mutation.type === "attributes") {
-          if (nodeMatchFunc(targetNode, registrationData, callbacksToBeCalled)) {
-            callbacksToBeCalled.push({ callback: registrationData.callback, elem: targetNode });
-          }
-        }
-
-        utils.callCallbacks(callbacksToBeCalled, registrationData);
-      });
-    }
-
-    function nodeMatchFunc(node, registrationData, callbacksToBeCalled) {
-      // check a single node to see if it matches the selector
-      if (utils.matchesSelector(node, registrationData.selector)) {
-        if(node._id === undefined) {
-          node._id = arriveUniqueId++;
-        }
-        // make sure the arrive event is not already fired for the element
-        if (registrationData.firedElems.indexOf(node._id) == -1) {
-          registrationData.firedElems.push(node._id);
-
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    arriveEvents = new MutationEvents(getArriveObserverConfig, onArriveMutation);
-
-    var mutationBindEvent = arriveEvents.bindEvent;
-
-    // override bindEvent function
-    arriveEvents.bindEvent = function(selector, options, callback) {
-
-      if (typeof callback === "undefined") {
-        callback = options;
-        options = arriveDefaultOptions;
-      } else {
-        options = utils.mergeArrays(arriveDefaultOptions, options);
-      }
-
-      var elements = utils.toElementsArray(this);
-
-      if (options.existing) {
-        var existing = [];
-
-        for (var i = 0; i < elements.length; i++) {
-          var nodes = elements[i].querySelectorAll(selector);
-          for (var j = 0; j < nodes.length; j++) {
-            existing.push({ callback: callback, elem: nodes[j] });
-          }
-        }
-
-        // no need to bind event if the callback has to be fired only once and we have already found the element
-        if (options.onceOnly && existing.length) {
-          return callback.call(existing[0].elem, existing[0].elem);
-        }
-
-        setTimeout(utils.callCallbacks, 1, existing);
-      }
-
-      mutationBindEvent.call(this, selector, options, callback);
-    };
-
-    return arriveEvents;
-  };
-
-
-  /**
-   * @constructor
-   * Processes 'leave' events
-   */
-  var LeaveEvents = function() {
-    // Default options for 'leave' event
-    var leaveDefaultOptions = {};
-
-    function getLeaveObserverConfig() {
-      var config = {
-        childList: true,
-        subtree: true
-      };
-
-      return config;
-    }
-
-    function onLeaveMutation(mutations, registrationData) {
-      mutations.forEach(function( mutation ) {
-        var removedNodes  = mutation.removedNodes,
-            callbacksToBeCalled = [];
-
-        if( removedNodes !== null && removedNodes.length > 0 ) {
-          utils.checkChildNodesRecursively(removedNodes, registrationData, nodeMatchFunc, callbacksToBeCalled);
-        }
-
-        utils.callCallbacks(callbacksToBeCalled, registrationData);
-      });
-    }
-
-    function nodeMatchFunc(node, registrationData) {
-      return utils.matchesSelector(node, registrationData.selector);
-    }
-
-    leaveEvents = new MutationEvents(getLeaveObserverConfig, onLeaveMutation);
-
-    var mutationBindEvent = leaveEvents.bindEvent;
-
-    // override bindEvent function
-    leaveEvents.bindEvent = function(selector, options, callback) {
-
-      if (typeof callback === "undefined") {
-        callback = options;
-        options = leaveDefaultOptions;
-      } else {
-        options = utils.mergeArrays(leaveDefaultOptions, options);
-      }
-
-      mutationBindEvent.call(this, selector, options, callback);
-    };
-
-    return leaveEvents;
-  };
-
-
-  var arriveEvents = new ArriveEvents(),
-      leaveEvents  = new LeaveEvents();
-
-  function exposeUnbindApi(eventObj, exposeTo, funcName) {
-    // expose unbind function with function overriding
-    utils.addMethod(exposeTo, funcName, eventObj.unbindEvent);
-    utils.addMethod(exposeTo, funcName, eventObj.unbindEventWithSelectorOrCallback);
-    utils.addMethod(exposeTo, funcName, eventObj.unbindEventWithSelectorAndCallback);
-  }
-
-  /*** expose APIs ***/
-  function exposeApi(exposeTo) {
-    exposeTo.arrive = arriveEvents.bindEvent;
-    exposeUnbindApi(arriveEvents, exposeTo, "unbindArrive");
-
-    exposeTo.leave = leaveEvents.bindEvent;
-    exposeUnbindApi(leaveEvents, exposeTo, "unbindLeave");
-  }
-
-  if ($) {
-    exposeApi($.fn);
-  }
-  exposeApi(HTMLElement.prototype);
-  exposeApi(NodeList.prototype);
-  exposeApi(HTMLCollection.prototype);
-  exposeApi(HTMLDocument.prototype);
-  exposeApi(Window.prototype);
-
-  var Arrive = {};
-  // expose functions to unbind all arrive/leave events
-  exposeUnbindApi(arriveEvents, Arrive, "unbindAllArrive");
-  exposeUnbindApi(leaveEvents, Arrive, "unbindAllLeave");
-
-  return Arrive;
-
-})(window, typeof jQuery === 'undefined' ? null : jQuery, undefined);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(3)))
-
-/***/ }),
-/* 258 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* Start AMD wrapper function */
 !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(3)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(jQuery) {
 
   /* globals jQuery */
 
 (function ($) {
-  console.log(document.arrive);
   // Selector to select only not already processed elements
   $.expr[":"].notmdproc = function (obj) {
     if ($(obj).data("mdproc")) {
@@ -53493,7 +53030,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* Start AMD wra
         this.attachAutofillEventHandlers();
       }
 
-      console.log(document.arrive);
       if (document.arrive && this.options.arrive) {
         if ($.fn.ripples && this.options.ripples) {
           $document.arrive(this.options.withRipples, function () {
@@ -53532,7 +53068,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* Start AMD wra
 
 
 /***/ }),
-/* 259 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* Start AMD wrapper function */
@@ -53868,16 +53404,16 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* Start AMD wra
 
 
 /***/ }),
-/* 260 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jquery) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _moment = _interopRequireDefault(__webpack_require__(103));
 
-var _bootstrapMaterialDatetimepicker = _interopRequireDefault(__webpack_require__(261));
+var _bootstrapMaterialDatetimepicker = _interopRequireDefault(__webpack_require__(260));
 
 var _DateTimeBase = _interopRequireDefault(__webpack_require__(168));
 
-var _DateTimeMDTemplate = _interopRequireDefault(__webpack_require__(262));
+var _DateTimeMDTemplate = _interopRequireDefault(__webpack_require__(261));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53972,7 +53508,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* WEBPACK VAR INJECTION */}.call(this, require("jquery")))
 
 /***/ }),
-/* 261 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* Start AMD wrapper function */
@@ -55286,16 +54822,16 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* Start AMD wra
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 /***/ }),
-/* 262 */
+/* 261 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"rdformsDateValue rdformsFieldInput\" xmlns=\"http://www.w3.org/1999/html\">\n    <div class=\"rdformsDatepicker form-group input\" style=\"padding-right: 15px;\">\n        <input class=\"form-control dateControl dateInput\" type=\"text\" data-dojo-attach-point=\"cal\" placeholder=\"2017-01-01\" />\n        <span >\n            <button type=\"button\" class=\"btn btn-fab btn-fab-mini\" data-dojo-attach-point=\"dateButton\"><span class=\"fa fa-calendar\"></span>\n                <div class=\"ripple-container\"></div></button>\n        </span>\n    </div>\n    <div class=\"form-group input\" style=\"display:none;\">\n        <input type=\"text\" class=\"form-control timeInput\" placeholder=\"23:59\" data-dojo-attach-point=\"timeInput\"/>\n        <span>\n            <button type=\"button\" class=\"btn btn-fab btn-fab-mini\" data-dojo-attach-point=\"timeButton\"><span class=\"fa fa-clock-o\"></span></button>\n        </span>\n    </div>\n    <div class=\"form-group input\" style=\"display:none;\">\n        <input type=\"text\" class=\"form-control yearInput\" placeholder=\"1999\" data-dojo-attach-point=\"yearInput\"/>\n    </div>\n\n    <select class=\"form-control dateControl\" data-dojo-attach-point=\"dateControl\">\n        <option value=\"Year\">${messages.date_year}</option>\n        <option value=\"Date\" selected=\"true\">${messages.date_date}</option>\n        <option value=\"DateTime\">${messages.date_date_and_time}</option>\n    </select>\n</div>"
 
 /***/ }),
-/* 263 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(jquery) {__webpack_require__(264);
+/* WEBPACK VAR INJECTION */(function(jquery) {__webpack_require__(263);
 
 var _renderingContext = _interopRequireDefault(__webpack_require__(14));
 
@@ -55382,7 +54918,7 @@ _renderingContext.default.renderSelect = function (fieldDiv, binding, context) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(3)))
 
 /***/ }),
-/* 264 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -55406,7 +54942,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 (function(root, factory) {
 	if (true) {
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(3),__webpack_require__(265),__webpack_require__(266)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(3),__webpack_require__(264),__webpack_require__(265)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(null, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -58641,7 +58177,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 }));
 
 /***/ }),
-/* 265 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -59146,7 +58682,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(3)))
 
 /***/ }),
-/* 266 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -59286,11 +58822,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 }));
 
 /***/ }),
-/* 267 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(268);
+var content = __webpack_require__(267);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -59311,7 +58847,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 268 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(31)(false);
@@ -59325,11 +58861,11 @@ exports.push([module.i, "/*\n\nTo get this list of colors inject jQuery at http:
 
 
 /***/ }),
-/* 269 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(270);
+var content = __webpack_require__(269);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -59350,7 +58886,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 270 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(31)(false);
@@ -59364,11 +58900,11 @@ exports.push([module.i, ".withripple {\n  position: relative;\n}\n.ripple-contai
 
 
 /***/ }),
-/* 271 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(272);
+var content = __webpack_require__(271);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -59389,7 +58925,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 272 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(31)(false);
@@ -59403,11 +58939,11 @@ exports.push([module.i, ".dtp { position: fixed; top: 0; left: 0; right: 0; bott
 
 
 /***/ }),
-/* 273 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(274);
+var content = __webpack_require__(273);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -59428,7 +58964,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 274 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(31)(false);

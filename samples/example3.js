@@ -1,10 +1,10 @@
 // rdfjson and rdforms are exposed as global variables in this example
 import rdfGraph from './rdf.mjs';
 
-var graph = new rdforms.Graph(rdfGraph); // rdfjson
-var itemStore = new rdforms.ItemStore();
+const graph = new rdfjson.Graph(rdfGraph);
+const itemStore = new rdforms.ItemStore();
 
-rdforms.bundleLoader(itemStore, ['./templateBundle.js'], () => {
+rdforms.bundleLoader(itemStore, ['./templateBundle.json'], () => {
   new rdforms.Editor({
     graph,
     resource: 'http://example.org/about',

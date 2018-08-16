@@ -1,4 +1,4 @@
-const graph = new rdforms.Graph({
+const graph = new rdfjson.Graph({
   'http://example.org/about': {
     'http://example.com/terms/colorOfHouse': [
       {

@@ -21,18 +21,13 @@ export default (itemStore, bundlePaths = [], callback = null) => {
     callback && callback(bundles);
   };
 
-  // json in node | x
-  // json in browser | x
-  // js in node | ? import()
-  // js in browser | ? import()
-
   if (endsWith(bundlePaths[0], '.json')) {
     if (isNode) {
       const bundles = bundlePaths.map(b => require(b));
-      registerBundle(bundles);
+      registerBundles(bundles);
     } else {
       const bundlePromises = bundlePaths.map(fetchBundle);
-      Promise.all(bundlePromises).then(registerBundle);
+      Promise.all(bundlePromises).then(registerBundles);
     }
   }
   // } else {

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import {locale} from 'di18n';
+import i18n from 'esi18n';
 import template from './DateTimeFueluxTemplate.html';
 import 'fuelux/js/datepicker';
 import DateTimeBase from './DateTimeBase';
@@ -36,7 +36,7 @@ define([
         allowPastDates: true,
         date: null,
         momentConfig: {
-          culture: 'en',//locale.getCurrentMomentLocale(),
+          culture: i18n.getLocale(),//locale.getCurrentMomentLocale(),
           format: 'L',
         },
       });

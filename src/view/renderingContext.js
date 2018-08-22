@@ -1,8 +1,9 @@
 import Registry from './Registry';
 import system from '../model/system';
 
-const i18n = require('di18n').default.i18n;
-const locale = require('di18n').default.locale;
+import i18n from 'esi18n';
+import nlsRdforms from 'src/view/nls/rdforms.nls';
+console.log(nlsRdforms);
 
 system.getChoice = function (item, value) {
   const chooser = renderingContext.chooserRegistry.getComponent(item);
@@ -128,7 +129,8 @@ const renderingContext = {
     if (messages) {
       callback(messages);
     } else {
-      return i18n.getLocalization('./view', 'rdforms', null, callback);
+      const newMessages = i18n.getLocalization(nlsRdforms);
+      callback(newMessages);
     }
   },
   /**
@@ -222,7 +224,7 @@ const renderingContext = {
   },
 
   getDefaultLanguage() {
-    return locale.get();
+    return i18n.getLocale();
   },
 
   setPopoverContainer(container) {

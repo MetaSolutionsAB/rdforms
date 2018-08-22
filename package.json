@@ -10,7 +10,7 @@
     "bootstrap-material-datetimepicker": "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#amd",
     "bootstrap-material-design": "https://bitbucket.org/metasolutions/bootstrap-material-design.git#amd",
     "detect-node": "^2.0.3",
-    "di18n": "https://bitbucket.org/metasolutions/di18n#webpack",
+    "esi18n": "https://bitbucket.org/metasolutions/esi18n#develop",
     "dijit": "^1.13.0",
     "dojo": "^1.13.0",
     "dojo-util": "^1.13.0",

@@ -35,6 +35,14 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.nls$/,
+        use: [
+          {
+            loader: 'nls-loader',
+          }
+        ]
+      },
+      {
         test: /\.js$/,
         use: {
           loader: 'babel-loader',
@@ -69,7 +77,6 @@ module.exports = {
   resolve: {
     alias: {
       jquery: path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
-      di18n: path.resolve(path.join(__dirname, 'node_modules', 'di18n')),
       moment: path.resolve(path.join(__dirname, 'node_modules', 'moment')),
       bmd: path.resolve(path.join(__dirname, 'node_modules', 'bootstrap-material-design')),
     }

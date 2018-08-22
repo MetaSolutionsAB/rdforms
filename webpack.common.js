@@ -70,9 +70,6 @@ module.exports = {
     process: false,
     global: false
   },
-  stats: {
-    
-  }
   resolve: {
     alias: {
       jquery: path.resolve(path.join(__dirname, 'node_modules', 'jquery')),

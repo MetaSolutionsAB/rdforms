@@ -1,0 +1,17 @@
+Build started: Mon Aug 20 2018 15:00:36 GMT+0200 (Central European Summer Time)
+Build application version: 1.13.0 (5d624ec)
+Messages:
+info(107) Package Version:
+	package: dojo; version: 1.13.0
+	package: util; version: 1.13.0
+warn(209) Missing or empty package.json.
+	filename: /Users/valentino/Projects/metasolutions/dev/entryscape/rdforms/node_modules/dojo-util/build/package.json
+warn(226) A package without a profile could throw errors or warnings.
+	package: dojo-util
+Layer Contents:
+
+
+Process finished normally
+	errors: 0
+	warnings: 2
+	build time: 0.047 seconds

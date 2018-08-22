@@ -15,14 +15,9 @@ module.exports = {
     libraryTarget: "umd"
   },
   plugins: [
+    // For plugins registered after the DojoAMDPlugin, data.request has been normalized and
+    // resolved to an absMid and loader-config maps and aliases have been applied
     new CleanWebpackPlugin(),
-    new DojoWebpackPlugin({
-      loaderConfig: require("./config/dojoConfig"),
-      locales: ["en"],
-      environment: {dojoRoot: "dist"},	// used at run time for non-packed resources (e.g.
-      // blank.gif)
-      buildEnvironment: {dojoRoot: "node_modules"}, // used at build time
-    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -31,11 +26,20 @@ module.exports = {
       Popper: ['popper.js', 'default'],
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new DojoWebpackPlugin({
+      loaderConfig: require("./config/dojoConfig"),
+      locales: ["en"],
+      environment: {dojoRoot: "dist"},	// used at run time for non-packed resources (e.g.
+      // blank.gif)
+      buildEnvironment: {dojoRoot: "node_modules"}, // used at build time
+      loader: path.join(__dirname, "./dist/dojo/dojo.js"),
+    }),
   ],
   module: {
     rules: [
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
         }
@@ -66,6 +70,9 @@ module.exports = {
     process: false,
     global: false
   },
+  stats: {
+    
+  }
   resolve: {
     alias: {
       jquery: path.resolve(path.join(__dirname, 'node_modules', 'jquery')),

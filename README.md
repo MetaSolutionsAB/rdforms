@@ -9,12 +9,10 @@ been deployed into an environment.
 Before you can use RDForms you need to make sure all the dependencies are loaded:
 
     $ cd path_to_rdforms
-    $ git submodule init
-    $ git submodule update
-    $ npm   install
-    $ grunt build
+    $ yarn
+    $ yarn build
 
-This requires that you have [nodejs](http://nodejs.org/) and [npm](https://www.npmjs.org/).
+This requires that you have [nodejs](http://nodejs.org/), [npm](https://www.npmjs.org/) and [yarn](https://yarnpkg.com/) already available in your system.
 
 # Development
 

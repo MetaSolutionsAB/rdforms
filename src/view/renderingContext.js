@@ -3,7 +3,6 @@ import system from '../model/system';
 
 import i18n from 'esi18n';
 import nlsRdforms from 'src/view/nls/rdforms.nls';
-console.log(nlsRdforms);
 
 system.getChoice = function (item, value) {
   const chooser = renderingContext.chooserRegistry.getComponent(item);

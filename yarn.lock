@@ -3324,13 +3324,6 @@ detect-node@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.3.tgz#a2033c09cc8e158d37748fbde7507832bd6ce127"
 
-"di18n@https://bitbucket.org/metasolutions/di18n#webpack":
-  version "1.0.0"
-  resolved "https://bitbucket.org/metasolutions/di18n#3aa5df4d1020f6d6903d59c80f1dcc049112b5d9"
-  dependencies:
-    lodash "^4.17.10"
-    webpack "^4.16.3"
-
 diff@^3.3.1, diff@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.5.0.tgz#800c0dd1e0a8bfbc95835c202ad220fe317e5a12"
@@ -3674,6 +3667,13 @@ escope@^3.6.0:
     es6-weak-map "^2.0.1"
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
+
+"esi18n@https://bitbucket.org/metasolutions/esi18n#develop":
+  version "1.0.0"
+  resolved "https://bitbucket.org/metasolutions/esi18n#556a91a50f8399ecc26b0cea775bda6539f1fffa"
+  dependencies:
+    lodash "^4.17.10"
+    moment "^2.22.2"
 
 eslint-config-airbnb-base@^11.1.1:
   version "11.3.2"
@@ -6202,6 +6202,12 @@ next-tick@1:
 nice-try@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.4.tgz#d93962f6c52f2c1558c0fbda6d512819f1efe1c4"
+
+"nls-loader@https://bitbucket.org/metasolutions/nls-loader#master":
+  version "1.0.0"
+  resolved "https://bitbucket.org/metasolutions/nls-loader#f6b3c6e0180e32661e34396e564bbb7375dba6ac"
+  dependencies:
+    loader-utils "^1.1.0"
 
 no-case@^2.2.0:
   version "2.3.2"
@@ -9299,36 +9305,6 @@ webpack-sources@^1.0.1, webpack-sources@^1.1.0:
   dependencies:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
-
-webpack@^4.16.3:
-  version "4.16.3"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.16.3.tgz#861be3176d81e7e3d71c66c8acc9bba35588b525"
-  dependencies:
-    "@webassemblyjs/ast" "1.5.13"
-    "@webassemblyjs/helper-module-context" "1.5.13"
-    "@webassemblyjs/wasm-edit" "1.5.13"
-    "@webassemblyjs/wasm-opt" "1.5.13"
-    "@webassemblyjs/wasm-parser" "1.5.13"
-    acorn "^5.6.2"
-    acorn-dynamic-import "^3.0.0"
-    ajv "^6.1.0"
-    ajv-keywords "^3.1.0"
-    chrome-trace-event "^1.0.0"
-    enhanced-resolve "^4.1.0"
-    eslint-scope "^4.0.0"
-    json-parse-better-errors "^1.0.2"
-    loader-runner "^2.3.0"
-    loader-utils "^1.1.0"
-    memory-fs "~0.4.1"
-    micromatch "^3.1.8"
-    mkdirp "~0.5.0"
-    neo-async "^2.5.0"
-    node-libs-browser "^2.0.0"
-    schema-utils "^0.4.4"
-    tapable "^1.0.0"
-    uglifyjs-webpack-plugin "^1.2.4"
-    watchpack "^1.5.0"
-    webpack-sources "^1.0.1"
 
 webpack@^4.16.5:
   version "4.16.5"

@@ -11,6 +11,7 @@
     "bootstrap-material-design": "https://bitbucket.org/metasolutions/bootstrap-material-design.git#amd",
     "detect-node": "^2.0.3",
     "esi18n": "https://bitbucket.org/metasolutions/esi18n#develop",
+    "nls-loader": "https://bitbucket.org/metasolutions/nls-loader#master",
     "dijit": "^1.13.0",
     "dojo": "^1.13.0",
     "dojo-util": "^1.13.0",

@@ -1,11 +1,11 @@
-import PropertyGroup from "./PropertyGroup";
-import Group from "./Group";
-import Text from "./Text";
-import Choice from "./Choice";
-import OntologyStore from "./OntologyStore";
-import Bundle from "./Bundle";
+import PropertyGroup from './PropertyGroup';
+import Group from './Group';
+import Text from './Text';
+import Choice from './Choice';
+import OntologyStore from './OntologyStore';
+import Bundle from './Bundle';
 
-import {constructTemplate} from "../model/engine";
+import {constructTemplate} from '../model/engine';
 import {namespaces as ns} from 'rdfjson';
 
 export default class ItemStore {
@@ -45,7 +45,7 @@ export default class ItemStore {
     if (original) {
       return this._createItems(origSourceContent, group._forceChildrenClones, group.getBundle());
     } else {
-      let ext = this.getItem(origSource["extends"]);
+      let ext = this.getItem(origSource['extends']);
       if (ext) {
         return ext.getChildren().concat(group.getChildren(true));
       } else {
@@ -80,10 +80,10 @@ export default class ItemStore {
 
   renameItem(from, to) {
     if (this._registry[to]) {
-      throw "Cannot rename to " + to + " since an item with that id already exists.";
+      throw 'Cannot rename to ' + to + ' since an item with that id already exists.';
     }
-    if (to === "" || to === null) {
-      throw "Cannot give an item an empty string or null as id.";
+    if (to === '' || to === null) {
+      throw 'Cannot give an item an empty string or null as id.';
     }
     let item = this._registry[from];
     if (item) {
@@ -96,9 +96,9 @@ export default class ItemStore {
       if (children) {
         for (let j = 0; j < children.length; j++) {
           let child = children[j];
-          if (child.id === from || child["@id"] === from) {
+          if (child.id === from || child['@id'] === from) {
             child.id = to;
-            delete child["@id"]; //Clean up backward compatability.
+            delete child['@id']; //Clean up backward compatability.
           }
           if (child.content) {
             renameInGroup(child);
@@ -155,7 +155,7 @@ export default class ItemStore {
     if (templates instanceof Array) {
       this._createItems(templates, false, b);
     }
-    if (typeof bundle.source.cachedChoices === "object") {
+    if (typeof bundle.source.cachedChoices === 'object') {
       this._ontologyStore.importRegistry(bundle.source.cachedChoices);
     }
 
@@ -173,7 +173,7 @@ export default class ItemStore {
   }
 
   createTemplateFromChildren(children) {
-    let childrenObj = (children || []).map(child => typeof child === "string" ? this.getItem(child) : child, this);
+    let childrenObj = (children || []).map(child => typeof child === 'string' ? this.getItem(child) : child, this);
     return new Group({source: {}, children: childrenObj, itemStore: this});
   }
 
@@ -183,9 +183,9 @@ export default class ItemStore {
 
   createExtendedSource(origSource, extSource) {
     let newSource = Object.assign(Object.assign({}, origSource), extSource);
-    newSource["_extendedSource"] = extSource;
-    newSource["extends"] = null; //Avoid infinite recursion when creating the fleshed out item.
-    delete newSource["children"];
+    newSource['_extendedSource'] = extSource;
+    newSource['extends'] = null; //Avoid infinite recursion when creating the fleshed out item.
+    delete newSource['children'];
     return newSource;
   }
 
@@ -196,12 +196,12 @@ export default class ItemStore {
    * @returns {*}
    */
   createItem(source, forceClone, skipRegistration, bundle) {
-    let item, id = source.id || source["@id"], type = source["type"] || source["@type"];
-    if (source["extends"]) {
+    let item, id = source.id || source['@id'], type = source['type'] || source['@type'];
+    if (source['extends']) {
       //Explicit extends given
-      let extItem = this._registry[source["extends"]];
+      let extItem = this._registry[source['extends']];
       if (extItem == null && !this.ignoreMissingItems) {
-        throw "Cannot find item to extend with id: " + source["extends"];
+        throw 'Cannot find item to extend with id: ' + source['extends'];
       }
       if (extItem) {
         let newSource = this.createExtendedSource(extItem.getSource(), source);
@@ -212,10 +212,10 @@ export default class ItemStore {
     if (type != null) {
       //If there is a type in the source then it means that the object is a new item.
       switch (type) {
-        case "text":
+        case 'text':
           item = new Text({source: source, itemStore: this, bundle: bundle});
           break;
-        case "choice":
+        case 'choice':
           item = new Choice({
             source: source,
             itemStore: this,
@@ -223,10 +223,10 @@ export default class ItemStore {
             bundle: bundle
           });
           break;
-        case "group":
+        case 'group':
           item = new Group({source: source, children: null, itemStore: this, bundle: bundle}); //Lazy loading of children.
           break;
-        case "propertygroup":
+        case 'propertygroup':
           item = new PropertyGroup({
             source: source,
             children: null,
@@ -253,14 +253,14 @@ export default class ItemStore {
     } else {
       //No type means it is a reference, check that the referred item (via id) exists
       if (id === undefined) {
-        throw "Cannot create subitem, 'type' for creating new or 'id' for referencing external are required.";
+        throw 'Cannot create subitem, `type` for creating new or `id` for referencing external are required.';
       }
       if (this._registry[id] === undefined) {
-        throw "Cannot find referenced subitem using identifier: " + id;
+        throw 'Cannot find referenced subitem using identifier: ' + id;
       }
       //Check if there are any overlay properties, if so force clone mode.
       for (let key in source) {
-        if (source.hasOwnProperty(key) && (key !== "id" && key !== "@id")) {
+        if (source.hasOwnProperty(key) && (key !== 'id' && key !== '@id')) {
           forceClone = true;
           break;
         }

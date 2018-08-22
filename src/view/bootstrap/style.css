@@ -1,5 +1,13 @@
 @import "../resources/rdforms.css";
 
+.test-class {
+    color: red !important;
+}
+
+.test-class2 {
+    color: green !important;
+}
+
 .input-group-btn > .form-control {
     margin-left: -1px;
     width: auto;

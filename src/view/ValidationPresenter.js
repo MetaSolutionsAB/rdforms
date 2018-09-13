@@ -139,5 +139,4 @@ define([
     this.inherited('addComponent', arguments);
     this.addValidationMarker(fieldDiv, binding);
   },
-
 }));

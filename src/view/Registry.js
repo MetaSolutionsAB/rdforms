@@ -72,7 +72,6 @@ filterMethods.forEach((meth) => {
 });
 
 export default class Registry {
-
   constructor() {
     this.components = [];
     this.priorities = {

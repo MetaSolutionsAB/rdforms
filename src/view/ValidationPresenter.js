@@ -3,7 +3,7 @@ import Presenter from './Presenter';
 import GroupBindig from '../model/GroupBindig';
 import engine from '../model/engine';
 import validate from '../model/validate';
-import i18n from 'esi18n';
+import {i18n, NLSMixin} from 'esi18n';
 
 define([
   'dojo/_base/declare',

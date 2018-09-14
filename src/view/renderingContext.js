@@ -1,7 +1,7 @@
 import Registry from './Registry';
 import system from '../model/system';
 
-import i18n from 'esi18n';
+import {i18n, NLSMixin} from 'esi18n';
 import nlsRdforms from 'src/view/nls/rdforms.nls';
 
 system.getChoice = function (item, value) {

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import i18n from 'esi18n';
+import {i18n, NLSMixin} from 'esi18n';
 import template from './DateTimeFueluxTemplate.html';
 import 'fuelux/js/datepicker';
 import DateTimeBase from './DateTimeBase';

@@ -1,6 +1,6 @@
 import renderingContext from './renderingContext';
 import View from './View';
-import i18n from 'esi18n';
+import {i18n, NLSMixin} from 'esi18n';
 
 define([
   'dojo/_base/declare',

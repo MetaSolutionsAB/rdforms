@@ -73,7 +73,7 @@ define([
                 .appendTo(fieldDiv);
       system.attachLinkBehaviour($a[0], parentBinding);
     } else {
-      jquery('<div>').toggleClass('rdformsField', context.inEditor).html(text).appendTo(fieldDiv);
+      jquery('<div>').toggleClass('rdformsField', context.inEditor === true).html(text).appendTo(fieldDiv);
     }
   });
 

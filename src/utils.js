@@ -1,5 +1,5 @@
 import system from './model/system';
-import i18n from 'esi18';
+import {i18n} from 'esi18n';
 import {cloneDeep} from 'lodash-es';
 
 const locale = i18n.getLocale();

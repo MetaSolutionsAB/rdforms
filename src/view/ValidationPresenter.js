@@ -1,6 +1,6 @@
 import renderingContext from './renderingContext';
 import Presenter from './Presenter';
-import GroupBindig from '../model/GroupBindig';
+import GroupBinding from '../model/GroupBinding';
 import engine from '../model/engine';
 import validate from '../model/validate';
 import {i18n, NLSMixin} from 'esi18n';

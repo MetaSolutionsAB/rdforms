@@ -1,12 +1,13 @@
-import DurationPresenter from './DurationPresenter';
 import template from './DurationEditorTemplate.html';
-
+import _WidgetsInTemplateMixin from 'dijit/_WidgetsInTemplateMixin';
+import DurationPresenter from './DurationPresenter';
 define([
   'dojo/_base/declare',
   'dojo/_base/lang',
-  'dijit/_WidgetsInTemplateMixin',
-], (declare, lang, _WidgetsInTemplateMixin) =>
-  declare([DurationPresenter, _WidgetsInTemplateMixin], {
+], (declare, lang) => {
+  console.log(_WidgetsInTemplateMixin);
+  console.log(DurationPresenter);
+  return declare([_WidgetsInTemplateMixin, DurationPresenter], {
     templateString: template,
     regex: /^([\-\+])?P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:([0-9]+(?:\.[0-9]+)?)?S)?)?$/,
 
@@ -71,4 +72,5 @@ define([
       }
       return null;
     },
-  }));
+  })
+});

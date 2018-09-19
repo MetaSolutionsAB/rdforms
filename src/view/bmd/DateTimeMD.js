@@ -5,8 +5,7 @@ import template from './DateTimeMDTemplate.html';
 
 define([
   'dojo/_base/declare',
-  'dojo/_base/lang',
-], (declare, lang) => {
+], (declare) => {
   /**
    * A Date and time picker.
    */
@@ -38,7 +37,7 @@ define([
       jquery(this.dateButton).click(() => {
         this.$datepicker.bootstrapMaterialDatePicker('_fireCalendar');
       });
-      this.$datepicker.on('change', lang.hitch(this, (evt, m) => {
+      this.$datepicker.on('change', (evt, m) => {
         if (!m) {
           m = moment(evt.target.value);
         }
@@ -50,7 +49,7 @@ define([
         }
         this.dpdate = m.toDate();
         this.setDateInBinding(this.dpdate);
-      }));
+      });
 
       if (!this.item.isEnabled()) {
         this.$datepicker.prop('disabled', true);
@@ -60,7 +59,7 @@ define([
         this.$timepicker.bootstrapMaterialDatePicker('_fireCalendar');
       });
 
-      this.$timepicker.on('change', lang.hitch(this, (evt, m) => {
+      this.$timepicker.on('change', (evt, m) => {
         if (!m) {
           m = moment(evt.target.value);
         }
@@ -74,7 +73,7 @@ define([
         } else {
           this.tpdate = m.toDate();
         }
-      }));
+      });
 
       if (!this.item.isEnabled()) {
         this.$timepicker.prop('disabled', true);

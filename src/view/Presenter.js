@@ -1,10 +1,9 @@
 import renderingContext from './renderingContext';
 import View from './View';
-import {i18n, NLSMixin} from 'esi18n';
+import {i18n} from 'esi18n';
+import declare from 'dojo/_base/declare';
 
-define([
-  'dojo/_base/declare',
-], declare => declare(View, {
+export default declare(View, {
   // ===================================================
   // Public attributes
   // ===================================================
@@ -86,6 +85,6 @@ define([
   addComponent(fieldDiv, binding) {
     renderingContext.renderPresenter(fieldDiv, binding, this.context);
   },
-}));
+});
 
 

@@ -1,6 +1,6 @@
-import {default as Group} from './Group';
+import Group from './Group';
 
-const lang = require('dojo/_base/lang');
+const lang = require('dojo/_base/lang'); // TODO
 
 export default class PropertyGroup extends Group {
   /**

@@ -1,37 +1,31 @@
 import DateTimeBase from './DateTimeBase';
-import template from './DateTimeBootstrapDatepickerTemplate.html';
+import templateString from './DateTimeBootstrapDatepickerTemplate.html';
+import declare from 'dojo/_base/declare';
 
-define([
-  'dojo/_base/declare',
-  'dojo/_base/lang',
-], (declare, lang) => {
-  /**
-   * A Date and time picker.
-   */
-  const DateTimeBootstrapDatepicker = declare([DateTimeBase], {
-    templateString: template,
+/**
+ * A Date and time picker.
+ */
+const DateTimeBootstrapDatepicker = declare([DateTimeBase], {
+  templateString,
 
-    //= ==================================================
-    // Inherited methods
-    //= ==================================================
+  //= ==================================================
+  // Inherited methods
+  //= ==================================================
 
-    initDatePicker() {
-      const updateDate = lang.hitch(this, (/* evt */) => {
-        this.setDateInBinding(this.$datepickerField.datepicker('getDate'));
-      });
-      this.$datepicker = jquery(this.cal);
-      this.$datepickerField = jquery(this.datepickerField)
-        .datepicker().on('changeDate', updateDate);
+  initDatePicker() {
+    const updateDate = (/* evt */) => this.setDateInBinding(this.$datepickerField.datepicker('getDate'));
+    this.$datepicker = jquery(this.cal);
+    this.$datepickerField = jquery(this.datepickerField)
+      .datepicker().on('changeDate', updateDate);
 
-      if (!this.item.isEnabled()) {
-        this.$datepicker.datepicker('disabled');
-      }
-    },
-    setDateInPicker(d) {
-      this.$datepickerField.datepicker('update', d);
-    },
-  });
-
-  DateTimeBase.register(DateTimeBootstrapDatepicker);
-  return DateTimeBootstrapDatepicker;
+    if (!this.item.isEnabled()) {
+      this.$datepicker.datepicker('disabled');
+    }
+  },
+  setDateInPicker(d) {
+    this.$datepickerField.datepicker('update', d);
+  },
 });
+
+DateTimeBase.register(DateTimeBootstrapDatepicker);
+export default DateTimeBootstrapDatepicker;

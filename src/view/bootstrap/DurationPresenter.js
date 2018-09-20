@@ -1,31 +1,32 @@
-import template from './DurationPresenterTemplate.html';
-define([
-  'dojo/_base/declare',
-  'dijit/_WidgetBase',
-  'dijit/_TemplatedMixin',
-], (declare, _WidgetBase, _TemplatedMixin) => declare([_WidgetBase, _TemplatedMixin], {
-  templateString: template,
+import templateString from './DurationPresenterTemplate.html';
+
+import declare from 'dojo/_base/declare';
+import _WidgetBase from 'dijit/_WidgetBase';
+import _TemplatedMixin from 'dijit/_TemplatedMixin';
+
+export default declare([_WidgetBase, _TemplatedMixin], {
+  templateString,
 
   yearsLabel: '',
-  _setYearsLabelAttr: { node: 'yearsLabelNode', type: 'innerHTML' },
+  _setYearsLabelAttr: {node: 'yearsLabelNode', type: 'innerHTML'},
   monthsLabel: '',
-  _setMonthsLabelAttr: { node: 'monthsLabelNode', type: 'innerHTML' },
+  _setMonthsLabelAttr: {node: 'monthsLabelNode', type: 'innerHTML'},
   daysLabel: '',
-  _setDaysLabelAttr: { node: 'daysLabelNode', type: 'innerHTML' },
+  _setDaysLabelAttr: {node: 'daysLabelNode', type: 'innerHTML'},
   hoursLabel: '',
-  _setHoursLabelAttr: { node: 'hoursLabelNode', type: 'innerHTML' },
+  _setHoursLabelAttr: {node: 'hoursLabelNode', type: 'innerHTML'},
   minutesLabel: '',
-  _setMinutesLabelAttr: { node: 'minutesLabelNode', type: 'innerHTML' },
+  _setMinutesLabelAttr: {node: 'minutesLabelNode', type: 'innerHTML'},
   years: 0,
-  _setYearsAttr: { node: 'yearsNode', type: 'innerHTML' },
+  _setYearsAttr: {node: 'yearsNode', type: 'innerHTML'},
   months: 0,
-  _setMonthsAttr: { node: 'monthsNode', type: 'innerHTML' },
+  _setMonthsAttr: {node: 'monthsNode', type: 'innerHTML'},
   days: 0,
-  _setDaysAttr: { node: 'daysNode', type: 'innerHTML' },
+  _setDaysAttr: {node: 'daysNode', type: 'innerHTML'},
   hours: 0,
-  _setHoursAttr: { node: 'hoursNode', type: 'innerHTML' },
+  _setHoursAttr: {node: 'hoursNode', type: 'innerHTML'},
   minutes: 0,
-  _setMinutesAttr: { node: 'minutesNode', type: 'innerHTML' },
+  _setMinutesAttr: {node: 'minutesNode', type: 'innerHTML'},
 
   _setValueAttr(value) {
 // eslint-disable-next-line arrow-body-style
@@ -43,4 +44,4 @@ define([
       this.set('minutes', f(arr[1].match(/([0-9])*M/)));
     }
   },
-}));
+});

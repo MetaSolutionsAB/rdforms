@@ -1,4 +1,3 @@
-const lang = require('dojo/_base/lang');
 const xhr = require('dojo/request/xhr');
 
 export default class Converter {
@@ -26,9 +25,7 @@ export default class Converter {
    * @param {Function} callback will be called with the converted exhibit.
    */
   convertExhibit(url, callback) {
-    this._load(url, lang.hitch(this, function (data) {
-      callback(this._convertExhibit(data));
-    }));
+    this._load(url, function (data) { callback(this._convertExhibit(data))}.bind(this));
   }
 
   //===================================================

@@ -1,13 +1,11 @@
 import renderingContext from './renderingContext';
 import Presenter from './Presenter';
-import GroupBinding from '../model/GroupBinding';
 import engine from '../model/engine';
 import validate from '../model/validate';
-import {i18n, NLSMixin} from 'esi18n';
+import {i18n} from 'esi18n';
+import declare from 'dojo/_base/declare';
 
-define([
-  'dojo/_base/declare',
-], declare => declare(Presenter, {
+export default declare(Presenter, {
   //= ==================================================
   // Public attributes
   //= ==================================================
@@ -139,4 +137,4 @@ define([
     this.inherited('addComponent', arguments);
     this.addValidationMarker(fieldDiv, binding);
   },
-}));
+});

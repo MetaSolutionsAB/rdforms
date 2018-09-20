@@ -263,7 +263,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			// undefined = 28
 /******/ 			// undefined = 29
 /******/ 			"dojo/aspect":30,
-/******/ 			// "./renderingContext" = 31
+/******/ 			// "../renderingContext" = 31
 /******/ 			// "../../utils" = 32
 /******/ 			// "./isLength.js" = 33
 /******/ 			// "./_isPrototype.js" = 34
@@ -276,16 +276,16 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			// undefined = 42
 /******/ 			// undefined = 43
 /******/ 			// undefined = 44
-/******/ 			// "./_Map.js" = 45
-/******/ 			// "./_Set.js" = 46
-/******/ 			// "moment" = 47
+/******/ 			"moment":45,
+/******/ 			// "./_Map.js" = 46
+/******/ 			// "./_Set.js" = 47
 /******/ 			"dojo/_base/config":48,
 /******/ 			"/Users/valentino/Projects/metasolutions/dev/entryscape/rdforms/node_modules/dojo/_base/config":48,
 /******/ 			"dojo/dom-style":49,
 /******/ 			// undefined = 50
 /******/ 			// "./_WeakMap.js" = 51
 /******/ 			// "../../model/system" = 52
-/******/ 			// "../../../node_modules/css-loader/lib/css-base.js" = 53
+/******/ 			// "../../css-loader/lib/css-base.js" = 53
 /******/ 			"/Users/valentino/Projects/metasolutions/dev/entryscape/rdforms/node_modules/dijit/_WidgetBase":54,
 /******/ 			"dojo/domReady":55,
 /******/ 			// "../model/engine" = 56
@@ -351,8 +351,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			"dojo/_base/sniff":115,
 /******/ 			"dojo/Stateful":116,
 /******/ 			// "dijit/_TemplatedMixin" = 117
-/******/ 			"dojo/request/default!":118,
 /******/ 			"dojo/request/xhr":118,
+/******/ 			"dojo/request/default!":118,
 /******/ 			"dojo/request/watch":119,
 /******/ 			"dojo/string":120,
 /******/ 			"dojo/touch":121,
@@ -381,7 +381,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			// "../../js/scrollspy.js" = 146
 /******/ 			// "../../js/tab.js" = 147
 /******/ 			// "../../js/affix.js" = 148
-/******/ 			// "./components" = 149
+/******/ 			// "../bootstrap/components" = 149
 /******/ 			// "./Registry" = 150
 /******/ 			// "crypt" = 151
 /******/ 			// "is-buffer" = 152
@@ -431,7 +431,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			// "./PropertyGroupBinding" = 195
 /******/ 			// "./CardinalityTracker" = 196
 /******/ 			// "./table" = 197
-/******/ 			// "./DateTimeBase" = 198
+/******/ 			// "../bootstrap/DateTimeBase" = 198
 /******/ 			// "./urls" = 199
 /******/ 			// "font-awesome/css/font-awesome.css" = 200
 /******/ 			// "!!../../css-loader/index.js!./font-awesome.css" = 201
@@ -460,28 +460,29 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			"/Users/valentino/Projects/metasolutions/dev/entryscape/rdforms/node_modules/dijit/hccss":224,
 /******/ 			"dojo/hccss":225,
 /******/ 			// "../model/validate" = 226
-/******/ 			// "/var/folders/vg/7w5l0f7x4zvfxcmnxglyd84w0000gn/T/tmp-11532SW0K3IAeGggh/dojo/dojo.js" = 227
+/******/ 			// "/var/folders/vg/7w5l0f7x4zvfxcmnxglyd84w0000gn/T/tmp-13002vRBGDwijKtG1/dojo/dojo.js" = 227
 /******/ 			"index.bmd.js":295,
 /******/ 			// "./src/view/bmd/all" = 296
 /******/ 			// "bootstrap-material-design/dist/js/material" = 297
 /******/ 			// "bootstrap-material-design/dist/js/ripples" = 298
-/******/ 			// "./DateTimeMD" = 299
-/******/ 			// "./DateTimeMDTemplate.html" = 300
-/******/ 			// "./Selectize" = 301
-/******/ 			// "selectize" = 302
-/******/ 			"sifter":303,
-/******/ 			"microplugin":304
-/******/ 			// "bootstrap-material-design/dist/css/bootstrap-material-design.css" = 305
-/******/ 			// "!!../../../css-loader/index.js!./bootstrap-material-design.css" = 306
-/******/ 			// "bootstrap-material-design/dist/css/ripples.css" = 307
-/******/ 			// "!!../../../css-loader/index.js!./ripples.css" = 308
-/******/ 			// "bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" = 309
-/******/ 			// "!!../../css-loader/index.js!./bootstrap-material-datetimepicker.css" = 310
-/******/ 			// "./style.css" = 311
-/******/ 			// "!!../../../node_modules/css-loader/index.js!./style.css" = 312
-/******/ 			// "./src/template/bundleLoader" = 313
-/******/ 			// "detect-node" = 314
-/******/ 			// undefined = 315
+/******/ 			// "bootstrap-material-datetimepicker" = 299
+/******/ 			// "./DateTimeMD" = 300
+/******/ 			// "./DateTimeMDTemplate.html" = 301
+/******/ 			// "./Selectize" = 302
+/******/ 			// "selectize" = 303
+/******/ 			"sifter":304,
+/******/ 			"microplugin":305
+/******/ 			// "bootstrap-material-design/dist/css/bootstrap-material-design.css" = 306
+/******/ 			// "!!../../../css-loader/index.js!./bootstrap-material-design.css" = 307
+/******/ 			// "bootstrap-material-design/dist/css/ripples.css" = 308
+/******/ 			// "!!../../../css-loader/index.js!./ripples.css" = 309
+/******/ 			// "bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" = 310
+/******/ 			// "!!../../css-loader/index.js!./bootstrap-material-datetimepicker.css" = 311
+/******/ 			// "./style.css" = 312
+/******/ 			// "!!../../../node_modules/css-loader/index.js!./style.css" = 313
+/******/ 			// "./src/template/bundleLoader" = 314
+/******/ 			// "detect-node" = 315
+/******/ 			// undefined = 316
 /******/ 		});
 /******/
 /******/ 		globalObj.require = req;
@@ -14046,7 +14047,7 @@ var DataView = Object(_getNative["a" /* default */])(_root["a" /* default */], '
 /* harmony default export */ var _DataView = (DataView);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/_Map.js
-var _Map = __webpack_require__(45);
+var _Map = __webpack_require__(46);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/_Promise.js
 
@@ -14058,7 +14059,7 @@ var Promise = Object(_getNative["a" /* default */])(_root["a" /* default */], 'P
 /* harmony default export */ var _Promise = (Promise);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/_Set.js
-var _Set = __webpack_require__(46);
+var _Set = __webpack_require__(47);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/_WeakMap.js
 var _WeakMap = __webpack_require__(51);
@@ -16743,7 +16744,7 @@ function stackHas(key) {
 /* harmony default export */ var _stackHas = (stackHas);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/_Map.js
-var _Map = __webpack_require__(45);
+var _Map = __webpack_require__(46);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/_MapCache.js + 14 modules
 var _MapCache = __webpack_require__(50);
@@ -17669,38 +17670,6 @@ SetCache.prototype.has = _setCacheHas;
 
 /***/ }),
 /* 45 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _getNative_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(29);
-/* harmony import */ var _root_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
-
-
-
-/* Built-in method references that are verified to be native. */
-var Map = Object(_getNative_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(_root_js__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"], 'Map');
-
-/* harmony default export */ __webpack_exports__["a"] = (Map);
-
-
-/***/ }),
-/* 46 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _getNative_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(29);
-/* harmony import */ var _root_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
-
-
-
-/* Built-in method references that are verified to be native. */
-var Set = Object(_getNative_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(_root_js__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"], 'Set');
-
-/* harmony default export */ __webpack_exports__["a"] = (Set);
-
-
-/***/ }),
-/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var require;//! moment.js
@@ -22212,6 +22181,38 @@ var Set = Object(_getNative_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(112)(module)))
 
 /***/ }),
+/* 46 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _getNative_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(29);
+/* harmony import */ var _root_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+
+
+
+/* Built-in method references that are verified to be native. */
+var Map = Object(_getNative_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(_root_js__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"], 'Map');
+
+/* harmony default export */ __webpack_exports__["a"] = (Map);
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _getNative_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(29);
+/* harmony import */ var _root_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+
+
+
+/* Built-in method references that are verified to be native. */
+var Set = Object(_getNative_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(_root_js__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"], 'Set');
+
+/* harmony default export */ __webpack_exports__["a"] = (Set);
+
+
+/***/ }),
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22916,7 +22917,7 @@ Hash.prototype.set = _hashSet;
 var _ListCache = __webpack_require__(42);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/_Map.js
-var _Map = __webpack_require__(45);
+var _Map = __webpack_require__(46);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/_mapCacheClear.js
 
@@ -33269,7 +33270,7 @@ function baseIsNative(value) {
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/moment/moment.js
-var moment = __webpack_require__(47);
+var moment = __webpack_require__(45);
 var moment_default = /*#__PURE__*/__webpack_require__.n(moment);
 
 // EXTERNAL MODULE: ../esi18n/node_modules/pubsub-js/src/pubsub.js
@@ -62106,7 +62107,7 @@ function unescape_unescape(string) {
 /* harmony default export */ var lodash_es_unescape = (unescape_unescape);
 
 // EXTERNAL MODULE: ./node_modules/lodash-es/_Set.js
-var _Set = __webpack_require__(46);
+var _Set = __webpack_require__(47);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/_createSet.js
 
@@ -80531,7 +80532,7 @@ var _ItemStore = _interopRequireDefault(__webpack_require__(210));
 
 var _Editor = _interopRequireDefault(__webpack_require__(213));
 
-var _bundleLoader = _interopRequireDefault(__webpack_require__(313));
+var _bundleLoader = _interopRequireDefault(__webpack_require__(314));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -80551,17 +80552,19 @@ __webpack_require__(298);
 
 __webpack_require__(299);
 
-__webpack_require__(301);
+__webpack_require__(300);
 
-__webpack_require__(305);
+__webpack_require__(302);
 
-__webpack_require__(307);
+__webpack_require__(306);
 
-__webpack_require__(309);
+__webpack_require__(308);
+
+__webpack_require__(310);
 
 __webpack_require__(200);
 
-__webpack_require__(311);
+__webpack_require__(312);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -81299,16 +81302,1330 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* Start AMD wra
 /* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* Start AMD wrapper function */
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(5), __webpack_require__(45)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(jQuery, moment) {
+(function ($, moment)
+{
+   var pluginName = "bootstrapMaterialDatePicker";
+   var pluginDataName = "plugin_" + pluginName;
+
+   moment.locale('en');
+
+   function Plugin(element, options)
+   {
+      this.currentView = 0;
+
+      this.minDate;
+      this.maxDate;
+
+      this._attachedEvents = [];
+
+      this.element = element;
+      this.$element = $(element);
+
+
+      this.params = {date: true, time: true, format: 'YYYY-MM-DD', minDate: null, maxDate: null, currentDate: null, lang: 'en', weekStart: 0, disabledDays: [], shortTime: false, clearButton: false, nowButton: false, cancelText: 'Cancel', okText: 'OK', clearText: 'Clear', nowText: 'Now', switchOnClick: false, triggerEvent: 'focus', monthPicker: false, year:true};
+      this.params = $.fn.extend(this.params, options);
+
+      this.name = "dtp_" + this.setName();
+      this.$element.attr("data-dtp", this.name);
+
+      moment.locale(this.params.lang);
+
+      this.init();
+   }
+
+   $.fn[pluginName] = function (options, p)
+   {
+      this.each(function ()
+      {
+         if (!$.data(this, pluginDataName))
+         {
+            $.data(this, pluginDataName, new Plugin(this, options));
+         } else
+         {
+            if (typeof ($.data(this, pluginDataName)[options]) === 'function')
+            {
+               $.data(this, pluginDataName)[options](p);
+            }
+            if (options === 'destroy')
+            {
+               delete $.data(this, pluginDataName);
+            }
+         }
+      });
+      return this;
+   };
+
+   Plugin.prototype =
+           {
+              init: function ()
+              {
+                 this.initDays();
+                 this.initDates();
+
+                 this.initTemplate();
+
+                 this.initButtons();
+
+                 this._attachEvent($(window), 'resize', this._centerBox.bind(this));
+                 this._attachEvent(this.$dtpElement.find('.dtp-content'), 'click', this._onElementClick.bind(this));
+                 this._attachEvent(this.$dtpElement, 'click', this._onBackgroundClick.bind(this));
+                 this._attachEvent(this.$dtpElement.find('.dtp-close > a'), 'click', this._onCloseClick.bind(this));
+                 this._attachEvent(this.$element, this.params.triggerEvent, this._fireCalendar.bind(this));
+              },
+              initDays: function ()
+              {
+                 this.days = [];
+                 for (var i = this.params.weekStart; this.days.length < 7; i++)
+                 {
+                    if (i > 6)
+                    {
+                       i = 0;
+                    }
+                    this.days.push(i.toString());
+                 }
+              },
+              initDates: function ()
+              {
+                 if (this.$element.val().length > 0)
+                 {
+                    if (typeof (this.params.format) !== 'undefined' && this.params.format !== null)
+                    {
+                       this.currentDate = moment(this.$element.val(), this.params.format).locale(this.params.lang);
+                    } else
+                    {
+                       this.currentDate = moment(this.$element.val()).locale(this.params.lang);
+                    }
+                 } else
+                 {
+                    if (typeof (this.$element.attr('value')) !== 'undefined' && this.$element.attr('value') !== null && this.$element.attr('value') !== "")
+                    {
+                       if (typeof (this.$element.attr('value')) === 'string')
+                       {
+                          if (typeof (this.params.format) !== 'undefined' && this.params.format !== null)
+                          {
+                             this.currentDate = moment(this.$element.attr('value'), this.params.format).locale(this.params.lang);
+                          } else
+                          {
+                             this.currentDate = moment(this.$element.attr('value')).locale(this.params.lang);
+                          }
+                       }
+                    } else
+                    {
+                       if (typeof (this.params.currentDate) !== 'undefined' && this.params.currentDate !== null)
+                       {
+                          if (typeof (this.params.currentDate) === 'string')
+                          {
+                             if (typeof (this.params.format) !== 'undefined' && this.params.format !== null)
+                             {
+                                this.currentDate = moment(this.params.currentDate, this.params.format).locale(this.params.lang);
+                             } else
+                             {
+                                this.currentDate = moment(this.params.currentDate).locale(this.params.lang);
+                             }
+                          } else
+                          {
+                             if (typeof (this.params.currentDate.isValid) === 'undefined' || typeof (this.params.currentDate.isValid) !== 'function')
+                             {
+                                var x = this.params.currentDate.getTime();
+                                this.currentDate = moment(x, "x").locale(this.params.lang);
+                             } else
+                             {
+                                this.currentDate = this.params.currentDate;
+                             }
+                          }
+                          this.$element.val(this.currentDate.format(this.params.format));
+                       } else
+                          this.currentDate = moment();
+                    }
+                 }
+
+                 if (typeof (this.params.minDate) !== 'undefined' && this.params.minDate !== null)
+                 {
+                    if (typeof (this.params.minDate) === 'string')
+                    {
+                       if (typeof (this.params.format) !== 'undefined' && this.params.format !== null)
+                       {
+                          this.minDate = moment(this.params.minDate, this.params.format).locale(this.params.lang);
+                       } else
+                       {
+                          this.minDate = moment(this.params.minDate).locale(this.params.lang);
+                       }
+                    } else
+                    {
+                       if (typeof (this.params.minDate.isValid) === 'undefined' || typeof (this.params.minDate.isValid) !== 'function')
+                       {
+                          var x = this.params.minDate.getTime();
+                          this.minDate = moment(x, "x").locale(this.params.lang);
+                       } else
+                       {
+                          this.minDate = this.params.minDate;
+                       }
+                    }
+                 } else if (this.params.minDate === null)
+                 {
+                    this.minDate = null;
+                 }
+
+                 if (typeof (this.params.maxDate) !== 'undefined' && this.params.maxDate !== null)
+                 {
+                    if (typeof (this.params.maxDate) === 'string')
+                    {
+                       if (typeof (this.params.format) !== 'undefined' && this.params.format !== null)
+                       {
+                          this.maxDate = moment(this.params.maxDate, this.params.format).locale(this.params.lang);
+                       } else
+                       {
+                          this.maxDate = moment(this.params.maxDate).locale(this.params.lang);
+                       }
+                    } else
+                    {
+                       if (typeof (this.params.maxDate.isValid) === 'undefined' || typeof (this.params.maxDate.isValid) !== 'function')
+                       {
+                          var x = this.params.maxDate.getTime();
+                          this.maxDate = moment(x, "x").locale(this.params.lang);
+                       } else
+                       {
+                          this.maxDate = this.params.maxDate;
+                       }
+                    }
+                 } else if (this.params.maxDate === null)
+                 {
+                    this.maxDate = null;
+                 }
+
+                 if (!this.isAfterMinDate(this.currentDate))
+                 {
+                    this.currentDate = moment(this.minDate);
+                 }
+                 if (!this.isBeforeMaxDate(this.currentDate))
+                 {
+                    this.currentDate = moment(this.maxDate);
+                 }
+              },
+              initTemplate: function ()
+              {
+                  var yearPicker = "";
+                  var y =this.currentDate.year();
+                  for (var i = y-3; i < y + 4; i++) {
+                      yearPicker += '<div class="year-picker-item" data-year="' + i + '">' + i + '</div>';
+                  }
+                  this.midYear=y;
+                  var yearHtml =
+                      '<div class="dtp-picker-year hidden" >' +
+                      '<div><a href="javascript:void(0);" class="btn btn-default' +
+                      ' dtp-select-year-range before" style="margin: 0;"><i' +
+                      ' class="fa fa-arrow-up"></i></a></div>' +
+                      yearPicker +
+                      '<div><a href="javascript:void(0);" class="btn btn-default' +
+                      ' dtp-select-year-range after" style="margin: 0;"><i' +
+                      ' class="fa fa-arrow-down"></i></a></div>' +
+                      '</div>';
+
+                 this.template = '<div class="dtp hidden" id="' + this.name + '">' +
+                         '<div class="dtp-content">' +
+                         '<div class="dtp-date-view">' +
+                         '<header class="dtp-header">' +
+                         '<div class="dtp-actual-day">Lundi</div>' +
+                         '<div class="dtp-close"><a href="javascript:void(0);"><i' +
+                   ' class="fa fa-times"></i></a></div>' +
+                         '</header>' +
+                         '<div class="dtp-date hidden">' +
+                         '<div>' +
+                         '<div class="left center p10">' +
+                         '<a href="javascript:void(0);" class="dtp-select-month-before"><i' +
+                   ' class="fa fa-chevron-left"></i></a>' +
+                         '</div>' +
+                         '<div class="dtp-actual-month p80">MAR</div>' +
+                         '<div class="right center p10">' +
+                         '<a href="javascript:void(0);" class="dtp-select-month-after"><i' +
+                   ' class="fa fa-chevron-right"></i></a>' +
+                         '</div>' +
+                         '<div class="clearfix"></div>' +
+                         '</div>' +
+                         '<div class="dtp-actual-num">13</div>' +
+                         '<div>' +
+                         '<div class="left center p10">' +
+                         '<a href="javascript:void(0);" class="dtp-select-year-before"><i' +
+                   ' class="fa fa-chevron-left"></i></a>' +
+                         '</div>' +
+                         '<div class="dtp-actual-year p80'+(this.params.year?"":" disabled")+'">2014</div>' +
+                         '<div class="right center p10">' +
+                         '<a href="javascript:void(0);" class="dtp-select-year-after"><i' +
+                   ' class="fa fa-chevron-right"></i></a>' +
+                         '</div>' +
+                         '<div class="clearfix"></div>' +
+                         '</div>' +
+                         '</div>' +
+                         '<div class="dtp-time hidden">' +
+                         '<div class="dtp-actual-maxtime">23:55</div>' +
+                         '</div>' +
+                         '<div class="dtp-picker">' +
+                         '<div class="dtp-picker-calendar"></div>' +
+                         '<div class="dtp-picker-datetime hidden">' +
+                         '<div class="dtp-actual-meridien">' +
+                         '<div class="left p20">' +
+                         '<a class="dtp-meridien-am" href="javascript:void(0);">AM</a>' +
+                         '</div>' +
+                         '<div class="dtp-actual-time p60"></div>' +
+                         '<div class="right p20">' +
+                         '<a class="dtp-meridien-pm" href="javascript:void(0);">PM</a>' +
+                         '</div>' +
+                         '<div class="clearfix"></div>' +
+                         '</div>' +
+                         '<div id="dtp-svg-clock">' +
+                         '</div>' +
+                         '</div>' +
+                         yearHtml+
+                         '</div>' +
+                         '</div>' +
+                         '<div class="dtp-buttons">' +
+                         '<button class="dtp-btn-now btn btn-flat hidden">' + this.params.nowText + '</button>' +
+                         '<button class="dtp-btn-clear btn btn-flat hidden">' + this.params.clearText + '</button>' +
+                         '<button class="dtp-btn-cancel btn btn-flat">' + this.params.cancelText + '</button>' +
+                         '<button class="dtp-btn-ok btn btn-flat">' + this.params.okText + '</button>' +
+                         '<div class="clearfix"></div>' +
+                         '</div>' +
+                         '</div>' +
+                         '</div>';
+
+                 if ($('body').find("#" + this.name).length <= 0)
+                 {
+                    $('body').append(this.template);
+
+                    if (this)
+                       this.dtpElement = $('body').find("#" + this.name);
+                    this.$dtpElement = $(this.dtpElement);
+                 }
+              },
+              initButtons: function ()
+              {
+                 this._attachEvent(this.$dtpElement.find('.dtp-btn-cancel'), 'click', this._onCancelClick.bind(this));
+                 this._attachEvent(this.$dtpElement.find('.dtp-btn-ok'), 'click', this._onOKClick.bind(this));
+                 this._attachEvent(this.$dtpElement.find('a.dtp-select-month-before'), 'click', this._onMonthBeforeClick.bind(this));
+                 this._attachEvent(this.$dtpElement.find('a.dtp-select-month-after'), 'click', this._onMonthAfterClick.bind(this));
+                 this._attachEvent(this.$dtpElement.find('a.dtp-select-year-before'), 'click', this._onYearBeforeClick.bind(this));
+                 this._attachEvent(this.$dtpElement.find('a.dtp-select-year-after'), 'click', this._onYearAfterClick.bind(this));
+                 this._attachEvent(this.$dtpElement.find('.dtp-actual-year'), 'click', this._onActualYearClick.bind(this));
+                 this._attachEvent(this.$dtpElement.find('a.dtp-select-year-range.before'), 'click', this._onYearRangeBeforeClick.bind(this));
+                 this._attachEvent(this.$dtpElement.find('a.dtp-select-year-range.after'), 'click', this._onYearRangeAfterClick.bind(this));
+                 this._attachEvent(this.$dtpElement.find('div.year-picker-item'), 'click', this._onYearItemClick.bind(this));
+
+                 if (this.params.clearButton === true)
+                 {
+                    this._attachEvent(this.$dtpElement.find('.dtp-btn-clear'), 'click', this._onClearClick.bind(this));
+                    this.$dtpElement.find('.dtp-btn-clear').removeClass('hidden');
+                 }
+
+                 if (this.params.nowButton === true)
+                 {
+                    this._attachEvent(this.$dtpElement.find('.dtp-btn-now'), 'click', this._onNowClick.bind(this));
+                    this.$dtpElement.find('.dtp-btn-now').removeClass('hidden');
+                 }
+
+                 if ((this.params.nowButton === true) && (this.params.clearButton === true))
+                 {
+                    this.$dtpElement.find('.dtp-btn-clear, .dtp-btn-now, .dtp-btn-cancel, .dtp-btn-ok').addClass('btn-xs');
+                 } else if ((this.params.nowButton === true) || (this.params.clearButton === true))
+                 {
+                    this.$dtpElement.find('.dtp-btn-clear, .dtp-btn-now, .dtp-btn-cancel, .dtp-btn-ok').addClass('btn-sm');
+                 }
+              },
+              initMeridienButtons: function ()
+              {
+                 this.$dtpElement.find('a.dtp-meridien-am').off('click').on('click', this._onSelectAM.bind(this));
+                 this.$dtpElement.find('a.dtp-meridien-pm').off('click').on('click', this._onSelectPM.bind(this));
+              },
+              initDate: function (d)
+              {
+                 this.currentView = 0;
+
+                 if (this.params.monthPicker === false)
+                 {
+                    this.$dtpElement.find('.dtp-picker-calendar').removeClass('hidden');
+                 }
+                 this.$dtpElement.find('.dtp-picker-datetime').addClass('hidden');
+                 this.$dtpElement.find('.dtp-picker-year').addClass('hidden');
+
+                 var _date = ((typeof (this.currentDate) !== 'undefined' && this.currentDate !== null) ? this.currentDate : null);
+                 var _calendar = this.generateCalendar(this.currentDate);
+
+                 if (typeof (_calendar.week) !== 'undefined' && typeof (_calendar.days) !== 'undefined')
+                 {
+                    var _template = this.constructHTMLCalendar(_date, _calendar);
+
+                    this.$dtpElement.find('a.dtp-select-day').off('click');
+                    this.$dtpElement.find('.dtp-picker-calendar').html(_template);
+
+                    this.$dtpElement.find('a.dtp-select-day').on('click', this._onSelectDate.bind(this));
+
+                    this.toggleButtons(_date);
+                 }
+
+                 this._centerBox();
+                 this.showDate(_date);
+              },
+              initHours: function ()
+              {
+                 this.currentView = 1;
+
+                 this.showTime(this.currentDate);
+                 this.initMeridienButtons();
+
+                 if (this.currentDate.hour() < 12)
+                 {
+                    this.$dtpElement.find('a.dtp-meridien-am').click();
+                 } else
+                 {
+                    this.$dtpElement.find('a.dtp-meridien-pm').click();
+                 }
+
+                 var hFormat = ((this.params.shortTime) ? 'h' : 'H');
+
+                 this.$dtpElement.find('.dtp-picker-datetime').removeClass('hidden');
+                 this.$dtpElement.find('.dtp-picker-calendar').addClass('hidden');
+                 this.$dtpElement.find('.dtp-picker-year').addClass('hidden');
+
+                 var svgClockElement = this.createSVGClock(true);
+
+                 for (var i = 0; i < 12; i++)
+                 {
+                    var x = -(162 * (Math.sin(-Math.PI * 2 * (i / 12))));
+                    var y = -(162 * (Math.cos(-Math.PI * 2 * (i / 12))));
+
+                    var fill = ((this.currentDate.format(hFormat) == i) ? "#8BC34A" : 'transparent');
+                    var color = ((this.currentDate.format(hFormat) == i) ? "#fff" : '#000');
+
+                    var svgHourCircle = this.createSVGElement("circle", {'id': 'h-' + i, 'class': 'dtp-select-hour', 'style': 'cursor:pointer', r: '30', cx: x, cy: y, fill: fill, 'data-hour': i});
+
+                    var svgHourText = this.createSVGElement("text", {'id': 'th-' + i, 'class': 'dtp-select-hour-text', 'text-anchor': 'middle', 'style': 'cursor:pointer', 'font-weight': 'bold', 'font-size': '20', x: x, y: y + 7, fill: color, 'data-hour': i});
+                    svgHourText.textContent = ((i === 0) ? ((this.params.shortTime) ? 12 : i) : i);
+
+                    if (!this.toggleTime(i, true))
+                    {
+                       svgHourCircle.className += " disabled";
+                       svgHourText.className += " disabled";
+                       svgHourText.setAttribute('fill', '#bdbdbd');
+                    } else
+                    {
+                       svgHourCircle.addEventListener('click', this._onSelectHour.bind(this));
+                       svgHourText.addEventListener('click', this._onSelectHour.bind(this));
+                    }
+
+                    svgClockElement.appendChild(svgHourCircle)
+                    svgClockElement.appendChild(svgHourText)
+                 }
+
+                 if (!this.params.shortTime)
+                 {
+                    for (var i = 0; i < 12; i++)
+                    {
+                       var x = -(110 * (Math.sin(-Math.PI * 2 * (i / 12))));
+                       var y = -(110 * (Math.cos(-Math.PI * 2 * (i / 12))));
+
+                       var fill = ((this.currentDate.format(hFormat) == (i + 12)) ? "#8BC34A" : 'transparent');
+                       var color = ((this.currentDate.format(hFormat) == (i + 12)) ? "#fff" : '#000');
+
+                       var svgHourCircle = this.createSVGElement("circle", {'id': 'h-' + (i + 12), 'class': 'dtp-select-hour', 'style': 'cursor:pointer', r: '30', cx: x, cy: y, fill: fill, 'data-hour': (i + 12)});
+
+                       var svgHourText = this.createSVGElement("text", {'id': 'th-' + (i + 12), 'class': 'dtp-select-hour-text', 'text-anchor': 'middle', 'style': 'cursor:pointer', 'font-weight': 'bold', 'font-size': '22', x: x, y: y + 7, fill: color, 'data-hour': (i + 12)});
+                       svgHourText.textContent = i + 12;
+
+                       if (!this.toggleTime(i + 12, true))
+                       {
+                          svgHourCircle.className += " disabled";
+                          svgHourText.className += " disabled";
+                          svgHourText.setAttribute('fill', '#bdbdbd');
+                       } else
+                       {
+                          svgHourCircle.addEventListener('click', this._onSelectHour.bind(this));
+                          svgHourText.addEventListener('click', this._onSelectHour.bind(this));
+                       }
+
+                       svgClockElement.appendChild(svgHourCircle)
+                       svgClockElement.appendChild(svgHourText)
+                    }
+
+                    this.$dtpElement.find('a.dtp-meridien-am').addClass('hidden');
+                    this.$dtpElement.find('a.dtp-meridien-pm').addClass('hidden');
+                 }
+
+                 this._centerBox();
+              },
+              initMinutes: function ()
+              {
+                 this.currentView = 2;
+
+                 this.showTime(this.currentDate);
+
+                 this.initMeridienButtons();
+
+                 if (this.currentDate.hour() < 12)
+                 {
+                    this.$dtpElement.find('a.dtp-meridien-am').click();
+                 } else
+                 {
+                    this.$dtpElement.find('a.dtp-meridien-pm').click();
+                 }
+
+                 this.$dtpElement.find('.dtp-picker-year').addClass('hidden');
+                 this.$dtpElement.find('.dtp-picker-calendar').addClass('hidden');
+                 this.$dtpElement.find('.dtp-picker-datetime').removeClass('hidden');
+
+                 var svgClockElement = this.createSVGClock(false);
+
+                 for (var i = 0; i < 60; i++)
+                 {
+                    var s = ((i % 5 === 0) ? 162 : 158);
+                    var r = ((i % 5 === 0) ? 30 : 20);
+
+                    var x = -(s * (Math.sin(-Math.PI * 2 * (i / 60))));
+                    var y = -(s * (Math.cos(-Math.PI * 2 * (i / 60))));
+
+                    var color = ((this.currentDate.format("m") == i) ? "#8BC34A" : 'transparent');
+
+                    var svgMinuteCircle = this.createSVGElement("circle", {'id': 'm-' + i, 'class': 'dtp-select-minute', 'style': 'cursor:pointer', r: r, cx: x, cy: y, fill: color, 'data-minute': i});
+
+                    if (!this.toggleTime(i, false))
+                    {
+                       svgMinuteCircle.className += " disabled";
+                    } else
+                    {
+                       svgMinuteCircle.addEventListener('click', this._onSelectMinute.bind(this));
+                    }
+
+                    svgClockElement.appendChild(svgMinuteCircle)
+                 }
+
+                 for (var i = 0; i < 60; i++)
+                 {
+                    if ((i % 5) === 0)
+                    {
+                       var x = -(162 * (Math.sin(-Math.PI * 2 * (i / 60))));
+                       var y = -(162 * (Math.cos(-Math.PI * 2 * (i / 60))));
+
+                       var color = ((this.currentDate.format("m") == i) ? "#fff" : '#000');
+
+                       var svgMinuteText = this.createSVGElement("text", {'id': 'tm-' + i, 'class': 'dtp-select-minute-text', 'text-anchor': 'middle', 'style': 'cursor:pointer', 'font-weight': 'bold', 'font-size': '20', x: x, y: y + 7, fill: color, 'data-minute': i});
+                       svgMinuteText.textContent = i;
+
+                       if (!this.toggleTime(i, false))
+                       {
+                          svgMinuteText.className += " disabled";
+                          svgMinuteText.setAttribute('fill', '#bdbdbd');
+                       } else
+                       {
+                          svgMinuteText.addEventListener('click', this._onSelectMinute.bind(this));
+                       }
+
+                       svgClockElement.appendChild(svgMinuteText)
+                    }
+                 }
+
+                 this._centerBox();
+              },
+              animateHands: function ()
+              {
+                 var H = this.currentDate.hour();
+                 var M = this.currentDate.minute();
+
+                 var hh = this.$dtpElement.find('.hour-hand');
+                 hh[0].setAttribute('transform', "rotate(" + 360 * H / 12 + ")");
+
+                 var mh = this.$dtpElement.find('.minute-hand');
+                 mh[0].setAttribute('transform', "rotate(" + 360 * M / 60 + ")");
+              },
+              createSVGClock: function (isHour)
+              {
+                 var hl = ((this.params.shortTime) ? -120 : -90);
+
+                 var svgElement = this.createSVGElement("svg", {class: 'svg-clock', viewBox: '0,0,400,400'});
+                 var svgGElement = this.createSVGElement("g", {transform: 'translate(200,200) '});
+                 var svgClockFace = this.createSVGElement("circle", {r: '192', fill: '#eee', stroke: '#bdbdbd', 'stroke-width': 2});
+                 var svgClockCenter = this.createSVGElement("circle", {r: '15', fill: '#757575'});
+
+                 svgGElement.appendChild(svgClockFace)
+
+                 if (isHour)
+                 {
+                    var svgMinuteHand = this.createSVGElement("line", {class: 'minute-hand', x1: 0, y1: 0, x2: 0, y2: -150, stroke: '#bdbdbd', 'stroke-width': 2});
+                    var svgHourHand = this.createSVGElement("line", {class: 'hour-hand', x1: 0, y1: 0, x2: 0, y2: hl, stroke: '#8BC34A', 'stroke-width': 8});
+
+                    svgGElement.appendChild(svgMinuteHand);
+                    svgGElement.appendChild(svgHourHand);
+                 } else
+                 {
+                    var svgMinuteHand = this.createSVGElement("line", {class: 'minute-hand', x1: 0, y1: 0, x2: 0, y2: -150, stroke: '#8BC34A', 'stroke-width': 2});
+                    var svgHourHand = this.createSVGElement("line", {class: 'hour-hand', x1: 0, y1: 0, x2: 0, y2: hl, stroke: '#bdbdbd', 'stroke-width': 8});
+
+                    svgGElement.appendChild(svgHourHand);
+                    svgGElement.appendChild(svgMinuteHand);
+                 }
+
+                 svgGElement.appendChild(svgClockCenter)
+
+                 svgElement.appendChild(svgGElement)
+
+                 this.$dtpElement.find("#dtp-svg-clock").empty();
+                 this.$dtpElement.find("#dtp-svg-clock")[0].appendChild(svgElement);
+
+                 this.animateHands();
+
+                 return svgGElement;
+              },
+              createSVGElement: function (tag, attrs)
+              {
+                 var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+                 for (var k in attrs)
+                 {
+                    el.setAttribute(k, attrs[k]);
+                 }
+                 return el;
+              },
+              isAfterMinDate: function (date, checkHour, checkMinute)
+              {
+                 var _return = true;
+
+                 if (typeof (this.minDate) !== 'undefined' && this.minDate !== null)
+                 {
+                    var _minDate = moment(this.minDate);
+                    var _date = moment(date);
+
+                    if (!checkHour && !checkMinute)
+                    {
+                       _minDate.hour(0);
+                       _minDate.minute(0);
+
+                       _date.hour(0);
+                       _date.minute(0);
+                    }
+
+                    _minDate.second(0);
+                    _date.second(0);
+                    _minDate.millisecond(0);
+                    _date.millisecond(0);
+
+                    if (!checkMinute)
+                    {
+                       _date.minute(0);
+                       _minDate.minute(0);
+
+                       _return = (parseInt(_date.format("X")) >= parseInt(_minDate.format("X")));
+                    } else
+                    {
+                       _return = (parseInt(_date.format("X")) >= parseInt(_minDate.format("X")));
+                    }
+                 }
+
+                 return _return;
+              },
+              isBeforeMaxDate: function (date, checkTime, checkMinute)
+              {
+                 var _return = true;
+
+                 if (typeof (this.maxDate) !== 'undefined' && this.maxDate !== null)
+                 {
+                    var _maxDate = moment(this.maxDate);
+                    var _date = moment(date);
+
+                    if (!checkTime && !checkMinute)
+                    {
+                       _maxDate.hour(0);
+                       _maxDate.minute(0);
+
+                       _date.hour(0);
+                       _date.minute(0);
+                    }
+
+                    _maxDate.second(0);
+                    _date.second(0);
+                    _maxDate.millisecond(0);
+                    _date.millisecond(0);
+
+                    if (!checkMinute)
+                    {
+                       _date.minute(0);
+                       _maxDate.minute(0);
+
+                       _return = (parseInt(_date.format("X")) <= parseInt(_maxDate.format("X")));
+                    } else
+                    {
+                       _return = (parseInt(_date.format("X")) <= parseInt(_maxDate.format("X")));
+                    }
+                 }
+
+                 return _return;
+              },
+              rotateElement: function (el, deg)
+              {
+                 $(el).css
+                         ({
+                            WebkitTransform: 'rotate(' + deg + 'deg)',
+                            '-moz-transform': 'rotate(' + deg + 'deg)'
+                         });
+              },
+              showDate: function (date)
+              {
+                 if (date)
+                 {
+                    this.$dtpElement.find('.dtp-actual-day').html(date.locale(this.params.lang).format('dddd'));
+                    this.$dtpElement.find('.dtp-actual-month').html(date.locale(this.params.lang).format('MMM').toUpperCase());
+                    this.$dtpElement.find('.dtp-actual-num').html(date.locale(this.params.lang).format('DD'));
+                    this.$dtpElement.find('.dtp-actual-year').html(date.locale(this.params.lang).format('YYYY'));
+                 }
+              },
+              showTime: function (date)
+              {
+                 if (date)
+                 {
+                    var minutes = date.minute();
+                    var content = ((this.params.shortTime) ? date.format('hh') : date.format('HH')) + ':' + ((minutes.toString().length == 2) ? minutes : '0' + minutes) + ((this.params.shortTime) ? ' ' + date.format('A') : '');
+
+                    if (this.params.date)
+                       this.$dtpElement.find('.dtp-actual-time').html(content);
+                    else
+                    {
+                       if (this.params.shortTime)
+                          this.$dtpElement.find('.dtp-actual-day').html(date.format('A'));
+                       else
+                          this.$dtpElement.find('.dtp-actual-day').html('&nbsp;');
+
+                       this.$dtpElement.find('.dtp-actual-maxtime').html(content);
+                    }
+                 }
+              },
+              selectDate: function (date)
+              {
+                 if (date)
+                 {
+                    this.currentDate.date(date);
+
+                    this.showDate(this.currentDate);
+                    this.$element.trigger('dateSelected', this.currentDate);
+                 }
+              },
+              generateCalendar: function (date)
+              {
+                 var _calendar = {};
+
+                 if (date !== null)
+                 {
+                    var startOfMonth = moment(date).locale(this.params.lang).startOf('month');
+                    var endOfMonth = moment(date).locale(this.params.lang).endOf('month');
+
+                    var iNumDay = startOfMonth.format('d');
+
+                    _calendar.week = this.days;
+                    _calendar.days = [];
+
+                    for (var i = startOfMonth.date(); i <= endOfMonth.date(); i++)
+                    {
+                       if (i === startOfMonth.date())
+                       {
+                          var iWeek = _calendar.week.indexOf(iNumDay.toString());
+                          if (iWeek > 0)
+                          {
+                             for (var x = 0; x < iWeek; x++)
+                             {
+                                _calendar.days.push(0);
+                             }
+                          }
+                       }
+                       _calendar.days.push(moment(startOfMonth).locale(this.params.lang).date(i));
+                    }
+                 }
+
+                 return _calendar;
+              },
+              constructHTMLCalendar: function (date, calendar)
+              {
+                 var _template = "";
+
+                 _template += '<div class="dtp-picker-month">' + date.locale(this.params.lang).format('MMMM YYYY') + '</div>';
+                 _template += '<table class="table dtp-picker-days"><thead>';
+                 for (var i = 0; i < calendar.week.length; i++)
+                 {
+                    _template += '<th>' + moment(parseInt(calendar.week[i]), "d").locale(this.params.lang).format("dd").substring(0, 1) + '</th>';
+                 }
+
+                 _template += '</thead>';
+                 _template += '<tbody><tr>';
+
+                 for (var i = 0; i < calendar.days.length; i++)
+                 {
+                    if (i % 7 == 0)
+                       _template += '</tr><tr>';
+                    _template += '<td data-date="' + moment(calendar.days[i]).locale(this.params.lang).format("D") + '">';
+                    if (calendar.days[i] != 0)
+                    {
+                        if (this.isBeforeMaxDate(moment(calendar.days[i]), false, false) === false
+                            || this.isAfterMinDate(moment(calendar.days[i]), false, false) === false
+                            || this.params.disabledDays.indexOf(calendar.days[i].isoWeekday()) !== -1)
+                        {
+                            _template += '<span class="dtp-select-day">' + moment(calendar.days[i]).locale(this.params.lang).format("DD") + '</span>';
+                        } else
+                        {
+                            if (moment(calendar.days[i]).locale(this.params.lang).format("DD") === moment(this.currentDate).locale(this.params.lang).format("DD"))
+                            {
+                                _template += '<a href="javascript:void(0);" class="dtp-select-day selected">' + moment(calendar.days[i]).locale(this.params.lang).format("DD") + '</a>';
+                            } else
+                            {
+                                _template += '<a href="javascript:void(0);" class="dtp-select-day">' + moment(calendar.days[i]).locale(this.params.lang).format("DD") + '</a>';
+                            }
+                        }
+
+                        _template += '</td>';
+                    }
+                 }
+                 _template += '</tr></tbody></table>';
+
+                 return _template;
+              },
+              setName: function ()
+              {
+                 var text = "";
+                 var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+                 for (var i = 0; i < 5; i++)
+                 {
+                    text += possible.charAt(Math.floor(Math.random() * possible.length));
+                 }
+
+                 return text;
+              },
+              isPM: function ()
+              {
+                 return this.$dtpElement.find('a.dtp-meridien-pm').hasClass('selected');
+              },
+              setElementValue: function ()
+              {
+                 this.$element.trigger('beforeChange', this.currentDate);
+                 if (typeof ($.material) !== 'undefined')
+                 {
+                    this.$element.removeClass('empty');
+                 }
+                 this.$element.val(moment(this.currentDate).locale(this.params.lang).format(this.params.format));
+                 this.$element.trigger('change', this.currentDate);
+              },
+              toggleButtons: function (date)
+              {
+                 if (date && date.isValid())
+                 {
+                    var startOfMonth = moment(date).locale(this.params.lang).startOf('month');
+                    var endOfMonth = moment(date).locale(this.params.lang).endOf('month');
+
+                    if (!this.isAfterMinDate(startOfMonth, false, false))
+                    {
+                       this.$dtpElement.find('a.dtp-select-month-before').addClass('invisible');
+                    } else
+                    {
+                       this.$dtpElement.find('a.dtp-select-month-before').removeClass('invisible');
+                    }
+
+                    if (!this.isBeforeMaxDate(endOfMonth, false, false))
+                    {
+                       this.$dtpElement.find('a.dtp-select-month-after').addClass('invisible');
+                    } else
+                    {
+                       this.$dtpElement.find('a.dtp-select-month-after').removeClass('invisible');
+                    }
+
+                    var startOfYear = moment(date).locale(this.params.lang).startOf('year');
+                    var endOfYear = moment(date).locale(this.params.lang).endOf('year');
+
+                    if (!this.isAfterMinDate(startOfYear, false, false))
+                    {
+                       this.$dtpElement.find('a.dtp-select-year-before').addClass('invisible');
+                    } else
+                    {
+                       this.$dtpElement.find('a.dtp-select-year-before').removeClass('invisible');
+                    }
+
+                    if (!this.isBeforeMaxDate(endOfYear, false, false))
+                    {
+                       this.$dtpElement.find('a.dtp-select-year-after').addClass('invisible');
+                    } else
+                    {
+                       this.$dtpElement.find('a.dtp-select-year-after').removeClass('invisible');
+                    }
+                 }
+              },
+              toggleTime: function (value, isHours)
+              {
+                 var result = false;
+
+                 if (isHours)
+                 {
+                    var _date = moment(this.currentDate);
+                    _date.hour(this.convertHours(value)).minute(0).second(0);
+
+                    result = !(this.isAfterMinDate(_date, true, false) === false || this.isBeforeMaxDate(_date, true, false) === false);
+                 } else
+                 {
+                    var _date = moment(this.currentDate);
+                    _date.minute(value).second(0);
+
+                    result = !(this.isAfterMinDate(_date, true, true) === false || this.isBeforeMaxDate(_date, true, true) === false);
+                 }
+
+                 return result;
+              },
+              _attachEvent: function (el, ev, fn)
+              {
+                 el.on(ev, null, null, fn);
+                 this._attachedEvents.push([el, ev, fn]);
+              },
+              _detachEvents: function ()
+              {
+                 for (var i = this._attachedEvents.length - 1; i >= 0; i--)
+                 {
+                    this._attachedEvents[i][0].off(this._attachedEvents[i][1], this._attachedEvents[i][2]);
+                    this._attachedEvents.splice(i, 1);
+                 }
+              },
+              _fireCalendar: function ()
+              {
+                 this.currentView = 0;
+                 this.$element.blur();
+
+                 this.initDates();
+
+                 this.show();
+
+                 if (this.params.date)
+                 {
+                    this.$dtpElement.find('.dtp-date').removeClass('hidden');
+                    this.initDate();
+                 } else
+                 {
+                    if (this.params.time)
+                    {
+                       this.$dtpElement.find('.dtp-time').removeClass('hidden');
+                       this.initHours();
+                    }
+                 }
+              },
+              _onBackgroundClick: function (e)
+              {
+                 e.stopPropagation();
+                 this.hide();
+              },
+              _onElementClick: function (e)
+              {
+                 e.stopPropagation();
+              },
+              _onKeydown: function (e)
+              {
+                 if (e.which === 27)
+                 {
+                    this.hide();
+                 }
+              },
+              _onCloseClick: function ()
+              {
+                 this.hide();
+              },
+              _onClearClick: function ()
+              {
+                 this.currentDate = null;
+                 this.$element.trigger('beforeChange', this.currentDate);
+                 this.hide();
+                 if (typeof ($.material) !== 'undefined')
+                 {
+                    this.$element.addClass('empty');
+                 }
+                 this.$element.val('');
+                 this.$element.trigger('change', this.currentDate);
+              },
+              _onNowClick: function ()
+              {
+                 this.currentDate = moment();
+
+                 if (this.params.date === true)
+                 {
+                    this.showDate(this.currentDate);
+
+                    if (this.currentView === 0)
+                    {
+                       this.initDate();
+                    }
+                 }
+
+                 if (this.params.time === true)
+                 {
+                    this.showTime(this.currentDate);
+
+                    switch (this.currentView)
+                    {
+                       case 1 :
+                          this.initHours();
+                          break;
+                       case 2 :
+                          this.initMinutes();
+                          break;
+                    }
+
+                    this.animateHands();
+                 }
+              },
+              _onOKClick: function ()
+              {
+                 switch (this.currentView)
+                 {
+                    case 0:
+                       if (this.params.time === true)
+                       {
+                          this.initHours();
+                       } else
+                       {
+                          this.setElementValue();
+                          this.hide();
+                       }
+                       break;
+                    case 1:
+                       this.initMinutes();
+                       break;
+                    case 2:
+                       this.setElementValue();
+                       this.hide();
+                       break;
+                 }
+              },
+              _onCancelClick: function ()
+              {
+                 if (this.params.time)
+                 {
+                    switch (this.currentView)
+                    {
+                       case 0:
+                          this.hide();
+                          break;
+                       case 1:
+                          if (this.params.date)
+                          {
+                             this.initDate();
+                          } else
+                          {
+                             this.hide();
+                          }
+                          break;
+                       case 2:
+                          this.initHours();
+                          break;
+                    }
+                 } else
+                 {
+                    this.hide();
+                 }
+              },
+              _onMonthBeforeClick: function ()
+              {
+                 this.currentDate.subtract(1, 'months');
+                 this.initDate(this.currentDate);
+                  this._closeYearPicker();
+              },
+              _onMonthAfterClick: function ()
+              {
+                 this.currentDate.add(1, 'months');
+                 this.initDate(this.currentDate);
+                  this._closeYearPicker();
+              },
+              _onYearBeforeClick: function ()
+              {
+                 this.currentDate.subtract(1, 'years');
+                 this.initDate(this.currentDate);
+                  this._closeYearPicker();
+              },
+              _onYearAfterClick: function ()
+              {
+                 this.currentDate.add(1, 'years');
+                 this.initDate(this.currentDate);
+                  this._closeYearPicker();
+              },
+               refreshYearItems:function () {
+                  var curYear=this.currentDate.year(),midYear=this.midYear;
+                   var minYear=1850;
+                   if (typeof (this.minDate) !== 'undefined' && this.minDate !== null){
+                       minYear=moment(this.minDate).year();
+                   }
+
+                   var maxYear=2200;
+                   if (typeof (this.maxDate) !== 'undefined' && this.maxDate !== null){
+                       maxYear=moment(this.maxDate).year();
+                   }
+
+                   this.$dtpElement.find(".dtp-picker-year .invisible").removeClass("invisible");
+                   this.$dtpElement.find(".year-picker-item").each(function (i, el) {
+                       var newYear = midYear - 3 + i;
+                       $(el).attr("data-year", newYear).text(newYear).data("year", newYear);
+                       if (curYear == newYear) {
+                           $(el).addClass("active");
+                       } else {
+                           $(el).removeClass("active");
+                       }
+                       if(newYear<minYear || newYear>maxYear){
+                           $(el).addClass("invisible")
+                       }
+                   });
+                   if(minYear>=midYear-3){
+                       this.$dtpElement.find(".dtp-select-year-range.before").addClass('invisible');
+                   }
+                   if(maxYear<=midYear+3){
+                       this.$dtpElement.find(".dtp-select-year-range.after").addClass('invisible');
+                   }
+
+                   this.$dtpElement.find(".dtp-select-year-range").data("mid", midYear);
+               },
+               _onActualYearClick:function(){
+                  if(this.params.year){
+                      if(this.$dtpElement.find('.dtp-picker-year.hidden').length>0) {
+                          this.$dtpElement.find('.dtp-picker-datetime').addClass("hidden");
+                          this.$dtpElement.find('.dtp-picker-calendar').addClass("hidden");
+                          this.$dtpElement.find('.dtp-picker-year').removeClass("hidden");
+                          this.midYear = this.currentDate.year();
+                          this.refreshYearItems();
+                      }else{
+                          this._closeYearPicker();
+                      }
+                  }
+               },
+               _onYearRangeBeforeClick:function(){
+                   this.midYear-=7;
+                   this.refreshYearItems();
+               },
+               _onYearRangeAfterClick:function(){
+                   this.midYear+=7;
+                   this.refreshYearItems();
+               },
+               _onYearItemClick:function (e) {
+                   var newYear = $(e.currentTarget).data('year');
+                   var oldYear = this.currentDate.year();
+                   var diff = newYear - oldYear;
+                   this.currentDate.add(diff, 'years');
+                   this.initDate(this.currentDate);
+
+                   this._closeYearPicker();
+                   this.$element.trigger("yearSelected",this.currentDate);
+               },
+               _closeYearPicker:function(){
+                   this.$dtpElement.find('.dtp-picker-calendar').removeClass("hidden");
+                   this.$dtpElement.find('.dtp-picker-year').addClass("hidden");
+               },
+               enableYearPicker:function () {
+                    this.params.year=true;
+                    this.$dtpElement.find(".dtp-actual-year").reomveClass("disabled");
+               },
+               disableYearPicker:function () {
+                   this.params.year=false;
+                   this.$dtpElement.find(".dtp-actual-year").addClass("disabled");
+                   this._closeYearPicker();
+               },
+              _onSelectDate: function (e)
+              {
+                 this.$dtpElement.find('a.dtp-select-day').removeClass('selected');
+                 $(e.currentTarget).addClass('selected');
+
+                 this.selectDate($(e.currentTarget).parent().data("date"));
+
+                 if (this.params.switchOnClick === true && this.params.time === true)
+                    setTimeout(this.initHours.bind(this), 200);
+
+                 if(this.params.switchOnClick === true && this.params.time === false) {
+                    setTimeout(this._onOKClick.bind(this), 200);
+                 }
+
+              },
+              _onSelectHour: function (e)
+              {
+                 if (!$(e.target).hasClass('disabled'))
+                 {
+                    var value = $(e.target).data('hour');
+                    var parent = $(e.target).parent();
+
+                    var h = parent.find('.dtp-select-hour');
+                    for (var i = 0; i < h.length; i++)
+                    {
+                       $(h[i]).attr('fill', 'transparent');
+                    }
+                    var th = parent.find('.dtp-select-hour-text');
+                    for (var i = 0; i < th.length; i++)
+                    {
+                       $(th[i]).attr('fill', '#000');
+                    }
+
+                    $(parent.find('#h-' + value)).attr('fill', '#8BC34A');
+                    $(parent.find('#th-' + value)).attr('fill', '#fff');
+
+                    this.currentDate.hour(parseInt(value));
+
+                    if (this.params.shortTime === true && this.isPM())
+                    {
+                       this.currentDate.add(12, 'hours');
+                    }
+
+                    this.showTime(this.currentDate);
+
+                    this.animateHands();
+
+                    if (this.params.switchOnClick === true)
+                       setTimeout(this.initMinutes.bind(this), 200);
+                 }
+              },
+              _onSelectMinute: function (e)
+              {
+                 if (!$(e.target).hasClass('disabled'))
+                 {
+                    var value = $(e.target).data('minute');
+                    var parent = $(e.target).parent();
+
+                    var m = parent.find('.dtp-select-minute');
+                    for (var i = 0; i < m.length; i++)
+                    {
+                       $(m[i]).attr('fill', 'transparent');
+                    }
+                    var tm = parent.find('.dtp-select-minute-text');
+                    for (var i = 0; i < tm.length; i++)
+                    {
+                       $(tm[i]).attr('fill', '#000');
+                    }
+
+                    $(parent.find('#m-' + value)).attr('fill', '#8BC34A');
+                    $(parent.find('#tm-' + value)).attr('fill', '#fff');
+
+                    this.currentDate.minute(parseInt(value));
+                    this.showTime(this.currentDate);
+
+                    this.animateHands();
+
+                    if (this.params.switchOnClick === true)
+                       setTimeout(function ()
+                       {
+                          this.setElementValue();
+                          this.hide();
+                       }.bind(this), 200);
+                 }
+              },
+              _onSelectAM: function (e)
+              {
+                 $('.dtp-actual-meridien').find('a').removeClass('selected');
+                 $(e.currentTarget).addClass('selected');
+
+                 if (this.currentDate.hour() >= 12)
+                 {
+                    if (this.currentDate.subtract(12, 'hours'))
+                       this.showTime(this.currentDate);
+                 }
+                 this.toggleTime((this.currentView === 1));
+              },
+              _onSelectPM: function (e)
+              {
+                 $('.dtp-actual-meridien').find('a').removeClass('selected');
+                 $(e.currentTarget).addClass('selected');
+
+                 if (this.currentDate.hour() < 12)
+                 {
+                    if (this.currentDate.add(12, 'hours'))
+                       this.showTime(this.currentDate);
+                 }
+                 this.toggleTime((this.currentView === 1));
+              },
+              _hideCalendar: function() {
+                 this.$dtpElement.find('.dtp-picker-calendar').addClass('hidden');
+              },
+              convertHours: function (h)
+              {
+                 var _return = h;
+
+                 if (this.params.shortTime === true)
+                 {
+                    if ((h < 12) && this.isPM())
+                    {
+                       _return += 12;
+                    }
+                 }
+
+                 return _return;
+              },
+              setDate: function (date)
+              {
+                 this.params.currentDate = date;
+                 this.initDates();
+              },
+              setMinDate: function (date)
+              {
+                 this.params.minDate = date;
+                 this.initDates();
+              },
+              setMaxDate: function (date)
+              {
+                 this.params.maxDate = date;
+                 this.initDates();
+              },
+              destroy: function ()
+              {
+                 this._detachEvents();
+                 this.$dtpElement.remove();
+              },
+              show: function ()
+              {
+                 this.$dtpElement.removeClass('hidden');
+                 this._attachEvent($(window), 'keydown', this._onKeydown.bind(this));
+                 this._centerBox();
+                 this.$element.trigger('open');
+                 if (this.params.monthPicker === true)
+                 {
+                    this._hideCalendar();
+                 }
+              },
+              hide: function ()
+              {
+                 $(window).off('keydown', null, null, this._onKeydown.bind(this));
+                 this.$dtpElement.addClass('hidden');
+                 this.$element.trigger('close');
+              },
+              _centerBox: function ()
+              {
+                 var h = (this.$dtpElement.height() - this.$dtpElement.find('.dtp-content').height()) / 2;
+                 this.$dtpElement.find('.dtp-content').css('marginLeft', -(this.$dtpElement.find('.dtp-content').width() / 2) + 'px');
+                 this.$dtpElement.find('.dtp-content').css('top', h + 'px');
+              },
+              enableDays: function ()
+              {
+                 var enableDays = this.params.enableDays;
+                 if (enableDays) {
+                    $(".dtp-picker-days tbody tr td").each(function () {
+                       if (!(($.inArray($(this).index(), enableDays)) >= 0)) {
+                          $(this).find('a').css({
+                             "background": "#e3e3e3",
+                             "cursor": "no-drop",
+                             "opacity": "0.5"
+                          }).off("click");
+                       }
+                    });
+                 }
+              }
+
+           };
+})(jQuery, moment);
+/* End AMD wrapper function. */
+}).apply(null, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+/***/ }),
+/* 300 */
+/***/ (function(module, exports, __webpack_require__) {
+
 /* WEBPACK VAR INJECTION */(function(jquery) {Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
 
-var _moment = _interopRequireDefault(__webpack_require__(47));
+var _moment = _interopRequireDefault(__webpack_require__(45));
 
 var _DateTimeBase = _interopRequireDefault(__webpack_require__(198));
 
-var _DateTimeMDTemplate = _interopRequireDefault(__webpack_require__(300));
+var _DateTimeMDTemplate = _interopRequireDefault(__webpack_require__(301));
 
 var _declare = _interopRequireDefault(__webpack_require__(14));
 
@@ -81403,16 +82720,16 @@ exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5)))
 
 /***/ }),
-/* 300 */
+/* 301 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"rdformsDateValue rdformsFieldInput\" xmlns=\"http://www.w3.org/1999/html\">\n    <div class=\"rdformsDatepicker form-group input\" style=\"padding-right: 15px;\">\n        <input class=\"form-control dateControl dateInput\" type=\"text\" data-dojo-attach-point=\"cal\" placeholder=\"2017-01-01\" />\n        <span >\n            <button type=\"button\" class=\"btn btn-fab btn-fab-mini\" data-dojo-attach-point=\"dateButton\"><span class=\"fa fa-calendar\"></span>\n                <div class=\"ripple-container\"></div></button>\n        </span>\n    </div>\n    <div class=\"form-group input\" style=\"display:none;\">\n        <input type=\"text\" class=\"form-control timeInput\" placeholder=\"23:59\" data-dojo-attach-point=\"timeInput\"/>\n        <span>\n            <button type=\"button\" class=\"btn btn-fab btn-fab-mini\" data-dojo-attach-point=\"timeButton\"><span class=\"fa fa-clock-o\"></span></button>\n        </span>\n    </div>\n    <div class=\"form-group input\" style=\"display:none;\">\n        <input type=\"text\" class=\"form-control yearInput\" placeholder=\"1999\" data-dojo-attach-point=\"yearInput\"/>\n    </div>\n\n    <select class=\"form-control dateControl\" data-dojo-attach-point=\"dateControl\">\n        <option value=\"Year\">${messages.date_year}</option>\n        <option value=\"Date\" selected=\"true\">${messages.date_date}</option>\n        <option value=\"DateTime\">${messages.date_date_and_time}</option>\n    </select>\n</div>"
 
 /***/ }),
-/* 301 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(jquery) {__webpack_require__(302);
+/* WEBPACK VAR INJECTION */(function(jquery) {__webpack_require__(303);
 
 var _renderingContext = _interopRequireDefault(__webpack_require__(31));
 
@@ -81499,7 +82816,7 @@ _renderingContext.default.renderSelect = function (fieldDiv, binding, context) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5)))
 
 /***/ }),
-/* 302 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -81523,7 +82840,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 (function(root, factory) {
 	if (true) {
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(5),__webpack_require__(303),__webpack_require__(304)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(5),__webpack_require__(304),__webpack_require__(305)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(null, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -84758,7 +86075,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 }));
 
 /***/ }),
-/* 303 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -85263,7 +86580,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(5)))
 
 /***/ }),
-/* 304 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -85403,11 +86720,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 }));
 
 /***/ }),
-/* 305 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(306);
+var content = __webpack_require__(307);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -85428,7 +86745,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 306 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(53)(false);
@@ -85442,11 +86759,11 @@ exports.push([module.i, "/*\n\nTo get this list of colors inject jQuery at http:
 
 
 /***/ }),
-/* 307 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(308);
+var content = __webpack_require__(309);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -85467,7 +86784,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 308 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(53)(false);
@@ -85481,11 +86798,11 @@ exports.push([module.i, ".withripple {\n  position: relative;\n}\n.ripple-contai
 
 
 /***/ }),
-/* 309 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(310);
+var content = __webpack_require__(311);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -85506,7 +86823,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 310 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(53)(false);
@@ -85520,11 +86837,11 @@ exports.push([module.i, ".dtp { position: fixed; top: 0; left: 0; right: 0; bott
 
 
 /***/ }),
-/* 311 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(312);
+var content = __webpack_require__(313);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -85545,7 +86862,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 312 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(53)(false);
@@ -85559,7 +86876,7 @@ exports.push([module.i, ".rdforms .form-group {\n    display: inline;\n}\n\n.rdf
 
 
 /***/ }),
-/* 313 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports, "__esModule", {
@@ -85569,7 +86886,7 @@ exports.default = void 0;
 
 var _lodashEs = __webpack_require__(135);
 
-var isNode = __webpack_require__(314);
+var isNode = __webpack_require__(315);
 
 var fetchBundle = function fetchBundle(b) {
   return fetch(b).then(function (r) {
@@ -85608,7 +86925,7 @@ var _default = function _default(itemStore) {
   if ((0, _lodashEs.endsWith)(bundlePaths[0], '.json')) {
     if (isNode) {
       var bundles = bundlePaths.map(function (b) {
-        return __webpack_require__(315)(b);
+        return __webpack_require__(316)(b);
       });
       registerBundles(bundles);
     } else {
@@ -85628,7 +86945,7 @@ var _default = function _default(itemStore) {
 exports.default = _default;
 
 /***/ }),
-/* 314 */
+/* 315 */
 /***/ (function(module, exports) {
 
 module.exports = false;
@@ -85640,7 +86957,7 @@ try {
 
 
 /***/ }),
-/* 315 */
+/* 316 */
 /***/ (function(module, exports) {
 
 function webpackEmptyContext(req) {
@@ -85651,7 +86968,7 @@ function webpackEmptyContext(req) {
 webpackEmptyContext.keys = function() { return []; };
 webpackEmptyContext.resolve = webpackEmptyContext;
 module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 315;
+webpackEmptyContext.id = 316;
 
 /***/ })
 /******/ ]);

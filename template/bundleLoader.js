@@ -4,8 +4,9 @@ define([
     "dojo/json",
     "dojo/promise/all",
     "dojo/request",
-    "dojo/has"
-], function (array, json, all, request, has) {
+    "dojo/has",
+    "require",
+], function (array, json, all, request, has, require) {
 
     var endsWith = function(str, suffix) {
         return str.indexOf(suffix, str.length - suffix.length) !== -1;

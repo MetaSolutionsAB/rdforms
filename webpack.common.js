@@ -48,8 +48,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        // exclude: /node_modules\/(?!(rdfjson|esi18n|store|)\/).*/,
-        exclude: /node_modules/,
+        exclude: /node_modules\/(?!(rdfjson|esi18n|store|)\/).*/,
         use: {
           loader: 'babel-loader',
           options: {

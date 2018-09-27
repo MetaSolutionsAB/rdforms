@@ -6,21 +6,24 @@
   "repository": "https://bitbucket.org/metasolutions/rdforms.git",
   "license": "MIT",
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "babel-loader": "^8.0.2",
     "bootstrap": "^3.3.7",
     "bootstrap-material-datetimepicker": "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#amd",
     "bootstrap-material-design": "https://bitbucket.org/metasolutions/bootstrap-material-design.git#amd",
     "detect-node": "^2.0.3",
-    "esi18n": "https://bitbucket.org/metasolutions/esi18n#develop",
-    "nls-loader": "https://bitbucket.org/metasolutions/nls-loader#master",
     "dijit": "^1.13.0",
     "dojo": "^1.13.0",
     "dojo-util": "^1.13.0",
+    "esi18n": "https://bitbucket.org/metasolutions/esi18n#develop",
     "font-awesome": "^4.7.0",
     "fuelux": "^3.16.6",
     "jquery": "^3.3.1",
     "jquery-mousewheel": "^3.1.13",
     "lodash-es": "^4.17.10",
     "moment": "^2.22.2",
+    "nls-loader": "https://bitbucket.org/metasolutions/nls-loader#master",
     "popper.js": "^1.12.9",
     "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#webpack",
     "select2": "^4.0.6-rc.1",
@@ -28,10 +31,9 @@
     "sizzle": "^2.3.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.54",
-    "@babel/core": "^7.0.0-beta.54",
-    "@babel/preset-env": "^7.0.0-beta.54",
-    "babel-loader": "^8.0.0-beta",
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
     "babel-minify-webpack-plugin": "^0.3.1",
     "babili": "0.0.12",
     "clean-webpack-plugin": "^0.1.18",
@@ -63,6 +65,8 @@
   },
   "scripts": {
     "build": "webpack --display-modules --config webpack.prod.js",
-    "start": "webpack-serve --config ./webpack.dev.js --require"
+    "build:dev": "webpack --config ./webpack.dev.js",
+    "start": "webpack-serve --config ./webpack.dev.js --require",
+    "examples": "webpack --display-modules --config ./webpack.examples.js"
   }
 }

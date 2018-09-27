@@ -1,5 +1,6 @@
 import './src/view/bmd/all'; // hard coded bmd
 
+export {default as renderingContext} from './src/view/renderingContext';
 export {default as ItemStore} from './src/template/ItemStore';
 export {default as bundleLoader} from './src/template/bundleLoader';
 export {default as Presenter} from './src/view/Presenter';

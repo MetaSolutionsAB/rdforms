@@ -23,7 +23,7 @@ export default (itemStore, bundlePaths = [], callback = null) => {
 
   if (endsWith(bundlePaths[0], '.json')) {
     if (isNode) {
-      const bundles = bundlePaths.map(b => require(b));
+      const bundles = bundlePaths.map(b => require(b)); // TODO @valentino use fetch (polyfill?) for node also
       registerBundles(bundles);
     } else {
       const bundlePromises = bundlePaths.map(fetchBundle);

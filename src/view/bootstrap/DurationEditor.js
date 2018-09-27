@@ -8,7 +8,7 @@ export default declare([_WidgetsInTemplateMixin, DurationPresenter], {
   regex: /^([\-\+])?P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:([0-9]+(?:\.[0-9]+)?)?S)?)?$/,
 
   buildRendering() {
-    this.inherited(arguments);
+    this.inherited('buildRendering', arguments);
     this.$years = jquery(this.yearsInput);
     this.$months = jquery(this.monthsInput);
     this.$days = jquery(this.daysInput);

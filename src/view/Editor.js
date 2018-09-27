@@ -120,7 +120,7 @@ export default declare(Presenter, {
 
   show(/* params */) {
     this._subEditors = [];
-    this.inherited(arguments);
+    this.inherited('show', arguments);
   },
 
   /**
@@ -200,7 +200,7 @@ export default declare(Presenter, {
     }
   },
   createRowNode(lastRowNode, binding, item) {
-    const newNode = this.inherited(arguments);
+    const newNode = this.inherited('createRowNode', arguments);
     if (item.getType() === 'choice' && typeof item.getProperty() === 'undefined') {
       const popular = engine.findPopularChoice(item, binding.getParent());
       if (popular) {

@@ -24,7 +24,7 @@ const DateTimeBase = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMi
   // Inherited methods
   //= ==================================================
   postCreate() {
-    this.inherited(arguments);
+    this.inherited('postCreate', arguments);
 
     // Datepicker
     this.initDatePicker();

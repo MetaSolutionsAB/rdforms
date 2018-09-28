@@ -42,6 +42,7 @@ define([
             "tree",
             "externalLink",
             "internalLink",
+            "noLink",
             "image",
             "label",
             "strictmatch",

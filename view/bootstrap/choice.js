@@ -42,27 +42,28 @@ define([
   presenters.itemtype('choice').register(choicify(
         (fieldDiv, binding, choice, desc) => {
           const item = binding.getItem();
-          if (item.hasStaticChoices() && !item.hasStyle('externalLink')) {
-            jquery('<div>')
+          let $n;
+          if ((item.hasStaticChoices() && !item.hasStyle('externalLink')) || item.hasStyle('noLink')) {
+            $n = jquery('<div>')
                     .attr('title', desc || choice.seeAlso || choice.value)
                     .html(utils.getLocalizedValue(choice.label).value)
                     .appendTo(fieldDiv);
           } else {
-            const $a = jquery('<a class="rdformsUrl">')
+            $n = jquery('<a class="rdformsUrl">')
                     .attr('href', choice.seeAlso || choice.value)
                     .attr('title', desc || choice.seeAlso || choice.value)
                     .html(utils.getLocalizedValue(choice.label).value)
                     .appendTo(fieldDiv);
             if (item.hasStyle('externalLink')) {
-              system.attachExternalLinkBehaviour($a[0], binding);
+              system.attachExternalLinkBehaviour($n[0], binding);
             } else {
-              system.attachLinkBehaviour($a[0], binding);
+              system.attachLinkBehaviour($n[0], binding);
             }
-            if (choice.load != null) {
-              choice.load(() => {
-                $a.html(utils.getLocalizedValue(choice.label).value);
-              });
-            }
+          }
+          if (choice.load != null) {
+            choice.load(() => {
+              $n.html(utils.getLocalizedValue(choice.label).value);
+            });
           }
         }));
 

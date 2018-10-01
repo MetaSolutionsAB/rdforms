@@ -73,7 +73,7 @@ define([
         .appendTo(fieldDiv);
       system.attachLinkBehaviour($a[0], parentBinding);
     } else {
-      jquery('<div>').toggleClass('rdformsField', context.inEditor).html(text).appendTo(fieldDiv);
+      jquery('<div>').toggleClass('rdformsField', context.inEditor === true).html(text).appendTo(fieldDiv);
     }
     if (binding.getItem().hasStyle('multiline')) {
       jquery(fieldDiv).toggleClass('rdformsMultiline', true);
@@ -103,7 +103,7 @@ define([
         } else {
           str = locale.format(d, { selector: 'date', datePattern: 'yyy' });
         }
-        jquery('<div>').html(str).toggleClass('rdformsField', context.inEditor).appendTo(fieldDiv);
+        jquery('<div>').html(str).toggleClass('rdformsField', context.inEditor === true).appendTo(fieldDiv);
       } catch (e) {
         console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 (potentially with time given after a 'T' character as well) but found '${data}' instead.`);
       }

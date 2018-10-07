@@ -51,5 +51,24 @@ define([
   er.itemtype('text').datatype('xsd:date').style('autoInitDate').register(autoDateE);
   er.itemtype('text').datatype('dcterms:W3CDTF').style('autoUpdateDate').register(autoDateE);
   er.itemtype('text').datatype('dcterms:W3CDTF').style('autoInitDate').register(autoDateE);
+
+  const autoValueFactory = (reg) => {
+    const autof = (fieldDiv, binding, context) => {
+      if (context.inEditor) {
+        const data = binding.getValue();
+        const path = item.getDeps();
+        if ((data == null || data === '') && path) {
+          const fromBinding = engine.findBindingRelativeToParentBinding(binding.getParent(), path);
+          const depBinding = engine.matchPathBelowBinding(fromBinding, path);
+          binding.setValue(depBinding.getValue());
+        }
+      }
+      reg.getComponentBefore(binding.getItem(), autof)(fieldDiv, binding, context);
+    };
+    return autof;
+  };
+
+  pr.itemtype('text').style('autoValue').register(autoValueFactory(pr));
+  er.itemtype('text').style('autoValue').register(autoValueFactory(er));
 });
 

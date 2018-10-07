@@ -59,7 +59,7 @@ define([
         getGist: function () {
             return utils.extractGist(this.getValue(), this.getItem().getValueTemplate());
         },
-        setGist: function (value) {
+        setGist: function (value, silent) {
             var vt = this.getItem().getValueTemplate();
             if (vt && value.length > 0) {
                 if (vt.indexOf("$1") === -1) {
@@ -67,7 +67,7 @@ define([
                 }
                 value = vt.replace("$1", value);
             }
-            this.setValue(value);
+            this.setValue(value, silent);
         },
 
         /**

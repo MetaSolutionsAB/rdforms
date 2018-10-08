@@ -137,7 +137,7 @@ const generateUUID = () => { // Public Domain/MIT
   });
 };
 
-export {
+export default {
   getLocalizedValue,
   getLocalizedMap,
   cloneArrayWithLabels,

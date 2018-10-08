@@ -1,4 +1,4 @@
-import {getLocalizedMap} from '../utils';
+import utils from '../utils';
 
 const generateUIDNotMoreThan1million = function () {
   return ("0000" + (Math.random() * Math.pow(36, 4) << 0).toString(36)).slice(-4)
@@ -19,7 +19,7 @@ const createURI = (item, parentBinding) => {
 
 const getFallbackChoice = (item, value, seeAlso, graph) => {
   if (item.getNodetype() === "URI" || item.getNodetype() === "RESOURCE") {
-    var lmap = getLocalizedMap(graph, value, item.getURIValueLabelProperties());
+    var lmap = utils.getLocalizedMap(graph, value, item.getURIValueLabelProperties());
     if (!lmap) {
       var lastHash = value.lastIndexOf("#"), lastSlash = value.lastIndexOf("/");
       if (lastHash > 0 || lastSlash > 0) {

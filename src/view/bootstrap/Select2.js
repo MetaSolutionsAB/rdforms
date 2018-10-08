@@ -1,8 +1,8 @@
 import renderingContext from '../renderingContext';
-import {getLocalizedValue} from '../../utils';
+import utils from '../../utils';
 
 define([
-  'select2/src/js/select2/data/array',
+  'select2/src/js/select2/data/array', // TODO
   './Select2QueryAdapter',
   'select2/src/js/jquery.select2',
 ], (ArrayAdapter, Select2QueryAdapter) => {
@@ -29,7 +29,7 @@ define([
     };
     context.setValue = (choice) => {
       $select.toggleClass('mismatch', choice.mismatch === true);
-      const label = getLocalizedValue(choice.label).value || '';
+      const label = utils.getLocalizedValue(choice.label).value || '';
       if ($select.find(`option[value='${choice.value}']`).length === 0) {
         $select.append(new Option(label, choice.value, true, true)).trigger('change');
         $select.trigger({
@@ -49,7 +49,7 @@ define([
       $select.toggleClass('mismatch', choice.mismatch);
       const $node = $select.next().find('.select2-selection__rendered');
       if (choice.description) {
-        $node.attr('title', getLocalizedValue(choice.description).value);
+        $node.attr('title', utils.getLocalizedValue(choice.description).value);
       }
     });
   };

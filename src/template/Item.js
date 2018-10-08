@@ -1,7 +1,7 @@
 import {namespaces as ns} from 'rdfjson';
-import {getLocalizedValue} from '../utils';
+import utils from '../utils';
 
-var itemCount = 0;
+let itemCount = 0;
 
 const setObjAttr = (obj, attr, value) => {
   if (value === null || typeof value === "undefined" || value === "" || (Array.isArray(value) && value.length === 0)) {
@@ -51,7 +51,7 @@ export default class Item {
       "autoUpdateDate",
       "autoUUID"
     ];
-    this._getLocalizedValue = getLocalizedValue;
+    this._getLocalizedValue = utils.getLocalizedValue;
   }
 
   //===================================================
@@ -109,7 +109,7 @@ export default class Item {
 
   getLabel(returnDetails, original) {
     var s = this.getSource(original);
-    return returnDetails ? getLocalizedValue(s.label) : getLocalizedValue(s.label).value;
+    return returnDetails ? utils.getLocalizedValue(s.label) : utils.getLocalizedValue(s.label).value;
   }
 
   setLabel(value, lang) {
@@ -129,7 +129,7 @@ export default class Item {
 
   getDescription(returnDetails, original) {
     var s = this.getSource(original);
-    return returnDetails ? getLocalizedValue(s.description) : getLocalizedValue(s.description).value;
+    return returnDetails ? utils.getLocalizedValue(s.description) : utils.getLocalizedValue(s.description).value;
   }
 
   setDescription(value, lang) {
@@ -149,7 +149,7 @@ export default class Item {
 
   getPlaceholder(returnDetails, original) {
     var s = this.getSource(original);
-    return returnDetails ? getLocalizedValue(s.placeholder) : getLocalizedValue(s.placeholder).value;
+    return returnDetails ? utils.getLocalizedValue(s.placeholder) : utils.getLocalizedValue(s.placeholder).value;
   }
 
   setPlaceholder(value, lang) {

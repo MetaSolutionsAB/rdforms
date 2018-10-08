@@ -1,7 +1,7 @@
 import 'selectize';
 import renderingContext from '../renderingContext';
 import system from '../../model/system';
-import {getLocalizedValue} from '../../utils';
+import utils from '../../utils';
 
 renderingContext.renderSelect = function (fieldDiv, binding, context) {
   const formgroup = jquery('<div class="form-group selectizeException">').appendTo(fieldDiv);
@@ -40,7 +40,7 @@ renderingContext.renderSelect = function (fieldDiv, binding, context) {
       context.chooser.search(binding.getItem(), query).then((choices) => {
         callback(choices.map(c => ({
           id: c.value,
-          text: getLocalizedValue(c.label).value || '',
+          text: utils.getLocalizedValue(c.label).value || '',
           choice: c,
         })));
       });
@@ -57,7 +57,7 @@ renderingContext.renderSelect = function (fieldDiv, binding, context) {
   };
   context.setValue = (choice) => {
     $select.toggleClass('mismatch', choice.mismatch === true);
-    const label = getLocalizedValue(choice.label).value || '';
+    const label = utils.getLocalizedValue(choice.label).value || '';
     const op = sel.options[choice.value];
     if (!op) {
       sel.addOption({id: choice.value, text: label, choice});

@@ -1,6 +1,6 @@
-import {extractGist} from '../utils';
+import utils from '../utils';
 
-var counter = 0;
+let counter = 0;
 
 /**
  * A binding is a pairing between an item and various RDF statement
@@ -139,7 +139,7 @@ export default class Binding {
     }
     var pattern = this._item.getPattern();
     if (pattern) {
-      value = extractGist(value, this.getItem().getValueTemplate());
+      value = utils.extractGist(value, this.getItem().getValueTemplate());
       return value !== undefined && value !== null && value !== "" &&
         (new RegExp("^" + pattern + "$")).test(value);
     } else {

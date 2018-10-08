@@ -7,9 +7,9 @@ import PropertyGroupBinding from './PropertyGroupBinding';
 import GroupBinding from './GroupBinding';
 import ValueBinding from './ValueBinding';
 import ChoiceBinding from './ChoiceBinding';
-import {extractGist, getLocalizedMap} from '../utils';
+import utils from '../utils';
 
-const kernel = require('dojo/_base/kernel');
+const kernel = require('dojo/_base/kernel'); // TODO replace
 
 // See public API at the bottom of this file.
 
@@ -379,7 +379,7 @@ _isNodeTypeMatch = (item, stmt) => {
 
 _isPatternMatch = (item, stmt) => {
   const pattern = item.getPattern();
-  const value = extractGist(stmt.getValue(), item.getValueTemplate());
+  const value = utils.extractGist(stmt.getValue(), item.getValueTemplate());
   if (typeof pattern !== 'undefined') {
     try {
       return (new RegExp(`^${pattern}$`)).test(value);
@@ -465,7 +465,7 @@ _findChoice = (item, obj, graph) => {
       return { value: obj, label: { '': obj }, mismatch: true };
     }
   } else {
-    const label = getLocalizedMap(graph, obj, item.getLabelProperties());
+    const label = utils.getLocalizedMap(graph, obj, item.getLabelProperties());
     const sa = graph.findFirstValue(obj, ChoiceBinding.seeAlso);
     if (label != null) {
       const choice = { label, value: obj };

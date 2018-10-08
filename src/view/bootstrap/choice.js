@@ -1,7 +1,7 @@
 import renderingContext from '../renderingContext';
 import system from '../../model/system';
 import {default as RadioButtonsEditor} from './RadioButtonsEditor';
-import {getLocalizedValue} from '../../utils';
+import utils from '../../utils';
 
 // -------------- Presenters ----------------
 const presenters = renderingContext.presenterRegistry;
@@ -13,7 +13,7 @@ const choicify = func => (fieldDiv, binding) => {
     return;
   }
   if (choice.description) {
-    desc = getLocalizedValue(choice.description).value;
+    desc = utils.getLocalizedValue(choice.description).value;
   }
   func(fieldDiv, binding, choice, desc);
 };
@@ -42,13 +42,13 @@ presenters.itemtype('choice').register(choicify(
     if (item.hasStaticChoices() && !item.hasStyle('externalLink')) {
       jquery('<div>')
         .attr('title', desc || choice.seeAlso || choice.value)
-        .html(getLocalizedValue(choice.label).value)
+        .html(utils.getLocalizedValue(choice.label).value)
         .appendTo(fieldDiv);
     } else {
       const $a = jquery('<a class="rdformsUrl">')
         .attr('href', choice.seeAlso || choice.value)
         .attr('title', desc || choice.seeAlso || choice.value)
-        .html(getLocalizedValue(choice.label).value)
+        .html(utils.getLocalizedValue(choice.label).value)
         .appendTo(fieldDiv);
       if (item.hasStyle('externalLink')) {
         system.attachExternalLinkBehaviour($a[0], binding);
@@ -57,7 +57,7 @@ presenters.itemtype('choice').register(choicify(
       }
       if (choice.load != null) {
         choice.load(() => {
-          $a.html(getLocalizedValue(choice.label).value);
+          $a.html(utils.getLocalizedValue(choice.label).value);
         });
       }
     }

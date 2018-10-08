@@ -1,5 +1,5 @@
 import Binding from "./Binding";
-import {extractGist} from '../utils';
+import utils from '../utils';
 
 export default class ValueBinding extends Binding {
   /**
@@ -57,7 +57,7 @@ export default class ValueBinding extends Binding {
   }
 
   getGist() {
-    return extractGist(this.getValue(), this.getItem().getValueTemplate());
+    return utils.extractGist(this.getValue(), this.getItem().getValueTemplate());
   }
 
   setGist(value) {

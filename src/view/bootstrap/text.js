@@ -1,11 +1,11 @@
 import DurationEditor from './DurationEditor';
 import DurationPresenter from './DurationPresenter';
 import renderingContext from '../renderingContext';
-import {cloneArrayWithLabels, getLocalizedMap, getLocalizedValue} from '../../utils';
+import utils from '../../utils';
 import system from '../../model/system';
 
 define([
-  'dojo/date/stamp',
+  'dojo/date/stamp', // todo
   'dojo/date/locale',
 ], (stamp, locale) => {
 
@@ -26,13 +26,13 @@ define([
 
   // Presenter for URIs.
   presenters.itemtype('text').nodetype('URI').register((fieldDiv, binding/* , context */) => {
-    const vmap = getLocalizedMap(binding);
+    const vmap = utils.getLocalizedMap(binding);
     const $a = jquery('<a class="rdformsUrl">')
       .attr('title', binding.getValue())
       .attr('href', binding.getValue())
       .appendTo(fieldDiv);
     if (vmap) {
-      $a.text(getLocalizedValue(vmap).value);
+      $a.text(utils.getLocalizedValue(vmap).value);
     } else {
       $a.text(binding.getGist());
     }
@@ -196,13 +196,13 @@ define([
         .appendTo(context.controlDiv);
       let primaryLangs = renderingContext.getPrimaryLanguageList();
       let langList = renderingContext.getNonPrimaryLanguageList();
-      langList = cloneArrayWithLabels(langList);
+      langList = utils.cloneArrayWithLabels(langList);
       if (primaryLangs.length === 0) {
         langList.forEach((lang) => {
           jquery('<option>').html(lang.label).val(lang.value).appendTo($lselect);
         });
       } else {
-        primaryLangs = cloneArrayWithLabels(primaryLangs, true);
+        primaryLangs = utils.cloneArrayWithLabels(primaryLangs, true);
         primaryLangs.forEach((lang) => {
           jquery('<option>').html(lang.label).val(lang.value).appendTo($lselect);
         });

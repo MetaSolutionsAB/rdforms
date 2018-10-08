@@ -1,7 +1,7 @@
-import {getLocalizedValue} from '../../utils';
+import utils from '../../utils';
 
 define([
-  'select2/src/js/select2/data/array',
+  'select2/src/js/select2/data/array', // TODO
   'select2/src/js/select2/utils',
 ], (ArrayAdapter, Utils) => {
   const AjaxAdapter = function ($element, options) {
@@ -17,7 +17,7 @@ define([
       this.chooser.search(this.rdformsItem, params.term).then((choices) => {
         callback({ results: choices.map(c => ({
           id: c.value,
-          text: getLocalizedValue(c.label).value || '',
+          text: utils.getLocalizedValue(c.label).value || '',
           choice: c,
         })) });
       });

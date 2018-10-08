@@ -1,6 +1,6 @@
 import Item from './Item';
 import {namespaces as ns} from 'rdfjson';
-import {getLocalizedValue} from '../utils';
+import utils from '../utils';
 
 const sortChoices = (choices, shouldExpand) => {
   if (choices == null) {
@@ -10,8 +10,8 @@ const sortChoices = (choices, shouldExpand) => {
     choices.forEach(c => c.value = ns.expand(c.value));
   }
   choices.sort(function (c1, c2) {
-    var lab1 = getLocalizedValue(c1.label).value || c1.value;
-    var lab2 = getLocalizedValue(c2.label).value || c2.value;
+    var lab1 = utils.getLocalizedValue(c1.label).value || c1.value;
+    var lab2 = utils.getLocalizedValue(c2.label).value || c2.value;
     if (lab1 > lab2) {
       return 1;
     } else if (lab1 < lab2) {

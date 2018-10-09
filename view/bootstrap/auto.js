@@ -2,7 +2,8 @@ define([
   'rdforms/view/renderingContext',
   'dojo/date/stamp',
   'rdforms/utils',
-], (renderingContext, stamp, utils) => {
+  'rdforms/model/engine',
+], (renderingContext, stamp, utils, engine) => {
   const pr = renderingContext.presenterRegistry;
   const er = renderingContext.editorRegistry;
 
@@ -11,7 +12,7 @@ define([
       const data = binding.getValue();
       if (context.inEditor) {
         if (data == null || data === '') {
-          binding.setValue(utils.generateUUID());
+          binding.setValue(utils.generateUUID(), true);
         }
       }
       reg.getComponentBefore(binding.getItem(), uuid)(fieldDiv, binding, context);
@@ -51,5 +52,24 @@ define([
   er.itemtype('text').datatype('xsd:date').style('autoInitDate').register(autoDateE);
   er.itemtype('text').datatype('dcterms:W3CDTF').style('autoUpdateDate').register(autoDateE);
   er.itemtype('text').datatype('dcterms:W3CDTF').style('autoInitDate').register(autoDateE);
+
+  const autoValueFactory = (reg) => {
+    const autof = (fieldDiv, binding, context) => {
+      if (context.inEditor) {
+        const data = binding.getValue();
+        const path = binding.getItem().getDeps();
+        if ((data == null || data === '') && path) {
+          const fromBinding = engine.findBindingRelativeToParentBinding(binding.getParent(), path);
+          const depBinding = engine.matchPathBelowBinding(fromBinding, path);
+          binding.setGist(depBinding.getValue(), true);
+        }
+      }
+      reg.getComponentBefore(binding.getItem(), autof)(fieldDiv, binding, context);
+    };
+    return autof;
+  };
+
+  pr.itemtype('text').style('autoValue').register(autoValueFactory(pr));
+  er.itemtype('text').style('autoValue').register(autoValueFactory(er));
 });
 

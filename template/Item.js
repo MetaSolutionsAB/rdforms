@@ -54,6 +54,7 @@ define([
             "autoInitDate",
             "autoUpdateDate",
             "autoUUID",
+            "autoValue",
             "showURI",
             "showLink",
         ],

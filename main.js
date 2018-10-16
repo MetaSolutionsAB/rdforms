@@ -9,3 +9,5 @@ export {default as LevelEditor} from './src/view/bootstrap/LevelEditor';
 export {default as ValidationPresenter} from './src/view/ValidationPresenter';
 export {default as utils} from './src/utils';
 export {default as system} from './src/model/system';
+export {default as engine} from './src/model/engine';
+export {default as validate} from './src/model/validate';

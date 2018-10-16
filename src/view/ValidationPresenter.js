@@ -1,7 +1,7 @@
 import renderingContext from './renderingContext';
 import Presenter from './Presenter';
 import engine from '../model/engine';
-import validate from '../model/validate';
+import {bindingReport} from '../model/validate';
 import {i18n} from 'esi18n';
 import declare from 'dojo/_base/declare';
 

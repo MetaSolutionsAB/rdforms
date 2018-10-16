@@ -282,3 +282,8 @@ export {
   graphReport,
   bindingReport,
 }
+
+export default { // TODO @valentino don't export default. Used in EntryScape
+  graphReport,
+  bindingReport,
+}

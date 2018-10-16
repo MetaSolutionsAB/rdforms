@@ -20,7 +20,7 @@ let _dibbs;
 let _createStatementsForConstraints;
 
 const match = (graph, uri, template) => {
-  const rootBinding = new GroupBinding({ item: template, childrenRootUri: uri, graph });
+  const rootBinding = new GroupBinding({item: template, childrenRootUri: uri, graph});
   _matchGroupItemChildren(rootBinding);
   _clearDibbs(rootBinding);
   return rootBinding;
@@ -82,14 +82,14 @@ const constructTemplate = (graph, uri, itemStore, requiredItems) => {
 const _createTextItem = (parentBinding, item) => {
   const graph = parentBinding.getGraph();
   const nt = item.getNodetype();
-  const obj = { value: '', type: 'literal' };
+  const obj = {value: '', type: 'literal'};
   if (nt === 'URI') {
     obj.type = 'uri';
   } else if (nt === 'DATATYPE_LITERAL') {
     obj.datatype = item.getDatatype();
   }
   const stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), obj, false);
-  const nbinding = new ValueBinding({ item, statement: stmt });
+  const nbinding = new ValueBinding({item, statement: stmt});
   parentBinding.addChildBinding(nbinding);
   const defaultValue = item.getValue();
   const cardTracker = nbinding.getCardinalityTracker();
@@ -109,14 +109,14 @@ const _createTextItem = (parentBinding, item) => {
 const _createChoiceItem = (parentBinding, item) => {
   const graph = parentBinding.getGraph();
   const nt = item.getNodetype();
-  const obj = { type: 'literal', value: '' };
+  const obj = {type: 'literal', value: ''};
   if (nt === 'DATATYPE_LITERAL') {
     obj.datatype = item.getDatatype();
   } else if (nt === 'RESOURCE' || nt === 'URI') {
     obj.type = 'uri';
   }
   const stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), obj, false);
-  const nbinding = new ChoiceBinding({ item, statement: stmt });
+  const nbinding = new ChoiceBinding({item, statement: stmt});
   parentBinding.addChildBinding(nbinding);
   const defaultValue = item.getValue();
   const cardTracker = nbinding.getCardinalityTracker();
@@ -142,7 +142,7 @@ const _createGroupItem = (parentBinding, item, parentItems) => {
     constr = _createStatementsForConstraints(graph, stmt.getValue(), item);
   }
 
-  const nBinding = new GroupBinding({ item, statement: stmt, constraints: constr });
+  const nBinding = new GroupBinding({item, statement: stmt, constraints: constr});
   parentBinding.addChildBinding(nBinding);
 
   // Only do loop detection for items that are stored in the itemStore and hence are
@@ -173,7 +173,7 @@ const _createPropertyGroupItem = (parentBinding, item) => {
     stmt = graph.create(parentBinding.getChildrenRootUri(), '', null, false);
     constr = _createStatementsForConstraints(graph, stmt.getSubject(), oItem);
   } else if (oItem instanceof Choice) {
-    stmt = graph.create(parentBinding.getChildrenRootUri(), '', { type: 'uri', value: '' }, false);
+    stmt = graph.create(parentBinding.getChildrenRootUri(), '', {type: 'uri', value: ''}, false);
   } else {
     stmt = graph.create(parentBinding.getChildrenRootUri(), '', {
       type: 'literal',
@@ -181,7 +181,7 @@ const _createPropertyGroupItem = (parentBinding, item) => {
     }, false);
   }
 
-  const nBinding = new PropertyGroupBinding({ item, statement: stmt, constraints: constr });
+  const nBinding = new PropertyGroupBinding({item, statement: stmt, constraints: constr});
   parentBinding.addChildBinding(nBinding);
   if (oItem instanceof Group) {
     oItem.getChildren().forEach((childItem) => {
@@ -235,7 +235,7 @@ const _matchGroupItem = (pb, item) => {
           constStmts = _findStatementsForConstraints(graph, stmt.getValue(), item);
           if (constStmts !== undefined) {
             _dibbs(stmt);
-            groupBinding = new GroupBinding({ item, statement: stmt, constraints: constStmts });
+            groupBinding = new GroupBinding({item, statement: stmt, constraints: constStmts});
             bindings.push(groupBinding);
             _matchGroupItemChildren(groupBinding); // Recursive call
           }
@@ -245,7 +245,7 @@ const _matchGroupItem = (pb, item) => {
     }
     // Case 2: there is no property in the item, i.e. a layout item.
   } else {
-    groupBinding = new GroupBinding({ item });
+    groupBinding = new GroupBinding({item});
     pb.addChildBindings([groupBinding]);
     _matchGroupItemChildren(groupBinding); // Recursive call
   }
@@ -280,12 +280,12 @@ const _matchPropertyGroupItem = (pb, item) => {
           oChoice = _findChoice(oItem, stmt.getValue(), stmt.getGraph());
           if (oChoice !== undefined) {
             _dibbs(stmt);
-            binding = new PropertyGroupBinding({ item, statement: stmt });
+            binding = new PropertyGroupBinding({item, statement: stmt});
             binding.getObjectBinding().setChoice(oChoice);
           }
         } else {
           _dibbs(stmt);
-          binding = new PropertyGroupBinding({ item, statement: stmt });
+          binding = new PropertyGroupBinding({item, statement: stmt});
         }
 
         if (binding !== null) {
@@ -308,7 +308,7 @@ const _matchTextItem = (pb, item) => {
   pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
     if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
       _dibbs(stmt);
-      bindings.push(new ValueBinding({ item, statement: stmt }));
+      bindings.push(new ValueBinding({item, statement: stmt}));
     }
   });
   if (bindings.length > 0) {
@@ -326,7 +326,7 @@ const _matchChoiceItem = (pb, item) => {
       const choice = _findChoice(item, stmt.getValue(), stmt.getGraph());
       if (choice !== undefined) {
         _dibbs(stmt);
-        bindings.push(new ChoiceBinding({ item, statement: stmt, choice }));
+        bindings.push(new ChoiceBinding({item, statement: stmt, choice}));
       }
     }
   });
@@ -404,7 +404,7 @@ _findStatementsForConstraints = (graph, uri, item) => {
   const constr = item.getConstraints();
   const results = [];
   const f = (predicate, object) => {
-    stmts = graph.find(uri, predicate, { type: 'uri', value: object });
+    stmts = graph.find(uri, predicate, {type: 'uri', value: object});
     if (stmts.length === 1) {
       results.push(stmts[0]);
       return undefined;
@@ -442,9 +442,9 @@ _createStatementsForConstraints = (graph, uri, item) => {
     Object.keys(constr).forEach((key) => {
       const obj = constr[key];
       if (Array.isArray(obj)) {
-        results.push(graph.create(uri, key, { type: 'uri', value: obj[0] }, false));
+        results.push(graph.create(uri, key, {type: 'uri', value: obj[0]}, false));
       } else {
-        results.push(graph.create(uri, key, { type: 'uri', value: obj }, false));
+        results.push(graph.create(uri, key, {type: 'uri', value: obj}, false));
       }
     });
   }
@@ -462,13 +462,13 @@ _findChoice = (item, obj, graph) => {
       }
     }
     if (!item.hasStyle('strictmatch')) {
-      return { value: obj, label: { '': obj }, mismatch: true };
+      return {value: obj, label: {'': obj}, mismatch: true};
     }
   } else {
     const label = utils.getLocalizedMap(graph, obj, item.getLabelProperties());
     const sa = graph.findFirstValue(obj, ChoiceBinding.seeAlso);
     if (label != null) {
-      const choice = { label, value: obj };
+      const choice = {label, value: obj};
       if (sa) {
         choice.seeAlso = sa;
       }
@@ -517,7 +517,7 @@ const findFirstValueBinding = (binding, createIfMissing) => {
       if (!(childItem instanceof Text)) {
         return findFirstValueBinding(vbs[0]);
       } else if (childItem.getNodetype() === 'LANGUAGE_LITERAL') {
-        const result = { firstValue: vbs[0] };
+        const result = {firstValue: vbs[0]};
         for (let i = 0; i < vbs.length; i++) {
           const l = vbs[i].getLanguage();
           if (l == null) {
@@ -673,7 +673,7 @@ const _levelProfile = (profile, item, ignoreTopLevelGroup) => {
 };
 
 const levelProfile = (item) => {
-  const profile = _levelProfile({ mandatory: 0, recommended: 0, optional: 0 }, item, true);
+  const profile = _levelProfile({mandatory: 0, recommended: 0, optional: 0}, item, true);
   profile.itemCount = profile.mandatory + profile.recommended + profile.optional;
   return profile;
 };
@@ -797,3 +797,17 @@ const CODES = {
 };
 
 export {CODES}
+
+
+export default { // TODO @valentino anti-pattern. This is done because engine is used in EntryScape. It shouldn't really...
+  detectLevel,
+  levelProfile,
+  findFirstValueBinding,
+  create,
+  constructTemplate,
+  findPopularChoice,
+  match,
+  matchPathBelowBinding,
+  findBindingRelativeToParentBinding,
+  CODES,
+}

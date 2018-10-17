@@ -15,17 +15,17 @@ export default class GroupBinding extends Binding {
   constructor(params) {
     super(params);
 
-    const {constraints = [], childrenRootUri} = params;
+    const {constraints = [], childrenRootUri = null} = params;
     this._constraints = constraints;
     //Generates an array of arrays, one array for each child item.
 
     this._childBindings = this._item.getChildren().map(child => ([]));
     this._rootUri = childrenRootUri;
+    this._validPredicate = true;
     if (this._statement) {
       this._validPredicate = this._isValidPredicateValue(this._statement.getPredicate());
     }
-
-    this._oneValidChild = undefined;
+    this._cachedChildBindings = null;
   }
 
   //===================================================

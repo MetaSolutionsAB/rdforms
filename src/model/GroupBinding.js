@@ -15,7 +15,7 @@ export default class GroupBinding extends Binding {
   constructor(params) {
     super(params);
 
-    const { constraints = [], childrenRootUri } = params;
+    const {constraints = [], childrenRootUri} = params;
     this._constraints = constraints;
     //Generates an array of arrays, one array for each child item.
 
@@ -124,7 +124,7 @@ export default class GroupBinding extends Binding {
   }
 
   getChildBindings() {
-    if (this._cachedChildBindings === null) {
+    if (this._cachedChildBindings == null) {
       if (this._childBindings && this._childBindings.length > 0) {
         var arr = [];
         this._cachedChildBindings = arr.concat.apply(arr, this._childBindings);

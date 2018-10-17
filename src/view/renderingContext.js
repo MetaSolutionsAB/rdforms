@@ -273,15 +273,16 @@ const renderingContext = {
 
 const groupPresenter = (fieldDiv, binding, context) => {
   const Cls = context.view.constructor;
-// eslint-disable-next-line no-new
+  // eslint-disable-next-line no-new
   new Cls({
     parentView: context.view,
     messages: context.view.messages,
     binding,
     topLevel: false,
-    includeLevel: this.includeLevel,
+    includeLevel: context.view.includeLevel, // Copied from groupEditor, was this.includeLevel but that 'this' does not make sense here
   }, fieldDiv);
 };
+
 renderingContext.presenterRegistry.itemtype('group').register(groupPresenter);
 renderingContext.presenterRegistry.itemtype('propertygroup').register(groupPresenter);
 

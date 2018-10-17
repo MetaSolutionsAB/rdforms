@@ -174,7 +174,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
  * @param {Array} mandatoryTypes an array of types to check that there are instances for
  * @return {Object} a report of the validity of the graph
  */
-const graphReport = (graph, type2template, mandatoryTypes) => {
+const graphReport = (graph, type2template, mandatoryTypes=[]) => {
   let resources, type2resources = {}, allResources = {}, cls, template, rr,
     report = { errors: 0, warnings: 0, deprecated: 0, resources: [] };
   for (cls in type2template) if (type2template.hasOwnProperty(cls)) {
@@ -199,8 +199,7 @@ const graphReport = (graph, type2template, mandatoryTypes) => {
   }
 
   let mandatoryError = [];
-  (mandatoryTypes || [])
-  forEach((mt) => {
+  mandatoryTypes.forEach((mt) => {
     if (type2resources[mt].length === 0) {
       mandatoryError.push(mt);
     }

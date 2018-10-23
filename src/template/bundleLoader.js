@@ -8,7 +8,7 @@ const isNode = require('detect-node');
  * @returns {Promise<Response | never | void>}
  */
 const fetchBundle = (path) => {
-  path = `dist/${path}`; // TODO remove!
+  path = `/${path}`; // TODO remove!
   if (!endsWith(path, '.json')) {
     path += '.json';
   }

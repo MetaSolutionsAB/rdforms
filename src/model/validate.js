@@ -244,7 +244,7 @@ const _includeIssue = (binding, resource, otherResources) => {
 
 const _simplifyReport = (report) => {
   const { errors, warnings, deprecated } = report;
-  report.errors = errors((err) => {
+  report.errors = errors.map((err) => {
     return { path: _createPath(err.parentBinding, err.item), code: err.code }
   });
   report.warnings = warnings((warn) => {

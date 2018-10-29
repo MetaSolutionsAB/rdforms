@@ -1,6 +1,7 @@
 const xhr = require('dojo/request/xhr');
 
 export default class Converter {
+  // TODO @scazan: Update documentation here. Where is createTemplate?
   /**
    * Keeps a registry of templates and reusable items.
    * Use the createTemplate method to create templates from a source

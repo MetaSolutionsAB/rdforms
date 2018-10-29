@@ -247,10 +247,10 @@ const _simplifyReport = (report) => {
   report.errors = errors.map((err) => {
     return { path: _createPath(err.parentBinding, err.item), code: err.code }
   });
-  report.warnings = warnings((warn) => {
+  report.warnings = warnings.map((warn) => {
     return { path: _createPath(warn.parentBinding, warn.item), code: warn.code }
   });
-  report.deprecated = deprecated((dep) => {
+  report.deprecated = deprecated.map((dep) => {
     return _createDepPath(dep)
   });
 };

@@ -110,9 +110,9 @@ export default declare(Presenter, {
       renderingContext.domClassToggle(fieldDiv, 'error', true);
       let tmpl;
       if (binding.error === engine.CODES.TOO_FEW_VALUES) {
-        tmpl = i18n.localize(this.messages, 'validation_min_required', min);
+        tmpl = i18n.renderNLSTemplate(this.messages.validation_min_required, min);
       } else if (binding.error === engine.CODES.TOO_MANY_VALUES) {
-        tmpl = i18n.localize(this.messages, 'validation_max', card.max || 1);
+        tmpl = i18n.renderNLSTemplate(this.messages.validation_max, card.max || 1);
       } else if (binding.error === engine.CODES.TOO_MANY_VALUES_DISJOINT) {
         tmpl = this.messages.validation_disjoint;
       }
@@ -121,7 +121,7 @@ export default declare(Presenter, {
       return true;
     } else if (binding.warning) {
       renderingContext.domClassToggle(fieldDiv, 'warning', true);
-      const tmpl = i18n.localize(this.messages, 'validation_min_recommended', pref);
+      const tmpl = i18n.renderNLSTemplate(this.messages.validation_min_recommended, pref);
       const n = renderingContext.domCreate('div', fieldDiv);
       renderingContext.domText(n, `>> ${tmpl} <<`);
       return true;

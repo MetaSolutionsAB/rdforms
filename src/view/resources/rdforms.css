@@ -249,12 +249,19 @@ a.rdformsUrl:hover {
 	padding-left: 0.3em;
 	padding-right: 0.3em;
 }
+.rdformsPresenter .rdformsField.rdformsSingleline {
+  word-break: break-all;
+}
+
+.rdformsPresenter .rdformsField.rdformsMultiline {
+  word-break: break-word;
+}
 
 .rdformsPresenter th,
 .rdformsEditor th {
-	font-weight: bold;
-	padding-left: 0.3em;
-	padding-right: 0.3em;
+  font-weight: bold;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
 }
 
 .rdformsPresenter table.rdformsGroup td {

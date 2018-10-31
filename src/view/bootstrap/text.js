@@ -60,7 +60,7 @@ define([
     // 1) The current item is indicated to be a label.
     // 2) The presenter is not at topLevel.
     // 3) The current item is first in the parents list of children.
-    // 4) The parent binding corresponds to a URI.
+    // 4) The parent binding corresponds to a URI
     const parentBinding = binding.getParent();
     if (binding.getItem().hasStyle('label')
       && this.topLevel !== true
@@ -72,7 +72,13 @@ define([
         .appendTo(fieldDiv);
       system.attachLinkBehaviour($a[0], parentBinding);
     } else {
-      jquery('<div>').toggleClass('rdformsField', context.inEditor).html(text).appendTo(fieldDiv);
+      jquery('<div>').toggleClass('rdformsField', context.inEditor === true).html(text).appendTo(fieldDiv);
+    }
+
+    if (binding.getItem().hasStyle('multiline')) {
+      jquery(fieldDiv).toggleClass('rdformsMultiline', true);
+    } else {
+      jquery(fieldDiv).toggleClass('rdformsSingleline', true);
     }
   });
 

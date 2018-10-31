@@ -130,7 +130,7 @@ define([
     };
   });
 
-  const addChangeListener = (inp, binding, regex) => {
+  const addChangeListener = (inp, binding, regex, full) => {
     let to = null;
     const s = () => {
       to = null;
@@ -138,9 +138,15 @@ define([
       if (regex) {
         if (regex.test(val)) {
           binding.setGist(val);
+          if (full) {
+            full.text(binding.getValue());
+          }
         }
       } else {
         binding.setGist(val);
+        if (full) {
+          full.text(binding.getValue());
+        }
       }
     };
     const c = () => {
@@ -160,7 +166,16 @@ define([
         $input.val(binding.getGist())
           .attr('pattern', pattern)
           .appendTo(fieldDiv);
-        addChangeListener($input, binding, regex);
+
+        if (binding.getItem().getValueTemplate()) {
+          const $fullValue = jquery('<div class="rdformsFullValue">');
+          $fullValue.text(binding.getValue()).appendTo(fieldDiv);
+          addChangeListener($input, binding, regex, $fullValue);
+        } else {
+          addChangeListener($input, binding, regex);
+        }
+
+
         if (!binding.getItem().isEnabled()) {
           $input.prop('disabled', true);
         }
@@ -187,7 +202,14 @@ define([
     }
     $input.val(binding.getGist())
       .appendTo(fieldDiv);
-    addChangeListener($input, binding);
+
+    if (item.getValueTemplate()) {
+      const $fullValue = jquery('<div class="rdformsFullValue">');
+      $fullValue.text(binding.getValue()).appendTo(fieldDiv);
+      addChangeListener($input, binding, null, $fullValue);
+    } else {
+      addChangeListener($input, binding);
+    }
 
     if (item.getPattern() != null) {
       $input.attr('pattern', item.getPattern());

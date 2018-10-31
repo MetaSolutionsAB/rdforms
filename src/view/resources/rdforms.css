@@ -349,6 +349,10 @@ a.rdformsUrl:hover {
     resize: vertical;
 }
 
+.rdformsEditor .rdformsFullValue {
+  color: #b3b3b3
+}
+
 .rdformsEditor .rdformsChoiceValue {
  	display: inline-block;
 	zoom:1;

@@ -13,7 +13,7 @@ const showNow = (editor, item, bindings, includeLevel) => {
   if (item.hasStyle('presenterOnly')) {
     return false;
   }
-  if ((item.hasStyle('deprecated') || item.hasStyle('nonEditable')) && bindings.length === 0) {
+  if (item.hasStyle('deprecated') && bindings.length === 0) {
     return false;
   }
   const prop = item.getProperty();

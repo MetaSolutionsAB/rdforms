@@ -10,7 +10,7 @@ const uuidFactory = (reg) => {
     const data = binding.getValue();
     if (context.inEditor) {
       if (data == null || data === '') {
-        binding.setValue(utils.generateUUID());
+        binding.setValue(utils.generateUUID(), true);
       }
     }
     reg.getComponentBefore(binding.getItem(), uuid)(fieldDiv, binding, context);
@@ -55,11 +55,11 @@ const autoValueFactory = (reg) => {
   const autof = (fieldDiv, binding, context) => {
     if (context.inEditor) {
       const data = binding.getValue();
-      const path = item.getDeps();
+      const path = binding.getItem().getDeps();
       if ((data == null || data === '') && path) {
         const fromBinding = engine.findBindingRelativeToParentBinding(binding.getParent(), path);
         const depBinding = engine.matchPathBelowBinding(fromBinding, path);
-        binding.setValue(depBinding.getValue());
+        binding.setGist(depBinding.getValue(), true);
       }
     }
     reg.getComponentBefore(binding.getItem(), autof)(fieldDiv, binding, context);

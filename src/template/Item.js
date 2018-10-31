@@ -50,7 +50,10 @@ export default class Item {
       "noLabelInPresent",
       "autoInitDate",
       "autoUpdateDate",
-      "autoUUID"
+      "autoUUID",
+      "autoValue",
+      "showURI",
+      "showLink",
     ];
     this._getLocalizedValue = utils.getLocalizedValue;
   }

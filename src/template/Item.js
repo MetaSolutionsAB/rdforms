@@ -39,6 +39,7 @@ export default class Item {
       "tree",
       "externalLink",
       "internalLink",
+      "noLink",
       "image",
       "label",
       "strictmatch",

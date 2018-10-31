@@ -188,7 +188,7 @@ export default declare(Presenter, {
 
   preRenderView() {
     renderingContext.preEditorViewRenderer(this.domNode, this.binding, {
-      view: this, inEditor: true, topLevel: this.topLevel, hideAddres: this.hideAddress
+      view: this, inEditor: true, topLevel: this.topLevel, hideAddress: this.hideAddress
     });
   },
   addComponent(fieldDiv, binding) {

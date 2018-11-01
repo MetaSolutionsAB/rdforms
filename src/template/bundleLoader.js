@@ -1,32 +1,63 @@
-import {endsWith} from 'lodash-es';
-
 const isNode = require('detect-node');
 
 /**
- * @param {String} url
+ * Return the first sucessfully fetched bundle from a list of urls
+ *
+ * @param {String} urls
  * @returns {Promise<Response | never | void>}
  */
-const fetchBundle = url => fetch(url).then(r => r.json()).catch(e => console.log(`Fetching template bundle ${url} failed`, e));
-
-export default (itemStore, bundlePaths = [], callback = null) => {
-  if (bundlePaths.length === 0) {
-    callback && callback([]);
-    return; // TODO consitent return
+const fetchBundle = async (urls) => {
+  let bundle;
+  for (url of urls) {
+    bundle = await fetch(url).then(r => r.json()).catch(e => console.log(`Fetching or parsing template bundle ${url} failed`, e)); // TODO dont't log if all fallback options are not exhausted
+    if (bundle) {
+      break;
+    }
   }
 
-  const registerBundles = (bundlesJSON = []) => {
-    const bundles = bundlesJSON.map((bundle, idx) => itemStore.registerBundle({
-      path: bundlePaths[idx],
-      source: bundle
-    }));
-    callback && callback(bundles);
-  };
+  return bundle;
+}
+
+/**
+ * Fetch or if loaded just wrap it in Promise.resolve
+ * @param bundles
+ * @returns {*}
+ */
+const promisifyBundles = bundles => bundles.map(b => b instanceof Array ? fetchBundle(b) : Promise.resolve(b));
+
+/**
+ * Register bundle templates
+ *
+ * @param bundles
+ * @param itemStore
+ * @param callback
+ */
+const registerBundles = (bundles = [], itemStore, callback) => {
+  const registeredBundles = bundles.map(source => itemStore.registerBundle({source}));
+  if (callback) {
+    callback(registeredBundles);
+  }
+};
+
+/**
+ *
+ * @param itemStore
+ * @param bundlePaths {Array<Object|String>} an array of object (bundles) or paths
+ * @param callback
+ */
+export default (itemStore, bundlePaths = [], callback = null) => {
+  if (bundlePaths.length === 0) { // nothing to load
+    callback && callback([]);
+  }
+
 
   if (isNode) {
     const bundles = bundlePaths.map(b => require(b)); // TODO @valentino use fetch (polyfill?) for node also
     registerBundles(bundles);
   } else {
-    const bundlePromises = bundlePaths.map(fetchBundle);
-    Promise.all(bundlePromises).then(registerBundles);
+    // Fetch or if loaded just wrap it in Promise.resolve
+    const bundlePromises = promisifyBundles(bundlePaths);
+    Promise.all(bundlePromises)
+      .then(loadedBundles => registerBundles(loadedBundles, itemStore, callback));
   }
 };

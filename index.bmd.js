@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import './src/view/bmd/all';
 
 import ItemStore from './src/template/ItemStore';

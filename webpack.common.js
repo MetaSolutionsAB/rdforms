@@ -85,7 +85,7 @@ module.exports = {
   node: {
     fs: 'empty',
     process: false,
-    global: false
+    global: true,
   },
   resolve: {
     alias: {

@@ -8,7 +8,9 @@
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "babel-loader": "^8.0.2",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/polyfill": "^7.0.0",
+    "babel-loader": "^8.0.4",
     "bootstrap": "^3.3.7",
     "bootstrap-material-datetimepicker": "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#amd",
     "bootstrap-material-design": "https://bitbucket.org/metasolutions/bootstrap-material-design.git#amd",
@@ -33,8 +35,13 @@
   "devDependencies": {
     "@babel/cli": "^7.1.0",
     "@babel/core": "^7.1.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
+    "babel-loader": "^8.0.2",
     "babel-minify-webpack-plugin": "^0.3.1",
+    "babel-plugin-lodash": "^3.3.4",
     "babili": "0.0.12",
     "clean-webpack-plugin": "^0.1.18",
     "css-loader": "^0.28.11",
@@ -65,8 +72,7 @@
   },
   "scripts": {
     "build": "webpack --display-modules --config webpack.prod.js",
-    "build:dev": "webpack --config ./webpack.dev.js",
-    "start": "webpack-serve --config ./webpack.dev.js --require",
+    "dev": "webpack --display-modules --config webpack.dev.js",
     "examples": "webpack --display-modules --config ./webpack.examples.js"
   }
 }

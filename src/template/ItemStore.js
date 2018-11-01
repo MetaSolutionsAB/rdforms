@@ -147,7 +147,7 @@ export default class ItemStore {
     let b = new Bundle(bundle);
     this._bundles.push(b);
 
-    if (bundle.source.namespaces) {
+    if (bundle.source && bundle.source.namespaces) {
       ns.add(bundle.source.namespaces);
     }
 

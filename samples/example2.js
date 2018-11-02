@@ -1,5 +1,5 @@
-import rdfGraph from './rdf.mjs';
-import templateBundle from './templateBundle.mjs';
+import rdfGraph from './rdf.js';
+import templateBundle from './templateBundle.js';
 
 const graph = new rdfjson.Graph(rdfGraph);
 

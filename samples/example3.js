@@ -1,5 +1,5 @@
 // rdfjson and rdforms are exposed as global variables in this example
-import rdfGraph from './rdf.mjs';
+import rdfGraph from './rdf.js';
 
 const graph = new rdfjson.Graph(rdfGraph);
 const itemStore = new rdforms.ItemStore();

@@ -1,17 +1,17 @@
-import rdfGraph from './rdf.mjs';
-import templateBundle from './templateBundle.mjs';
+import rdfGraph from './rdf.js';
+import templateBundle from './templateBundle.js';
 import bundleMix from './bundleMix.js';
 
-const graph = new rdfjson.Graph(rdfGraph);
 const itemStore = new rdforms.ItemStore();
+//
+// const callback = (bundles) => {
+//   new rdforms.Editor({
+//     graph,
+//     resource: 'http://example.org/about',
+//     template: bundles[0].getRoot(),
+//     compact: false,
+//   }, 'node');
+// };
 
-const callback = (bundles) => {
-  new rdforms.Editor({
-    graph,
-    resource: 'http://example.org/about',
-    template: bundles[0].getRoot(),
-    compact: false,
-  }, 'node');
-};
-
-rdforms.bundleLoader(itemStore, bundleMix, callback);
+rdforms.bundleLoader(itemStore, bundleDefault, null);
+// rdforms.bundleLoader(itemStore, bundleMo, callback);

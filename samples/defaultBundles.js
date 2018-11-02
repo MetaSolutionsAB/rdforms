@@ -12663,49 +12663,4 @@ export default [
       }
     ]
   },
-  [
-    "http://suite.es.com:8080/templates/templates/skos/skos.json",
-    "http://suite.es.com:8080/theme/templates/skos/skos.json",
-    "http://suite.es.com:8080/suite/1.5.2/templates/templates/skos/skos.json"
-  ],
-  [
-    "http://suite.es.com:8080/templates/templates/dcterms/dcterms.json",
-    "http://suite.es.com:8080/theme/templates/dcterms/dcterms.json",
-    "http://suite.es.com:8080/suite/1.5.2/templates/templates/dcterms/dcterms.json"
-  ],
-  [
-    "http://suite.es.com:8080/templates/templates/foaf/foaf.json",
-    "http://suite.es.com:8080/theme/templates/foaf/foaf.json",
-    "http://suite.es.com:8080/suite/1.5.2/templates/templates/foaf/foaf.json"
-  ],
-  [
-    "http://suite.es.com:8080/templates/templates/vcard/vcard.json",
-    "http://suite.es.com:8080/theme/templates/vcard/vcard.json",
-    "http://suite.es.com:8080/suite/1.5.2/templates/templates/vcard/vcard.json"
-  ],
-  [
-    "http://suite.es.com:8080/templates/templates/odrs/odrs.json",
-    "http://suite.es.com:8080/theme/templates/odrs/odrs.json",
-    "http://suite.es.com:8080/suite/1.5.2/templates/templates/odrs/odrs.json"
-  ],
-  [
-    "http://suite.es.com:8080/templates/templates/dcat-ap/dcat-ap_props.json",
-    "http://suite.es.com:8080/theme/templates/dcat-ap/dcat-ap_props.json",
-    "http://suite.es.com:8080/suite/1.5.2/templates/templates/dcat-ap/dcat-ap_props.json"
-  ],
-  [
-    "http://suite.es.com:8080/templates/templates/dcat-ap/dcat-ap.json",
-    "http://suite.es.com:8080/theme/templates/dcat-ap/dcat-ap.json",
-    "http://suite.es.com:8080/suite/1.5.2/templates/templates/dcat-ap/dcat-ap.json"
-  ],
-  [
-    "http://suite.es.com:8080/templates/templates/entryscape/esc.json",
-    "http://suite.es.com:8080/theme/templates/entryscape/esc.json",
-    "http://suite.es.com:8080/suite/1.5.2/templates/templates/entryscape/esc.json"
-  ],
-  [
-    "http://suite.es.com:8080/templates/templates/rdfs/rdfs.json",
-    "http://suite.es.com:8080/theme/templates/rdfs/rdfs.json",
-    "http://suite.es.com:8080/suite/1.5.2/templates/templates/rdfs/rdfs.json"
-  ]
 ]

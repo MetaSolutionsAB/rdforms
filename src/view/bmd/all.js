@@ -12,7 +12,6 @@ import './Selectize';
 import 'bootstrap-material-design/dist/css/bootstrap-material-design.css';
 import 'bootstrap-material-design/dist/css/ripples.css';
 import 'bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css';
-import 'font-awesome/css/font-awesome.css';
 import './style.css';
 
 

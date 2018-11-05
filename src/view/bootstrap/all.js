@@ -7,6 +7,5 @@ import 'sizzle';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'fuelux/dist/css/fuelux.min.css';
-import 'font-awesome/css/font-awesome.css';
 import 'select2/dist/css/select2.css';
 import './style.css';

@@ -34,9 +34,10 @@ const promisifyBundles = bundles => bundles.map(b => b instanceof Array ? fetchB
  */
 const registerBundles = (bundles = [], itemStore, callback) => {
   const registeredBundles = bundles.map(source => itemStore.registerBundle({source}));
-  if (callback) {
-    callback(registeredBundles);
-  }
+  return registeredBundles;
+  // if (callback) {
+    // callback(registeredBundles);
+  // }
 };
 
 /**
@@ -45,7 +46,7 @@ const registerBundles = (bundles = [], itemStore, callback) => {
  * @param bundlePaths {Array<Object|String>} an array of object (bundles) or paths
  * @param callback
  */
-export default (itemStore, bundlePaths = [], callback = null) => {
+export default async (itemStore, bundlePaths = [], callback = null) => {
   if (bundlePaths.length === 0) { // nothing to load
     callback && callback([]);
   }
@@ -57,7 +58,7 @@ export default (itemStore, bundlePaths = [], callback = null) => {
   } else {
     // Fetch or if loaded just wrap it in Promise.resolve
     const bundlePromises = promisifyBundles(bundlePaths);
-    Promise.all(bundlePromises)
-      .then(loadedBundles => registerBundles(loadedBundles, itemStore, callback));
+    const loadedBundles = await Promise.all(bundlePromises);
+    return registerBundles(loadedBundles, itemStore, callback);
   }
 };

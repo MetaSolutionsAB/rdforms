@@ -97,7 +97,7 @@ export default declare(Presenter, {
   _handleParams(/* params */) {
     this.inherited('_handleParams', arguments);
     if (this.binding) {
-      validate.bindingReport(this.binding);
+      bindingReport(this.binding);
     }
   },
 

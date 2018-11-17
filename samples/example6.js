@@ -5,11 +5,10 @@ const bundles = [
   ['templates/dcterms.json'],
   ['templates/foaf.json'],
   ['templates/skos.json'],
-  ['templates/vcard.json'],
   ['templates/adms.json'],
+  ['templates/vcard.json'],
   ['templates/dcat_props.json'],
   ['templates/dcat.json'],
-  ['templateBundle.json']
 ];
 
 const graph = new rdfjson.Graph(rdfGraph);
@@ -18,8 +17,18 @@ rdforms.bundleLoader(itemStore, bundles, function(bundles) {
   new rdforms.Editor({
     graph,
     resource: 'http://example.org/about',
-    template: bundles[7].getRoot(),
+    template: itemStore.getItem('dcat:OnlyDataset'),
     compact: false,
     includeLevel: 'optional'
   }, 'node');
+  var ta = document.getElementById('output');
+  var updateOutput = function() {
+    // Export RDF/XML
+    ta.value = rdfjson.converters.rdfjson2rdfxml(graph);
+
+    // Export RDF/JSON
+    // ta.value = JSON.stringify(graph.exportRDFJSON(), null, "  ");
+  };
+  updateOutput();
+  graph.onChange = updateOutput;
 });

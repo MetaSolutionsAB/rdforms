@@ -1,0 +1,209 @@
+{
+  "templates": [
+    {
+      "id": "dc:title",
+      "property": "http://purl.org/dc/elements/1.1/title",
+      "label": {
+        "en": "Title"
+      },
+      "description": {
+        "en": "A name given to the resource."
+      },
+      "type": "text",
+      "automatic": true,
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dc:creator",
+      "property": "http://purl.org/dc/elements/1.1/creator",
+      "label": {
+        "en": "Creator"
+      },
+      "description": {
+        "en": "An entity primarily responsible for making the resource."
+      },
+      "type": "text",
+      "automatic": true,
+      "nodetype": "ONLY_LITERAL"
+    },
+    {
+      "id": "dc:subject",
+      "property": "http://purl.org/dc/elements/1.1/subject",
+      "label": {
+        "en": "Subject"
+      },
+      "description": {
+        "en": "The topic of the resource."
+      },
+      "type": "text",
+      "automatic": true,
+      "nodetype": "ONLY_LITERAL"
+    },
+    {
+      "id": "dc:description",
+      "property": "http://purl.org/dc/elements/1.1/description",
+      "label": {
+        "en": "Description"
+      },
+      "description": {
+        "en": "An account of the resource."
+      },
+      "type": "text",
+      "automatic": true,
+      "nodetype": "PLAIN_LITERAL",
+      "styles": [
+        "multiline"
+      ]
+    },
+    {
+      "id": "dc:publisher",
+      "property": "http://purl.org/dc/elements/1.1/publisher",
+      "label": {
+        "en": "Publisher"
+      },
+      "description": {
+        "en": "An entity responsible for making the resource available."
+      },
+      "type": "text",
+      "automatic": true,
+      "nodetype": "ONLY_LITERAL"
+    },
+    {
+      "id": "dc:contributor",
+      "property": "http://purl.org/dc/elements/1.1/contributor",
+      "label": {
+        "en": "Contributor"
+      },
+      "description": {
+        "en": "An entity responsible for making contributions to the resource."
+      },
+      "type": "text",
+      "automatic": true,
+      "nodetype": "ONLY_LITERAL"
+    },
+    {
+      "id": "dc:date",
+      "property": "http://purl.org/dc/elements/1.1/date",
+      "label": {
+        "en": "Date"
+      },
+      "description": {
+        "en": "A point or period of time associated with an event in the lifecycle of the resource."
+      },
+      "type": "text",
+      "automatic": true,
+      "nodetype": "ONLY_LITERAL"
+    },
+    {
+      "id": "dc:type",
+      "property": "http://purl.org/dc/elements/1.1/type",
+      "label": {
+        "en": "Type"
+      },
+      "description": {
+        "en": "The nature or genre of the resource."
+      },
+      "type": "text",
+      "automatic": true,
+      "nodetype": "ONLY_LITERAL"
+    },
+    {
+      "id": "dc:format",
+      "property": "http://purl.org/dc/elements/1.1/format",
+      "label": {
+        "en": "Format"
+      },
+      "description": {
+        "en": "The file format, physical medium, or dimensions of the resource."
+      },
+      "type": "text",
+      "automatic": true,
+      "nodetype": "ONLY_LITERAL"
+    },
+    {
+      "id": "dc:identifier",
+      "property": "http://purl.org/dc/elements/1.1/identifier",
+      "label": {
+        "en": "Identifier"
+      },
+      "description": {
+        "en": "An unambiguous reference to the resource within a given context."
+      },
+      "type": "text",
+      "automatic": true,
+      "nodetype": "ONLY_LITERAL"
+    },
+    {
+      "id": "dc:source",
+      "property": "http://purl.org/dc/elements/1.1/source",
+      "label": {
+        "en": "Source"
+      },
+      "description": {
+        "en": "A related resource from which the described resource is derived."
+      },
+      "type": "text",
+      "automatic": true,
+      "nodetype": "URI"
+    },
+    {
+      "id": "dc:language",
+      "property": "http://purl.org/dc/elements/1.1/language",
+      "label": {
+        "en": "Language"
+      },
+      "description": {
+        "en": "A language of the resource."
+      },
+      "type": "text",
+      "automatic": true,
+      "nodetype": "ONLY_LITERAL"
+    },
+    {
+      "id": "dc:relation",
+      "property": "http://purl.org/dc/elements/1.1/relation",
+      "label": {
+        "en": "Relation"
+      },
+      "description": {
+        "en": "A related resource."
+      },
+      "type": "choice",
+      "automatic": true,
+      "nodetype": "URI"
+    },
+    {
+      "id": "dc:coverage",
+      "property": "http://purl.org/dc/elements/1.1/coverage",
+      "label": {
+        "en": "Coverage"
+      },
+      "description": {
+        "en": "The spatial or temporal topic of the resource, the spatial applicability of the resource, or the jurisdiction under which the resource is relevant."
+      },
+      "type": "text",
+      "automatic": true,
+      "nodetype": "ONLY_LITERAL"
+    },
+    {
+      "id": "dc:rights",
+      "property": "http://purl.org/dc/elements/1.1/rights",
+      "label": {
+        "en": "Rights",
+        "sv": "Rättigheter"
+      },
+      "description": {
+        "en": "Information about rights held in and over the resource.",
+        "sv": "Information om rättigheter knutna till resursen."
+      },
+      "type": "text",
+      "automatic": true,
+      "nodetype": "LANGUAGE_LITERAL",
+      "styles": [
+        "multiline"
+      ]
+    }
+  ],
+  "scope": "dc",
+  "namespace": "http://purl.org/dc/elements/1.1/"
+}

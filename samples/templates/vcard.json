@@ -1,0 +1,1261 @@
+{
+  "templates": [
+    {
+      "id": "vc:organization-unit",
+      "property": "http://www.w3.org/2006/vcard/ns#organization-unit",
+      "label": {
+        "en": "organizational unit name"
+      },
+      "description": {
+        "en": "To specify the organizational unit name associated with the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:organization-name",
+      "property": "http://www.w3.org/2006/vcard/ns#organization-name",
+      "label": {
+        "en": "organization name"
+      },
+      "description": {
+        "en": "To specify the organizational name associated with the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:anniversary",
+      "property": "http://www.w3.org/2006/vcard/ns#anniversary",
+      "label": {
+        "en": "anniversary"
+      },
+      "description": {
+        "en": "The date of marriage, or equivalent, of the object"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "_:genid1"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:bday",
+      "property": "http://www.w3.org/2006/vcard/ns#bday",
+      "label": {
+        "en": "birth date"
+      },
+      "description": {
+        "en": "To specify the birth date of the object"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "_:genid4"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:category",
+      "property": "http://www.w3.org/2006/vcard/ns#category",
+      "label": {
+        "en": "category"
+      },
+      "description": {
+        "en": "The category information about the object, also known as tags"
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:language",
+      "property": "http://www.w3.org/2006/vcard/ns#language",
+      "label": {
+        "en": "language"
+      },
+      "description": {
+        "en": "To specify the language that may be used for contacting the object. May also be used as a property parameter."
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:latitude",
+      "property": "http://www.w3.org/2006/vcard/ns#latitude",
+      "label": {
+        "en": "latitude"
+      },
+      "description": {
+        "en": "This data property has been deprecated. See hasGeo"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:note",
+      "property": "http://www.w3.org/2006/vcard/ns#note",
+      "label": {
+        "en": "note"
+      },
+      "description": {
+        "en": "A note associated with the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:prodid",
+      "property": "http://www.w3.org/2006/vcard/ns#prodid",
+      "label": {
+        "en": "product id"
+      },
+      "description": {
+        "en": "To specify the identifier for the product that created the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:rev",
+      "property": "http://www.w3.org/2006/vcard/ns#rev",
+      "label": {
+        "en": "revision"
+      },
+      "description": {
+        "en": "To specify revision information about the object"
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    {
+      "id": "vc:role",
+      "property": "http://www.w3.org/2006/vcard/ns#role",
+      "label": {
+        "en": "role"
+      },
+      "description": {
+        "en": "To specify the function or part played in a particular situation by the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:sort-string",
+      "property": "http://www.w3.org/2006/vcard/ns#sort-string",
+      "label": {
+        "en": "sort as"
+      },
+      "description": {
+        "en": "To specify the string to be used for national-language-specific sorting. Used as a property parameter only."
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:title",
+      "property": "http://www.w3.org/2006/vcard/ns#title",
+      "label": {
+        "en": "title"
+      },
+      "description": {
+        "en": "To specify the position or job of the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:tz",
+      "property": "http://www.w3.org/2006/vcard/ns#tz",
+      "label": {
+        "en": "time zone"
+      },
+      "description": {
+        "en": "To indicate time zone information that is specific to the object. May also be used as a property parameter."
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:value",
+      "property": "http://www.w3.org/2006/vcard/ns#value",
+      "label": {
+        "en": "value"
+      },
+      "description": {
+        "en": "Used to indicate the literal value of a data property that requires property parameters"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:fn",
+      "property": "http://www.w3.org/2006/vcard/ns#fn",
+      "label": {
+        "en": "Formatted name",
+        "sv": "Namn",
+        "nb": "Formatert navn",
+        "da": "Formateret navn",
+        "de": "Name"
+      },
+      "description": {
+        "en": "The formatted text corresponding to the name of the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL",
+      "cardinality": {
+        "min": 1,
+        "pref": 0
+      }
+    },
+    {
+      "id": "vc:nickname",
+      "property": "http://www.w3.org/2006/vcard/ns#nickname",
+      "label": {
+        "en": "nickname"
+      },
+      "description": {
+        "en": "The nick name associated with the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:additional-name",
+      "property": "http://www.w3.org/2006/vcard/ns#additional-name",
+      "label": {
+        "en": "additional name"
+      },
+      "description": {
+        "en": "The additional name associated with the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:country-name",
+      "property": "http://www.w3.org/2006/vcard/ns#country-name",
+      "label": {
+        "en": "Country name",
+        "sv": "Land",
+        "nb": "Navn på land",
+        "da": "Landenavn",
+        "de": "Land"
+      },
+      "description": {
+        "en": "The country name associated with the address of the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "vc:family-name",
+      "property": "http://www.w3.org/2006/vcard/ns#family-name",
+      "label": {
+        "en": "family name"
+      },
+      "description": {
+        "en": "The family name associated with the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:given-name",
+      "property": "http://www.w3.org/2006/vcard/ns#given-name",
+      "label": {
+        "en": "given name"
+      },
+      "description": {
+        "en": "The given name associated with the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:honorific-prefix",
+      "property": "http://www.w3.org/2006/vcard/ns#honorific-prefix",
+      "label": {
+        "en": "honorific prefix"
+      },
+      "description": {
+        "en": "The honorific prefix of the name associated with the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:honorific-suffix",
+      "property": "http://www.w3.org/2006/vcard/ns#honorific-suffix",
+      "label": {
+        "en": "honorific suffix"
+      },
+      "description": {
+        "en": "The honorific suffix of the name associated with the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:locality",
+      "property": "http://www.w3.org/2006/vcard/ns#locality",
+      "label": {
+        "en": "Locality",
+        "sv": "Postort",
+        "nb": "Sted",
+        "da": "Sted",
+        "de": "Ort"
+      },
+      "description": {
+        "en": "The locality (e.g. city or town) associated with the address of the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "vc:postal-code",
+      "property": "http://www.w3.org/2006/vcard/ns#postal-code",
+      "label": {
+        "en": "Postal code",
+        "sv": "Postkod",
+        "nb": "Postnummer",
+        "da": "Postnummer",
+        "de": "Postleitzahl"
+      },
+      "description": {
+        "en": "The postal code associated with the address of the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "vc:region",
+      "property": "http://www.w3.org/2006/vcard/ns#region",
+      "label": {
+        "en": "region"
+      },
+      "description": {
+        "en": "The region (e.g. state or province) associated with the address of the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL"
+    },
+    {
+      "id": "vc:street-address",
+      "property": "http://www.w3.org/2006/vcard/ns#street-address",
+      "label": {
+        "en": "Street address",
+        "sv": "Gatuadress",
+        "nb": "Gateadresse",
+        "da": "Gadeadresse",
+        "de": "Straßenadresse"
+      },
+      "description": {
+        "en": "The street address associated with the address of the object"
+      },
+      "type": "text",
+      "nodetype": "LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "id": "vc:hasAdditionalName",
+      "property": "http://www.w3.org/2006/vcard/ns#hasAdditionalName",
+      "label": {
+        "en": "has additional name"
+      },
+      "description": {
+        "en": "Used to support property parameters for the additional name data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasCalendarBusy",
+      "property": "http://www.w3.org/2006/vcard/ns#hasCalendarBusy",
+      "label": {
+        "en": "has calendar busy"
+      },
+      "description": {
+        "en": "To specify the busy time associated with the object. (Was called FBURL in RFC6350)"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasCalendarLink",
+      "property": "http://www.w3.org/2006/vcard/ns#hasCalendarLink",
+      "label": {
+        "en": "has calendar link"
+      },
+      "description": {
+        "en": "To specify the calendar associated with the object. (Was called CALURI in RFC6350)"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasCalendarRequest",
+      "property": "http://www.w3.org/2006/vcard/ns#hasCalendarRequest",
+      "label": {
+        "en": "has calendar request"
+      },
+      "description": {
+        "en": "To specify the calendar user address to which a scheduling request be sent for the object. (Was called CALADRURI in RFC6350)"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasCategory",
+      "property": "http://www.w3.org/2006/vcard/ns#hasCategory",
+      "label": {
+        "en": "has category"
+      },
+      "description": {
+        "en": "Used to support property parameters for the category data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasCountryName",
+      "property": "http://www.w3.org/2006/vcard/ns#hasCountryName",
+      "label": {
+        "en": "has country name"
+      },
+      "description": {
+        "en": "Used to support property parameters for the country name data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasFN",
+      "property": "http://www.w3.org/2006/vcard/ns#hasFN",
+      "label": {
+        "en": "has formatted name"
+      },
+      "description": {
+        "en": "Used to support property parameters for the formatted name data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasFamilyName",
+      "property": "http://www.w3.org/2006/vcard/ns#hasFamilyName",
+      "label": {
+        "en": "has family name"
+      },
+      "description": {
+        "en": "Used to support property parameters for the family name data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasGender",
+      "property": "http://www.w3.org/2006/vcard/ns#hasGender",
+      "label": {
+        "en": "has gender"
+      },
+      "description": {
+        "en": "To specify  the sex or gender identity of the object. URIs are recommended to enable interoperable sex and gender codes to be used."
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasGivenName",
+      "property": "http://www.w3.org/2006/vcard/ns#hasGivenName",
+      "label": {
+        "en": "has given name"
+      },
+      "description": {
+        "en": "Used to support property parameters for the given name data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasHonorificPrefix",
+      "property": "http://www.w3.org/2006/vcard/ns#hasHonorificPrefix",
+      "label": {
+        "en": "has honorific prefix"
+      },
+      "description": {
+        "en": "Used to support property parameters for the honorific prefix data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasHonorificSuffix",
+      "property": "http://www.w3.org/2006/vcard/ns#hasHonorificSuffix",
+      "label": {
+        "en": "has honorific suffix"
+      },
+      "description": {
+        "en": "Used to support property parameters for the honorific suffix data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasInstantMessage",
+      "property": "http://www.w3.org/2006/vcard/ns#hasInstantMessage",
+      "label": {
+        "en": "has messaging"
+      },
+      "description": {
+        "en": "To specify the instant messaging and presence protocol communications with the object. (Was called IMPP in RFC6350)"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasLanguage",
+      "property": "http://www.w3.org/2006/vcard/ns#hasLanguage",
+      "label": {
+        "en": "has language"
+      },
+      "description": {
+        "en": "Used to support property parameters for the language data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasLocality",
+      "property": "http://www.w3.org/2006/vcard/ns#hasLocality",
+      "label": {
+        "en": "has locality"
+      },
+      "description": {
+        "en": "Used to support property parameters for the locality data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasNickname",
+      "property": "http://www.w3.org/2006/vcard/ns#hasNickname",
+      "label": {
+        "en": "has nickname"
+      },
+      "description": {
+        "en": "Used to support property parameters for the nickname data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasNote",
+      "property": "http://www.w3.org/2006/vcard/ns#hasNote",
+      "label": {
+        "en": "has note"
+      },
+      "description": {
+        "en": "Used to support property parameters for the note data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasOrganizationName",
+      "property": "http://www.w3.org/2006/vcard/ns#hasOrganizationName",
+      "label": {
+        "en": "has organization name"
+      },
+      "description": {
+        "en": "Used to support property parameters for the organization name data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasOrganizationUnit",
+      "property": "http://www.w3.org/2006/vcard/ns#hasOrganizationUnit",
+      "label": {
+        "en": "has organization unit name"
+      },
+      "description": {
+        "en": "Used to support property parameters for the organization unit name data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasPostalCode",
+      "property": "http://www.w3.org/2006/vcard/ns#hasPostalCode",
+      "label": {
+        "en": "has postal code"
+      },
+      "description": {
+        "en": "Used to support property parameters for the postal code data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasRegion",
+      "property": "http://www.w3.org/2006/vcard/ns#hasRegion",
+      "label": {
+        "en": "has region"
+      },
+      "description": {
+        "en": "Used to support property parameters for the region data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasRelated",
+      "property": "http://www.w3.org/2006/vcard/ns#hasRelated",
+      "label": {
+        "en": "has related"
+      },
+      "description": {
+        "en": "To specify a relationship between another entity and the entity represented by this object"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasRole",
+      "property": "http://www.w3.org/2006/vcard/ns#hasRole",
+      "label": {
+        "en": "has role"
+      },
+      "description": {
+        "en": "Used to support property parameters for the role data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasSource",
+      "property": "http://www.w3.org/2006/vcard/ns#hasSource",
+      "label": {
+        "en": "has source"
+      },
+      "description": {
+        "en": "To identify the source of directory information of the object"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasStreetAddress",
+      "property": "http://www.w3.org/2006/vcard/ns#hasStreetAddress",
+      "label": {
+        "en": "has street address"
+      },
+      "description": {
+        "en": "Used to support property parameters for the street address data property"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasTitle",
+      "property": "http://www.w3.org/2006/vcard/ns#hasTitle",
+      "label": {
+        "en": "has title"
+      },
+      "description": {
+        "en": "Used to support property parameters for the title data property"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "vc:hasUID",
+      "property": "http://www.w3.org/2006/vcard/ns#hasUID",
+      "label": {
+        "en": "has uid"
+      },
+      "description": {
+        "en": "To specify a value that represents a globally unique identifier corresponding to the object"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasValue",
+      "property": "http://www.w3.org/2006/vcard/ns#hasValue",
+      "label": {
+        "en": "has value"
+      },
+      "description": {
+        "en": "Used to indicate the resource value of an object property that requires property parameters"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasAddress",
+      "property": "http://www.w3.org/2006/vcard/ns#hasAddress",
+      "label": {
+        "en": "Address",
+        "sv": "Adress",
+        "nb": "Adresse",
+        "da": "Adresse",
+        "de": "Adresse"
+      },
+      "description": {
+        "en": "To specify the components of the delivery address for the object"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2006/vcard/ns#Address"
+      },
+      "type": "group",
+      "automatic": true,
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "items": [
+        {
+          "id": "vc:street-address"
+        },
+        {
+          "id": "vc:locality"
+        },
+        {
+          "id": "vc:postal-code"
+        },
+        {
+          "id": "vc:country-name"
+        }
+      ]
+    },
+    {
+      "id": "vc:hasEmail",
+      "property": "http://www.w3.org/2006/vcard/ns#hasEmail",
+      "label": {
+        "en": "Email",
+        "sv": "E-postadress",
+        "nb": "Epost",
+        "da": "E-mail",
+        "de": "E-Mail-Adresse"
+      },
+      "description": {
+        "en": "To specify the electronic mail address for communication with the object"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2006/vcard/ns#Email"
+      },
+      "type": "text",
+      "automatic": true,
+      "valueTemplate": "mailto:",
+      "styles": [
+        "email"
+      ],
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 1,
+        "pref": 0
+      }
+    },
+    {
+      "id": "vc:hasGeo",
+      "property": "http://www.w3.org/2006/vcard/ns#hasGeo",
+      "label": {
+        "en": "has geo"
+      },
+      "description": {
+        "en": "To specify information related to the global positioning of the object. May also be used as a property parameter."
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasKey",
+      "property": "http://www.w3.org/2006/vcard/ns#hasKey",
+      "label": {
+        "en": "has key"
+      },
+      "description": {
+        "en": "To specify a public key or authentication certificate associated with the object"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasLogo",
+      "property": "http://www.w3.org/2006/vcard/ns#hasLogo",
+      "label": {
+        "en": "has logo"
+      },
+      "description": {
+        "en": "To specify a graphic image of a logo associated with the object "
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasName",
+      "property": "http://www.w3.org/2006/vcard/ns#hasName",
+      "label": {
+        "en": "has name"
+      },
+      "description": {
+        "en": "To specify the components of the name of the object"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2006/vcard/ns#Name"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasPhoto",
+      "property": "http://www.w3.org/2006/vcard/ns#hasPhoto",
+      "label": {
+        "en": "has photo"
+      },
+      "description": {
+        "en": "To specify an image or photograph information that annotates some aspect of the object"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasSound",
+      "property": "http://www.w3.org/2006/vcard/ns#hasSound",
+      "label": {
+        "en": "has sound"
+      },
+      "description": {
+        "en": "To specify a digital sound content information that annotates some aspect of the object"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasTelephone",
+      "property": "http://www.w3.org/2006/vcard/ns#hasTelephone",
+      "label": {
+        "en": "Telephone",
+        "sv": "Telefon",
+        "nb": "Telefon",
+        "da": "Telefon",
+        "de": "Telefon"
+      },
+      "description": {
+        "en": "The telephone number should be given including country calling code, e.g. +4618100000."
+      },
+      "type": "group",
+      "automatic": true,
+      "items": [
+        {
+          "type": "text",
+          "nodetype": "URI",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "description": {
+            "": "The telephone number must be given as a valid resource URI, e.g. tel:+4618100000."
+          },
+          "property": "http://www.w3.org/2006/vcard/ns#hasValue",
+          "pattern": "\\+?[0-9]*",
+          "valueTemplate": "tel:$1"
+        }
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "vc:hasTelephone_complete",
+      "property": "http://www.w3.org/2006/vcard/ns#hasTelephone",
+      "label": {
+        "en": "Telephone",
+        "sv": "Telefon",
+        "nb": "Telefon",
+        "da": "Telefon",
+        "de": "Telefon"
+      },
+      "description": {
+        "en": "To specify the telephone number for telephony communication with the object"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": [
+        {
+          "type": "text",
+          "nodetype": "URI",
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          },
+          "label": {
+            "en": "Number",
+            "sv": "Nummer",
+            "da": "Nummer",
+            "de": "Nummer"
+          },
+          "description": {
+            "": "The telephone number must be given as a valid resource URI, e.g. tel:+4618100000."
+          },
+          "property": "http://www.w3.org/2006/vcard/ns#hasValue",
+          "pattern": "\\+?[0-9]*",
+          "valueTemplate": "tel:$1"
+        },
+        {
+          "id": "vc:telephoneType"
+        },
+        {
+          "id": "vc:vCardType"
+        }
+      ],
+      "styles": [
+        "table"
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "vc:hasURL",
+      "property": "http://www.w3.org/2006/vcard/ns#hasURL",
+      "label": {
+        "en": "has url"
+      },
+      "description": {
+        "en": "To specify a uniform resource locator associated with the object"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "id": "vc:hasMember",
+      "property": "http://www.w3.org/2006/vcard/ns#hasMember",
+      "label": {
+        "en": "has member"
+      },
+      "description": {
+        "en": "To include a member in the group this object represents. (This property can only be used by Group individuals)"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2006/vcard/ns#Kind"
+      },
+      "type": "group",
+      "automatic": true
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "vc:vCardType",
+      "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "label": {
+        "en": "Context",
+        "sv": "Sammanhang",
+        "nb": "Kontekst",
+        "da": "Kontekst",
+        "de": "Zusammenhang"
+      },
+      "choices": [
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#Home",
+          "label": {
+            "en": "Home",
+            "sv": "Hem",
+            "nb": "Hjemme",
+            "da": "Hjemme",
+            "de": "Zuhause"
+          },
+          "description": {
+            "en": "This implies that the property is related to an individual's personal life"
+          }
+        },
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#Work",
+          "description": {
+            "en": "This implies that the property is related to an individual's work place"
+          },
+          "label": {
+            "en": "Work",
+            "sv": "Arbete",
+            "nb": "Arbeid",
+            "da": "Arbejde",
+            "de": "Arbeit"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "styles": [
+        "strictmatch"
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "vc:IndOrGroup",
+      "label": {
+        "en": "Individual or Group"
+      },
+      "description": {},
+      "items": [
+        {
+          "id": "vc:kindIndOrOrg"
+        },
+        {
+          "id": "vc:fn"
+        },
+        {
+          "id": "vc:hasEmail"
+        },
+        {
+          "id": "vc:hasTelephone"
+        },
+        {
+          "id": "vc:hasAddress"
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "vc:kind",
+      "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "label": {
+        "en": "Kind",
+        "sv": "Art",
+        "de": "Art"
+      },
+      "choices": [
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#Group",
+          "label": {
+            "en": "Group",
+            "sv": "Grupp",
+            "da": "Gruppe",
+            "de": "Gruppe"
+          },
+          "description": {
+            "en": "Object representing a group of persons or entities.  A group object will usually contain hasMember properties to specify the members of the group."
+          }
+        },
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#Individual",
+          "label": {
+            "en": "Individual",
+            "sv": "Individ",
+            "da": "Individ",
+            "de": "Einzelperson"
+          },
+          "description": {
+            "en": "An object representing a single person or entity."
+          }
+        },
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#Location",
+          "label": {
+            "en": "Location",
+            "sv": "Plats",
+            "da": "Sted",
+            "de": "Ort"
+          },
+          "description": {
+            "en": "An object representing a named geographical place."
+          }
+        },
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#Organization",
+          "label": {
+            "en": "Organization",
+            "sv": "Organisation",
+            "da": "Organisation",
+            "de": "Organisation"
+          },
+          "description": {
+            "en": "An object representing an organization.  An organization is a single entity, and might represent a business or government, a department or division within a business or government, a club, an association, or the like."
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 1,
+        "pref": 0,
+        "max": 1
+      }
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "vc:telephoneType",
+      "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "label": {
+        "en": "Type",
+        "sv": "Typ",
+        "nb": "Type",
+        "da": "Type",
+        "de": "Typ"
+      },
+      "description": {},
+      "choices": [
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#Cell",
+          "label": {
+            "en": "Cell (mobile)",
+            "sv": "Mobiltelefon",
+            "nb": "mobil",
+            "da": "Mobiltelefon",
+            "de": "Mobiltelefon"
+          },
+          "description": {
+            "en": "Also called mobile telephone."
+          }
+        },
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#Fax",
+          "label": {
+            "en": "Fax",
+            "sv": "Fax",
+            "nb": "Faks",
+            "da": "Fax",
+            "de": "Fax"
+          },
+          "description": {
+            "en": "A faxmachine telephone number."
+          }
+        },
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#Pager",
+          "label": {
+            "en": "Pager",
+            "sv": "Personsökare",
+            "nb": "Personsøker",
+            "da": "Personsøger",
+            "de": "Pager"
+          },
+          "description": {}
+        },
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#Text",
+          "description": {
+            "en": "Also called sms telephone"
+          },
+          "label": {
+            "en": "Text (sms)",
+            "sv": "Textmeddelande (sms)",
+            "nb": "Sms",
+            "da": "Tekstbesked (SMS)",
+            "de": "SMS"
+          }
+        },
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#TextPhone",
+          "label": {
+            "en": "Text phone",
+            "sv": "Texttelefon",
+            "nb": "Teksttelefon",
+            "da": "Teksttelefon",
+            "de": "Texttelefon"
+          }
+        },
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#Video",
+          "label": {
+            "en": "Video",
+            "sv": "Video",
+            "nb": "Video",
+            "da": "Video",
+            "de": "Video"
+          }
+        },
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#Voice",
+          "label": {
+            "en": "Voice",
+            "sv": "Röst",
+            "nb": "Stemme",
+            "da": "Stemme",
+            "de": "Stimme"
+          },
+          "description": {}
+        }
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "styles": [
+        "strictmatch"
+      ]
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "property": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "label": {
+        "en": "Kind",
+        "sv": "Typ",
+        "da": "Type"
+      },
+      "choices": [
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#Individual",
+          "label": {
+            "en": "Individual",
+            "sv": "Individ",
+            "nb": "Individ",
+            "da": "Individ",
+            "de": "Einzelperson"
+          },
+          "description": {
+            "en": "An object representing a single person or entity."
+          }
+        },
+        {
+          "value": "http://www.w3.org/2006/vcard/ns#Organization",
+          "label": {
+            "en": "Organization",
+            "sv": "Organisation",
+            "nb": "Organisasjon",
+            "da": "Organisation",
+            "de": "Organisation"
+          },
+          "description": {
+            "en": "An object representing an organization.  An organization is a single entity, and might represent a business or government, a department or division within a business or government, a club, an association, or the like."
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 1,
+        "pref": 0,
+        "max": 1
+      },
+      "id": "vc:kindIndOrOrg"
+    }
+  ],
+  "scope": "vcard",
+  "namespace": "http://www.w3.org/2006/vcard/ns#"
+}

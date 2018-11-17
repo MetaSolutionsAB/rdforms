@@ -52,8 +52,8 @@ export default declare([_WidgetBase], {
         $input.attr('disabled', true);
       } else {
         $label.click((inp) => {
-          this.binding.setValue(inp.val());
-        }, $input);
+          this.binding.setValue($input.val());
+        });
       }
     }
     uniqueRadioButtonGroupNr += 1;

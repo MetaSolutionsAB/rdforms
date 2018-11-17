@@ -1,17 +1,31 @@
 const isNode = require('detect-node');
 
 /**
- * Return the first sucessfully fetched bundle from a list of urls
+ * Return the first sucessfully fetched bundle from a list of urls or throw en error if none could be fetched
  *
  * @param {String} urls
  * @returns {Promise<Response | never | void>}
  */
 const fetchBundle = async (urls) => {
+  const totalUrls = urls.length;
+  let response;
   let bundle;
-  for (url of urls) {
-    bundle = await fetch(url).then(r => r.json()).catch(e => console.log(`Fetching or parsing template bundle ${url} failed`, e)); // TODO dont't log if all fallback options are not exhausted
-    if (bundle) {
+
+  for (let i = 0; i < totalUrls; i++) {
+    try {
+      response = await fetch(urls[i]);
+    } catch (e) {
+      throw Error(`A network error ocurred while trying to fetch bundle ${urls[i]}`);
+    }
+    if (response.ok) {
+      try {
+        bundle = await response.json();
+      } catch (e) {
+        console.log(e);
+      }
       break;
+    } else if (i === (totalUrls - 1)) { // if last url to check also failed then throw an error
+      throw Error(`Fetching template bundle ${urls[i]} failed`);
     }
   }
 
@@ -30,14 +44,8 @@ const promisifyBundles = bundles => bundles.map(b => b instanceof Array ? fetchB
  *
  * @param bundles
  * @param itemStore
- * @param callback
  */
-const registerBundles = (bundles = [], itemStore, callback) => {
-  const registeredBundles = bundles.map(source => itemStore.registerBundle({source}));
-  if (callback) {
-    callback(registeredBundles);
-  }
-};
+const registerBundles = (itemStore, bundles = []) => bundles.map(source => itemStore.registerBundle({ source }));
 
 /**
  *
@@ -45,7 +53,7 @@ const registerBundles = (bundles = [], itemStore, callback) => {
  * @param bundlePaths {Array<Object|String>} an array of object (bundles) or paths
  * @param callback
  */
-export default (itemStore, bundlePaths = [], callback = null) => {
+export default async (itemStore, bundlePaths = [], callback = ()=>{}) => {
   if (bundlePaths.length === 0) { // nothing to load
     callback && callback([]);
   }
@@ -57,7 +65,9 @@ export default (itemStore, bundlePaths = [], callback = null) => {
   } else {
     // Fetch or if loaded just wrap it in Promise.resolve
     const bundlePromises = promisifyBundles(bundlePaths);
-    Promise.all(bundlePromises)
-      .then(loadedBundles => registerBundles(loadedBundles, itemStore, callback));
+    const loadedBundles = await Promise.all(bundlePromises);
+    const registeredBundles = registerBundles(itemStore, loadedBundles);
+    callback(registeredBundles); // TODO remove; should be deprecated
+    return registeredBundles;
   }
 };

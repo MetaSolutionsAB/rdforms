@@ -37,7 +37,7 @@ const fetchBundle = async (urls) => {
  * @param bundles
  * @returns {*}
  */
-const promisifyBundles = bundles => bundles.map(b => b instanceof Array ? fetchBundle(b) : Promise.resolve(b));
+const promisifyBundles = bundles => bundles.map(bundle => bundle instanceof Array ? fetchBundle(bundle) : Promise.resolve(bundle));
 
 /**
  * Register bundle templates
@@ -60,7 +60,7 @@ export default async (itemStore, bundlePaths = [], callback = ()=>{}) => {
 
 
   if (isNode) {
-    const bundles = bundlePaths.map(b => require(b)); // TODO @valentino use fetch (polyfill?) for node also
+    const bundles = bundlePaths.map(bundlePath => require(bundlePath)); // TODO @valentino use fetch (polyfill?) for node also
     registerBundles(bundles);
   } else {
     // Fetch or if loaded just wrap it in Promise.resolve

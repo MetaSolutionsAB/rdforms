@@ -17,7 +17,7 @@ const fetchBundle = async (urls) => {
     } catch (e) {
       throw Error(`A network error ocurred while trying to fetch bundle ${urls[i]}`);
     }
-    if (response.ok) {
+    if (response && response.ok) {
       try {
         bundle = await response.json();
       } catch (e) {

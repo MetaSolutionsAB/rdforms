@@ -7,6 +7,7 @@ module.exports = {
   entry: {
     bootstrap: 'index.bootstrap.js',
     bmd: 'index.bmd.js',
+    'no-bootstrap-css': 'index.no-bootstrap-css.js',
   },
   output: {
     path: path.join(__dirname, 'dist'),

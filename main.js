@@ -1,4 +1,5 @@
-import './src/view/bmd/all'; // hard coded bmd
+// import './src/view/bmd/all'; // hard coded bmd
+import './index.no-bootstrap-css'; // hard coded bmd
 
 export {default as renderingContext} from './src/view/renderingContext';
 export {default as ItemStore} from './src/template/ItemStore';

@@ -2148,25 +2148,18 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
 
-"bootstrap-material-datetimepicker@https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#amd":
+"bootstrap-material-datetimepicker@https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#webpack":
   version "2.7.1"
-  resolved "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#d0659319a3e136c0f84b881cbe478482a303484b"
+  resolved "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#a41ebf6395fb0d0a5fdabfe3ddc43f83ac745250"
   dependencies:
     bootstrap "~3.3.4"
-    bootstrap-material-design "~0.3.0"
+    bootstrap-material-design "https://bitbucket.org/metasolutions/bootstrap-material-design.git#amd"
     jquery "1.12.3"
-    moment "~2.10.2"
+    moment "^2.22.2"
 
 "bootstrap-material-design@https://bitbucket.org/metasolutions/bootstrap-material-design.git#amd":
   version "0.5.10"
   resolved "https://bitbucket.org/metasolutions/bootstrap-material-design.git#5c1fa35b7e613c063d73858594166b3b44c6aab5"
-  dependencies:
-    bootstrap ">=3.0"
-    jquery ">=1.9.1"
-
-bootstrap-material-design@~0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/bootstrap-material-design/-/bootstrap-material-design-0.3.0.tgz#e23fc34eb73a9230d50bbdf68c9fee97fc465b9f"
   dependencies:
     bootstrap ">=3.0"
     jquery ">=1.9.1"
@@ -4207,10 +4200,6 @@ follow-redirects@^1.0.0:
   dependencies:
     debug "^3.1.0"
 
-font-awesome@^4.7.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
-
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
@@ -6148,10 +6137,6 @@ moment@2.18.1:
 moment@^2.22.2:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
-
-moment@~2.10.2:
-  version "2.10.6"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.10.6.tgz#6cb21967c79cba7b0ca5e66644f173662b3efa77"
 
 move-concurrently@^1.0.1:
   version "1.0.1"

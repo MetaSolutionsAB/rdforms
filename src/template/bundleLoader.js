@@ -20,10 +20,10 @@ const fetchBundle = async (urls) => {
     if (response && response.ok) {
       try {
         bundle = await response.json();
+        break;
       } catch (e) {
         console.log(e);
       }
-      break;
     } else if (i === (totalUrls - 1)) { // if last url to check also failed then throw an error
       throw Error(`Fetching template bundle ${urls[i]} failed`);
     }

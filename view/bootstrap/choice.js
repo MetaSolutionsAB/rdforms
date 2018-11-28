@@ -96,16 +96,17 @@ define([
     });
     context.choices = choices;
     renderingContext.renderSelect(fieldDiv, binding, context);
+    const setValue = context.setValue;
 
     // Sets the value if any using the setValue defined in renderSelect
     const c = binding.getChoice();
     if (c) {
       if (c.load != null) {
         c.load(() => {
-          context.setValue(c);
+          setValue(c);
         });
       } else {
-        context.setValue(c);
+        setValue(c);
       }
     }
   });
@@ -117,6 +118,9 @@ define([
 
     const renderSelect = () => {
       renderingContext.renderSelect(fieldDiv, binding, context);
+      // remember the function since the context object is reused and may
+      // reference to the wrong setValue function later on.
+      const setValue = context.setValue;
       const $search = jquery('<button class="btn btn-default btn-fab btn-fab-mini browseChoices" type="button">')
         .attr('title', context.view.messages.edit_browse)
         .appendTo(fieldDiv);
@@ -134,10 +138,10 @@ define([
           binding.setChoice(choice);
           if (choice.load != null) {
             choice.load(() => {
-              context.setValue(choice);
+              setValue(choice);
             });
           } else {
-            context.setValue(choice);
+            setValue(choice);
           }
         } else {
           binding.setChoice(null);

@@ -241,7 +241,7 @@ export default declare(_Widget, {
     let rowNode;
 
     // New rowDiv since we have a label
-    if (lastRowNode === undefined) {
+    if (lastRowNode == null) {
       rowNode = renderingContext.domCreate('div', this.domNode);
     } else {
       rowNode = renderingContext.domCreateAfter('div', lastRowNode);

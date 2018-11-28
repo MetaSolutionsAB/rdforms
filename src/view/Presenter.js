@@ -52,7 +52,7 @@ export default declare(View, {
     }
     for (index = 0; index < bindings.length; index++) {
       const lang = bindings[index].getLanguage();
-      if (lang === '' || lang === undefined) {
+      if (lang === '' || lang == null) {
         alts.noLanguage = bindings[index];
       } else if (lang === i18n.getLocale()) {
         alts.best = bindings[index];

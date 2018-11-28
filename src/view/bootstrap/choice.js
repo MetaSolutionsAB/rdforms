@@ -105,6 +105,7 @@ editors.itemtype('choice').choices().register((fieldDiv, binding, context) => {
 // Depends on system.getChoice and system.openChoiceSelector methods being available
 editors.itemtype('choice').choices('none').register((fieldDiv, binding, context) => {
   context.chooser = renderingContext.chooserRegistry.getComponent(binding.getItem());
+  context.choices = undefined; // Reset choices so no bleeding over when reusing context between fields.
 
   const renderSelect = () => {
     renderingContext.renderSelect(fieldDiv, binding, context);

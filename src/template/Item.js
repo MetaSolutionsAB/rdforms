@@ -377,7 +377,7 @@ export default class Item {
 
   isEnabled(original) {
     var s = this.getSource(original);
-    return s.enabled === undefined ? true : s.enabled;
+    return s.enabled == null ? true : s.enabled;
   }
 
   setEnabled(en) {
@@ -417,7 +417,7 @@ export default class Item {
     if (this.hasStyle(cls, original)) {
       return true;
     }
-    if (s.cls === undefined) {
+    if (s.cls == null) {
       return false;
     }
     return s.cls.some(c => c.toLowerCase() === cls.toLowerCase());

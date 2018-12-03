@@ -2,7 +2,7 @@
   "name": "rdforms",
   "version": "9.0.0",
   "main": "dist/bmd.rdforms.js",
-  "module": "main.js",
+  "module": "main-no-bootstrap-css.js",
   "repository": "https://bitbucket.org/metasolutions/rdforms.git",
   "license": "MIT",
   "dependencies": {

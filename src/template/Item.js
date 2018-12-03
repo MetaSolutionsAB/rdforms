@@ -456,11 +456,11 @@ export default class Item {
     if (original === true) {  // Get the original source
       return this._source._extendedSource || this._source;
     } else if (original === false) {  // Get the extended source
-      var ei = this._itemStore.getItem(this.getExtends());
-      if (ei == null) {
+      var entryItem = this._itemStore.getItem(this.getExtends());
+      if (entryItem == null) {
         return this._source;
       } else {
-        return ei.getSource();
+        return entryItem.getSource();
       }
     } else {  //Get the merged source.
       return this._source;

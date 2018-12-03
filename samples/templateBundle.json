@@ -10,25 +10,6 @@
       "type": "group",
       "content": [
         {
-          "id": "p1",
-          "nodetype": "LITERAL",
-          "type": "text",
-          "property": "http://example.com/p1",
-          "cardinality": {"min": 1, "max": 1},
-          "label": {"en": "Property 1"}
-        },
-        {
-          "id": "p2",
-          "nodetype": "URI",
-          "type": "text",
-          "property": "http://example.com/p2",
-          "cardinality": {"min": 1, "max": 1},
-          "label": {"en": "Property 1"},
-          "valueTemplate": "http://",
-          "styles": ["autoValue", "invisible"],
-          "deps": ["http://example.com/p1"]
-        },
-        {
           "type": "text",
           "nodetype": "LITERAL",
           "property": "dcterms:identifier",
@@ -109,19 +90,93 @@
           ]
         },
         {
-          "id": "relation",
-          "type": "text",
+          "id": "subject",
+          "type": "choice",
           "nodetype": "URI",
-          "property": "http://purl.org/dc/terms/relation",
+          "property": "http://purl.org/dc/terms/subject",
           "cardinality": {
             "min": 1,
             "pref": "1",
             "max": 2
           },
+          "choices": [
+            {
+              "value": "ex:physics",
+              "label": {
+                "en": "Physics",
+                "sv": "Fysik"
+              }
+            },
+            {
+              "value": "http://example.com/chemistry",
+              "label": {
+                "en": "Chemistry",
+                "sv": "Kemi"
+              }
+            }
+          ],
           "label": {
-            "en": "Relation"
+            "en": "Subject",
+            "sv": "Ã„mne"
           },
-          "styles": ["externalLink"]
+          "description": {
+            "en": "A subject for this resource.",
+            "sv": "Ett Ã¤mne fÃ¶r denna resurs."
+          }
+        },
+        {
+          "type": "choice",
+          "nodetype": "URI",
+          "property": "http://purl.org/dc/terms/license",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "choices": [
+            {
+              "value": "cc:by/4.0/",
+              "label": {
+                "en": "CC BY 4.0 (Attribution)"
+              }
+            },
+            {
+              "value": "cc:by-nc/4.0/",
+              "label": {
+                "en": "CC BY-NC 4.0 (Attribution, Non-Commercial)"
+              }
+            }
+          ],
+          "styles": [
+            "verticalRadioButtons"
+          ],
+          "label": {
+            "en": "License",
+            "sv": "Licens"
+          },
+          "description": {
+            "en": "A license for this resource.",
+            "sv": "En licens fÃ¶r denna resurs."
+          }
+        },
+        {
+          "type": "choice",
+          "nodetype": "URI",
+          "property": "http://purl.org/dc/terms/relation",
+          "placeholder": "a relation",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "label": {
+            "en": "Relation",
+            "sv": "Relation"
+          },
+          "description": {
+            "en": "A relation to another resource.",
+            "sv": "En relation till en annan resurs."
+          }
         },
         {
           "type": "group",

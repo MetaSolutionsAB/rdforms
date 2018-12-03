@@ -349,8 +349,19 @@ a.rdformsUrl:hover {
     resize: vertical;
 }
 
-.rdformsEditor .rdformsFullValue {
-  color: #b3b3b3
+.rdformsEditor .rdformsExtLink {
+    margin-top: 0.6em;
+    margin-right: .6em;
+    text-decoration: none;
+}
+
+.rdformsEditor .rdformsExtLinkDisabled {
+    pointer-events: none;
+    opacity: 0.14;
+}
+
+.rdformsEditor .rdformsExtLinkControl {
+    padding-right: 3.5em !important;
 }
 
 .rdformsEditor .rdformsChoiceValue {

@@ -130,23 +130,21 @@ define([
     };
   });
 
-  const addChangeListener = (inp, binding, regex, full) => {
+  const addChangeListener = (inp, binding, regex, extLink) => {
     let to = null;
     const s = () => {
       to = null;
       const val = inp.val();
-      if (regex) {
-        if (regex.test(val)) {
-          binding.setGist(val);
-          if (full) {
-            full.text(binding.getValue());
-          }
-        }
-      } else {
+      let disableExtLink = true;
+      if (!regex || regex.test(val)) {
         binding.setGist(val);
-        if (full) {
-          full.text(binding.getValue());
+        if (extLink && val) {
+          extLink.prop("href", binding.getValue());
+          disableExtLink = false;
         }
+      }
+      if (extLink) {
+        extLink.toggleClass("rdformsExtLinkDisabled", disableExtLink);
       }
     };
     const c = () => {
@@ -161,16 +159,18 @@ define([
   const registerPattern = (pattern, datatype) => {
     const regex = new RegExp(pattern);
     editors.itemtype('text').datatype(datatype)
-      .register((fieldDiv, binding) => {
+      .register((fieldDiv, binding, context) => {
         const $input = jquery('<input type="text" class="form-control rdformsFieldInput">');
         $input.val(binding.getGist())
           .attr('pattern', pattern)
           .appendTo(fieldDiv);
 
-        if (binding.getItem().getValueTemplate()) {
-          const $fullValue = jquery('<div class="rdformsFullValue">');
-          $fullValue.text(binding.getValue()).appendTo(fieldDiv);
-          addChangeListener($input, binding, regex, $fullValue);
+        if (binding.getItem().hasStyle('externalLink')) {
+          const $extLink = jquery(`<a class="fa fa-external-link rdformsExtLink ${renderingContext.getExtLinkClass()}" target="_blank">`);
+          $extLink.appendTo(context.controlDiv);
+          jquery(fieldDiv).addClass('rdformsExtLinkControl');
+          addChangeListener($input, binding, regex, $extLink);
+          $input.keyup();
         } else {
           addChangeListener($input, binding, regex);
         }
@@ -203,16 +203,20 @@ define([
     $input.val(binding.getGist())
       .appendTo(fieldDiv);
 
-    if (item.getValueTemplate()) {
-      const $fullValue = jquery('<div class="rdformsFullValue">');
-      $fullValue.text(binding.getValue()).appendTo(fieldDiv);
-      addChangeListener($input, binding, null, $fullValue);
-    } else {
-      addChangeListener($input, binding);
+    const pattern = item.getPattern();
+    let regex = null;
+    if (pattern != null) {
+      $input.attr('pattern', pattern);
+      regex = new RegExp(pattern);
     }
-
-    if (item.getPattern() != null) {
-      $input.attr('pattern', item.getPattern());
+    if (item.hasStyle('externalLink')) {
+      const $extLink = jquery(`<a class="fa fa-external-link rdformsExtLink ${renderingContext.getExtLinkClass()}" target="_blank">`);
+      $extLink.appendTo(context.controlDiv);
+      jquery(fieldDiv).addClass('rdformsExtLinkControl');
+      addChangeListener($input, binding, regex, $extLink);
+      $input.keyup();
+    } else {
+      addChangeListener($input, binding, regex);
     }
 
     // If language control should be present

@@ -29,7 +29,8 @@
     "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#webpack",
     "select2": "^4.0.6-rc.1",
     "selectize": "^0.12.6",
-    "sizzle": "^2.3.3"
+    "sizzle": "^2.3.3",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.0",

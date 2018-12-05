@@ -62,9 +62,9 @@ export default class GroupBinding extends Binding {
   getChildrenRootUri() {
     if (this._statement) { //Either the object of the statement.
       return this._statement.getValue();
-    } else if (this._rootUri !== undefined) {
+    } else if (this._rootUri != null) {
       return this._rootUri;
-    } else if (this._parent !== undefined) {
+    } else if (this._parent != null) {
       return this._parent.getChildrenRootUri();
     }
   }
@@ -160,14 +160,14 @@ export default class GroupBinding extends Binding {
   remove() {
     this._oneValidChild = false;
     this.setAncestorValid(false);
-    if (this._parent !== undefined) {
+    if (this._parent != null) {
       this._parent.removeChildBinding(this);
     }
     super.remove(arguments);
   }
 
   isValid() {
-    if (this._oneValidChild === undefined) {
+    if (this._oneValidChild == null) {
       this._oneValidChild = this._forceOneValidChildCheck();
     }
     return this._oneValidChild && this._validPredicate;
@@ -184,11 +184,11 @@ export default class GroupBinding extends Binding {
   }
 
   updateAssertions() {
-    if (this._oneValidChild === undefined) {
+    if (this._oneValidChild == null) {
       this.isValid();
     }
     var assert = this._ancestorValid && this._oneValidChild && this._validPredicate;
-    if (this._statement !== undefined) {
+    if (this._statement != null) {
       this._statement.setAsserted(assert);
     }
     this._constraints.forEach(constraintStmt => constraintStmt.setAsserted(assert));

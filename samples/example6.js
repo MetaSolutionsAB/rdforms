@@ -9,6 +9,7 @@ const bundles = [
   ['templates/vcard.json'],
   ['templates/dcat_props.json'],
   ['templates/dcat.json'],
+  ['templateBundle.json'],
 ];
 
 const graph = new rdfjson.Graph(rdfGraph);
@@ -17,7 +18,7 @@ rdforms.bundleLoader(itemStore, bundles, function(bundles) {
   new rdforms.Editor({
     graph,
     resource: 'http://example.org/about',
-    template: itemStore.getItem('dcat:OnlyDataset'),
+    template: itemStore.getItem('test'),
     compact: false,
     includeLevel: 'optional'
   }, 'node');

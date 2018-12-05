@@ -1,3 +1,4 @@
+import 'whatwg-fetch';
 import './src/view/bmd/all'; // hard coded bmd
 
 export {default as renderingContext} from './src/view/renderingContext';

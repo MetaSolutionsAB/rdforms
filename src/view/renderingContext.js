@@ -120,7 +120,9 @@ const renderingContext = {
     }
     chooser.show(binding, callback);
   },
-
+  getExtLinkClass() {
+    return '';
+  },
   setMessages(msgs) {
     messages = msgs;
   },

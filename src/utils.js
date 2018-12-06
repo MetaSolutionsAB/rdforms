@@ -2,9 +2,8 @@ import system from './model/system';
 import {i18n} from 'esi18n';
 import {cloneDeep} from 'lodash-es';
 
-const locale = i18n.getLocale();
-
 const getLocalizedValue = function (hash) {
+  const locale = i18n.getLocale();
   if (hash == null) {
     return {precision: 'none'};
   } else if (typeof hash === 'string') {

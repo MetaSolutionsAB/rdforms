@@ -1,6 +1,7 @@
+import registeryDummyChooser from './chooser/dummy.js';
 import rdfGraph from './rdf.js'; // import a rdfjson graph
 const itemStore = new rdforms.ItemStore();
-
+const graph = new rdfjson.Graph(rdfGraph);
 const bundles = [
   ['templates/dcterms.json'],
   ['templates/foaf.json'],
@@ -12,7 +13,7 @@ const bundles = [
   ['templateBundle.json'],
 ];
 
-const graph = new rdfjson.Graph(rdfGraph);
+registeryDummyChooser();
 
 rdforms.bundleLoader(itemStore, bundles, function(bundles) {
   new rdforms.Editor({

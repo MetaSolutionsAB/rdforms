@@ -1,7 +1,10 @@
+import registeryDummyChooser from './chooser/dummy.js';
+
 import rdfGraph from './rdf.js';
 const itemStore = new rdforms.ItemStore();
 
 const graph = new rdfjson.Graph(rdfGraph);
+registeryDummyChooser();
 
 rdforms.bundleLoader(itemStore, [['templateBundle.json']], function(bundles) {
   new rdforms.Editor({

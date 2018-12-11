@@ -1,7 +1,7 @@
 import moment from 'moment';
 import DateTimeBase from '../bootstrap/DateTimeBase';
 import template from './DateTimeMDTemplate.html';
-
+import jquery from 'jquery';
 import declare from 'dojo/_base/declare';
 
 /**

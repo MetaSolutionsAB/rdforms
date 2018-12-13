@@ -24,7 +24,7 @@ sample directory using file: address, for instance file:///path_to_rdforms/sampl
 # Samples
 
 A good way to start is to take a look at the samples. To be able to run the samples smoothly you can use the webpack 
-dev server to spin up a local http server which we will *watch* your code changes and re-bundle automatically. 
+dev server to spin up a local http server which will *watch* your code changes and re-bundle automatically. 
 
 ```
 cd path_to_rdforms

@@ -52,7 +52,6 @@
     "eslint-plugin-requirejs": "^3.1.1",
     "file-loader": "^1.1.11",
     "html-loader": "^0.5.5",
-    "http-server": "^0.11.1",
     "imports-loader": "^0.8.0",
     "mini-css-extract-plugin": "^0.4.1",
     "optimize-css-assets-webpack-plugin": "^5.0.0",
@@ -64,8 +63,8 @@
     "uglifyjs-webpack-plugin": "^1.2.7",
     "webpack": "^4.16.5",
     "webpack-bundle-analyzer": "^2.13.1",
-    "webpack-cli": "^2.0.10",
-    "webpack-dev-server": "^3.1.5",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.10",
     "webpack-jarvis": "^0.3.2",
     "webpack-merge": "^4.1.4",
     "webpack-node-externals": "^1.6.0",
@@ -73,7 +72,7 @@
   },
   "scripts": {
     "build": "webpack --display-modules --config webpack.prod.js",
-    "dev": "webpack --display-modules --config webpack.dev.js",
+    "dev": "webpack-dev-server --watch --mode=development --config webpack.dev.js",
     "examples": "webpack --display-modules --config ./webpack.examples.js"
   }
 }

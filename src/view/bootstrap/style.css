@@ -1,0 +1,195 @@
+@import "../resources/rdforms.css";
+
+.test-class {
+    color: red !important;
+}
+
+.test-class2 {
+    color: green !important;
+}
+
+.input-group-btn > .form-control {
+    margin-left: -1px;
+    width: auto;
+}
+
+.rdformsEditor .rdformsField .rdformsLanguage {
+    width: 117px;
+    float: none;
+}
+
+.rdformsEditor .rdformsField .rdformsLangFieldControl {
+    width: 146px;
+}
+
+.rdformsLabelRow {
+    vertical-align: top;
+}
+
+.rdformsDateValue .form-control:invalid,
+.rdformsFieldInput:invalid {
+    /* insert your own styles for invalid form input */
+    background-color: lightcoral;
+}
+
+.rdformsDateValue .rdformsDatepicker {
+    width: 12em;
+    display: inline-block;
+}
+
+.rdformsDateValue .yearInput,
+.rdformsDateValue .timeInput {
+    width: 6em;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.rdformsDateValue .input {
+    padding-right: 15px;
+}
+
+.rdformsDateValue .dateControl {
+    width: 10em;
+    display: inline-block;
+    margin-right: 1em;
+    vertical-align: top;
+}
+
+.rdformsDateValue .fa {
+    line-height: 21px;
+}
+
+.rdformsDuration>div {
+    width: 10em;
+    display: inline-block;
+    margin-right: 1em;
+}
+
+.popover strong {
+    color: #808080;
+}
+
+.popover a {
+    color: #808080;
+}
+.popover .property {
+    margin-top: 1em;
+    font-size: small;
+}
+
+.popover .property>a {
+    word-wrap: break-word;
+}
+
+.popover .description {
+    max-width: 300px;
+    font-size: small;
+}
+
+.rdformsFieldControl>.fa.action {
+    float: right;
+    position: initial;
+    margin-top: 8px;
+}
+
+.fa.action.disabled {
+    cursor: default;
+}
+
+.rdformsEditor .rdformsFieldControl {
+    height: 3em;
+    top: 0px;
+}
+
+.rdformsLabelRow>.action.fa {
+    vertical-align: middle;
+}
+
+.rdformsLabelRow>.action.indentRemove.fa-remove,
+.rdformsLabelRow>.action.fa-plus {
+    margin-left: 1em;
+}
+
+.input-group-btn .fa {
+    line-height: 20px;
+}
+
+.rdformsField>.select2,
+.rdformsField>.select2-container { /* select2-container is for backwards compatability*/
+    min-width: 12em;
+}
+
+.compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow,
+.compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel {
+    padding-top: 6px;
+}
+
+.rdformsLabelRow.rdformsLabel {
+    display: inline-block;
+}
+
+.compact .rdformsLabelRow.rdformsLabel {
+    display: block;
+}
+
+.rdformsRow.rdformsTopLevel {
+    padding-bottom: 0.5em;
+}
+
+.rdformsEditor .rdformsField.rdformsLangcontrolledfield {
+    padding-right: 152px;
+}
+.rdformsEditor .rdformsField {
+    min-height: 34px;
+    padding-right: 28px;
+}
+
+.rdformsEditor .systemChoice.input-group {
+    max-width: 22em;
+}
+
+.rdformsEditor .browseChoices {
+    margin-left: 4px;
+}
+
+.browseChoices .fa-search.fa-stack-1x {
+    top: -2px;
+    left: -7px;
+    font-size: 20px;
+}
+
+.browseChoices .fa-plus.fa-stack-1x {
+    top: -11px;
+    left: 3px;
+    font-size: 12px;
+}
+
+.rdformsDateValue.rdformsDatepicker {
+    display: inline-block;
+}
+
+.rdformsDateValue.rdformsDatepicker>.input-group {
+    width: 150px;
+}
+/*.rdformsEditor.compact>.rdformsTopLevel:nth-child(odd) {
+    background: #E6E6E6
+}*/
+
+.fuelux .rdformsDatepicker>.input-group>.input-group-btn>.dropdown-menu-left {
+    left: -128px;
+}
+
+.cardgroup>.rdformsFields>.rdformsGroup {
+    padding: 2px 5px 5px 10px;
+    margin-right: -5px;
+    margin-bottom: 14px;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+}
+
+.rdforms .form-group.rdforms-upgrade {
+    display: inline-block;
+    width: 300px;
+    margin: 0px;
+}

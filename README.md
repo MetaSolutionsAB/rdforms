@@ -9,71 +9,88 @@ been deployed into an environment.
 Before you can use RDForms you need to make sure all the dependencies are loaded:
 
     $ cd path_to_rdforms
-    $ git submodule init
-    $ git submodule update
-    $ npm   install
-    $ grunt build
+    $ yarn
+    $ yarn build
 
-This requires that you have [nodejs](http://nodejs.org/) and [npm](https://www.npmjs.org/).
+This requires that you have [nodejs](http://nodejs.org/), [npm](https://www.npmjs.org/) and [yarn](https://yarnpkg.com/) already available in your system.
 
 # Development
 
-It is recommended to experiment directly with non-built versions as it gives you very good debugging and inspection tools
+It is recommended to experiment with the development version as it gives you very good debugging and inspection tools
 to understand what is going on (especially firebug in firefox and the built in debugging tools in Chrome).
 Furthermore, you do not have to deploy the rdforms library on a web server, you can point your browser to the
 sample directory using file: address, for instance file:///path_to_rdforms/samples/example1.html.
-But due to the AJAX approach for loading dependencies you first have to allow your browser to do ajax request from a file url,
-in Firefox this is done by:
-
-1. Going into the config mode by typing about:config in the location bar
-2. Searching for and changing the security.fileuri.strict_origin_policy to false
-
-In Chrome this is done by starting the browser with the following flag: --allow-file-access-from-files
 
 # Samples
 
-A good way to start is to take a look at the samples.
+A good way to start is to take a look at the samples. To be able to run the samples smoothly you can use the webpack 
+dev server to spin up a local http server which will *watch* your code changes and re-bundle automatically. 
 
-## samples/example1.html
+```
+cd path_to_rdforms
+yarn dev
+```
+
+Now you can access your sample in your browsers at [http://localhost:8080/samples/](http://localhost:8080/samples/). 
+For all the following examples their respective `.js` files control which are the data and how the forms are rendered.  
+
+## [example1.html](http://localhost:8080/samples/example1.html) - Simple Editor
 
 1. Loads the library and its CSS.
 2. Creates a minimal RDF graph manually.
 3. Creates a minimal RDForms template manually.
 4. Creates the editor UI from the RDF graph, a given resource, a template and an HTML node.
 
-## samples/example1-dev.html - Development version
+Check [example1.js](http://localhost:8080/samples/example1.js) for more.
 
-Similar to example1.html but loads the RDForms framework in non-built version. This is useful for debugging. Take inspiration from this approach if you need to test new code and want to avoid the delay of the building process.
-
-## samples/example2.html
+## [example2.html](http://localhost:8080/samples/example2.html) - Editor in Bootstrap
 
 Different from example1 in the sense that it loads the graph and template from separate files.
 
-## samples/example3.html
+Check [example2.js](http://localhost:8080/samples/example2.js) for more.
+
+## [example2-bmd.html](http://localhost:8080/samples/example2-bmd.html) - Editor using Material design
+
+Same as example 2 but with a material design theme for bootstrap.
+
+Check [example2.js](http://localhost:8080/samples/example2.js) for more.
+
+## [example3.html](http://localhost:8080/samples/example3.html) - Presenter using material design
 
 Different from example2 in how it loads the template form a separate file and how to depend on files not part of the build.
 See the next section for a longer explanation about the build.
 
+Check [example3.js](http://localhost:8080/samples/example3.js) for more.
+
+## [example4.html](http://localhost:8080/samples/example4.html) - Validation presenter using material design
+
+This examples shows how RDForms can be used as a form validator rather than just an editor. 
+Take a look at the validation report  inside the form presenter.
+
+Check [example4.js](http://localhost:8080/samples/example4.js) for more.
+
+## [example5.html](http://localhost:8080/samples/example5.html) - Building on default templates
+
+This examples utilizes pre-made templates to render forms. It can serve as a very good start for extending them and creating your
+own custom forms.
+
+Check [example5.js](http://localhost:8080/samples/example5.js) for more.
+
+## [example6.html](http://localhost:8080/samples/example6.html) - RDF output from editor (Template is for Dataset according to DCAT-AP)
+
+This example provides a ready output to check your form RDF output live.
+
+Check [example6.js](http://localhost:8080/samples/example6.js) for more.
+
+## [example7.html](http://localhost:8080/samples/example7.html) - RDForm editor with a registered chooser
+
+This is a more advanced example providing some guidance on how to create your own choosers and register them to show on 
+select fields in your forms. You can even have your data be fetched across the network.
+
+Check [example7.js](http://localhost:8080/samples/example7.js) for more.
+
+
 # A note on how to use the built version
-The build process uses r.js and works like this:
-
-1. All needed files are copied over to the release folder
-2. Files are transpiled if needed (converting ES6 to ES5)
-3. Depended files are bundled together into release/all.js and then removed as standalone files in the release folder
-
-So you should be able to use rdforms by simply including the all.js. (see samples/example1.html).
-
-However, if you need files that are not bundled in all.js there are two alternatives:
-
-1. Change in config/deps.js to include the additional files you need.
-2. Provide a suitable fallback to load missing files from the release folder
-
-To achieve alternative 2 you add the following before you load any rdforms files via require.
-
-    require.config({
-        baseUrl: "../release"
-    });
-
-The path (baseUrl) need to be relative to your main html file. You can see an example of this in samples/example3.html.
-
-Note: a baseUrl is already given in the config/deps.js which is also included in all.js. However, in most production environments this value is wrong as it points to the libs directory (not transpiled). In many cases it is also the wrong relative path from your html file.)
+The build process uses webpack and outputs the bundled result into the dist folder. The result is babelified into JavaScript ES5
+and you should be able to use the library by simply including the dist/rdforms.js. Check the examples above for more info on 
+the library's API or feel free to explore the `src/` directory.

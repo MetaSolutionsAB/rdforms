@@ -1,20 +1,16 @@
-require([
-  'rdfjson/Graph',                     // Rdfjson Graph API
-  'rdforms/template/ItemStore',        // Stores all the RDForm templates
-  'rdforms/view/Editor',               // The editor User interface
-  'rdforms/samples/rdf',               // The sample RDF
-  'rdforms/samples/templateBundle',    // The sample template
-  'rdforms/view/bootstrap/all',        // Depend on the bootstrap view
-  'rdforms/samples/chooser',           // Dummy chooser
-  'dojo/domReady!',                    // Wait until the dom is ready.
-], (Graph, ItemStore, Editor, rdf, templateBundle) => {
-  const graph = new Graph(rdf);
-  const itemStore = new ItemStore();
-  const bundle = itemStore.registerBundle({ source: templateBundle });
-  new Editor({
+import registeryDummyChooser from './chooser/dummy.js';
+
+import rdfGraph from './rdf.js';
+const itemStore = new rdforms.ItemStore();
+
+const graph = new rdfjson.Graph(rdfGraph);
+registeryDummyChooser();
+
+rdforms.bundleLoader(itemStore, [['templateBundle.json']], function(bundles) {
+  new rdforms.Editor({
     graph,
     resource: 'http://example.org/about',
-    template: bundle.getRoot(),
+    template: bundles[0].getRoot(),
     compact: false,
   }, 'node');
 });

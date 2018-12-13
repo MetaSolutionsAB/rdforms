@@ -1,0 +1,452 @@
+{
+  "templates": [
+    {
+      "type": "group",
+      "id": "odrs:RightsStatement-long",
+      "items": [
+        {
+          "id": "odrs:databaseRightStatement"
+        },
+        {
+          "id": "odrs:databaseRightYear"
+        },
+        {
+          "id": "odrs:copyrightHolder"
+        },
+        {
+          "id": "odrs:databaseRightHolder"
+        },
+        {
+          "id": "odrs:jurisdiction"
+        },
+        {
+          "id": "odrs:reuserGuidelines"
+        },
+        {
+          "id": "odrs:dataLicense"
+        },
+        {
+          "id": "odrs:contentLicense"
+        }
+      ],
+      "extends": "odrs:RightsStatement-common"
+    },
+    {
+      "type": "text",
+      "id": "odrs:attributionText",
+      "property": "http://schema.theodi.org/odrs#attributionText",
+      "label": {
+        "en": "Attribution text",
+        "sv": "Erkännandetext",
+        "nb": "Attribusjonstekst",
+        "da": "Text på attribut",
+        "de": "Namensnennungstext"
+      },
+      "description": {
+        "en": "The text to use in an attribution link. This may be the name of the publisher or a reference to a community or group of contributors.",
+        "nb": "Teksten som skal benyttes i en henvisningslenke (attribusjonslink). Dette kan være navnet på utgiveren eller en referanse til en gruppe bidragsytere.",
+        "da": "Teksten som skal benyttes i en henvisning (link til attribut). Dette kan være navnet på den dataejende organisation eller en reference til en gruppe bidragsydere.",
+        "sv": "Texten som ska användas i en erkännandetext. Detta kan vara namnet på utgivaren eller en hänvisning till ett gemenskap eller en grupp av bidragare.",
+        "de": "Der Text, der in einer Namensnennung verwendet wird. Dies kann der Name des Verlages oder ein Verweis auf eine Gemeinschaft oder eine Gruppe von Mitwirkenden sein."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "styles": [
+        "multiline"
+      ],
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "type": "text",
+      "id": "odrs:attributionURL",
+      "property": "http://schema.theodi.org/odrs#attributionURL",
+      "nodetype": "URI",
+      "label": {
+        "en": "Attribution URL",
+        "sv": "Erkännande URL",
+        "nb": "Attribusjonslenke",
+        "da": "Link til attribut",
+        "de": "Webadresse zur Namensnennung"
+      },
+      "description": {
+        "en": "The link (URL) which should be used when attributing a data source. The URL could be a reference to the dataset or publisher homepage, but may also be a dedicated attribution page. This is useful when providing onward attribution to upstream sources.",
+        "nb": "Linken skal benyttes ved henvisning av datakilde. URLen kan referere til datasettet eller utgiverens hjemmeside, men kan også peke til en egen attribusjonsside. Dette er nyttig når du henviser tilbake til hovedkilden.",
+        "da": "Link skal benyttes ved henvisning til datakilde. URLen kan referere til datasettet eller den dataejendes hjemmeside, men kan også pege til attributtens egen side. Dette er nyttigt når du henviser tilbage til hovedkilden."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "pattern": "https?://.+"
+    },
+    {
+      "type": "text",
+      "id": "odrs:copyrightNotice",
+      "property": "http://schema.theodi.org/odrs#copyrightNotice",
+      "label": {
+        "en": "Copyright notice",
+        "sv": "Meddelande om upphovsrätt",
+        "nb": "Copyrighterklæring",
+        "da": "Copyrighterklæring",
+        "de": "Urheberrechtshinweis"
+      },
+      "description": {
+        "en": "The copyright notice associated with a rights statement. A notice must typically be preserved and displayed when acknowledging the source of some data. This property is expressed as a simple literal value and so is suitable for simple copyright notices. Where a data publisher needs to reference a larger copyright statement and/or related guidance then the copyrightStatement property should be used instead.",
+        "nb": "En copyrighterklæring som hører til en rettighetserklæring. En merknad må som regel beholdes og vises ved oppgivelse av kilden av enkelte data. Egenskapen er uttrykt som en enkel literalverdi og er egnet for enkle copyrighterklæringer. Dersom en dataeier trenger en mer utfyllende forklaring til copyrighten og/eller relatert veiledning, bør copyrightforklaring brukes.",
+        "da": "En copyrighterklæring som hører til en rettighetserklæring. En besked må som regel bevares og vises ved anerkendelse af kilden til nogen data. Egenskaben er udtrykt som en simpel literalværdi og er egnet til enkle copyrighterklæringer. Hvis en dataejer har behov for en mere fuldstændig forklaring til copyrighten og/eller relateret vejledning, bør copyrightforklaring bruges."
+      },
+      "styles": [
+        "multiline"
+      ],
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "type": "text",
+      "id": "odrs:reuserGuidelines",
+      "label": {
+        "en": "Guidelines for re-users",
+        "sv": "Riktlinjer för återanvändning",
+        "nb": "Retningslinjer for gjenbrukere/viderebrukere",
+        "da": "Retningslinjer for genbrugere/videreanvendere",
+        "de": "Richtlinien für Wiederverwender"
+      },
+      "description": {
+        "en": "Link (URL) to a document that provides guidelines for re-users of data that is covered by a specific rights statement. The guidelines may include more detail on attribution guidelines, a fuller copyright statement, and general guidance on how the data might be re-used",
+        "nb": "Lenke til et dokument som gir veiledning for gjen- og viderebrukerne av data som er dekket av en spesifikk rettighetserklæring. Veiledningen kan inneholde mer detaljert informasjon om  retningslinjene for opphavsrett, en fyldigere forklaring til copyrighten, og en generell veiledning i hvordan data kan gjen- og videregjenbrukes.",
+        "da": "Link (URL) til et dokument som giver vejledning for genbrug og videreanvendelse af data som er dækket af en specifik rettighetserklæring. Vejledningen kan indeholde mere detaljeret information om  retningslinjerne for ophavsret, en fyldigere forklaring til copyrighten, og en generel vejledning i hvordan data kan genbruges og videreanvendes."
+      },
+      "property": "http://schema.theodi.org/odrs#reuserGuidelines",
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "pattern": "https?://.+"
+    },
+    {
+      "type": "text",
+      "id": "odrs:copyrightStatement",
+      "property": "http://schema.theodi.org/odrs#copyrightStatement",
+      "nodetype": "URI",
+      "label": {
+        "en": "Copyright statement",
+        "sv": "Upphovsrättsdokument",
+        "nb": "Copyrightforklaring / forklaring til copyright",
+        "da": "Copyrightforklaring / forklaring til copyright",
+        "de": "Urheberrechtserklärung"
+      },
+      "description": {
+        "en": "A link (URL) to a document that includes a statement about the copyright status of the content of a dataset. The web page might include both a copyright notice for a dataset, and any relevant guidance for re-users.",
+        "nb": "En lenke til et dokument som inneholder en erklæring om opphavsretten til innholdet i et datasett. Nettsiden kan inkludere både copyrighterklæring for et datasett, og annen relevant veiledning for gjenbrukeren.",
+        "da": "Et link (URL) til et dokument som indeholder en erklæring om ophavsretten til indholdet i et datasæt. Netsiden kan inkludere både copyrighterklæring for et datasæt, og anden relevant vejledning for genbrugeren."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "pattern": "https?://.+"
+    },
+    {
+      "type": "group",
+      "id": "odrs:copyrightHolder",
+      "property": "http://schema.theodi.org/odrs#copyrightHolder",
+      "extends": "foaf:Organization-ref",
+      "label": {
+        "en": "Copyright holder",
+        "sv": "Ägare av upphovsrätten",
+        "nb": "Copyrightinnehaver",
+        "da": "Copyrightindehaver",
+        "de": "Urheberrechtsinhaber"
+      },
+      "description": {
+        "en": "A reference to the organization that holds copyright over the content of the dataset",
+        "da": "En reference til den organisation der har ophavsretten over indholdet af datasættet"
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "group",
+      "id": "odrs:databaseRightHolder",
+      "property": "http://schema.theodi.org/odrs#databaseRightHolder",
+      "extends": "foaf:Organization-ref",
+      "label": {
+        "en": "Database rights holder",
+        "da": "Database rettighedsholder",
+        "de": "Datenbankrechte-Inhaber",
+        "sv": "Databasens rättighetsinnehavare"
+      },
+      "description": {
+        "en": "A reference to the organization that holds database rights over the dataset",
+        "da": "En reference til den organisation der har ophavsretten over databasen der indeholder datasættet"
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "text",
+      "id": "odrs:jurisdiction",
+      "property": "http://schema.theodi.org/odrs#jurisdiction",
+      "nodetype": "URI",
+      "label": {
+        "en": "Jurisdiction",
+        "sv": "Jurisdiktion",
+        "nb": "Jurisdiksjon",
+        "da": "Jurisdiktion",
+        "de": "Gerichtsbarkeit"
+      },
+      "description": {
+        "en": "A reference (URI) to the jurisdiction in which copyright and/or database rights have been asserts. It is recommended that this refer to the URI for a country or region.",
+        "nb": "En referanse til jurisdiksjonen der opphavsretten og/eller databaserettighetene ble gjort gjeldende. Det er anbefalt at denne referere til URIen for et land eller en region.",
+        "da": "En reference til jurisdiktionen der har gjort ophavsretten og/eller databaserettighederne gældende. Det er anbefalet at denne referere til URIen for et land eller en region."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "pattern": "https?://.+"
+    },
+    {
+      "type": "text",
+      "id": "odrs:copyrightYear",
+      "property": "http://schema.theodi.org/odrs#copyrightYear",
+      "nodetype": "ONLY_LITERAL",
+      "label": {
+        "en": "Copyright year",
+        "sv": "Upphovsrättsår",
+        "da": "Dato for copyright",
+        "de": "Copyright-Jahr"
+      },
+      "description": {
+        "en": "The year from which copyright over the content of the dataset is asserted.",
+        "nb": "Året der opphavsretten for innholdet blir anført. ",
+        "da": "Året hvor ophavsretten for indholdet er gældende fra. "
+      }
+    },
+    {
+      "type": "text",
+      "id": "odrs:databaseRightYear",
+      "property": "http://schema.theodi.org/odrs#databaseRightYear",
+      "nodetype": "ONLY_LITERAL",
+      "label": {
+        "en": "Database rights year",
+        "da": "Database rettigheds år",
+        "de": "Datenbankrechte-Jahr",
+        "sv": "Databasens rättighetsår"
+      },
+      "description": {
+        "en": "The year from which a database right over the dataset is asserted.",
+        "da": "Året hvor ophavsretten for databasen er gældende fra. "
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "choice",
+      "id": "odrs:compatibleWith",
+      "property": "http://schema.theodi.org/odrs#compatibleWith",
+      "description": {
+        "en": "This property is used to indicates that one license is compatible with another. A re-use that meets the requirements, permissions and prohibitions of the first license should also meet the requirements, permissions and prohibitions of the second, compatible license. The inverse is not necessarily true: the compatible license might have stricter requirements. This statement can be used as an indicator that a re-user could publish a derivative dataset under the compatible license, e.g. to help drive automated selection and guidance licenses for publishers of derived data. However it is not a substitute for properly reading and understanding the text of either license."
+      },
+      "label": {
+        "en": "Compatible with",
+        "de": "Kompatibel mit",
+        "sv": "Kompatibel med"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://schema.theodi.org/odrs#License"
+      },
+      "nodetype": "URI"
+    },
+    {
+      "type": "group",
+      "id": "odrs:dataLicense",
+      "label": {
+        "en": "Data license",
+        "sv": "Datalicens",
+        "de": "Datenlizenz"
+      },
+      "cardinality": {
+        "min": 1,
+        "pref": 1,
+        "max": 1
+      },
+      "items": [
+        {
+          "type": "choice",
+          "property": "http://schema.theodi.org/odrs#dataLicense",
+          "label": {
+            "en": "Choose an existing license",
+            "sv": "Välj en befintlig licens",
+            "de": "Wählen Sie eine vorhandene Lizenz"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "nodetype": "URI",
+          "extends": "dcterms:cc-license-choices"
+        },
+        {
+          "type": "text",
+          "nodetype": "URI",
+          "property": "http://schema.theodi.org/odrs#dataLicense",
+          "label": {
+            "en": "or, provide a URL to the license",
+            "de": "oder stellen Sie eine Webadresse zur Lizenz zur Verfügung",
+            "sv": "eller ange en webbadress till licensen"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "property": "http://schema.theodi.org/odrs#databaseRightStatement",
+      "nodetype": "URI",
+      "label": {
+        "en": "Database rights statement",
+        "sv": "Rättighetsförklaring för databasen",
+        "de": "Rechteerklärung für Datenbank"
+      },
+      "description": {
+        "en": "A link to a document that includes a statement about the database rights that apply to this dataset. The web page might include both a statement on the applicable rights and any relevant guidance for re-users."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "id": "odrs:databaseRightStatement"
+    },
+    {
+      "type": "group",
+      "id": "odrs:contentLicense",
+      "cardinality": {
+        "min": 1,
+        "pref": 1,
+        "max": 1
+      },
+      "label": {
+        "en": "Content license"
+      },
+      "items": [
+        {
+          "type": "choice",
+          "property": "http://schema.theodi.org/odrs#contentLicense",
+          "label": {
+            "en": "Choose an existing license"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "nodetype": "URI",
+          "extends": "dcterms:cc-license-choices"
+        },
+        {
+          "type": "text",
+          "nodetype": "URI",
+          "property": "http://schema.theodi.org/odrs#contentLicense",
+          "label": {
+            "en": "or, provide a URL to the license"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "id": "odrs:RightsStatement-short",
+      "items": [
+        {
+          "id": "odrs:copyrightHolder"
+        },
+        {
+          "id": "odrs:jurisdiction"
+        },
+        {
+          "id": "odrs:reuserGuidelines"
+        }
+      ],
+      "extends": "odrs:RightsStatement-common"
+    },
+    {
+      "type": "group",
+      "id": "odrs:RightsStatement-common",
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://schema.theodi.org/odrs#RightsStatement"
+      },
+      "label": {
+        "en": "Rights statement",
+        "sv": "Rättighetsförklaring",
+        "nb": "Rettighetserklæring",
+        "da": "Rettighedserklæring",
+        "de": "Rechteerklärung"
+      },
+      "description": {
+        "en": "A description of the rights and terms of re-use for a dataset. A rights statement will include a reference to one or more licences copyright notices, and attribution requirements. Where a Rights Statement refers to several licences the intention is that these should separately apply to the data and content associated with the dataset. An individual Rights Statement may be specific to a dataset or could be applied to a number of datasets published by the same organisation or person, where the rights associated with each dataset are identical.",
+        "nb": "En beskrivelse av rettigheter og vilkår for gjen- og viderebruk av et datasett. En rettighetserklæring inkluderer referanse til en eller flere lisenser, copyrighterklæring og krav til henvisning/navngivelse. Der en rettighetserklæring refererer til flere lisenser, er intensjonen at disse hver for seg skal gjelde for data og innhold assosiert med datasettet. En egen rettighetserklæring kan gjelde for et spesifikk datasett, eller for en rekke datasett publisert av samme organisasjon eller person, der rettigheten for hvert datasett er identiske.",
+        "da": "En beskrivelse af rettigheter og vilkår for genbrug og videreanvendelse af et datasæt. En rettighedserklæring inkluderer reference til en eller flere lisencer, copyrighterklæringer og krav til henvisning/navngivelse. Der hvor en rettighedserklæring refererer til flere licenser, er intentionen at disse hver for sig skal gælde for data og indhold associeret med datasættet. En individuel rettighedserklæring kan gælde for et specifikt datasæt, eller for en række datasæt publiceret af samme organisation eller person, hvor rettigheden for hvert datasæt er identiske."
+      },
+      "items": [
+        {
+          "id": "odrs:attributionText"
+        },
+        {
+          "id": "odrs:attributionURL"
+        },
+        {
+          "id": "odrs:copyrightNotice"
+        },
+        {
+          "id": "odrs:copyrightStatement"
+        },
+        {
+          "id": "odrs:copyrightYear"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "id": "odrs:RightsStatement-short-agent",
+      "items": [
+        {
+          "type": "choice",
+          "labelProperties": [
+            "http://xmlns.com/foaf/0.1/name"
+          ],
+          "nodetype": "URI",
+          "extends": "odrs:copyrightHolder",
+          "constraints": {
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://xmlns.com/foaf/0.1/Agent"
+          }
+        },
+        {
+          "id": "odrs:jurisdiction"
+        },
+        {
+          "id": "odrs:reuserGuidelines"
+        }
+      ],
+      "extends": "odrs:RightsStatement-common"
+    }
+  ]
+}

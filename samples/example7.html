@@ -1,0 +1,34 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link type="text/css" href="example.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="../dist/bmd.rdforms.js"></script>
+    <script src="../node_modules/rdfjson/dist/rdfjson.js"></script>
+</head>
+<body>
+
+<h1>Example 7 - RDForm editor with a registered chooser</h1>
+<div class="col1">
+    <p>In RDForms we can pre-define the available choices to be rendered for a choice item either inline in the template
+        or with a standalone (registered) chooser.
+        We usually prefer the latter when the choices are not static or should be fetched by 3rd parties.
+        In this example we use static data with a standalone chooser to showcase the concept. This chooser can easily
+        modified to fetch dynamic data by modifying <a href="chooser/chooser.js">chooser.js</a>.</p>
+    <p>Note how the <i>Publisher</i> has different choices than the <i>Contact Point</i>, <i>Conforms To</i> or <i>Spatial
+        Coverage</i>. The former choices are defined in <a href="chooser/data.js">data.js</a> used by the standalone
+        chooser
+        while the rest uses the default "dummy" RDForm choooser's data.
+        Also note that the chooser can render its own UI (e.g a pop-up or modal) to present and select the choice. The UI would be triggered
+        when the search icon is clicked. Try clicking on the search icon for the <i>Publisher</i> field.</p>
+</div>
+
+<div class="twocol">
+    <div id="node" class="col1"></div>
+    <textarea class="col2" id="output" readonly></textarea>
+</div>
+<script src="example7.js" type="module"></script>
+</body>
+</html>

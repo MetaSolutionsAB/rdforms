@@ -1,0 +1,651 @@
+/* === Colors === */
+.rdformsLabel {
+    /*	font-weight:bold;*/
+    color: black;
+}
+
+.rdformsPresenter .rdformsLabel {
+    border-bottom: 1px solid #E6E6E6;
+}
+
+.compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow,
+.compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel {
+/*    border-right: 1px solid #E6E6E6;*/
+    border-bottom-width: 0px;
+}
+
+/* No border to the right of a heading*/
+.compact.rdformsEditor .rdformsTopLevel.rdformsHeading>.rdformsLabelRow,
+.compact.rdformsPresenter .rdformsTopLevel.rdformsHeading>.rdformsLabel {
+    border-right-width: 0px;
+}
+
+/* --- Inverted, background greyish with white separators. --- */
+.inverted.rdforms .rdformsTopLevel {
+    background: #E6E6E6;
+}
+
+.inverted.compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow,
+.inverted.compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel {
+    border-right: 1px solid white;
+}
+
+
+/* --- Validation colors --- */
+.rdforms .rdformsField.errorReport,
+.rdforms .rdformsGroup.errorReport {
+    border-left: 2px dotted red;
+}
+
+.rdforms .error {
+    background: salmon;
+}
+
+.rdforms .warning {
+    background: bisque;
+}
+
+.rdforms .deprecated {
+    background: lightskyblue;
+}
+
+.rdforms .rdformsMandatoryMark {
+    color: red;
+    vertical-align: text-bottom;
+    font-weight: bold;
+}
+
+.rdforms .rdformsRecommendedMark,
+.rdforms .rdformsOptionalMark {
+    padding-left: 10px;
+    font-size: 12px;
+    color: grey;
+}
+
+.rdformsMark {
+    display: none;
+}
+
+.rdformsTopLevel>.rdformsLabelRow>.rdformsMark,
+.rdformsTopLevel.rdformsHeading>.rdformsFields>.rdformsGroup>.rdformsRow>.rdformsLabelRow>.rdformsMark {
+    display: inline;
+}
+
+.compact .rdformsTopLevel>.rdformsLabelRow>.rdformsMark,
+.compact .rdformsTopLevel.rdformsHeading>.rdformsFields>.rdformsGroup>.rdformsRow>.rdformsLabelRow>.rdformsMark {
+    display: none;
+}
+
+
+/* === End colors === */
+
+.rdformsInvisible {
+    display: none;
+}
+
+.rdformsRow.rdformsTopLevel {
+ 	padding-top: 0.3em;
+ 	padding-bottom: 0.3em;
+	margin-top: 0em;
+}
+
+.compact .rdformsRow.rdformsTopLevel .rdformsRow {
+	padding-left: 0.7em;
+    margin-bottom: 0.3em;
+}
+
+.rdformsRow.rdformsTopLevel .rdformsRow {
+    margin-bottom: 0.15em;
+}
+
+.compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel,
+.compact.rdformsPresenter .rdformsTopLevel.rdformsRow.rdformsHeading>.rdformsFields>.rdformsGroup>.rdformsRow>.rdformsLabel {
+	font-style: normal;
+	width: 10em !important;
+}
+
+.compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow,
+.compact.rdformsEditor .rdformsTopLevel.rdformsRow.rdformsHeading>.rdformsFields>.rdformsGroup>.rdformsRow>.rdformsLabelRow {
+	width: 13em !important;
+}
+
+/* No specific width for headings */
+.rdformsEditor .rdformsTopLevel.rdformsHeading>.rdformsLabelRow,
+.rdformsPresenter .rdformsTopLevel.rdformsHeading>.rdformsLabel {
+    width: auto !important;
+    border-bottom: 1px solid lightgrey;
+}
+
+
+.rdformsEditor .rdformsTopLevel>.rdformsLabelRow>.rdformsLabel {
+	max-width: 15em;
+	width: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+	zoom:1;
+	*display: inline;
+    vertical-align: middle;
+}
+
+a.rdformsUrl {
+    text-decoration: none;
+    word-break: break-all;
+}
+
+a.rdformsUrl:hover {
+    text-decoration: underline;
+}
+
+/* compact anyway for first level*/
+.compact .rdformsTopLevel.rdformsRow.notCompact {
+	display: table;
+	width: 98%;
+}
+.compact .rdformsTopLevel.rdformsRow.notCompact>div {
+	display: table-cell;
+}
+
+.compact .rdformsTopLevel.rdformsRow.rdformsHeading.notCompact>div {
+    display: block;
+}
+
+.compact .rdformsTopLevel.rdformsRow.notCompact>.rdformsFields>.rdformsGroup {
+	margin-left: 0px;
+}
+
+/* compact anyway for first level*/
+.compact .rdformsTopLevel.rdformsRow.rdformsHeading>.rdformsFields>.rdformsGroup>.rdformsRow {
+    display: table;
+    width: 98%;
+}
+
+.compact .rdformsTopLevel.rdformsRow.rdformsHeading>.rdformsFields>.rdformsGroup>.rdformsRow>div {
+    display: table-cell;
+}
+
+
+
+.rdformsImage {
+    max-width: 100%;
+    max-height: 300px;
+}
+
+.rdformsLabel:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.rdformsLabel.noPointer:hover {
+    text-decoration: none;
+    cursor: default;
+}
+
+.rdformsPresenter th span:hover,
+.rdformsEditor th span:hover,
+.rdformsLabel.hasInfo:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.rdforms .itemInfoTable {
+	display: table;
+	width: 100%;
+}
+.rdforms .itemInfoTable>* {
+	display: table-row;
+}
+.rdforms .itemInfoTable>*>* {
+	display: table-cell;
+}
+
+.rdformsGroup {
+	margin-left: 13px;
+    position: relative;
+    margin-top: 10px;
+ }
+
+.compact .rdformsRow.rdformsInvisibleGroup>.rdformsLabelRow,
+.rdformsRow.rdformsInvisibleGroup>.rdformsLabelRow,
+.compact .rdformsRow.rdformsInvisibleGroup>.rdformsLabel,
+.rdformsRow.rdformsInvisibleGroup>.rdformsLabel{
+    display: none;
+}
+
+.rdformsInvisibleGroup>.rdformsFields>.rdformsField {
+    margin-left: 0em;
+    padding-left: 0em;
+}
+
+.rdformsInvisibleGroup>.rdformsFields>.rdformsGroup {
+    margin-left: 0em;
+}
+.rdformsInvisibleGroup>.rdformsFields>.rdformsGroup>.rdformsRow {
+    padding-left: 0px;
+}
+
+.rdformsHeading>.rdformsLabel {
+    font-size: larger;
+    margin: 8px 0px 5px 0px;
+}
+
+.rdformsField {
+	margin-left: 2em;
+/*	background: white;*/
+	padding-left: 0.5em;
+/*	word-break: break-all;*/
+}
+
+.rdformsPresenter .rdformsRepeatedValue {
+ 	border-top: 1px solid #E6E6E6;
+}
+
+.rdformsEditor .rdformsRepeatedValue {
+    margin-top: 2px;
+}
+
+.rdformsPresenter .rdformsField {
+	background: white;
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+}
+.rdformsPresenter .rdformsField.rdformsSingleline {
+  word-break: break-all;
+}
+
+.rdformsPresenter .rdformsField.rdformsMultiline {
+  word-break: break-word;
+}
+
+.rdformsPresenter th,
+.rdformsEditor th {
+  font-weight: bold;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+}
+
+.rdformsPresenter table.rdformsGroup td {
+	border: 1px solid #E6E6E6;
+}
+.rdformsEditor table.rdformsGroup th {
+	border-bottom: 1px solid #E6E6E6;
+}
+
+
+.rdformsEditor table.rdformsGroup td {
+	padding-left: 0em;
+	padding-right: 0.6em;
+}
+
+.rdformsEditor table.rdformsGroup td.rdformsLangcontrolledfield {
+    padding-right: 7.4em;
+}
+.rdformsEditor table.rdformsGroup td.rdformsLangcontrolledfield .rdformsLangFieldControl {
+    width: 6.4em;
+}
+
+.rdformsEditor table.rdformsGroup td.rdformsTableControl,
+.rdformsPresenter table.rdformsGroup td {
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+}
+
+.rdformsPresenter table.rdformsGroup,
+.rdformsEditor table.rdformsGroup {
+	border-collapse: collapse;
+}
+.rdformsEditor table.rdformsGroup tr{
+	background-color: white;
+}
+.rdformsPresenter table.rdformsGgroup th,
+.rdformsEditor table.rdformsGroup th {
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+}
+
+
+.rdformsPresenter .rdformsLanguage {
+ 	float: right;
+/*	border-left: 1px solid #E6E6E6;*/
+	padding-left: 0.7em;
+ }
+
+.rdformsEditor .rdformsLanguage {
+ 	float: right;
+/*	border-left: 1px solid white;*/
+	padding-right: 0.7em;
+ }
+ .rdformsEditor .rdformsField {
+ 	padding-right: 55px;
+	position: relative;
+ }
+ 
+ .rdformsEditor .rdformsField .rdformsChoiceLabel {
+ 	margin-left: 0.2em;
+ 	margin-right: 1em;
+ }
+ .rdformsEditor .rdformsField .mismatch {
+     color: red;
+     font-weight: bold;
+ }
+ .rdformsEditor .rdformsLangcontrolledfield {
+ 	padding-right: 10.9em;
+ }
+ .rdformsEditor .rdformsFieldControl {
+	position: absolute;
+	width: 3.8em;
+	padding-right: 0.1em;
+	right: 0;
+	overflow-x: hidden;
+	padding-right: 0.1em;
+	font-weight: normal;
+ }
+ .rdformsEditor .rdformsLangFieldControl {
+	width: 10em;
+ }
+
+.rdformsEditor .rdformsFieldInput {
+    width: 100%;
+    resize: vertical;
+}
+
+.rdformsEditor .rdformsExtLink {
+    margin-top: 0.6em;
+    margin-right: .6em;
+    text-decoration: none;
+}
+
+.rdformsEditor .rdformsExtLinkDisabled {
+    pointer-events: none;
+    opacity: 0.14;
+}
+
+.rdformsEditor .rdformsExtLinkControl {
+    padding-right: 3.5em !important;
+}
+
+.rdformsEditor .rdformsChoiceValue {
+ 	display: inline-block;
+	zoom:1;
+	background: whitesmoke;
+	min-height: 1.4em;
+	padding-left: 4px;
+	padding-right: 4px;
+	border: 1px solid lightgrey;
+	min-width: 4em;
+}
+
+.chooser.rdforms label {
+	font-weight:normal;
+	margin-left:5px;
+	margin-top:5px;
+	font-size:15px;
+    width: 4em;
+}
+
+.chooser.rdforms .uriNode,
+.chooser.rdforms .labelNode,
+.chooser.rdforms .descriptionNode {
+	margin-left:20px;
+	font-size:15px;
+    background: rgb(228, 224, 219);
+    border-radius: 3px;
+    padding: 3px 7px;
+    border: 1px solid grey;
+    word-break: break-all;
+}
+
+.chooser.rdforms h2 {
+    margin-top: 0px;
+    margin-bottom: 0.7em;
+}
+
+.rdformsStar {
+	display: inline-block;
+	zoom:1;
+	*display: inline;
+	width: 16px;
+	height: 16px;
+	background-repeat: no-repeat;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAAQAAAAEABcxq3DAAACGUlEQVQ4y52TTUhUcRTFf//3n/FjZsxmQsOvmtJF5VQ6i3IsaaJcVIs24UKIIKRNuGrboihaRWQptbVtmLvCWgyZWJRlNimUaKajMH1gWprzfO/dFiYozgR54WzuPedwOZcL/6jDtXjq68hlPRXejRqM0TPwhK51Gdy6QoNM5oqTyHFaLnP8v8TRCFmJPobly0GRZI2MvSBeX4dOxzXSNZsaaS4pLqrA8IMuYOuWwtDpUzSl46pohOxohGhVJdVlxVQHNlJdVuorN7L3GSjvEkt+4iy8sscTc8PTM7ydmKJ/YIg3sV6eqjvXOH+uUbWii8EVBJUPKu22IBbILFgjYCdpa5czem6eeHiXOlAQcG8TXY7gQkRlgEbEjZhj9MdTD1vbuajHEljjkzwI7zSP+H2zJaiiJbLDWtgOznwfQx9+dF+66Zzs6ialAYbHMJNf6QzvSJ3I81iFqELEUWtg/37PyGjy9dU251jnY36tukJHl3yP9cpd23SwLZUepkPPS27ffyQzyzrXyow2bTBKbcuLs6iWU1s+1t8Mvfh9RtlKzSqDgE8HHdsDpiDmFJL6BBio7CAqqwixPPi9OpjRINdlBBdnP4OM8G16Yep53GpR4K7dO9gcyB/djDLIcRmZDcQy8sYn5j8+G1i83hEz7/W+s1MANSF9o+GoffZQlfuCWIYv4w9EQq78PRXayDQPbdd6f6XesLL3By3z9hHiEQ65AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDEwLTAyLTExVDAxOjIwOjIxLTA2OjAwtZnToAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAwNi0xMC0wMVQwMDo1NjoyNi0wNTowMJWSAJ0AAAAASUVORK5CYII=);
+}
+
+
+/*.compact .rdformsLabel {
+	width: 1px;
+}*/
+
+.compact .rdformsRow.rdformsTopLevel {
+	display: table;
+	width: 98%;
+}
+.compact .rdformsRow.rdformsTopLevel>div {
+	display: table-cell;
+}
+
+.compact .rdformsRow>.rdformsFields>a,
+.compact .rdformsRow>.rdformsFields>div {
+    padding-left: 10px;
+}
+
+.compact .rdformsRow.rdformsTopLevel>.rdformsFields>div.rdforms {
+    padding-left: 0px;
+}
+
+.compact .rdformsRow.notCompact {
+	display: block;
+	width: auto;
+}
+
+.compact .rdformsRow.notCompact>div {
+	display: inherit;
+}
+
+.compact .rdformsRow>.rdformsLabelRow {
+	width: 1px;
+	white-space: nowrap;
+}
+
+.compact .rdformsTopLevel.rdformsRow>.rdformsLabelRow .action {
+	vertical-align: middle;
+}
+
+.compact .rdformsField {
+	margin-left: 0.6em;
+}
+
+.rdforms .action {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background-repeat: no-repeat;
+    opacity:0.65;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=65)";
+    filter:alpha(opacity=65);
+    zoom:1;
+	vertical-align: top;
+}
+
+.rdforms .action:hover {
+	opacity:1;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=100)";
+    filter:alpha(opacity=100);
+    zoom:1;
+    cursor: pointer;
+}
+
+.rdforms .action.disabled {
+	opacity:0.14;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=14)";
+    filter:alpha(opacity=14);
+    zoom:1;
+}
+
+.rdforms .action.editAdd {
+	margin-left: 0.5em;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAABuwAAAbsBOuzj4gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAG6SURBVDiNpZI9a1NRHIefc+45J0l7E1NaF4cE0cHMClYQRRCh38DNIfoBxMXFFl06CRb0CxTBSQdBRAcXsUN9AUGQijaggihe01ybmzT3vDiIIpirFv/r7+Hh/yZCCPxPyaLgwurZ68dutwbH7+xLll8tXSviRFEHJ+/N+bndJ8TIDXmePLFXD9/U2+rg6cfHwushpYri5cYLVcQVBrl3fN3KEFIycq4I+ykQQATYH4F1nnQ0QCDI7W8CBTggKID23fZiJ+2ce/ThoTKRwqgIHUmyfIgUgi2XM3urGSpaUzGa/TsP2UatefnM3oXzIoSAXtSfTx84NU3kCJFHSPFd4FOkENRVHSkVJWKSfo80+0I+uZ7cOPpsRgFYa1lPOiij0OWIWilGS0HfbRJJ0EGTjTLWkjf0BgOmTJUZM/plB575+68fXEGhUaCVxEQRs80Wk8aw8naVslaUlKIaK7RJc2vVPPzhD8pLOhzZ02JqosxKZ4137Z4YxxX+gfOe3OVIAbn3fz3jWMGnzR5BeKzbtuCibMT18L7bFd1+Tmx32PFc4QgL/uB0dRkY7ppobNR87VKRoHCJ/1rfAF8ir6zXPA5QAAAAAElFTkSuQmCC);
+}
+
+.rdforms .action.editDelete {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAABuwAAAbsBOuzj4gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAIXSURBVDiNpZM9aBNxGMafN80Rm49ekktS83H5IMHSUjscFcGCtQg1iRA1OAtOgmBHiVvq1EEIFB0c0r0IpVwWFx0MOIggaIci2FaTq2LtqW1MyeV6f6cLZ9pF+oz/931+PC8Pf2KM4SSyncjdD1ghkt7cvvV9leNy/YurHJf78OB+c4VIOhawTCT5J8denRkdC0aLWfkZUdYyy4Wz03I8GIyevjJdX7ZAegANWEpOnncdNLcRS47aw/lLtSpRvkJ0zXn5Qk0cmbC3txrIzOadGrBk+uwWQGmt/rKWHD9nB7MhEE7ZNy625F3DoNlExqY2FAw4Hfj24r2uASXTR9YWnhJlh0eickzMcIbGYPO6ccAMODsGHIkItt6+7irvPhbuMPb8WAAALBJlI5lhORKMcocagRwO6KyDr8qn7s6XX4U5i/mfE0x1AGhaF/r6OvSfbRCAAZ8TzHMKnf7l/gQLRFkxIcjj+x0OagttvxsEYFBtAX431jyD3cbnnULJkqLXwjxRTkxF5KmWzglqCy7Biyc8zxZ5L3MFfBDUFqb+HHJiOi4v8PzVIwAWDz2eGfJyod3fcAf8qHh5Q9hUir7N5s0KzxvuoIDQDxUzniGOF8VHvdiMMTDGUAakaiK2p0hnWTmd0ueA6+bsLlCcT6d0RZpg1URsrwxI5qwHMCEPM9GNe8AN67sJqedz21YzY+xojf+rE//Gv3sS6xhM1kjhAAAAAElFTkSuQmCC);
+}
+
+.rdforms .rdformsTableControl>.action.editDelete,
+.rdforms .rdformsFieldControl>.action.editDelete {
+	float: right;
+    margin-top: 3px;
+}
+.rdforms .action.editSearch {
+	margin-left: 13px;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACnklEQVQ4jY2SX0hTYRjG39VEQl2RN2UXZQRFd0EIEUH/BhVBZCSEeFMpQSgVjc3/VhSCXUSBWSG5bipDU1IoCVEa6JTUzvGsZrP5Z9NtHre5qZubO0/fNylqDOqFh8P5OO/vfb73PES8UjYQnagh0g2TSi9kkF7Qkl7MZc9slV4kKuogyj5IyYs35xtJZRA16wxiQ3qlFNY+s+NM0wR21loVdm5Wl4o5HE67jycBHL7Bp2rYh8PFbU74l6NYjSlxxRQFraIfmbcsoZQyUUvX+4nSMhMA7JA1N/DmSHQVzkAMdp+C6QUF7kUF4WgM/ROLSCkbdTOHGjpQmADQf8ngtueDYXyXoxhxrcLiiWFsPgabl8NicXDBqymoDEIRnXuYCBC0x56MI7gUQvePFZgmV2B2RDA0E8HIbDQud2AFxgEZbLHP6UJjIkDMPd04DtkfRItlCR3WZXTZOCyEHvua7PIyXn+e44DmJAAhe/u9r4rP70ezuADjSAAvhSDejDKgFESrJQiXN4DyTgcH1FB+UwJAN8RdmF/0OWF1yKg3e/Go34fHAz48HfRh0O6F7PVj7/0xsCWWsIFE+/P/AJx9wF3kbKqWQh+EGUzPuGEac6PX6oHN4YHLI6NdWkDdJy82VlsiDJL3N0STRXS1m2VB1KpLR915RhvqeybRZJqCrs2OPXVW3O6WUWvyoeKjjIykkM07iC63cycadp2i+Lb5wvid9WKJhjXdfO+BrmsOJZ1upFdJHHI+ns7fpVpPtOsI0VEd0ak7azrJdK2f7ygvvcoSudLuwiWmi29nkVohhdnArCTZTqht+1hazXFIWqUUKWhxovDdLLbe/cb+inDo34AESGq5FN7Cmw1iH3tX/x/gF6S4l+K2+WS9oOah+glT18LOvPJgZQAAAABJRU5ErkJggg==);
+    vertical-align: top;
+    margin-top: 5px;
+}
+
+.rdforms .action.editExpand {
+	margin-left: 0.5em;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACJUlEQVQ4jaWTO2hVQRCGv5k959yb+zg3MUQNEt+QwlejkCIRAhEhBGxSWAkWksLGgKWNjTYqEhDS24qgQoJWNhGxMWBjIxYKQTQPE9HknrM7FucmxiiiON0u/3z8/8wu/GfJ5sPA+VQP9pVPlyu6/cu8f3L30se5vwacGu+o9hwpPYoTBuNEiBP5bLkN3x6de/YngAIMjLXXOvfFU1nTBrMmZJmRZ9bQWKbH73f3r4vP3exMJl7vHrs2s+vA+l0E0LEnnsianAQrbImgYqiSxiWZvvywe3jhXf6it690L3gbad/pXgFHNwDNNRsxAzMBDFFQFdSBi6glZZnqOZzMGtLvYsECe3+K0FzjbdY08szIM/AZ5Dn43AjBKJWlJkJ/z35HvaEEozZ6pcNtAL4u+bGsyUKeFU3eG8EbwcO2LkfvsZhDxxMqNUUdmCFtdU03AM8nF2dXl/2QDzbvAwQPIUAwqDaErAmihWXnAINyTX4AAGbuLL5cWwlDwKdiHoXYabEVn7cyu2LU5bo2fgIAPL21MEuwIVHWAJKStGYB3lsLKgjQVvsNACBK9IIIJRGI4laUYFhoOVBAoJJq+gvgzPWuq6JcFCmEqlI0tiIVbwRUoNIoHESbAS4SFyeF9aQkrH4zPrz3LC8IlXqgmipRDC4CdazAls8EcOJsfUdbXTsqqaa1dm1U2zVNO7WRdro07dK0rapp5HjzeHJ58sGNJdva/8/1HRdPyP0VYmT/AAAAAElFTkSuQmCC);
+}
+
+.rdforms .action.info {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAAN1wAADdcBQiibeAAAAAd0SU1FB9sHEgk6F1W2ZXkAAAMkSURBVDjLhZNfSN11GMY/7/f7O+eox+W/CGbptmTJGptTWgwGmWW6xQKtga2g0U30D5rdSEFFN60RbQV1IURd9GeuiyWxShd6JtO8ydha5i6WJNtkarGcHc8539/v+3u7EF1d9Vy9D8/zPvDC+8C/8GTPGP+H93sH/sNldTjwyhjHD+8GoO3ZwZfqNt56MJ1ONqgii0vL5yenrnw6/tljRwE6Dp2iu3Mdzc3NKwGryw89M9C0pX79xM6mDaRLUhhjsEZIJIRcPmIw8wvXLk+393/Qdfq19wZobSxGut48w4k37mfPc983NTXUTmzdUo33XkFk+6YURoSLsxHJhNV16ZQMnZ1ifubXAx+9tb/v61NDN094/sg5bWqoxXuv1hoCazjYWg7AidG/MUYwRriltFiO94/z6iP5OzbvePCqBejozhzatrVmj/eqcYzEqpJ3scwshHLxipNsPhZVFVXEhZFurLlNPj45WXd+7Mu+AKCqovQpjcG5SKw1asTIw/eWs7Ts1YjIxKUczolaG4u3hlQqQbK0fK/qTyUGwFizreA8Bee14Dy5fKRjF27ojroStt9ZrGHkNQw9zsXqnCd0Hq+pZDiX3RQAeB9LGHpEkDhW4lj4c9GhqgCEYYyqICbGeoMYQxzHZAsmHQAUXPhzwflGI2CtahCI5AVAFFRc6IkVNcaINaoiRix5kkHp9QAgm13+PJd3jYmEVRsrPhbN5b2AAuhfNxxFSYuxqoEVsrmIitTybEl1/bQB6D/W+u7CwnWiSMWFEQaVlx+vQUQQEXmhs1pACV0kiGH8x0n2N1f0imz0wbFPTtP9dBtlqaX2+T/MYFVFuWRzkX4ztiDGCCKi1qx8YjKR0B8mfpN9jX7qrvXB22tdeKJnkC+OtNPzznddl+aK+srKK0kmAgIrWGswYgi9Z3rmdzp36tSj91U+ULVh17Xh4eGVgJGREUYuFHj9xTamJ4dvP3oy9+FiLrF3uWCSCqRTIdXlbrZjd1lvfU3R4craXWEmk6GlpeVmLYeGhvjq2zNrXPVccTQ/evfi5bP3ZK+Oblads6taJpNZ8/0Dy3R3nlDQL+wAAAAASUVORK5CYII=);
+}
+
+.rdformsEditor .rdformsDateValue {
+    margin-right: 0.4em;
+}
+
+/* ---------- StoreManager -----------*/
+
+.formulatorTable {
+    display: table;
+    width: 100%;
+}
+.formulatorTable .row {
+    display: table-row;
+}
+
+.formulatorTable .row>* {
+    display: table-cell;
+    padding-bottom: 0.3em;
+}
+
+.formulatorTable .row>*>* {
+    width: 100%;
+}
+
+.formulatorTable .row .select {
+    width: 16em;
+}
+
+.formulatorTable .row label {
+    width: 10em;
+}
+
+.formulatorTable .row .cardinality label {
+    width: 2.5em;
+}
+
+.storeManager .readOnly {
+    color: gray !important;
+}
+
+.storeManager .itemList>div {
+    height: 100%;
+}
+
+.formulatorTable label .addButton {
+    background: lightgreen;
+    border-radius: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.formulatorTable label .addButton:hover {
+    background: green;
+    color: white;
+}
+
+.inlineState .dynamic  {
+    display: none;
+}
+
+.langStringArr {
+    display: table;
+}
+
+.langStringArr .langString {
+    display: table-row;
+}
+
+.langString>* {
+    display: table-cell;
+}
+
+.langString .langStringString {
+    width: auto;
+}
+
+.langString .langStringLang {
+    width: 5em;
+}
+.langString .langStringString>* {
+    width: 100%;
+}
+
+.langString .langStringLang>* {
+    width: 4.7em;
+    margin-left: 0.3em;
+}
+
+.maximized_textarea {
+    width: 100%;
+    height: 100%;
+    border-width: 0px;
+    padding: 0px;
+    resize: none;
+}
+
+
+/* LDBrowser */
+
+.ldbrowser.managedHeight>div {
+    height: 100%;
+    position: relative;
+}
+
+.ldbrowser.examples .examplesBlock {
+    display: block;
+}
+.ldbrowser .examplesBlock {
+    display:none;
+    margin: 5px;
+}
+
+/* RDFView */
+.rdfView pre {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    border-width:0px;
+}
+
+.rdfView.managedHeight pre {
+    height: 100%;
+    overflow:auto;
+}
+
+.rdforms .cardinality {
+    width: 500px;
+    margin: 0px auto 1em auto;
+}
+
+.rdformsRow.missingDeps, .rdformsRow.hiddenProperty {
+    display: none !important;
+}
+
+.rdformsRow.missingDepsWithValue {
+    background: lightsalmon;
+}

@@ -3721,9 +3721,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-"esi18n@https://bitbucket.org/metasolutions/esi18n.git#develop":
+"esi18n@https://bitbucket.org/metasolutions/esi18n.git#master":
   version "1.0.0"
-  resolved "https://bitbucket.org/metasolutions/esi18n.git#d3fbe1ff6c1df882052c2ecae5fdd7c694bd14b3"
+  resolved "https://bitbucket.org/metasolutions/esi18n.git#10cd96ca01686156f3dacb826c288d046fac1a45"
   dependencies:
     dojo "^1.14.1"
     lodash-es "^4.17.10"

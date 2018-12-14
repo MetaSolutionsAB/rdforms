@@ -1,6 +1,6 @@
 {
   "name": "rdforms",
-  "version": "9.0.0",
+  "version": "10.0.0-SNAPSHOT",
   "main": "dist/bmd.rdforms.js",
   "module": "main.js",
   "repository": "https://bitbucket.org/metasolutions/rdforms.git",

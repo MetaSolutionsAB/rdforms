@@ -3099,7 +3099,7 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-"esi18n@https://bitbucket.org/metasolutions/esi18n.git#master":
+"esi18n@https://bitbucket.org/metasolutions/esi18n.git#1.0":
   version "1.0.0"
   resolved "https://bitbucket.org/metasolutions/esi18n.git#10cd96ca01686156f3dacb826c288d046fac1a45"
   dependencies:
@@ -6528,7 +6528,7 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-"rdfjson@https://bitbucket.org/metasolutions/rdfjson.git#develop":
+"rdfjson@https://bitbucket.org/metasolutions/rdfjson.git#2.0":
   version "2.0.0"
   resolved "https://bitbucket.org/metasolutions/rdfjson.git#f821a12ad87b6957a286949c3aa0611bd4ab1a04"
   dependencies:

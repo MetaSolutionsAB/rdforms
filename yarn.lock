@@ -5378,9 +5378,9 @@ nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
 
-"nls-loader@https://bitbucket.org/metasolutions/nls-loader#master":
-  version "1.0.0"
-  resolved "https://bitbucket.org/metasolutions/nls-loader#f6b3c6e0180e32661e34396e564bbb7375dba6ac"
+"nls-loader@https://bitbucket.org/metasolutions/nls-loader#1.1.0":
+  version "1.1.0"
+  resolved "https://bitbucket.org/metasolutions/nls-loader#f8ec72f61a8995d13ce44e65cff331d5c9b879b5"
   dependencies:
     loader-utils "^1.1.0"
 

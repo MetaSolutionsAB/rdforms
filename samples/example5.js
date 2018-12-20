@@ -1,5 +1,8 @@
+import registeryDummyChooser from './chooser/dummy.js';
 import rdfGraph from './rdf.js'; // import a rdfjson graph
 const itemStore = new rdforms.ItemStore();
+
+registeryDummyChooser();
 
 const bundles = [
   ['templates/dcterms.json'],

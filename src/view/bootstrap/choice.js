@@ -121,7 +121,7 @@ editors.itemtype('choice').choices('none').register((fieldDiv, binding, context)
     const $search = jquery('<button class="btn btn-default btn-fab btn-fab-mini browseChoices" type="button">')
       .attr('title', context.view.messages.edit_browse)
       .appendTo(fieldDiv);
-    if (context.chooser.supportsInlineCreate &&
+    if (context.chooser && context.chooser.supportsInlineCreate &&
       context.chooser.supportsInlineCreate(binding)) {
       const $stack = jquery('<span class="fa-stack">').appendTo($search);
       jquery('<span class="fa fa-search fa-stack-1x" aria-hidden="true">').appendTo($stack);

@@ -1,6 +1,6 @@
 {
   "name": "rdforms",
-  "version": "9.0.0",
+  "version": "10.0.0-SNAPSHOT",
   "main": "dist/bmd.rdforms.js",
   "module": "main-no-bootstrap-css.js",
   "repository": "https://bitbucket.org/metasolutions/rdforms.git",
@@ -18,15 +18,15 @@
     "dijit": "^1.13.0",
     "dojo": "^1.13.0",
     "dojo-util": "^1.13.0",
-    "esi18n": "https://bitbucket.org/metasolutions/esi18n.git#develop",
+    "esi18n": "https://bitbucket.org/metasolutions/esi18n.git#master",
     "fuelux": "^3.16.6",
     "jquery": "^3.3.1",
     "jquery-mousewheel": "^3.1.13",
     "lodash-es": "^4.17.10",
     "moment": "^2.22.2",
-    "nls-loader": "https://bitbucket.org/metasolutions/nls-loader#master",
+    "nls-loader": "https://bitbucket.org/metasolutions/nls-loader#1.1.0",
     "popper.js": "^1.12.9",
-    "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#webpack",
+    "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#develop",
     "select2": "^4.0.6-rc.1",
     "selectize": "^0.12.6",
     "sizzle": "^2.3.3",
@@ -63,8 +63,8 @@
     "uglifyjs-webpack-plugin": "^1.2.7",
     "webpack": "^4.16.5",
     "webpack-bundle-analyzer": "^2.13.1",
-    "webpack-cli": "^2.0.10",
-    "webpack-dev-server": "^3.1.5",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.10",
     "webpack-jarvis": "^0.3.2",
     "webpack-merge": "^4.1.4",
     "webpack-node-externals": "^1.6.0",
@@ -72,7 +72,7 @@
   },
   "scripts": {
     "build": "webpack --display-modules --config webpack.prod.js",
-    "dev": "webpack --display-modules --config webpack.dev.js",
+    "dev": "webpack-dev-server --watch --mode=development --config webpack.dev.js",
     "examples": "webpack --display-modules --config ./webpack.examples.js"
   }
 }

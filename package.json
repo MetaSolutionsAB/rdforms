@@ -4,7 +4,7 @@
   "main": "dist/bmd.rdforms.js",
   "module": "main.js",
   "repository": "https://bitbucket.org/metasolutions/rdforms.git",
-  "license": "MIT",
+  "license": "LGPL-3.0-only",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",

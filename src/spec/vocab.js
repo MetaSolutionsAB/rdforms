@@ -1,6 +1,8 @@
 import {namespaces as ns} from 'rdfjson';
 import {getLabel} from './itemUtils.js';
 import {createEl, addDef, addURIDef, safeFragment, initHeaderCounters, renderHeader, renderSubHeader} from './domUtils.js';
+import specNLS from "./nls/spec.nls";
+import { i18n } from 'esi18n';
 
 let vocs = [];
 const init = () => {
@@ -44,17 +46,17 @@ const renderTermDetails = (nodetype, obj, node) => {
   table.classList.add('propdef');
   table.classList.add('def');
   const tbody = createEl('tbody', null, table);
-  addDef('Label', obj.label, tbody);
+  addDef(i18n.localize(specNLS, 'vocabLabel', {}), obj.label, tbody);
   if (nodetype.indexOf('LITERAL') >= 0) {
-    addDef('Value', obj.value, tbody);
+    addDef(i18n.localize(specNLS, 'vocabLiteralValue', {}), obj.value, tbody);
   } else {
-    addURIDef('Value', obj.value, tbody);
+    addURIDef(i18n.localize(specNLS, 'vocabURIValue', {}), obj.value, tbody);
   }
   if (obj.description) {
-    addDef('Description', obj.description, tbody);
+    addDef(i18n.localize(specNLS, 'vocabDescrioption', {}), obj.description, tbody);
   }
   if (obj.choice.seeAlso) {
-    addURIDef('See also', obj.choice.seeAlso, tbody);
+    addURIDef(i18n.localize(specNLS, 'vocabSeeAlso', {}), obj.choice.seeAlso, tbody);
   }
 };
 
@@ -70,8 +72,8 @@ const renderVocabularies = (node, toc) => {
     createEl('colgroup', null, table).setAttribute('span', 1);
     const thead = createEl('thead', null, table);
     const htr = createEl('tr', null, thead);
-    createEl('th', 'Label', htr);
-    createEl('th', 'Value', htr);
+    createEl('th', i18n.localize(specNLS, 'vocabTableHeadingLabel', {}), htr);
+    createEl('th', i18n.localize(specNLS, 'vocabTableHeadingValue', {}), htr);
     const tbody = createEl('tbody', null, table);
 
     Object.keys(vocab.vals).forEach((val) => {

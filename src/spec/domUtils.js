@@ -1,4 +1,6 @@
 import {namespaces as ns} from 'rdfjson';
+import { i18n } from 'esi18n';
+import specNLS from "./nls/spec.nls";
 
 const createEl = (el, inner, parent) => {
   const element = document.createElement(el);
@@ -42,7 +44,9 @@ const initHeaderCounters = () => {
 let appendixCounter = 0;
 const renderAppendixHeader = (name, node, toc) => {
   const id = String.fromCharCode('A'.charCodeAt(0)+appendixCounter);
-  createEl('h2', `Appendix ${id} - ${name}`, node).setAttribute('id', `appendix-${id}`);
+  appendixCounter += 1;
+  const heading = i18n.localize(specNLS, 'apxHeading', {id, name});
+  createEl('h2', heading, node).setAttribute('id', `appendix-${id}`);
   const li = createEl('li', null, toc);
   const a = createEl('a', null, li);
   a.setAttribute('href', `#appendix-${id}`);

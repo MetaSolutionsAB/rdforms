@@ -3,6 +3,8 @@ import {createEl, addDef, renderHeader, renderSubHeader, initHeaderCounters} fro
 import {addVocabulary} from './vocab.js';
 import {nsReg} from './namespaces.js';
 import {namespaces as ns} from 'rdfjson';
+import { i18n } from 'esi18n';
+import specNLS from "./nls/spec.nls";
 
 const type2form = {};
 let inlineFormCounter = 0;
@@ -95,19 +97,19 @@ const renderFieldHeader = (item, field, node, toc) => {
 const getStringRange = (field) => {
   switch (field.getNodetype()) {
     case 'ONLY_LITERAL':
-      return "Literal";
+      return i18n.localize(specNLS, 'fieldLiteral', {});
     case 'LITERAL':
     case 'LANGUAGE_LITERAL':
-      return "Literal with a language";
+      return i18n.localize(specNLS, 'fieldLangLit', {});
     case 'DATATYPE_LITERAL':
-      return `Literal in the form of a ${ns.shortenKnown(field.getDatatype())} datatype`;
+      return i18n.localize(specNLS, 'fieldDatatype', {datatype: ns.shortenKnown(field.getDatatype())});
     case 'URI':
-      return "Web address (URI)";
+      return i18n.localize(specNLS, 'fieldURI', {});
   }
 };
 
 const addRange = (field, tbody) => {
-  const td = addDef('Range', '', tbody);
+  const td = addDef(i18n.localize(specNLS, 'fieldRange', {}), '', tbody);
   switch(field.getType()) {
     case 'text':
       td.innerText = getStringRange(field);
@@ -119,7 +121,7 @@ const addRange = (field, tbody) => {
       } else if (rdftype) {
         const obj = type2form[rdftype];
         if (obj) {
-          createEl('span', 'Entity described by ', td);
+          createEl('span', i18n.localize(specNLS, 'fielRef', {}), td);
           const a = createEl('a', obj.label, td);
           a.setAttribute('href', `#${obj.id}`);
         }
@@ -128,7 +130,7 @@ const addRange = (field, tbody) => {
     case 'group':
       const obj = findInlineObj(field);
       if (obj) {
-        createEl('span', 'Entity described by ', td);
+        createEl('span', i18n.localize(specNLS, 'fielRef', {}), td);
         const a = createEl('a', obj.label, td);
         a.setAttribute('href', `#${obj.id}`);
       }
@@ -141,17 +143,18 @@ const renderFieldDetails = (field, node) => {
   table.classList.add('propdef');
   table.classList.add('def');
   const tbody = createEl('tbody', null, table);
-  addDef('Label', `${getLabel(field)}`, tbody);
-  addDef('Description', field.getDescription(), tbody);
-  addDef('Property', rdfjson.namespaces.expand(field.getProperty()), tbody);
+  addDef(i18n.localize(specNLS, 'fieldLabel', {}), `${getLabel(field)}`, tbody);
+  addDef(i18n.localize(specNLS, 'fieldDescription', {}), field.getDescription(), tbody);
+  addDef(i18n.localize(specNLS, 'fieldProperty', {}), rdfjson.namespaces.expand(field.getProperty()), tbody);
   addRange(field, tbody);
   const card = field.getCardinality() || {};
+  const cardinality = i18n.localize(specNLS, 'fieldCardinality', {});
   if (card.min > 0) {
-    addDef('Cardinality', 'Mandatory', tbody);
+    addDef(cardinality, i18n.localize(specNLS, 'cardMandatory', {}), tbody);
   } else if (card.pref > 0) {
-    addDef('Cardinality', 'Recommended', tbody);
+    addDef(cardinality, i18n.localize(specNLS, 'cardRecommended', {}), tbody);
   } else {
-    addDef('Cardinality', 'Optional', tbody);
+    addDef(cardinality, i18n.localize(specNLS, 'cardOptional', {}), tbody);
   }
 };
 
@@ -173,11 +176,11 @@ const renderField = (item, node, field, tbody, tocOl) => {
       createEl('td', ns.shortenKnown(prop), tr);
       const card = field.getCardinality() || {};
       if (card.min > 0) {
-        createEl('td', 'mandatory', tr);
+        createEl('td', i18n.localize(specNLS, 'cardMandatory', {}).toLowerCase(), tr);
       } else if (card.pref > 0) {
-        createEl('td', 'recommended', tr);
+        createEl('td', i18n.localize(specNLS, 'cardRecommended', {}).toLowerCase(), tr);
       } else {
-        createEl('td', 'optional', tr);
+        createEl('td', i18n.localize(specNLS, 'cardOptional', {}).toLowerCase(), tr);
       }
       renderFieldDetails(field, node);
     }
@@ -203,8 +206,8 @@ const renderForm = (item, node, toc, id) => {
   const thead = createEl('thead', null, table);
   const htr = createEl('tr', null, thead);
   createEl('th', null, htr);
-  createEl('th', 'Property', htr);
-  createEl('th', 'Cardinality', htr);
+  createEl('th', i18n.localize(specNLS, 'fieldTableHeaderProperty', {}), htr);
+  createEl('th', i18n.localize(specNLS, 'fieldTableHeaderCardinality', {}), htr);
   const tbody = createEl('tbody', null, table);
 
   item.getChildren().forEach((field) => {

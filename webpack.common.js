@@ -25,7 +25,7 @@ module.exports = {
       'window.jquery': 'jquery',
       Popper: ['popper.js', 'default'],
     }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+//    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new DojoWebpackPlugin({
       loaderConfig: require("./config/dojoConfig"),
       locales: ["en"],

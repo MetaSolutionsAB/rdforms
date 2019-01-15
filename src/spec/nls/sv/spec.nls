@@ -23,10 +23,12 @@
   "fieldDescription": "Beskrivning",
   "fieldProperty": "Egenskap",
   "fieldRange": "Värdemängd",
+  "fieldLevel": "Kravnivå",
+  "unlimited": "n",
   "fieldCardinality": "Kardinalitet",
   "fieldTableHeaderProperty": "Property",
-  "fieldTableHeaderCardinality": "Kardinalitet",
-  "cardMandatory": "Obligatorisk",
-  "cardRecommended": "Rekommenderad",
-  "cardOptional": "Valfri"
+  "fieldTableHeaderLevel": "Kravnivå",
+  "levelMandatory": "Obligatorisk",
+  "levelRecommended": "Rekommenderad",
+  "levelOptional": "Valfri"
 }

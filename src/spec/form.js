@@ -144,17 +144,28 @@ const renderFieldDetails = (field, node) => {
   table.classList.add('def');
   const tbody = createEl('tbody', null, table);
   addDef(i18n.localize(specNLS, 'fieldLabel', {}), `${getLabel(field)}`, tbody);
-  addDef(i18n.localize(specNLS, 'fieldDescription', {}), field.getDescription(), tbody);
+  const desc = field.getDescription();
+  if (desc && desc != "") {
+    addDef(i18n.localize(specNLS, 'fieldDescription', {}), desc, tbody);
+  }
   addDef(i18n.localize(specNLS, 'fieldProperty', {}), rdfjson.namespaces.expand(field.getProperty()), tbody);
   addRange(field, tbody);
   const card = field.getCardinality() || {};
-  const cardinality = i18n.localize(specNLS, 'fieldCardinality', {});
+  const level = i18n.localize(specNLS, 'fieldLevel', {});
   if (card.min > 0) {
-    addDef(cardinality, i18n.localize(specNLS, 'cardMandatory', {}), tbody);
+    addDef(level, i18n.localize(specNLS, 'levelMandatory', {}), tbody);
   } else if (card.pref > 0) {
-    addDef(cardinality, i18n.localize(specNLS, 'cardRecommended', {}), tbody);
+    addDef(level, i18n.localize(specNLS, 'levelRecommended', {}), tbody);
   } else {
-    addDef(cardinality, i18n.localize(specNLS, 'cardOptional', {}), tbody);
+    addDef(level, i18n.localize(specNLS, 'levelOptional', {}), tbody);
+  }
+  const cardinality = i18n.localize(specNLS, 'fieldCardinality', {});
+  const min = typeof card.min === 'number' ? card.min : 0;
+  const max = typeof card.max === 'number' ? card.max : i18n.localize(specNLS, 'unlimited', {});
+  if (min === max) {
+    addDef(cardinality, `${min}`, tbody);
+  } else {
+    addDef(cardinality, `${min}..${max}`, tbody);
   }
 };
 
@@ -176,11 +187,11 @@ const renderField = (item, node, field, tbody, tocOl) => {
       createEl('td', ns.shortenKnown(prop), tr);
       const card = field.getCardinality() || {};
       if (card.min > 0) {
-        createEl('td', i18n.localize(specNLS, 'cardMandatory', {}).toLowerCase(), tr);
+        createEl('td', i18n.localize(specNLS, 'levelMandatory', {}).toLowerCase(), tr);
       } else if (card.pref > 0) {
-        createEl('td', i18n.localize(specNLS, 'cardRecommended', {}).toLowerCase(), tr);
+        createEl('td', i18n.localize(specNLS, 'levelRecommended', {}).toLowerCase(), tr);
       } else {
-        createEl('td', i18n.localize(specNLS, 'cardOptional', {}).toLowerCase(), tr);
+        createEl('td', i18n.localize(specNLS, 'levelOptional', {}).toLowerCase(), tr);
       }
       renderFieldDetails(field, node);
     }
@@ -207,7 +218,7 @@ const renderForm = (item, node, toc, id) => {
   const htr = createEl('tr', null, thead);
   createEl('th', null, htr);
   createEl('th', i18n.localize(specNLS, 'fieldTableHeaderProperty', {}), htr);
-  createEl('th', i18n.localize(specNLS, 'fieldTableHeaderCardinality', {}), htr);
+  createEl('th', i18n.localize(specNLS, 'fieldTableHeaderLevel', {}), htr);
   const tbody = createEl('tbody', null, table);
 
   item.getChildren().forEach((field) => {

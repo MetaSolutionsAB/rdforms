@@ -24,12 +24,14 @@
     "fieldDescription": "Description",
     "fieldProperty": "Property",
     "fieldRange": "Range",
+    "fieldLevel": "Requirement level",
     "fieldCardinality": "Cardinality",
+    "unlimited": "n",
     "fieldTableHeaderProperty": "Property",
-    "fieldTableHeaderCardinality": "Cardinality",
-    "cardMandatory": "Mandatory",
-    "cardRecommended": "Recommended",
-    "cardOptional": "Optional"
+    "fieldTableHeaderLevel": "Requirement level",
+    "levelMandatory": "Mandatory",
+    "levelRecommended": "Recommended",
+    "levelOptional": "Optional"
   },
   "sv": true
 }

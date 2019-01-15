@@ -53,7 +53,7 @@ const renderTermDetails = (nodetype, obj, node) => {
     addURIDef(i18n.localize(specNLS, 'vocabURIValue', {}), obj.value, tbody);
   }
   if (obj.description) {
-    addDef(i18n.localize(specNLS, 'vocabDescrioption', {}), obj.description, tbody);
+    addDef(i18n.localize(specNLS, 'vocabDescription', {}), obj.description, tbody);
   }
   if (obj.choice.seeAlso) {
     addURIDef(i18n.localize(specNLS, 'vocabSeeAlso', {}), obj.choice.seeAlso, tbody);

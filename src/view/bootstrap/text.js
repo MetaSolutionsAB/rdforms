@@ -98,7 +98,7 @@ const datePresenter = (fieldDiv, binding, context) => {
       } else if (data.length > 4) {
         str = i18n.getDate(d, {selector: 'date'});
       } else {
-        str = i18n.getDate(d, {selector: 'date', datePattern: 'yyy'});
+        str = i18n.getDate(d, {selector: 'date', datePattern: 'YYYY'});
       }
       jquery('<div>').html(str).toggleClass('rdformsField', context.inEditor).appendTo(fieldDiv);
     } catch (e) {

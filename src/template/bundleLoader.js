@@ -11,6 +11,11 @@ const fetchBundle = async (urls) => {
   let response;
   let bundle;
 
+
+  if (isNode) {
+    const fetch = await require('node-fetch');
+  }
+
   for (let i = 0; i < totalUrls; i++) {
     try {
       response = await fetch(urls[i]);
@@ -58,16 +63,10 @@ export default async (itemStore, bundlePaths = [], callback = ()=>{}) => {
     callback && callback([]);
   }
 
-
-  if (isNode) {
-    const bundles = bundlePaths.map(bundlePath => require(bundlePath)); // TODO @valentino use fetch (polyfill?) for node also
-    registerBundles(bundles);
-  } else {
-    // Fetch or if loaded just wrap it in Promise.resolve
-    const bundlePromises = promisifyBundles(bundlePaths);
-    const loadedBundles = await Promise.all(bundlePromises);
-    const registeredBundles = registerBundles(itemStore, loadedBundles);
-    callback(registeredBundles); // TODO remove; should be deprecated
-    return registeredBundles;
-  }
+  // Fetch or if loaded just wrap it in Promise.resolve
+  const bundlePromises = promisifyBundles(bundlePaths);
+  const loadedBundles = await Promise.all(bundlePromises);
+  const registeredBundles = registerBundles(itemStore, loadedBundles);
+  callback(registeredBundles); // TODO remove; should be deprecated
+  return registeredBundles;
 };

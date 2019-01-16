@@ -7,7 +7,7 @@ module.exports = {
   entry: {
     bootstrap: 'index.bootstrap.js',
     bmd: 'index.bmd.js',
-    'no-bootstrap-css': 'index.no-bootstrap-css.js',
+    'no-bootstrap-css': 'main.no-bootstrap-css.js',
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -44,6 +44,10 @@ module.exports = {
         use: [
           {
             loader: 'nls-loader',
+              options: {
+                // context: APP_PATH,
+                locales: ["en"],
+              },
           }
         ]
       },

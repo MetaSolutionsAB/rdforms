@@ -25,6 +25,7 @@
     "lodash-es": "^4.17.10",
     "moment": "^2.22.2",
     "nls-loader": "https://bitbucket.org/metasolutions/nls-loader#1.1.0",
+    "node-fetch": "^2.3.0",
     "popper.js": "^1.12.9",
     "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#develop",
     "select2": "^4.0.6-rc.1",
@@ -73,6 +74,10 @@
   },
   "scripts": {
     "build": "webpack --display-modules --config webpack.prod.js",
+    "build:node": "webpack --display-modules --config webpack.node.js",
+    "build:node:dev": "webpack --mode=development --display-modules --config webpack.node.js",
+    "build:all": "webpack --display-modules --mode=production --config webpack.all.js",
+    "build:all:dev": "webpack --display-modules --mode=development --config webpack.all.js",
     "dev": "webpack-dev-server --watch --mode=development --config webpack.dev.js",
     "examples": "webpack --display-modules --config ./webpack.examples.js",
     "print-licenses": "print-licenses"

@@ -1,4 +1,4 @@
-@import '../bootstrap/style.css';
+@import "../bootstrap/base.css";
 
 .rdforms .form-group {
     display: inline;

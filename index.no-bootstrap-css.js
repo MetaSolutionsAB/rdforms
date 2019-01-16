@@ -1,3 +1,4 @@
+import 'whatwg-fetch';
 import 'bootstrap';
 import './src/view/bootstrap/components';
 import './src/view/bootstrap/Select2'

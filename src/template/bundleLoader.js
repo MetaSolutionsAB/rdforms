@@ -6,9 +6,9 @@ if (isNode) {
 /**
  * Check if there's any iterations left in a hypothetical array with 'length' given.
  *
- * @param iteration
- * @param length
- * @param templateId
+ * @param {number} iteration
+ * @param {number} length
+ * @param {string} templateId
  * @throws
  */
 const stopFetchingOrJustLog = (iteration, length, templateId) => {
@@ -24,7 +24,7 @@ const stopFetchingOrJustLog = (iteration, length, templateId) => {
 /**
  * Return the first sucessfully fetched bundle from a list of urls or throw en error if none could be fetched
  *
- * @param {String} urls
+ * @param {Array<String>} urls
  * @returns {Promise<Response | never | void>}
  */
 const fetchBundle = async (urls) => {
@@ -69,21 +69,21 @@ const fetchBundle = async (urls) => {
 /**
  * Fetch or if loaded just wrap it in Promise.resolve
  * @param bundles
- * @returns {*}
+ * @returns {Promise<*>}
  */
 const promisifyBundles = bundles => bundles.map(bundle => bundle instanceof Array ? fetchBundle(bundle) : Promise.resolve(bundle));
 
 /**
  * Register bundle templates
  *
- * @param bundles
- * @param itemStore
+ * @param {ItemStore} itemStore
+ * @param {array} bundles
  */
 const registerBundles = (itemStore, bundles = []) => bundles.map(source => itemStore.registerBundle({ source }));
 
 /**
  *
- * @param itemStore
+ * @param {ItemStore} itemStore
  * @param bundlePaths {Array<Object|String>} an array of object (bundles) or paths
  * @param callback
  */

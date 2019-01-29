@@ -1,5 +1,12 @@
 const isNode = require('detect-node');
 
+let fetch;
+if (isNode) {
+  fetch = require('node-fetch').default;
+} else {
+  fetch = window.fetch;
+}
+
 /**
  * Return the first sucessfully fetched bundle from a list of urls or throw en error if none could be fetched
  *
@@ -11,10 +18,6 @@ const fetchBundle = async (urls) => {
   let response;
   let bundle;
 
-
-  if (isNode) {
-    const fetch = await require('node-fetch');
-  }
 
   for (let i = 0; i < totalUrls; i++) {
     try {

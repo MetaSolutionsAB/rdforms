@@ -3132,9 +3132,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-"esi18n@https://bitbucket.org/metasolutions/esi18n.git#master":
-  version "1.0.0"
-  resolved "https://bitbucket.org/metasolutions/esi18n.git#10cd96ca01686156f3dacb826c288d046fac1a45"
+"esi18n@https://bitbucket.org/metasolutions/esi18n.git#develop":
+  version "1.1.0-SNAPSHOT"
+  resolved "https://bitbucket.org/metasolutions/esi18n.git#65eee2543f56dec5ce7288d0da3bbd7a9e5941f2"
   dependencies:
     dojo "^1.14.1"
     lodash-es "^4.17.10"
@@ -5362,9 +5362,9 @@ nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
 
-"nls-loader@https://bitbucket.org/metasolutions/nls-loader#1.1.0":
+"nls-loader@https://bitbucket.org/metasolutions/nls-loader#master":
   version "1.1.0"
-  resolved "https://bitbucket.org/metasolutions/nls-loader#f8ec72f61a8995d13ce44e65cff331d5c9b879b5"
+  resolved "https://bitbucket.org/metasolutions/nls-loader#0db4b2d4db4b3fbed45f7df977d3ad02a7068185"
   dependencies:
     loader-utils "^1.1.0"
 

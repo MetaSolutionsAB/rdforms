@@ -17,7 +17,7 @@
   "fieldLiteral": "Sträng",
   "fieldLangLit": "Sträng med språk",
   "fieldDatatype": "Datatyp (${datatype})",
-  "fieldURI": "Webadress (URI)",
+  "fieldURI": "Webbadress (URI)",
   "fieldRef": "Entiteten beskrivs av ",
   "fieldLabel": "Beteckning",
   "fieldDescription": "Beskrivning",

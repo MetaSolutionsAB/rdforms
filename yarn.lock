@@ -6676,7 +6676,7 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
 
 "rdfjson@https://bitbucket.org/metasolutions/rdfjson.git#develop":
   version "2.1.0-SNAPSHOT"
-  resolved "https://bitbucket.org/metasolutions/rdfjson.git#83eee25bd343f2553139a958a71fbb150074fe3c"
+  resolved "https://bitbucket.org/metasolutions/rdfjson.git#6b573e9c113d3bf6b515156e49cf7d7b009c0f25"
   dependencies:
     md5 "^2.2.1"
     xmldom "~0.1.19"

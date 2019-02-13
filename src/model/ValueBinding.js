@@ -35,16 +35,17 @@ export default class ValueBinding extends Binding {
    * @param {String} value
    */
   setValue(value, silent) {
+    const _value = typeof _value === 'string' ? value.trim() : value;
     var oValidObject = this._validObject;
-    if (this._isValidObjectValue(value)) {
-      this._statement.setValue(value, silent);
+    if (this._isValidObjectValue(_value)) {
+      this._statement.setValue(_value, silent);
       this._validObject = true;
       if (oValidObject !== true && this._validPredicate === true && !this._excludeFromTreeValidityCheck) {
         this._parent.oneChildValidityChanged(true);
       }
     } else {
       //If it is a null value, change the statement.
-      if (value === "" || value === null) {
+      if (_value === "" || _value === null) {
         this._statement.setValue("", silent);
       }
       //And unassert the statement.

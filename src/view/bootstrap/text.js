@@ -4,6 +4,7 @@ import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import system from '../../model/system';
 import { i18n } from 'esi18n';
+import { escape } from 'lodash-es';
 
 /**
  * Try to guess the number of rows needed for a textarea element by looking at the value of the element
@@ -50,7 +51,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
   if (context.view.showLanguage && binding.getLanguage()) {
     jquery('<div class="rdformsLanguage">').text(binding.getLanguage()).appendTo(fieldDiv);
   }
-  const text = binding.getGist().replace('<', '&lt;').replace('>', '&gt;').replace(/(\r\n|\r|\n)/g, '<br/>');
+  const text = escape(binding.getGist());
 
   // The text is shown as a link to the parents bindings URI if:
   // 1) The current item is indicated to be a label.
@@ -97,7 +98,7 @@ const datePresenter = (fieldDiv, binding, context) => {
       } else if (data.length > 4) {
         str = i18n.getDate(d, {selector: 'date'});
       } else {
-        str = i18n.getDate(d, {selector: 'date', datePattern: 'yyy'});
+        str = i18n.getDate(d, {selector: 'date', datePattern: 'YYYY'});
       }
       jquery('<div>').html(str).toggleClass('rdformsField', context.inEditor).appendTo(fieldDiv);
     } catch (e) {

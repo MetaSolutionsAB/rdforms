@@ -1,5 +1,5 @@
-import renderingContext from '../renderingContext';
 import jquery from 'jquery';
+import renderingContext from '../renderingContext';
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelRow) => {
   let label = item.getLabel();
@@ -13,7 +13,9 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelR
   if (labelRow) {
     $labelDiv.addClass('rdformsLabelRow');
   }
-  context.labelNode = $labelDiv[0];
+  if (context) {
+    context.labelNode = $labelDiv[0];
+  }
   renderingContext.attachItemInfo(item, $labelDiv[0], context);
 };
 

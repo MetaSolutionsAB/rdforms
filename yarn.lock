@@ -865,7 +865,6 @@ ansi-html@0.0.7:
 ansi-regex@^0.2.0, ansi-regex@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-0.2.1.tgz#0d8e946967a3d8143f93e24e298525fc1b2235f9"
-  integrity sha1-DY6UaWej2BQ/k+JOKYUl/BsiNfk=
 
 ansi-regex@^2.0.0:
   version "2.1.1"
@@ -878,7 +877,6 @@ ansi-regex@^3.0.0:
 ansi-styles@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-1.1.0.tgz#eaecbf66cd706882760b2f4691582b8f55d7a7de"
-  integrity sha1-6uy/Zs1waIJ2Cy9GkVgrj1XXp94=
 
 ansi-styles@^2.2.1:
   version "2.2.1"
@@ -1002,7 +1000,6 @@ arrify@^1.0.0, arrify@^1.0.1:
 asap@^2.0.0:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
-  integrity sha1-5QNHYR1+aQlDIIu9r+vLwvuGbUY=
 
 asn1.js@^4.0.0:
   version "4.10.1"
@@ -1985,7 +1982,6 @@ chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.0, chalk@^2.3.2, chalk@^2.4
 chalk@~0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-0.5.1.tgz#663b3a648b68b55d04690d49167aa837858f2174"
-  integrity sha1-Zjs6ZItotV0EaQ1JFnqoN4WPIXQ=
   dependencies:
     ansi-styles "^1.1.0"
     escape-string-regexp "^1.0.0"
@@ -2681,7 +2677,6 @@ debug@^3.1.0, debug@^3.2.5:
 debuglog@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/debuglog/-/debuglog-1.0.1.tgz#aa24ffb9ac3df9a2351837cfb2d279360cd78492"
-  integrity sha1-qiT/uaw9+aI1GDfPstJ5NgzXhJI=
 
 decamelize-keys@^1.0.0:
   version "1.1.0"
@@ -2812,7 +2807,6 @@ detect-node@^2.0.3:
 dezalgo@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/dezalgo/-/dezalgo-1.0.3.tgz#7f742de066fc748bc8db820569dddce49bf0d456"
-  integrity sha1-f3Qt4Gb8dIvI24IFad3c5Jvw1FY=
   dependencies:
     asap "^2.0.0"
     wrappy "1"
@@ -3138,9 +3132,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-"esi18n@https://bitbucket.org/metasolutions/esi18n.git#master":
-  version "1.0.0"
-  resolved "https://bitbucket.org/metasolutions/esi18n.git#10cd96ca01686156f3dacb826c288d046fac1a45"
+"esi18n@https://bitbucket.org/metasolutions/esi18n.git#develop":
+  version "1.2.0-SNAPSHOT"
+  resolved "https://bitbucket.org/metasolutions/esi18n.git#92648b2b6acf648934f9c7073d95c2069e17a293"
   dependencies:
     dojo "^1.14.1"
     lodash-es "^4.17.10"
@@ -3720,12 +3714,10 @@ get-value@^2.0.3, get-value@^2.0.6:
 github-url-from-git@^1.3.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/github-url-from-git/-/github-url-from-git-1.5.0.tgz#f985fedcc0a9aa579dc88d7aff068d55cc6251a0"
-  integrity sha1-+YX+3MCpqledyI16/waNVcxiUaA=
 
 github-url-from-username-repo@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/github-url-from-username-repo/-/github-url-from-username-repo-1.0.2.tgz#7dd79330d2abe69c10c2cef79714c97215791dfa"
-  integrity sha1-fdeTMNKr5pwQws73lxTJchV5Hfo=
 
 glob-base@^0.3.0:
   version "0.3.0"
@@ -3750,7 +3742,6 @@ glob-parent@^3.1.0:
 glob@^5.0.3:
   version "5.0.15"
   resolved "https://registry.yarnpkg.com/glob/-/glob-5.0.15.tgz#1bc936b9e02f4a603fcc222ecf7633d30b8b93b1"
-  integrity sha1-G8k2ueAvSmA/zCIuz3Yz0wuLk7E=
   dependencies:
     inflight "^1.0.4"
     inherits "2"
@@ -3827,7 +3818,6 @@ got@^6.7.1:
 "graceful-fs@2 || 3":
   version "3.0.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-3.0.11.tgz#7613c778a1afea62f25c630a086d7f3acbbdd818"
-  integrity sha1-dhPHeKGv6mLyXGMKCG1/Osu92Bg=
   dependencies:
     natives "^1.1.0"
 
@@ -3853,7 +3843,6 @@ handle-thing@^1.2.5:
 has-ansi@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/has-ansi/-/has-ansi-0.1.0.tgz#84f265aae8c0e6a88a12d7022894b7568894c62e"
-  integrity sha1-hPJlqujA5qiKEtcCKJS3VoiUxi4=
   dependencies:
     ansi-regex "^0.2.0"
 
@@ -4551,12 +4540,10 @@ isobject@^3.0.0, isobject@^3.0.1:
 jju@^1.1.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/jju/-/jju-1.4.0.tgz#a3abe2718af241a2b2904f84a625970f389ae32a"
-  integrity sha1-o6vicYryQaKykE+EpiWXDzia4yo=
 
 jquery-extend@~2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/jquery-extend/-/jquery-extend-2.0.3.tgz#6815cdb01a866ddba30e6f4d0fc5fb6679272735"
-  integrity sha1-aBXNsBqGbdujDm9ND8X7ZnknJzU=
 
 jquery-mousewheel@^3.1.13, jquery-mousewheel@~3.1.13:
   version "3.1.13"
@@ -4630,7 +4617,6 @@ json-parse-better-errors@^1.0.1, json-parse-better-errors@^1.0.2:
 json-parse-helpfulerror@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/json-parse-helpfulerror/-/json-parse-helpfulerror-1.0.3.tgz#13f14ce02eed4e981297b64eb9e3b932e2dd13dc"
-  integrity sha1-E/FM4C7tTpgSl7ZOueO5MuLdE9w=
   dependencies:
     jju "^1.1.0"
 
@@ -5249,7 +5235,6 @@ mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
 mkdirp@^0.3.5:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.3.5.tgz#de3e5f8961c88c787ee1368df849ac4413eca8d7"
-  integrity sha1-3j5fiWHIjHh+4TaN+EmsRBPsqNc=
 
 moment@2.18.1:
   version "2.18.1"
@@ -5348,7 +5333,6 @@ nanotiming@^7.2.0:
 natives@^1.1.0:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/natives/-/natives-1.1.6.tgz#a603b4a498ab77173612b9ea1acdec4d980f00bb"
-  integrity sha512-6+TDFewD4yxY14ptjKaS63GVdtKiES1pTPyxn9Jb0rBqPMZ7VcCiooEhPNsr+mqHtMGxa/5c/HhcC4uPEUw/nA==
 
 natural-compare@^1.4.0:
   version "1.4.0"
@@ -5378,9 +5362,9 @@ nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
 
-"nls-loader@https://bitbucket.org/metasolutions/nls-loader#1.1.0":
+"nls-loader@https://bitbucket.org/metasolutions/nls-loader#master":
   version "1.1.0"
-  resolved "https://bitbucket.org/metasolutions/nls-loader#f8ec72f61a8995d13ce44e65cff331d5c9b879b5"
+  resolved "https://bitbucket.org/metasolutions/nls-loader#0db4b2d4db4b3fbed45f7df977d3ad02a7068185"
   dependencies:
     loader-utils "^1.1.0"
 
@@ -5389,6 +5373,10 @@ no-case@^2.2.0:
   resolved "https://registry.yarnpkg.com/no-case/-/no-case-2.3.2.tgz#60b813396be39b3f1288a4c1ed5d1e7d28b464ac"
   dependencies:
     lower-case "^1.1.1"
+
+node-fetch@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.3.0.tgz#1a1d940bbfb916a1d3e0219f037e89e71f8c5fa5"
 
 node-forge@0.7.5:
   version "0.7.5"
@@ -5460,24 +5448,20 @@ node-version@^1.1.3:
 nopt-defaults@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/nopt-defaults/-/nopt-defaults-0.0.1.tgz#f150fcc8882309cbfb76187e12e9bcb20694558b"
-  integrity sha1-8VD8yIgjCcv7dhh+Eum8sgaUVYs=
 
 nopt-usage@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/nopt-usage/-/nopt-usage-0.1.0.tgz#b18b8c183e181047ca9e63b7cde7cfc702cca579"
-  integrity sha1-sYuMGD4YEEfKnmO3zefPxwLMpXk=
 
 nopt@^2.2.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-2.2.1.tgz#2aa09b7d1768487b3b89a9c5aa52335bff0baea7"
-  integrity sha1-KqCbfRdoSHs7ianFqlIzW/8Lrqc=
   dependencies:
     abbrev "1"
 
 nopt@^3.0.6:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-3.0.6.tgz#c6465dbf08abcd4db359317f79ac68a646b28ff9"
-  integrity sha1-xkZdvwirzU2zWTF/eaxopkayj/k=
   dependencies:
     abbrev "1"
 
@@ -5491,7 +5475,6 @@ nopt@^4.0.1:
 normalize-package-data@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-1.0.3.tgz#8be955b8907af975f1a4584ea8bb9b41492312f5"
-  integrity sha1-i+lVuJB6+XXxpFhOqLubQUkjEvU=
   dependencies:
     github-url-from-git "^1.3.0"
     github-url-from-username-repo "^1.0.0"
@@ -5536,7 +5519,6 @@ npm-bundled@^1.0.1:
 npm-license-crawler@^0.1.9:
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/npm-license-crawler/-/npm-license-crawler-0.1.9.tgz#2e92f554ef38a20d377a2fbdae3bc7bd9440e8d5"
-  integrity sha1-LpL1VO84og03ei+9rjvHvZRA6NU=
   dependencies:
     async "^2.6.1"
     jquery-extend "~2.0.3"
@@ -6693,8 +6675,8 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     strip-json-comments "~2.0.1"
 
 "rdfjson@https://bitbucket.org/metasolutions/rdfjson.git#develop":
-  version "2.0.0"
-  resolved "https://bitbucket.org/metasolutions/rdfjson.git#f821a12ad87b6957a286949c3aa0611bd4ab1a04"
+  version "2.2.0-SNAPSHOT"
+  resolved "https://bitbucket.org/metasolutions/rdfjson.git#3c1d30aaeeb421d2e7ed8f1fe136795869a0c5c8"
   dependencies:
     md5 "^2.2.1"
     xmldom "~0.1.19"
@@ -6706,7 +6688,6 @@ react-favicon@^0.0.11:
 read-installed@~3.1.3:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/read-installed/-/read-installed-3.1.5.tgz#4ae36081afd3e2204dc2e279807aaa52c30c8c0c"
-  integrity sha1-SuNgga/T4iBNwuJ5gHqqUsMMjAw=
   dependencies:
     debuglog "^1.0.1"
     read-package-json "1"
@@ -6720,7 +6701,6 @@ read-installed@~3.1.3:
 read-package-json@1:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/read-package-json/-/read-package-json-1.3.3.tgz#ef79dfda46e165376ee8a57efbfedd4d1b029ba4"
-  integrity sha1-73nf2kbhZTdu6KV++/7dTRsCm6Q=
   dependencies:
     glob "^5.0.3"
     json-parse-helpfulerror "^1.0.2"
@@ -6773,7 +6753,6 @@ read-pkg@^3.0.0:
 readdir-scoped-modules@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/readdir-scoped-modules/-/readdir-scoped-modules-1.0.2.tgz#9fafa37d286be5d92cbaebdee030dc9b5f406747"
-  integrity sha1-n6+jfShr5dksuuve4DDcm19AZ0c=
   dependencies:
     debuglog "^1.0.1"
     dezalgo "^1.0.0"
@@ -7138,7 +7117,6 @@ semver-diff@^2.0.0:
 "semver@2 || 3 || 4":
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/semver/-/semver-4.3.6.tgz#300bc6e0e86374f7ba61068b5b1ecd57fc6532da"
-  integrity sha1-MAvG4OhjdPe6YQaLWx7NV/xlMto=
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.5.0:
   version "5.6.0"
@@ -7289,7 +7267,6 @@ slice-ansi@0.0.4:
 slide@~1.1.3:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/slide/-/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
-  integrity sha1-VusCfWW00tzmyy4tMsTUr8nh1wc=
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
@@ -7571,7 +7548,6 @@ string_decoder@~1.1.1:
 strip-ansi@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-0.3.0.tgz#25f48ea22ca79187f3174a4db8759347bb126220"
-  integrity sha1-JfSOoiynkYfzF0pNuHWTR7sSYiA=
   dependencies:
     ansi-regex "^0.2.1"
 
@@ -7621,7 +7597,6 @@ stylehacks@^4.0.0:
 supports-color@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-0.2.0.tgz#d92de2694eb3f67323973d7ae3d8b55b4c22190a"
-  integrity sha1-2S3iaU6z9nMjlz1649i1W0wiGQo=
 
 supports-color@^2.0.0:
   version "2.0.0"
@@ -7836,7 +7811,6 @@ toidentifier@1.0.0:
 treeify@^1.0.1, treeify@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/treeify/-/treeify-1.1.0.tgz#4e31c6a463accd0943879f30667c4fdaff411bb8"
-  integrity sha512-1m4RA7xVAJrSGrrXGs0L3YTwyvBs2S8PbRHaLZAkFw7JR8oIFwYtysxlBZhYIa7xSyiYJKZ3iGrrk55cGA3i9A==
 
 trim-newlines@^2.0.0:
   version "2.0.0"
@@ -8088,7 +8062,6 @@ util-deprecate@~1.0.1:
 util-extend@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/util-extend/-/util-extend-1.0.3.tgz#a7c216d267545169637b3b6edc6ca9119e2ff93f"
-  integrity sha1-p8IW0mdUUWljeztu3GypEZ4v+T8=
 
 util.promisify@^1.0.0, util.promisify@~1.0.0:
   version "1.0.0"

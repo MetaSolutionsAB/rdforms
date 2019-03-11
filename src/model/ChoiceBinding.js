@@ -27,14 +27,6 @@ export default class ChoiceBinding extends ValueBinding {
     return this._choice;
   }
 
-  get label() {
-    return label;
-  }
-
-  get seeAlso() {
-    return seeAlso;
-  }
-
   remove() {
     this.setValue(null);
     //Removed line below as it is also done in superclass
@@ -52,13 +44,13 @@ export default class ChoiceBinding extends ValueBinding {
 
     if (value != null && choice != null) {
       if (choice.seeAlso && choice.inlineSeeAlso) {
-        graph.create(value, ChoiceBinding.seeAlso, choice.seeAlso, true, silent);
+        graph.create(value, seeAlso, choice.seeAlso, true, silent);
       }
 
       if (choice.inlineLabel === true) {
         var labelMap = choice.label || {};
         for (var lang in labelMap) if (labelMap.hasOwnProperty(lang)) {
-          graph.create(value, ChoiceBinding.label,
+          graph.create(value, label,
             {value: labelMap[lang], lang: lang, type: "literal"}, true, silent);
         }
       }

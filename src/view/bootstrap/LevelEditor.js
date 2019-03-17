@@ -45,10 +45,10 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], 
         this._mandatoryClick();
         break;
       case 'recommended':
-        !this._recommendedLabel.getAttribute('disabled') && this._recommendedClick();
+        this._recommendedClick();
         break;
       case 'optional':
-        !this._optionalLabel.getAttribute('disabled') && this._optionalClick();
+        this._optionalClick();
     }
   },
   disableLevel(levelName) {

@@ -354,7 +354,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			// "./_an-instance" = 125
 /******/ 			// "./_redefine-all" = 126
 /******/ 			// "./_validate-collection" = 127
-/******/ 			// "!../../style-loader/lib/addStyles.js" = 128
+/******/ 			// "!../../../node_modules/style-loader/lib/addStyles.js" = 128
 /******/ 			// "./_iobject" = 129
 /******/ 			// "./_object-pie" = 130
 /******/ 			// "./src/Graph" = 131
@@ -391,7 +391,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			"dijit/_WidgetsInTemplateMixin":163,
 /******/ 			// "./src/model/validate" = 165
 /******/ 			// "./dom" = 166
-/******/ 			// "./rdfjson/util" = 167
+/******/ 			// "./formats/rdfjson/util" = 167
 /******/ 			// "./src/Statement" = 168
 /******/ 			// "./src/utils" = 169
 /******/ 			"charenc":170,
@@ -413,7 +413,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			"dojo/query":186,
 /******/ 			// "./_dom-create" = 187
 /******/ 			// "./_shared" = 188
-/******/ 			// "./_wks-ext" = 189
+/******/ 			// "../../modules/_wks-ext" = 189
 /******/ 			// "./_shared-key" = 190
 /******/ 			// "./_enum-bug-keys" = 191
 /******/ 			// "./_is-array" = 192
@@ -551,7 +551,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			// "./src/template/bundleLoader" = 327
 /******/ 			"detect-node":328,
 /******/ 			"node-fetch":329,
-/******/ 			// "/var/folders/vg/7w5l0f7x4zvfxcmnxglyd84w0000gn/T/tmp-30707uXwYsa0VI7ky/dojo/dojo.js" = 330
+/******/ 			// "/var/folders/vg/7w5l0f7x4zvfxcmnxglyd84w0000gn/T/tmp-270502zTG1n1gLLIi/dojo/dojo.js" = 330
 /******/ 			"@babel/polyfill":332,
 /******/ 			"core-js/es6":333,
 /******/ 			// "../modules/es6.symbol" = 334
@@ -59553,7 +59553,7 @@ function (_ValueBinding) {
 
       if (value != null && choice != null) {
         if (choice.seeAlso && choice.inlineSeeAlso) {
-          graph.create(value, ChoiceBinding.seeAlso, choice.seeAlso, true, silent);
+          graph.create(value, seeAlso, choice.seeAlso, true, silent);
         }
 
         if (choice.inlineLabel === true) {
@@ -59561,7 +59561,7 @@ function (_ValueBinding) {
 
           for (var lang in labelMap) {
             if (labelMap.hasOwnProperty(lang)) {
-              graph.create(value, ChoiceBinding.label, {
+              graph.create(value, label, {
                 value: labelMap[lang],
                 lang: lang,
                 type: "literal"
@@ -59570,16 +59570,6 @@ function (_ValueBinding) {
           }
         }
       }
-    }
-  }, {
-    key: "label",
-    get: function get() {
-      return label;
-    }
-  }, {
-    key: "seeAlso",
-    get: function get() {
-      return seeAlso;
     }
   }]);
 
@@ -70791,7 +70781,7 @@ var datePresenter = function datePresenter(fieldDiv, binding, context) {
         });
       }
 
-      jquery('<div>').html(str).toggleClass('rdformsField', context.inEditor).appendTo(fieldDiv);
+      jquery('<div>').html(str).toggleClass('rdformsField', context.inEditor === true).appendTo(fieldDiv);
     } catch (e) {
       console.warn("Could not present date, expected ISO8601 format in the form 2001-01-01 (potentially with time given after a 'T' character as well) but found '".concat(data, "' instead."));
     }
@@ -85711,7 +85701,8 @@ var DTMD = (0, _declare.default)([_DateTimeBase.default], {
       time: false,
       date: true,
       triggerEvent: 'none',
-      switchOnClick: true
+      switchOnClick: true,
+      lang: _moment.default.locale()
     }); // time
 
     this.$timepicker = (0, _jquery.default)(this.timeInput).bootstrapMaterialDatePicker({
@@ -85719,7 +85710,8 @@ var DTMD = (0, _declare.default)([_DateTimeBase.default], {
       time: true,
       date: false,
       triggerEvent: 'none',
-      switchOnClick: true
+      switchOnClick: true,
+      lang: _moment.default.locale()
     });
     (0, _jquery.default)(this.dateButton).click(function () {
       _this.$datepicker.bootstrapMaterialDatePicker('_fireCalendar');

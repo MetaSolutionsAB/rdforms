@@ -1,6 +1,6 @@
 {
   "name": "rdforms",
-  "version": "9.1.0",
+  "version": "9.2.0",
   "main": "dist/bmd.rdforms.js",
   "module": "main.js",
   "repository": "https://bitbucket.org/metasolutions/rdforms.git",
@@ -27,7 +27,7 @@
     "nls-loader": "https://bitbucket.org/metasolutions/nls-loader#master",
     "node-fetch": "^2.3.0",
     "popper.js": "^1.12.9",
-    "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#2.1",
+    "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#2.2",
     "select2": "^4.0.6-rc.1",
     "selectize": "^0.12.6",
     "sizzle": "^2.3.3",

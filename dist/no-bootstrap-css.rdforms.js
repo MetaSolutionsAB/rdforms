@@ -312,7 +312,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			// "./_cloneBuffer.js" = 118
 /******/ 			// "./_baseGetAllKeys.js" = 119
 /******/ 			// undefined = 120
-/******/ 			// "!../../style-loader/lib/addStyles.js" = 128
+/******/ 			// "!../../../node_modules/style-loader/lib/addStyles.js" = 128
 /******/ 			// "./src/Graph" = 131
 /******/ 			"moment":132,
 /******/ 			// "./../webpack/buildin/harmony-module.js" = 133
@@ -338,7 +338,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			"select2/src/js/select2/data/array":164,
 /******/ 			// "./src/model/validate" = 165
 /******/ 			// "./dom" = 166
-/******/ 			// "./rdfjson/util" = 167
+/******/ 			// "./formats/rdfjson/util" = 167
 /******/ 			// "./src/Statement" = 168
 /******/ 			// "./src/utils" = 169
 /******/ 			"charenc":170,
@@ -449,7 +449,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 			// "./src/template/bundleLoader" = 327
 /******/ 			"detect-node":328,
 /******/ 			"node-fetch":329,
-/******/ 			// "/var/folders/vg/7w5l0f7x4zvfxcmnxglyd84w0000gn/T/tmp-30707uXwYsa0VI7ky/dojo/dojo.js" = 330
+/******/ 			// "/var/folders/vg/7w5l0f7x4zvfxcmnxglyd84w0000gn/T/tmp-270502zTG1n1gLLIi/dojo/dojo.js" = 330
 /******/ 			// "../../../css-loader/lib/url/escape.js" = 331
 /******/ 			// "./src/view/bootstrap/Select2" = 498
 /******/ 			"select2/src/js/select2/data/base":499,
@@ -58228,7 +58228,7 @@ function (_ValueBinding) {
 
       if (value != null && choice != null) {
         if (choice.seeAlso && choice.inlineSeeAlso) {
-          graph.create(value, ChoiceBinding.seeAlso, choice.seeAlso, true, silent);
+          graph.create(value, seeAlso, choice.seeAlso, true, silent);
         }
 
         if (choice.inlineLabel === true) {
@@ -58236,7 +58236,7 @@ function (_ValueBinding) {
 
           for (var lang in labelMap) {
             if (labelMap.hasOwnProperty(lang)) {
-              graph.create(value, ChoiceBinding.label, {
+              graph.create(value, label, {
                 value: labelMap[lang],
                 lang: lang,
                 type: "literal"
@@ -58245,16 +58245,6 @@ function (_ValueBinding) {
           }
         }
       }
-    }
-  }, {
-    key: "label",
-    get: function get() {
-      return label;
-    }
-  }, {
-    key: "seeAlso",
-    get: function get() {
-      return seeAlso;
     }
   }]);
 
@@ -67670,7 +67660,7 @@ var datePresenter = function datePresenter(fieldDiv, binding, context) {
         });
       }
 
-      jquery('<div>').html(str).toggleClass('rdformsField', context.inEditor).appendTo(fieldDiv);
+      jquery('<div>').html(str).toggleClass('rdformsField', context.inEditor === true).appendTo(fieldDiv);
     } catch (e) {
       console.warn("Could not present date, expected ISO8601 format in the form 2001-01-01 (potentially with time given after a 'T' character as well) but found '".concat(data, "' instead."));
     }
@@ -82920,6 +82910,23 @@ var _default = (0, _declare.default)([_WidgetBase2.default, _TemplatedMixin2.def
 
     }
   },
+  disableLevel: function disableLevel(levelName) {
+    switch (levelName) {
+      case 'mandatory':
+        this._mandatoryLabel.setAttribute('disabled', true);
+
+        break;
+
+      case 'recommended':
+        this._recommendedLabel.setAttribute('disabled', true);
+
+        break;
+
+      case 'optional':
+        this._optionalLabel.setAttribute('disabled', true);
+
+    }
+  },
   localize: function localize() {
     var _this = this;
 
@@ -82961,21 +82968,23 @@ var _default = (0, _declare.default)([_WidgetBase2.default, _TemplatedMixin2.def
     this.show();
   },
   _mandatoryClick: function _mandatoryClick(ev) {
-    _renderingContext.default.domClassToggle(this._mandatoryLabel, 'active', true);
+    if (!this._mandatoryLabel.getAttribute('disabled')) {
+      _renderingContext.default.domClassToggle(this._mandatoryLabel, 'active', true);
 
-    _renderingContext.default.domClassToggle(this._recommendedLabel, 'active', false);
+      _renderingContext.default.domClassToggle(this._recommendedLabel, 'active', false);
 
-    _renderingContext.default.domClassToggle(this._recommendedLabel, 'btn-default', true);
+      _renderingContext.default.domClassToggle(this._recommendedLabel, 'btn-default', true);
 
-    _renderingContext.default.domClassToggle(this._recommendedLabel, 'btn-success', false);
+      _renderingContext.default.domClassToggle(this._recommendedLabel, 'btn-success', false);
 
-    _renderingContext.default.domClassToggle(this._optionalLabel, 'active', false);
+      _renderingContext.default.domClassToggle(this._optionalLabel, 'active', false);
 
-    _renderingContext.default.domClassToggle(this._optionalLabel, 'btn-default', true);
+      _renderingContext.default.domClassToggle(this._optionalLabel, 'btn-default', true);
 
-    _renderingContext.default.domClassToggle(this._optionalLabel, 'btn-success', false);
+      _renderingContext.default.domClassToggle(this._optionalLabel, 'btn-success', false);
 
-    this._updateEditor('mandatory');
+      this._updateEditor('mandatory');
+    }
 
     if (ev) {
       // event.stop(ev);
@@ -82984,21 +82993,23 @@ var _default = (0, _declare.default)([_WidgetBase2.default, _TemplatedMixin2.def
     }
   },
   _recommendedClick: function _recommendedClick(ev) {
-    _renderingContext.default.domClassToggle(this._mandatoryLabel, 'active', true);
+    if (!this._recommendedLabel.getAttribute('disabled')) {
+      _renderingContext.default.domClassToggle(this._mandatoryLabel, 'active', true);
 
-    _renderingContext.default.domClassToggle(this._recommendedLabel, 'active', true);
+      _renderingContext.default.domClassToggle(this._recommendedLabel, 'active', true);
 
-    _renderingContext.default.domClassToggle(this._recommendedLabel, 'btn-success', true);
+      _renderingContext.default.domClassToggle(this._recommendedLabel, 'btn-success', true);
 
-    _renderingContext.default.domClassToggle(this._recommendedLabel, 'btn-default', false);
+      _renderingContext.default.domClassToggle(this._recommendedLabel, 'btn-default', false);
 
-    _renderingContext.default.domClassToggle(this._optionalLabel, 'active', false);
+      _renderingContext.default.domClassToggle(this._optionalLabel, 'active', false);
 
-    _renderingContext.default.domClassToggle(this._optionalLabel, 'btn-default', true);
+      _renderingContext.default.domClassToggle(this._optionalLabel, 'btn-default', true);
 
-    _renderingContext.default.domClassToggle(this._optionalLabel, 'btn-success', false);
+      _renderingContext.default.domClassToggle(this._optionalLabel, 'btn-success', false);
 
-    this._updateEditor('recommended');
+      this._updateEditor('recommended');
+    }
 
     if (ev) {
       // event.stop(ev);
@@ -83007,21 +83018,23 @@ var _default = (0, _declare.default)([_WidgetBase2.default, _TemplatedMixin2.def
     }
   },
   _optionalClick: function _optionalClick(ev) {
-    _renderingContext.default.domClassToggle(this._mandatoryLabel, 'active', true);
+    if (!this._optionalLabel.getAttribute('disabled')) {
+      _renderingContext.default.domClassToggle(this._mandatoryLabel, 'active', true);
 
-    _renderingContext.default.domClassToggle(this._recommendedLabel, 'active', true);
+      _renderingContext.default.domClassToggle(this._recommendedLabel, 'active', true);
 
-    _renderingContext.default.domClassToggle(this._recommendedLabel, 'btn-success', true);
+      _renderingContext.default.domClassToggle(this._recommendedLabel, 'btn-success', true);
 
-    _renderingContext.default.domClassToggle(this._recommendedLabel, 'btn-default', false);
+      _renderingContext.default.domClassToggle(this._recommendedLabel, 'btn-default', false);
 
-    _renderingContext.default.domClassToggle(this._optionalLabel, 'active', true);
+      _renderingContext.default.domClassToggle(this._optionalLabel, 'active', true);
 
-    _renderingContext.default.domClassToggle(this._optionalLabel, 'btn-success', true);
+      _renderingContext.default.domClassToggle(this._optionalLabel, 'btn-success', true);
 
-    _renderingContext.default.domClassToggle(this._optionalLabel, 'btn-default', false);
+      _renderingContext.default.domClassToggle(this._optionalLabel, 'btn-default', false);
 
-    this._updateEditor('optional');
+      this._updateEditor('optional');
+    }
 
     if (ev) {
       ev.preventDefault();

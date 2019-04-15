@@ -30,10 +30,10 @@ export default declare([_WidgetBase], {
       const c = this.choices[ind];
       let $label;
       if (this.item.hasStyle('verticalRadioButtons')) {
-        const $divWrap = jquery('<div class="radio">').appendTo(this.domNode);
+        const $divWrap = jquery('<div class="form-check">').appendTo(this.domNode);
         $label = jquery('<label>').appendTo($divWrap);
       } else {
-        $label = jquery('<label class="radio-inline">').appendTo(this.domNode);
+        $label = jquery('<label class="form-check-label">').appendTo(this.domNode);
       }
       if (c.description) {
         $label.attr('title', this.item._getLocalizedValue(c.description).value

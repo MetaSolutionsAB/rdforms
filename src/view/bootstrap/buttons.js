@@ -5,7 +5,7 @@ define([
   'dojo/aspect',
 ], (aspect) => {
   renderingContext.addRemoveButton = (fieldDiv, binding, context) => {
-    const $remove = jquery('<span class="fa fa-remove action">')
+    const $remove = jquery('<span class="fas fa-times action">')
             .attr('title', context.view.messages.edit_remove)
             .appendTo(context.controlDiv);
     const cardTr = binding.getCardinalityTracker();
@@ -41,7 +41,7 @@ define([
   };
 
   renderingContext.addExpandButton = (rowDiv, labelDiv, item, context) => {
-    const $expand = jquery('<span class="fa fa-plus action">')
+    const $expand = jquery('<span class="fas fa-plus action">')
       .attr('title', context.view.messages.edit_expand)
       .appendTo(labelDiv)
       .click(() => {
@@ -64,7 +64,7 @@ define([
     const card = item.getCardinality();
     let $add;
     if (card.max !== 1) {
-      $add = jquery('<span class="action fa fa-plus ">')
+      $add = jquery('<span class="action fas fa-plus ">')
                 .attr('title', context.view.messages.edit_add)
                 .appendTo(labelDiv);
       $add.click(() => {
@@ -74,7 +74,7 @@ define([
         }
       });
     }
-    const $remove = jquery('<span class="action fa fa-remove">')
+    const $remove = jquery('<span class="action fas fa-times">')
             .attr('title', context.view.messages.edit_remove)
             .appendTo(labelDiv);
 
@@ -130,7 +130,7 @@ define([
     const parentBinding = binding.getParent();
     const item = binding.getItem();
     const cardTr = binding.getCardinalityTracker();
-    const $add = jquery('<span class="action fa fa-plus">')
+    const $add = jquery('<span class="action fas fa-plus">')
             .attr('title', context.view.messages.edit_add)
             .appendTo(labelDiv)
             .click(() => {

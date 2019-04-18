@@ -3132,14 +3132,14 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-"esi18n@https://bitbucket.org/metasolutions/esi18n.git#1.1":
-  version "1.1.0"
-  resolved "https://bitbucket.org/metasolutions/esi18n.git#17ee6f593755b28419cc0bed17f0643a26aec782"
+"esi18n@https://bitbucket.org/metasolutions/esi18n.git#develop":
+  version "1.2.0-SNAPSHOT"
+  resolved "https://bitbucket.org/metasolutions/esi18n.git#9a866c39f28d950405cf2954dd021931ee7851e5"
   dependencies:
     dojo "^1.14.1"
     lodash-es "^4.17.10"
     moment "^2.22.2"
-    pubsub-js "^1.6.0"
+    pubsub-js "https://bitbucket.org/metasolutions/pubsubjs.git"
 
 eslint-config-airbnb-base@^11.1.1:
   version "11.3.2"
@@ -3659,9 +3659,10 @@ fsevents@^1.0.0, fsevents@^1.2.2:
     nan "^2.9.2"
     node-pre-gyp "^0.10.0"
 
-fuelux@^3.16.6:
+fuelux@3.16.6:
   version "3.16.6"
   resolved "https://registry.yarnpkg.com/fuelux/-/fuelux-3.16.6.tgz#b92ced514e53105e2ccb368bfadcaeddd94d95ed"
+  integrity sha1-uSztUU5TEF4syzaL+tyu3dlNle0=
   dependencies:
     bootstrap "3.3.7"
     jquery "3.2.1"
@@ -4083,6 +4084,13 @@ icss-utils@^2.1.0:
 ieee754@^1.1.4:
   version "1.1.12"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.12.tgz#50bf24e5b9c8bb98af4964c941cdb0918da7b60b"
+
+ifdef-loader@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/ifdef-loader/-/ifdef-loader-2.1.1.tgz#443cb6c99c68ae085966b9e2ada853001d368ee7"
+  integrity sha512-0jyVmSDGeiuWksoo44XXdMp+vbQ8Fp7PRz8X+6ecBfgSOF9OpsLj9M+N18YyXADC71jKZf93P81/SQtORPq6bg==
+  dependencies:
+    loader-utils "^1.1.0"
 
 iferr@^0.1.5:
   version "0.1.5"
@@ -6558,9 +6566,9 @@ public-encrypt@^4.0.0:
     randombytes "^2.0.1"
     safe-buffer "^5.1.2"
 
-pubsub-js@^1.6.0:
+"pubsub-js@https://bitbucket.org/metasolutions/pubsubjs.git":
   version "1.7.0"
-  resolved "https://registry.yarnpkg.com/pubsub-js/-/pubsub-js-1.7.0.tgz#eca97f9a4217bef62b2d3aaa1552005260cc2e49"
+  resolved "https://bitbucket.org/metasolutions/pubsubjs.git#9aba34cdd397cfbe80e6541087d69349d607f216"
 
 pump@^2.0.0, pump@^2.0.1:
   version "2.0.1"
@@ -6674,9 +6682,9 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-"rdfjson@https://bitbucket.org/metasolutions/rdfjson.git#2.2":
-  version "2.2.0"
-  resolved "https://bitbucket.org/metasolutions/rdfjson.git#e67cdca52d900ac978ad3e1180dd51f87b2c40ea"
+"rdfjson@https://bitbucket.org/metasolutions/rdfjson.git#develop":
+  version "2.3.0-SNAPSHOT"
+  resolved "https://bitbucket.org/metasolutions/rdfjson.git#37399998654b947f918150a4d4f5e88d64760bdf"
   dependencies:
     md5 "^2.2.1"
     xmldom "~0.1.19"

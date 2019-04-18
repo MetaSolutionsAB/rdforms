@@ -2,7 +2,7 @@
   "name": "rdforms",
   "version": "9.3.0-SNAPSHOT",
   "main": "dist/bmd.rdforms.js",
-  "module": "main.no-bootstrap-css.js",
+  "module": "main.js",
   "repository": "https://bitbucket.org/metasolutions/rdforms.git",
   "license": "LGPL-3.0-only",
   "dependencies": {
@@ -19,7 +19,7 @@
     "dojo": "^1.13.0",
     "dojo-util": "^1.13.0",
     "esi18n": "https://bitbucket.org/metasolutions/esi18n.git#develop",
-    "fuelux": "^3.16.6",
+    "fuelux": "3.16.6",
     "jquery": "^3.3.1",
     "jquery-mousewheel": "^3.1.13",
     "lodash-es": "^4.17.10",

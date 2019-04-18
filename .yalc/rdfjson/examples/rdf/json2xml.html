@@ -1,0 +1,25 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script src="/rdfjson.js"></script>
+</head>
+<body>
+<div style="width:50%;height:100%;float:left;">
+    <h1>RDF/JSON loaded from <a href="./rdf.json">rdf.json</a></h1>
+    <textarea style="width: 99%;height:500px;" id="source"></textarea>
+</div>
+<div style="width:50%;height:100%;float:left;">
+    <h1>Converted to RDF/XML</h1>
+    <textarea style="width:99%;height:500px;" id="destination"></textarea>
+</div>
+<script type="text/javascript">
+  fetch('./rdf.json')
+    .then(rdf => rdf.json())
+    .then((rdfJSON) => {
+      const { rdfjson2rdfxml } = rdfjson.converters;
+      document.getElementById('source').innerHTML = JSON.stringify(rdfJSON);
+      document.getElementById('destination').innerHTML = rdfjson2rdfxml(rdfJSON);
+    });
+</script>
+</body>
+</html>

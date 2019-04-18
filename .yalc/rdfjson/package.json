@@ -1,0 +1,61 @@
+{
+  "name": "rdfjson",
+  "version": "2.3.0-SNAPSHOT-ff61ad98",
+  "main": "dist/node.rdfjson.js",
+  "module": "main.js",
+  "author": {
+    "name": "Matthias Palmér",
+    "email": "matthias@metasolutions.se",
+    "url": "https://entryscape.com/"
+  },
+  "contributors": [
+    {
+      "name": "Valentino Hudhra",
+      "email": "valentino@metasolutions.se",
+      "url": "http://valentinohudhra.com/"
+    }
+  ],
+  "dependencies": {
+    "md5": "^2.2.1",
+    "xmldom": "~0.1.19"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "clean-webpack-plugin": "^0.1.18",
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "mocha": "^5.2.0",
+    "print-licenses": "https://bitbucket.org/metasolutions/print-licenses#master",
+    "uglifyjs-webpack-plugin": "^1.2.2",
+    "webpack": "^4.8.0",
+    "webpack-bundle-analyzer": "^2.13.1",
+    "webpack-cli": "^3.3.0",
+    "webpack-merge": "^4.1.4",
+    "webpack-serve": "^2.0.2"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.all.js",
+    "build:browser": "webpack --config webpack.browser.js",
+    "build:node": "webpack --config webpack.node.js",
+    "start": "webpack-serve ./webpack.dev.js",
+    "dev": "webpack-dashboard node main.js",
+    "test": "mocha --require @babel/register ./tests/*.js",
+    "print-licenses": "print-licenses"
+  },
+  "description": "Rdfjson is a library for working with RDF in the RDF/Json format.",
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "http://bugs.dojotoolkit.org/browser/dojo/trunk/LICENSE#L13"
+    }
+  ],
+  "homepage": "https://code.google.com/p/rforms/",
+  "dojoBuild": "package.js",
+  "repository": "https://bitbucket.org/metasolutions/rdfjson.git",
+  "license": "LGPL-3.0-only"
+}

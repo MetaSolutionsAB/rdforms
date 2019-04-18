@@ -1,0 +1,7 @@
+/.idea
+node_modules
+/release
+/*.iml
+yarn-error.log
+*.temp
+*.vim

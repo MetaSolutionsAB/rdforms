@@ -3,7 +3,6 @@ import renderingContext from '../renderingContext';
 import system from '../../model/system';
 import utils from '../../utils';
 
-console.log('hello');
 renderingContext.renderSelect = function (fieldDiv, binding, context) {
   const formgroup = jquery('<div class="form-group selectizeException">').appendTo(fieldDiv);
   const formcontrol = jquery('<div class="form-control">').appendTo(formgroup);

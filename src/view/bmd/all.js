@@ -10,7 +10,6 @@ import './Selectize';
 import 'bootstrap-material-design/dist/css/bootstrap-material-design.css';
 import 'bootstrap-material-design/dist/css/ripples.css';
 import 'bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css';
-import './style.css';
 
 
 // TODO revisit the below strategy. Perhaps use arrive.js as suggested by bmd

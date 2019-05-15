@@ -5,7 +5,7 @@ define([
   'dojo/aspect',
 ], (aspect) => {
   renderingContext.addRemoveButton = (fieldDiv, binding, context) => {
-    const $remove = jquery('<span class="fa fa-remove action">')
+    const $remove = jquery('<span class="fa fa-times action">')
             .attr('title', context.view.messages.edit_remove)
             .appendTo(context.controlDiv);
     const cardTr = binding.getCardinalityTracker();
@@ -74,7 +74,7 @@ define([
         }
       });
     }
-    const $remove = jquery('<span class="action fa fa-remove">')
+    const $remove = jquery('<span class="action fa fa-times">')
             .attr('title', context.view.messages.edit_remove)
             .appendTo(labelDiv);
 

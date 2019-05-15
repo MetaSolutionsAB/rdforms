@@ -607,7 +607,9 @@ a.rdformsUrl:hover {
     padding: 0px;
     resize: none;
 }
-
+textarea.form-control{
+    height: 38px;
+}
 
 /* LDBrowser */
 
@@ -649,3 +651,4 @@ a.rdformsUrl:hover {
 .rdformsRow.missingDepsWithValue {
     background: lightsalmon;
 }
+

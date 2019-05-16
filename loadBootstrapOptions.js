@@ -5,8 +5,9 @@
   import 'select2/dist/css/select2.css';
 
 /// #else
+  import '@babel/polyfill';
   import './src/view/bmd/all'; // hard coded bmd
 /// #endif
 
-import './src/view/bootstrap/style.css';
+import './src/view/bmd/style.css';
 

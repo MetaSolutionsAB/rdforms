@@ -3132,9 +3132,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-"esi18n@https://bitbucket.org/metasolutions/esi18n.git#develop":
-  version "1.3.0-SNAPSHOT"
-  resolved "https://bitbucket.org/metasolutions/esi18n.git#34f4852c3ba5eda2cf184474b68da39ce04e0ee9"
+"esi18n@https://bitbucket.org/metasolutions/esi18n.git#1.2":
+  version "1.2.0"
+  resolved "https://bitbucket.org/metasolutions/esi18n.git#949b442479450f78028088e4896db0c8c04f6e59"
   dependencies:
     dojo "^1.14.1"
     lodash-es "^4.17.10"
@@ -6680,9 +6680,9 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-"rdfjson@https://bitbucket.org/metasolutions/rdfjson.git#develop":
-  version "2.3.0-SNAPSHOT"
-  resolved "https://bitbucket.org/metasolutions/rdfjson.git#37399998654b947f918150a4d4f5e88d64760bdf"
+"rdfjson@https://bitbucket.org/metasolutions/rdfjson.git#2.2":
+  version "2.2.0"
+  resolved "https://bitbucket.org/metasolutions/rdfjson.git#e67cdca52d900ac978ad3e1180dd51f87b2c40ea"
   dependencies:
     md5 "^2.2.1"
     xmldom "~0.1.19"

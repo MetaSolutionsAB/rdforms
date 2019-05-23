@@ -11,7 +11,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/polyfill": "^7.0.0",
     "babel-loader": "^8.0.4",
-    "bootstrap": "3.3.7",
+    "bootstrap": "3.4.1",
     "bootstrap-material-datetimepicker": "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#webpack",
     "bootstrap-material-design": "https://bitbucket.org/metasolutions/bootstrap-material-design.git#amd",
     "detect-node": "^2.0.3",

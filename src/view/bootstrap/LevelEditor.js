@@ -88,14 +88,16 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], 
   },
 
   _mandatoryClick(ev) {
-    renderingContext.domClassToggle(this._mandatoryLabel, 'active', true);
-    renderingContext.domClassToggle(this._recommendedLabel, 'active', false);
-    renderingContext.domClassToggle(this._recommendedLabel, 'btn-default', true);
-    renderingContext.domClassToggle(this._recommendedLabel, 'btn-success', false);
-    renderingContext.domClassToggle(this._optionalLabel, 'active', false);
-    renderingContext.domClassToggle(this._optionalLabel, 'btn-default', true);
-    renderingContext.domClassToggle(this._optionalLabel, 'btn-success', false);
-    this._updateEditor('mandatory');
+    if (!this._mandatoryLabel.getAttribute('disabled')) {
+      renderingContext.domClassToggle(this._mandatoryLabel, 'active', true);
+      renderingContext.domClassToggle(this._recommendedLabel, 'active', false);
+      renderingContext.domClassToggle(this._recommendedLabel, 'btn-primary', true);
+      renderingContext.domClassToggle(this._recommendedLabel, 'btn-success', false);
+      renderingContext.domClassToggle(this._optionalLabel, 'active', false);
+      renderingContext.domClassToggle(this._optionalLabel, 'btn-primary', true);
+      renderingContext.domClassToggle(this._optionalLabel, 'btn-success', false);
+      this._updateEditor('mandatory');
+    }
     if (ev) {
       // event.stop(ev);
       ev.preventDefault();
@@ -103,14 +105,16 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], 
     }
   },
   _recommendedClick(ev) {
-    renderingContext.domClassToggle(this._mandatoryLabel, 'active', true);
-    renderingContext.domClassToggle(this._recommendedLabel, 'active', true);
-    renderingContext.domClassToggle(this._recommendedLabel, 'btn-success', true);
-    renderingContext.domClassToggle(this._recommendedLabel, 'btn-default', false);
-    renderingContext.domClassToggle(this._optionalLabel, 'active', false);
-    renderingContext.domClassToggle(this._optionalLabel, 'btn-default', true);
-    renderingContext.domClassToggle(this._optionalLabel, 'btn-success', false);
-    this._updateEditor('recommended');
+    if (!this._recommendedLabel.getAttribute('disabled')) {
+      renderingContext.domClassToggle(this._mandatoryLabel, 'active', true);
+      renderingContext.domClassToggle(this._recommendedLabel, 'active', true);
+      renderingContext.domClassToggle(this._recommendedLabel, 'btn-success', true);
+      renderingContext.domClassToggle(this._recommendedLabel, 'btn-primary', false);
+      renderingContext.domClassToggle(this._optionalLabel, 'active', false);
+      renderingContext.domClassToggle(this._optionalLabel, 'btn-primary', true);
+      renderingContext.domClassToggle(this._optionalLabel, 'btn-success', false);
+      this._updateEditor('recommended');
+    }
     if (ev) {
       // event.stop(ev);
       ev.preventDefault();
@@ -118,14 +122,16 @@ export default declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], 
     }
   },
   _optionalClick(ev) {
-    renderingContext.domClassToggle(this._mandatoryLabel, 'active', true);
-    renderingContext.domClassToggle(this._recommendedLabel, 'active', true);
-    renderingContext.domClassToggle(this._recommendedLabel, 'btn-success', true);
-    renderingContext.domClassToggle(this._recommendedLabel, 'btn-default', false);
-    renderingContext.domClassToggle(this._optionalLabel, 'active', true);
-    renderingContext.domClassToggle(this._optionalLabel, 'btn-success', true);
-    renderingContext.domClassToggle(this._optionalLabel, 'btn-default', false);
-    this._updateEditor('optional');
+    if (!this._optionalLabel.getAttribute('disabled')) {
+      renderingContext.domClassToggle(this._mandatoryLabel, 'active', true);
+      renderingContext.domClassToggle(this._recommendedLabel, 'active', true);
+      renderingContext.domClassToggle(this._recommendedLabel, 'btn-success', true);
+      renderingContext.domClassToggle(this._recommendedLabel, 'btn-primary', false);
+      renderingContext.domClassToggle(this._optionalLabel, 'active', true);
+      renderingContext.domClassToggle(this._optionalLabel, 'btn-success', true);
+      renderingContext.domClassToggle(this._optionalLabel, 'btn-primary', false);
+      this._updateEditor('optional');
+    }
     if (ev) {
       ev.preventDefault();
       ev.stopPropagation();

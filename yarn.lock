@@ -1644,6 +1644,11 @@ boolbase@^1.0.0, boolbase@~1.0.0:
     jquery "1.12.3"
     moment "^2.22.2"
 
+bootstrap-material-design@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/bootstrap-material-design/-/bootstrap-material-design-4.1.1.tgz#87433db0bf64d6a0afb0f5faaa8606134c9d26d2"
+  integrity sha1-h0M9sL9k1qCvsPX6qoYGE0ydJtI=
+
 "bootstrap-material-design@https://bitbucket.org/metasolutions/bootstrap-material-design.git#amd":
   version "0.5.10"
   resolved "https://bitbucket.org/metasolutions/bootstrap-material-design.git#5c1fa35b7e613c063d73858594166b3b44c6aab5"

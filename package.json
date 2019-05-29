@@ -13,7 +13,7 @@
     "babel-loader": "^8.0.4",
     "bootstrap": "3.3.7",
     "bootstrap-material-datetimepicker": "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#webpack",
-    "bootstrap-material-design": "https://bitbucket.org/metasolutions/bootstrap-material-design.git#amd",
+    "bootstrap-material-design": "4.1.1",
     "detect-node": "^2.0.3",
     "dijit": "^1.13.0",
     "dojo": "^1.13.0",

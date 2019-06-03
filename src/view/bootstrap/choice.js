@@ -169,7 +169,7 @@ editors.itemtype('choice').choices('none').register((fieldDiv, binding, context)
       c.load(() => {
         // If the value can be upgraded into its own entity.
         if (c.upgrade) {
-          const $button = jquery('<button class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm' +
+          const $button = jquery('<button class="btn btn-default bmd-btn-fab bmd-btn-fab-sm' +
             ' browseChoices" type="button">')
             .attr('title', context.view.messages.edit_upgrade)
             .click(() => {

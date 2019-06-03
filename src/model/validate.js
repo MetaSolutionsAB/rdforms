@@ -57,7 +57,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
       let bindings = groupbinding.getChildBindings();
       let nrOfValid = _countValidBindings(bindings);
       if (nrOfValid > 1) {
-        groupbinding.error = engine.CODES.TOO_MANY_VALUES;
+        groupbinding.setMatchingCode(engine.CODES.TOO_MANY_VALUES);
         report.errors.push({
           parentBinding: groupbinding,
           item: bindings[0].getItem(),
@@ -67,7 +67,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
         bindings.forEach((binding, idx) => {
           if (binding.isValid()) {
             if (counter > 0) {
-              binding.error = engine.CODES.TOO_MANY_VALUES_DISJOINT;
+              binding.setMatchingCode(engine.CODES.TOO_MANY_VALUES_DISJOINT);
             }
             counter++;
           }
@@ -121,7 +121,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
               if (binding.isValid()) {
                 counter++;
                 if (counter > card.max) {
-                  binding.error = engine.CODES.TOO_MANY_VALUES;
+                  binding.setMatchingCode(engine.CODES.TOO_MANY_VALUES);
                 }
               }
             });
@@ -133,6 +133,16 @@ const _createReport = (groupbinding, report, firstLevel) => {
         }
       }, this);
     }
+    groupbinding.getChildBindings().forEach((binding) => {
+      const item = binding.getItem();
+      if (binding.getMatchingCode() !== engine.CODES.OK) {
+        report.errors.push({
+          parentBinding: binding,
+          item,
+          code: binding.getMatchingCode(),
+        });
+      }
+    });
   }
   return report;
 };
@@ -161,7 +171,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
  *           path: "vcard:hasFN",
  *           code: "few"
  *         }],
- *         deprecated: [
+ *         deprecated: [https://challengesgov.se/challenge-sthlm/
  *           "vcard:fn"
  *         ]
  *       },
@@ -215,7 +225,7 @@ const _findResources = (graph, cls) => graph.find(null, "rdf:type", cls)
   .map(stmt => stmt.getSubject());
 
 const _resourceReport = (resource, graph, template, ignoreResources) => {
-  let binding = engine.match(graph, resource, template);
+  let binding = engine.fuzzyMatch(graph, resource, template);
   let report = bindingReport(binding);
   _filterReport(report, resource, ignoreResources || {});
   _simplifyReport(report);
@@ -257,7 +267,7 @@ const _simplifyReport = (report) => {
 
 const _createPath = (binding, item) => {
   let path = [];
-  if (item.getProperty() != null) {
+  if (item.getProperty() != null && binding.getItem() != item) {
     path.push(ns.shorten(item.getProperty()));
   }
   while (true) {

@@ -18,10 +18,21 @@ let _clearDibbs;
 let _noDibbs;
 let _dibbs;
 let _createStatementsForConstraints;
+let _fuzzy = false;
 
 const match = (graph, uri, template) => {
   const rootBinding = new GroupBinding({item: template, childrenRootUri: uri, graph});
   _matchGroupItemChildren(rootBinding);
+  _clearDibbs(rootBinding);
+  return rootBinding;
+};
+
+const fuzzyMatch = (graph, uri, template) => {
+  const rootBinding = new GroupBinding({item: template, childrenRootUri: uri, graph});
+  _matchGroupItemChildren(rootBinding);
+  _fuzzy = true;
+  _matchGroupItemChildren(rootBinding);
+  _fuzzy = false;
   _clearDibbs(rootBinding);
   return rootBinding;
 };
@@ -79,6 +90,8 @@ const constructTemplate = (graph, uri, itemStore, requiredItems) => {
 //= ==============================================
 // Core creation engine
 //= ==============================================
+const getFirstDataType = item => (Array.isArray(item.getDatatype()) ? item.getDatatype()[0] : item.getDatatype());
+
 const _createTextItem = (parentBinding, item) => {
   const graph = parentBinding.getGraph();
   const nt = item.getNodetype();
@@ -86,7 +99,7 @@ const _createTextItem = (parentBinding, item) => {
   if (nt === 'URI') {
     obj.type = 'uri';
   } else if (nt === 'DATATYPE_LITERAL') {
-    obj.datatype = item.getDatatype();
+    obj.datatype = getFirstDataType(item);
   }
   const stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), obj, false);
   const nbinding = new ValueBinding({item, statement: stmt});
@@ -95,7 +108,7 @@ const _createTextItem = (parentBinding, item) => {
   const cardTracker = nbinding.getCardinalityTracker();
   if (defaultValue != null && cardTracker.getCounter() === 1) {
     stmt.setValue(defaultValue, true);
-    const dt = item.getDatatype();
+    const dt = getFirstDataType(item);
     const la = item.getLanguage();
     if (dt != null) {
       stmt.setDatatype(dt, true);
@@ -111,7 +124,7 @@ const _createChoiceItem = (parentBinding, item) => {
   const nt = item.getNodetype();
   const obj = {type: 'literal', value: ''};
   if (nt === 'DATATYPE_LITERAL') {
-    obj.datatype = item.getDatatype();
+    obj.datatype = getFirstDataType(item);
   } else if (nt === 'RESOURCE' || nt === 'URI') {
     obj.type = 'uri';
   }
@@ -214,8 +227,21 @@ let _findChoice;
 let _findStatementsForConstraints;
 
 _matchGroupItemChildren = (pb) => {
+  if (_fuzzy) {
+    pb.getChildBindings().forEach((cb) => {
+      if (cb.getItem().getType() === 'group') {
+        _matchGroupItemChildren(cb);
+      }
+    });
+  }
   pb.getItem().getChildren().forEach((item) => {
-    _matchItem(pb, item);
+    if (_fuzzy) {
+      if (item.getProperty() !== undefined) {
+        _matchItem(pb, item);
+      }
+    } else {
+      _matchItem(pb, item);
+    }
   });
 };
 
@@ -231,13 +257,19 @@ const _matchGroupItem = (pb, item) => {
     if (stmts.length > 0) {
       bindings = [];
       stmts.forEach((stmt) => {
-        if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
-          constStmts = _findStatementsForConstraints(graph, stmt.getValue(), item);
-          if (constStmts !== undefined) {
-            _dibbs(stmt);
-            groupBinding = new GroupBinding({item, statement: stmt, constraints: constStmts});
-            bindings.push(groupBinding);
-            _matchGroupItemChildren(groupBinding); // Recursive call
+        if (_noDibbs(stmt) && _isPatternMatch(item, stmt)) {
+          const ntMatch = _isNodeTypeMatch(item, stmt);
+          if (ntMatch || _fuzzy) {
+            constStmts = _findStatementsForConstraints(graph, stmt.getValue(), item);
+            if (constStmts !== undefined || _fuzzy) {
+              const matchingCode = !ntMatch ? CODES.WRONG_NODETYPE : CODES.OK;
+              _dibbs(stmt);
+              groupBinding = new GroupBinding({ item, statement: stmt, constraints: constStmts, matchingCode });
+              bindings.push(groupBinding);
+              if (matchingCode === CODES.OK) {
+                _matchGroupItemChildren(groupBinding); // Recursive call
+              }
+            }
           }
         }
       });
@@ -306,9 +338,12 @@ const _matchTextItem = (pb, item) => {
   }
   const bindings = [];
   pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
-    if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
-      _dibbs(stmt);
-      bindings.push(new ValueBinding({item, statement: stmt}));
+    if (_noDibbs(stmt) && _isPatternMatch(item, stmt)) {
+      const ntMatch = _isNodeTypeMatch(item, stmt);
+      if (ntMatch || _fuzzy) {
+        _dibbs(stmt);
+        bindings.push(new ValueBinding({ item, statement: stmt, accurate: ntMatch ? CODES.OK : CODES.WRONG_NODETYPE}));
+      }
     }
   });
   if (bindings.length > 0) {
@@ -322,11 +357,18 @@ const _matchChoiceItem = (pb, item) => {
   }
   const bindings = [];
   pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
-    if (_noDibbs(stmt) && _isNodeTypeMatch(item, stmt) && _isPatternMatch(item, stmt)) {
-      const choice = _findChoice(item, stmt.getValue(), stmt.getGraph());
-      if (choice !== undefined) {
-        _dibbs(stmt);
-        bindings.push(new ChoiceBinding({item, statement: stmt, choice}));
+    if (_noDibbs(stmt) && _isPatternMatch(item, stmt)) {
+      const ntMatch = _isNodeTypeMatch(item, stmt);
+      if (ntMatch || _fuzzy) {
+        const choice = _findChoice(item, stmt.getValue(), stmt.getGraph());
+        if (choice !== undefined) {
+          _dibbs(stmt);
+          let matchingCode = !ntMatch ? CODES.WRONG_NODETYPE : CODES.OK;
+          if (choice.mismatch) {
+            matchingCode = CODES.WRONG_VALUE;
+          }
+          bindings.push(new ChoiceBinding({ item, statement: stmt, choice, matchingCode }));
+        }
       }
     }
   });
@@ -366,7 +408,8 @@ _isNodeTypeMatch = (item, stmt) => {
     case 'LANGUAGE_LITERAL':  // Definitely a language
       return objectType === 'literal';
     case 'DATATYPE_LITERAL':     // Definitiely a datatype
-      return objectType === 'literal' && stmt.getDatatype() === item.getDatatype();
+      return objectType === 'literal' && (Array.isArray(item.getDatatype()) ?
+        item.getDatatype().indexOf(stmt.getDatatype()) !== -1 : stmt.getDatatype() === item.getDatatype());
     case 'RESOURCE':
       return objectType === 'uri' || objectType === 'bnode';
     case 'URI':
@@ -437,7 +480,7 @@ _findStatementsForConstraints = (graph, uri, item) => {
 
 _createStatementsForConstraints = (graph, uri, item) => {
   const results = [];
-  const constr = item.getConstraints()
+  const constr = item.getConstraints();
   if ((typeof constr === 'object') && (constr !== null)) {
     Object.keys(constr).forEach((key) => {
       const obj = constr[key];
@@ -461,11 +504,14 @@ _findChoice = (item, obj, graph) => {
         return choices[index];
       }
     }
-    if (!item.hasStyle('strictmatch')) {
+    if (!item.hasStyle('strictmatch') || _fuzzy) {
       return {value: obj, label: {'': obj}, mismatch: true};
     }
   } else {
-    const label = utils.getLocalizedMap(graph, obj, item.getLabelProperties());
+    let label = utils.getLocalizedMap(graph, obj, item.getLabelProperties());
+    if (label == null && _fuzzy) {
+      label = {'': obj, mismatch: true};
+    }
     const sa = graph.findFirstValue(obj, ChoiceBinding.seeAlso);
     if (label != null) {
       const choice = {label, value: obj};
@@ -716,6 +762,8 @@ const detectLevel = (profile) => {
  */
 export {match};
 
+export {fuzzyMatch};
+
 export {matchPathBelowBinding};
 export {findBindingRelativeToParentBinding}
 
@@ -791,9 +839,17 @@ export {levelProfile};
 export {detectLevel};
 
 const CODES = {
-  TOO_FEW_VALUES: 'few',
+  OK: 'correct',
+  TOO_FEW_VALUES: 'few', // deprecated
+  TOO_FEW_VALUES_MIN: 'min',
+  TOO_FEW_VALUES_PREF: 'pref',
   TOO_MANY_VALUES: 'many',
   TOO_MANY_VALUES_DISJOINT: 'disjoint',
+  WRONG_VALUE: 'value',
+  WRONG_NODETYPE: 'nodetype',
+  WRONG_DATATYPE: 'datatype',
+  MISSING_LANGUAGE: 'language',
+  MISSING_CONSTRAINTS: 'constraints'
 };
 
 export {CODES}
@@ -807,6 +863,7 @@ export default { // TODO @valentino anti-pattern. This is done because engine is
   constructTemplate,
   findPopularChoice,
   match,
+  fuzzyMatch,
   matchPathBelowBinding,
   findBindingRelativeToParentBinding,
   CODES,

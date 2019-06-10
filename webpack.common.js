@@ -7,7 +7,6 @@ module.exports = {
   entry: {
     bootstrap: 'index.bootstrap.js',
     bmd: 'index.bmd.js',
-    'no-bootstrap-css': 'index.no-bootstrap-css.js',
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -44,25 +43,37 @@ module.exports = {
         use: [
           {
             loader: 'nls-loader',
+              options: {
+                // context: APP_PATH,
+                locales: ["en"],
+              },
           }
         ]
       },
       {
         test: /\.js$/,
         exclude: /node_modules\/(?!(rdfjson|esi18n|store|)\/).*/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-            plugins: [
-              '@babel/plugin-proposal-object-rest-spread',
-              '@babel/plugin-proposal-class-properties',
-              ['@babel/plugin-transform-modules-commonjs', {strictMode: false}],
-            ]
-          }
-        }
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+              plugins: [
+                '@babel/plugin-proposal-object-rest-spread',
+                '@babel/plugin-proposal-class-properties',
+                ['@babel/plugin-transform-modules-commonjs', {strictMode: false}],
+              ]
+            }
+          },
+          {
+            loader: 'ifdef-loader',
+            options: {
+              BLOCKS: false,
+            },
+          },
+        ],
       },
-      {
+        {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
       },

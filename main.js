@@ -1,5 +1,8 @@
 import 'whatwg-fetch';
-import './src/view/bmd/all'; // hard coded bmd
+import 'bootstrap';
+import './src/view/bootstrap/components';
+
+import './loadBootstrapOptions';
 
 export {default as renderingContext} from './src/view/renderingContext';
 export {default as ItemStore} from './src/template/ItemStore';

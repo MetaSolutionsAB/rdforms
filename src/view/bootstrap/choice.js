@@ -124,10 +124,10 @@ editors.itemtype('choice').choices('none').register((fieldDiv, binding, context)
     if (context.chooser && context.chooser.supportsInlineCreate &&
       context.chooser.supportsInlineCreate(binding)) {
       const $stack = jquery('<span class="fa-stack">').appendTo($search);
-      jquery('<span class="fa fa-search fa-stack-1x" aria-hidden="true">').appendTo($stack);
-      jquery('<span class="fa fa-plus fa-stack-1x" aria-hidden="true">').appendTo($stack);
+      jquery('<span class="fas fa-search fa-stack-1x" aria-hidden="true">').appendTo($stack);
+      jquery('<span class="fas fa-plus fa-stack-1x" aria-hidden="true">').appendTo($stack);
     } else {
-      jquery('<span class="fa fa-search" aria-hidden="true">').appendTo($search);
+      jquery('<span class="fas fa-search" aria-hidden="true">').appendTo($search);
     }
 
     const setChoice = (choice) => {
@@ -181,7 +181,7 @@ editors.itemtype('choice').choices('none').register((fieldDiv, binding, context)
                 binding.setChoice(updatedChoice);
               });
             }).insertAfter($uri);
-          jquery('<span class="fa fa-magic" aria-hidden="true">').appendTo($button);
+          jquery('<span class="fas fa-magic" aria-hidden="true">').appendTo($button);
         } else {
           $uri.remove();
           renderSelect();

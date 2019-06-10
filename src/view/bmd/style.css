@@ -5,12 +5,14 @@
 }
 
 .rdforms .rdformsFields textarea.form-control {
+    height: 38px;
     max-height: 200px;
 }
 
 .rdforms .rdformsFields textarea.form-control:focus {
     min-height: 60px;
 }
+
 
 .rdforms select.rdformsLanguage {
     display: inline;
@@ -95,7 +97,11 @@
 .selectize-control.single .selectize-input:after,
 .selectize-control.single .selectize-input.input-active:after {
     cursor: pointer;
+    font-weight: 900;
+    font-family: 'Font Awesome\ 5 Free';
+
 }
+
 
 .rdforms .selectize-dropdown-content {
     max-height: 200px;
@@ -128,9 +134,8 @@
     border-radius: 2px;
     color: rgba(0,0,0, 0.87);
     background: #fff;
-    -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 7px 10px 10px 10px;
     margin-top: 10px;
     margin-right: -10px;
+    box-shadow: 0px 3px 6px -1px rgba(0,0,0,0.3);
 }

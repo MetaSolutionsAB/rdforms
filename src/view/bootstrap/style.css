@@ -105,7 +105,7 @@
     vertical-align: middle;
 }
 
-.rdformsLabelRow>.action.indentRemove.fa-remove,
+.rdformsLabelRow>.action.indentRemove.fa-times,
 .rdformsLabelRow>.action.fa-plus {
     margin-left: 1em;
 }

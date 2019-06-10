@@ -21,6 +21,7 @@ const DTMD = declare([DateTimeBase], {
       date: true,
       triggerEvent: 'none',
       switchOnClick: true,
+      lang: moment.locale(),
     });
 
     // time
@@ -30,6 +31,7 @@ const DTMD = declare([DateTimeBase], {
       date: false,
       triggerEvent: 'none',
       switchOnClick: true,
+      lang: moment.locale(),
     });
 
     jquery(this.dateButton).click(() => {

@@ -222,6 +222,7 @@ const create = (parentBinding, item, parentItems) => {
 
 let _matchItem;
 let _isNodeTypeMatch;
+let _isDataTypeMatch;
 let _isPatternMatch;
 let _findChoice;
 let _findStatementsForConstraints;
@@ -257,12 +258,18 @@ const _matchGroupItem = (pb, item) => {
     if (stmts.length > 0) {
       bindings = [];
       stmts.forEach((stmt) => {
-        if (_noDibbs(stmt) && _isPatternMatch(item, stmt)) {
+        if (_noDibbs(stmt)) {
+          const pMatch = _isPatternMatch(item, stmt);
           const ntMatch = _isNodeTypeMatch(item, stmt);
-          if (ntMatch || _fuzzy) {
+          if ((pMatch && ntMatch) || _fuzzy) {
             constStmts = _findStatementsForConstraints(graph, stmt.getValue(), item);
             if (constStmts !== undefined || _fuzzy) {
-              const matchingCode = !ntMatch ? CODES.WRONG_NODETYPE : CODES.OK;
+              let matchingCode = !ntMatch ? CODES.WRONG_NODETYPE : CODES.OK;
+              if (!pMatch) {
+                matchingCode = CODES.WRONG_PATTERN;
+              } else if (constStmts === undefined) {
+                matchingCode = CODES.MISSING_CONSTRAINTS;
+              }
               _dibbs(stmt);
               groupBinding = new GroupBinding({ item, statement: stmt, constraints: constStmts, matchingCode });
               bindings.push(groupBinding);
@@ -340,9 +347,14 @@ const _matchTextItem = (pb, item) => {
   pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
     if (_noDibbs(stmt) && _isPatternMatch(item, stmt)) {
       const ntMatch = _isNodeTypeMatch(item, stmt);
-      if (ntMatch || _fuzzy) {
+      const dtMatch = _isDataTypeMatch(item, stmt);
+      if ((ntMatch && dtMatch) || _fuzzy) {
         _dibbs(stmt);
-        bindings.push(new ValueBinding({ item, statement: stmt, accurate: ntMatch ? CODES.OK : CODES.WRONG_NODETYPE}));
+        let matchingCode = ntMatch ? CODES.OK : CODES.WRONG_NODETYPE;
+        if (!dtMatch) {
+          matchingCode = CODES.WRONG_DATATYPE;
+        }
+        bindings.push(new ValueBinding({ item, statement: stmt, matchingCode}));
       }
     }
   });
@@ -357,14 +369,20 @@ const _matchChoiceItem = (pb, item) => {
   }
   const bindings = [];
   pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
-    if (_noDibbs(stmt) && _isPatternMatch(item, stmt)) {
+    if (_noDibbs(stmt)) {
       const ntMatch = _isNodeTypeMatch(item, stmt);
-      if (ntMatch || _fuzzy) {
+      const dtMatch = _isDataTypeMatch(item, stmt);
+      const pMatch = _isPatternMatch(item, stmt);
+      if ((ntMatch && dtMatch && pMatch) || _fuzzy) {
         const choice = _findChoice(item, stmt.getValue(), stmt.getGraph());
         if (choice !== undefined) {
           _dibbs(stmt);
           let matchingCode = !ntMatch ? CODES.WRONG_NODETYPE : CODES.OK;
-          if (choice.mismatch) {
+          if (!dtMatch) {
+            matchingCode = CODES.WRONG_DATATYPE;
+          } else if (!pMatch) {
+            matchingCode = CODES.WRONG_PATTERN;
+          } else if (choice.mismatch) {
             matchingCode = CODES.WRONG_VALUE;
           }
           bindings.push(new ChoiceBinding({ item, statement: stmt, choice, matchingCode }));
@@ -408,8 +426,7 @@ _isNodeTypeMatch = (item, stmt) => {
     case 'LANGUAGE_LITERAL':  // Definitely a language
       return objectType === 'literal';
     case 'DATATYPE_LITERAL':     // Definitiely a datatype
-      return objectType === 'literal' && (Array.isArray(item.getDatatype()) ?
-        item.getDatatype().indexOf(stmt.getDatatype()) !== -1 : stmt.getDatatype() === item.getDatatype());
+      return objectType === 'literal';
     case 'RESOURCE':
       return objectType === 'uri' || objectType === 'bnode';
     case 'URI':
@@ -418,6 +435,14 @@ _isNodeTypeMatch = (item, stmt) => {
       return objectType === 'bnode';
   }
   return false;
+};
+
+_isDataTypeMatch = (item, stmt) => {
+  const dt = item.getNodetype() === 'DATATYPE_LITERAL' ? item.getDatatype() || null : null;
+  if (dt != null) {
+    return Array.isArray(dt) ? dt.indexOf(stmt.getDatatype()) !== -1 : stmt.getDatatype() === dt;
+  }
+  return true;
 };
 
 _isPatternMatch = (item, stmt) => {
@@ -846,6 +871,7 @@ const CODES = {
   TOO_MANY_VALUES: 'many',
   TOO_MANY_VALUES_DISJOINT: 'disjoint',
   WRONG_VALUE: 'value',
+  WRONG_PATTERN: 'pattern',
   WRONG_NODETYPE: 'nodetype',
   WRONG_DATATYPE: 'datatype',
   MISSING_LANGUAGE: 'language',

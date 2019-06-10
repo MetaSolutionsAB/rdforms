@@ -38,6 +38,11 @@ export default declare(Presenter, {
     if (item.hasStyle('deprecated')) {
       return false;
     }
+    const code = this.binding.getMatchingCode();
+    if (code === engine.CODES.MISSING_CONSTRAINTS || code === engine.CODES.WRONG_NODETYPE) {
+      return false;
+    }
+
     const card = item.getCardinality();
     switch (this.includeLevel) {
       case 'mandatory':
@@ -88,7 +93,8 @@ export default declare(Presenter, {
     const noDisjointHinder = !this.binding.getItem().hasStyle('disjoint') ||
       code === engine.CODES.TOO_FEW_VALUES_MIN ||
       code === engine.CODES.TOO_FEW_VALUES_PREF;
-    if (target > _bindings.length && noDisjointHinder) {
+    const groupError = code === engine.CODES.MISSING_CONSTRAINTS || code === engine.CODES.WRONG_NODETYPE;
+    if (target > _bindings.length && noDisjointHinder && !groupError) {
       _bindings = _bindings.concat([]);
       while (target > _bindings.length) {
         const binding = engine.create(this.binding, item);
@@ -134,9 +140,17 @@ export default declare(Presenter, {
       } else if (code === engine.CODES.TOO_MANY_VALUES_DISJOINT) {
         tmpl = this.messages.validation_disjoint;
       } else if (code === engine.CODES.WRONG_NODETYPE) {
-        tmpl = 'Wrong nodetype'//this.messages.validation_disjoint;
+        tmpl = this.messages.validation_nodetype;
       } else if (code === engine.CODES.WRONG_VALUE) {
-        tmpl = 'Wrong value'//this.messages.validation_disjoint;
+        tmpl = this.messages.validation_value;
+      } else if (code === engine.CODES.WRONG_DATATYPE) {
+        tmpl = this.messages.validation_datatype;
+      } else if (code === engine.CODES.MISSING_CONSTRAINTS) {
+        tmpl = this.messages.validation_constraints;
+      } else if (code === engine.CODES.WRONG_PATTERN) {
+        tmpl = this.messages.validation_pattern;
+      } else if (code === engine.CODES.MISSING_LANGUAGE) {
+        tmpl = this.messages.validation_language;
       }
 
       addValidationMessage(fieldDiv, 'exclamation-triangle', tmpl);

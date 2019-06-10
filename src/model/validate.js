@@ -41,6 +41,9 @@ const _countValidBindings = (bindings) => {
 };
 
 const _createReport = (groupbinding, report, firstLevel) => {
+  if (groupbinding.getMatchingCode() !== engine.CODES.OK) {
+    return;
+  }
   let groupitem = groupbinding.getItem();
   let path = groupitem.getDeps();
   if (path && groupbinding.getParent() != null) {
@@ -101,13 +104,13 @@ const _createReport = (groupbinding, report, firstLevel) => {
             report.errors.push({
               parentBinding: groupbinding,
               item: item,
-              code: engine.CODES.TOO_FEW_VALUES
+              code: engine.CODES.TOO_FEW_VALUES_MIN
             });
           } else if (card.pref != null && card.pref > nrOfValid) {
             report.warnings.push({
               parentBinding: groupbinding,
               item: item,
-              code: engine.CODES.TOO_FEW_VALUES
+              code: engine.CODES.TOO_FEW_VALUES_PREF
             });
           }
           if (card.max != null && card.max < nrOfValid) {

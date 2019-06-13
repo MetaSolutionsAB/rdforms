@@ -1,4 +1,4 @@
-@import "../resources/rdforms.css";
+@import "../resources/rdforms.scss";
 
 .test-class {
     color: red !important;

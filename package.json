@@ -11,7 +11,6 @@
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/polyfill": "^7.0.0",
     "babel-loader": "^8.0.4",
-    "bootstrap": "3.3.7",
     "bootstrap-material-datetimepicker": "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#webpack",
     "bootstrap-material-design": "4.1.1",
     "detect-node": "^2.0.3",
@@ -31,6 +30,7 @@
     "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#develop",
     "select2": "^4.0.6-rc.1",
     "selectize": "^0.12.6",
+    "selectize-bootstrap4-theme": "^2.0.2",
     "sizzle": "^2.3.3",
     "whatwg-fetch": "^3.0.0"
   },

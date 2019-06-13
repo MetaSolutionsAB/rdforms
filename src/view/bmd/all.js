@@ -6,6 +6,7 @@ import 'bootstrap-material-datetimepicker';
 import './DateTimeMD';
 import './Selectize';
 
+import 'selectize-bootstrap4-theme/dist/css/selectize.bootstrap4.css';
 import 'bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css';
 
 
@@ -13,6 +14,7 @@ import 'bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.
 // https://github.com/FezVrasta/bootstrap-material-design/tree/v3#arrivejs-support
 // updateMaterial called only by postEditorRender
 const updateMaterial = (node) => {
+  jquery('body').bootstrapMaterialDesign();
   if (jquery.material) {
     jquery(node).find(jquery.material.options.withRipples).each((idx, el) => {
       jquery.material.ripples(el);

@@ -1,143 +1,147 @@
 @import '../bootstrap/style.css';
+@import './Selectize.css';
 
 .rdforms .form-group {
-    display: inline;
+  display: inline;
 }
 
 .rdforms .rdformsFields textarea.form-control {
-    height: 38px;
-    max-height: 200px;
+  height: 38px;
+  max-height: 200px;
 }
 
 .rdforms .rdformsFields textarea.form-control:focus {
-    min-height: 60px;
+  min-height: 60px;
 }
 
 
 .rdforms select.rdformsLanguage {
-    display: inline;
+  display: inline;
 }
 
 .rdforms.rdformsEditor .rdformsFieldControl {
-    height: auto;
+  height: auto;
 }
 
 .rdforms .cardinality .btn {
-    background-color: #333;
-    color: #fff !important;
-    font-size: 14px;
+  background-color: #333;
+  color: #fff !important;
+  font-size: 14px;
 }
 
 .rdforms .cardinality .btn:hover {
-    background-color: #626262 !important;
+  background-color: #626262 !important;
 }
 
 .rdforms .cardinality .btn.active {
-    background-color: #00a946;
+  background-color: #00a946;
 }
 
 .rdforms .cardinality .btn.active:hover {
-    background-color: #00b85c !important;
+  background-color: #00b85c !important;
 }
 
 .popover a {
-    color: #ececec;
+  color: #ececec;
 }
 
 .popover .popover-title {
-    color: black;
-    font-weight: bold;
-    border-radius: 0px;
+  color: black;
+  font-weight: bold;
+  border-radius: 0px;
 }
 
 .rdformsDatepicker input {
-    display: inline-block;
-    width: 12em;
+  display: inline-block;
+  width: 12em;
 }
 
 .rdforms .selectize-dropdown-content > .option {
-    min-height: 42px;
+  min-height: 42px;
 }
 
 .rdforms .form-group.selectizeException {
-    display: inline-block;
-    min-width: 300px;
-    margin: 0px;
-    vertical-align: top;
+  position:relative;
+  display: inline-block;
+  min-width: 300px;
+  margin: 0px;
+  vertical-align: top;
 }
 
 .rdforms .browseChoices.btn.bmd-btn-fab{
-    margin-top: -5px;
-    margin-left: 13px;
+  margin-top: -5px;
+  margin-left: 13px;
 }
 
 .selectize-control.single .selectize-dropdown .active, .selectize-control.multi .selectize-dropdown .active {
-    background-color: #EEEEEE !important;
+  background-color: #EEEEEE !important;
 }
 
 .selectize-control.single .selectize-dropdown .selected {
-    background-color: inherit;
+  background-color: inherit;
 }
 
 .selectize-control.single .selectize-input input,
 .selectize-control.single .selectize-input {
-    font-size: 16px !important;
+  font-size: 16px !important;
 }
 
 .selectize-input {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .rdformsEditor .rdformsFieldControl {
-    width: auto !important;
+  width: auto !important;
 }
-
-.selectize-control.single .selectize-input:after,
-.selectize-control.single .selectize-input.input-active:after {
-    cursor: pointer;
-    font-weight: 900;
-    font-family: 'Font Awesome\ 5 Free';
-
-}
-
 
 .rdforms .selectize-dropdown-content {
-    max-height: 200px;
-    overflow-x: hidden;
-    overflow-y: auto;
+  max-height: 200px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .selectize-control.single .selectize-dropdown {
-    z-index:1001 !important;
+  z-index:1001 !important;
 }
 
 .rdforms .rdformsDateValue .dateInput {
-    width: 5.7em;
+  width: 5.7em;
 }
 
 .rdforms .rdformsDateValue .yearInput,
 .rdforms .rdformsDateValue .timeInput {
-    width: 3em;
+  width: 3em;
 }
 
 .rdforms .rdformsDateValue .dateControl {
-    margin-right: 3px;
+  margin-right: 3px;
 }
 
 .rdforms .rdformsDateValue>.form-group {
-    margin-right: 2em;
+  margin-right: 2em;
 }
 
 .cardgroup>.rdformsFields>.rdformsGroup {
-    border-radius: 2px;
-    color: rgba(0,0,0, 0.87);
-    background: #fff;
-    padding: 7px 10px 10px 10px;
-    margin-top: 10px;
-    margin-right: -10px;
-    box-shadow: 0px 3px 6px -1px rgba(0,0,0,0.3);
+  border-radius: 2px;
+  color: rgba(0,0,0, 0.87);
+  background: #fff;
+  padding: 7px 10px 10px 10px;
+  margin-top: 10px;
+  margin-right: -10px;
+  box-shadow: 0px 3px 6px -1px rgba(0,0,0,0.3);
 }
 .rdformsLangFieldControl .fa-times{
-    position: absolute;
-    right: 0;
+  position: absolute;
+  right: 0;
 }
+
+
+
+
+.selectize-control.single .selectize-input:after,
+.selectize-control.single .selectize-input.input-active:after {
+  cursor: pointer;
+  font-weight: 900;
+  font-family: 'Font Awesome\ 5 Free';
+}
+

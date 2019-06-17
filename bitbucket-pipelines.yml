@@ -14,7 +14,7 @@ stepdefinitions:
         - export RDFORMS_VERSION=`jq -r .version package.json`
         - echo RDFORMS_VERSION
         # We allow anything between x.y and x.y.z-SNAPSHOT
-        - if [ ${#ESJS_VERSION} -lt 3 ] || [ ${#ESJS_VERSION} -gt 14 ]; then exit 1 ; fi
+        - if [ ${#RDFORMS_VERSION} -lt 3 ] || [ ${#RDFORMS_VERSION} -gt 14 ]; then exit 1 ; fi
         - yarn
         - yarn build:all
 

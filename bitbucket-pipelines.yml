@@ -1,0 +1,23 @@
+image: metasolutions/openjdk-node:latest
+
+options:
+  max-time: 10
+
+pipelines:
+  - build: &build
+      name: Build
+      script:
+        - node --version
+        - npm --version
+        - yarn --version
+        - yarn cache dir
+        - export RDFORMS_VERSION=`jq -r .version package.json`
+        - echo RDFORMS_VERSION
+        # We allow anything between x.y and x.y.z-SNAPSHOT
+        - if [ ${#ESJS_VERSION} -lt 3 ] || [ ${#ESJS_VERSION} -gt 14 ]; then exit 1 ; fi
+        - yarn
+        - yarn build:all
+
+pipelines:
+  default:
+    - step: *build

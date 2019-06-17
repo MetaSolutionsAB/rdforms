@@ -510,13 +510,6 @@
     "@babel/helper-regex" "^7.4.4"
     regexpu-core "^4.5.4"
 
-"@babel/polyfill@^7.0.0":
-  version "7.4.4"
-  resolved "https://registry.yarnpkg.com/@babel/polyfill/-/polyfill-7.4.4.tgz#78801cf3dbe657844eeabf31c1cae3828051e893"
-  dependencies:
-    core-js "^2.6.5"
-    regenerator-runtime "^0.13.2"
-
 "@babel/preset-env@^7.1.0":
   version "7.4.5"
   resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.4.5.tgz#2fad7f62983d5af563b5f3139242755884998a58"
@@ -2443,9 +2436,13 @@ core-js-pure@3.1.4:
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.1.4.tgz#5fa17dc77002a169a3566cc48dc774d2e13e3769"
 
-core-js@^2.4.0, core-js@^2.5.0, core-js@^2.6.5:
+core-js@^2.4.0, core-js@^2.5.0:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
+
+core-js@^3.1.4:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.1.4.tgz#3a2837fc48e582e1ae25907afcd6cf03b0cc7a07"
 
 core-util-is@~1.0.0:
   version "1.0.2"
@@ -6804,7 +6801,7 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
 
 "rdfjson@https://bitbucket.org/metasolutions/rdfjson.git#develop":
   version "2.3.0-SNAPSHOT"
-  resolved "https://bitbucket.org/metasolutions/rdfjson.git#63f8d8a62effcef70cd11ad4c7e5f35d1bf2a3e8"
+  resolved "https://bitbucket.org/metasolutions/rdfjson.git#3cffbf250c350a500f26ae6a4706c23c95538353"
   dependencies:
     md5 "^2.2.1"
     xmldom "~0.1.19"

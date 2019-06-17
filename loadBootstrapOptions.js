@@ -5,7 +5,8 @@
   import 'select2/dist/css/select2.css';
 
 /// #else
-  import '@babel/polyfill';
+  import 'core-js/stable';
+  import 'regenerator-runtime/runtime';
   import './src/view/bmd/all'; // hard coded bmd
 /// #endif
 

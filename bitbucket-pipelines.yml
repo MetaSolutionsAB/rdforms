@@ -12,7 +12,7 @@ stepdefinitions:
         - yarn --version
         - yarn cache dir
         - export RDFORMS_VERSION=`jq -r .version package.json`
-        - echo RDFORMS_VERSION
+        - echo $RDFORMS_VERSION
         # We allow anything between x.y and x.y.z-SNAPSHOT
         - if [ ${#RDFORMS_VERSION} -lt 3 ] || [ ${#RDFORMS_VERSION} -gt 14 ]; then exit 1 ; fi
         - yarn

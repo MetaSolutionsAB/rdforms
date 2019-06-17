@@ -17,6 +17,7 @@ stepdefinitions:
         - if [ ${#RDFORMS_VERSION} -lt 3 ] || [ ${#RDFORMS_VERSION} -gt 14 ]; then exit 1 ; fi
         - yarn
         - yarn build:all
+        - ls -al dist/
 
 pipelines:
   default:

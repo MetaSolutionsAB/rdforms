@@ -103,7 +103,6 @@ module.exports = {
     alias: {
       jquery: path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
       moment: path.resolve(path.join(__dirname, 'node_modules', 'moment')),
-      bmd: path.resolve(path.join(__dirname, 'node_modules', 'bootstrap-material-design')),
     }
   },
   context: __dirname, // string (absolute path!)

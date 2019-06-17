@@ -3,7 +3,7 @@ image: metasolutions/openjdk-node:latest
 options:
   max-time: 10
 
-pipelines:
+stepdefinitions:
   - build: &build
       name: Build
       script:

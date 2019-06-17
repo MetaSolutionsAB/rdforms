@@ -8,8 +8,8 @@ const seeAlso = "http://www.w3.org/2000/01/rdf-schema#seeAlso";
  * @see rforms.template.Choice#getChoices
  */
 export default class ChoiceBinding extends ValueBinding {
-  constructor({choice, item, statement}) {
-    super({choice, item, statement});
+  constructor({choice, item, statement, matchingCode}) {
+    super({choice, item, statement, matchingCode});
     this._choice = choice;
     this._validPredicate = item.getProperty() != null;
   }

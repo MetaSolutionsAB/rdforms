@@ -1,4 +1,5 @@
 import utils from '../utils';
+//import engine from './engine';
 
 let counter = 0;
 
@@ -10,13 +11,14 @@ let counter = 0;
  * the statement is asserted, that is, inserted into the RDF graph.
  */
 export default class Binding {
-  constructor({ item, statement, graph }) {
+  constructor({ item, statement, graph, matchingCode }) {
     this._item = item;
     this._statement = statement;
     this._graph = graph;
     this._ancestorValid = true;
     this._cardinalityTracker = null;
     this._hash = "b_" + counter;
+    this._matchingCode = matchingCode || 'correct';
     counter++;
   }
 
@@ -82,6 +84,14 @@ export default class Binding {
    */
   isValid() {
     //Override
+  }
+
+  getMatchingCode() {
+    return this._matchingCode;
+  }
+
+  setMatchingCode(matchingCode) {
+    this._matchingCode = matchingCode;
   }
 
   /**

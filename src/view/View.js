@@ -1,6 +1,9 @@
 import renderingContext from './renderingContext';
 import GroupBinding from '../model/GroupBinding';
 import * as engine from '../model/engine';
+import { bindingReport} from "../model/validate";
+
+'../model/validate';
 import declare from 'dojo/_base/declare';
 import _Widget from 'dijit/_Widget';
 
@@ -90,7 +93,12 @@ export default declare(_Widget, {
       if (this.graph == null || this.resource == null || this.template == null) {
         return;
       }
-      this.binding = engine.match(this.graph, this.resource, this.template);
+      if (this.fuzzy) {
+        this.binding = engine.fuzzyMatch(this.graph, this.resource, this.template);
+        bindingReport(this.binding); // Just to make all extra errors and warnings to be materialized, don't care about the report
+      } else {
+        this.binding = engine.match(this.graph, this.resource, this.template);
+      }
     }
   },
 

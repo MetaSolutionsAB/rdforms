@@ -1,0 +1,2005 @@
+{
+  "namespaces": {
+    "nvvdok": "https://data.naturvardsverket.se/ns/dokument/",
+    "nvv": "https://data.naturvardsverket.se/ns/",
+    "org": "http://www.w3.org/ns/org#",
+    "scounty": "http://data.scb.se/terms/lkf/"
+  },
+  "templates": [
+    {
+      "type": "choice",
+      "id": "nvvdok:documentType",
+      "property": "nvvdok:documentType",
+      "nodetype": "URI",
+      "label": {
+        "en": "Document type",
+        "sv": "Dokumenttyp"
+      },
+      "choices": [
+        {
+          "value": "nvvdok:Beslut",
+          "label": {
+            "sv": "Beslut"
+          }
+        },
+        {
+          "value": "nvvdok:Ansokan",
+          "label": {
+            "sv": "Ansökan"
+          }
+        },
+        {
+          "value": "nvvdok:Anmalan",
+          "label": {
+            "sv": "Anmälan"
+          }
+        },
+        {
+          "value": "nvvdok:Meddelande",
+          "label": {
+            "sv": "Meddelande"
+          }
+        },
+        {
+          "value": "nvvdok:Rapport",
+          "label": {
+            "sv": "Rapport"
+          }
+        },
+        {
+          "value": "nvvdok:Referensdokument",
+          "label": {
+            "sv": "Referensdokument"
+          }
+        },
+        {
+          "value": "nvvdok:Overklagande",
+          "label": {
+            "sv": "Överklagande"
+          }
+        },
+        {
+          "value": "nvvdok:Plan",
+          "label": {
+            "sv": "Plan"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "styles": [
+        "strictmatch"
+      ]
+    },
+    {
+      "type": "choice",
+      "id": "nvvdok:documentSubTypeBeslut",
+      "property": "dcterms:subject",
+      "nodetype": "URI",
+      "label": {
+        "sv": "Beslutstyp"
+      },
+      "deps": [
+        "nvvdok:documentType",
+        "nvvdok:Beslut"
+      ],
+      "choices": [
+        {
+          "value": "nvvdok:BeslutTillstand",
+          "label": {
+            "sv": "Tillstånd"
+          }
+        },
+        {
+          "value": "nvvdok:BeslutDispens",
+          "label": {
+            "sv": "Dispens"
+          }
+        },
+        {
+          "value": "nvvdok:BeslutAlternativvarde",
+          "label": {
+            "sv": "Alternativvärde"
+          }
+        },
+        {
+          "value": "nvvdok:BeslutForelaggande",
+          "label": {
+            "sv": "Föreläggande"
+          }
+        },
+        {
+          "value": "nvvdok:BeslutForbud",
+          "label": {
+            "sv": "Förbud"
+          }
+        },
+        {
+          "value": "nvvdok:BeslutVillkor",
+          "label": {
+            "sv": "Villkor"
+          }
+        },
+        {
+          "value": "nvvdok:BeslutVerkstallighet",
+          "label": {
+            "sv": "Verkställighet"
+          }
+        },
+        {
+          "value": "nvvdok:BeslutTillatlighet",
+          "label": {
+            "sv": "Tillåtlighet"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 1,
+        "pref": 1
+      },
+      "styles": [
+        "strictmatch"
+      ]
+    },
+    {
+      "type": "choice",
+      "id": "nvvdok:documentSubTypeRapport",
+      "property": "dcterms:subject",
+      "nodetype": "URI",
+      "label": {
+        "sv": "Rapporttyp"
+      },
+      "deps": [
+        "nvvdok:documentType",
+        "nvvdok:Rapport"
+      ],
+      "choices": [
+        {
+          "value": "nvvdok:RapportTillsyn",
+          "label": {
+            "sv": "Tillsyn"
+          }
+        },
+        {
+          "value": "nvvdok:RapportMKB",
+          "label": {
+            "sv": "MKB"
+          }
+        },
+        {
+          "value": "nvvdok:RapportEgenkontroll",
+          "label": {
+            "sv": "Egenkontroll"
+          }
+        },
+        {
+          "value": "nvvdok:RapportAterstallningsatgarder",
+          "label": {
+            "sv": "Återställningsåtgärder"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 1,
+        "pref": 1
+      },
+      "styles": [
+        "strictmatch"
+      ]
+    },
+    {
+      "type": "choice",
+      "id": "nvvdok:documentSubTypeAnsokan",
+      "property": "dcterms:subject",
+      "nodetype": "URI",
+      "label": {
+        "sv": "Ansökanstyp"
+      },
+      "deps": [
+        "nvvdok:documentType",
+        "nvvdok:Ansokan"
+      ],
+      "choices": [
+        {
+          "value": "nvvdok:AnsokanTillstand",
+          "label": {
+            "sv": "Tillstånd"
+          }
+        },
+        {
+          "value": "nvvdok:AnsokanDispens",
+          "label": {
+            "sv": "Dispens"
+          }
+        },
+        {
+          "value": "nvvdok:AnsokanAlternativvarde",
+          "label": {
+            "sv": "Alternativvärde"
+          }
+        },
+        {
+          "value": "nvvdok:AnsokanVillkor",
+          "label": {
+            "sv": "Villkor"
+          }
+        },
+        {
+          "value": "nvvdok:AnsokanAterkallelse",
+          "label": {
+            "sv": "Återkallelse"
+          }
+        },
+        {
+          "value": "nvvdok:AnsokanUpphavande",
+          "label": {
+            "sv": "Upphävande"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 1,
+        "pref": 1
+      },
+      "styles": [
+        "strictmatch"
+      ]
+    },
+    {
+      "type": "choice",
+      "id": "nvvdok:documentSubTypeAnmalan",
+      "property": "dcterms:subject",
+      "nodetype": "URI",
+      "label": {
+        "sv": "Anmälanstyp"
+      },
+      "deps": [
+        "nvvdok:documentType",
+        "nvvdok:Anmalan"
+      ],
+      "choices": [
+        {
+          "value": "nvvdok:AnmalanAterstallningsatgarder",
+          "label": {
+            "sv": "Återställningsåtgärder"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 1,
+        "pref": 1
+      },
+      "styles": [
+        "strictmatch"
+      ]
+    },
+    {
+      "type": "choice",
+      "id": "nvvdok:documentSubTypeOverklagande",
+      "property": "dcterms:subject",
+      "nodetype": "URI",
+      "label": {
+        "sv": "Överklagandetyp"
+      },
+      "deps": [
+        "nvvdok:documentType",
+        "nvvdok:Overklagande"
+      ],
+      "choices": [
+        {
+          "value": "nvvdok:OverklagandeTillstand",
+          "label": {
+            "sv": "Tillstånd"
+          }
+        },
+        {
+          "value": "nvvdok:OverklagandeDispens",
+          "label": {
+            "sv": "Dispens"
+          }
+        },
+        {
+          "value": "nvvdok:OverklagandeAlternativvarde",
+          "label": {
+            "sv": "Alternativvärde"
+          }
+        },
+        {
+          "value": "nvvdok:OverklagandeForelaggande",
+          "label": {
+            "sv": "Föreläggande"
+          }
+        },
+        {
+          "value": "nvvdok:OverklagandeForbud",
+          "label": {
+            "sv": "Förbud"
+          }
+        },
+        {
+          "value": "nvvdok:OverklagandeVillkor",
+          "label": {
+            "sv": "Villkor"
+          }
+        },
+        {
+          "value": "nvvdok:OverklagandeAvskrivning",
+          "label": {
+            "sv": "Avskrivning"
+          }
+        },
+        {
+          "value": "nvvdok:OverklagandeAvvisning",
+          "label": {
+            "sv": "Avvisning"
+          }
+        },
+        {
+          "value": "nvvdok:OverklagandeVerkstallighet",
+          "label": {
+            "sv": "Verkställighet"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 1,
+        "pref": 1
+      },
+      "styles": [
+        "strictmatch"
+      ]
+    },
+    {
+      "type": "choice",
+      "id": "nvvdok:documentSubTypePlan",
+      "property": "dcterms:subject",
+      "nodetype": "URI",
+      "label": {
+        "sv": "Plantyp"
+      },
+      "deps": [
+        "nvvdok:documentType",
+        "nvvdok:Plan"
+      ],
+      "choices": [
+        {
+          "value": "nvvdok:PlanMinskningsplan",
+          "label": {
+            "sv": "Minskningsplan"
+          }
+        },
+        {
+          "value": "nvvdok:PlanTillsynsplan",
+          "label": {
+            "sv": "Tillsynsplan"
+          }
+        },
+        {
+          "value": "nvvdok:PlanTillsynsprogram",
+          "label": {
+            "sv": "Tillsynsprogram"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 1,
+        "pref": 1
+      },
+      "styles": [
+        "strictmatch"
+      ]
+    },
+    {
+      "type": "choice",
+      "id": "nvvdok:documentSubTypeReferensdokument",
+      "property": "dcterms:subject",
+      "nodetype": "URI",
+      "label": {
+        "sv": "Referensdokumentstyp"
+      },
+      "deps": [
+        "nvvdok:documentType",
+        "nvvdok:Referensdokument"
+      ],
+      "choices": [
+        {
+          "value": "nvvdok:ReferensdokumentBAT",
+          "label": {
+            "sv": "BAT-slutsatser"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 1,
+        "pref": 1
+      },
+      "styles": [
+        "strictmatch"
+      ]
+    },
+    {
+      "type": "choice",
+      "id": "nvvdok:dct:source",
+      "property": "dcterms:source",
+      "nodetype": "URI",
+      "label": {
+        "sv": "Ursprung"
+      },
+      "choices": [
+        {
+          "value": "nvvdok:HandlingInkommen",
+          "label": {
+            "sv": "Inkommen"
+          }
+        },
+        {
+          "value": "nvvdok:HandlingUpprattad",
+          "label": {
+            "sv": "Upprättad"
+          }
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "id": "nvvdok:Stallningstagande",
+      "property": "nvvdok:stallningstagande",
+      "nodetype": "URI",
+      "label": {
+        "sv": "Ställningstagande"
+      },
+      "choices": [
+        {
+          "value": "nvvdok:StallningstagandeBifall",
+          "label": {
+            "sv": "Bifall"
+          }
+        },
+        {
+          "value": "nvvdok:StallningstagandeBifallMedVissaUndantag",
+          "label": {
+            "sv": "Bifall med vissa undantag"
+          }
+        },
+        {
+          "value": "nvvdok:StallningstagandeAvslag",
+          "label": {
+            "sv": "Avslag"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "type": "choice",
+      "id": "nvvdok:ConfidentialityType",
+      "property": "nvvdok:confidentiality",
+      "nodetype": "URI",
+      "label": {
+        "en": "Confidentiality",
+        "sv": "Konfidentialitet"
+      },
+      "choices": [
+        {
+          "value": "nvvdok:Artskydd",
+          "label": {
+            "sv": "Artskydd"
+          }
+        },
+        {
+          "value": "nvvdok:Forsvarssekretess",
+          "label": {
+            "sv": "Försvarssekretess"
+          }
+        },
+        {
+          "value": "nvvdok:KansligPersonuppgift",
+          "label": {
+            "sv": "Känslig personuppgift"
+          }
+        },
+        {
+          "value": "nvvdok:Personuppgift",
+          "label": {
+            "sv": "Personuppgift"
+          }
+        },
+        {
+          "value": "nvvdok:SekretessOSL",
+          "label": {
+            "sv": "Sekretess OSL"
+          }
+        },
+        {
+          "value": "nvvdok:Sekretessprovas",
+          "label": {
+            "sv": "Sekretessprövas"
+          }
+        },
+        {
+          "value": "nvvdok:Statistiksekretess",
+          "label": {
+            "sv": "Statistiksekretess"
+          }
+        },
+        {
+          "value": "nvvdok:Tillsynssekretess",
+          "label": {
+            "sv": "Tillsynssekretess"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      }
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "nvvdok:org:Organization",
+      "label": {
+        "en": "Agency",
+        "sv": "Myndighet"
+      },
+      "items": [
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "extends": "skos:prefLabel",
+          "label": {
+            "sv": "Officiellt namn",
+            "en": "Official name"
+          },
+          "cardinality": {
+            "min": 1,
+            "pref": 0
+          }
+        },
+        {
+          "extends": "foaf:homepage",
+          "description": {
+            "sv": "Myndighetens hemsida"
+          },
+          "pattern": "https?://.*",
+          "cardinality": {
+            "pref": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "nvvdok:Document",
+      "constraints": {
+        "rdf:type": "nvvdok:Document"
+      },
+      "label": {
+        "en": "Document",
+        "sv": "Dokument"
+      },
+      "items": [
+        {
+          "type": "text",
+          "extends": "dcterms:title",
+          "nodetype": "LITERAL",
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "text",
+          "extends": "dcterms:description",
+          "nodetype": "LITERAL",
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "text",
+          "extends": "dcterms:identifier",
+          "label": {
+            "en": "UUID",
+            "sv": "UUID"
+          },
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          },
+          "styles": [
+            "autoUUID",
+            "nonEditable",
+            "invisible"
+          ]
+        },
+        {
+          "extends": "nvvdok:dct:source",
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "extends": "dcterms:date",
+          "label": {
+            "en": "Date of origin",
+            "sv": "Ursprungsdatum"
+          },
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "text",
+          "nodetype": "URI",
+          "id": "nvvdok:dcterms:relation",
+          "extends": "dcterms:relation",
+          "label": {
+            "en": "Related document",
+            "sv": "Relaterat dokument"
+          },
+          "pattern": "https?://.+"
+        },
+        {
+          "id": "nvvdok:documentID",
+          "property": "nvvdok:documentID",
+          "label": {
+            "en": "Agency s document ID",
+            "sv": "Myndighetens dokument-ID"
+          },
+          "type": "text",
+          "nodetype": "LITERAL",
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "id": "nvvdok:documentType"
+        },
+        {
+          "id": "nvvdok:documentSubTypeBeslut"
+        },
+        {
+          "id": "nvvdok:documentSubTypeRapport"
+        },
+        {
+          "id": "nvvdok:documentSubTypeAnsokan"
+        },
+        {
+          "id": "nvvdok:documentSubTypeAnmalan"
+        },
+        {
+          "id": "nvvdok:documentSubTypeOverklagande"
+        },
+        {
+          "id": "nvvdok:documentSubTypePlan"
+        },
+        {
+          "id": "nvvdok:documentSubTypeReferensdokument"
+        },
+        {
+          "type": "text",
+          "id": "nvvdok:dcterms:subject",
+          "nodetype": "LANGUAGE_LITERAL",
+          "label": {
+            "en": "Keyword (one per line)",
+            "sv": "Nyckelord (ett per rad)"
+          },
+          "property": "dcterms:subject",
+          "cardinality": {
+            "min": 0,
+            "pref": 0
+          }
+        },
+        {
+          "type": "choice",
+          "nodetype": "URI",
+          "id": "nvvdok:dcterms:spatial",
+          "property": "dcterms:spatial",
+          "label": {
+            "en": "Geographical area (Municipality)",
+            "sv": "Geografisk område (Kommun)"
+          },
+          "constraints": {
+            "rdf:type": "http://www.geonames.org/ontology#Feature"
+          },
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          },
+          "styles": [
+            "noLink"
+          ]
+        },
+        {
+          "type": "text",
+          "nodetype": "URI",
+          "label": {
+            "sv": "Adress till metadata hos publicerande myndighet"
+          },
+          "property": "http://xmlns.com/foaf/0.1/page",
+          "id": "nvvdok:foaf:page",
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          },
+          "deps": [
+            "dcterms:identifier"
+          ],
+          "valueTemplate": "https://metadatasok.naturvardsverket.se/detalj.html#esc_lookup=",
+          "styles": [
+            "autoValue",
+            "nonEditable"
+          ]
+        },
+        {
+          "type": "text",
+          "nodetype": "URI",
+          "label": {
+            "sv": "Myndighetskontakt"
+          },
+          "property": "nvvdok:contactPointEmail",
+          "id": "nvvdok:contactPointEmail",
+          "valueTemplate": "mailto:",
+          "cardinality": {
+            "pref": 0,
+            "max": 1
+          }
+        },
+        {
+          "id": "nvvdok:Resource"
+        },
+        {
+          "id": "nvvdok:RelatedDocument"
+        },
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "label": {
+            "sv": "Ärendebeteckning"
+          },
+          "property": "nvvdok:arendeBeteckning",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "label": {
+            "sv": "Ärenderubrik"
+          },
+          "property": "nvvdok:arendeRubrik",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "label": {
+            "sv": "Ärendetyp"
+          },
+          "property": "nvvdok:arendeTyp",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "choice",
+          "nodetype": "URI",
+          "label": {
+            "sv": "Bransch (SCB, SNI-kod)"
+          },
+          "property": "nvvdok:bransch",
+          "constraints": {
+            "dcterms:partOf": "https://data.naturvardsverket.se/store/63/resource/1819"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "styles": [
+            "noLink"
+          ]
+        },
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "label": {
+            "sv": "IED-kod"
+          },
+          "property": "nvvdok:iedKod",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "label": {
+            "sv": "MPF-kod"
+          },
+          "property": "nvvdok:mpfKod",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "label": {
+            "sv": "Lokalt ID"
+          },
+          "property": "nvvdok:lokaltID",
+          "cardinality": {
+            "min": 0,
+            "pref": 0,
+            "max": 1
+          }
+        },
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "label": {
+            "sv": "Nationellt ID"
+          },
+          "property": "nvvdok:nationelltID",
+          "cardinality": {
+            "min": 0,
+            "pref": 0,
+            "max": 1
+          }
+        },
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "label": {
+            "sv": "Anläggningsnamn"
+          },
+          "property": "nvvdok:objektNamn",
+          "cardinality": {
+            "min": 0,
+            "pref": 0,
+            "max": 1
+          }
+        },
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "label": {
+            "sv": "Organisationsnummer"
+          },
+          "property": "nvvdok:organisationsnummer",
+          "cardinality": {
+            "min": 0,
+            "pref": 0,
+            "max": 1
+          }
+        },
+        {
+          "id": "nvvdok:Stallningstagande"
+        },
+        {
+          "type": "choice",
+          "nodetype": "URI",
+          "extends": "dcterms:publisher",
+          "constraints": {
+            "rdf:type": "org:Organization"
+          },
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          },
+          "label": {
+            "en": "Publishing agency",
+            "sv": "Publicerande myndighet"
+          },
+          "value": "https://data.naturvardsverket.se/store/40/resource/nvv",
+          "styles": [
+            "nonEditable",
+            "noLink"
+          ]
+        },
+        {
+          "extends": "dcterms:issued",
+          "label": {
+            "sv": "Publiceringsdatum",
+            "en": "Publication date"
+          },
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          },
+          "styles": [
+            "nonEditable",
+            "autoInitDate"
+          ]
+        },
+        {
+          "extends": "dcterms:modified",
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          },
+          "label": {
+            "sv": "Ändringsdatum (uppdateras vid sparning)"
+          },
+          "styles": [
+            "nonEditable",
+            "autoUpdateDate"
+          ]
+        },
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "label": {
+            "sv": "Tema"
+          },
+          "property": "nvvdok:tema",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "value": "Miljö",
+          "styles": [
+            "nonEditable"
+          ]
+        },
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "label": {
+            "sv": "Subtema"
+          },
+          "property": "nvvdok:subtema",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "value": "Miljöfarlig verksamhet",
+          "styles": [
+            "nonEditable"
+          ]
+        },
+        {
+          "id": "nvvdok:ConfidentialityType"
+        },
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "label": {
+            "sv": "Företag/verksamhetsutövare"
+          },
+          "property": "nvvdok:verksamhetsutovare",
+          "cardinality": {
+            "min": 0,
+            "pref": 0,
+            "max": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "BLANK",
+      "property": "dcterms:hasVersion",
+      "id": "nvvdok:Resource",
+      "constraints": {
+        "rdf:type": "nvvdok:Resource"
+      },
+      "label": {
+        "en": "Resource",
+        "sv": "Resurs"
+      },
+      "items": [
+        {
+          "property": "http://schema.org/contentUrl",
+          "label": {
+            "en": "URL",
+            "sv": "URL"
+          },
+          "description": {
+            "en": "Actual bytes of the media object, for example the image file or video file",
+            "sv": "Medieobjektets innehåll, t.ex. bild- eller videofilen"
+          },
+          "type": "text",
+          "nodetype": "URI",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        },
+        {
+          "extends": "schema:contentURL",
+          "label": {
+            "en": "URL (deprecated)",
+            "sv": "URL (deprecated)"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "styles": [
+            "deprecated"
+          ]
+        },
+        {
+          "extends": "dcterms:title",
+          "nodetype": "LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        },
+        {
+          "extends": "dcterms:description",
+          "nodetype": "LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        },
+        {
+          "extends": "dc:rights",
+          "nodetype": "LITERAL",
+          "label": {
+            "en": "License",
+            "sv": "Licens"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "group",
+      "nodetype": "BLANK",
+      "property": "dcterms:relation",
+      "id": "nvvdok:RelatedDocument",
+      "constraints": {
+        "rdf:type": "nvvdok:RelatedDocument"
+      },
+      "label": {
+        "en": "Related document",
+        "sv": "Relaterat dokument"
+      },
+      "items": [
+        {
+          "property": "http://schema.org/contentUrl",
+          "label": {
+            "en": "URL",
+            "sv": "URL"
+          },
+          "description": {
+            "en": "Actual bytes of the media object, for example the image file or video file",
+            "sv": "Medieobjektets innehåll, t.ex. bild- eller videofilen"
+          },
+          "type": "text",
+          "nodetype": "URI",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        },
+        {
+          "extends": "schema:contentURL",
+          "label": {
+            "en": "URL (deprecated)",
+            "sv": "URL (deprecated)"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "styles": [
+            "deprecated"
+          ]
+        },
+        {
+          "extends": "dcterms:title",
+          "nodetype": "LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        },
+        {
+          "extends": "dcterms:description",
+          "nodetype": "LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "choice",
+          "id": "nvvdok:relationsKategori",
+          "property": "nvvdok:relationsKategori",
+          "nodetype": "URI",
+          "label": {
+            "sv": "Relationskategori"
+          },
+          "choices": [
+            {
+              "value": "nvvdok:Bilaga",
+              "label": {
+                "sv": "Bilaga"
+              }
+            },
+            {
+              "value": "nvvdok:Referens",
+              "label": {
+                "sv": "Referens"
+              }
+            }
+          ],
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "nvv:Resources",
+      "label": {
+        "en": "Resources",
+        "sv": "Resurser"
+      },
+      "items": [
+        {
+          "id": "nvv:Resource"
+        }
+      ],
+      "styles": [
+        "heading"
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "nvv:Indicator",
+      "constraints": {
+        "rdf:type": "nvv:Indicator"
+      },
+      "label": {
+        "en": "Indicator",
+        "sv": "Indikator"
+      },
+      "items": [
+        {
+          "type": "text",
+          "extends": "dcterms:title",
+          "nodetype": "LITERAL",
+          "label": {
+            "en": "Full name",
+            "sv": "Fullständigt namn"
+          },
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "text",
+          "extends": "dcterms:alternative",
+          "nodetype": "LITERAL",
+          "label": {
+            "en": "Short name",
+            "sv": "Kortnamn"
+          },
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "choice",
+          "nodetype": "URI",
+          "label": {
+            "sv": "Status"
+          },
+          "property": "nvv:status",
+          "choices": [
+            {
+              "value": "nvv:inEffect",
+              "label": {
+                "sv": "Gällande"
+              }
+            },
+            {
+              "value": "nvv:decommissioned",
+              "label": {
+                "sv": "Avvecklad"
+              }
+            }
+          ],
+          "cardinality": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        {
+          "extends": "dcterms:issued",
+          "label": {
+            "sv": "Beslutsdatum"
+          },
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "datatype": "xsd:date",
+          "label": {
+            "sv": "Avvecklingsdatum"
+          },
+          "property": "nvv:decommissionedDate",
+          "cardinality": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        {
+          "id": "nvv:publisher"
+        },
+        {
+          "extends": "dcat:contactPoint-choice_da",
+          "description": {
+            "sv": "Vem du ska kontakta (kan vara en funktionsadress) för frågor kring indikatorn."
+          }
+        },
+        {
+          "extends": "dcat:dcterms:accrualPeriodicity_da",
+          "property": "nvv:followupPeriodicity",
+          "label": {
+            "en": "Uppföljningsfrekvens"
+          },
+          "description": {
+            "sv": "Hur ofta indikatorn följs upp med analyser (inte nödvändigtvis samma frekvens som tillhörande datamängder uppdateras)."
+          }
+        },
+        {
+          "extends": "dcat:dcterms:spatial"
+        },
+        {
+          "type": "group",
+          "nodetype": "RESOURCE",
+          "property": "nvv:connection",
+          "constraints": {
+            "rdf:type": "nvv:IndicatorConnection"
+          },
+          "label": {
+            "sv": "Indikatorkoppling"
+          },
+          "cardinality": {
+            "pref": 1
+          },
+          "cls": [
+            "cardgroup"
+          ],
+          "items": [
+            {
+              "type": "choice",
+              "id": "nvv:category",
+              "nodetype": "URI",
+              "label": {
+                "sv": "Kategori"
+              },
+              "property": "nvv:category",
+              "choices": [
+                {
+                  "value": "nvv:environmentalGoalIndicator",
+                  "label": {
+                    "sv": "Miljömålssystemet"
+                  }
+                },
+                {
+                  "value": "nvv:agenda2030Indicator",
+                  "label": {
+                    "sv": "Agenda 2030"
+                  }
+                },
+                {
+                  "value": "nvv:outdoorActivityPoliticsIndicator",
+                  "label": {
+                    "sv": "Friluftspolitik"
+                  }
+                }
+              ],
+              "cardinality": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "type": "choice",
+              "id": "nvv:environmentalGoal",
+              "nodetype": "RESOURCE",
+              "label": {
+                "sv": "Miljökvalitetsmål"
+              },
+              "property": "nvv:subCategory",
+              "constraints": {
+                "rdf:type": "skos:Concept",
+                "skos:inScheme": [
+                  "https://data.naturvardsverket.se/store/7/resource/1",
+                  "https://data.naturvardsverket.se/store/23/resource/1",
+                  "https://data.naturvardsverket.se/store/24/resource/1"
+                ]
+              },
+              "deps": [
+                "nvv:category",
+                "nvv:environmentalGoalIndicator"
+              ],
+              "cardinality": {
+                "min": 1,
+                "pref": 1
+              }
+            },
+            {
+              "type": "choice",
+              "id": "nvv:agenda2030",
+              "nodetype": "RESOURCE",
+              "label": {
+                "sv": "Agenda 2030 mål"
+              },
+              "property": "nvv:subCategory",
+              "constraints": {
+                "rdf:type": "skos:Concept",
+                "skos:inScheme": "https://data.naturvardsverket.se/store/15/resource/1"
+              },
+              "deps": [
+                "nvv:category",
+                "nvv:agenda2030Indicator"
+              ],
+              "cardinality": {
+                "min": 1,
+                "pref": 1
+              }
+            },
+            {
+              "type": "choice",
+              "id": "nvv:outdoorActivity",
+              "nodetype": "RESOURCE",
+              "label": {
+                "sv": "Friluftsmål"
+              },
+              "property": "nvv:subCategory",
+              "constraints": {
+                "rdf:type": "skos:Concept",
+                "skos:inScheme": "https://data.naturvardsverket.se/store/19/resource/1"
+              },
+              "deps": [
+                "nvv:category",
+                "nvv:outdoorActivityPoliticsIndicator"
+              ],
+              "cardinality": {
+                "min": 1,
+                "pref": 1
+              }
+            },
+            {
+              "type": "choice",
+              "nodetype": "URI",
+              "label": {
+                "sv": "Relevans"
+              },
+              "property": "nvv:relevance",
+              "choices": [
+                {
+                  "value": "nvv:Primary",
+                  "label": {
+                    "sv": "Primär"
+                  }
+                },
+                {
+                  "value": "nvv:Secundary",
+                  "label": {
+                    "sv": "Sekundärt"
+                  }
+                }
+              ],
+              "cardinality": {
+                "min": 1,
+                "max": 1
+              }
+            },
+            {
+              "type": "choice",
+              "nodetype": "URI",
+              "label": {
+                "sv": "Perspektiv"
+              },
+              "property": "nvv:perspective",
+              "cardinality": {
+                "min": 1,
+                "max": 1
+              },
+              "constraints": {
+                "rdf:type": "skos:Concept",
+                "skos:inScheme": "https://data.naturvardsverket.se/store/14/resource/1"
+              }
+            },
+            {
+              "type": "choice",
+              "nodetype": "URI",
+              "label": {
+                "sv": "Typ"
+              },
+              "property": "nvv:focus",
+              "cardinality": {
+                "min": 0,
+                "max": 1
+              },
+              "constraints": {
+                "rdf:type": "skos:Concept",
+                "skos:inScheme": "https://data.naturvardsverket.se/store/20/resource/1"
+              }
+            },
+            {
+              "type": "text",
+              "nodetype": "DATATYPE_LITERAL",
+              "property": "http://schema.org/startDate",
+              "label": {
+                "en": "Start",
+                "sv": "Start",
+                "nb": "Start",
+                "da": "Start",
+                "de": "Beginn"
+              },
+              "datatype": "xsd:date"
+            },
+            {
+              "type": "text",
+              "nodetype": "DATATYPE_LITERAL",
+              "property": "http://schema.org/endDate",
+              "label": {
+                "en": "End",
+                "sv": "Slut",
+                "nb": "Slutt",
+                "da": "Slut",
+                "de": "Ende"
+              },
+              "datatype": "xsd:date"
+            },
+            {
+              "type": "choice",
+              "nodetype": "RESOURCE",
+              "property": "dcterms:creator",
+              "label": {
+                "sv": "Kopplingsansvarig"
+              },
+              "constraints": {
+                "rdf:type": [
+                  "vcard:Individual",
+                  "vcard:Organization",
+                  "vcard:Kind"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "nodetype": "RESOURCE",
+          "label": {
+            "sv": "Indikatorbeskrivning"
+          },
+          "styles": [
+            "heading"
+          ],
+          "items": [
+            {
+              "type": "text",
+              "nodetype": "LITERAL",
+              "property": "nvv:issue",
+              "label": {
+                "sv": "Frågeställning"
+              },
+              "cardinality": {
+                "min": 0,
+                "pref": 1
+              },
+              "styles": [
+                "multiline"
+              ]
+            },
+            {
+              "type": "text",
+              "nodetype": "LITERAL",
+              "property": "nvv:objective",
+              "label": {
+                "sv": "Syfte"
+              },
+              "cardinality": {
+                "min": 1
+              },
+              "styles": [
+                "multiline"
+              ]
+            },
+            {
+              "type": "text",
+              "nodetype": "LITERAL",
+              "property": "nvv:indicatorDevelopmentMethod",
+              "label": {
+                "sv": "Metod för framtagande av indikator"
+              },
+              "cardinality": {
+                "pref": 1
+              },
+              "styles": [
+                "multiline"
+              ]
+            },
+            {
+              "type": "text",
+              "nodetype": "LITERAL",
+              "property": "dcterms:description",
+              "label": {
+                "sv": "Fördjupningstext"
+              },
+              "cardinality": {
+                "min": 0,
+                "pref": 1
+              },
+              "styles": [
+                "multiline"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "nodetype": "RESOURCE",
+          "property": "nvv:value",
+          "label": {
+            "sv": "Värde"
+          },
+          "cardinality": {
+            "pref": 1
+          },
+          "items": [
+            {
+              "type": "choice",
+              "nodetype": "LITERAL",
+              "label": {
+                "sv": "Typ"
+              },
+              "property": "dcterms:type",
+              "cardinality": {
+                "min": 1,
+                "max": 1
+              },
+              "constraints": {
+                "rdf:type": "skos:Concept",
+                "skos:inScheme": "https://data.naturvardsverket.se/store/21/resource/1"
+              }
+            },
+            {
+              "type": "text",
+              "nodetype": "DATATYPE_LITERAL",
+              "label": {
+                "sv": "Mätetal"
+              },
+              "property": "rdf:value",
+              "cardinality": {
+                "min": 1,
+                "max": 1
+              },
+              "datatype": "xsd:decimal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "nvv:Text",
+      "items": [
+        {
+          "type": "choice",
+          "extends": "dcterms:requires",
+          "nodetype": "URI",
+          "label": {
+            "sv": "Indikator"
+          },
+          "constraints": {
+            "rdf:type": "nvv:Indicator"
+          },
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "text",
+          "extends": "dcterms:title",
+          "nodetype": "LITERAL",
+          "label": {
+            "sv": "Titel"
+          },
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "choice",
+          "id": "nvv:textType",
+          "nodetype": "RESOURCE",
+          "label": {
+            "sv": "Texttyp"
+          },
+          "property": "nvv:textType",
+          "constraints": {
+            "rdf:type": "skos:Concept",
+            "skos:inScheme": "https://data.naturvardsverket.se/store/30/resource/1"
+          },
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "type": "choice",
+          "id": "nvv:reportingLevel",
+          "nodetype": "URI",
+          "label": {
+            "sv": "Rapporteringsnivå"
+          },
+          "property": "nvv:reportingLevel",
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          },
+          "choices": [
+            {
+              "value": "nvv:National",
+              "label": {
+                "sv": "Nationell"
+              }
+            },
+            {
+              "value": "nvv:Regional",
+              "label": {
+                "sv": "Regional"
+              }
+            },
+            {
+              "value": "nvv:County",
+              "label": {
+                "sv": "Län"
+              }
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "id": "nvv:region",
+          "nodetype": "URI",
+          "label": {
+            "sv": "Region"
+          },
+          "property": "nvv:region",
+          "constraints": {
+            "rdf:type": "skos:Concept",
+            "skos:inScheme": "https://data.naturvardsverket.se/store/32/resource/1"
+          },
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          },
+          "deps": [
+            "nvv:reportingLevel",
+            "nvv:Regional"
+          ]
+        },
+        {
+          "type": "choice",
+          "id": "nvv:county",
+          "nodetype": "URI",
+          "label": {
+            "sv": "Län"
+          },
+          "property": "nvv:county",
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          },
+          "choices": [
+            {
+              "value": "scounty:01",
+              "label": {
+                "sv": "Stockholms län"
+              }
+            },
+            {
+              "value": "scounty:03",
+              "label": {
+                "sv": "Uppsala län"
+              }
+            },
+            {
+              "value": "scounty:04",
+              "label": {
+                "sv": "Södermanlands län"
+              }
+            },
+            {
+              "value": "scounty:05",
+              "label": {
+                "sv": "Östergötlands län"
+              }
+            },
+            {
+              "value": "scounty:06",
+              "label": {
+                "sv": "Jönköpings län"
+              }
+            },
+            {
+              "value": "scounty:07",
+              "label": {
+                "sv": "Kronobergs län"
+              }
+            },
+            {
+              "value": "scounty:08",
+              "label": {
+                "sv": "Kalmar län"
+              }
+            },
+            {
+              "value": "scounty:09",
+              "label": {
+                "sv": "Gotlands län"
+              }
+            },
+            {
+              "value": "scounty:10",
+              "label": {
+                "sv": "Blekinge län"
+              }
+            },
+            {
+              "value": "scounty:12",
+              "label": {
+                "sv": "Skåne län"
+              }
+            },
+            {
+              "value": "scounty:13",
+              "label": {
+                "sv": "Hallands län"
+              }
+            },
+            {
+              "value": "scounty:14",
+              "label": {
+                "sv": "Västra Götalands län"
+              }
+            },
+            {
+              "value": "scounty:17",
+              "label": {
+                "sv": "Värmlands län"
+              }
+            },
+            {
+              "value": "scounty:18",
+              "label": {
+                "sv": "Örebro län"
+              }
+            },
+            {
+              "value": "scounty:19",
+              "label": {
+                "sv": "Västmanlands län"
+              }
+            },
+            {
+              "value": "scounty:20",
+              "label": {
+                "sv": "Dalarnas län"
+              }
+            },
+            {
+              "value": "scounty:21",
+              "label": {
+                "sv": "Gävleborgs län"
+              }
+            },
+            {
+              "value": "scounty:22",
+              "label": {
+                "sv": "Västernorrlands län"
+              }
+            },
+            {
+              "value": "scounty:23",
+              "label": {
+                "sv": "Jämtlands län"
+              }
+            },
+            {
+              "value": "scounty:24",
+              "label": {
+                "sv": "Västerbottens län"
+              }
+            },
+            {
+              "value": "scounty:25",
+              "label": {
+                "sv": "Norrbottens län"
+              }
+            }
+          ],
+          "deps": [
+            "nvv:reportingLevel",
+            "nvv:County"
+          ]
+        },
+        {
+          "extends": "dcterms:issued",
+          "label": {
+            "sv": "Beslutsdatum"
+          },
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "id": "nvv:publisher"
+        },
+        {
+          "extends": "dcat:contactPoint-choice_da",
+          "description": {
+            "sv": "Vem du ska kontakta (kan vara en funktionsadress) för frågor kring analysen."
+          }
+        },
+        {
+          "type": "group",
+          "nodetype": "RESOURCE",
+          "label": {
+            "sv": "Sammanfattning"
+          },
+          "styles": [
+            "heading"
+          ],
+          "items": [
+            {
+              "type": "text",
+              "nodetype": "LITERAL",
+              "property": "dcterms:abstract",
+              "cardinality": {
+                "min": 0,
+                "pref": 1
+              },
+              "styles": [
+                "multiline",
+                "invisibleGroup"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "nodetype": "RESOURCE",
+          "label": {
+            "sv": "Fulltext"
+          },
+          "styles": [
+            "heading"
+          ],
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          },
+          "items": [
+            {
+              "type": "text",
+              "nodetype": "LITERAL",
+              "property": "rdf:value",
+              "cardinality": {
+                "min": 1,
+                "max": 1
+              },
+              "styles": [
+                "multiline",
+                "invisibleGroup"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nvv:publisher",
+      "type": "choice",
+      "nodetype": "URI",
+      "extends": "dcterms:publisher",
+      "constraints": {
+        "rdf:type": "org:Organization"
+      },
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "label": {
+        "en": "Deciding authority",
+        "sv": "Beslutande myndighet"
+      }
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "nvv:contactPoint",
+      "label": {
+        "sv": "Kontakt"
+      },
+      "description": {
+        "sv": "Kontakt"
+      },
+      "items": [
+        "vc:fn",
+        "vc:hasEmail",
+        "vc:hasTelephone",
+        "vc:hasAddress"
+      ]
+    }
+  ]
+}

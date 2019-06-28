@@ -197,8 +197,8 @@
             "cardgroup"
           ],
           "deps": [
-            "subject",
-            "http://example.com/chemistry"
+            "dcterms:subject",
+            "http://example.com/physics"
           ],
           "content": [
             {

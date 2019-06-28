@@ -1,4 +1,4 @@
-import * as system from './system';
+import system from './system';
 import PropertyGroup from '../template/PropertyGroup';
 import Text from '../template/Text';
 import Choice from '../template/Choice';

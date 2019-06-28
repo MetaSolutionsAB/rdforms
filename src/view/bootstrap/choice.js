@@ -39,22 +39,26 @@ presenters.itemtype('choice').style('stars').register(choicify(
 presenters.itemtype('choice').register(choicify(
   (fieldDiv, binding, choice, desc) => {
     const item = binding.getItem();
-    let $n;
     if (item.hasStaticChoices() && !item.hasStyle('externalLink') || item.hasStyle('noLink')) {
-      $n = jquery('<div>')
+      jquery('<div>')
         .attr('title', desc || choice.seeAlso || choice.value)
         .html(utils.getLocalizedValue(choice.label).value)
         .appendTo(fieldDiv);
     } else {
-      $n = jquery('<a class="rdformsUrl">')
+      const $a = jquery('<a class="rdformsUrl">')
         .attr('href', choice.seeAlso || choice.value)
         .attr('title', desc || choice.seeAlso || choice.value)
         .html(utils.getLocalizedValue(choice.label).value)
         .appendTo(fieldDiv);
       if (item.hasStyle('externalLink')) {
-        system.attachExternalLinkBehaviour($n[0], binding);
+        system.attachExternalLinkBehaviour($a[0], binding);
       } else {
-        system.attachLinkBehaviour($n[0], binding);
+        system.attachLinkBehaviour($a[0], binding);
+      }
+      if (choice.load != null) {
+        choice.load(() => {
+          $a.html(utils.getLocalizedValue(choice.label).value);
+        });
       }
     }
   }));
@@ -88,16 +92,17 @@ editors.itemtype('choice').choices().register((fieldDiv, binding, context) => {
   });
   context.choices = choices;
   renderingContext.renderSelect(fieldDiv, binding, context);
+  const setValue = context.setValue;
 
   // Sets the value if any using the setValue defined in renderSelect
   const c = binding.getChoice();
   if (c) {
     if (c.load != null) {
       c.load(() => {
-        context.setValue(c);
+        setValue(c);
       });
     } else {
-      context.setValue(c);
+      setValue(c);
     }
   }
 });
@@ -105,19 +110,24 @@ editors.itemtype('choice').choices().register((fieldDiv, binding, context) => {
 // Depends on system.getChoice and system.openChoiceSelector methods being available
 editors.itemtype('choice').choices('none').register((fieldDiv, binding, context) => {
   context.chooser = renderingContext.chooserRegistry.getComponent(binding.getItem());
+  context.choices = undefined; // Reset choices so no bleeding over when reusing context between fields.
 
   const renderSelect = () => {
     renderingContext.renderSelect(fieldDiv, binding, context);
+    // remember the function since the context object is reused and may
+    // reference to the wrong setValue function later on.
+    const setValue = context.setValue;
+
     const $search = jquery('<button class="btn btn-default btn-fab btn-fab-mini browseChoices" type="button">')
       .attr('title', context.view.messages.edit_browse)
       .appendTo(fieldDiv);
-    if (context.chooser.supportsInlineCreate &&
+    if (context.chooser && context.chooser.supportsInlineCreate &&
       context.chooser.supportsInlineCreate(binding)) {
       const $stack = jquery('<span class="fa-stack">').appendTo($search);
-      jquery('<span class="fa fa-search fa-stack-1x" aria-hidden="true">').appendTo($stack);
-      jquery('<span class="fa fa-plus fa-stack-1x" aria-hidden="true">').appendTo($stack);
+      jquery('<span class="fas fa-search fa-stack-1x" aria-hidden="true">').appendTo($stack);
+      jquery('<span class="fas fa-plus fa-stack-1x" aria-hidden="true">').appendTo($stack);
     } else {
-      jquery('<span class="fa fa-search" aria-hidden="true">').appendTo($search);
+      jquery('<span class="fas fa-search" aria-hidden="true">').appendTo($search);
     }
 
     const setChoice = (choice) => {
@@ -125,10 +135,10 @@ editors.itemtype('choice').choices('none').register((fieldDiv, binding, context)
         binding.setChoice(choice);
         if (choice.load != null) {
           choice.load(() => {
-            context.setValue(choice);
+            setValue(choice);
           });
         } else {
-          context.setValue(choice);
+          setValue(choice);
         }
       } else {
         binding.setChoice(null);
@@ -171,7 +181,7 @@ editors.itemtype('choice').choices('none').register((fieldDiv, binding, context)
                 binding.setChoice(updatedChoice);
               });
             }).insertAfter($uri);
-          jquery('<span class="fa fa-magic" aria-hidden="true">').appendTo($button);
+          jquery('<span class="fas fa-magic" aria-hidden="true">').appendTo($button);
         } else {
           $uri.remove();
           renderSelect();

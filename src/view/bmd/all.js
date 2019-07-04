@@ -15,23 +15,6 @@ import 'bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.
 // updateMaterial called only by postEditorRender
 const updateMaterial = (node) => {
   jquery('body').bootstrapMaterialDesign();
-  if (jquery.material) {
-    jquery(node).find(jquery.material.options.withRipples).each((idx, el) => {
-      jquery.material.ripples(el);
-    });
-    jquery(node).find(jquery.material.options.inputElements).each((idx, el) => {
-      jquery.material.input(el);
-    });
-    jquery(node).find(jquery.material.options.checkboxElements).each((idx, el) => {
-      jquery.material.checkbox(el);
-    });
-    jquery(node).find(jquery.material.options.radioElements).each((idx, el) => {
-      jquery.material.radio(el);
-    });
-    jquery(node).find(jquery.material.options.togglebuttonElements).each((idx, el) => {
-      jquery.material.togglebutton(el);
-    });
-  }
 };
 
 renderingContext.postEditorRenderer = function (fieldDiv, binding, context) {

@@ -1,4 +1,5 @@
 /// #if BLOCKS
+  import 'bootstrap';
   import './src/view/bootstrap/Select2'
   import './src/view/bootstrap/DateTimeFuelux';
   import 'fuelux/dist/css/fuelux.min.css';

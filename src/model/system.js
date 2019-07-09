@@ -108,4 +108,5 @@ export default {
   openChoiceSelector,
   getChoice,
   getFallbackChoice,
+  labelProperties,
 }

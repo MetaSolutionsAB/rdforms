@@ -1,0 +1,175 @@
+{
+  "templates": [
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "schema:CreativeWork"
+    },
+    {
+      "id": "schema:streetAddress",
+      "property": "http://schema.org/streetAddress",
+      "label": {
+        "en": "Street address",
+        "sv": "Gatuadress"
+      },
+      "description": {
+      },
+      "type": "text",
+      "nodetype": "LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "schema:addressLocality",
+      "property": "http://schema.org/addressLocality",
+      "label": {
+        "en": "Locality",
+        "sv": "Ort"
+      },
+      "description": {
+        "en": "The locality. For example, Mountain View.",
+        "sv": "Orten. T.ex. Stockholm."
+      },
+      "type": "text",
+      "nodetype": "LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "schema:addressRegion",
+      "property": "http://schema.org/addressRegion",
+      "label": {
+        "en": "Region",
+        "sv": "Region"
+      },
+      "description": {
+        "en": "The region. For example, CA.",
+        "sv": "Regionen. T.ex. Uppsala län."
+      },
+      "type": "text",
+      "nodetype": "LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "schema:artform",
+      "property": "http://schema.org/artform",
+      "label": {
+        "en": "Art form",
+        "sv": "Konstform"
+      },
+      "description": {
+        "en": "e.g. Painting, Drawing, Sculpture, Print, Photograph, Assemblage, Collage, etc.",
+        "sv": "T.ex. måleri, teckning, skulptur, mosaik, fotografi, installation, etc."
+      },
+      "type": "text",
+      "nodetype": "LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "schema:birthDate",
+      "property": "http://schema.org/birthDate",
+      "label": {
+        "en": "Date of birth",
+        "sv": "Födelsedatum"
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#date",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "schema:deathDate",
+      "property": "http://schema.org/deathDate",
+      "label": {
+        "en": "Date of death",
+        "sv": "Dödsdatum"
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#date",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "schema:image",
+      "property": "http://schema.org/image",
+      "label": {
+        "en": "Image",
+        "sv": "Bild"
+      },
+      "type": "text",
+      "nodetype": "RESOURCE",
+      "datatype": "http://schema.org/ImageObject",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "schema:location",
+      "property": "http://schema.org/location",
+      "label": {
+        "en": "Location",
+        "sv": "Plats"
+      },
+      "type": "text",
+      "nodetype": "RESOURCE",
+      "datatype": "http://schema.org/Place",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "schema:caption",
+      "property": "http://schema.org/caption",
+      "label": {
+        "en": "Caption",
+        "sv": "Bildtext"
+      },
+      "description": {
+        "en": "The caption for this object",
+        "sv": "Objektets bildtext"
+      },
+      "type": "text",
+      "nodetype": "LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "schema:contentURL",
+      "property": "http://schema.org/contentURL",
+      "label": {
+        "en": "URL",
+        "sv": "URL"
+      },
+      "description": {
+        "en": "Actual bytes of the media object, for example the image file or video file",
+        "sv": "Medieobjektets innehåll, t.ex. bild- eller videofilen"
+      },
+      "type": "text",
+      "nodetype": "LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    }
+  ]
+}

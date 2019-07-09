@@ -29,11 +29,13 @@ export default declare([_WidgetBase], {
     for (let ind = 0; ind < this.choices.length; ind++) {
       const c = this.choices[ind];
       let $label;
+      const $divWrap = jquery('<div class="radio form-check">').appendTo(this.domNode);
+
       if (this.item.hasStyle('verticalRadioButtons')) {
-        const $divWrap = jquery('<div class="radio">').appendTo(this.domNode);
         $label = jquery('<label>').appendTo($divWrap);
       } else {
-        $label = jquery('<label class="radio-inline">').appendTo(this.domNode);
+        $label = jquery('<label class="form-check-label">')
+          .appendTo($divWrap);
       }
       if (c.description) {
         $label.attr('title', this.item._getLocalizedValue(c.description).value
@@ -52,8 +54,8 @@ export default declare([_WidgetBase], {
         $input.attr('disabled', true);
       } else {
         $label.click((inp) => {
-          this.binding.setValue(inp.val());
-        }, $input);
+          this.binding.setValue($input.val());
+        });
       }
     }
     uniqueRadioButtonGroupNr += 1;

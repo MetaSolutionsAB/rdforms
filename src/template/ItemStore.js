@@ -252,10 +252,10 @@ export default class ItemStore {
       return item;
     } else {
       //No type means it is a reference, check that the referred item (via id) exists
-      if (id === undefined) {
+      if (id == null) {
         throw 'Cannot create subitem, `type` for creating new or `id` for referencing external are required.';
       }
-      if (this._registry[id] === undefined) {
+      if (this._registry[id] == null) {
         throw 'Cannot find referenced subitem using identifier: ' + id;
       }
       //Check if there are any overlay properties, if so force clone mode.

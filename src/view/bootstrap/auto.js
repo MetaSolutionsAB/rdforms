@@ -1,6 +1,7 @@
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import stamp from 'dojo/date/stamp';
+import engine from '../../model/engine';
 
 const pr = renderingContext.presenterRegistry;
 const er = renderingContext.editorRegistry;
@@ -58,8 +59,21 @@ const autoValueFactory = (reg) => {
       const path = binding.getItem().getDeps();
       if ((data == null || data === '') && path) {
         const fromBinding = engine.findBindingRelativeToParentBinding(binding.getParent(), path);
-        const depBinding = engine.matchPathBelowBinding(fromBinding, path);
-        binding.setGist(depBinding.getValue(), true);
+        const update = (silent) => {
+          const depBinding = engine.matchPathBelowBinding(fromBinding, path);
+          const prevValue = binding.getGist();
+          const newValue = depBinding ? depBinding.getValue() : '';
+          if (prevValue != newValue) {
+            binding.setGist(newValue, silent);
+          }
+        };
+        update(true);
+        fromBinding.addListener((changedBinding) => {
+          if (changedBinding != binding) {
+            update();
+          }
+        });
+
       }
     }
     reg.getComponentBefore(binding.getItem(), autof)(fieldDiv, binding, context);

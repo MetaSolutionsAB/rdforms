@@ -1,14 +1,12 @@
-// rdfjson and rdforms are exposed as global variables in this example
 import rdfGraph from './rdf.js';
-
-const graph = new rdfjson.Graph(rdfGraph);
 const itemStore = new rdforms.ItemStore();
+const graph = new rdfjson.Graph(rdfGraph);
 
-rdforms.bundleLoader(itemStore, ['./templateBundle.json'], () => {
-  new rdforms.Editor({
+rdforms.bundleLoader(itemStore, [['./templateBundle.json']], (bundles) => {
+  new rdforms.Presenter({
     graph,
     resource: 'http://example.org/about',
-    template: itemStore.getItem('test'),
+    template: bundles[0].getRoot(),
     compact: true
   }, 'node');
 });

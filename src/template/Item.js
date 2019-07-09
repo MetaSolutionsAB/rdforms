@@ -284,7 +284,7 @@ export default class Item {
   getDatatype(original) {
     const dt = this.getSource(original).datatype;
     if (dt != null && dt != '') {
-      return ns.expand(dt);
+      return Array.isArray(dt) ? dt.map((d) => ns.expand(d)) : ns.expand(dt);
     }
     return dt;
   }
@@ -377,7 +377,7 @@ export default class Item {
 
   isEnabled(original) {
     var s = this.getSource(original);
-    return s.enabled === undefined ? true : s.enabled;
+    return s.enabled == null ? true : s.enabled;
   }
 
   setEnabled(en) {
@@ -417,7 +417,7 @@ export default class Item {
     if (this.hasStyle(cls, original)) {
       return true;
     }
-    if (s.cls === undefined) {
+    if (s.cls == null) {
       return false;
     }
     return s.cls.some(c => c.toLowerCase() === cls.toLowerCase());
@@ -456,11 +456,11 @@ export default class Item {
     if (original === true) {  // Get the original source
       return this._source._extendedSource || this._source;
     } else if (original === false) {  // Get the extended source
-      var ei = this._itemStore.getItem(this.getExtends());
-      if (ei == null) {
+      var entryItem = this._itemStore.getItem(this.getExtends());
+      if (entryItem == null) {
         return this._source;
       } else {
-        return ei.getSource();
+        return entryItem.getSource();
       }
     } else {  //Get the merged source.
       return this._source;

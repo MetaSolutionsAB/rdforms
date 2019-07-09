@@ -1,0 +1,4331 @@
+{
+  "templates": [
+    {
+      "type": "text",
+      "id": "dcat:dcterms:title",
+      "extends": "dcterms:title",
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "nodetype": "LANGUAGE_LITERAL",
+      "label": {
+        "sv": "Titel",
+        "da": "Titel",
+        "en": "Title",
+        "nb": "Tittel",
+        "de": "Titel"
+      }
+    },
+    {
+      "type": "text",
+      "id": "dcat:dcterms:title_da",
+      "cardinality": {
+        "min": 1,
+        "pref": 0
+      },
+      "description": {
+        "en": "This property contains a name given to the Dataset. This property can be repeated for parallel language versions of the name.",
+        "nb": "Inneholder navnet på datasettet. Kan gjentas for parallelle språkversjoner av navnet",
+        "da": "Datasættets formelle navn. Kan gentages for forskellige sprogversioner af navnet",
+        "de": "Der Name des Datensatzes. Diese Eigenschaft kann für andere Sprachversionen des Namens wiederholt werden.",
+        "sv": "Datamängdens namn. Denna egenskap kan upprepas för parallella språkversioner av namnet."
+      },
+      "nodetype": "LANGUAGE_LITERAL",
+      "extends": "dcat:dcterms:title"
+    },
+    {
+      "type": "text",
+      "id": "dcat:dcterms:description",
+      "extends": "dcterms:description",
+      "styles": [
+        "multiline"
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "label": {
+        "nb": "Beskrivelse",
+        "da": "Beskrivelse",
+        "sv": "Beskrivning",
+        "en": "Description",
+        "de": "Beschreibung"
+      }
+    },
+    {
+      "type": "text",
+      "id": "dcat:dcterms:description_da",
+      "extends": "dcat:dcterms:description",
+      "styles": [
+        "multiline"
+      ],
+      "cardinality": {
+        "min": 1,
+        "pref": 0
+      },
+      "description": {
+        "en": "This property contains a free-text description of the dataset. This property can be repeated for parallel  language versions of the description.",
+        "nb": "Inneholder fritekstbeskrivelse av datasettet. Kan gjentas for parallelle språkversjoner",
+        "da": "Beskrivelse af datasættet som angiver centrale kendetegn, og formålet med dataindsamlingen. Kan gentages for forskellige sprogversioner",
+        "de": "Diese Eigenschaft enthält eine Beschreibung des Datensatzes. Diese Eigenschaft kann für andere Sprachversionen der Beschreibung wiederholt werden.",
+        "sv": "Datamängdens beskrivning. Denna egenskap kan upprepas för parallella språkversioner av beskrivningen."
+      }
+    },
+    {
+      "type": "text",
+      "id": "dcat:dcterms:identifier_da",
+      "extends": "dcterms:identifier",
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "description": {
+        "en": "This property contains the main identifier for the Dataset, e.g. the URI or other unique identifier in the context of the Catalogue.",
+        "nb": "Hovedindentifikator for datasettet, feks URIen eller annen identifikator som er unik i kontekst av katalogen",
+        "da": "Unik identifikator som kan anvendes til at identificere det pågældende sæt af metadata og håndtere relationen til det pågældende datasæt",
+        "de": "Diese Eigenschaft enthält then Hauptidentifikator für den Datensatz, z.B. die URI oder eine andere eindeutige Kennung im Kontext des Kataloges.",
+        "sv": "Datamängdens huvudidentifierare, t.ex. en URI eller annan unik identifierare i katalogens sammanhang."
+      },
+      "label": {
+        "en": "Identifier",
+        "da": "identifikator",
+        "nb": "identifikator",
+        "de": "Identifikator",
+        "sv": "Identifierare"
+      }
+    },
+    {
+      "type": "choice",
+      "id": "dcat:dcterms:language",
+      "extends": "dcterms:language",
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "choices": [
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/SQI",
+          "label": {
+            "en": "Albanian",
+            "sv": "albanska",
+            "da": "albansk",
+            "de": "Albanisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/ARA",
+          "label": {
+            "en": "Arabic",
+            "sv": "arabiska",
+            "da": "arabisk",
+            "de": "Arabisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/HYE",
+          "label": {
+            "en": "Armenian",
+            "sv": "armeniska",
+            "da": "armenisk",
+            "de": "Armenisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/AZE",
+          "label": {
+            "en": "Azerbaijani",
+            "sv": "azerbajdzjanska",
+            "da": "azerbajdzjansk",
+            "de": "Aserbaidschanisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/EUS",
+          "label": {
+            "en": "Basque",
+            "sv": "baskiska",
+            "da": "baskisk",
+            "de": "Baskisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/BEL",
+          "label": {
+            "en": "Belarusian",
+            "sv": "vitryska",
+            "da": "hviderussisk",
+            "de": "Belarussisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/BEN",
+          "label": {
+            "en": "Bengali",
+            "sv": "bengali",
+            "da": "bengalsk",
+            "de": "Bengalisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/BOS",
+          "label": {
+            "en": "Bosnian",
+            "sv": "bosniska",
+            "da": "bosnisk",
+            "de": "Bosnisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/BRE",
+          "label": {
+            "en": "Breton",
+            "sv": "bretonska",
+            "da": "bretonsk",
+            "de": "Bretonisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/BUL",
+          "label": {
+            "en": "Bulgarian",
+            "da": "bulgarisk",
+            "sv": "bulgariska",
+            "de": "Bulgarisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/CAT",
+          "label": {
+            "en": "Catalan",
+            "sv": "katalanska",
+            "da": "katalansk",
+            "de": "Katalanisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/ZHO",
+          "label": {
+            "en": "Chinese",
+            "sv": "kinesiska",
+            "da": "kinesisk",
+            "de": "Chinesisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/COS",
+          "label": {
+            "en": "Corsican",
+            "da": "korsikansk",
+            "sv": "korsikanska",
+            "de": "Korsisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/HRV",
+          "label": {
+            "en": "Croatian",
+            "sv": "kroatiska",
+            "da": "kroatisk",
+            "de": "Kroatisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/CES",
+          "label": {
+            "en": "Czech",
+            "da": "tjekkisk",
+            "sv": "tjeckiska",
+            "de": "Tschechisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/DAN",
+          "label": {
+            "en": "Danish",
+            "sv": "danska",
+            "da": "dansk",
+            "de": "Dänisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/DIV",
+          "label": {
+            "en": "Dhivehi",
+            "sv": "divehi",
+            "da": "maldivisk",
+            "de": "Dhivehi"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/NLD",
+          "label": {
+            "en": "Dutch",
+            "sv": "nederländska",
+            "da": "hollandsk",
+            "de": "Niederländisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/ENG",
+          "label": {
+            "en": "English",
+            "sv": "engelska",
+            "da": "engelsk",
+            "de": "Englisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/EPO",
+          "label": {
+            "en": "Esperanto",
+            "sv": "esperanto",
+            "da": "esperanto",
+            "de": "Esperanto"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/EST",
+          "label": {
+            "en": "Estonian",
+            "sv": "estniska",
+            "da": "estnisk",
+            "de": "Estnisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/FAO",
+          "label": {
+            "en": "Faroese",
+            "sv": "färöiska",
+            "da": "færøsk",
+            "de": "Färöisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/FIN",
+          "label": {
+            "en": "Finnish",
+            "da": "finsk",
+            "sv": "finska",
+            "de": "Finnisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/VLS",
+          "label": {
+            "en": "Flemish",
+            "sv": "flamländska",
+            "da": "flamsk",
+            "de": "Flämisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/FRA",
+          "label": {
+            "en": "French",
+            "sv": "franska",
+            "da": "fransk",
+            "de": "Französisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/FRY",
+          "label": {
+            "en": "Frisian",
+            "sv": "frisiska",
+            "da": "frisisk",
+            "de": "Friesisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/GLG",
+          "label": {
+            "en": "Galician",
+            "sv": "galiciska",
+            "da": "galisk",
+            "de": "Gälisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/KAT",
+          "label": {
+            "en": "Georgian",
+            "sv": "georgiska",
+            "da": "georgisk",
+            "de": "Georgisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/DEU",
+          "label": {
+            "en": "German",
+            "sv": "tyska",
+            "da": "tysk",
+            "de": "Deutsch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/ELL",
+          "label": {
+            "en": "Greek",
+            "sv": "grekiska",
+            "da": "græsk",
+            "de": "Griechisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/KAL",
+          "label": {
+            "en": "Greenlandic",
+            "sv": "grönländska",
+            "da": "grønlandsk",
+            "de": "Grönländisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/HEB",
+          "label": {
+            "en": "Hebrew",
+            "sv": "hebreiska",
+            "da": "hebraisk",
+            "de": "Hebräisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/HIN",
+          "label": {
+            "en": "Hindi",
+            "sv": "hindi",
+            "da": "hindi",
+            "de": "Hindi"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/HUN",
+          "label": {
+            "en": "Hungarian",
+            "sv": "ungerska",
+            "da": "ungarsk",
+            "de": "Ungarisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/ISL",
+          "label": {
+            "en": "Icelandic",
+            "sv": "isländska",
+            "da": "islandsk",
+            "de": "Isländisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/IND",
+          "label": {
+            "en": "Indonesian",
+            "sv": "indonesiska",
+            "da": "indonesisk",
+            "de": "Indonesisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/INA",
+          "label": {
+            "en": "Interlingua",
+            "sv": "interlingua",
+            "da": "interlingua",
+            "de": "Interlingua"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/GLE",
+          "label": {
+            "en": "Irish",
+            "da": "irisk",
+            "sv": "iriska",
+            "de": "Irisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/ITA",
+          "label": {
+            "en": "Italian",
+            "da": "italiensk",
+            "sv": "italienska",
+            "de": "Italienisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/JPN",
+          "label": {
+            "en": "Japanese",
+            "sv": "japanska",
+            "da": "japansk",
+            "de": "Japanisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/CSB",
+          "label": {
+            "en": "Kashubian",
+            "da": "kasjubisk",
+            "sv": "kasjubiska",
+            "de": "Kaschubisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/KAZ",
+          "label": {
+            "en": "Kazakh",
+            "sv": "kazakiska",
+            "da": "kazakisk",
+            "de": "Kasachisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/KHM",
+          "label": {
+            "en": "Khmer",
+            "sv": "khmer",
+            "da": "khmer",
+            "de": "Khmer"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/KOR",
+          "label": {
+            "en": "Korean",
+            "da": "koreansk",
+            "sv": "koreanska",
+            "de": "Koreanisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/KUR",
+          "label": {
+            "en": "Kurdish",
+            "sv": "kurdiska",
+            "da": "kurdisk",
+            "de": "Kurdisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/KIR",
+          "label": {
+            "en": "Kyrgyz",
+            "sv": "kirgiziska",
+            "da": "kirgizisk",
+            "de": "Kirgisisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/LAO",
+          "label": {
+            "en": "Lao",
+            "sv": "lao",
+            "da": "lao",
+            "de": "Lao"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/LAT",
+          "label": {
+            "en": "Latin",
+            "sv": "latin",
+            "da": "latin",
+            "de": "Latein"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/LAV",
+          "label": {
+            "en": "Latvian",
+            "da": "lettisk",
+            "sv": "lettiska",
+            "de": "Lettisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/LIT",
+          "label": {
+            "en": "Lithuanian",
+            "da": "litauisk",
+            "sv": "litauiska",
+            "de": "Litauisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/LTZ",
+          "label": {
+            "en": "Luxembourgish",
+            "da": "luxemburgisk",
+            "sv": "luxemburgiska",
+            "de": "Luxemburgisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/MKD",
+          "label": {
+            "en": "Macedonian",
+            "da": "makedonsk",
+            "sv": "makedonska",
+            "de": "Mazedonisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/MLG",
+          "label": {
+            "en": "Malagasy",
+            "da": "malagassisk",
+            "sv": "malagassiska",
+            "de": "Madagasisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/MSA",
+          "label": {
+            "en": "Malay",
+            "da": "malajisk",
+            "sv": "malajiska",
+            "de": "Malaiisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/MLT",
+          "label": {
+            "en": "Maltese",
+            "da": "maltesisk",
+            "sv": "maltesiska",
+            "de": "Maltesisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/MIN",
+          "label": {
+            "en": "Minangkabau",
+            "sv": "minangkabau",
+            "da": "minangkabau",
+            "de": "Minangkabau"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/MOL",
+          "label": {
+            "en": "Moldavian",
+            "da": "moldavisk",
+            "sv": "moldaviska",
+            "de": "Moldawisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/MON",
+          "label": {
+            "en": "Mongolian",
+            "sv": "mongoliska",
+            "da": "mongolisk",
+            "de": "Mongolisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/0E0",
+          "label": {
+            "en": "Montenegrin",
+            "da": "montenegrinsk",
+            "sv": "montenegrinska",
+            "de": "Montenegrinisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/NEP",
+          "label": {
+            "en": "Nepali",
+            "sv": "nepali",
+            "da": "nepalesisk",
+            "de": "Nepalesisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/SME",
+          "label": {
+            "en": "Northern Sami",
+            "sv": "nordsamiska",
+            "da": "nordsamisk",
+            "de": "Nord-Sami"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/NOR",
+          "label": {
+            "en": "Norwegian",
+            "sv": "norska",
+            "da": "norsk",
+            "de": "Norwegisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/OCI",
+          "label": {
+            "en": "Occitan",
+            "sv": "occitanska",
+            "da": "occitansk",
+            "de": "Okzitanisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/OSS",
+          "label": {
+            "en": "Ossetian",
+            "sv": "ossetiska",
+            "da": "ossetisk",
+            "de": "Ossetisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/FAS",
+          "label": {
+            "en": "Persian",
+            "sv": "persiska",
+            "da": "persisk",
+            "de": "Persisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/POL",
+          "label": {
+            "en": "Polish",
+            "sv": "polska",
+            "da": "polsk",
+            "de": "Polnisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/POR",
+          "label": {
+            "en": "Portuguese",
+            "sv": "portugisiska",
+            "da": "portugisisk",
+            "de": "Portugiesisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/ROM",
+          "label": {
+            "en": "Romani",
+            "sv": "romani",
+            "da": "romani",
+            "de": "Romani"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/RON",
+          "label": {
+            "en": "Romanian",
+            "sv": "rumänska",
+            "da": "rumænsk",
+            "de": "Rumänisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/ROH",
+          "label": {
+            "en": "Romansh",
+            "sv": "rätoromanska",
+            "da": "rætoromansk",
+            "de": "Rätoromanisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/RUS",
+          "label": {
+            "en": "Russian",
+            "sv": "ryska",
+            "da": "russisk",
+            "de": "Russisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/GLA",
+          "label": {
+            "en": "Scottish Gaelic",
+            "sv": "skotsk gaeliska",
+            "da": "skotsk gaelisk",
+            "de": "Schottisches Gälisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/SRP",
+          "label": {
+            "en": "Serbian",
+            "sv": "serbiska",
+            "da": "serbisk",
+            "de": "Serbisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/HBS",
+          "label": {
+            "en": "Serbo-Croatian",
+            "sv": "serbokroatiska",
+            "da": "serbokroatisk",
+            "de": "Serbokroatisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/SIN",
+          "label": {
+            "en": "Sinhala",
+            "da": "singalesisk",
+            "sv": "singalesiska",
+            "de": "Singhala"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/SLK",
+          "label": {
+            "en": "Slovak",
+            "da": "slovakisk",
+            "sv": "slovakiska",
+            "de": "Slowakisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/SLV",
+          "label": {
+            "en": "Slovenian",
+            "sv": "slovenska",
+            "da": "slovensk",
+            "de": "Slowenisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/SPA",
+          "label": {
+            "en": "Spanish",
+            "da": "spansk",
+            "sv": "spanska",
+            "de": "Spanisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/SWA",
+          "label": {
+            "en": "Swahili",
+            "sv": "swahili",
+            "da": "swahili",
+            "de": "Swahili"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/SWE",
+          "label": {
+            "en": "Swedish",
+            "sv": "svenska",
+            "da": "svensk",
+            "de": "Schwedisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/TGK",
+          "label": {
+            "en": "Tajiks",
+            "da": "tadzjikisk",
+            "sv": "tadzjikiska",
+            "de": "Tadschiksch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/TAM",
+          "label": {
+            "en": "Tamil",
+            "sv": "tamil",
+            "da": "tamil",
+            "de": "Tamilisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/THA",
+          "label": {
+            "en": "Thai",
+            "da": "thai",
+            "sv": "thai",
+            "de": "Thai"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/BOD",
+          "label": {
+            "en": "Tibetan",
+            "sv": "tibetanska",
+            "da": "tibetansk",
+            "de": "Tibetisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/TUR",
+          "label": {
+            "en": "Turkish",
+            "sv": "turkiska",
+            "da": "turkisk",
+            "de": "Türkisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/TUK",
+          "label": {
+            "en": "Turkmen",
+            "sv": "turkmeniska",
+            "da": "turkmenisk",
+            "de": "Turkmenisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/UKR",
+          "label": {
+            "en": "Ukrainian",
+            "sv": "ukrainska",
+            "da": "ukrainsk",
+            "de": "Ukrainisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/URD",
+          "label": {
+            "en": "Urdu",
+            "sv": "urdu",
+            "da": "urdu",
+            "de": "Urdu"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/UZB",
+          "label": {
+            "en": "Uzbek",
+            "sv": "uzbekiska",
+            "da": "uzbekisk",
+            "de": "Usbekisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/0D0",
+          "label": {
+            "en": "Valencian",
+            "sv": "valencianska",
+            "da": "valenciansk",
+            "de": "Valencianisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/VIE",
+          "label": {
+            "en": "Vietnamese",
+            "sv": "vietnamesiska",
+            "da": "vietnamesisk",
+            "de": "Vietnamesisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/WLN",
+          "label": {
+            "en": "Walloon",
+            "sv": "vallonska",
+            "da": "vallonsk",
+            "de": "Wallonisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/CYM",
+          "label": {
+            "en": "Welsh",
+            "sv": "kymriska",
+            "da": "walisisk",
+            "de": "Walisisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/YID",
+          "label": {
+            "en": "Yiddish",
+            "sv": "jiddisch",
+            "da": "jiddisch",
+            "de": "Jiddisch"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/language/ZUL",
+          "label": {
+            "en": "Zulu",
+            "sv": "zulu",
+            "da": "zulu",
+            "de": "Zulu"
+          }
+        }
+      ],
+      "nodetype": "URI",
+      "label": {
+        "nb": "Språk",
+        "sv": "Språk",
+        "da": "Sprog",
+        "en": "Language",
+        "de": "Sprache"
+      }
+    },
+    {
+      "id": "dcat:dcterms:spatial_bb_da",
+      "property": "http://purl.org/dc/terms/spatial",
+      "label": {
+        "en": "Boundingbox",
+        "da": "Geografisk omkransende rektangel",
+        "sv": "Geografisk omskrivande rektangel",
+        "de": "Geografisches Begrenzungsrechteck"
+      },
+      "type": "group",
+      "nodetype": "BLANK",
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Location"
+      },
+      "items": [
+        {
+          "type": "text",
+          "nodetype": "DATATYPE_LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          },
+          "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+          "property": "http://www.w3.org/ns/locn#geometry",
+          "styles": [
+            "invisibleGroup"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "id": "dcat:dcterms:accrualPeriodicity-cld_da",
+      "label": {
+        "en": "Frequency of update",
+        "sv": "Uppdateringsfrekvens",
+        "da": "Opdateringsfrekvens",
+        "de": "Aktualisierungshäufigkeit"
+      },
+      "styles": [
+        "strictmatch",
+        "deprecated"
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "choices": [
+        {
+          "value": "http://purl.org/cld/freq/annual",
+          "label": {
+            "en": "Annual",
+            "da": "Årlig",
+            "de": "Jährlich",
+            "sv": "Årlig"
+          },
+          "description": {
+            "en": "The event occurs once a year.",
+            "da": "Opdatering sker en gang årligt.",
+            "de": "Eine Aktualisierung findet einmal pro Jahr statt.",
+            "sv": "Uppdateringen sker en gång per år."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/biennial",
+          "label": {
+            "en": "Biennial",
+            "da": "Hvert andet år",
+            "de": "Zweijährig",
+            "sv": "Varannat år"
+          },
+          "description": {
+            "en": "The event occurs every two years.",
+            "da": "Opdatering sker hvert andet år.",
+            "de": "Eine Aktualisierung findet jedes zweite Jahr statt.",
+            "sv": "Uppdateringen sker vartannat år."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/bimonthly",
+          "label": {
+            "en": "Bimonthly",
+            "da": "Hver anden måned",
+            "de": "Zweimonatlich",
+            "sv": "Varannan månad"
+          },
+          "description": {
+            "en": "The event occurs every two months.",
+            "da": "Opdatering sker hver anden måned.",
+            "de": "Eine Aktualisierung findet alle zwei Monate statt.",
+            "sv": "Uppdateringen sker varannan månad."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/biweekly",
+          "label": {
+            "en": "Biweekly",
+            "da": "Hver anden uge",
+            "de": "Zweiwöchentlich",
+            "sv": "Varannan vecka"
+          },
+          "description": {
+            "en": "The event occurs every two weeks.",
+            "da": "Opdatering sker hver anden uge.",
+            "de": "Eine Aktualisierung findet alle zwei Wochen statt.",
+            "sv": "Uppdateringen sker varannan vecka."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/continuous",
+          "label": {
+            "en": "Continuous",
+            "da": "Kontinuerlig",
+            "de": "Kontinuierlich",
+            "sv": "Kontinuerlig"
+          },
+          "description": {
+            "en": "The event repeats without interruption.",
+            "da": "Opdatering sker kontinuerligt og uden afbrydelse.",
+            "de": "Eine Aktualisierung findet kontinuierlich statt.",
+            "sv": "Uppdateringen sker kontiuerlig."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/daily",
+          "label": {
+            "en": "Daily",
+            "da": "Dagligt",
+            "de": "Täglich",
+            "sv": "Dagligen"
+          },
+          "description": {
+            "en": "The event occurs once a day.",
+            "da": "Opdatering sker dagligt."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/irregular",
+          "label": {
+            "en": "Irregular",
+            "da": "Irregulært",
+            "de": "Irregulär",
+            "sv": "Oregelbunden"
+          },
+          "description": {
+            "en": "The event occurs at uneven intervals.",
+            "da": "Opdatering sker efter vilkårlige intervaller."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/monthly",
+          "label": {
+            "en": "Monthly",
+            "da": "Månedligt",
+            "de": "Monatlich",
+            "sv": "Månatlig"
+          },
+          "description": {
+            "en": "The event occurs once a month.",
+            "da": "Opdatering sker en gang om måneden."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/quarterly",
+          "label": {
+            "en": "Quarterly",
+            "da": "Kvartalsvis",
+            "de": "Vierteljährlich",
+            "sv": "Kvartalsvis"
+          },
+          "description": {
+            "en": "The event occurs every three months.",
+            "da": "Opdatering sker kvartalsvis."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/semiannual",
+          "label": {
+            "en": "Semiannual",
+            "da": "Halvårligt",
+            "de": "Halbjährlich",
+            "sv": "Halvårlig"
+          },
+          "description": {
+            "en": "The event occurs twice a year.",
+            "da": "Opdatering sker halvårligt."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/semimonthly",
+          "label": {
+            "en": "Semimonthly",
+            "da": "Bimånedligt",
+            "de": "Halbmonatlich",
+            "sv": "Varannan månad"
+          },
+          "description": {
+            "en": "The event occurs twice a month.",
+            "da": "Opdatering sker to gange om måneden."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/semiweekly",
+          "label": {
+            "en": "Semiweekly",
+            "da": "Biugentligt",
+            "de": "Halbwöchentlich",
+            "sv": "Två gånger per vecka"
+          },
+          "description": {
+            "en": "The event occurs twice a week.",
+            "da": "Opdatering sker to gange om ugen."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/threeTimesAMonth",
+          "label": {
+            "en": "Three times a month",
+            "da": "Tre gange om måneden",
+            "de": "Drei Mal im Monat",
+            "sv": "Tre gånger per månad"
+          },
+          "description": {
+            "en": "The event occurs three times a month.",
+            "da": "Opdatering sker tre gange om måneden."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/threeTimesAWeek",
+          "label": {
+            "en": "Three times a week",
+            "da": "Tre gange om ugen",
+            "de": "Drei Mal in der Woche",
+            "sv": "Tre gånger per vecka"
+          },
+          "description": {
+            "en": "The event occurs three times a week.",
+            "da": "Opdatering sker tre gange om ugen."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/threeTimesAYear",
+          "label": {
+            "en": "Three times a year",
+            "da": "Tre gange om året",
+            "de": "Drei Mal im Jahr",
+            "sv": "Tre gånger per år"
+          },
+          "description": {
+            "en": "The event occurs three times a year.",
+            "da": "Opdatering sker tre gange om året."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/triennial",
+          "label": {
+            "en": "Triennial",
+            "da": "Hvert tredje år",
+            "de": "Alle drei Jahre",
+            "sv": "Vart tredje år"
+          },
+          "description": {
+            "en": "The event occurs every three years.",
+            "da": "Opdatering sker hvert tredje år."
+          }
+        },
+        {
+          "value": "http://purl.org/cld/freq/weekly",
+          "label": {
+            "en": "Weekly",
+            "da": "Ugentligt",
+            "de": "Wöchentlich",
+            "sv": "Varje vecka"
+          },
+          "description": {
+            "en": "The event occurs once a week.",
+            "da": "Opdatering sker ugentligt."
+          }
+        }
+      ],
+      "nodetype": "URI",
+      "property": "http://purl.org/dc/terms/accrualPeriodicity",
+      "description": {
+        "en": "This property refers to the frequency at which Dataset is updated.",
+        "da": "Hvor ofte det pågældende datasæt bliver opdateret.",
+        "de": "Diese Eigenschaft bezieht sich auf die Häufigkeit mit welcher der Datensatz aktualisiert wird.",
+        "sv": "Denna egenskapen avser den datamängdens uppdateringsfrekvens."
+      }
+    },
+    {
+      "type": "group",
+      "id": "dcat:dcterms:temporal_da",
+      "property": "http://purl.org/dc/terms/temporal",
+      "nodetype": "RESOURCE",
+      "label": {
+        "en": "Time period",
+        "sv": "Tidsperiod",
+        "nb": "Tidsperiode",
+        "da": "Tidsperiode",
+        "de": "Zeitperiode"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/PeriodOfTime"
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "items": [
+        {
+          "type": "text",
+          "nodetype": "DATATYPE_LITERAL",
+          "property": "http://schema.org/startDate",
+          "label": {
+            "en": "Start",
+            "sv": "Start",
+            "nb": "Start",
+            "da": "Start",
+            "de": "Beginn"
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#date"
+        },
+        {
+          "type": "text",
+          "nodetype": "DATATYPE_LITERAL",
+          "property": "http://schema.org/endDate",
+          "label": {
+            "en": "End",
+            "sv": "Slut",
+            "nb": "Slutt",
+            "da": "Slut",
+            "de": "Ende"
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "description": {
+        "nb": "Referanse til en tidsperiode datasettet gjelder for (startdato og sluttdato)",
+        "da": "Reference til en tidsperiode datasættet gælder for (startdato og slutdato)",
+        "de": "Gültigkeitszeitraum für einen Datensatz (Start- und Enddatum)",
+        "sv": "Datamängdens giltighetsperiod (startdatum och slutdatum)"
+      }
+    },
+    {
+      "type": "text",
+      "id": "dcat:keyword_da",
+      "nodetype": "LANGUAGE_LITERAL",
+      "label": {
+        "en": "Keyword",
+        "sv": "Nyckelord",
+        "nb": "Emneord",
+        "da": "Nøgleord",
+        "de": "Schlüsselwort"
+      },
+      "property": "http://www.w3.org/ns/dcat#keyword",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "description": {
+        "en": "This property contains a keyword or tag describing the Dataset",
+        "nb": "Inneholder emneord (eller tag) som beskriver datasettet",
+        "da": "Nøgleord for et datasæt baseret på FORM på forskelligt niveau",
+        "de": "Diese Eigenschaft enthält ein Schlüsselwort das den Datensatz beschreibt",
+        "sv": "Egenskapen innehåller ett nyckelord som beskriver datamängden"
+      },
+      "styles": [
+        "viewAllTranslations"
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "label": {
+        "en": "Contact point",
+        "sv": "Kontakt",
+        "da": "Kontaktpunkt",
+        "de": "Kontaktpunkt"
+      },
+      "id": "dcat:contactPoint",
+      "property": "http://www.w3.org/ns/dcat#contactPoint",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "description": {
+        "en": "This property contains contact information that can be used for flagging errors in the Dataset or sending comments",
+        "da": "Kontaktinformation i forhold til spørgsmål og kommentarer til datasættet",
+        "de": "Diese Eigenschaft enthält Kontaktinformationen die zum Melden von Fehlern im Datensatz oder zum Versenden von Kommentaren verwendet werden können",
+        "sv": "Egenskapen innehåller kontaktuppgifter som kan användas för att flagga fel i datamängden eller för att skicka kommentarer"
+      },
+      "extends": "vc:IndOrGroup"
+    },
+    {
+      "type": "text",
+      "nodetype": "URI",
+      "label": {
+        "en": "Landing page",
+        "sv": "Ingångssida",
+        "nb": "Landingsside",
+        "da": "Link til hjemmeside",
+        "de": "Landing-Page"
+      },
+      "property": "http://www.w3.org/ns/dcat#landingPage",
+      "id": "dcat:landingPage_da",
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "description": {
+        "en": "This property refers to a web page that provides access to the Dataset, its Distributions and/or additional information. It is intended to point to a landing page at the original data provider, not to a page on a site of a third party, such as an aggregator.",
+        "nb": "Referanse til nettside som gir tilgang til datasettet, dets distribusjoner og/eller tilleggsinformasjon. Dokumentasjon som ikke er spesifikt definisjon av felter, hører hjemme her.",
+        "da": "Denne attribut refererer til en hjemmeside der giver adgang til datasættet, dens distribution eller yderligere information. Formålet er at pege på en start side hos den oprindelige dataejer.",
+        "de": "Diese Eigenschaft bezieht sich auf eine Webseite die Zugriff auf den Datensatz, seine Distributionen und/oder zusätzliche Informationen bietet. Es sollte auf eine Webseite beim ursprünglichen Datenanbieter verweisen und nicht etwa auf eine Website eines Aggregators.",
+        "sv": "Den här egenskapen hänvisar till en webbsida som ger tillgång till datamängden eller dess distributioner och/eller ytterligare information. Den bör peka på en landningssida hos den ursprungliga dataleverantören och inte till en sida på en webbplats av en tredje part, såsom en aggregator."
+      },
+      "pattern": "https?://.+"
+    },
+    {
+      "type": "group",
+      "id": "dcat:publisher-person",
+      "extends": "foaf:Person-ref",
+      "property": "http://purl.org/dc/terms/publisher",
+      "label": {
+        "en": "Publisher (person)",
+        "da": "Dataansvarlig organisation"
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "choice",
+      "id": "dcat:theme-1ev",
+      "property": "http://www.w3.org/ns/dcat#theme",
+      "nodetype": "URI",
+      "label": {
+        "en": "Eurovoc: first level",
+        "sv": "Eurovoc: första nivån",
+        "da": "Eurovoc: første niveau"
+      },
+      "styles": [
+        "deprecated",
+        "strictmatch"
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "choices": [
+        {
+          "value": "http://eurovoc.europa.eu/100142",
+          "label": {
+            "en": "04 POLITICS",
+            "sv": "04 POLITIK",
+            "da": "04 POLITIK"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100143",
+          "label": {
+            "en": "08 INTERNATIONAL RELATIONS",
+            "sv": "08 INTERNATIONELLA FÖRBINDELSER",
+            "da": "08 INTERNATIONALE FORHOLD"
+          },
+          "description": {}
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100144",
+          "label": {
+            "en": "10 EUROPEAN UNION",
+            "sv": "10 EUROPEISKA UNIONEN",
+            "da": "10 EUROPÆISKE UNION"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100145",
+          "label": {
+            "en": "12 LAW",
+            "sv": "12 LAG OCH RÄTT",
+            "da": "12 LOVGIVNING"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100146",
+          "label": {
+            "en": "16 ECONOMICS",
+            "sv": "16 EKONOMI",
+            "da": "16 ØKONOMI"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100147",
+          "label": {
+            "en": "20 TRADE",
+            "sv": "20 HANDEL OCH AFFÄRSVERKSAMHET",
+            "da": "20 HANDEL"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100148",
+          "label": {
+            "en": "24 FINANCE",
+            "sv": "24 FINANSER",
+            "da": "24 FINANS"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100149",
+          "label": {
+            "en": "28 SOCIAL QUESTIONS",
+            "sv": "28 SOCIALA FRÅGOR",
+            "da": "28 SOCIALE ANLIGGENDER"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100150",
+          "label": {
+            "en": "32 EDUCATION AND COMMUNICATIONS",
+            "sv": "32 UTBILDNING OCH KOMMUNIKATION",
+            "ek": "32 UDDANNELSE OG KOMMUNIKATION"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100151",
+          "label": {
+            "en": "36 SCIENCE",
+            "sv": "36 VETENSKAP",
+            "da": "36 VIDENSKAB"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100152",
+          "label": {
+            "en": "40 BUSINESS AND COMPETITION",
+            "sv": "40 FÖRETAG OCH KONKURRENS",
+            "da": "40 ERHVERV OG KONKURRENCE"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100153",
+          "label": {
+            "en": "44 EMPLOYMENT AND WORKING CONDITIONS",
+            "sv": "44 SYSSELSÄTTNING OCH ARBETE",
+            "da": "44 ARBEJDSMARKEDSFORHOLD"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100154",
+          "label": {
+            "en": "48 TRANSPORT",
+            "sv": "48 TRANSPORT",
+            "da": "48 TRANSPORT"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100155",
+          "label": {
+            "en": "52 ENVIRONMENT",
+            "sv": "52 MILJÖ",
+            "da": "52 MILJØ"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100156",
+          "label": {
+            "en": "56 AGRICULTURE, FORESTRY AND FISHERIES",
+            "sv": "56 JORDBRUK, SKOGSBRUK OCH FISKE",
+            "da": "56 LANDBRUG, SKOVBRUG OG FISKERI"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100157",
+          "label": {
+            "en": "60 AGRI-FOODSTUFFS",
+            "sv": "60 JORDBRUKSLIVSMEDELSINDUSTRI",
+            "da": "60 LANDBRUGSMIDDELINDUSTRI"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100158",
+          "label": {
+            "en": "64 PRODUCTION, TECHNOLOGY AND RESEARCH",
+            "sv": "64 PRODUKTION, TEKNIK OCH FORSKNING",
+            "da": "64 PRODUKTION, TEKNIK OG FORSKNING"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100159",
+          "label": {
+            "en": "66 ENERGY",
+            "sv": "66 ENERGI",
+            "da": "66 ENERGI"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100160",
+          "label": {
+            "en": "68 INDUSTRY",
+            "sv": "68 INDUSTRI",
+            "da": "68 INDUSTRI"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100161",
+          "label": {
+            "en": "72 GEOGRAPHY",
+            "sv": "72 GEOGRAFI",
+            "da": "72 GEOGRAFI"
+          }
+        },
+        {
+          "value": "http://eurovoc.europa.eu/100162",
+          "label": {
+            "en": "76 INTERNATIONAL ORGANISATIONS",
+            "sv": "76 INTERNATIONELLA ORGANISATIONER",
+            "da": "76 INTERNATIONALE ORGANISATIONER"
+          }
+        }
+      ],
+      "description": {
+        "en": "This is a list of the first level Eurovoc categories.",
+        "da": "Dette er en liste over Eurovoc kategorier på første niveau."
+      }
+    },
+    {
+      "type": "group",
+      "id": "dcat:format-group_di",
+      "label": {
+        "en": "Format",
+        "sv": "Format",
+        "nb": "Format",
+        "da": "Format",
+        "de": "Format"
+      },
+      "cardinality": {
+        "min": 1,
+        "pref": 1,
+        "max": 1
+      },
+      "styles": [
+        "disjoint"
+      ],
+      "items": [
+        {
+          "id": "dcat:format-group_di_choices"
+        },
+        {
+          "type": "text",
+          "property": "http://purl.org/dc/terms/format",
+          "description": {
+            "en": "If you cannot find your mediatype in the list above you can provide one by hand. See list of established mediatypes at: http://www.iana.org/assignments/media-types/media-types.xhtml."
+          },
+          "label": {
+            "en": "Other mediatypes",
+            "sv": "Övriga mediatyper",
+            "nb": "Andre",
+            "da": "Andre filtyper",
+            "de": "Sonstige Medientypen"
+          },
+          "nodetype": "ONLY_LITERAL",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "id": "dcat:format-group_di_choices",
+      "property": "http://purl.org/dc/terms/format",
+      "nodetype": "ONLY_LITERAL",
+      "label": {
+        "en": "Common mediatypes",
+        "sv": "Vanliga mediatyper",
+        "nb": "Vanlige filtyper",
+        "da": "Almindelige filtyper",
+        "de": "Verbreitete Medientypen"
+      },
+      "choices": [
+        {
+          "value": "text/csv",
+          "label": {
+            "en": "Comma Separated Values (.csv)"
+          },
+          "description": {
+            "en": "CSV is a simple spreadsheet format where rows are separeted by newlines and columns by commas , semicolon or some other special character."
+          }
+        },
+        {
+          "value": "application/x-shp",
+          "label": {
+            "en": "ESRI Shapefile (.zip containing .shp)"
+          },
+          "description": {
+            "en": "ESRI Shapefile developed by ESRI for ArcMap which is a multi-file GIS format that uses DBase files for the attribution and a prf file for the coordinate system. "
+          }
+        },
+        {
+          "value": "application/gml+xml",
+          "label": {
+            "en": "GML (.gml)"
+          },
+          "description": {
+            "en": "Geography Markup Language (GML) is an international standard for exchange of geographical feature maintained by the Open Geospatial Consortium (OGC)."
+          }
+        },
+        {
+          "value": "text/html",
+          "label": {
+            "en": "HTML (.html)"
+          },
+          "description": {
+            "en": "HTML or HyperText Markup Language is the standard markup language used to create web pages."
+          }
+        },
+        {
+          "value": "application/json",
+          "label": {
+            "en": "JSON (.json)"
+          },
+          "description": {
+            "en": "JSON or JavaScript Object Notation, is an open standard format that uses human-readable text to transmit data objects consisting of attribute–value pairs. It is used primarily to transmit data between a server and web application, as an alternative to XML."
+          }
+        },
+        {
+          "value": "application/vnd.google-earth.kml+xml",
+          "label": {
+            "en": "KML (.kml)"
+          },
+          "description": {
+            "en": "Keyhole Markup Language (KML) is used to display geographic data in an Earth browser, such as Google Earth. KML is an international standard maintained by the Open Geospatial Consortium, Inc. (OGC)."
+          }
+        },
+        {
+          "value": "application/vnd.ms-excel",
+          "label": {
+            "en": "Microsoft Excel (.xls)"
+          },
+          "description": {}
+        },
+        {
+          "value": "application/n-triples",
+          "label": {
+            "en": "N-Triples (.n3)"
+          },
+          "description": {
+            "en": "A line-based syntax for an RDF graph."
+          }
+        },
+        {
+          "value": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet ",
+          "label": {
+            "en": "OOXML Spreadsheet (.xlsx)"
+          },
+          "description": {
+            "en": "Office Open XML Spreadsheet is a zipped, XML-based file format developed by Microsoft, standardized in ECMA-376 and later in ISO/IEC 29500."
+          }
+        },
+        {
+          "value": "application/vnd.oasis.opendocument.spreadsheet",
+          "label": {
+            "en": "OpenDocument Spreadsheet (.ods)"
+          },
+          "description": {
+            "en": "The Open Document Format for spreadsheets is an XML based format standardized first by OASIS and later by ISO/IEC: ISO/IEC 26300:2006/Amd 1:2012 — Open Document Format for Office Applications (OpenDocument) v1.1."
+          }
+        },
+        {
+          "value": "application/pdf",
+          "description": {
+            "en": "Portable Document Format (PDF) is a file format used to present documents encapsulating a complete description of a fixed-layout flat document, including the text, fonts, graphics, and other information needed to display it."
+          },
+          "label": {
+            "en": "PDF (.pdf)"
+          }
+        },
+        {
+          "value": "application/rdf+xml",
+          "label": {
+            "en": "RDF/XML (.rdf)"
+          },
+          "description": {
+            "en": "This is an XML syntax for RDF as introduced in the RDF/XML Syntax Specification by W3C in 2004."
+          }
+        },
+        {
+          "value": "application/sparql-query",
+          "label": {
+            "en": "SPARQL Query Language for RDF (API)"
+          },
+          "description": {
+            "en": "SPARQL (pronounced \"sparkle\", an acronym for SPARQL Protocol and RDF Query Language) is an RDF query language, that is, a query language for databases, able to retrieve and manipulate data stored in Resource Description Framework format."
+          }
+        },
+        {
+          "value": "text/plain",
+          "label": {
+            "en": "Text (.txt)"
+          },
+          "description": {
+            "en": "Plain text file."
+          }
+        },
+        {
+          "value": "text/turtle; charset=utf-8",
+          "description": {
+            "en": "Turtle is a syntax for RDF that allows an RDF graph to be completely written in a compact and natural text form, with abbreviations for common usage patterns and datatypes. "
+          },
+          "label": {
+            "en": "Turtle (.ttl)"
+          }
+        },
+        {
+          "value": "application/xml",
+          "label": {
+            "en": "XML data (.xml)"
+          },
+          "description": {
+            "en": "Extensible Markup Language (XML) is a markup language that defines a set of rules for encoding documents in a format that is both human-readable and machine-readable. It is defined in the XML 1.0 Specification produced by the W3C."
+          }
+        },
+        {
+          "value": "application/zip",
+          "label": {
+            "en": "ZIP (.zip)"
+          },
+          "description": {
+            "en": ".ZIP is an archive file format that supports lossless data compression."
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      },
+      "description": {
+        "en": "A selection of common mediatypes according to the list suggested by the DCAT-AP recommendation."
+      },
+      "styles": [
+        "strictmatch"
+      ]
+    },
+    {
+      "type": "text",
+      "id": "dcat:byteSize_di",
+      "property": "http://www.w3.org/ns/dcat#byteSize",
+      "nodetype": "DATATYPE_LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "label": {
+        "en": "Size (in bytes)",
+        "sv": "Storlek (i bytes)",
+        "nb": "Filstørrelse (i bytes)",
+        "da": "Filstørrelse (i bytes)",
+        "de": "Größe (in Bytes)"
+      },
+      "description": {
+        "en": "The size in bytes can be approximated when the precise size is not known.",
+        "nb": "Distribusjonens størrelse oppgitt i bytes",
+        "da": "Distribusionens størrelse i bytes",
+        "de": "Die Größe der Distribution kann geschätzt werden wenn die genaue Größe nicht bekannt ist.",
+        "sv": "Distributionens storleken kan uppskattas när den exakta storleken är okänd."
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#decimal"
+    },
+    {
+      "type": "text",
+      "id": "dcat:accessURL_di",
+      "nodetype": "URI",
+      "label": {
+        "en": "Web address for access",
+        "sv": "Webbadress för åtkomst",
+        "nb": "TilgangsURL",
+        "da": "Adgang til datasæt",
+        "de": "Webadresse für den Zugriff"
+      },
+      "property": "http://www.w3.org/ns/dcat#accessURL",
+      "description": {
+        "en": "This property contains a URL that gives access to a Distribution of the Dataset. The resource at the access URL may contain information about how to get the Dataset. (1) Use accessURL, and not downloadURL,  when it is definitely not a download or when you are not sure whether it is. (2) If the distribution(s) are accessible only through a landing page (i.e. direct download URLs are not known), then the landing page link SHOULD be duplicated as accessURL on a distribution.",
+        "nb": "En URL som gir tilgang til en distribusjon av datasettet. Ressursen det pekes til kan gi informasjon om hvordan en kan få tilgang til i datasettet",
+        "da": "Link til hjemmeside der giver adgang til datasættet og dets distribution. Ressursen der peges på kan give informasion om hvordan en bruger kan få adgang til datasættet",
+        "de": "Eine Webadresse für den Zugriff auf eine Distribution.",
+        "sv": "En webbadress till datamängdens distribution."
+      },
+      "cardinality": {
+        "min": 1,
+        "pref": 1
+      },
+      "pattern": "https?://.+"
+    },
+    {
+      "type": "text",
+      "nodetype": "URI",
+      "label": {
+        "en": "Web address for download",
+        "sv": "Webbadress för nedladdning",
+        "nb": "Nedlastningslenke",
+        "da": "Download URL",
+        "de": "Webadresse zum Download"
+      },
+      "property": "http://www.w3.org/ns/dcat#downloadURL",
+      "description": {
+        "en": "A file that contains the distribution of the dataset in a given format. dcat:downloadURL is a specific form of dcat:accessURL. Nevertheless, DCAT does not define dcat:downloadURL as a subproperty of dcat:accessURL not to enforce this entailment as DCAT profiles may wish to impose a stronger separation where they only use accessURL for non-download locations.",
+        "nb": "Direktelenke (URL) til en nedlastbar fil i et gitt format",
+        "da": "Angiver et direkte link til at downloade filen i et givent format.",
+        "de": "Die Webadresse zur Datei welche eine Distribution des Datensatzes in einem gegebenen Format enthält.",
+        "sv": "En fil som innehåller datamängdens distribution i ett givet format."
+      },
+      "id": "dcat:downloadURL_di",
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "pattern": "(http|https|ftp|ftps)://.*"
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:dcterms:spatial",
+      "extends": "dcterms:spatial",
+      "label": {
+        "en": "Spatial coverage",
+        "nb": "Dekningsområde",
+        "sv": "Geografiskt område",
+        "da": "Datasættets administrative grænser",
+        "de": "Geographische Abdeckung"
+      }
+    },
+    {
+      "type": "choice",
+      "id": "dcat:dcterms:spatial_da",
+      "nodetype": "URI",
+      "description": {
+        "en": "A spatial region or named place. The geographical area covered by the dataset. It is recommended to use URIs from Geonames in the form: http://sws.geonames.org/6695072",
+        "nb": "Referanse til et geografisk område datasettet ",
+        "da": "Det geografiske område som datasættet dækker. (Eksempelvis DAGI områder)",
+        "de": "Das geographische Gebiet das durch den Datensatz abgedeckt wird. Es wird empfohlen URIs von Geonames in der folgenden Form zu verwenden: http://sws.geonames.org/6695072",
+        "sv": "Det geografiska området som omfattas av datamängden. Det rekommenderas att använda Geonames URI:er i följande form: http://sws.geonames.org/6695072"
+      },
+      "extends": "dcat:dcterms:spatial"
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:dcterms:conformsTo",
+      "extends": "dcterms:conformsTo",
+      "label": {
+        "en": "Conforms to",
+        "nb": "I samsvar med",
+        "sv": "Uppfyller",
+        "da": "Overholdelse af regel eller specifikation",
+        "de": "Folgt Standard oder Spezifikation"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "dcterms:Standard"
+      },
+      "pattern": "https?://.+"
+    },
+    {
+      "type": "text",
+      "nodetype": "ONLY_LITERAL",
+      "id": "dcat:adms:identifier_da",
+      "property": "http://www.w3.org/ns/adms#identifier",
+      "label": {
+        "en": "Other identifier",
+        "sv": "Övrig identifierare",
+        "nb": "Annen identifikator",
+        "da": "Anden identifikator",
+        "de": "Anderer Identifikator"
+      },
+      "description": {
+        "en": "This property refers to a secondary identifier of the Dataset, such as MAST/ADS 48, DataCite 49 , DOI 50 , EZID 51 or W3ID 52.",
+        "nb": "Referanse til en sekundær identifikator av datasettet som MAST/ADS, DataCite, DOI, EZID eller W3ID.",
+        "da": "Denne attribut referer til en sekundær identifikator for datasætter.",
+        "de": "Diese Eigenschaft bezieht sich auf eine sekundäre Kennung des Datensatzes wie z.B. MAST/ADS 48, DataCite 49 , DOI 50 , EZID 51 or W3ID 52",
+        "sv": "Egenskapen avser en sekundär identifierare för datamängden"
+      }
+    },
+    {
+      "type": "text",
+      "nodetype": "ONLY_LITERAL",
+      "id": "dcat:owl:versionInfo_da",
+      "label": {
+        "en": "Version",
+        "sv": "Version",
+        "nb": "Versjon",
+        "da": "Version",
+        "de": "Version"
+      },
+      "property": "http://www.w3.org/2002/07/owl#versionInfo",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "description": {
+        "nb": "Et versjonsnummer eller annen versjonsbetegnelse for datasettet",
+        "en": "This property contains a version number or other version designation of the Dataset.",
+        "da": "Angiver et versionsnummer for datasættet.",
+        "de": "Eine Versionsnummer oder eine andere Versionsbezeichnung des Datensatzes.",
+        "sv": "Ett versionsnummer eller annan versionsbeteckning för datamängden."
+      }
+    },
+    {
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "id": "dcat:adms:versionNotes_da",
+      "property": "http://www.w3.org/ns/adms#versionNotes",
+      "styles": [
+        "multiline"
+      ],
+      "label": {
+        "en": "Version notes",
+        "sv": "Versionsanteckningar",
+        "nb": "Versjonsnote",
+        "da": "Versionsnoter",
+        "de": "Versionshinweise"
+      },
+      "description": {
+        "en": "This property contains a description of the differences between this version and a previous version of the Dataset. This property can be repeated for parallel language versions of the version notes.",
+        "nb": "En beskrivelse av endringene fra forrige versjon til denne versjonen av datasettet",
+        "da": "Angiver forskellen mellem denne version og den forrige.",
+        "de": "Enthält eine Beschreibung der Unterschiede zwischen dieser Version und einer früheren Version des Datensatzes. Diese Eigenschaft kann für parallele Sprachversionen der Versionshinweise wiederholt werden.",
+        "sv": "Innehåller en beskrivning av skillnaderna mellan denna version och en tidigare version av datamängden. Denna egenskap kan upprepas för parallella språkversioner av versionsanteckningar."
+      }
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:adms:status_di",
+      "property": "http://www.w3.org/ns/adms#status",
+      "label": {
+        "en": "Status",
+        "sv": "Status",
+        "nb": "Status",
+        "da": "Status",
+        "de": "Status"
+      },
+      "choices": [
+        {
+          "value": "http://purl.org/adms/status/Completed",
+          "label": {
+            "en": "Completed",
+            "sv": "Färdig",
+            "nb": "Fullført",
+            "da": "Fuldført",
+            "de": "Fertiggestellt"
+          }
+        },
+        {
+          "value": "http://purl.org/adms/status/Deprecated",
+          "label": {
+            "en": "Deprecated",
+            "sv": "Avvecklad",
+            "nb": "Utgått",
+            "da": "Udgået",
+            "de": "Veraltet"
+          }
+        },
+        {
+          "value": "http://purl.org/adms/status/UnderDevelopment",
+          "label": {
+            "en": "Under development",
+            "sv": "Under utveckling",
+            "nb": "Under utvikling",
+            "da": "Under udvikling",
+            "de": "In Entwicklung"
+          }
+        },
+        {
+          "value": "http://purl.org/adms/status/Withdrawn",
+          "label": {
+            "en": "Withdrawn",
+            "sv": "Tillbakadragen",
+            "nb": "Trekt tilbake",
+            "da": "Trukket tilbage",
+            "de": "Zurückgezogen"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "styles": [
+        "verticalRadioButtons"
+      ],
+      "description": {
+        "nb": "Distribusjonens modenhet (fullført, under utvikling, utgått, trekt tilbake)",
+        "en": "This property refers to the maturity of the Distribution",
+        "da": "Angiver modenheden af distributionen.",
+        "de": "Reifegrad der Distribution",
+        "sv": "Distributionens mognadsgrad"
+      }
+    },
+    {
+      "id": "adms:publishertype",
+      "type": "choice",
+      "nodetype": "URI",
+      "property": "http://purl.org/dc/terms/type",
+      "label": {
+        "en": "Type",
+        "sv": "Typ",
+        "nb": "Type",
+        "da": "Type",
+        "de": "Typ"
+      },
+      "choices": [
+        {
+          "value": "http://purl.org/adms/publishertype/Academia-ScientificOrganisation",
+          "label": {
+            "en": "Academia/Scientific organisation",
+            "sv": "Akademia/Vetenskaplig organisation",
+            "nb": "Akademia/Forskningsorganisasjon",
+            "da": "Akademia/Forskningsorganisation",
+            "de": "Akademie/Wissenschaftliche Organisation"
+          }
+        },
+        {
+          "value": "http://purl.org/adms/publishertype/Company",
+          "label": {
+            "en": "Company",
+            "sv": "Företag",
+            "nb": "Virksomhet",
+            "da": "Virksomhed",
+            "de": "Unternehmen"
+          }
+        },
+        {
+          "value": "http://purl.org/adms/publishertype/IndustryConsortium",
+          "label": {
+            "en": "Industry consortium",
+            "sv": "Industrikonsortium",
+            "nb": "Industrikonsortium",
+            "da": "Industrikonsortium",
+            "de": "Industriekonsortium"
+          }
+        },
+        {
+          "value": "http://purl.org/adms/publishertype/LocalAuthority",
+          "label": {
+            "en": "Local Authority",
+            "sv": "Lokal myndighet/kommun",
+            "nb": "Lokal myndighet",
+            "da": "Lokal myndighed",
+            "de": "Lokale Behörde/Bezirk/Gemeinde"
+          }
+        },
+        {
+          "value": "http://purl.org/adms/publishertype/NationalAuthority",
+          "label": {
+            "en": "National authority",
+            "sv": "Nationell myndighet",
+            "nb": "Nasjonal myndighet",
+            "da": "National myndighed",
+            "de": "Nationale Behörde"
+          }
+        },
+        {
+          "value": "http://purl.org/adms/publishertype/NonGovernmentalOrganisation",
+          "label": {
+            "en": "Non-Governmental Organisation",
+            "sv": "Icke-statlig organisation",
+            "nb": "Ikke-statlig organisasjon",
+            "da": "Ikke-statslig organisation",
+            "de": "Nicht-Regierungs-Organisation"
+          }
+        },
+        {
+          "value": "http://purl.org/adms/publishertype/NonProfitOrganisation",
+          "label": {
+            "en": "Non-Profit Organisation",
+            "sv": "Ej vinstdrivande organisation",
+            "nb": "Non-profit organisasjon",
+            "da": "Non-profit organisaton",
+            "de": "Non-Profit-Organisation"
+          }
+        },
+        {
+          "value": "http://purl.org/adms/publishertype/PrivateIndividual(s)",
+          "label": {
+            "en": "Private Individual(s)",
+            "sv": "Privatperson(er)",
+            "nb": "Privatperson(er)",
+            "da": "Privatperson(er)",
+            "de": "Privatperson(en)"
+          }
+        },
+        {
+          "value": "http://purl.org/adms/publishertype/RegionalAuthority",
+          "label": {
+            "en": "Regional authority",
+            "sv": "Regional myndighet/landsting",
+            "nb": "Regional myndighet",
+            "da": "Regional myndighed",
+            "de": "Regionale Behörde/Bundesland"
+          }
+        },
+        {
+          "value": "http://purl.org/adms/publishertype/StandardisationBody",
+          "label": {
+            "en": "Standardisation body",
+            "sv": "Standardiseringsorganisation",
+            "nb": "Standardiseringsråd",
+            "da": "Standardiseringsorganisation",
+            "de": "Standardisierungsorganisation"
+          }
+        },
+        {
+          "value": "http://purl.org/adms/publishertype/SupraNationalAuthority",
+          "label": {
+            "en": "Supra-national authority",
+            "sv": "Över-/mellanstatlig myndighet",
+            "nb": "Overnasjonal myndighet",
+            "da": "Overnational myndighed",
+            "de": "Supranationale/Überstaatliche Behörde"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "dcat:foaf:Agent",
+      "property": "http://purl.org/dc/terms/publisher",
+      "items": [
+        {
+          "type": "text",
+          "nodetype": "LANGUAGE_LITERAL",
+          "extends": "foaf:name",
+          "cardinality": {
+            "min": 1,
+            "pref": 0
+          }
+        },
+        {
+          "id": "adms:publishertype"
+        },
+        {
+          "type": "text",
+          "nodetype": "URI",
+          "extends": "foaf:homepage",
+          "cardinality": {
+            "min": 0,
+            "pref": 0
+          },
+          "pattern": "https?://.+"
+        },
+        {
+          "type": "text",
+          "nodetype": "URI",
+          "extends": "foaf:mbox",
+          "valueTemplate": "mailto:",
+          "cardinality": {
+            "min": 0,
+            "pref": 0
+          },
+          "label": {
+            "en": "Email address",
+            "sv": "E-postadress",
+            "da": "Email adresse",
+            "de": "E-Mail-Adresse"
+          }
+        }
+      ],
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+          "http://xmlns.com/foaf/0.1/Agent",
+          "http://xmlns.com/foaf/0.1/Person",
+          "http://xmlns.com/foaf/0.1/Organization"
+        ]
+      },
+      "label": {
+        "en": "Publisher",
+        "sv": "Tillhandahållande organisation",
+        "nb": "Utgiver",
+        "da": "Dataansvarlig organisation",
+        "de": "Herausgeber"
+      }
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "dcat:dcterms:license",
+      "styles": [
+        "disjoint"
+      ],
+      "items": [
+        "dcat:dcterms:cc-license-choices",
+        {
+          "type": "choice",
+          "nodetype": "URI",
+          "property": "http://purl.org/dc/terms/license",
+          "constraints": {
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "dcterms:LicenseDocument"
+          },
+          "label": {
+            "en": "Other",
+            "sv": "Övriga",
+            "da": "Øvrige",
+            "de": "Andere"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          }
+        }
+      ],
+      "label": {
+        "en": "License",
+        "sv": "Licens",
+        "nb": "Lisens",
+        "da": "Licens",
+        "de": "Lizenz"
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      }
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:dcterms:cc-license-choices",
+      "extends": "dcterms:cc-license-choices",
+      "label": {
+        "en": "Creative Commons"
+      },
+      "choices": [
+        {
+          "value": "http://creativecommons.org/licenses/by/4.0/",
+          "label": {
+            "en": "CC BY 4.0 (Attribution)"
+          },
+          "description": {
+            "de": "Der Urheber gestattet die Ressource für kommerzielle Zwecke zu nutzen und Änderungen vorzunehmen",
+            "sl": "Lastnik DOVOLJUJE komercialno rabo in spreminjanje vira.",
+            "ro": "Autorul PERMITE utilizarea in scop comercial SI modificari asupra resursei",
+            "el": "Άδεια που εφαρμόζεται στο αντικείμενο (αναφορικά με Creative Commons)",
+            "hu": "A tulajdonos engedélyezi a kereskedelmi forgalomba hozatalt és a változásokat",
+            "bg": "Притежателят ПОЗВОЛЯВА търговска употреба и промени в ресурса ",
+            "fr": "Le détenteur des droits AUTORISE l'utilisation commerciale ET les modifications de la ressource",
+            "en": "The owner ALLOWS commercial uses AND changes to the resource",
+            "ru": "Владелец РАЗРЕШАЕТ как использование источника в коммерческих целях, ТАК И изменение содержания",
+            "hi": "स्वामी वाणिज्यिक उपयोग एवं संसाधनों में परिवर्तन की अनुमति देता है",
+            "et": "Omanik LUBAB kasutada allikat kommertslikel eesmärkidel JA muuta allika sisu",
+            "es": "El propieatrio PERMITE uso comercial Y cambios en el recurso"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-nc/4.0/",
+          "label": {
+            "en": "CC BY-NC 4.0 (Attribution, Non-Commercial)"
+          },
+          "description": {
+            "de": "Der Urheber gestattet keine kommerzielle Nutzung, erlaubt aber Änderungen an der Ressource",
+            "sl": "Lastnik NE dovoljuje komercialne rabe toda DOVOLJUJE spreminjanje vira.",
+            "ro": "Autorul NU permite utilizarea in scop comercial dar PERMITE modificari asupra resursei",
+            "el": "Ο ιδιοκτήτης του αντικειμένου ΔΕΝ επιτρέπει εμπορικές χρήσεις αλλά ΕΠΙΤΡΕΠΕΙ αλλαγές στο αντικείμενο",
+            "hu": "A tulajdonos nem engedélyezi a kereskedelmi forgalomba hozatalt, de a módosítást igen. ",
+            "bg": "Притежателят НЕ ПОЗВОЛЯВА за търговски цели, но ПОЗВОЛЯВА да се променя ресурса",
+            "fr": "Le détenteur des droits N'AUTORISE PAS l'utilisation commerciale MAIS ACCEPTE les modifications de la ressource",
+            "en": "The owner does NOT allow commercial uses but ALLOWS changes to the resource",
+            "ru": "Владелец НЕ РАЗРЕШАЕТ использование источника в коммерческих целях, но РАЗРЕШАЕТ изменение содержани��",
+            "hi": "स���वामी वाणिज्यिक उपयोग की अनुमति नही देता है परंतु संसाधनों में परिवर्तन की अनुमति देता है",
+            "et": "Omanik EI LUBA kasutada allikat kommertslikel eesmärkidel, kuid LUBAB muuta allika sisu",
+            "es": "El propieatrio NO permite uso comercial pero PERMITE cambios en el recurso"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-nc-nd/4.0/",
+          "label": {
+            "en": "CC BY-NC-ND 4.0 (Attribution, Non-Commercial, No Derivative Works)"
+          },
+          "description": {
+            "de": "Der Urheber gestattet die nicht-kommerzielle Nutzung oder Änderungen an der Ressourcen",
+            "sl": "Lastnik NE dovoljuje komercialne rabe ALI spreminjanja virov.",
+            "ro": "Autorul NU permite nici utilizarea in scop comercial nici modificari asupra resursei",
+            "el": "Ο ιδιοκτήτης του αντικειμένου ΕΠΙΤΡΕΠΕΙ εμπορικές χρήσεις αλλά ΌΧΙ αλλαγές στο αντικείμενο",
+            "hu": "A tulajdonos nem engedélyezi a kereskedelmi forgalomba hozatalt és módosítást. ",
+            "bg": "Притежателят НЕ позволява търговска употреба и ИЛИ да се променя ресурса ",
+            "fr": "Le détenteur des droits N'AUTORISE PAS l'utilisation commerciale NI les modifications de la ressource",
+            "en": "The owner does NOT allow commercial uses OR changes to the resource",
+            "ru": "Владелец НЕ РАЗРЕШАЕТ как использование источника в коммерческих целях, ТАК И изменение содержания",
+            "hi": "स्वामी वाणिज्यिक उपयोग और संसाधनों में परिवर्तन की अनुमति नहीं  देता है",
+            "et": "Omanik EI LUBA kasutada allikat kommertslikel eesmärkidel EGA luba muuta allika sisu",
+            "es": "El propieatrio NO permite uso comercial ni cambios en el recurso"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "label": {
+            "en": "CC BY-NC-SA 4.0 (Attribution, Non-Commercial, Share Alike)"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-nd/4.0/",
+          "label": {
+            "en": "CC BY-ND 4.0 (Attribution, No Derivative Works)"
+          },
+          "description": {
+            "de": "Der Urheber gestattet, die Ressource für kommerzielle Zwecke zu nutzen, es dürfen jedoch keine Änderungen vorgenommen werden",
+            "sl": "Lastnik DOVOLJUJE komercialno rabo toda NE dovoli spreminjanja vira.",
+            "ro": "Autorul PERMITE utilizarea in scop comercial dar nu permite modificari asupra resursei",
+            "el": "Ο ιδιοκτήτης του αντικειμένου ΕΠΙΤΡΕΠΕΙ εμπορικές χρήσεις ΚΑΙ αλλαγές στο αντικείμενο",
+            "hu": "A tulajdonos engedélyezi a kereskedelmi forgalomba hozatalt, változások nélkül.",
+            "bg": "Притежателят ПОЗВОЛЯВА търговска употреба, но НЕ се позволява да се променя ресурса",
+            "fr": "Le détenteur des droits AUTORISE l'utilisation commerciale MAIS REFUSE les modifications de la ressource",
+            "en": "The owner ALLOWS commercial uses but does NOT allow changes to the resource",
+            "ru": "Владелец РАЗРЕШАЕТ использование источника в коммерческих целях, но НЕ РАЗРЕШАЕТ изменение содержания",
+            "hi": "स्वामी वाणिज्यिक उपयोग की अनुमति देता है परंतु  संसाधनों में परिवर्तन की अनुमति नहीं  देता है",
+            "et": "Omanik LUBAB kasutada allikat kommertslikel eesmärkidel, kuid EI luba muuta allika sisu",
+            "es": "El propieatrio PERMITE uso comercial pero NO permite cambios en el recurso"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-sa/4.0/",
+          "label": {
+            "en": "CC BY-SA 4.0 (Attribution, Share Alike)"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "label": {
+            "en": "CC0 1.0 (Public Domain Dedication, No Copyright)"
+          }
+        }
+      ],
+      "property": "http://purl.org/dc/terms/license",
+      "description": {},
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "styles": [
+        "verticalRadioButtons",
+        "strictmatch"
+      ]
+    },
+    {
+      "type": "text",
+      "nodetype": "URI",
+      "id": "dcat:theme",
+      "property": "http://www.w3.org/ns/dcat#theme",
+      "label": {
+        "en": "Theme/category",
+        "sv": "Tema/klassificering",
+        "da": "Tema/klassificering",
+        "de": "Thema/Kategorie"
+      },
+      "description": {
+        "en": "This property refers to a category of the Dataset. A Dataset may be associated with multiple themes.",
+        "da": "Denne attribut refererer til en kategori for datasættet. Et datasæt kan være associeret med flere temaer.",
+        "de": "Diese Eigenschaft bezieht sich auf eine Kategorie des Datensatzes. Ein Datensatz kann mit mehreren Themen verknüpft sein.",
+        "sv": "En kategori för datamängden. En datamängd kan associeras med flera teman."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "pattern": "https?://.+"
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:theme-isa",
+      "property": "http://www.w3.org/ns/dcat#theme",
+      "styles": [
+        "strictmatch"
+      ],
+      "label": {
+        "en": "Data Theme Vocabulary",
+        "de": "Data Theme Vocabulary",
+        "sv": "Data Theme Vocabulary"
+      },
+      "description": {
+        "en": "This property refers to a category of the Dataset. A Dataset may be associated with multiple themes."
+      },
+      "choices": [
+        {
+          "value": "http://publications.europa.eu/resource/authority/data-theme/AGRI",
+          "label": {
+            "en": "Agriculture, fisheries, forestry and food",
+            "sv": "Jordbruk, fiske, skogsbruk och livsmedel",
+            "nb": "Jordbruk, fiskeri, skogbruk og mat",
+            "da": "Landbrug, fiskeri, skovbrug og mad",
+            "de": "Landwirtschaft, Fischerei, Forstwirtschaft und Lebensmittel"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/data-theme/ECON",
+          "label": {
+            "en": "Economy and finance",
+            "sv": "Ekonomi och finans",
+            "nb": "Økonomi og finans",
+            "da": "Økonomi og finans",
+            "de": "Wirtschaft und Finanzen"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/data-theme/EDUC",
+          "label": {
+            "en": "Education, culture and sport",
+            "sv": "Utbildning, kultur och sport",
+            "nb": "Utdanning, kultur og sport",
+            "da": "Uddannelse, kultur og sport",
+            "de": "Bildung, Kultur und Sport"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/data-theme/ENER",
+          "label": {
+            "en": "Energy",
+            "sv": "Energi",
+            "nb": "Energi",
+            "da": "Energi",
+            "de": "Energie"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
+          "label": {
+            "en": "Environment",
+            "sv": "Miljö",
+            "nb": "Miljø",
+            "da": "Miljø",
+            "de": "Umwelt"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/data-theme/GOVE",
+          "label": {
+            "en": "Government and public sector",
+            "sv": "Regeringen och den offentliga sektorn",
+            "nb": "Forvaltning og offentlig sektor",
+            "da": "Forvaltning og offentlig sektor",
+            "de": "Regierung und öffentlicher Sektor"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/data-theme/HEAL",
+          "label": {
+            "en": "Health",
+            "sv": "Hälsa",
+            "nb": "Helse",
+            "da": "Helbred",
+            "de": "Gesundheit"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/data-theme/INTR",
+          "label": {
+            "en": "International issues",
+            "sv": "Internationella frågor",
+            "nb": "Internasjonale temaer",
+            "da": "Internationale forhold",
+            "de": "Internationale Angelegenheiten"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/data-theme/JUST",
+          "label": {
+            "en": "Justice, legal system and public safety",
+            "sv": "Rättvisa, rättsliga system och allmän säkerhet",
+            "nb": "Justis, rettssystem og allmenn sikkerhet",
+            "da": "Justits, rettssystem og almen sikkerhed",
+            "de": "Gerechtigkeit, Rechtsordnung und öffentliche Sicherheit"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/data-theme/SOCI",
+          "label": {
+            "en": "Population and society",
+            "sv": "Befolkning och samhälle",
+            "nb": "Befolkning og samfunn",
+            "da": "Befolkning og samfund",
+            "de": "Bevölkerung und Gesellschaft"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/data-theme/REGI",
+          "label": {
+            "en": "Regions and cities",
+            "sv": "Regioner och städer",
+            "nb": "Regioner og byer",
+            "da": "Regioner og byer",
+            "de": "Regionen und Städte"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/data-theme/TECH",
+          "label": {
+            "en": "Science and technology",
+            "sv": "Vetenskap och teknik",
+            "nb": "Vitenskap og teknologi",
+            "da": "Videnskab og teknologi",
+            "de": "Wissenschaft und Technik"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/data-theme/TRAN",
+          "label": {
+            "en": "Transport",
+            "sv": "Transport",
+            "nb": "Transport",
+            "da": "Transport",
+            "de": "Transport"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "id": "dcat:theme-da",
+      "extends": "dcat:theme-isa",
+      "label": {
+        "en": "Category (Data Theme Vocabulary)",
+        "sv": "Kategori (Data Theme Vocabulary)",
+        "nb": "Tema (Data Theme Vocabulary)",
+        "da": "Kategori (Data Theme Vocabulary)",
+        "de": "Kategorie (Data Theme Vocabulary)"
+      },
+      "description": {
+        "en": "This property refers to a category of the Dataset. A Dataset may be associated with multiple themes.",
+        "nb": "Referanse til en tema/kategori for datasettet. Et datasett kan assosieres med flere tema",
+        "da": "Refererer til et tema/kategori for datasættet. Et datasæt kan være associeret med flere temaer",
+        "de": "Diese Eigenschaft bezieht sich auf eine Kategorie des Datensatzes. Ein Datensatz kann mit mehreren Themen verknüpft sein.",
+        "sv": "En kategori för datamängden. En datamängd kan associeras med flera teman."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "dcat:theme-group_da",
+      "label": {
+        "en": "Theme/category",
+        "sv": "Tema/kategori",
+        "nb": "Tema",
+        "da": "Tema/kategori",
+        "de": "Thema/Kategorie"
+      },
+      "description": {
+        "en": "This property refers to a category of the Dataset. A Dataset may be associated with multiple themes.",
+        "nb": "Referanse til en tema/kategori for datasettet. Et datasett kan assosieres med flere tema",
+        "da": "Refererer til et tema/kategori for datasættet. Et datasæt kan være associeret med flere temaer",
+        "de": "Diese Eigenschaft bezieht sich auf eine Kategorie des Datensatzes. Ein Datensatz kann mit mehreren Themen verknüpft sein.",
+        "sv": "En kategori för datamängden. En datamängd kan associeras med flera teman."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      },
+      "items": [
+        {
+          "id": "dcat:theme-1ev"
+        },
+        {
+          "id": "dcat:theme-isa"
+        },
+        {
+          "type": "text",
+          "nodetype": "URI",
+          "extends": "dcat:theme",
+          "label": {
+            "en": "Other themes",
+            "sv": "Övriga klassificeringar",
+            "da": "Øvrige klassificeringer",
+            "de": "Andere Klassifikationen"
+          },
+          "description": {
+            "en": "Use this field in case you want to provide another vocabulary, in addition to the first level Eurovoc values.  The value must be a valid URL."
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 0
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "dcat:spdx:checksum_di",
+      "description": {
+        "en": "This property provides a mechanism that can be used to verify that the contents of a distribution have not changed.",
+        "nb": "Brukes for å oppgi en mekanisme som kan brukes til å verifisere at innhold i en distribusjon ikke har endret seg",
+        "da": "Checksum bruges til at angive en mekaniske som kan bruges til at verificere at indholdet i en distribution ikke har ændret sig.",
+        "de": "Diese Eigenschaft kann verwendet werden um zu überprüfen ob sich der Inhalt einer Distribution geändert hat.",
+        "sv": "Denna egenskap kan användas för att kontrollera om innehållet i en distribution har förändrats."
+      },
+      "label": {
+        "en": "Checksum",
+        "nb": "Sjekksum",
+        "sv": "Checksumma",
+        "da": "Checksum",
+        "de": "Prüfsumme"
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "property": "http://spdx.org/rdf/terms#checksum",
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://spdx.org/rdf/terms#Checksum"
+      },
+      "items": [
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "property": "http://spdx.org/rdf/terms#checksumValue",
+          "label": {
+            "en": "Checksum value",
+            "sv": "Värde",
+            "nb": "Sjekksumverdi",
+            "da": "Checksumsværdi",
+            "de": "Prüfsummenwert"
+          },
+          "description": {
+            "en": "This property provides a lower case hexadecimal encoded digest value produced using a specific algorithm.",
+            "nb": "Denne egenskapen brukes til å oppgi en heksadesimal-kodet verdi med små bokstaver, produsert ved hjelp av en spesifikk algoritme.",
+            "da": "Denne attribut bruges til at angive en heksadesimal-kode værdi med små bogstaver, og genereret ved hjælp af en specifik algoritme.",
+            "de": "Ein hexadezimaler Digest-Wert in Kleinbuchstaben der unter Verwendung eines spezifischen Algorithmus erzeugt wird.",
+            "sv": "Ett hexadecimalt Digest-värde i gemener som genereras med hjälp av en särskild algoritm."
+          },
+          "cardinality": {
+            "min": 1,
+            "pref": 0,
+            "max": 1
+          }
+        },
+        {
+          "type": "choice",
+          "nodetype": "URI",
+          "choices": [
+            {
+              "value": "http://spdx.org/rdf/terms#checksumAlgorithm_sha1",
+              "label": {
+                "en": "SHA-1"
+              }
+            }
+          ],
+          "property": "http://spdx.org/rdf/terms#algorithm",
+          "label": {
+            "en": "Algorithm",
+            "nb": "Algoritme",
+            "sv": "Algoritm",
+            "da": "Algoritme",
+            "de": "Algorithmus"
+          },
+          "description": {
+            "en": "This property identifies the algorithm used to produce the subject Checksum. Currently, SHA-1 is the only supported algorithm. It is anticipated that other algorithms will be supported at a later time.",
+            "nb": "Identifiserer algoritmen som er brukt til å produsere sjekksum. For øyeblikket er SHA-1 den eneste algoritmen som er støttet. Det er forventet støtte for andre algoritmer på et senere tidspunkt.",
+            "da": "Identifiserer algoritmen som er brugt til at generere checksummen. I øjeblikket er SHA-1 den eneste algoritme som er understøttet. Der forventes understøttelse af andre algoritmer på et senere tidspunkt.",
+            "de": "Der Algorithmus der verwendet wird um die Prüfsumme zu erzeugen.",
+            "sv": "Algoritmen som används för att generera checksumman."
+          },
+          "cardinality": {
+            "min": 1,
+            "pref": 0,
+            "max": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:themeTaxonomy_ca",
+      "property": "http://www.w3.org/ns/dcat#themeTaxonomy",
+      "label": {
+        "en": "Theme",
+        "nb": "Tema",
+        "sv": "Tema",
+        "da": "Tema",
+        "de": "Theme"
+      },
+      "description": {
+        "en": "This property refers to a knowledge organization system used to classify the Catalogue's Datasets.",
+        "nb": "Referer til et kunnskapsorganiseringssystem (KOS) som er brukt for å klassifisere katalogens datasett",
+        "da": "Refererer til et emneklassificeringssystem som er brugt til at klassificere katalogets datasæt",
+        "de": "Diese Eigenschaft bezieht sich auf ein Wissensorganisationssystem das zur Klassifizierung der Datensätze des Kataloges verwendet wird.",
+        "sv": "Den här egenskapen hänvisar till ett kunskapsorganisationssystem som används för att klassificera katalogens datamängder."
+      },
+      "choices": [
+        {
+          "value": "http://publications.europa.eu/resource/authority/data-theme",
+          "label": {
+            "en": "Data Theme Vocabulary"
+          },
+          "description": {
+            "en": "MRD Data Themes Named Authority List"
+          }
+        }
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcat:dcterms:source_da",
+      "type": "choice",
+      "nodetype": "URI",
+      "description": {
+        "en": "This property refers to a related Dataset from which the described Dataset is derived.",
+        "nb": "Referanse til et datasett som gjeldende datasett er avledet fra.",
+        "da": "Det eller de  oprindelige datasæt, som dette datasæt stammer fra. Eksempelvis ved sammenstillede datasæt.",
+        "de": "Diese Eigenschaft bezieht sich auf einen verwandten Datensatz von dem der beschriebene Datensatz abgeleitet wurde.",
+        "sv": "En referens till en relaterad datamängd från vilken den beskrivna datamängden härleds."
+      },
+      "label": {
+        "en": "Source",
+        "sv": "Källa",
+        "nb": "Kilde",
+        "da": "Kildedatasæt",
+        "de": "Quelle"
+      },
+      "property": "http://purl.org/dc/terms/source",
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/ns/dcat#Dataset"
+      }
+    },
+    {
+      "id": "dcat:dcterms:accessRights_da",
+      "type": "choice",
+      "nodetype": "URI",
+      "property": "http://purl.org/dc/terms/accessRights",
+      "label": {
+        "en": "Access rights",
+        "nb": "Tilgangsnivå",
+        "sv": "Åtkomsträttigheter",
+        "da": "Adgangsrettigheder",
+        "de": "Zugriffsrechte"
+      },
+      "description": {
+        "en": "This property refers to information that indicates whether the Dataset is open data, has access restrictions or is not public.",
+        "nb": "Refaranse til informasjon som indikerer om datasettet er åpne data, har tilgangsbegrensninger eller er unntatt offentlighet.",
+        "da": "Angiver information om hvilke begrænsninger der eksisterer for adgangen til data.",
+        "de": "Diese Eigenschaft bezieht sich auf Informationen die angeben ob der Datensatz offene Daten beinhaltet, Zugriffsbeschränkungen hat oder nicht öffentlich ist.",
+        "sv": "Den här egenskapen hänvisar till information som indikerar huruvida datamängden innehåller öppna data, har åtkomstrestriktioner eller är inte offentlig."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "choices": [
+        {
+          "value": "http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC",
+          "label": {
+            "en": "Non-public",
+            "nb": "Unntatt offentlighet",
+            "da": "Ikke offentligt",
+            "de": "Nicht öffentlich",
+            "sv": "Ej offentlig"
+          },
+          "description": {
+            "en": "Not publicly accessible for privacy, security or other reasons. Usage note: This category may include resources that contain sensitive or personal information.",
+            "da": "Ikke offentligt pga. privatlivs, sikkerheds eller andre forhold. Note om anvendelse: Denne kategori kan inkluderer ressurser der indeholder sensitive eller personlige informationer.",
+            "de": "Nicht öffentlich zugänglich wegen Privatsphäre, Sicherheit oder aus anderen Gründe. Verwendungshinweis: Diese Kategorie kann Ressourcen enthalten die sensible oder persönliche Informationen enthalten.",
+            "sv": "Inte tillgänglig för allmänheten pga integritet, säkerhet eller andra orsaker. Användningsanmärkning: Denna kategori kan omfatta resurser som innehåller känslig eller personlig information."
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/access-right/PUBLIC",
+          "label": {
+            "en": "Public",
+            "nb": "Offentlig",
+            "sv": "Publik",
+            "da": "Offentlig",
+            "de": "Öffentlich"
+          },
+          "description": {
+            "en": "Publicly accessible by everyone. Usage note: Permissible obstacles include registration and request for API keys, as long as anyone can request such registration and/or API keys.",
+            "da": "Offentligt tilgængelig for alle. Note om anvendelse: Andre begrænsninger for adgang kan inkludereregi registrering og anmodning om API koder, så længe hvem som helst kan anmode om sådan registrering og/eller API koder.",
+            "de": "Öffentlich zugänglich für alle. Verwendungshinweis: Zulässige Hindernisse beinhalten die Registrierung und die Anforderung von API-Schlüsseln, solange jedermann solche Registrierungs- und/oder API-Schlüssel anfordern kann.",
+            "sv": "Tillgängligt för allmänheten. Användningsanmärkning: Tillåtna hinder inkluderar registrering och begäran av API-nycklar, så länge vem som helst kan begära registrering och/eller API-nycklar."
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/access-right/RESTRICTED",
+          "label": {
+            "en": "Restricted",
+            "nb": "Begrenset offentlighet",
+            "da": "Begrænset offentlighed",
+            "de": "Eingeschränkt",
+            "sv": "Begränsad"
+          },
+          "description": {
+            "en": "Only available under certain conditions. Usage note: This category may include resources that require payment, resources shared under non-disclosure agreements, resources for which the publisher or owner has not yet decided if they can be publicly released.",
+            "da": "Kun tilgængelig under særlige vilkår. Note om anvendelse: Denne kategori kan indeholde ressurser This cate der kræver betaling, ressurser delt under 'non-disclosure agreements', ressurcer for hvem den dataejende organisation ikke endnu har besluttet om datasættet kan publiceres offentligt.",
+            "de": "Nur unter bestimmten Bedingungen verfügbar. Verwendungshinweis: Diese Kategorie kann auch Ressourcen enthalten die eine Zahlung verlangen, Ressourcen die im Rahmen von Geheimhaltungsvereinbarungen verfügbar gemacht werden, und Ressourcen für die der Herausgeber oder Eigentümer noch nicht entschieden hat ob sie öffentlich freigegeben werden können.",
+            "sv": "Endast tillgängligt under särskilda villkor. Användningsanmärkning: Denna kategori kan omfatta resurser som kräver betalning, resurser som tillgängliggörs inom ramen för sekretessavtal, eller resurser där utgivaren eller ägaren ännu inte har beslutat om de kan offentliggjöras."
+          }
+        }
+      ],
+      "styles": [
+        "verticalRadioButtons"
+      ]
+    },
+    {
+      "id": "dcat:hasVersion_da",
+      "type": "choice",
+      "nodetype": "URI",
+      "property": "http://www.w3.org/ns/dcat#hasVersion",
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/ns/dcat#Dataset"
+      },
+      "label": {
+        "en": "Has version",
+        "nb": "Har versjon",
+        "sv": "Har version",
+        "da": "Har version",
+        "de": "Hat Version"
+      },
+      "description": {
+        "en": "This property refers to a related Dataset that is a version, edition, or adaptation of the described Dataset.",
+        "nb": "Referanse til et datasett som er en versjon, utgave, eller tilpasning av det beskrevne datasettet",
+        "da": "Refererer til et konkret datasæt som er en udgave af det beskrevne datasæt.",
+        "de": "Ein verwandter Datensatz, der eine Version, eine Ausgabe oder eine Anpassung des beschriebenen Datensatzes ist.",
+        "sv": "En relaterad datamängd som är en version, utgåva, eller anpassning av den beskrivna datamängden."
+      }
+    },
+    {
+      "id": "dcat:isVersionOf_da",
+      "type": "choice",
+      "nodetype": "URI",
+      "property": "http://www.w3.org/ns/dcat#isVersionOf",
+      "label": {
+        "en": "Is version of",
+        "nb": "Er versjon av",
+        "sv": "Är version av",
+        "da": "Er version af",
+        "de": "Ist Version von"
+      },
+      "description": {
+        "en": "This property refers to a related Dataset of which the described Dataset is a version, edition, or adaptation.",
+        "nb": "Referanse til et beslektet datasett som det beskrevne datasettet er en versjon, utgave, eller tilpasning av",
+        "da": "Refererer til et konkret relateret datasæt som det beskrevne datasæt er en udgave af.",
+        "de": "Einen verwandter Datensatz von dem der beschriebene Datensatz eine Version, eine Edition oder eine Anpassung ist.",
+        "sv": "En relaterad datamängd som den beskrivna datamängden är en version, utgåva, eller anpassning av."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/ns/dcat#Dataset"
+      }
+    },
+    {
+      "id": "dcat:dcterms:hasPart_ca",
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "property": "http://purl.org/dc/terms/hasPart",
+      "label": {
+        "en": "Has part",
+        "sv": "Består av",
+        "nb": "Har del",
+        "da": "Består af",
+        "de": "Besteht aus"
+      },
+      "description": {
+        "en": "This property refers to a related Catalogue that is part of the described Catalogue.",
+        "nb": "Referanse til en beslektet katalog som er en del av den beskrevne katalogen.",
+        "da": "Reference til et beslægtet katalog som er en del af det beskrevne katalog.",
+        "de": "Diese Eigenschaft bezieht sich auf einen verwandten Katalog, der Teil des beschriebenen Kataloges ist.",
+        "sv": "Hänvisar till en relaterad katalog som är del av den beskrivna katalogen."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/ns/dcat#Catalog"
+      }
+    },
+    {
+      "id": "dcat:dcterms:isPartOf_ca",
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "property": "http://purl.org/dc/terms/isPartOf",
+      "label": {
+        "en": "Is part of",
+        "sv": "Är del av",
+        "nb": "Er del av",
+        "da": "Er del af",
+        "de": "Ist Teil von"
+      },
+      "description": {
+        "en": "This property refers to a related Catalogue in which the described Catalogue is physically or logically included.",
+        "nb": "Refereranse til en beslektet katalog som denne katalogen er fysisk eller logisk inkludert i.",
+        "da": "Refererence til et beslægtet katalog som dette katalog er fysisk eller logisk inkluderet i.",
+        "de": "Diese Eigenschaft bezieht sich auf einen verwandten Katalog, in welchen der beschriebene Katalog physisch oder logisch einbezogen ist.",
+        "sv": "Hänvisar till en närstående katalog där den beskrivna katalogen fysiskt eller logiskt ingår."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/ns/dcat#Catalog"
+      }
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:dcterms:accrualPeriodicity_da",
+      "property": "http://purl.org/dc/terms/accrualPeriodicity",
+      "label": {
+        "en": "Frequency of update",
+        "sv": "Uppdateringsfrekvens",
+        "nb": "Frekvens",
+        "da": "Opdateringsfrekvens",
+        "de": "Aktualisierungshäufigkeit"
+      },
+      "description": {
+        "en": "This property refers to the frequency at which Dataset is updated.",
+        "nb": "Referer til oppdateringsfrekvensen for datasettet",
+        "da": "Refererer til opdateringsfrekvensen for datasættet",
+        "de": "Diese Eigenschaft bezieht sich auf die Häufigkeit mit welcher der Datensatz aktualisiert wird.",
+        "sv": "Avser datamängdens uppdateringsfrekvens."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "choices": [
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/ANNUAL",
+          "label": {
+            "bg": "годишен",
+            "cs": "roční",
+            "da": "årligt",
+            "de": "jährlich",
+            "el": "ετήσιος",
+            "en": "annual",
+            "et": "aastane",
+            "fi": "vuotuinen",
+            "fr": "annuel",
+            "ga": "bliantúil",
+            "hr": "godišnje",
+            "hu": "évenkénti",
+            "it": "annuale",
+            "lv": "reizi gadā",
+            "lt": "kasmetinis",
+            "mt": "annwali",
+            "nl": "jaarlijks",
+            "pl": "roczny",
+            "pt": "anual",
+            "ro": "anual",
+            "sk": "ročný",
+            "sl": "letni",
+            "es": "anual",
+            "sv": "årlig",
+            "nb": "årlig"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/BIENNIAL",
+          "label": {
+            "bg": "двегодишен",
+            "cs": "dvouletý",
+            "da": "toårigt",
+            "de": "zweijährlich",
+            "el": "διετής",
+            "en": "biennial",
+            "et": "iga kahe aasta järel",
+            "fi": "kaksivuotinen",
+            "fr": "biennal",
+            "ga": "dhébhliantúil",
+            "hr": "bijenale",
+            "hu": "kétévenkénti",
+            "it": "biennale",
+            "lv": "reizi divos gados",
+            "lt": "dvimetis",
+            "mt": "biennali",
+            "nl": "tweejaarlijks",
+            "pl": "dwuletni",
+            "pt": "bienal",
+            "ro": "bienal",
+            "sk": "dvojročný",
+            "sl": "bienale",
+            "es": "bienal",
+            "sv": "vartannat år",
+            "nb": "annethvert år"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/BIMONTHLY",
+          "label": {
+            "bg": "двухмесечен",
+            "cs": "dvouměsíční",
+            "da": "hver anden måned",
+            "de": "zweimonatlich",
+            "el": "διμηνιαίος",
+            "en": "bimonthly",
+            "et": "kord kahe kuu jooksul",
+            "fi": "kahdesti kuussa",
+            "fr": "bimestriel",
+            "ga": "gach dhá mhí",
+            "hr": "dvomjesečno",
+            "hu": "kéthavonkénti",
+            "it": "bimestrale",
+            "lv": "reizi divos mēnešos",
+            "lt": "dviejų mėnesių",
+            "mt": "bimensili",
+            "nl": "tweemaandelijks",
+            "pl": "dwumiesięcznik",
+            "pt": "quinzenal",
+            "ro": "bilunar",
+            "sk": "dvojmesačný",
+            "sl": "dvomesečen",
+            "es": "bimestral",
+            "sv": "varannan månad",
+            "nb": "annenhver måned"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/BIWEEKLY",
+          "label": {
+            "bg": "на две седмици",
+            "cs": "čtrnáctidenní",
+            "da": "hver fjortende dag",
+            "de": "zweiwöchentlich",
+            "el": "δισεβδομαδιαίος",
+            "en": "biweekly",
+            "et": "kahenädalane",
+            "fi": "joka toinen viikko",
+            "fr": "tous les quinze jours",
+            "ga": "gach coicís",
+            "hr": "polumjesečno",
+            "hu": "kéthetenkénti",
+            "it": "quindicinale",
+            "lv": "reizi divās nedēļās",
+            "lt": "dvisavaitinis",
+            "mt": "ta’ kull ħmistax",
+            "nl": "veertiendaags",
+            "pl": "dwutygodnik",
+            "pt": "quinzenal",
+            "ro": "la fiecare două săptămâni",
+            "sk": "dvojtýždenný",
+            "sl": "vsakih štirinajst dni",
+            "es": "quincenal",
+            "sv": "var fjortonde dag",
+            "nb": "hver fjortende dag"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/CONT",
+          "label": {
+            "bg": "постоянен",
+            "cs": "průběžný",
+            "da": "kontinuerligt",
+            "de": "kontinuierlich",
+            "el": "συνεχής",
+            "en": "continuous",
+            "et": "pidev",
+            "fi": "jatkuva",
+            "fr": "continuel",
+            "ga": "leanúnach",
+            "hr": "stalan",
+            "hu": "folyamatos",
+            "it": "continuo",
+            "lv": "pastāvīgs",
+            "lt": "nenutrūkstamas",
+            "mt": "kontinwu",
+            "nl": "voortdurend",
+            "pl": "ciągły",
+            "pt": "continuo",
+            "ro": "continuu",
+            "sk": "priebežný",
+            "sl": "nenehen",
+            "es": "continuo",
+            "sv": "kontinuerlig",
+            "nb": "kontinuerlig"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/UPDATE_CONT",
+          "label": {
+            "bg": "постоянно се актуализира",
+            "cs": "průběžně aktualizovaný",
+            "da": "opdateres løbende",
+            "de": "ständige Aktualisierung",
+            "el": "ενημερώνεται συνεχώς",
+            "en": "continuously updated",
+            "et": "ajakohastatakse pidevalt",
+            "fi": "päivitetään jatkuvasti",
+            "fr": "mise à jour continuelle",
+            "ga": "á leasú chun dáta go leanúnach",
+            "hr": "stalno ažuriraju",
+            "hu": "folyamatosan frissített",
+            "it": "in continuo aggiornamento",
+            "lv": "pastāvīgi tiek atjaunots",
+            "lt": "nuolat atnaujinama",
+            "mt": "kontinwament aġġornata",
+            "nl": "voortdurend geactualiseerd",
+            "pl": "stale aktualizowany",
+            "pt": "continuamente atualizado",
+            "ro": "actualizare continuă",
+            "sk": "priebežne aktualizovaný",
+            "sl": "nenehno posodobljen",
+            "es": "continuamente actualizado",
+            "sv": "uppdateras kontinuerligt",
+            "nb": "kontinuerlig oppdatert"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/DAILY",
+          "label": {
+            "bg": "ежедневен",
+            "cs": "denní",
+            "da": "dagligt",
+            "de": "täglich",
+            "el": "ημερήσιος",
+            "en": "daily",
+            "et": "päevane",
+            "fi": "päivittäin",
+            "fr": "quotidien",
+            "ga": "laethúil",
+            "hr": "dnevni",
+            "hu": "naponkénti",
+            "it": "quotidiano",
+            "lv": "katru dienu",
+            "lt": "kasdieninis",
+            "mt": "kuljum",
+            "nl": "dagelĳks",
+            "pl": "dziennik",
+            "pt": "diário",
+            "ro": "zilnic",
+            "sk": "denný",
+            "sl": "dnevni",
+            "es": "diario",
+            "sv": "dagligen",
+            "nb": "daglig"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/IRREG",
+          "label": {
+            "bg": "неправилен",
+            "cs": "nepravidelný",
+            "da": "uregelmæssigt",
+            "de": "unregelmäßig",
+            "el": "μη τακτικός",
+            "en": "irregular",
+            "et": "ebakorrapärane",
+            "fi": "epäsäännöllinen",
+            "fr": "irrégulier",
+            "ga": "neamhrialta",
+            "hr": "neredovit",
+            "hu": "rendszertelen",
+            "it": "irregolare",
+            "lv": "neregulāri",
+            "lt": "nereguliarus",
+            "mt": "irregolari",
+            "nl": "onregelmatig",
+            "pl": "nieregularny",
+            "pt": "irregular",
+            "ro": "neregulat",
+            "sk": "nepravidelný",
+            "sl": "nepravilen",
+            "es": "irregular",
+            "sv": "oregelbundet",
+            "nb": "uregelmessig"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/MONTHLY",
+          "label": {
+            "bg": "месечен",
+            "cs": "měsíční",
+            "da": "månedligt",
+            "de": "monatlich",
+            "el": "μηνιαίος",
+            "en": "monthly",
+            "et": "igakuine",
+            "fi": "kuukausittainen",
+            "fr": "mensuel",
+            "ga": "míosúil",
+            "hr": "mjesečno",
+            "hu": "havonkénti",
+            "it": "mensile",
+            "lv": "reizi mēnesī",
+            "lt": "kas mėnesį",
+            "mt": "mensili",
+            "nl": "maandelijks",
+            "pl": "miesięcznik",
+            "pt": "mensal",
+            "ro": "lunar",
+            "sk": "mesačný",
+            "sl": "mesečen",
+            "es": "mensual",
+            "sv": "månatligen",
+            "nb": "månedlig"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/OTHER",
+          "label": {
+            "bg": "друг",
+            "cs": "ostatní",
+            "da": "andet",
+            "de": "anderer",
+            "el": "άλλο",
+            "en": "other",
+            "et": "muu",
+            "fi": "muut",
+            "fr": "autre",
+            "ga": "eile",
+            "hr": "drugi",
+            "hu": "egyéb",
+            "it": "altro",
+            "lv": "citi",
+            "lt": "kitas",
+            "mt": "oħra",
+            "nl": "overige",
+            "pl": "inne",
+            "pt": "outro",
+            "ro": "altele",
+            "sk": "ostatné",
+            "sl": "ostali",
+            "es": "otro",
+            "sv": "andra",
+            "nb": "annet"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/QUARTERLY",
+          "label": {
+            "bg": "тримесечен",
+            "cs": "čtvrtletní",
+            "da": "kvartalsvis",
+            "de": "vierteljährlich",
+            "el": "τριμηνιαίος",
+            "en": "quarterly",
+            "et": "kvartaalne",
+            "fi": "vuosineljänsittäin",
+            "fr": "trimestriel",
+            "ga": "ráitheachán",
+            "hr": "tromjesečno",
+            "hu": "negyedévenkénti",
+            "it": "trimestrale",
+            "lv": "reizi trīs mēnešos",
+            "lt": "kas ketvirtį",
+            "mt": "kull tliet xhur",
+            "nl": "driemaandelijks",
+            "pl": "kwartalnik",
+            "pt": "trimestral",
+            "ro": "trimestrial",
+            "sk": "štvrťročný",
+            "sl": "četrtletni",
+            "es": "trimestral",
+            "sv": "kvartalsvis",
+            "nb": "kvartalsvis"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/ANNUAL_2",
+          "label": {
+            "bg": "два пъти на година",
+            "cs": "pololetní",
+            "da": "halvårligt",
+            "de": "halbjährlich",
+            "el": "εξαμηνιαίος",
+            "en": "semiannual",
+            "et": "pooleaastane",
+            "fi": "puolivuotinen",
+            "fr": "semestriel",
+            "ga": "leathbhliantúil",
+            "hr": "polugodišnje",
+            "hu": "félévenkénti",
+            "it": "semestrale",
+            "lv": "reizi pusgadā",
+            "lt": "kas pusę metų",
+            "mt": "kull sitt xhur",
+            "nl": "halfjaarlĳks",
+            "pl": "półroczny",
+            "pt": "semianual",
+            "ro": "semestrial",
+            "sk": "polročný",
+            "sl": "polletni",
+            "es": "semestral",
+            "sv": "halvårs",
+            "nb": "halvårlig"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/MONTHLY_2",
+          "label": {
+            "bg": "на половин месец",
+            "cs": "nědvakrát za měsíc",
+            "da": "to gange månedligt",
+            "de": "zweimal im Monat",
+            "el": "δεκαπενθήμερος",
+            "en": "semimonthly",
+            "et": "kaks korda kuus",
+            "fi": "kaksi kertaa kuukaudessa",
+            "fr": "bimensuel",
+            "ga": "leath-míosúil",
+            "hr": "dvaput mjesečno",
+            "hu": "félhavonkénti",
+            "it": "bimensile",
+            "lv": "divreiz mēnesī",
+            "lt": "dukart per mėnesį",
+            "mt": "darbtejn fix-xahar",
+            "nl": "twee keer per maand",
+            "pl": "dwukrotnie w miesiącu",
+            "pt": "duas vezes por mês",
+            "ro": "se două ori pe lună",
+            "sk": "dvakrát mesačne",
+            "sl": "dvakrat na mesec",
+            "es": "bimensual",
+            "sv": "två gånger per månad",
+            "nb": "to ganger i måneden"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/WEEKLY_2",
+          "label": {
+            "bg": "дваж на седмица",
+            "cs": "dvakrát týdně",
+            "da": "to gange ugentligt",
+            "de": "zweimal in Woche",
+            "el": "διεβδομαδιαίος",
+            "en": "semiweekly",
+            "et": "kaks korda nädalas",
+            "fi": "kaksi kertaa viikossa",
+            "fr": "bihebdomadaire",
+            "ga": "dhá uair in aghaidh na seachtaine",
+            "hr": "dvaput tjedno",
+            "hu": "hetente kétszeri",
+            "it": "bisettimanale",
+            "lv": "divreiz nedēļā",
+            "lt": "dukart per savaitę",
+            "mt": "darbtejn fil-ġimgħa",
+            "nl": "twee keer per week",
+            "pl": "dwa razy w tygodniu",
+            "pt": "duas vezes por semana",
+            "ro": "de două ori pe săptămână",
+            "sk": "dvakrát týždenne",
+            "sl": "dvakrat tedensko",
+            "es": "bisemanal",
+            "sv": "två gånge per vecka",
+            "nb": "to ganger i uken"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/MONTHLY_3",
+          "label": {
+            "bg": "три пъти месечно",
+            "cs": "třikrát za měsíc",
+            "da": "tre gange månedligt",
+            "de": "dreimal im Monat",
+            "el": "τρεις φορές τον μήνα",
+            "en": "three times a month",
+            "et": "kolm korda kuus",
+            "fi": "kolme kertaa kuukaudessa",
+            "fr": "trois fois par mois",
+            "ga": "trí uair sa mhí",
+            "hr": "triput mjesečno",
+            "hu": "havonta háromszori",
+            "it": "tre volte al mese",
+            "lv": "trīsreiz mēnesī",
+            "lt": "tris kartus per mėnesį",
+            "mt": "tliet darbiet fix-xahar",
+            "nl": "drie keer per maand",
+            "pl": "trzy razy w miesiącu",
+            "pt": "três vezes por mês",
+            "ro": "de trei ori pe lună",
+            "sk": "trikrát mesačne",
+            "sl": "trikrat na mesec",
+            "es": "tres veces por mes",
+            "sv": "tre gånger per månad",
+            "nb": "tre ganger i måneden"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/WEEKLY_3",
+          "label": {
+            "bg": "три пъти на седмица",
+            "cs": "třikrát týdně",
+            "da": "tre gange ugentligt",
+            "de": "dreimal in Woche",
+            "el": "τριεβδομαδιαίος",
+            "en": "three times a week",
+            "et": "kolm korda nädalas",
+            "fi": "kolme kertaa viikossa",
+            "fr": "trois fois par semaine",
+            "ga": "trí uair in aghaidh na seachtaine",
+            "hr": "triput tjedno",
+            "hu": "hetente háromszori",
+            "it": "tre volte a settimana",
+            "lv": "trīsreiz nedēļā",
+            "lt": "tris kartus per savaitę",
+            "mt": "tliet darbiet fil-ġimgħa",
+            "nl": "drie keer per week",
+            "pl": "trzy razy w tygodniu",
+            "pt": "três vezes por semana",
+            "ro": "de trei ori pe săptămână",
+            "sk": "trikrát týždenne",
+            "sl": "trikrat tedensko",
+            "es": "tres veces por semana",
+            "sv": "tre gånger per vecka",
+            "nb": "tre ganger i uken"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/ANNUAL_3",
+          "label": {
+            "bg": "три пъти на година",
+            "cs": "třikrát do roka",
+            "da": "tre gange årligt",
+            "de": "dreimal im Jahr",
+            "el": "τετραμηνιαίος",
+            "en": "three times a year",
+            "et": "kolm korda aastas",
+            "fi": "kolme kertaa vuodessa",
+            "fr": "trois fois par an",
+            "ga": "trí uair sa bhliain",
+            "hr": "triput godišnje",
+            "hu": "évente háromszori",
+            "it": "tre volte all'anno",
+            "lv": "trīsreiz gadā",
+            "lt": "tris kartus per metus",
+            "mt": "tliet darbiet fis-sena",
+            "nl": "drie keer per jaar",
+            "pl": "trzy razy w roku",
+            "pt": "três vezes por ano",
+            "ro": "de trei ori pe an",
+            "sk": "trikrát do roka",
+            "sl": "trikrat na leto",
+            "es": "cuatrimestral",
+            "sv": "tre gånger per år",
+            "nb": "tre ganger per år"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/TRIENNIAL",
+          "label": {
+            "bg": "тригодишен",
+            "cs": "tříletý",
+            "da": "treårligt",
+            "de": "dreijährlich",
+            "el": "τριετής",
+            "en": "triennial",
+            "et": "iga kolme aasta järel",
+            "fi": "kolmivuotinen",
+            "fr": "triennal",
+            "ga": "tríbhliantúil",
+            "hr": "trijenale",
+            "hu": "háromévenkénti",
+            "it": "triennale",
+            "lv": "reizi trīs gados",
+            "lt": "trimetis",
+            "mt": "triennali",
+            "nl": "driejaarlijks",
+            "pl": "trzyletni",
+            "pt": "trienal",
+            "ro": "trienal",
+            "sk": "trojročný",
+            "sl": "trienale",
+            "es": "trienal",
+            "sv": "vart tredje år",
+            "nb": "hvert tredje år"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/DAILY_2",
+          "label": {
+            "bg": "два пъти на ден",
+            "cs": "dvakrát denně",
+            "da": "to gange om dagen",
+            "de": "zweimal täglich",
+            "el": "δύο φορές την ημέρα",
+            "en": "twice a day",
+            "et": "kaks korda päevas",
+            "fi": "kahdesti päivässä",
+            "fr": "deux fois par jour",
+            "ga": "dhá uair sa lá",
+            "hr": "dvaput dnevno",
+            "hu": "naponta kétszeri",
+            "it": "due volte al giorno",
+            "lv": "divreiz dienā",
+            "lt": "dukart per dieną",
+            "mt": "darbtejn kuljum",
+            "nl": "tweemaal per dag",
+            "pl": "dwa razy dziennie",
+            "pt": "duas vezes por dia",
+            "ro": "de două ori pe zi",
+            "sk": "dvakrát denne",
+            "sl": "dvakrat dnevno",
+            "es": "dos veces al día",
+            "sv": "två gånger per dag",
+            "nb": "daglig"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/UNKNOWN",
+          "label": {
+            "bg": "непознат",
+            "cs": "neznámý",
+            "da": "ubekendt",
+            "de": "unbekannt",
+            "el": "άγνωστος",
+            "en": "unknown",
+            "et": "tundmatu",
+            "fi": "tuntematon",
+            "fr": "inconnu",
+            "ga": "anaithnid",
+            "hr": "nepoznat",
+            "hu": "ismeretlen",
+            "it": "sconosciuto",
+            "lv": "nav zināms",
+            "lt": "nežinomas",
+            "mt": "mhux magħruf",
+            "nl": "onbekend",
+            "pl": "nieznany",
+            "pt": "desconhecido",
+            "ro": "necunoscut",
+            "sk": "neznámy",
+            "sl": "nepoznan",
+            "es": "desconocido",
+            "sv": "obekant",
+            "nb": "ukjent"
+          }
+        },
+        {
+          "value": "http://publications.europa.eu/resource/authority/frequency/WEEKLY",
+          "label": {
+            "bg": "седмичен",
+            "cs": "týdenní",
+            "da": "ugentligt",
+            "de": "wöchentlich",
+            "el": "εβδομαδιαίος",
+            "en": "weekly",
+            "et": "nädalane",
+            "fi": "viikoittainen",
+            "fr": "hebdomadaire",
+            "ga": "in aghaidh na seachtaine",
+            "hr": "tjedni",
+            "hu": "hetenkénti",
+            "it": "settimanale",
+            "lv": "reizi nedēļā",
+            "lt": "kas savaitę",
+            "mt": "kull ġimgħa",
+            "nl": "wekelijks",
+            "pl": "tygodnik",
+            "pt": "hebdomadário",
+            "ro": "săptămânal",
+            "sk": "týždenný",
+            "sl": "tedensko",
+            "es": "semanal",
+            "sv": "veckovis",
+            "nb": "ukentlig"
+          }
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "id": "dcat:contactPoint-choice_da",
+      "labelProperties": [
+        "http://www.w3.org/2006/vcard/ns#fn"
+      ],
+      "property": "http://www.w3.org/ns/dcat#contactPoint",
+      "description": {
+        "en": "This property contains contact information that can be used for flagging errors in the Dataset or sending comments.",
+        "de": "Diese Eigenschaft enthält Kontaktinformationen die zum Melden von Fehlern im Datensatz oder zum Versenden von Kommentaren verwendet werden können",
+        "sv": "Egenskapen innehåller kontaktuppgifter som kan användas för att flagga fel i datamängden eller för att skicka kommentarer"
+      },
+      "label": {
+        "en": "Contact point",
+        "sv": "Kontakt",
+        "nb": "Kontaktpunkt",
+        "da": "Kontaktpunkt",
+        "de": "Kontaktpunkt"
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": [
+          "http://www.w3.org/2006/vcard/ns#Organization",
+          "http://www.w3.org/2006/vcard/ns#Individual",
+          "http://www.w3.org/2006/vcard/ns#Kind"
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "nodetype": "URI",
+      "id": "dcat:foaf:page",
+      "label": {
+        "en": "Documentation",
+        "nb": "Dokumentasjon",
+        "sv": "Dokumentation",
+        "da": "Dokumentation",
+        "de": "Dokumentation"
+      },
+      "property": "http://xmlns.com/foaf/0.1/page",
+      "pattern": "https?://.+"
+    },
+    {
+      "type": "text",
+      "id": "dcat:dcterms:description_ca",
+      "extends": "dcat:dcterms:description",
+      "styles": [
+        "multiline"
+      ],
+      "cardinality": {
+        "min": 1,
+        "pref": 0
+      },
+      "description": {
+        "en": "This property contains a free-text account of the Catalogue. This property can be repeated for parallel language versions of the description.",
+        "nb": "Fritekst-beskrivelse av innholdet i katalogen. Egenskapen kan bli gjentatt for parallelle språkversjoner av beskrivelsen.",
+        "da": "Beskrivelse af datasættet som angiver centrale kendetegn, og formålet med dataindsamlingen. Attributten kan gentages for forskellige sprogversion af beskrivelsen.",
+        "de": "Diese Eigenschaft enthält eine Beschreibung des Kataloges. Diese Eigenschaft kann für andere Sprachversionen der Beschreibung wiederholt werden.",
+        "sv": "Katalogens beskrivning. Denna egenskap kan upprepas för parallella språkversioner av beskrivningen."
+      }
+    },
+    {
+      "type": "choice",
+      "id": "dcat:foaf:Agent_ca",
+      "labelProperties": [
+        "http://xmlns.com/foaf/0.1/name",
+        [
+          "http://xmlns.com/foaf/0.1/givenName",
+          "http://xmlns.com/foaf/0.1/familyName"
+        ]
+      ],
+      "extends": "dcat:foaf:Agent",
+      "description": {
+        "en": "This property refers to an entity (organisation) responsible for making the Catalogue available.",
+        "nb": "Referer til en enhet (organisasjon) som er ansvarlig for å gjøre katalogen tilgjengelig. Bør være autoritativ URI for enhet, sekundært organisasjonsnummer.",
+        "da": "Refererer til en enhed (organisation) som er ansvarlig for at gøre kataloget tilgængeligt. Bør være en autoritativ URI for enhed, alternativt organisationsnummer.",
+        "de": "Diese Eigenschaft bezieht sich auf eine Einrichtung (Organisation), die für die Erstellung des Kataloges verantwortlich ist.",
+        "sv": "Egenskapen hänvisar till en enhet (organisation) som ansvarar för att göra katalogen tillgänglig."
+      },
+      "cardinality": {
+        "min": 1,
+        "pref": 0,
+        "max": 1
+      }
+    },
+    {
+      "type": "choice",
+      "id": "dcat:foaf:Agent_da",
+      "labelProperties": [
+        "http://xmlns.com/foaf/0.1/name",
+        [
+          "http://xmlns.com/foaf/0.1/givenName",
+          "http://xmlns.com/foaf/0.1/familyName"
+        ]
+      ],
+      "extends": "dcat:foaf:Agent",
+      "description": {
+        "en": "This property refers to an entity (organisation) responsible for making the Dataset available.",
+        "nb": "Refererer til en enhet (organisasjon) som er ansvarlig for å gjøre datasettet tilgjengelig. Bør være autoritativ URI for enhet, sekundært organisasjonsnummer.",
+        "da": "Refererer til en enhed (organisation) som ejer datasættet. Bør være en autoritativ URI for enhed, alternativt organisationsnummer.",
+        "de": "Diese Eigenschaft bezieht sich auf eine Einrichtung (Organisation), die für die Erstellung des Datensatzes verantwortlich ist.",
+        "sv": "Egenskapen hänvisar till en enhet (organisation) som ansvarar för att göra datamängden tillgänglig."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      }
+    },
+    {
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "id": "dcat:dcterms:issued",
+      "extends": "dcterms:issued",
+      "label": {
+        "en": "Release date",
+        "sv": "Utgivningsdatum",
+        "nb": "Utgivelsesdato",
+        "da": "Udgivelsesdato",
+        "de": "Veröffentlichungsdatum"
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    {
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "id": "dcat:dcterms:issued_ca",
+      "description": {
+        "en": "This property contains the date of formal issuance (e.g., publication) of the Catalogue.",
+        "nb": "Dato for formell utgivelse (publisering) av katalogen.",
+        "da": "Dato for formel udgivelse af datasættet.",
+        "de": "Diese Eigenschaft enthält das Datum der Veröffentlichung des Kataloges.",
+        "sv": "Egenskapen innehåller katalogens utgivningsdatum."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      },
+      "extends": "dcat:dcterms:issued"
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:dcterms:language_ca",
+      "description": {
+        "en": "This property refers to a language used in the textual metadata describing titles, descriptions, etc. of the Datasets in the Catalogue. This property can be repeated if the metadata is provided in multiple languages.",
+        "nb": "Viser til et språk som brukes i tekstlige metadata som beskriver titler, beskrivelser, osv av datasettene i katalogen. Egenskapen kan gjentas hvis metadata er gitt i flere språk.",
+        "da": "Refererer til det sprog som bruges i de tekstlige metadata som beskriver titler, beskrivelser, osv af datasættene i kataloget. Attributten gentages hvis metadata er beskrevet i flere sprog.",
+        "de": "Diese Eigenschaft bezieht sich auf die Sprache die in den Metadaten verwendet wird und die Titel, Beschreibungen usw. der Datensätze im Katalog beschreiben. Diese Eigenschaft kann wiederholt werden wenn die Metadaten in mehreren Sprachen bereitgestellt werden.",
+        "sv": "Egenskapen anger vilket språk som används i metadata som titlar, beskrivningar etc. av datamängder i katalogen. Egenskapen kan upprepas om metadata anges på flera språk."
+      },
+      "extends": "dcat:dcterms:language",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:dcterms:language_da",
+      "extends": "dcat:dcterms:language",
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "description": {
+        "en": "This property refers to a language of the Dataset. This property can be repeated if there are multiple languages in the Dataset.",
+        "nb": "Referanse til språket som datasettet er på. Kan repeteres dersom det er flere språk i datasettet",
+        "da": "Sprog der er brugt i datasættet. Gentages hvis det er anvendt forskellige sprog i datasættet",
+        "de": "Diese Eigenschaft bezieht sich auf eine Sprache des Datensatzes. Diese Eigenschaft kann wiederholt werden wenn mehrere Sprachen im Datensatz vorhanden sind.",
+        "sv": "Egenskapen hänvisar till datamängdens språk. Egenskapen kan upprepas om det finns flera språk i datamängden."
+      }
+    },
+    {
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "id": "dcat:dcterms:modified",
+      "extends": "dcterms:modified",
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "label": {
+        "en": "Date modified",
+        "sv": "Ändringsdatum",
+        "nb": "Modifiseringsdato",
+        "da": "Senest opdateret",
+        "de": "Änderungsdatum"
+      }
+    },
+    {
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "id": "dcat:dcterms:modified_ca",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      },
+      "description": {
+        "en": "This property contains the most recent date on which the Catalogue was changed or modified.",
+        "nb": "Dato for siste oppdatering/endring av katalogen",
+        "da": "Dato for hvornår kataloget senest er ændret eller modificeret.",
+        "de": "Diese Eigenschaft enthält das aktuellste Datum an dem der Katalog geändert wurde.",
+        "sv": "Datum för senaste ändring av katalogen."
+      },
+      "extends": "dcat:dcterms:modified"
+    },
+    {
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "id": "dcat:dcterms:modified_da",
+      "extends": "dcat:dcterms:modified",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "description": {
+        "en": "This property contains the most recent date on which the Dataset was changed or modified.",
+        "nb": "Dato for siste oppdatering av datasettet",
+        "da": "Dato for hvornår datasættet senest er ændret eller modificeret.",
+        "de": "Diese Eigenschaft enthält das aktuellste Datum an dem der Datensatz geändert wurde.",
+        "sv": "Datum för senaste ändring av datamängden."
+      }
+    },
+    {
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "id": "dcat:dcterms:modified_di",
+      "extends": "dcat:dcterms:modified",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "description": {
+        "en": "This property contains the most recent date on which the Distribution was changed or modified.",
+        "nb": "Dato for siste modifisering av distribusjonen",
+        "da": "Dato for hvornår distributionen senest er ændret eller modificeret.",
+        "de": "Diese Eigenschaft enthält das aktuellste Datum an dem die Distribution geändert wurde.",
+        "sv": "Datum för senaste ändring av distributionen."
+      }
+    },
+    {
+      "type": "text",
+      "nodetype": "URI",
+      "id": "dcat:foaf:homepage_ca",
+      "extends": "foaf:homepage",
+      "description": {
+        "en": "This property refers to a web page that acts as the main page for the Catalogue.",
+        "nb": "Nettside som fungerer som hovedside for katalogen.",
+        "da": "Denne attribut refererer til en hjemmeside der giver adgang til kataloget.",
+        "de": "Webadresse zur Hauptseite des Kataloges.",
+        "sv": "Webadress till katalogens huvudsida."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      },
+      "label": {
+        "en": "Homepage",
+        "nb": "Hjemmeside",
+        "sv": "Hemsida",
+        "da": "Link til hjemmeside",
+        "de": "Homepage"
+      }
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:dcterms:spatial_ca",
+      "description": {
+        "en": "The geographical area covered by the catalogue. It is recommended to use URIs from Geonames in the form: http://sws.geonames.org/6695072",
+        "nb": "Referanse til et geografisk område som er dekket av katalogen",
+        "da": "Reference til et geografisk område som er dækket af kataloget",
+        "de": "Das geographische Gebiet das durch den Katalog abgedeckt wird. Es wird empfohlen URIs von Geonames in der folgenden Form zu verwenden: http://sws.geonames.org/6695072",
+        "sv": "Det geografiska området som omfattas av katalogen. Det rekommenderas att använda URI:er från Geonames i följande form: http://sws.geonames.org/6695072"
+      },
+      "extends": "dcat:dcterms:spatial"
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "dcat:dcterms:license_ca",
+      "extends": "dcat:dcterms:license",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      },
+      "description": {
+        "en": "This property refers to the licence under which the Catalogue can be used or reused.",
+        "nb": "Viser til lisens for datakatalogen som beskriver hvordan den kan viderebrukes.",
+        "da": "Angiver den licens hvorunder kataloget kan anvendes og genbruges.",
+        "de": "Diese Eigenschaft bezieht sich auf die Lizenz, unter der der Katalog verwendet oder wiederverwendet werden kann.",
+        "sv": "Den här egenskapen hänvisar till licensen enligt vilken katalogen kan användas eller återanvändas."
+      }
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "dcat:dcterms:license_di",
+      "extends": "dcat:dcterms:license",
+      "cardinality": {
+        "min": 0,
+        "pref": 1,
+        "max": 1
+      },
+      "description": {
+        "en": "This property refers to the licence under which the Distribution is made available.",
+        "nb": "Referanse til lisensen distribusjonen er gjort tilgjengelig under. Bør oppgis som URI, feks http://data.norge.no/nlod/no/1.0",
+        "da": "Reference til lisencen som distributioonen er gjort tilgængelig under. Bør angives som en URI, feks http://data.danmark.dk/nlod/dk/1.0",
+        "de": "Diese Eigenschaft bezieht sich auf die Lizenz unter der die Distribution zur Verfügung gestellt wird.",
+        "sv": "Den här egenskapen hänvisar till licensen enligt vilken distributionen görs tillgänglig."
+      }
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "dcat:odrs:RSSA",
+      "extends": "odrs:RightsStatement-short-agent",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "property": "http://purl.org/dc/terms/rights",
+      "label": {
+        "en": "Rights statement",
+        "nb": "Rettigheter",
+        "sv": "Rättigheter",
+        "da": "Rettigheder",
+        "de": "Rechteerklärung"
+      }
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "dcat:odrs:RSSA_ca",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "description": {
+        "en": "This property refers to a statement that specifies rights associated with the Catalogue.",
+        "nb": "Uttalelse som spesifiserer rettigheter knyttet til katalogen",
+        "da": "Beskrivelse som specificerer rettighederne tilknyttet kataloget",
+        "de": "Diese Eigenschaft bezieht sich auf eine Erklärung die die mit dem Katalog verknüpften Rechte angibt.",
+        "sv": "Egenskapen anger förklaring för rättigheterna som är förknippade med katalogen."
+      },
+      "extends": "dcat:odrs:RSSA"
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "dcat:odrs:RSSA_di",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "description": {
+        "en": "This property refers to a statement that specifies rights associated with the Distribution.",
+        "nb": "Viser til en uttalelse som angir rettigheter knyttet til distribusjonen.",
+        "da": "Beskrivelse som specificerer rettighederne tilknyttet distributionen.",
+        "de": "Diese Eigenschaft bezieht sich auf eine Erklärung die die mit der Distribution verknüpften Rechte angibt.",
+        "sv": "Egenskapen anger förklaring för rättigheterna som är förknippade med distributionen."
+      },
+      "extends": "dcat:odrs:RSSA"
+    },
+    {
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "id": "dcat:dcterms:issued_da",
+      "description": {
+        "en": "This property contains the date of formal issuance (e.g., publication) of the Dataset.",
+        "nb": "Dato for den formelle utgivelsen av datasettet",
+        "da": "Dato for formel udgivelse af datasættet.",
+        "de": "Diese Eigenschaft enthält das Datum der Veröffentlichung des Datensatzes.",
+        "sv": "Egenskapen anger datamängdens utgivningsdatum."
+      },
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "extends": "dcat:dcterms:issued"
+    },
+    {
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "id": "dcat:dcterms:issued_di",
+      "cardinality": {
+        "min": 0,
+        "pref": 0,
+        "max": 1
+      },
+      "extends": "dcat:dcterms:issued",
+      "description": {
+        "en": "This property contains the date of formal issuance (e.g., publication) of the Distribution.",
+        "nb": "Dato for formell utgivelse/publisering av distribusjonen",
+        "da": "Dato for formel offentliggørelse af distributionen.",
+        "de": "Diese Eigenschaft enthält das Datum der Veröffentlichung der Distribution.",
+        "sv": "Egenskapen anger distributionens utgivningsdatum."
+      }
+    },
+    {
+      "type": "text",
+      "nodetype": "URI",
+      "id": "dcat:dcterms:relation_da",
+      "extends": "dcterms:relation",
+      "label": {
+        "en": "Related resource",
+        "nb": "Relasjon",
+        "sv": "Relaterad resurs",
+        "da": "Relateret datasæt",
+        "de": "Verwandte Ressource"
+      },
+      "description": {
+        "en": "This property refers to a related resource.",
+        "nb": "Referanse til en beslektet ressurs",
+        "da": "Andre datasæt som dette datasæt har relationer til.",
+        "de": "Diese Eigenschaft gibt eine verwandte Ressource an.",
+        "sv": "Egenskapen anger en relaterad resurs."
+      },
+      "pattern": "https?://.+"
+    },
+    {
+      "type": "text",
+      "id": "dcat:dcterms:title_di",
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "description": {
+        "en": "This property contains a name given to the distribution. This property can be repeated for parallel language versions of the name.",
+        "nb": "Navn på distribusjonen",
+        "da": "Distributionens navn.",
+        "de": "Der Name der Distribution. Diese Eigenschaft kann für andere Sprachversionen des Namens wiederholt werden.",
+        "sv": "Distributionens namn. Denna egenskap kan upprepas för parallella språkversioner av namnet."
+      },
+      "nodetype": "LANGUAGE_LITERAL",
+      "extends": "dcat:dcterms:title"
+    },
+    {
+      "type": "text",
+      "id": "dcat:dcterms:description_di",
+      "extends": "dcat:dcterms:description",
+      "styles": [
+        "multiline"
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      },
+      "description": {
+        "en": "This property contains a free-text description of the distribution. This property can be repeated for parallel language versions of the description.",
+        "nb": "Fritekstbeskrivelse av distribusjonen. Kan repeteres for parallelle språkversjoner",
+        "da": "Beskrivelse af distributionen. Gentages for forskellige sprogversioner.",
+        "de": "Diese Eigenschaft enthält eine Beschreibung der Distribution. Diese Eigenschaft kann für andere Sprachversionen der Beschreibung wiederholt werden.",
+        "sv": "Distributionens beskrivning. Denna egenskap kan upprepas för parallella språkversioner av beskrivningen."
+      }
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:foaf:page_da",
+      "description": {
+        "en": "This property refers to a page or document about this Dataset.",
+        "nb": "Referanse til en side eller et dokument om dette datasettet.",
+        "da": "Direkte henvisning til ekstern dokumentation af datasættet i et vilkårligt format som er tilgængeligt via internettet.",
+        "de": "Diese Eigenschaft bezieht sich auf eine Seite oder ein Dokument über diesen Datensatz.",
+        "sv": "En sida eller ett dokument om denna datamängd."
+      },
+      "extends": "dcat:foaf:page",
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "foaf:Document"
+      }
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:foaf:page_di",
+      "extends": "dcat:foaf:page",
+      "description": {
+        "en": "This property refers to a page or document about this Distribution.",
+        "nb": "En side eller et dokument om gjeldende distribusjon",
+        "da": "Direkte henvisning til ekstern dokumentation af distributionen i et vilkårligt format som er tilgængeligt via internettet.",
+        "de": "Diese Eigenschaft bezieht sich auf eine Seite oder ein Dokument über diese Distribution.",
+        "sv": "En sida eller ett dokument om denna distribution."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "foaf:Document"
+      }
+    },
+    {
+      "type": "text",
+      "id": "dcat:dcterms:title_ca",
+      "cardinality": {
+        "min": 1,
+        "pref": 0
+      },
+      "nodetype": "LANGUAGE_LITERAL",
+      "description": {
+        "en": "This property contains a name given to the Catalogue. This property can be repeated for parallel language versions of the name.",
+        "nb": "Inneholder navnet på katalogen. Egenskapen kan bli gjentatt for parallelle språkversjoner av navnet.",
+        "da": "Katalogets formelle navn. Attributten gentages for forskellige sprogversioner.",
+        "de": "Der Name des Kataloges. Diese Eigenschaft kann für andere Sprachversionen des Namens wiederholt werden.",
+        "sv": "Katalogens namn. Denna egenskap kan upprepas för parallella språkversioner av namnet."
+      },
+      "extends": "dcat:dcterms:title"
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:dcterms:conformsTo_da",
+      "extends": "dcat:dcterms:conformsTo",
+      "description": {
+        "en": "This property refers to an implementing rule or other specification.",
+        "nb": "Referanse til en applikasjonsprofil som datasettets metadata er i samsvar med.",
+        "da": "Reference til en etableret standard eller regler som det beskrevne datasæt overholder.",
+        "de": "Diese Eigenschaft bezieht sich auf eine Implementierungsregel oder eine andere Spezifikation.",
+        "sv": "Egenskapen hänvisar till en tillämpningsföreskrift eller annan specifikation."
+      }
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:dcterms:conformsTo_di",
+      "extends": "dcat:dcterms:conformsTo",
+      "description": {
+        "en": "This property refers to an established schema to which the described Distribution conforms.",
+        "nb": "Referanse til et etablert skjema som distribusjonen er i samsvar med",
+        "da": "Reference til et skema som den beskrevne distribution anvender.",
+        "de": "Diese Eigenschaft bezieht sich auf ein etabliertes Schema dem die beschriebene Distribution entspricht.",
+        "sv": "Egenskapen hänvisar till ett etablerat schema som den beskrivna distribution använder."
+      },
+      "label": {
+        "en": "Linked schemas",
+        "de": "Verknüpfte Schemata",
+        "sv": "Länkade scheman"
+      }
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:dcterms:language_di",
+      "extends": "dcat:dcterms:language",
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "description": {
+        "en": "This property refers to a language used in the Distribution. This property can be repeated if the metadata is provided in multiple languages.",
+        "nb": "Referanse til språket som distribusjon er på. Kan repeteres dersom det er flere språk i distribusjon",
+        "da": "Sprog der er brugt i distributionen. Gentages for forskellige sprogversioner.",
+        "de": "Diese Eigenschaft bezieht sich auf eine Sprache der Distribution. Diese Eigenschaft kann wiederholt werden wenn mehrere Sprachen in der Distribution vorhanden sind.",
+        "sv": "Egenskapen hänvisar till distributionens språk. Egenskapen kan upprepas om det finns flera språk i distributionen."
+      }
+    },
+    {
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "id": "adms:contactPoint-choice_da",
+      "extends": "dcat:contactPoint-choice_da",
+      "styles": [
+        "strictmatch",
+        "deprecated"
+      ],
+      "property": "http://www.w3.org/ns/adms#contactPoint"
+    },
+    {
+      "type": "text",
+      "nodetype": "ONLY_LITERAL",
+      "id": "dcat:adms:version",
+      "extends": "dcat:owl:versionInfo_da",
+      "styles": [
+        "strictmatch",
+        "deprecated"
+      ]
+    },
+    {
+      "type": "choice",
+      "nodetype": "URI",
+      "id": "dcat:themeTaxonomy_ca_deprecated",
+      "extends": "dcat:themeTaxonomy_ca",
+      "choices": [
+        {
+          "value": "http://eurovoc.europa.eu/domains",
+          "label": {
+            "en": "Eurovoc"
+          }
+        }
+      ],
+      "styles": [
+        "strictmatch",
+        "deprecated"
+      ]
+    },
+    {
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "id": "dcat:dcterms:provenance_da",
+      "property": "http://purl.org/dc/terms/provenance",
+      "label": {
+        "en": "Provenance",
+        "sv": "Ursprung",
+        "da": "Proveniens",
+        "de": "Herkunft"
+      },
+      "description": {
+        "en": "This property contains a statement about the lineage of a Dataset.",
+        "da": "Fritekst beskrivelse af et datasæts stamtræ.",
+        "de": "Diese Eigenschaft enthält eine Aussage über die Abstammung eines Datensatzes.",
+        "sv": "Egenskapen innehåller ett uttalande om härstamningen av en datamängd."
+      },
+      "styles": [
+        "multiline"
+      ]
+    },
+    {
+      "type": "choice",
+      "id": "dcat:documentType",
+      "property": "rdf:type",
+      "nodetype": "URI",
+      "label": {
+        "sv": "Dokumenttyp",
+        "en": "Document type",
+        "de": "Art des Dokuments"
+      },
+      "cardinality": {
+        "min": 1
+      },
+      "choices": [
+        {
+          "value": "foaf:Document",
+          "label": {
+            "en": "Documentation",
+            "sv": "Dokumentation",
+            "de": "Dokumentation"
+          }
+        },
+        {
+          "value": "dcterms:LicenseDocument",
+          "label": {
+            "en": "License",
+            "sv": "Licens",
+            "de": "Lizenz"
+          }
+        },
+        {
+          "value": "dcterms:Standard",
+          "label": {
+            "en": "Standard/Recommendation/Specification",
+            "sv": "Standard/rekommendation/specifikation",
+            "de": "Standard/Empfehlung/Spezifikation"
+          }
+        }
+      ]
+    }
+  ]
+}

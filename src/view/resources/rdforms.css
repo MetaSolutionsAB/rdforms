@@ -349,8 +349,19 @@ a.rdformsUrl:hover {
     resize: vertical;
 }
 
-.rdformsEditor .rdformsFullValue {
-  color: #b3b3b3
+.rdformsEditor .rdformsExtLink {
+    margin-top: 0.6em;
+    margin-right: .6em;
+    text-decoration: none;
+}
+
+.rdformsEditor .rdformsExtLinkDisabled {
+    pointer-events: none;
+    opacity: 0.14;
+}
+
+.rdformsEditor .rdformsExtLinkControl {
+    padding-right: 3.5em !important;
 }
 
 .rdformsEditor .rdformsChoiceValue {
@@ -398,6 +409,61 @@ a.rdformsUrl:hover {
 	background-repeat: no-repeat;
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAAQAAAAEABcxq3DAAACGUlEQVQ4y52TTUhUcRTFf//3n/FjZsxmQsOvmtJF5VQ6i3IsaaJcVIs24UKIIKRNuGrboihaRWQptbVtmLvCWgyZWJRlNimUaKajMH1gWprzfO/dFiYozgR54WzuPedwOZcL/6jDtXjq68hlPRXejRqM0TPwhK51Gdy6QoNM5oqTyHFaLnP8v8TRCFmJPobly0GRZI2MvSBeX4dOxzXSNZsaaS4pLqrA8IMuYOuWwtDpUzSl46pohOxohGhVJdVlxVQHNlJdVuorN7L3GSjvEkt+4iy8sscTc8PTM7ydmKJ/YIg3sV6eqjvXOH+uUbWii8EVBJUPKu22IBbILFgjYCdpa5czem6eeHiXOlAQcG8TXY7gQkRlgEbEjZhj9MdTD1vbuajHEljjkzwI7zSP+H2zJaiiJbLDWtgOznwfQx9+dF+66Zzs6ialAYbHMJNf6QzvSJ3I81iFqELEUWtg/37PyGjy9dU251jnY36tukJHl3yP9cpd23SwLZUepkPPS27ffyQzyzrXyow2bTBKbcuLs6iWU1s+1t8Mvfh9RtlKzSqDgE8HHdsDpiDmFJL6BBio7CAqqwixPPi9OpjRINdlBBdnP4OM8G16Yep53GpR4K7dO9gcyB/djDLIcRmZDcQy8sYn5j8+G1i83hEz7/W+s1MANSF9o+GoffZQlfuCWIYv4w9EQq78PRXayDQPbdd6f6XesLL3By3z9hHiEQ65AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDEwLTAyLTExVDAxOjIwOjIxLTA2OjAwtZnToAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAwNi0xMC0wMVQwMDo1NjoyNi0wNTowMJWSAJ0AAAAASUVORK5CYII=);
 }
+
+.rdformsValidator .rdformsFields .error,
+.rdformsValidator .rdformsFields .warning,
+.rdformsValidator .rdformsFields .deprecated {
+    border-radius: 4px;
+    padding: 4px;
+    color: white;
+}
+.rdformsValidator .rdformsField.error {
+    background: red;
+}
+
+.rdformsValidator .rdformsField.warning {
+    background: orange;
+}
+
+.rdformsValidator .rdformsField.deprecated {
+    background: royalblue;
+}
+
+.rdformsValidator .rdformsField.error .rdformsUrl,
+.rdformsValidator .rdformsField.warning .rdformsUrl,
+.rdformsValidator .rdformsField.deprecated .rdformsUrl {
+    color: white;
+    text-decoration: underline;
+}
+
+.rdformsValidator .rdformsField.error .rdformsUrl:hover,
+.rdformsValidator .rdformsField.warning .rdformsUrl:hover,
+.rdformsValidator .rdformsField.deprecated .rdformsUrl:hover {
+    color: white;
+}
+
+.rdformsValidator .rdformsValidationMessage {
+    font-style: italic;
+    margin-left: 5px;
+}
+
+.compact .rdformsRow.rdformsTopLevel>.rdformsFields>div.rdforms.error {
+    padding: 4px 10px;
+}
+.rdforms.rdformsValidator .rdformsValidator.error {
+    background: red;
+    border-radius: 4px;
+    padding: 4px;
+    color: white;
+}
+
+
+.rdformsValidator .rdformsValidationMessageWrapper {
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+}
+
 
 
 /*.compact .rdformsLabel {
@@ -596,7 +662,9 @@ a.rdformsUrl:hover {
     padding: 0px;
     resize: none;
 }
-
+textarea.form-control{
+    height: 38px;
+}
 
 /* LDBrowser */
 
@@ -638,3 +706,4 @@ a.rdformsUrl:hover {
 .rdformsRow.missingDepsWithValue {
     background: lightsalmon;
 }
+

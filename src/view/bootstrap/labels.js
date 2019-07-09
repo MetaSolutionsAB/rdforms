@@ -1,3 +1,4 @@
+import jquery from 'jquery';
 import renderingContext from '../renderingContext';
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelRow) => {
@@ -12,7 +13,9 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelR
   if (labelRow) {
     $labelDiv.addClass('rdformsLabelRow');
   }
-  context.labelNode = $labelDiv[0];
+  if (context) {
+    context.labelNode = $labelDiv[0];
+  }
   renderingContext.attachItemInfo(item, $labelDiv[0], context);
 };
 
@@ -64,12 +67,15 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
   }
   return undefined;
 };
-
-jquery('body').on('show.bs.popover click', function (e) {
-  jquery('[data-toggle="popover"]').each((node, a) => {
-    if (e.target.innerHTML !== a.innerHTML) {
-      jquery(a).popover('hide');
-    }
+// TODO this is listening for any click and popover showings... too much! especially considering
+// that is being used in another application. Rewrite!
+jquery(document).ready(() => {
+  jquery(document.body).on('show.bs.popover click', (e) => {
+    jquery('[data-toggle="popover"]').each((node, a) => {
+      if (e.target.innerHTML !== a.innerHTML) {
+        jquery(a).popover('hide');
+      }
+    });
   });
 });
 
@@ -92,12 +98,10 @@ renderingContext.attachItemInfo = function (item, aroundNode/* , context */) {
   } else {
     label = '';
   }
-
   const popoverOptions = {
     html: true,
     container: renderingContext.getPopoverContainer(),
     placement: 'auto',
-    template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
     trigger: 'click',
     title: label,
     content: `<div class="description">${

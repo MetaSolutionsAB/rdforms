@@ -8,8 +8,8 @@ const seeAlso = "http://www.w3.org/2000/01/rdf-schema#seeAlso";
  * @see rforms.template.Choice#getChoices
  */
 export default class ChoiceBinding extends ValueBinding {
-  constructor({choice, item, statement}) {
-    super({choice, item, statement});
+  constructor({choice, item, statement, matchingCode}) {
+    super({choice, item, statement, matchingCode});
     this._choice = choice;
     this._validPredicate = item.getProperty() != null;
   }
@@ -25,14 +25,6 @@ export default class ChoiceBinding extends ValueBinding {
 
   getChoice() {
     return this._choice;
-  }
-
-  get label() {
-    return label;
-  }
-
-  get seeAlso() {
-    return seeAlso;
   }
 
   remove() {
@@ -52,13 +44,13 @@ export default class ChoiceBinding extends ValueBinding {
 
     if (value != null && choice != null) {
       if (choice.seeAlso && choice.inlineSeeAlso) {
-        graph.create(value, ChoiceBinding.seeAlso, choice.seeAlso, true, silent);
+        graph.create(value, seeAlso, choice.seeAlso, true, silent);
       }
 
       if (choice.inlineLabel === true) {
         var labelMap = choice.label || {};
         for (var lang in labelMap) if (labelMap.hasOwnProperty(lang)) {
-          graph.create(value, ChoiceBinding.label,
+          graph.create(value, label,
             {value: labelMap[lang], lang: lang, type: "literal"}, true, silent);
         }
       }

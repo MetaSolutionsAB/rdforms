@@ -6,3 +6,5 @@
 /release
 yarn-error.log
 *.vim
+*.temp
+/dist

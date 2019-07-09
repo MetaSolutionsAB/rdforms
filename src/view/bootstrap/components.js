@@ -6,6 +6,7 @@ import './text';
 import './choice';
 import './buttons';
 import './table';
+import jquery from 'jquery';
 
 renderingContext.domQuery = (selector, node) => jquery(selector, node)[0];
 

@@ -163,7 +163,7 @@ const registerPattern = (pattern, datatype) => {
         .appendTo(fieldDiv);
 
       if (binding.getItem().hasStyle('externalLink')) {
-        const $extLink = jquery(`<a class="fas fa-external-link-square-alt rdformsExtLink ${renderingContext.getExtLinkClass()}" target="_blank">`);
+        const $extLink = jquery(`<a class="fas fa-external-link-alt rdformsExtLink ${renderingContext.getExtLinkClass()}" target="_blank">`);
         $extLink.appendTo(context.controlDiv);
         jquery(fieldDiv).addClass('rdformsExtLinkControl');
         addChangeListener($input, binding, regex, $extLink);
@@ -207,7 +207,7 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
     regex = new RegExp(pattern);
   }
   if (item.hasStyle('externalLink')) {
-    const $extLink = jquery(`<a class="fas fa-external-link-square-alt rdformsExtLink ${renderingContext.getExtLinkClass()}" target="_blank">`);
+    const $extLink = jquery(`<a class="fas fa-external-link-alt rdformsExtLink ${renderingContext.getExtLinkClass()}" target="_blank">`);
     $extLink.appendTo(context.controlDiv);
     jquery(fieldDiv).addClass('rdformsExtLinkControl');
     addChangeListener($input, binding, regex, $extLink);

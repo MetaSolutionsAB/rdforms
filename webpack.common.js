@@ -45,24 +45,35 @@ module.exports = {
             loader: 'nls-loader',
               options: {
                 // context: APP_PATH,
-                locales: ["en"],
+                locales: ["en", "sv"],
               },
           }
         ]
       },
       {
         test: /\.js$/,
-        exclude: /node_modules\/(?!(rdfjson|esi18n|store|)\/).*/,
+        exclude: /node_modules\/(?!(bootstrap|bootstrap-material-design|rdfjson|esi18n)\/).*/,
         use: [
           {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env'],
+              presets: [
+                [
+                  "@babel/preset-env", {
+                  "targets": {
+                    "ie": 11,
+                  },
+                },
+                ]
+              ],
               plugins: [
+                'lodash',
                 '@babel/plugin-proposal-object-rest-spread',
                 '@babel/plugin-proposal-class-properties',
-                ['@babel/plugin-transform-modules-commonjs', {strictMode: false}],
-              ]
+                '@babel/plugin-syntax-dynamic-import',
+                ['@babel/plugin-transform-modules-commonjs', { strictMode: false }],
+
+              ],
             }
           },
           {
@@ -103,7 +114,6 @@ module.exports = {
     alias: {
       jquery: path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
       moment: path.resolve(path.join(__dirname, 'node_modules', 'moment')),
-      bmd: path.resolve(path.join(__dirname, 'node_modules', 'bootstrap-material-design')),
     }
   },
   context: __dirname, // string (absolute path!)

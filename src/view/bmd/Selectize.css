@@ -1,0 +1,163 @@
+/* SELECTIZE */
+
+
+.selectize-control.single,
+.selectize-control.multi {
+  padding: 0;
+}
+.selectize-control.single .selectize-input,
+.selectize-control.multi .selectize-input,
+.selectize-control.single .selectize-input.input-active,
+.selectize-control.multi .selectize-input.input-active {
+  cursor: text;
+  background: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border: 0;
+  padding: 0;
+  height: 100%;
+  font-size: 14px;
+  line-height: 30px;
+}
+.selectize-control.single .selectize-input .has-items,
+.selectize-control.multi .selectize-input .has-items,
+.selectize-control.single .selectize-input.input-active .has-items,
+.selectize-control.multi .selectize-input.input-active .has-items {
+  padding: 0;
+}
+.selectize-control.single .selectize-input:after,
+.selectize-control.multi .selectize-input:after,
+.selectize-control.single .selectize-input.input-active:after,
+.selectize-control.multi .selectize-input.input-active:after {
+  right: 5px;
+  position: absolute;
+  /* font-size: 25px;
+  content: "\e5c5";
+  font-family: 'Material Icons'; */
+  font-size: 20px;
+  content: "\f0d7";
+  font-family: FontAwesome;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.selectize-control.single .selectize-input input,
+.selectize-control.multi .selectize-input input,
+.selectize-control.single .selectize-input.input-active input,
+.selectize-control.multi .selectize-input.input-active input {
+  font-size: 14px;
+  outline: 0;
+  border: 0;
+  background: transparent;
+}
+.selectize-control.single .selectize-input.label-floating-fix input,
+.selectize-control.multi .selectize-input.label-floating-fix input,
+.selectize-control.single .selectize-input.input-active.label-floating-fix input,
+.selectize-control.multi .selectize-input.input-active.label-floating-fix input {
+  opacity: 0;
+}
+.selectize-control.single .selectize-input > div,
+.selectize-control.multi .selectize-input > div,
+.selectize-control.single .selectize-input.input-active > div,
+.selectize-control.multi .selectize-input.input-active > div,
+.selectize-control.single .selectize-input > .item,
+.selectize-control.multi .selectize-input > .item,
+.selectize-control.single .selectize-input.input-active > .item,
+.selectize-control.multi .selectize-input.input-active > .item {
+  display: inline-block;
+  margin: 0 8px 3px 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+.selectize-control.single .selectize-input > div:after,
+.selectize-control.multi .selectize-input > div:after,
+.selectize-control.single .selectize-input.input-active > div:after,
+.selectize-control.multi .selectize-input.input-active > div:after,
+.selectize-control.single .selectize-input > .item:after,
+.selectize-control.multi .selectize-input > .item:after,
+.selectize-control.single .selectize-input.input-active > .item:after,
+.selectize-control.multi .selectize-input.input-active > .item:after {
+  content: ",";
+}
+.selectize-control.single .selectize-input > div:last-of-type:after,
+.selectize-control.multi .selectize-input > div:last-of-type:after,
+.selectize-control.single .selectize-input.input-active > div:last-of-type:after,
+.selectize-control.multi .selectize-input.input-active > div:last-of-type:after,
+.selectize-control.single .selectize-input > .item:last-of-type:after,
+.selectize-control.multi .selectize-input > .item:last-of-type:after,
+.selectize-control.single .selectize-input.input-active > .item:last-of-type:after,
+.selectize-control.multi .selectize-input.input-active > .item:last-of-type:after {
+  content: "";
+}
+.selectize-control.single .selectize-input > div.active,
+.selectize-control.multi .selectize-input > div.active,
+.selectize-control.single .selectize-input.input-active > div.active,
+.selectize-control.multi .selectize-input.input-active > div.active,
+.selectize-control.single .selectize-input > .item.active,
+.selectize-control.multi .selectize-input > .item.active,
+.selectize-control.single .selectize-input.input-active > .item.active,
+.selectize-control.multi .selectize-input.input-active > .item.active {
+  font-weight: bold;
+  background: transparent;
+  border: 0;
+}
+.selectize-control.single .selectize-dropdown,
+.selectize-control.multi .selectize-dropdown {
+  position: absolute;
+  z-index: 1000;
+  border: 0;
+  width: 100% !important;
+  left: 0 !important;
+  height: auto;
+  background-color: #FFF;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 2px;
+  padding: 0;
+  margin-top: 3px;
+}
+.selectize-control.single .selectize-dropdown .active,
+.selectize-control.multi .selectize-dropdown .active {
+  background-color: inherit;
+}
+.selectize-control.single .selectize-dropdown .highlight,
+.selectize-control.multi .selectize-dropdown .highlight {
+  background-color: #d5d8ff;
+}
+.selectize-control.single .selectize-dropdown .selected,
+.selectize-control.multi .selectize-dropdown .selected,
+.selectize-control.single .selectize-dropdown .selected.active,
+.selectize-control.multi .selectize-dropdown .selected.active {
+  background-color: #EEEEEE;
+}
+.selectize-control.single .selectize-dropdown [data-selectable],
+.selectize-control.multi .selectize-dropdown [data-selectable],
+.selectize-control.single .selectize-dropdown .optgroup-header,
+.selectize-control.multi .selectize-dropdown .optgroup-header {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.selectize-control.single .dropdown-active ~ .selectize-dropdown,
+.selectize-control.multi .dropdown-active ~ .selectize-dropdown {
+  display: block;
+}
+.dropdownjs::after {
+  right: 5px;
+  top: 3px;
+  font-size: 25px;
+  position: absolute;
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  content: "\e5c5";
+  pointer-events: none;
+  color: #757575;
+}
+
+

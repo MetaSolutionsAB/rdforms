@@ -2895,9 +2895,10 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
-dijit@^1.13.0:
+dijit@^1.14.2:
   version "1.15.0"
   resolved "https://registry.yarnpkg.com/dijit/-/dijit-1.15.0.tgz#9f0c5b58dbba1fe3829897866c05ade300ddb6fa"
+  integrity sha512-+sW53N5PfqI7X/iKFl2jPKIoc93nmkmg2bqHPNUZ+fqWsdjb042KJUw24MOK70BZFVcwru2Uw/kVEb/BZRmO/w==
   dependencies:
     dojo "1.15.0"
 
@@ -2945,7 +2946,7 @@ dojo-webpack-plugin@^2.7.5:
     tmp "0.0.30"
     webpack-plugin-compat "1.0.1"
 
-dojo@1.15.0, dojo@^1.13.0, dojo@^1.14.1:
+dojo@1.15.0, dojo@^1.14.1, dojo@^1.14.2:
   version "1.15.0"
   resolved "https://registry.yarnpkg.com/dojo/-/dojo-1.15.0.tgz#af8dc3e18b7c46305569affcf7e479de68d0e40f"
 

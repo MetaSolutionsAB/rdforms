@@ -28,7 +28,7 @@ module.exports = {
 //    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new DojoWebpackPlugin({
       loaderConfig: require("./config/dojoConfig"),
-      locales: ["en"],
+      locales: ["en", "sv"],
       environment: {dojoRoot: "dist"},	// used at run time for non-packed resources (e.g.
       // blank.gif)
       buildEnvironment: {dojoRoot: "node_modules"}, // used at build time

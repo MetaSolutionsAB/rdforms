@@ -75,10 +75,10 @@
   },
   "scripts": {
     "build": "webpack --display-modules --config webpack.prod.js",
+    "build:pretty": "webpack --display-modules --mode=development --config webpack.dev.js",
     "build:node": "webpack --display-modules --config webpack.node.js",
     "build:node:dev": "webpack --mode=development --display-modules --config webpack.node.js",
     "build:all": "webpack --display-modules --mode=production --config webpack.all.js",
-    "build:all:dev": "webpack --display-modules --mode=development --config webpack.all.js",
     "dev": "webpack-dev-server --watch --mode=development --config webpack.dev.js",
     "examples": "webpack --display-modules --config ./webpack.examples.js",
     "print-licenses": "print-licenses"

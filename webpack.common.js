@@ -45,24 +45,35 @@ module.exports = {
             loader: 'nls-loader',
               options: {
                 // context: APP_PATH,
-                locales: ["en"],
+                locales: ["en", "sv"],
               },
           }
         ]
       },
       {
         test: /\.js$/,
-        exclude: /node_modules\/(?!(rdfjson|esi18n|store|)\/).*/,
+        exclude: /node_modules\/(?!(bootstrap|bootstrap-material-design|rdfjson|esi18n|store|)\/).*/,
         use: [
           {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env'],
+              presets: [
+                [
+                  "@babel/preset-env", {
+                  "targets": {
+                    "ie": 11,
+                  },
+                },
+                ]
+              ],
               plugins: [
+                'lodash',
                 '@babel/plugin-proposal-object-rest-spread',
                 '@babel/plugin-proposal-class-properties',
-                ['@babel/plugin-transform-modules-commonjs', {strictMode: false}],
-              ]
+                '@babel/plugin-syntax-dynamic-import',
+                ['@babel/plugin-transform-modules-commonjs', { strictMode: false }],
+
+              ],
             }
           },
           {

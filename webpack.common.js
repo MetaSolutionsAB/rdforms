@@ -52,7 +52,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /node_modules\/(?!(bootstrap|bootstrap-material-design|rdfjson|esi18n|store|)\/).*/,
+        exclude: /node_modules\/(?!(bootstrap|bootstrap-material-design|rdfjson|esi18n)\/).*/,
         use: [
           {
             loader: 'babel-loader',

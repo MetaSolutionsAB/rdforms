@@ -1,4 +1,5 @@
-import '@babel/polyfill';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import './src/view/bmd/all';
 
 import ItemStore from './src/template/ItemStore';
@@ -10,4 +11,5 @@ import utils from './src/utils';
 import spec from './src/spec/init';
 import renderingContext from './src/view/renderingContext';
 
-export {bundleLoader, ItemStore, Editor, Presenter, ValidationPresenter, utils, spec, renderingContext};
+export {bundleLoader, ItemStore, Editor, Presenter, ValidationPresenter, renderingContext, utils, spec};
+

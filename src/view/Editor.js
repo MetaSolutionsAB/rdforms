@@ -86,7 +86,7 @@ export default declare(Presenter, {
           });
         } else if (err.code === engine.CODES.TOO_MANY_VALUES_DISJOINT) {
           this.binding.getChildBindings().forEach((binding) => {
-            if (binding.error) {
+            if (binding.getMatchingCode() !== engine.CODES.OK) {
               renderingContext.domClassToggle(this._binding2node[binding.getHash()],
                 'errorReport', true);
             }

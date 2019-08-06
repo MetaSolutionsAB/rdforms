@@ -1669,6 +1669,7 @@ better-assert@~1.0.0:
 big.js@^3.1.3:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-3.2.0.tgz#a5fc298b81b9e0dca2e458824784b65c52ba588e"
+  integrity sha512-+hN/Zh2D08Mx65pZ/4g5bsmNiZUuChDiQfTUQ7qJr4/kuopCr88xZsAXv6mBoZEsUI4OuGHlX59qE94K2mMW8Q==
 
 big.js@^5.2.2:
   version "5.2.2"
@@ -2944,6 +2945,7 @@ dojo-util@^1.13.0:
 dojo-webpack-plugin@^2.7.5:
   version "2.8.9"
   resolved "https://registry.yarnpkg.com/dojo-webpack-plugin/-/dojo-webpack-plugin-2.8.9.tgz#5573c350db2cbcbd4a40346122cda5950c4281fe"
+  integrity sha512-IR0ADttdOBLJX19l17gg3VpH5yN7ywH69EpJb42iSVOGh8CM3uZj3luC1awyWbJtchVq71bZCLV5O8BgUUPfFg==
   dependencies:
     loader-utils "1.1.0"
     node-stringify "0.2.1"
@@ -3019,6 +3021,7 @@ elliptic@^6.0.0:
 emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
+  integrity sha1-TapNnbAPmBmIDHn6RXrlsJof04k=
 
 encodeurl@~1.0.2:
   version "1.0.2"
@@ -3191,9 +3194,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-"esi18n@https://bitbucket.org/metasolutions/esi18n.git#develop":
-  version "1.3.0-SNAPSHOT"
-  resolved "https://bitbucket.org/metasolutions/esi18n.git#34f4852c3ba5eda2cf184474b68da39ce04e0ee9"
+"esi18n@https://bitbucket.org/metasolutions/esi18n.git#1.2":
+  version "1.2.0"
+  resolved "https://bitbucket.org/metasolutions/esi18n.git#949b442479450f78028088e4896db0c8c04f6e59"
   dependencies:
     dojo "^1.14.1"
     lodash-es "^4.17.10"
@@ -4881,6 +4884,7 @@ loader-runner@^2.3.0:
 loader-utils@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.1.0.tgz#c98aef488bcceda2ffb5e2de646d6a754429f5cd"
+  integrity sha1-yYrvSIvM7aL/teLeZG1qdUQp9c0=
   dependencies:
     big.js "^3.1.3"
     emojis-list "^2.0.0"
@@ -5502,6 +5506,7 @@ node-releases@^1.1.23:
 node-stringify@0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/node-stringify/-/node-stringify-0.2.1.tgz#aee4addb89702861c004b6848ec22fbc0b01f46e"
+  integrity sha512-EdzBiPO2hmQOpG8eZtJmBK0bAWPTdla2GAU4Tb7fztLkAiMEYcJAHWvC/4FI8E9ZOxB1zmoAJpM6upTQ54xNDw==
 
 node-version@^1.1.3:
   version "1.2.0"
@@ -6763,7 +6768,7 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
 
 "rdfjson@https://bitbucket.org/metasolutions/rdfjson.git#develop":
   version "2.3.0-SNAPSHOT"
-  resolved "https://bitbucket.org/metasolutions/rdfjson.git#3cffbf250c350a500f26ae6a4706c23c95538353"
+  resolved "https://bitbucket.org/metasolutions/rdfjson.git#ec20339d023bbffd5aa0322eb6e5b674def5cb1a"
   dependencies:
     md5 "^2.2.1"
     xmldom "~0.1.19"
@@ -7873,6 +7878,7 @@ timsort@^0.3.0:
 tmp@0.0.30:
   version "0.0.30"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.30.tgz#72419d4a8be7d6ce75148fd8b324e593a711c2ed"
+  integrity sha1-ckGdSovn1s51FI/YsyTlk6cRwu0=
   dependencies:
     os-tmpdir "~1.0.1"
 
@@ -8343,6 +8349,7 @@ webpack-node-externals@^1.6.0:
 webpack-plugin-compat@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/webpack-plugin-compat/-/webpack-plugin-compat-1.0.1.tgz#7fb420bad4d68d2d0dc5d4de3e1da6b9ee7a49b3"
+  integrity sha512-mCFeieoXJDqFecib1ofvpHB+NqxRWHbZ5/NSlUa7Myb1j24zkCUS/0+r+i5VPyvUvCxQ/cLvMc5pj+6CHmv/gA==
 
 webpack-serve@^2.0.2:
   version "2.0.3"

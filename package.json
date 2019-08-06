@@ -1,6 +1,6 @@
 {
   "name": "rdforms",
-  "version": "9.3.0-SNAPSHOT",
+  "version": "9.5.0-SNAPSHOT",
   "main": "dist/bmd.rdforms.js",
   "module": "main.js",
   "repository": "https://bitbucket.org/metasolutions/rdforms.git",
@@ -15,7 +15,7 @@
     "dijit": "^1.14.2",
     "dojo": "^1.14.2",
     "dojo-util": "^1.13.0",
-    "esi18n": "https://bitbucket.org/metasolutions/esi18n.git#develop",
+    "esi18n": "https://bitbucket.org/metasolutions/esi18n.git#1.2",
     "fuelux": "3.16.6",
     "ifdef-loader": "^2.1.1",
     "jquery": "^3.3.1",

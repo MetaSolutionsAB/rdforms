@@ -9,8 +9,12 @@ import ItemStore from '../template/ItemStore';
 import { i18n } from 'esi18n';
 import specNLS from "./nls/spec.nls";
 import { template } from "lodash-es";
+import { namespaces } from "rdfjson";
 
 export default (config, nav, main) => {
+  if (config.namespaces) {
+    namespaces.add(config.namespaces);
+  }
   if (config.language) {
     i18n.setLocale(config.language);
   }
@@ -32,12 +36,20 @@ export default (config, nav, main) => {
       document.body.appendChild(mainNode);
     }
   }
+  let sectionNode;
+  const sectionNodes = document.querySelectorAll('main section');
+  if (sectionNodes.length > 0) {
+    sectionNode = sectionNodes[0];
+  }
+
   const bundle = i18n.getLocalization(specNLS);
   navNode.innerHTML = template(navTemplate)(bundle);
   mainNode.innerHTML = template(mainTemplate)(bundle);
   bundleLoader(itemStore, config.bundles, (bundles) => {
     if (config.introduction) {
       document.getElementById('introText').innerHTML = config.introduction;
+    } else if (sectionNode) {
+      document.getElementById('introText').appendChild(sectionNode);
     }
     const aps = document.getElementById('aps');
     const tocAps = document.getElementById('toc-aps');

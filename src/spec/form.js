@@ -1,5 +1,5 @@
 import {getLabel, getConstrType} from './itemUtils.js';
-import {createEl, addDef, renderHeader, renderSubHeader, initHeaderCounters} from './domUtils.js';
+import {createEl, addDef, addURIDef, renderHeader, renderSubHeader, initHeaderCounters} from './domUtils.js';
 import {addVocabulary} from './vocab.js';
 import {nsReg} from './namespaces.js';
 import {namespaces as ns} from 'rdfjson';
@@ -102,7 +102,13 @@ const getStringRange = (field) => {
     case 'LANGUAGE_LITERAL':
       return i18n.localize(specNLS, 'fieldLangLit', {});
     case 'DATATYPE_LITERAL':
-      return i18n.localize(specNLS, 'fieldDatatype', {datatype: ns.shortenKnown(field.getDatatype())});
+      let datatype = field.getDatatype();
+      if (Array.isArray(datatype)) {
+        datatype = datatype.map(d => ns.shortenKnown(d)).join(', ');
+      } else {
+        datatype = ns.shortenKnown(datatype);
+      }
+      return i18n.localize(specNLS, 'fieldDatatype', {datatype});
     case 'URI':
       return i18n.localize(specNLS, 'fieldURI', {});
   }
@@ -148,7 +154,7 @@ const renderFieldDetails = (field, node) => {
   if (desc && desc != "") {
     addDef(i18n.localize(specNLS, 'fieldDescription', {}), desc, tbody);
   }
-  addDef(i18n.localize(specNLS, 'fieldProperty', {}), rdfjson.namespaces.expand(field.getProperty()), tbody);
+  addURIDef(i18n.localize(specNLS, 'fieldProperty', {}), rdfjson.namespaces.expand(field.getProperty()), tbody);
   addRange(field, tbody);
   const card = field.getCardinality() || {};
   const level = i18n.localize(specNLS, 'fieldLevel', {});
@@ -203,7 +209,7 @@ const renderForm = (item, node, toc, id) => {
   const tocOl = createEl('ol', null, tocLi);
   const rdftype = getConstrType(item);
   if (rdftype) {
-    createEl('strong', 'Class: ', node);
+    createEl('strong', `${i18n.localize(specNLS, 'class', {})}: `, node);
     createEl('span', rdftype, node);
   }
   const desc = item.getDescription();

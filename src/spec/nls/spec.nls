@@ -31,7 +31,8 @@
     "fieldTableHeaderLevel": "Requirement level",
     "levelMandatory": "Mandatory",
     "levelRecommended": "Recommended",
-    "levelOptional": "Optional"
+    "levelOptional": "Optional",
+    "class": "Class"
   },
   "sv": true
 }

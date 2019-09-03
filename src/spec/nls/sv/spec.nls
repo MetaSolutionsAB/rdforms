@@ -30,5 +30,6 @@
   "fieldTableHeaderLevel": "Kravnivå",
   "levelMandatory": "Obligatorisk",
   "levelRecommended": "Rekommenderad",
-  "levelOptional": "Valfri"
+  "levelOptional": "Valfri",
+  "class": "Klass"
 }

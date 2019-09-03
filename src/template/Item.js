@@ -284,7 +284,7 @@ export default class Item {
   getDatatype(original) {
     const dt = this.getSource(original).datatype;
     if (dt != null && dt != '') {
-      return ns.expand(dt);
+      return Array.isArray(dt) ? dt.map((d) => ns.expand(d)) : ns.expand(dt);
     }
     return dt;
   }

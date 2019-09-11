@@ -45,7 +45,6 @@
     "babel-loader": "^8.0.2",
     "babel-minify-webpack-plugin": "^0.3.1",
     "babel-plugin-lodash": "^3.3.4",
-    "babili": "0.0.12",
     "clean-webpack-plugin": "^0.1.18",
     "css-loader": "^0.28.11",
     "dojo-webpack-plugin": "^2.7.5",

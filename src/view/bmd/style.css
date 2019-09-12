@@ -5,16 +5,6 @@
   display: inline;
 }
 
-.rdforms .rdformsFields textarea.form-control {
-  height: 38px;
-  max-height: 200px;
-}
-
-.rdforms .rdformsFields textarea.form-control:focus {
-  min-height: 60px;
-}
-
-
 .rdforms select.rdformsLanguage {
   display: inline;
 }

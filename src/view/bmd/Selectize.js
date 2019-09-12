@@ -53,7 +53,7 @@ renderingContext.renderSelect = function (fieldDiv, binding, context) {
   }
 
   context.clear = () => {
-    $select.val(null).trigger('change');
+    sel.clear();
   };
   context.setValue = (choice) => {
     $select.toggleClass('mismatch', choice.mismatch === true);

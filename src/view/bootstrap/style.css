@@ -212,6 +212,12 @@
     height: 38px;
 }
 
+.rdformsEditor .rdformsExtLink {
+    margin-top: 4px;
+    float: left;
+}
+
+
 /*.rdforms .rdformsFields textarea.form-control:focus {
   max-height: 400px;
 }*/

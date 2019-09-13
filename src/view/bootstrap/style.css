@@ -193,3 +193,31 @@
     width: 300px;
     margin: 0px;
 }
+
+/* Autoexpand style */
+.rdforms .rdformsFields textarea.form-control {
+    display: block;
+    box-sizing: padding-box;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.rdforms .rdformsFields textarea.form-control {
+    min-height: 38px;
+    max-height: 200px;
+    line-height: 1.5;
+}
+
+.rdforms .rdformsFields textarea.form-control.rdformsEmpty {
+    height: 38px;
+}
+
+.rdformsEditor .rdformsExtLink {
+    margin-top: 4px;
+    float: left;
+}
+
+
+/*.rdforms .rdformsFields textarea.form-control:focus {
+  max-height: 400px;
+}*/

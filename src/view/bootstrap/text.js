@@ -143,6 +143,7 @@ const addChangeListener = (inp, binding, regex, extLink) => {
     if (extLink) {
       extLink.toggleClass("rdformsExtLinkDisabled", disableExtLink);
     }
+    inp.toggleClass("rdformsEmpty", val === "");
   };
   const c = () => {
     if (to != null) {
@@ -191,7 +192,18 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
   const item = binding.getItem();
   let $input;
   if (item.hasStyle('multiline')) {
-    $input = jquery(`<textarea class="form-control rdformsFieldInput" rows="${countLines(binding.getGist())}">`);
+    const originalNrOfLines = countLines(binding.getGist());
+    $input = jquery(`<textarea class="form-control rdformsFieldInput autoExpand" rows="${originalNrOfLines}">`);
+    $input.on('input focus', function(){
+      if (this.baseScrollHeight === undefined) {
+        const originalHeight = $input.height();
+        this.baseScrollHeight = $input.innerHeight() - originalHeight;
+        this.baseLineHeight = originalHeight/originalNrOfLines;
+      }
+      this.rows = 1;
+      const rows = 1 + Math.ceil((this.scrollHeight - this.baseScrollHeight) / this.baseLineHeight);
+      this.rows = rows;
+    });
   } else if (item.hasStyle('email')) {
     $input = jquery('<input type="email" class="form-control rdformsFieldInput">');
   } else {

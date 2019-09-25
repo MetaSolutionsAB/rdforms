@@ -1,7 +1,8 @@
 {
   "name": "rdforms",
   "version": "9.6.0-SNAPSHOT",
-  "main": "dist/bmd.rdforms.js",
+  "main": "dist/node.rdforms.js",
+  "browser": "dist/bmd.rdforms.js",
   "module": "main.js",
   "repository": "https://bitbucket.org/metasolutions/rdforms.git",
   "license": "LGPL-3.0-only",

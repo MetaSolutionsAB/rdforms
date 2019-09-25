@@ -1,6 +1,5 @@
-const isNode = require('detect-node');
-if (isNode) {
-  fetch = require('node-fetch');
+if (typeof window === 'undefined') {
+  global.fetch = require('node-fetch/lib/index.js');
 }
 
 /**

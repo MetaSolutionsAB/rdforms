@@ -12,7 +12,6 @@
     "bootstrap-material-datetimepicker": "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#webpack",
     "bootstrap-material-design": "^4.1.1",
     "core-js": "^3.1.4",
-    "detect-node": "^2.0.3",
     "dijit": "^1.14.2",
     "dojo": "^1.14.2",
     "dojo-util": "^1.13.0",

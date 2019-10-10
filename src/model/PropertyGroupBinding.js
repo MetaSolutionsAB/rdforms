@@ -3,6 +3,7 @@ import Group from "../template/Group";
 import Choice from "../template/Choice";
 import ChoiceBinding from "./ChoiceBinding";
 import GroupBinding from "./GroupBinding";
+import PropertyChoiceBinding from "./PropertyChoiceBinding";
 
 export default class PropertyGroupBinding extends GroupBinding {
   /**

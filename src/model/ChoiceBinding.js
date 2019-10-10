@@ -14,6 +14,9 @@ export default class ChoiceBinding extends ValueBinding {
     this._validPredicate = item.getProperty() != null;
   }
 
+  // Static property on class ChoiceBinding via static getter,
+  static get seeAlso() { return seeAlso; }
+
   setChoice(choice, silent) {
     this._choice = choice;
     if (choice == null) {

@@ -14,8 +14,9 @@ export default class PropertyGroupBinding extends GroupBinding {
    *
    * @see rforms.template.PropertyGroup
    */
-  constructor({statement, constraints}) {
-    super({statement, constraints});
+  constructor(params) {
+    super(params);
+    const { statement, constraints } = params;
 
     this._statement = undefined;
     this._validPredicate = true; //Reset to initial value to ignore check from incorrect given statement in this case.

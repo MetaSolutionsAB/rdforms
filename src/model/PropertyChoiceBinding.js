@@ -5,9 +5,9 @@ export default class PropertyChoiceBinding extends ChoiceBinding {
    * Are only used as the first child of a PropertyGroupBinding to capture
    * a variable predicate.
    */
-  constructor({objectBinding}) {
-    super({objectBinding});
-    this._objectBinding = objectBinding;
+  constructor(params) {
+    super(params);
+    this._objectBinding = params.objectBinding;
   }
 
   /**

@@ -10,14 +10,14 @@ export default class PropertyGroup extends Group {
    * an item corresponding to the object in the triple. The second item can be either a
    * Text, Choice or Group item depending on the kind of object envisioned in the triple.
    */
-  getChildren() {
+  getChildren(original) {
     if (this._delegatedChildren == null) {
       let override = {
         getCardinality: function () {
           return {"min": 1, "max": 1, "pref": 1};
         }
       };
-      const children = super.getChildren() || [];
+      const children = super.getChildren(original) || [];
       this._delegatedChildren = children.map(child => lang.delegate(child, override));
     }
     return this._delegatedChildren;

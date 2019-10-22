@@ -7,6 +7,8 @@ import 'bootstrap-material-datetimepicker';
 import './DateTimeMD';
 import './Selectize';
 
+import 'bootstrap-material-design/dist/css/bootstrap-material-design.css';
+import 'bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css';
 import 'selectize-bootstrap4-theme/dist/css/selectize.bootstrap4.css';
 import 'bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css';
 

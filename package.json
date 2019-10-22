@@ -1,12 +1,13 @@
 {
   "name": "rdforms",
   "version": "9.6.0-SNAPSHOT",
-  "main": "dist/node.rdforms.js",
-  "browser": "dist/bmd.rdforms.js",
+  "main": "dist/rdforms.node.js",
+  "browser": "dist/rdforms.bmd.js",
   "module": "main.js",
   "repository": "https://bitbucket.org/metasolutions/rdforms.git",
   "license": "LGPL-3.0-only",
   "dependencies": {
+    "@entryscape/rdfjson": "^2.2.3",
     "arrive": "^2.4.1",
     "bootstrap": "^4.3.1",
     "bootstrap-material-datetimepicker": "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#webpack",
@@ -15,7 +16,7 @@
     "dijit": "^1.14.2",
     "dojo": "^1.14.2",
     "dojo-util": "^1.13.0",
-    "esi18n": "https://bitbucket.org/metasolutions/esi18n.git#1.2",
+    "esi18n": "https://bitbucket.org/metasolutions/esi18n.git#master",
     "fuelux": "3.16.6",
     "ifdef-loader": "^2.1.1",
     "jquery": "^3.3.1",
@@ -25,7 +26,6 @@
     "nls-loader": "https://bitbucket.org/metasolutions/nls-loader#master",
     "node-fetch": "^2.3.0",
     "popper.js": "^1.12.9",
-    "rdfjson": "https://bitbucket.org/metasolutions/rdfjson.git#2.2.1",
     "regenerator-runtime": "^0.13.2",
     "select2": "^4.0.6-rc.1",
     "selectize": "^0.12.6",
@@ -72,12 +72,17 @@
     "webpack-node-externals": "^1.6.0",
     "webpack-serve": "^2.0.2"
   },
+  "files": [
+    "dist",
+    "src",
+    "main*",
+    "index*",
+    "loadBootstrapOptions.js"
+  ],
   "scripts": {
-    "build": "webpack --display-modules --config webpack.prod.js",
-    "build:pretty": "webpack --display-modules --mode=development --config webpack.dev.js",
+    "build:all": "webpack --display-modules --mode=production --config webpack.all.js",
     "build:node": "webpack --display-modules --config webpack.node.js",
     "build:node:dev": "webpack --mode=development --display-modules --config webpack.node.js",
-    "build:all": "webpack --display-modules --mode=production --config webpack.all.js",
     "dev": "webpack-dev-server --watch --mode=development --config webpack.dev.js",
     "examples": "webpack --display-modules --config ./webpack.examples.js",
     "print-licenses": "print-licenses"

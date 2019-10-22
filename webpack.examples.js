@@ -1,7 +1,6 @@
-const merge = require('webpack-merge')
+const merge = require('webpack-merge');
 const path = require('path');
-const common = require('./webpack.common.js')
-const Jarvis = require('webpack-jarvis');
+const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   entry: {
@@ -15,4 +14,4 @@ module.exports = merge(common, {
   },
   mode: 'development',
   devtool: 'inline-source-map',
-})
+});

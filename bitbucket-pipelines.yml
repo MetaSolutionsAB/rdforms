@@ -18,6 +18,9 @@ stepdefinitions:
         - yarn
         - yarn build:all
         - ls -al dist/
+        - if [ `wc -c < dist/rdforms.bmd.js` -gt 2000000 ]; then exit 1 ; fi
+        - if [ `wc -c < dist/rdforms.bootstrap.js` -gt 2000000 ]; then exit 1 ; fi
+        - if [ `wc -c < dist/rdforms.node.js` -gt 2000000 ]; then exit 1 ; fi
 
 pipelines:
   default:

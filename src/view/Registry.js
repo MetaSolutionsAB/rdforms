@@ -1,4 +1,4 @@
-import {namespaces as ns} from 'rdfjson';
+import {namespaces as ns} from '@entryscape/rdfjson';
 
 const matchRdfType = (item, type) => {
   const constr = item.getConstraints();

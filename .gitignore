@@ -1,6 +1,7 @@
 /libs
 .idea
 /node_modules
+/dist
 *~
 *.iml
 /release

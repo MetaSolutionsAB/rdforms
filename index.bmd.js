@@ -3,6 +3,7 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import './src/view/bmd/all';
 import './src/view/bootstrap/components';
+import './src/view/bmd/style.css';
 
 import ItemStore from './src/template/ItemStore';
 import Editor from './src/view/Editor';

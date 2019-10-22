@@ -6,7 +6,7 @@ import OntologyStore from './OntologyStore';
 import Bundle from './Bundle';
 
 import {constructTemplate} from '../model/engine';
-import {namespaces as ns} from 'rdfjson';
+import {namespaces as ns} from '@entryscape/rdfjson';
 
 export default class ItemStore {
   /**

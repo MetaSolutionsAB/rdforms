@@ -1,5 +1,5 @@
 import * as engine from './engine';
-import {namespaces as ns} from 'rdfjson';
+import {namespaces as ns} from '@entryscape/rdfjson';
 
 /**
  * Generates a report for the given binding. Below is an example of a report:

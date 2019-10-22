@@ -10,14 +10,14 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: "[name].rdforms.js",
+    filename: "rdforms.[name].js",
     library: 'rdforms',
     libraryTarget: "umd"
   },
   plugins: [
     // For plugins registered after the DojoAMDPlugin, data.request has been normalized and
     // resolved to an absMid and loader-config maps and aliases have been applied
-    new CleanWebpackPlugin(),
+    // new CleanWebpackPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -33,8 +33,8 @@ module.exports = {
       // blank.gif)
       buildEnvironment: {dojoRoot: "node_modules"}, // used at build time
       noConsole: true,
-      // loader: path.join(__dirname, "./dist/dojo/dojo.js"),
     }),
+    new CleanWebpackPlugin(),
   ],
   module: {
     rules: [
@@ -52,7 +52,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /node_modules\/(?!(bootstrap|bootstrap-material-design|rdfjson|esi18n)\/).*/,
+        exclude: /node_modules\/(?!(bootstrap|bootstrap-material-design|esi18n|@entryscape)\/).*/,
         use: [
           {
             loader: 'babel-loader',
@@ -111,6 +111,7 @@ module.exports = {
     global: true,
   },
   resolve: {
+    mainFields: ['module', 'browser', 'main'],
     alias: {
       jquery: path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
       moment: path.resolve(path.join(__dirname, 'node_modules', 'moment')),

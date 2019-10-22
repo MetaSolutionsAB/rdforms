@@ -1,5 +1,5 @@
 import Item from './Item';
-import {namespaces as ns} from 'rdfjson';
+import {namespaces as ns} from '@entryscape/rdfjson';
 import utils from '../utils';
 
 const sortChoices = (choices, shouldExpand) => {

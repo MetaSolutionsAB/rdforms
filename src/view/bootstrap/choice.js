@@ -42,13 +42,13 @@ presenters.itemtype('choice').register(choicify(
     if (item.hasStaticChoices() && !item.hasStyle('externalLink') || item.hasStyle('noLink')) {
       jquery('<div>')
         .attr('title', desc || choice.seeAlso || choice.value)
-        .html(utils.getLocalizedValue(choice.label).value)
+        .text(utils.getLocalizedValue(choice.label).value)
         .appendTo(fieldDiv);
     } else {
       const $a = jquery('<a class="rdformsUrl">')
         .attr('href', choice.seeAlso || choice.value)
         .attr('title', desc || choice.seeAlso || choice.value)
-        .html(utils.getLocalizedValue(choice.label).value)
+        .text(utils.getLocalizedValue(choice.label).value)
         .appendTo(fieldDiv);
       if (item.hasStyle('externalLink')) {
         system.attachExternalLinkBehaviour($a[0], binding);
@@ -57,7 +57,7 @@ presenters.itemtype('choice').register(choicify(
       }
       if (choice.load != null) {
         choice.load(() => {
-          $a.html(utils.getLocalizedValue(choice.label).value);
+          $a.text(utils.getLocalizedValue(choice.label).value);
         });
       }
     }

@@ -80,7 +80,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
 });
 
 // Presenter for duration
-presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding) => {
+presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding, context) => {
   // eslint-disable-next-line no-new
   new DurationPresenter({
     value: binding.getValue(),

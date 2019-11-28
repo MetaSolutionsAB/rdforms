@@ -47,13 +47,15 @@
     "babel-plugin-lodash": "^3.3.4",
     "clean-webpack-plugin": "^0.1.18",
     "css-loader": "^0.28.11",
-    "dojo-webpack-plugin": "^2.7.5",
+    "dojo-webpack-plugin": "2.8.12",
     "eslint": "^3.17.1",
     "eslint-config-airbnb-base": "^11.1.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-requirejs": "^3.1.1",
     "file-loader": "^1.1.11",
     "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-tags-plugin": "^2.0.17",
     "imports-loader": "^0.8.0",
     "mini-css-extract-plugin": "^0.4.1",
     "nls-loader": "https://bitbucket.org/metasolutions/nls-loader#master",
@@ -64,13 +66,12 @@
     "style-loader": "^0.20.3",
     "svg-inline-loader": "^0.8.0",
     "ttf-loader": "^1.0.2",
-    "webpack": "^4.16.5",
+    "webpack": "^4.41.2",
     "webpack-cli": "^3.1.1",
     "webpack-dev-server": "^3.1.10",
     "webpack-jarvis": "^0.3.2",
     "webpack-merge": "^4.1.4",
-    "webpack-node-externals": "^1.6.0",
-    "webpack-serve": "^2.0.2"
+    "webpack-node-externals": "^1.6.0"
   },
   "files": [
     "dist",
@@ -83,7 +84,7 @@
     "build:all": "webpack --display-modules --mode=production --config webpack.all.js",
     "build:node": "webpack --display-modules --config webpack.node.js",
     "build:node:dev": "webpack --mode=development --display-modules --config webpack.node.js",
-    "dev": "webpack-dev-server --watch --mode=development --config webpack.dev.js",
+    "dev": "webpack-dev-server --watch --config webpack.dev.js",
     "examples": "webpack --display-modules --config ./webpack.examples.js",
     "print-licenses": "print-licenses"
   }

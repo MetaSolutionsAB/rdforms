@@ -1,0 +1,38 @@
+body {
+    background: #f1f1f1;
+}
+
+body > div.main {
+    margin: auto;
+    height: 100%;
+    width: 800px;
+    background: white;
+    padding: 20px;
+    border-left: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+    overflow-y: auto;
+}
+
+h1 {
+    border-bottom: 2px solid darkgrey;
+    color: darkgrey;
+    margin-bottom: 30px;
+}
+
+.twocol {
+    max-width: 1200px;
+    margin: 20px;
+    display: flex;
+    height: 85%;
+}
+
+.col1, .col2 {
+    max-width: 600px;
+    min-width: 300px;
+    margin: 20px;
+    background: white;
+    padding: 20px;
+    border: none;
+    width: 100%;
+    overflow: auto;
+}

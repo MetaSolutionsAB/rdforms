@@ -33,6 +33,7 @@ module.exports = {
       // blank.gif)
       buildEnvironment: {dojoRoot: "node_modules"}, // used at build time
       noConsole: true,
+      // loader: path.join(__dirname, './config/dojo/dojo.js'),
     }),
     new CleanWebpackPlugin(),
   ],

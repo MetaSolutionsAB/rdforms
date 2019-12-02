@@ -2,12 +2,20 @@ const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WriteFilePlugin = require('write-file-webpack-plugin');
 
 const path = require('path');
+const examples = [1, 2, 3, 4, 5, 6, 7];
 
 const getHTMLPlugins = () => {
-  const examples = [1, 2, 3, 4, 5, 6, 7];
   return [
+    // create all examples' html
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: __dirname + `/html/index.html`,
+      inject: true,
+    }),
     // create all examples' html
     ...examples.map((exampleNumber) => new HtmlWebpackPlugin({
       filename: `example${exampleNumber}/index.html`,
@@ -17,15 +25,11 @@ const getHTMLPlugins = () => {
     //  append assets for all examples
     new HtmlWebpackTagsPlugin({
       tags: [{
-        path: 'https://fonts.googleapis.com/css?family=Material+Icons',
-        type: 'css',
-        publicPath: false,
-      }, {
         path: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700',
         type: 'css',
         publicPath: false,
       }, {
-        path: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
+        path: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css',
         type: 'css',
         publicPath: false,
       }, {
@@ -33,7 +37,7 @@ const getHTMLPlugins = () => {
         type: 'js',
         publicPath: false,
       },
-        'html/example.css'
+        '../styles.css'
       ],
       append: true
     }), // append styles.css to all examples
@@ -41,7 +45,7 @@ const getHTMLPlugins = () => {
     ...examples.map((number) => new HtmlWebpackTagsPlugin({
       files: [`example${number}/**/*.html`],
       tags: [{
-        path: `html/example${number}/init.js`,
+        path: `./example${number}/init.js`,
         attributes: {
           type: 'module',
         }
@@ -71,10 +75,9 @@ module.exports = (env, argv) => {
       process: false,
     },
     devServer: {
-      contentBase: path.join(__dirname, '/'),
+      contentBase: path.join(__dirname, '/html'),
       hot: true,
       open: true,
-      openPage: 'example3',
       publicPath: '/',
     },
   };

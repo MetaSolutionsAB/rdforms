@@ -1,0 +1,232 @@
+{
+  "root": "test",
+  "namespaces": {
+    "ex": "http://example.com/",
+    "cc": "http://creativecommons.org/licenses/"
+  },
+  "templates": [
+    {
+      "id": "test",
+      "type": "group",
+      "content": [
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "property": "dcterms:identifier",
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          },
+          "label": {
+            "en": "Identifier",
+            "sv": "Identifierare"
+          },
+          "styles": [
+            "autoUUID",
+            "nonEditable"
+          ]
+        },
+        {
+          "type": "text",
+          "nodetype": "LANGUAGE_LITERAL",
+          "property": "dcterms:title",
+          "cardinality": {
+            "min": 2,
+            "pref": "4",
+            "max": 5
+          },
+          "label": {
+            "en": "Title",
+            "sv": "Titel"
+          },
+          "description": {
+            "en": "A short title of the resource",
+            "sv": "En kort titel fÃ¶r resursen"
+          }
+        },
+        {
+          "type": "text",
+          "nodetype": "DATATYPE_LITERAL",
+          "property": "dcterms:modified",
+          "datatype": "xsd:date",
+          "cardinality": {
+            "min": 1,
+            "pref": "1",
+            "max": 1
+          },
+          "label": {
+            "en": "Date",
+            "sv": "Datum"
+          },
+          "description": {
+            "en": "A date when this resource was modified.",
+            "sv": "Ett datum nÃ¤r denna resurs modifierades."
+          },
+          "styles": [
+            "autoUpdateDate",
+            "nonEditable"
+          ]
+        },
+        {
+          "type": "text",
+          "nodetype": "DATATYPE_LITERAL",
+          "property": "dcterms:date",
+          "datatype": "xsd:date",
+          "cardinality": {
+            "min": 1,
+            "pref": "1",
+            "max": 1
+          },
+          "label": {
+            "en": "Date",
+            "sv": "Datum"
+          },
+          "description": {
+            "en": "A date for this resource.",
+            "sv": "Ett datum fÃ¶r denna resurs."
+          },
+          "styles": [
+            "autoInitDate"
+          ]
+        },
+        {
+          "id": "subject",
+          "type": "choice",
+          "nodetype": "URI",
+          "property": "http://purl.org/dc/terms/subject",
+          "cardinality": {
+            "min": 1,
+            "pref": "1",
+            "max": 2
+          },
+          "choices": [
+            {
+              "value": "ex:physics",
+              "label": {
+                "en": "Physics",
+                "sv": "Fysik"
+              }
+            },
+            {
+              "value": "http://example.com/chemistry",
+              "label": {
+                "en": "Chemistry",
+                "sv": "Kemi"
+              }
+            }
+          ],
+          "label": {
+            "en": "Subject",
+            "sv": "Ã„mne"
+          },
+          "description": {
+            "en": "A subject for this resource.",
+            "sv": "Ett Ã¤mne fÃ¶r denna resurs."
+          }
+        },
+        {
+          "type": "choice",
+          "nodetype": "URI",
+          "property": "http://purl.org/dc/terms/license",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "choices": [
+            {
+              "value": "cc:by/4.0/",
+              "label": {
+                "en": "CC BY 4.0 (Attribution)"
+              }
+            },
+            {
+              "value": "cc:by-nc/4.0/",
+              "label": {
+                "en": "CC BY-NC 4.0 (Attribution, Non-Commercial)"
+              }
+            }
+          ],
+          "styles": [
+            "verticalRadioButtons"
+          ],
+          "label": {
+            "en": "License",
+            "sv": "Licens"
+          },
+          "description": {
+            "en": "A license for this resource.",
+            "sv": "En licens fÃ¶r denna resurs."
+          }
+        },
+        {
+          "type": "choice",
+          "nodetype": "URI",
+          "property": "http://purl.org/dc/terms/relation",
+          "placeholder": "a relation",
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "label": {
+            "en": "Relation",
+            "sv": "Relation"
+          },
+          "description": {
+            "en": "A relation to another resource.",
+            "sv": "En relation till en annan resurs."
+          }
+        },
+        {
+          "type": "group",
+          "nodetype": "RESOURCE",
+          "label": {
+            "en": "Creator"
+          },
+          "property": "http://purl.org/dc/terms/creator",
+          "cardinality": {
+            "min": 0,
+            "pref": 1,
+            "max": 5
+          },
+          "constraints": {
+            "rdf:type": "foaf:Person"
+          },
+          "cls": [
+            "cardgroup"
+          ],
+          "deps": [
+            "dcterms:subject",
+            "http://example.com/physics"
+          ],
+          "content": [
+            {
+              "type": "text",
+              "nodetype": "ONLY_LITERAL",
+              "property": "http://xmlns.com/foaf/0.1/firstName",
+              "cardinality": {
+                "min": 1,
+                "max": 1
+              },
+              "label": {
+                "en": "First name"
+              }
+            },
+            {
+              "type": "text",
+              "nodetype": "ONLY_LITERAL",
+              "property": "http://xmlns.com/foaf/0.1/surname",
+              "cardinality": {
+                "min": 1
+              },
+              "label": {
+                "en": "Surname"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

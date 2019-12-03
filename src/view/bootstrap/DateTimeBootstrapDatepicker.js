@@ -1,7 +1,8 @@
+import 'bootstrap-datepicker/dist/js/bootstrap-datepicker';
+import declare from 'dojo/_base/declare';
+import jquery from 'jquery';
 import DateTimeBase from './DateTimeBase';
 import templateString from './DateTimeBootstrapDatepickerTemplate.html';
-import declare from 'dojo/_base/declare';
-import 'bootstrap-datepicker/dist/js/bootstrap-datepicker.min';
 
 /**
  * A Date and time picker.
@@ -14,17 +15,30 @@ const DateTimeBootstrapDatepicker = declare([DateTimeBase], {
   //= ==================================================
 
   initDatePicker() {
-    const updateDate = (/* evt */) => this.setDateInBinding(this.$datepickerField.datepicker('getDate'));
-    this.$datepicker = jquery(this.cal);
-    this.$datepickerField = jquery(this.datepickerField)
-      .datepicker().on('changeDate', updateDate);
+    this.$datepicker = jquery(this.cal).datepicker({
+      autoclose: true,
+    });
+    const updateDate = (/* evt */) => {
+      const selectedDate = this.$datepicker.datepicker('getDate');
+      const newDate = new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        selectedDate.getDate(),
+        this._date.getHours(),
+        this._date.getMinutes(),
+        this._date.getSeconds(),
+        this._date.getMilliseconds(),
+      );
 
+      this.setDateInBinding(newDate);
+    };
+    this.$datepicker.on('changeDate', updateDate);
     if (!this.item.isEnabled()) {
       this.$datepicker.datepicker('disabled');
     }
   },
   setDateInPicker(d) {
-    this.$datepickerField.datepicker('update', d);
+    this.$datepicker.datepicker('update', d);
   },
 });
 

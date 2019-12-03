@@ -1,12 +1,28 @@
-<div class="rdformsDateValue rdformsFieldInput" xmlns="http://www.w3.org/1999/html">
-    <div class="rdformsDatepicker" data-dojo-attach-point="cal">
-        <div class="input-group date">
-            <input type="text" class="form-control" data-dojo-attach-point="datepickerField"/>
-            <span class="input-group-addon"><span class="fas fa-calendar"></span></span>
+<div class="rdformsDateValue rdformsFieldInput fuelux" xmlns="http://www.w3.org/1999/html">
+    <div class="rdformsDatepicker datepicker">
+        <div class="input-group date" data-provide="datepicker">
+            <input type="text" class="form-control">
+            <div class="input-group-addon">
+                <span class="glyphicon glyphicon-th"></span>
+            </div>
+        </div>
+        <div class="input-group" data-dojo-attach-point="cal">
+            <input class="form-control" type="text"/>
+            <div class="input-group-btn" data-dojo-attach-point="menuBlock">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="fas fa-calendar"></span>
+                    <span class="sr-only">Toggle Calendar</span>
+                </button>
+            </div>
         </div>
     </div>
-    <input type="text" style="display: none" class="form-control timeInput" placeholder="23:59" data-dojo-attach-point="timeInput"/>
-    <input type="text" style="display: none" class="form-control yearInput" placeholder="1999" data-dojo-attach-point="yearInput"/>
+    <span style="display: none">
+        <input type="text" class="form-control timeInput" placeholder="23:59" data-dojo-attach-point="timeInput"/>
+    </span>
+    <span style="display: none">
+        <input type="text" class="form-control yearInput" placeholder="1999"
+               data-dojo-attach-point="yearInput"/>
+    </span>
     <select class="form-control dateControl" data-dojo-attach-point="dateControl">
         <option value="Year">${messages.date_year}</option>
         <option value="Date" selected="true">${messages.date_date}</option>

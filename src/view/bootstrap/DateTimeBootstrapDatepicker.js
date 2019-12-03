@@ -1,6 +1,7 @@
 import DateTimeBase from './DateTimeBase';
 import templateString from './DateTimeBootstrapDatepickerTemplate.html';
 import declare from 'dojo/_base/declare';
+import 'bootstrap-datepicker/dist/js/bootstrap-datepicker.min';
 
 /**
  * A Date and time picker.

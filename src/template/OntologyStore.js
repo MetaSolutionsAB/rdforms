@@ -1,4 +1,4 @@
-import isEqual from 'lodash-es/isEqual';
+import { isEqual } from 'lodash-es';
 
 export default class OntologyStore {
   /**

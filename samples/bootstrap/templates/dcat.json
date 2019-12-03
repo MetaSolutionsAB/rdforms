@@ -1,0 +1,242 @@
+{
+  "templates": [
+    {
+      "type": "group",
+      "id": "dcat:OnlyDataset",
+      "label": {
+        "en": "Dataset",
+        "sv": "Dataset",
+        "de": "Datensatz"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/ns/dcat#Dataset"
+      },
+      "items": [
+        {
+          "id": "dcat:dcterms:title_da"
+        },
+        {
+          "id": "dcat:dcterms:description_da"
+        },
+        {
+          "id": "dcat:foaf:Agent_da"
+        },
+        {
+          "id": "adms:contactPoint-choice_da"
+        },
+        {
+          "id": "dcat:contactPoint-choice_da"
+        },
+        {
+          "id": "dcat:keyword_da"
+        },
+        {
+          "id": "dcat:theme-da"
+        },
+        {
+          "id": "dcat:dcterms:identifier_da"
+        },
+        {
+          "id": "dcat:adms:identifier_da"
+        },
+        {
+          "id": "dcat:dcterms:issued_da"
+        },
+        {
+          "id": "dcat:dcterms:modified_da"
+        },
+        {
+          "id": "dcat:dcterms:language_da"
+        },
+        {
+          "id": "dcat:landingPage_da"
+        },
+        {
+          "id": "dcat:dcterms:conformsTo_da"
+        },
+        {
+          "id": "dcat:dcterms:spatial_da"
+        },
+        {
+          "id": "dcat:dcterms:spatial_bb_da"
+        },
+        {
+          "id": "dcat:dcterms:temporal_da"
+        },
+        {
+          "id": "dcat:dcterms:accrualPeriodicity-cld_da"
+        },
+        {
+          "id": "dcat:dcterms:accrualPeriodicity_da"
+        },
+        {
+          "id": "dcat:adms:version"
+        },
+        {
+          "id": "dcat:owl:versionInfo_da"
+        },
+        {
+          "id": "dcat:adms:versionNotes_da"
+        },
+        {
+          "id": "dcat:dcterms:source_da"
+        },
+        {
+          "id": "dcat:dcterms:accessRights_da"
+        },
+        {
+          "id": "dcat:hasVersion_da"
+        },
+        {
+          "id": "dcat:isVersionOf_da"
+        },
+        {
+          "id": "dcat:dcterms:relation_da"
+        },
+        {
+          "id": "dcat:foaf:page_da"
+        },
+        {
+          "id": "dcat:dcterms:provenance_da"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "id": "dcat:OnlyDistribution",
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/ns/dcat#Distribution"
+      },
+      "label": {},
+      "items": [
+        {
+          "id": "dcat:dcterms:title_di"
+        },
+        {
+          "id": "dcat:dcterms:description_di"
+        },
+        {
+          "id": "dcat:accessURL_di"
+        },
+        {
+          "id": "dcat:downloadURL_di"
+        },
+        {
+          "id": "dcat:format-group_di"
+        },
+        {
+          "id": "dcat:byteSize_di"
+        },
+        {
+          "id": "dcat:dcterms:language_di"
+        },
+        {
+          "id": "dcat:dcterms:issued_di"
+        },
+        {
+          "id": "dcat:dcterms:modified_di"
+        },
+        {
+          "id": "dcat:adms:status_di"
+        },
+        {
+          "id": "dcat:dcterms:license_di"
+        },
+        {
+          "id": "dcat:odrs:RSSA_di"
+        },
+        {
+          "id": "dcat:spdx:checksum_di"
+        },
+        {
+          "id": "dcat:foaf:page_di"
+        },
+        {
+          "id": "dcat:dcterms:conformsTo_di"
+        }
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 0
+      },
+      "description": {},
+      "nodetype": "URI"
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "dcat:OnlyCatalog",
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/ns/dcat#Catalog"
+      },
+      "items": [
+        {
+          "id": "dcat:dcterms:title_ca"
+        },
+        {
+          "id": "dcat:dcterms:description_ca"
+        },
+        {
+          "id": "dcat:foaf:Agent_ca"
+        },
+        {
+          "id": "dcat:dcterms:issued_ca"
+        },
+        {
+          "id": "dcat:dcterms:language_ca"
+        },
+        {
+          "id": "dcat:dcterms:modified_ca"
+        },
+        {
+          "id": "dcat:foaf:homepage_ca"
+        },
+        {
+          "id": "dcat:dcterms:spatial_ca"
+        },
+        {
+          "id": "dcat:dcterms:license_ca"
+        },
+        {
+          "id": "dcat:odrs:RSSA_ca"
+        },
+        {
+          "id": "dcat:dcterms:hasPart_ca"
+        },
+        {
+          "id": "dcat:dcterms:isPartOf_ca"
+        },
+        {
+          "id": "dcat:themeTaxonomy_ca_deprecated"
+        },
+        {
+          "id": "dcat:themeTaxonomy_ca"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "dcat:Documentish",
+      "styles": [
+        "showLink"
+      ],
+      "items": [
+        "dcat:documentType",
+        {
+          "extends": "dcat:dcterms:title",
+          "cardinality": {
+            "min": 1
+          }
+        },
+        {
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          },
+          "extends": "dcat:dcterms:description"
+        }
+      ]
+    }
+  ]
+}

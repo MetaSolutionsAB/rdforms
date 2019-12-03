@@ -1,0 +1,796 @@
+{
+  "templates": [
+    {
+      "id": "skos:inScheme",
+      "property": "http://www.w3.org/2004/02/skos/core#inScheme",
+      "label": {
+        "en": "In scheme",
+        "sv": "Ingår i modell",
+        "de": "In Schema"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:hasTopConcept",
+      "property": "http://www.w3.org/2004/02/skos/core#hasTopConcept",
+      "label": {
+        "en": "Has top concept",
+        "sv": "Har huvudbegrepp",
+        "de": "Hat Begriff oberster Ebene"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:topConceptOf",
+      "property": "http://www.w3.org/2004/02/skos/core#topConceptOf",
+      "label": {
+        "en": "Top concept of",
+        "sv": "Huvudbegrepp i modellen",
+        "de": "Begriff oberster Ebene von"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:prefLabel",
+      "property": "http://www.w3.org/2004/02/skos/core#prefLabel",
+      "label": {
+        "en": "Preferred label",
+        "sv": "Föredragen term",
+        "de": "Bevorzugter Name"
+      },
+      "description": {
+        "en": "skos:prefLabel, skos:altLabel and skos:hiddenLabel are pairwise disjoint properties."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "skos:altLabel",
+      "property": "http://www.w3.org/2004/02/skos/core#altLabel",
+      "label": {
+        "en": "Alternative label",
+        "sv": "Alternativ term",
+        "de": "Alternativer Name"
+      },
+      "description": {
+        "en": "skos:prefLabel, skos:altLabel and skos:hiddenLabel are pairwise disjoint properties."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:hiddenLabel",
+      "property": "http://www.w3.org/2004/02/skos/core#hiddenLabel",
+      "label": {
+        "en": "Hidden label",
+        "sv": "Dold term",
+        "de": "Verborgener Name"
+      },
+      "description": {
+        "en": "skos:prefLabel, skos:altLabel and skos:hiddenLabel are pairwise disjoint properties."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:notation",
+      "property": "http://www.w3.org/2004/02/skos/core#notation",
+      "label": {
+        "en": "Notation",
+        "sv": "Notation",
+        "de": "Notation"
+      },
+      "type": "group",
+      "automatic": true,
+      "nodetype": "RESOURCE",
+      "items": []
+    },
+    {
+      "id": "skos:note",
+      "property": "http://www.w3.org/2004/02/skos/core#note",
+      "label": {
+        "en": "Note",
+        "sv": "Anmärkning",
+        "de": "Anmerkung"
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "styles": [
+        "multiline"
+      ]
+    },
+    {
+      "id": "skos:changeNote",
+      "property": "http://www.w3.org/2004/02/skos/core#changeNote",
+      "label": {
+        "en": "Change note",
+        "sv": "Förändringsanmärkning",
+        "de": "Änderungsvermerk"
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "styles": [
+        "multiline"
+      ]
+    },
+    {
+      "id": "skos:definition",
+      "property": "http://www.w3.org/2004/02/skos/core#definition",
+      "label": {
+        "en": "Definition",
+        "sv": "Definition",
+        "de": "Definition"
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "styles": [
+        "multiline"
+      ],
+      "cardinality": {
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:editorialNote",
+      "property": "http://www.w3.org/2004/02/skos/core#editorialNote",
+      "label": {
+        "en": "Editorial note",
+        "sv": "Redaktionell anmärkning",
+        "de": "Redaktionelle Anmerkung"
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "styles": [
+        "multiline"
+      ]
+    },
+    {
+      "id": "skos:example",
+      "property": "http://www.w3.org/2004/02/skos/core#example",
+      "label": {
+        "en": "Example",
+        "sv": "Exempel",
+        "de": "Beispiel"
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "styles": [
+        "multiline"
+      ],
+      "cardinality": {
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:historyNote",
+      "property": "http://www.w3.org/2004/02/skos/core#historyNote",
+      "label": {
+        "en": "History note",
+        "sv": "Historisk anmärkning",
+        "de": "Versionshinweis"
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "styles": [
+        "multiline"
+      ],
+      "cardinality": {
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:scopeNote",
+      "property": "http://www.w3.org/2004/02/skos/core#scopeNote",
+      "label": {
+        "en": "Scope note",
+        "sv": "Användningsanmärkning",
+        "de": "Anwendungshinweis"
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "styles": [
+        "multiline"
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:broader",
+      "property": "http://www.w3.org/2004/02/skos/core#broader",
+      "label": {
+        "en": "Has broader concept",
+        "sv": "Har överordnat begrepp",
+        "de": "Hat Oberbegriff"
+      },
+      "description": {
+        "en": "Broader concepts are typically rendered as parents in a concept hierarchy (tree)."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:narrower",
+      "property": "http://www.w3.org/2004/02/skos/core#narrower",
+      "label": {
+        "en": "Has narrower concept",
+        "sv": "Har underordnat begrepp",
+        "de": "Hat Unterbegriff"
+      },
+      "description": {
+        "en": "Narrower concepts are typically rendered as children in a concept hierarchy (tree)."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:related",
+      "property": "http://www.w3.org/2004/02/skos/core#related",
+      "label": {
+        "en": "Has related concept",
+        "sv": "Är relaterat med",
+        "de": "Hat verwandten Begriff"
+      },
+      "description": {
+        "en": "skos:related is disjoint with skos:broaderTransitive"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "skos:broaderTransitive",
+      "property": "http://www.w3.org/2004/02/skos/core#broaderTransitive",
+      "label": {
+        "en": "Has broader transitive concept",
+        "sv": "Har transitivt överordnat begrepp",
+        "de": "Hat transitiven Oberbegriff"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:narrowerTransitive",
+      "property": "http://www.w3.org/2004/02/skos/core#narrowerTransitive",
+      "label": {
+        "en": "Has narrower transitive concept",
+        "sv": "Har transitivt underordnat begrepp",
+        "de": "Hat transitiven Unterbegriff"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:member",
+      "property": "http://www.w3.org/2004/02/skos/core#member",
+      "label": {
+        "en": "Member",
+        "sv": "Medlem",
+        "de": "Mitglied"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "automatic": true,
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "skos:memberList",
+      "property": "http://www.w3.org/2004/02/skos/core#memberList",
+      "label": {
+        "en": "Member list",
+        "sv": "Medlemsförteckning",
+        "de": "Mitgliederliste"
+      },
+      "description": {
+        "en": "For any resource, every item in the list given as the value of the skos:memberList property is also a value of the skos:member property."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/1999/02/22-rdf-syntax-ns#List"
+      },
+      "type": "group",
+      "automatic": true,
+      "nodetype": "RESOURCE",
+      "items": []
+    },
+    {
+      "id": "skos:mappingRelation",
+      "property": "http://www.w3.org/2004/02/skos/core#mappingRelation",
+      "label": {
+        "en": "Mapping relation",
+        "sv": "Ingår i en jämförande relation till",
+        "de": "Verwandter Begriff"
+      },
+      "description": {
+        "en": "These concept mapping relations mirror semantic relations, and the data model defined below is similar (with the exception of skos:exactMatch) to the data model defined for semantic relations. A distinct vocabulary is provided for concept mapping relations, to provide a convenient way to differentiate links within a concept scheme from links between concept schemes. However, this pattern of usage is not a formal requirement of the SKOS data model, and relies on informal definitions of best practice."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "skos:broadMatch",
+      "property": "http://www.w3.org/2004/02/skos/core#broadMatch",
+      "label": {
+        "en": "Has broader matching concept",
+        "sv": "Har överordnat motsvarande begrepp",
+        "de": "Gleichwertiger Oberbegriff"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "skos:narrowMatch",
+      "property": "http://www.w3.org/2004/02/skos/core#narrowMatch",
+      "label": {
+        "en": "Has narrower matching concept",
+        "sv": "Har underordnat motsvarande begrepp",
+        "de": "Gleichwertiger Unterbegriff"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "skos:relatedMatch",
+      "property": "http://www.w3.org/2004/02/skos/core#relatedMatch",
+      "label": {
+        "en": "Has related matching concept",
+        "sv": "Har relaterat motsvarande begrepp",
+        "de": "Gleichwertiger verwandter Begriff"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:exactMatch",
+      "property": "http://www.w3.org/2004/02/skos/core#exactMatch",
+      "label": {
+        "en": "Has exact matching concept",
+        "sv": "Har exakt motsvarande begrepp",
+        "de": "Exakt übereinstimmender Begriff"
+      },
+      "description": {
+        "en": "skos:exactMatch is disjoint with each of the properties skos:broadMatch and skos:relatedMatch."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "skos:closeMatch",
+      "property": "http://www.w3.org/2004/02/skos/core#closeMatch",
+      "label": {
+        "en": "Has close matching concept",
+        "sv": "Har snarlikt motsvarande begrepp",
+        "de": "Ähnlich übereinstimmender Begriff"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "http://www.w3.org/2000/01/rdf-schema#label",
+      "property": "http://www.w3.org/2000/01/rdf-schema#label",
+      "label": {
+        "en": "rdf-schema#label"
+      },
+      "type": "group",
+      "automatic": true,
+      "nodetype": "RESOURCE",
+      "items": []
+    },
+    {
+      "id": "skos:Concept",
+      "label": {
+        "en": "Concept",
+        "sv": "Begrepp",
+        "de": "Begriff"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Concept"
+      },
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "items": [
+        {
+          "id": "skos:prefLabel"
+        },
+        {
+          "id": "skos:definition"
+        },
+        {
+          "id": "skos:example"
+        },
+        {
+          "id": "skos:broader"
+        },
+        {
+          "id": "skos:narrower"
+        },
+        {
+          "id": "skos:related"
+        },
+        {
+          "id": "skos:inScheme"
+        },
+        {
+          "id": "skos:topConceptOf"
+        },
+        {
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "type": "group",
+          "label": {
+            "en": "Labels and annotations",
+            "sv": "Termer och kommentarer",
+            "de": "Namen und Kommentare"
+          },
+          "nodetype": "RESOURCE",
+          "styles": [
+            "expandable"
+          ],
+          "items": [
+            {
+              "id": "skos:altLabel"
+            },
+            {
+              "id": "skos:hiddenLabel"
+            },
+            {
+              "id": "skos:note"
+            },
+            {
+              "id": "skos:editorialNote"
+            },
+            {
+              "id": "skos:scopeNote"
+            },
+            {
+              "id": "skos:changeNote"
+            },
+            {
+              "id": "skos:historyNote"
+            }
+          ]
+        },
+        {
+          "cardinality": {
+            "min": 1,
+            "pref": 1,
+            "max": 1
+          },
+          "type": "group",
+          "label": {
+            "en": "Additional concept relations",
+            "sv": "Ytterligare begreppsrelationer",
+            "de": "Zusätzliche Begriffsbeziehungen"
+          },
+          "nodetype": "RESOURCE",
+          "styles": [
+            "expandable"
+          ],
+          "items": [
+            {
+              "id": "skos:broaderTransitive"
+            },
+            {
+              "id": "skos:narrowerTransitive"
+            },
+            {
+              "id": "skos:broadMatch"
+            },
+            {
+              "id": "skos:narrowMatch"
+            },
+            {
+              "id": "skos:exactMatch"
+            },
+            {
+              "id": "skos:closeMatch"
+            },
+            {
+              "id": "skos:relatedMatch"
+            },
+            {
+              "id": "skos:mappingRelation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skos:ConceptScheme",
+      "label": {
+        "en": "Concept scheme",
+        "sv": "Begreppsmodell",
+        "de": "Begriffsmodell"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+      },
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "items": [
+        {
+          "id": "skos:hasTopConcept"
+        }
+      ]
+    },
+    {
+      "id": "skos:Collection",
+      "label": {
+        "en": "Collection",
+        "sv": "Samling",
+        "de": "Sammlung"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#Collection"
+      },
+      "type": "group",
+      "items": [
+        {
+          "id": "skos:member"
+        }
+      ]
+    },
+    {
+      "id": "skos:OrderedCollection",
+      "label": {
+        "en": "Ordered collection",
+        "sv": "Ordnad samling",
+        "de": "Geordnete Sammlung"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2004/02/skos/core#OrderedCollection"
+      },
+      "type": "group",
+      "items": [
+        {
+          "id": "skos:memberList"
+        },
+        {
+          "id": "skos:member"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "skos:conceptLabels",
+      "label": {
+        "en": "Labels",
+        "sv": "Termer",
+        "de": "Namen"
+      },
+      "items": [
+        {
+          "extends": "skos:prefLabel",
+          "cardinality": {
+            "min": 1
+          }
+        },
+        {
+          "id": "skos:altLabel"
+        },
+        {
+          "id": "skos:hiddenLabel"
+        }
+      ],
+      "styles": [
+        "heading"
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "skos:conceptRelations",
+      "label": {
+        "en": "Relations",
+        "sv": "Relationer",
+        "de": "Beziehungen"
+      },
+      "items": [
+        {
+          "id": "skos:related"
+        },
+        {
+          "id": "skos:broader"
+        },
+        {
+          "id": "skos:broaderTransitive"
+        },
+        {
+          "id": "skos:narrower"
+        },
+        {
+          "id": "skos:narrowerTransitive"
+        }
+      ],
+      "styles": [
+        "heading"
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "skos:conceptDocumentation",
+      "label": {
+        "en": "Documentation",
+        "sv": "Dokumentation",
+        "de": "Dokumentation"
+      },
+      "items": [
+        {
+          "id": "skos:definition"
+        },
+        {
+          "id": "skos:scopeNote"
+        },
+        {
+          "id": "skos:example"
+        },
+        {
+          "id": "skos:historyNote"
+        },
+        {
+          "id": "skos:editorialNote"
+        },
+        {
+          "id": "skos:changeNote"
+        },
+        {
+          "id": "skos:note"
+        }
+      ],
+      "styles": [
+        "heading"
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "skos:conceptMappings",
+      "label": {
+        "en": "Mappings",
+        "sv": "Mappningar",
+        "de": "Zuordnungen"
+      },
+      "description": {},
+      "items": [
+        {
+          "id": "skos:exactMatch"
+        },
+        {
+          "id": "skos:closeMatch"
+        },
+        {
+          "id": "skos:relatedMatch"
+        },
+        {
+          "id": "skos:broadMatch"
+        },
+        {
+          "id": "skos:narrowMatch"
+        }
+      ],
+      "styles": [
+        "heading"
+      ]
+    },
+    {
+      "type": "group",
+      "nodetype": "RESOURCE",
+      "id": "skos:easyConcept",
+      "items": [
+        {
+          "id": "skos:conceptLabels"
+        },
+        {
+          "id": "skos:conceptDocumentation"
+        },
+        {
+          "id": "skos:conceptRelations"
+        },
+        {
+          "id": "skos:conceptMappings"
+        }
+      ]
+    }
+  ],
+  "scope": "skos",
+  "namespace": "http://www.w3.org/2004/02/skos/core#"
+}

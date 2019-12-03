@@ -1,0 +1,2573 @@
+{
+  "templates": [
+    {
+      "id": "dcterms:title",
+      "property": "http://purl.org/dc/terms/title",
+      "label": {
+        "en": "Title",
+        "sv": "Titel",
+        "de": "Titel",
+        "nb": "Tittel",
+        "da": "Titel"
+      },
+      "description": {
+        "en": "A name given to the resource."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcterms:creator",
+      "property": "http://purl.org/dc/terms/creator",
+      "label": {
+        "en": "Creator",
+        "sv": "Skapare",
+        "de": "Urheber"
+      },
+      "description": {
+        "en": "An entity primarily responsible for making the resource."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Agent"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcterms:subject",
+      "property": "http://purl.org/dc/terms/subject",
+      "label": {
+        "en": "Subject",
+        "sv": "Ämne",
+        "de": "Thema"
+      },
+      "description": {
+        "en": "The topic of the resource."
+      },
+      "type": "choice",
+      "nodetype": "URI",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcterms:description",
+      "property": "http://purl.org/dc/terms/description",
+      "label": {
+        "en": "Description",
+        "sv": "Beskrivning",
+        "de": "Beschreibung",
+        "nb": "Beskrivelse",
+        "da": "Beskrivelse"
+      },
+      "description": {
+        "en": "An account of the resource."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "styles": [
+        "multiline"
+      ]
+    },
+    {
+      "id": "dcterms:publisher",
+      "property": "http://purl.org/dc/terms/publisher",
+      "label": {
+        "en": "Publisher",
+        "sv": "Utgivare",
+        "de": "Herausgeber"
+      },
+      "description": {
+        "en": "An entity responsible for making the resource available."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Agent"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcterms:contributor",
+      "property": "http://purl.org/dc/terms/contributor",
+      "label": {
+        "en": "Contributor",
+        "sv": "Bidragsgivare",
+        "de": "Mitwirkender"
+      },
+      "description": {
+        "en": "An entity responsible for making contributions to the resource."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Agent"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcterms:date",
+      "property": "http://purl.org/dc/terms/date",
+      "label": {
+        "en": "Date",
+        "sv": "Datum",
+        "de": "Datum"
+      },
+      "description": {
+        "en": "A point or period of time associated with an event in the lifecycle of the resource."
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#date",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcterms:type",
+      "property": "http://purl.org/dc/terms/type",
+      "label": {
+        "en": "Type",
+        "sv": "Typ",
+        "de": "Typ"
+      },
+      "description": {
+        "en": "The nature or genre of the resource."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://www.w3.org/2000/01/rdf-schema#Class"
+      },
+      "type": "choice"
+    },
+    {
+      "id": "dcterms:format",
+      "property": "http://purl.org/dc/terms/format",
+      "label": {
+        "en": "Format",
+        "sv": "Format",
+        "de": "Format"
+      },
+      "description": {
+        "en": "The file format, physical medium, or dimensions of the resource."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/MediaTypeOrExtent"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:identifier",
+      "property": "http://purl.org/dc/terms/identifier",
+      "label": {
+        "en": "Identifier",
+        "sv": "Identifierare",
+        "de": "Kennzeichnung"
+      },
+      "description": {
+        "en": "An unambiguous reference to the resource within a given context."
+      },
+      "type": "text",
+      "nodetype": "ONLY_LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcterms:source",
+      "property": "http://purl.org/dc/terms/source",
+      "label": {
+        "en": "Source",
+        "sv": "Källa",
+        "de": "Quelle"
+      },
+      "description": {
+        "en": "A related resource from which the described resource is derived."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:language",
+      "property": "http://purl.org/dc/terms/language",
+      "label": {
+        "en": "Language",
+        "sv": "Språk",
+        "de": "Sprache"
+      },
+      "description": {
+        "en": "A language of the resource."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/LinguisticSystem"
+      },
+      "type": "choice",
+      "automatic": true,
+      "content": [],
+      "choices": [
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ab",
+          "label": {
+            "en": "Abkhazian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/aa",
+          "label": {
+            "en": "Afar"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/af",
+          "label": {
+            "en": "Afrikaans"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ak",
+          "label": {
+            "en": "Akan"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sq",
+          "label": {
+            "en": "Albanian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/am",
+          "label": {
+            "en": "Amharic"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ar",
+          "label": {
+            "en": "Arabic"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/an",
+          "label": {
+            "en": "Aragonese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/hy",
+          "label": {
+            "en": "Armenian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/as",
+          "label": {
+            "en": "Assamese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/av",
+          "label": {
+            "en": "Avaric"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ae",
+          "label": {
+            "en": "Avestan"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ay",
+          "label": {
+            "en": "Aymara"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/az",
+          "label": {
+            "en": "Azerbaijani"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/bm",
+          "label": {
+            "en": "Bambara"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ba",
+          "label": {
+            "en": "Bashkir"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/eu",
+          "label": {
+            "en": "Basque"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/be",
+          "label": {
+            "en": "Belarusian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/bn",
+          "label": {
+            "en": "Bengali"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/bh",
+          "label": {
+            "en": "Bihari languages"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/bi",
+          "label": {
+            "en": "Bislama"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/nb",
+          "label": {
+            "en": "Bokmål, Norwegian |  Norwegian Bokmål"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/bs",
+          "label": {
+            "en": "Bosnian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/br",
+          "label": {
+            "en": "Breton"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/bg",
+          "label": {
+            "en": "Bulgarian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/my",
+          "label": {
+            "en": "Burmese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ca",
+          "label": {
+            "en": "Catalan |  Valencian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/km",
+          "label": {
+            "en": "Central Khmer"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ch",
+          "label": {
+            "en": "Chamorro"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ce",
+          "label": {
+            "en": "Chechen"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ny",
+          "label": {
+            "en": "Chichewa |  Chewa |  Nyanja"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/zh",
+          "label": {
+            "en": "Chinese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/cu",
+          "label": {
+            "en": "Church Slavic |  Old Slavonic |  Church Slavonic |  Old Bulgarian |  Old Church Slavonic"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/cv",
+          "label": {
+            "en": "Chuvash"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kw",
+          "label": {
+            "en": "Cornish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/co",
+          "label": {
+            "en": "Corsican"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/cr",
+          "label": {
+            "en": "Cree"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/hr",
+          "label": {
+            "en": "Croatian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/cs",
+          "label": {
+            "en": "Czech"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/da",
+          "label": {
+            "en": "Danish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/dv",
+          "label": {
+            "en": "Divehi |  Dhivehi |  Maldivian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/nl",
+          "label": {
+            "en": "Dutch |  Flemish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/dz",
+          "label": {
+            "en": "Dzongkha"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/en",
+          "label": {
+            "en": "English"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/eo",
+          "label": {
+            "en": "Esperanto"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/et",
+          "label": {
+            "en": "Estonian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ee",
+          "label": {
+            "en": "Ewe"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/fo",
+          "label": {
+            "en": "Faroese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/fj",
+          "label": {
+            "en": "Fijian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/fi",
+          "label": {
+            "en": "Finnish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/fr",
+          "label": {
+            "en": "French"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ff",
+          "label": {
+            "en": "Fulah"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/gd",
+          "label": {
+            "en": "Gaelic |  Scottish Gaelic"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/gl",
+          "label": {
+            "en": "Galician"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/lg",
+          "label": {
+            "en": "Ganda"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ka",
+          "label": {
+            "en": "Georgian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/de",
+          "label": {
+            "en": "German"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/el",
+          "label": {
+            "en": "Greek, Modern (1453-)"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/gn",
+          "label": {
+            "en": "Guarani"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/gu",
+          "label": {
+            "en": "Gujarati"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ht",
+          "label": {
+            "en": "Haitian |  Haitian Creole"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ha",
+          "label": {
+            "en": "Hausa"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/he",
+          "label": {
+            "en": "Hebrew"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/hz",
+          "label": {
+            "en": "Herero"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/hi",
+          "label": {
+            "en": "Hindi"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ho",
+          "label": {
+            "en": "Hiri Motu"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/hu",
+          "label": {
+            "en": "Hungarian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/is",
+          "label": {
+            "en": "Icelandic"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/io",
+          "label": {
+            "en": "Ido"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ig",
+          "label": {
+            "en": "Igbo"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/id",
+          "label": {
+            "en": "Indonesian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ia",
+          "label": {
+            "en": "Interlingua (International Auxiliary Language Association)"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ie",
+          "label": {
+            "en": "Interlingue |  Occidental"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/iu",
+          "label": {
+            "en": "Inuktitut"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ik",
+          "label": {
+            "en": "Inupiaq"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ga",
+          "label": {
+            "en": "Irish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/it",
+          "label": {
+            "en": "Italian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ja",
+          "label": {
+            "en": "Japanese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/jv",
+          "label": {
+            "en": "Javanese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kl",
+          "label": {
+            "en": "Kalaallisut |  Greenlandic"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kn",
+          "label": {
+            "en": "Kannada"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kr",
+          "label": {
+            "en": "Kanuri"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ks",
+          "label": {
+            "en": "Kashmiri"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kk",
+          "label": {
+            "en": "Kazakh"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ki",
+          "label": {
+            "en": "Kikuyu |  Gikuyu"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/rw",
+          "label": {
+            "en": "Kinyarwanda"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ky",
+          "label": {
+            "en": "Kirghiz |  Kyrgyz"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kv",
+          "label": {
+            "en": "Komi"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kg",
+          "label": {
+            "en": "Kongo"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ko",
+          "label": {
+            "en": "Korean"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/kj",
+          "label": {
+            "en": "Kuanyama |  Kwanyama"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ku",
+          "label": {
+            "en": "Kurdish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/lo",
+          "label": {
+            "en": "Lao"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/la",
+          "label": {
+            "en": "Latin"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/lv",
+          "label": {
+            "en": "Latvian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/li",
+          "label": {
+            "en": "Limburgan |  Limburger |  Limburgish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ln",
+          "label": {
+            "en": "Lingala"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/lt",
+          "label": {
+            "en": "Lithuanian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/lu",
+          "label": {
+            "en": "Luba-Katanga"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/lb",
+          "label": {
+            "en": "Luxembourgish |  Letzeburgesch"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/mk",
+          "label": {
+            "en": "Macedonian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/mg",
+          "label": {
+            "en": "Malagasy"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ms",
+          "label": {
+            "en": "Malay"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ml",
+          "label": {
+            "en": "Malayalam"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/mt",
+          "label": {
+            "en": "Maltese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/gv",
+          "label": {
+            "en": "Manx"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/mi",
+          "label": {
+            "en": "Maori"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/mr",
+          "label": {
+            "en": "Marathi"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/mh",
+          "label": {
+            "en": "Marshallese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/mn",
+          "label": {
+            "en": "Mongolian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/na",
+          "label": {
+            "en": "Nauru"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/nv",
+          "label": {
+            "en": "Navajo |  Navaho"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/nd",
+          "label": {
+            "en": "Ndebele, North |  North Ndebele"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/nr",
+          "label": {
+            "en": "Ndebele, South |  South Ndebele"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ng",
+          "label": {
+            "en": "Ndonga"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ne",
+          "label": {
+            "en": "Nepali"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/se",
+          "label": {
+            "en": "Northern Sami"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/no",
+          "label": {
+            "en": "Norwegian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/nn",
+          "label": {
+            "en": "Norwegian Nynorsk |  Nynorsk, Norwegian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/oc",
+          "label": {
+            "en": "Occitan (post 1500)"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/oj",
+          "label": {
+            "en": "Ojibwa"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/or",
+          "label": {
+            "en": "Oriya"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/om",
+          "label": {
+            "en": "Oromo"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/os",
+          "label": {
+            "en": "Ossetian |  Ossetic"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/pi",
+          "label": {
+            "en": "Pali"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/pa",
+          "label": {
+            "en": "Panjabi |  Punjabi"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/fa",
+          "label": {
+            "en": "Persian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/pl",
+          "label": {
+            "en": "Polish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/pt",
+          "label": {
+            "en": "Portuguese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ps",
+          "label": {
+            "en": "Pushto |  Pashto"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/qu",
+          "label": {
+            "en": "Quechua"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ro",
+          "label": {
+            "en": "Romanian |  Moldavian |  Moldovan"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/rm",
+          "label": {
+            "en": "Romansh"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/rn",
+          "label": {
+            "en": "Rundi"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ru",
+          "label": {
+            "en": "Russian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sm",
+          "label": {
+            "en": "Samoan"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sg",
+          "label": {
+            "en": "Sango"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sa",
+          "label": {
+            "en": "Sanskrit"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sc",
+          "label": {
+            "en": "Sardinian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sr",
+          "label": {
+            "en": "Serbian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sn",
+          "label": {
+            "en": "Shona"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ii",
+          "label": {
+            "en": "Sichuan Yi |  Nuosu"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sd",
+          "label": {
+            "en": "Sindhi"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/si",
+          "label": {
+            "en": "Sinhala |  Sinhalese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sk",
+          "label": {
+            "en": "Slovak"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sl",
+          "label": {
+            "en": "Slovenian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/so",
+          "label": {
+            "en": "Somali"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/st",
+          "label": {
+            "en": "Sotho, Southern"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/es",
+          "label": {
+            "en": "Spanish |  Castilian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/su",
+          "label": {
+            "en": "Sundanese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sw",
+          "label": {
+            "en": "Swahili"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ss",
+          "label": {
+            "en": "Swati"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/sv",
+          "label": {
+            "en": "Swedish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/tl",
+          "label": {
+            "en": "Tagalog"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ty",
+          "label": {
+            "en": "Tahitian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/tg",
+          "label": {
+            "en": "Tajik"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ta",
+          "label": {
+            "en": "Tamil"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/tt",
+          "label": {
+            "en": "Tatar"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/te",
+          "label": {
+            "en": "Telugu"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/th",
+          "label": {
+            "en": "Thai"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/bo",
+          "label": {
+            "en": "Tibetan"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ti",
+          "label": {
+            "en": "Tigrinya"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/to",
+          "label": {
+            "en": "Tonga (Tonga Islands)"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ts",
+          "label": {
+            "en": "Tsonga"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/tn",
+          "label": {
+            "en": "Tswana"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/tr",
+          "label": {
+            "en": "Turkish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/tk",
+          "label": {
+            "en": "Turkmen"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/tw",
+          "label": {
+            "en": "Twi"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ug",
+          "label": {
+            "en": "Uighur |  Uyghur"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/uk",
+          "label": {
+            "en": "Ukrainian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ur",
+          "label": {
+            "en": "Urdu"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/uz",
+          "label": {
+            "en": "Uzbek"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/ve",
+          "label": {
+            "en": "Venda"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/vi",
+          "label": {
+            "en": "Vietnamese"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/vo",
+          "label": {
+            "en": "Volapük"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/wa",
+          "label": {
+            "en": "Walloon"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/cy",
+          "label": {
+            "en": "Welsh"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/fy",
+          "label": {
+            "en": "Western Frisian"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/wo",
+          "label": {
+            "en": "Wolof"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/xh",
+          "label": {
+            "en": "Xhosa"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/yi",
+          "label": {
+            "en": "Yiddish"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/yo",
+          "label": {
+            "en": "Yoruba"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/za",
+          "label": {
+            "en": "Zhuang |  Chuang"
+          }
+        },
+        {
+          "value": "http://id.loc.gov/vocabulary/iso639-1/zu",
+          "label": {
+            "en": "Zulu"
+          }
+        }
+      ],
+      "nodetype": "URI"
+    },
+    {
+      "id": "dcterms:relation",
+      "property": "http://purl.org/dc/terms/relation",
+      "label": {
+        "en": "Relation",
+        "sv": "Relation",
+        "de": "Beziehung"
+      },
+      "description": {
+        "en": "A related resource."
+      },
+      "type": "choice",
+      "nodetype": "URI"
+    },
+    {
+      "id": "dcterms:coverage",
+      "property": "http://purl.org/dc/terms/coverage",
+      "label": {
+        "en": "Coverage",
+        "sv": "Utsträckning",
+        "de": "Umfang"
+      },
+      "description": {
+        "en": "The spatial or temporal topic of the resource, the spatial applicability of the resource, or the jurisdiction under which the resource is relevant."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/LocationPeriodOrJurisdiction"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:rights",
+      "property": "http://purl.org/dc/terms/rights",
+      "label": {
+        "en": "Rights",
+        "sv": "Rättigheter",
+        "de": "Rechte"
+      },
+      "description": {
+        "en": "Information about rights held in and over the resource."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/RightsStatement"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:audience",
+      "property": "http://purl.org/dc/terms/audience",
+      "label": {
+        "en": "Audience",
+        "sv": "Målgrupp",
+        "de": "Zielgruppe"
+      },
+      "description": {
+        "en": "A class of entity for whom the resource is intended or useful."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/AgentClass"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:alternative",
+      "property": "http://purl.org/dc/terms/alternative",
+      "label": {
+        "en": "Alternative title",
+        "sv": "Alternativ titel",
+        "de": "Alternativer Titel"
+      },
+      "description": {
+        "en": "An alternative name for the resource."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcterms:tableOfContents",
+      "property": "http://purl.org/dc/terms/tableOfContents",
+      "label": {
+        "en": "Table Of Contents",
+        "sv": "Innehållsförteckning",
+        "de": "Inhaltsverzeichnis"
+      },
+      "description": {
+        "en": "A list of subunits of the resource."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "styles": [
+        "multiline"
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcterms:abstract",
+      "property": "http://purl.org/dc/terms/abstract",
+      "label": {
+        "en": "Abstract",
+        "sv": "Sammandrag",
+        "de": "Zusammenfassung"
+      },
+      "description": {
+        "en": "A summary of the resource."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "styles": [
+        "multiline"
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcterms:created",
+      "property": "http://purl.org/dc/terms/created",
+      "label": {
+        "en": "Date created",
+        "sv": "Skapelsedatum",
+        "de": "Erstellungsdatum",
+        "da": "Dato for oprettelse"
+      },
+      "description": {
+        "en": "Date of creation of the resource.",
+        "sv": "Datum då resursen har skapats."
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    {
+      "id": "dcterms:valid",
+      "property": "http://purl.org/dc/terms/valid",
+      "label": {
+        "en": "Date valid",
+        "sv": "Giltighetsdatum",
+        "de": "Gültigheitsdatum"
+      },
+      "description": {
+        "en": "Date (often a range) of validity of a resource."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:available",
+      "property": "http://purl.org/dc/terms/available",
+      "label": {
+        "en": "Date available",
+        "sv": "Tillgänglighetsdatum",
+        "de": "Verfügbarkeitsdatum"
+      },
+      "description": {
+        "en": "Date (often a range) that the resource became or will become available."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:issued",
+      "property": "http://purl.org/dc/terms/issued",
+      "label": {
+        "en": "Date issued",
+        "sv": "Utgivningsdatum",
+        "de": "Veröffentlichungsdatum"
+      },
+      "description": {
+        "en": "Date of formal issuance (e.g., publication) of the resource."
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#date",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcterms:modified",
+      "property": "http://purl.org/dc/terms/modified",
+      "label": {
+        "en": "Date modified",
+        "sv": "Ändringsdatum",
+        "de": "Änderungsdatum"
+      },
+      "description": {
+        "en": "Date on which the resource was changed."
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    {
+      "id": "dcterms:extent",
+      "property": "http://purl.org/dc/terms/extent",
+      "label": {
+        "en": "Extent",
+        "sv": "Utsträckning",
+        "de": "Ausmaß"
+      },
+      "description": {
+        "en": "The size or duration of the resource."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/SizeOrDuration"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:medium",
+      "property": "http://purl.org/dc/terms/medium",
+      "label": {
+        "en": "Medium",
+        "sv": "Medium",
+        "de": "Medium"
+      },
+      "description": {
+        "en": "The material or physical carrier of the resource."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/PhysicalMedium"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:isVersionOf",
+      "property": "http://purl.org/dc/terms/isVersionOf",
+      "label": {
+        "en": "Is version of",
+        "sv": "Är version av",
+        "de": "Ist Version von"
+      },
+      "description": {
+        "en": "A related resource of which the described resource is a version, edition, or adaptation."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:hasVersion",
+      "property": "http://purl.org/dc/terms/hasVersion",
+      "label": {
+        "en": "Has version",
+        "sv": "Har version",
+        "de": "Hat Version"
+      },
+      "description": {
+        "en": "A related resource that is a version, edition, or adaptation of the described resource."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:isReplacedBy",
+      "property": "http://purl.org/dc/terms/isReplacedBy",
+      "label": {
+        "en": "Is replaced by",
+        "sv": "Har ersatts med",
+        "de": "Wurde ersetzt durch"
+      },
+      "description": {
+        "en": "A related resource that supplants, displaces, or supersedes the described resource."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:replaces",
+      "property": "http://purl.org/dc/terms/replaces",
+      "label": {
+        "en": "Replaces",
+        "sv": "Ersätter",
+        "de": "Ersetzt"
+      },
+      "description": {
+        "en": "A related resource that is supplanted, displaced, or superseded by the described resource."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:isRequiredBy",
+      "property": "http://purl.org/dc/terms/isRequiredBy",
+      "label": {
+        "en": "Is required by",
+        "sv": "Krävs av",
+        "de": "Wird benötigt von"
+      },
+      "description": {
+        "en": "A related resource that requires the described resource to support its function, delivery, or coherence."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:requires",
+      "property": "http://purl.org/dc/terms/requires",
+      "label": {
+        "en": "Requires",
+        "sv": "Kräver",
+        "de": "Benötigt"
+      },
+      "description": {
+        "en": "A related resource that is required by the described resource to support its function, delivery, or coherence."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:isPartOf",
+      "property": "http://purl.org/dc/terms/isPartOf",
+      "label": {
+        "en": "Is part of",
+        "sv": "Är del av",
+        "de": "Ist Teil von"
+      },
+      "description": {
+        "en": "A related resource in which the described resource is physically or logically included."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:hasPart",
+      "property": "http://purl.org/dc/terms/hasPart",
+      "label": {
+        "en": "Has part",
+        "sv": "Har del",
+        "de": "Hat Teil"
+      },
+      "description": {
+        "en": "A related resource that is included either physically or logically in the described resource."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:isReferencedBy",
+      "property": "http://purl.org/dc/terms/isReferencedBy",
+      "label": {
+        "en": "Is referenced by",
+        "sv": "Refereras av",
+        "de": "Wird referenziert von"
+      },
+      "description": {
+        "en": "A related resource that references, cites, or otherwise points to the described resource."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:references",
+      "property": "http://purl.org/dc/terms/references",
+      "label": {
+        "en": "References",
+        "sv": "Referenser",
+        "de": "Referenzen"
+      },
+      "description": {
+        "en": "A related resource that is referenced, cited, or otherwise pointed to by the described resource."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:isFormatOf",
+      "property": "http://purl.org/dc/terms/isFormatOf",
+      "label": {
+        "en": "Is format of",
+        "sv": "Är format av",
+        "de": "Ist Format von"
+      },
+      "description": {
+        "en": "A related resource that is substantially the same as the described resource, but in another format."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:hasFormat",
+      "property": "http://purl.org/dc/terms/hasFormat",
+      "label": {
+        "en": "Has format",
+        "sv": "Har format",
+        "de": "Hat Format"
+      },
+      "description": {
+        "en": "A related resource that is substantially the same as the pre-existing described resource, but in another format."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:conformsTo",
+      "property": "http://purl.org/dc/terms/conformsTo",
+      "label": {
+        "en": "Conforms to",
+        "sv": "Följer standard",
+        "de": "Folgt Standard"
+      },
+      "description": {
+        "en": "An established standard to which the described resource conforms."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Standard"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:spatial",
+      "property": "http://purl.org/dc/terms/spatial",
+      "label": {
+        "en": "Spatial Coverage",
+        "sv": "Geografisk täckning",
+        "de": "Geographischer Umfang"
+      },
+      "description": {
+        "en": "Spatial characteristics of the resource."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Location"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:temporal",
+      "property": "http://purl.org/dc/terms/temporal",
+      "label": {
+        "en": "Temporal coverage",
+        "sv": "Tidsmässig omfattning",
+        "de": "Zeitlicher Umfang"
+      },
+      "description": {
+        "en": "Temporal characteristics of the resource."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/PeriodOfTime"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:mediator",
+      "property": "http://purl.org/dc/terms/mediator",
+      "label": {
+        "en": "Mediator",
+        "sv": "Medlare",
+        "de": "Vermittler"
+      },
+      "description": {
+        "en": "An entity that mediates access to the resource and for whom the resource is intended or useful."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/AgentClass"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:dateAccepted",
+      "property": "http://purl.org/dc/terms/dateAccepted",
+      "label": {
+        "en": "Date accepted",
+        "sv": "Acceptansdatum",
+        "de": "Abnahmedatum"
+      },
+      "description": {
+        "en": "Date of acceptance of the resource."
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#date",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcterms:dateCopyrighted",
+      "property": "http://purl.org/dc/terms/dateCopyrighted",
+      "label": {
+        "en": "Date copyrighted",
+        "sv": "Upphovsrättsskyddsdatum",
+        "de": "Copyright-Datum"
+      },
+      "description": {
+        "en": "Date of copyright."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL"
+    },
+    {
+      "id": "dcterms:dateSubmitted",
+      "property": "http://purl.org/dc/terms/dateSubmitted",
+      "label": {
+        "en": "Date submitted",
+        "sv": "Inlämningsdatum",
+        "de": "Einreichungsdatum"
+      },
+      "description": {
+        "en": "Date of submission of the resource."
+      },
+      "type": "text",
+      "nodetype": "DATATYPE_LITERAL",
+      "datatype": "http://www.w3.org/2001/XMLSchema#date",
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcterms:educationLevel",
+      "property": "http://purl.org/dc/terms/educationLevel",
+      "label": {
+        "en": "Audience Education Level",
+        "sv": "Målgruppens utbildningsnivå",
+        "de": "Ausbildungsniveau der Zielgruppe"
+      },
+      "description": {
+        "en": "A class of entity, defined in terms of progression through an educational or training context, for which the described resource is intended."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/AgentClass"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:accessRights",
+      "property": "http://purl.org/dc/terms/accessRights",
+      "label": {
+        "en": "Access rights",
+        "sv": "Åtkomsträttighet",
+        "de": "Zugriffsrechte"
+      },
+      "description": {
+        "en": "Information about who can access the resource or an indication of its security status."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/RightsStatement"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:bibliographicCitation",
+      "property": "http://purl.org/dc/terms/bibliographicCitation",
+      "label": {
+        "en": "Bibliographic citation",
+        "sv": "Bibliografisk citering",
+        "de": "Bibliographisches Zitat"
+      },
+      "description": {
+        "en": "A bibliographic reference for the resource."
+      },
+      "type": "text",
+      "nodetype": "LANGUAGE_LITERAL",
+      "styles": [
+        "multiline"
+      ],
+      "cardinality": {
+        "min": 0,
+        "pref": 1
+      }
+    },
+    {
+      "id": "dcterms:license",
+      "label": {
+        "en": "License",
+        "sv": "Licens",
+        "de": "Lizenz"
+      },
+      "description": {
+        "en": "A legal document giving official permission to do something with the resource."
+      },
+      "type": "group",
+      "automatic": true,
+      "cardinality": {
+        "min": 1,
+        "pref": 1,
+        "max": 1
+      },
+      "items": [
+        {
+          "type": "choice",
+          "property": "http://purl.org/dc/terms/license",
+          "nodetype": "URI",
+          "extends": "dcterms:cc-license-choices",
+          "label": {
+            "en": "Choose a CC license"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          }
+        },
+        {
+          "type": "text",
+          "property": "http://purl.org/dc/terms/license",
+          "label": {
+            "de": "or provide a URL to a license"
+          },
+          "cardinality": {
+            "min": 0,
+            "pref": 1
+          },
+          "nodetype": "URI"
+        }
+      ]
+    },
+    {
+      "id": "dcterms:rightsHolder",
+      "property": "http://purl.org/dc/terms/rightsHolder",
+      "label": {
+        "en": "Rights holder",
+        "sv": "Rättighetsinnehavare",
+        "de": "Rechteinhaber"
+      },
+      "description": {
+        "en": "A person or organization owning or managing rights over the resource.",
+        "sv": "En person eller organisation som äger eller förvaltar resursens rättigheter."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Agent"
+      },
+      "type": "choice",
+      "nodetype": "RESOURCE"
+    },
+    {
+      "id": "dcterms:provenance",
+      "property": "http://purl.org/dc/terms/provenance",
+      "label": {
+        "en": "Provenance",
+        "sv": "Ursprung",
+        "de": "Herkunft"
+      },
+      "description": {
+        "en": "A statement of any changes in ownership and custody of the resource since its creation that are significant for its authenticity, integrity, and interpretation."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/ProvenanceStatement"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:instructionalMethod",
+      "property": "http://purl.org/dc/terms/instructionalMethod",
+      "label": {
+        "en": "Instructional method",
+        "sv": "Instruktionsmetod",
+        "de": "Lehrmethode"
+      },
+      "description": {
+        "en": "A process, used to engender knowledge, attitudes and skills, that the described resource is designed to support."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/MethodOfInstruction"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:accrualMethod",
+      "property": "http://purl.org/dc/terms/accrualMethod",
+      "label": {
+        "en": "Accrual method"
+      },
+      "description": {
+        "en": "The method by which items are added to a collection."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/MethodOfAccrual"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:accrualPeriodicity",
+      "property": "http://purl.org/dc/terms/accrualPeriodicity",
+      "label": {
+        "en": "Accrual Periodicity"
+      },
+      "description": {
+        "en": "The frequency with which items are added to a collection."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Frequency"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:accrualPolicy",
+      "property": "http://purl.org/dc/terms/accrualPolicy",
+      "label": {
+        "en": "Accrual Policy"
+      },
+      "description": {
+        "en": "The policy governing the addition of items to a collection."
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Policy"
+      },
+      "type": "group",
+      "automatic": true,
+      "items": []
+    },
+    {
+      "id": "dcterms:Agent",
+      "label": {
+        "en": "Agent"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Agent"
+      },
+      "description": {
+        "en": "A resource that acts or has the power to act."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:AgentClass",
+      "label": {
+        "en": "Agent Class"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/AgentClass"
+      },
+      "description": {
+        "en": "A group of agents."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:BibliographicResource",
+      "label": {
+        "en": "Bibliographic resource",
+        "sv": "Bibliografisk resurs",
+        "de": "Bibliographische Ressource"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/BibliographicResource"
+      },
+      "description": {
+        "en": "A book, article, or other documentary resource."
+      },
+      "type": "group",
+      "items": [
+        {
+          "id": "dcterms:title"
+        },
+        {
+          "id": "dcterms:alternative"
+        },
+        {
+          "id": "dcterms:identifier"
+        },
+        {
+          "id": "dcterms:abstract"
+        },
+        {
+          "id": "dcterms:subject"
+        },
+        {
+          "id": "dcterms:bibliographicCitation"
+        },
+        {
+          "id": "dcterms:date"
+        },
+        {
+          "id": "dcterms:dateAccepted"
+        },
+        {
+          "id": "dcterms:dateSubmitted"
+        },
+        {
+          "id": "dcterms:issued"
+        },
+        {
+          "id": "dcterms:publisher"
+        },
+        {
+          "id": "dcterms:creator"
+        },
+        {
+          "id": "dcterms:contributor"
+        },
+        {
+          "id": "dcterms:tableOfContents"
+        }
+      ]
+    },
+    {
+      "id": "dcterms:FileFormat",
+      "label": {
+        "en": "File format",
+        "sv": "Filformat",
+        "de": "Dateiformat"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/FileFormat"
+      },
+      "description": {
+        "en": "A digital resource format."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:Frequency",
+      "label": {
+        "en": "Frequency",
+        "sv": "",
+        "de": ""
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Frequency"
+      },
+      "description": {
+        "en": "A rate at which something recurs."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:Jurisdiction",
+      "label": {
+        "en": "Jurisdiction",
+        "sv": "Frekvens",
+        "de": "Frequenz"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Jurisdiction"
+      },
+      "description": {
+        "en": "The extent or range of judicial, law enforcement, or other authority."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:LicenseDocument",
+      "label": {
+        "en": "License document",
+        "sv": "Licensdokument",
+        "de": "Lizenzdokument"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/LicenseDocument"
+      },
+      "description": {
+        "en": "A legal document giving official permission to do something with a Resource."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:LinguisticSystem",
+      "label": {
+        "en": "Linguistic system",
+        "sv": "Språksystem",
+        "de": "Sprachsystem"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/LinguisticSystem"
+      },
+      "description": {
+        "en": "A system of signs, symbols, sounds, gestures, or rules used in communication."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:Location",
+      "label": {
+        "en": "Location",
+        "sv": "Plats",
+        "de": "Ort"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Location"
+      },
+      "description": {
+        "en": "A spatial region or named place."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:LocationPeriodOrJurisdiction",
+      "label": {
+        "en": "Location, Period, or Jurisdiction",
+        "sv": "Plats, period eller jurisdiktion",
+        "de": "Ort, Zeitraum oder Gerichtsstand"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/LocationPeriodOrJurisdiction"
+      },
+      "description": {
+        "en": "A location, period of time, or jurisdiction."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:MediaType",
+      "label": {
+        "en": "Media type",
+        "sv": "Mediatyp",
+        "de": "Medientyp"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/MediaType"
+      },
+      "description": {
+        "en": "A file format or physical medium."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:MediaTypeOrExtent",
+      "label": {
+        "en": "Media type or extent",
+        "sv": "Medietyp eller utsträckning",
+        "de": "Medientyp oder Ausmaß"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/MediaTypeOrExtent"
+      },
+      "description": {
+        "en": "A media type or extent."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:MethodOfInstruction",
+      "label": {
+        "en": "Method of instruction",
+        "sv": "Instruktionsmetod",
+        "de": "Unterrichtsmethode"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/MethodOfInstruction"
+      },
+      "description": {
+        "en": "A process that is used to engender knowledge, attitudes, and skills."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:MethodOfAccrual",
+      "label": {
+        "en": "Method of Accrual"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/MethodOfAccrual"
+      },
+      "description": {
+        "en": "A method by which resources are added to a collection."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:PeriodOfTime",
+      "label": {
+        "en": "Period of time",
+        "sv": "Tidsperiod",
+        "de": "Zeitspanne"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/PeriodOfTime"
+      },
+      "description": {
+        "en": "An interval of time that is named or defined by its start and end dates."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:PhysicalMedium",
+      "label": {
+        "en": "Physical medium",
+        "sv": "Fysiskt medium",
+        "de": "Physikalisches Medium"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/PhysicalMedium"
+      },
+      "description": {
+        "en": "A physical material or carrier."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:PhysicalResource",
+      "label": {
+        "en": "Physical resource",
+        "sv": "Fysisk resurs",
+        "de": "Physische Ressource"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/PhysicalResource"
+      },
+      "description": {
+        "en": "A material thing."
+      },
+      "type": "group",
+      "items": [
+        {
+          "id": "dcterms:medium"
+        }
+      ]
+    },
+    {
+      "id": "dcterms:Policy",
+      "label": {
+        "en": "Policy"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Policy"
+      },
+      "description": {
+        "en": "A plan or course of action by an authority, intended to influence and determine decisions, actions, and other matters."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:ProvenanceStatement",
+      "label": {
+        "en": "Provenance statement"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/ProvenanceStatement"
+      },
+      "description": {
+        "en": "A statement of any changes in ownership and custody of a resource since its creation that are significant for its authenticity, integrity, and interpretation."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:RightsStatement",
+      "label": {
+        "en": "Rights statement",
+        "de": "Rechteerklärung",
+        "sv": "Rättighetsförklaring"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/RightsStatement"
+      },
+      "description": {
+        "en": "A statement about the intellectual property rights (IPR) held in or over a Resource, a legal document giving official permission to do something with a resource, or a statement about access rights."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:SizeOrDuration",
+      "label": {
+        "en": "Size or duration",
+        "sv": "Storlek eller varaktighet",
+        "de": "Größe oder Dauer"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/SizeOrDuration"
+      },
+      "description": {
+        "en": "A dimension or extent, or a time taken to play or execute."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "id": "dcterms:Standard",
+      "label": {
+        "en": "Standard",
+        "sv": "Standard",
+        "de": "Standard"
+      },
+      "constraints": {
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type": "http://purl.org/dc/terms/Standard"
+      },
+      "description": {
+        "en": "A basis for comparison; a reference point against which other things can be evaluated."
+      },
+      "type": "group",
+      "items": []
+    },
+    {
+      "type": "choice",
+      "id": "dcterms:cc-license-choices",
+      "nodetype": "URI",
+      "choices": [
+        {
+          "value": "http://creativecommons.org/licenses/by/3.0/",
+          "label": {
+            "en": "CC BY 3.0 (Attribution)"
+          },
+          "description": {
+            "de": "Der Urheber gestattet die Ressource für kommerzielle Zwecke zu nutzen und Änderungen vorzunehmen",
+            "sl": "Lastnik DOVOLJUJE komercialno rabo in spreminjanje vira.",
+            "ro": "Autorul PERMITE utilizarea in scop comercial SI modificari asupra resursei",
+            "el": "Άδεια που εφαρμόζεται στο αντικείμενο (αναφορικά με Creative Commons)",
+            "hu": "A tulajdonos engedélyezi a kereskedelmi forgalomba hozatalt és a változásokat",
+            "bg": "Притежателят ПОЗВОЛЯВА търговска употреба и промени в ресурса ",
+            "fr": "Le détenteur des droits AUTORISE l'utilisation commerciale ET les modifications de la ressource",
+            "en": "The owner ALLOWS commercial uses AND changes to the resource",
+            "ru": "Владелец РАЗРЕШАЕТ как использование источника в коммерческих целях, ТАК И изменение содержания",
+            "hi": "स्वामी वाणिज्यिक उपयोग एवं संसाधनों में परिवर्तन की अनुमति देता है",
+            "et": "Omanik LUBAB kasutada allikat kommertslikel eesmärkidel JA muuta allika sisu",
+            "es": "El propieatrio PERMITE uso comercial Y cambios en el recurso"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-nc/3.0/",
+          "label": {
+            "en": "CC BY-NC 3.0 (Attribution, Non-Commercial)"
+          },
+          "description": {
+            "de": "Der Urheber gestattet keine kommerzielle Nutzung, erlaubt aber Änderungen an der Ressource",
+            "sl": "Lastnik NE dovoljuje komercialne rabe toda DOVOLJUJE spreminjanje vira.",
+            "ro": "Autorul NU permite utilizarea in scop comercial dar PERMITE modificari asupra resursei",
+            "el": "Ο ιδιοκτήτης του αντικειμένου ΔΕΝ επιτρέπει εμπορικές χρήσεις αλλά ΕΠΙΤΡΕΠΕΙ αλλαγές στο αντικείμενο",
+            "hu": "A tulajdonos nem engedélyezi a kereskedelmi forgalomba hozatalt, de a módosítást igen. ",
+            "bg": "Притежателят НЕ ПОЗВОЛЯВА за търговски цели, но ПОЗВОЛЯВА да се променя ресурса",
+            "fr": "Le détenteur des droits N'AUTORISE PAS l'utilisation commerciale MAIS ACCEPTE les modifications de la ressource",
+            "en": "The owner does NOT allow commercial uses but ALLOWS changes to the resource",
+            "ru": "Владелец НЕ РАЗРЕШАЕТ использование источника в коммерческих целях, но РАЗРЕШАЕТ изменение содержания",
+            "hi": "स्वामी वाणिज्यिक उपयोग की अनुमति नही देता है परंतु संसाधनों में परिवर्तन की अनुमति देता है",
+            "et": "Omanik EI LUBA kasutada allikat kommertslikel eesmärkidel, kuid LUBAB muuta allika sisu",
+            "es": "El propieatrio NO permite uso comercial pero PERMITE cambios en el recurso"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-nc-nd/3.0/",
+          "label": {
+            "en": "CC BY-NC-ND 3.0 (Attribution, Non-Commercial, No Derivative Works)"
+          },
+          "description": {
+            "de": "Der Urheber gestattet die nicht-kommerzielle Nutzung oder Änderungen an der Ressourcen",
+            "sl": "Lastnik NE dovoljuje komercialne rabe ALI spreminjanja virov.",
+            "ro": "Autorul NU permite nici utilizarea in scop comercial nici modificari asupra resursei",
+            "el": "Ο ιδιοκτήτης του αντικειμένου ΕΠΙΤΡΕΠΕΙ εμπορικές χρήσεις αλλά ΌΧΙ αλλαγές στο αντικείμενο",
+            "hu": "A tulajdonos nem engedélyezi a kereskedelmi forgalomba hozatalt és módosítást. ",
+            "bg": "Притежателят НЕ позволява търговска употреба и ИЛИ да се променя ресурса ",
+            "fr": "Le détenteur des droits N'AUTORISE PAS l'utilisation commerciale NI les modifications de la ressource",
+            "en": "The owner does NOT allow commercial uses OR changes to the resource",
+            "ru": "Владелец НЕ РАЗРЕШАЕТ как использование источника в коммерческих целях, ТАК И изменение содержания",
+            "hi": "स्वामी वाणिज्यिक उपयोग और संसाधनों में परिवर्तन की अनुमति नहीं  देता है",
+            "et": "Omanik EI LUBA kasutada allikat kommertslikel eesmärkidel EGA luba muuta allika sisu",
+            "es": "El propieatrio NO permite uso comercial ni cambios en el recurso"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "label": {
+            "en": "CC BY-NC-SA 3.0 (Attribution, Non-Commercial, Share Alike)"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-nd/3.0/",
+          "label": {
+            "en": "CC BY-ND 3.0 (Attribution, No Derivative Works)"
+          },
+          "description": {
+            "de": "Der Urheber gestattet, die Ressource für kommerzielle Zwecke zu nutzen, es dürfen jedoch keine Änderungen vorgenommen werden",
+            "sl": "Lastnik DOVOLJUJE komercialno rabo toda NE dovoli spreminjanja vira.",
+            "ro": "Autorul PERMITE utilizarea in scop comercial dar nu permite modificari asupra resursei",
+            "el": "Ο ιδιοκτήτης του αντικειμένου ΕΠΙΤΡΕΠΕΙ εμπορικές χρήσεις ΚΑΙ αλλαγές στο αντικείμενο",
+            "hu": "A tulajdonos engedélyezi a kereskedelmi forgalomba hozatalt, változások nélkül.",
+            "bg": "Притежателят ПОЗВОЛЯВА търговска употреба, но НЕ се позволява да се променя ресурса",
+            "fr": "Le détenteur des droits AUTORISE l'utilisation commerciale MAIS REFUSE les modifications de la ressource",
+            "en": "The owner ALLOWS commercial uses but does NOT allow changes to the resource",
+            "ru": "Владелец РАЗРЕШАЕТ использование источника в коммерческих целях, но НЕ РАЗРЕШАЕТ изменение содержания",
+            "hi": "स्वामी वाणिज्यिक उपयोग की अनुमति देता है परंतु  संसाधनों में परिवर्तन की अनुमति नहीं  देता है",
+            "et": "Omanik LUBAB kasutada allikat kommertslikel eesmärkidel, kuid EI luba muuta allika sisu",
+            "es": "El propieatrio PERMITE uso comercial pero NO permite cambios en el recurso"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "label": {
+            "en": "CC BY-SA 3.0 (Attribution, Share Alike)"
+          }
+        },
+        {
+          "value": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "label": {
+            "en": "CC0 1.0 (Public Domain Dedication, No Copyright)"
+          }
+        }
+      ],
+      "styles": [
+        "verticalRadioButtons"
+      ],
+      "description": {}
+    }
+  ],
+  "scope": "dcterms",
+  "namespace": "http://purl.org/dc/terms/"
+}

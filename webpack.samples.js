@@ -2,19 +2,22 @@ const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
-
+const { execSync } = require('child_process');
 const path = require('path');
-const examples = [1, 2, 3, 4, 5, 6, 7];
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const createVariants = require('parallel-webpack').createVariants;
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+
+const rdfjsonVersion = execSync('yarn info @entryscape/rdfjson version --silent').toString().trim();
+const examples = [1, 2, 3, 4, 5, 6, 7];
 const getHTMLPlugins = () => {
   return [
-    // create all examples' html
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: __dirname + `/html/index.html`,
       inject: true,
     }),
-    // create all examples' html
     ...examples.map((exampleNumber) => new HtmlWebpackPlugin({
       filename: `example${exampleNumber}/index.html`,
       template: __dirname + `/html/example${exampleNumber}/index.html`,
@@ -31,19 +34,20 @@ const getHTMLPlugins = () => {
         type: 'css',
         publicPath: false,
       }, {
-        path: 'https://unpkg.com/@entryscape/rdfjson/dist/rdfjson.js',
+        path: `https://unpkg.com/@entryscape/rdfjson@${rdfjsonVersion}/dist/rdfjson.js`,
         type: 'js',
         publicPath: false,
       },
-        '../styles.css'
+        'styles.css'
       ],
       append: true
     }), // append styles.css to all examples
     // append examples' respective js for all html
     ...examples.map((number) => new HtmlWebpackTagsPlugin({
       files: [`example${number}/**/*.html`],
+      publicPath: '.',
       tags: [{
-        path: `./example${number}/init.js`,
+        path: 'init.js',
         attributes: {
           type: 'module',
         }
@@ -53,30 +57,50 @@ const getHTMLPlugins = () => {
   ];
 };
 
-module.exports = (env, argv) => {
-  const type = argv.type ? argv.type : 'bmd';
+const getCopyPlugins = (type) => new CopyWebpackPlugin([
+  ...examples.map((number) => ({
+    from: path.resolve(path.join(__dirname, 'html', `example${number}`)),
+    to: path.resolve(path.join(__dirname, 'samples', type, `example${number}`)),
+    test: /\.js$/,
+  })), {
+    from: path.resolve(path.join(__dirname, 'html', 'chooser')),
+    to: 'chooser',
+  }, {
+    from: path.resolve(path.join(__dirname, 'html', 'templates')),
+    to: 'templates',
+  }, {
+    from: path.resolve(path.join(__dirname, 'html', 'rdf.js')),
+    to: 'rdf.js',
+  }, {
+    from: path.resolve(path.join(__dirname, 'html', 'examples.html')),
+    to: 'index.html',
+  }, {
+    from: path.resolve(path.join(__dirname, 'html', 'styles.css')),
+    to: 'styles.css',
+  }]);
 
+const variants = {
+  type: ['bmd', 'bootstrap'],
+};
+
+function createConfig(options) {
   const devConfig = {
-    entry: `./index.${type}.js`,
+    entry: `./index.${options.type}.js`,
     output: {
-      filename: 'rdforms.[name].js',
-      library: 'rdforms',
-      libraryTarget: "umd",
+      path: path.join(__dirname, 'samples', options.type),
+      filename: 'rdforms.js',
     },
-    mode: 'development',
-    devtool: 'inline-source-map',
+    mode: 'production',
     plugins: [
       ...getHTMLPlugins(),
+      getCopyPlugins(options.type),
+      new CleanWebpackPlugin([
+        path.join(__dirname, 'samples', options.type),
+      ]),
     ],
     node: {
       fs: 'empty',
       process: false,
-    },
-    devServer: {
-      contentBase: path.join(__dirname, '/html'),
-      hot: true,
-      open: true,
-      publicPath: '/',
     },
   };
 
@@ -93,4 +117,8 @@ module.exports = (env, argv) => {
     }
   })(common, devConfig);
 };
+
+
+module.exports = createVariants({}, variants, createConfig);
+
 

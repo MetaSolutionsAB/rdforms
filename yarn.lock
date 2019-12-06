@@ -3203,8 +3203,8 @@ escope@^3.6.0:
     estraverse "^4.1.1"
 
 "esi18n@https://bitbucket.org/metasolutions/esi18n.git#master":
-  version "1.3.0"
-  resolved "https://bitbucket.org/metasolutions/esi18n.git#85838068605862860977850fd5de6e01d574da26"
+  version "1.4.0"
+  resolved "https://bitbucket.org/metasolutions/esi18n.git#53247b4c837ff5a8d3b2671a2d926ab22dd0c653"
   dependencies:
     dojo "^1.14.1"
     lodash-es "^4.17.10"

@@ -1,7 +1,3 @@
-if (typeof window === 'undefined') {
-  global.fetch = require('node-fetch/lib/index.js');
-}
-
 /**
  * Check if there's any iterations left in a hypothetical array with 'length' given.
  *

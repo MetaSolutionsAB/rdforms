@@ -6,8 +6,8 @@ module.exports = {
   entry: './main.node.js',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: "rdforms.node.js",
-    libraryTarget: "commonjs2",
+    filename: 'rdforms.node.js',
+    libraryTarget: 'commonjs2',
   },
   plugins: [
     new webpack.IgnorePlugin(/\.css$/),

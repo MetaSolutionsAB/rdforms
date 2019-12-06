@@ -90,7 +90,6 @@
     "dev": "webpack-dev-server --watch --config webpack.dev.js",
     "dev:bootstrap": "webpack-dev-server --watch --config webpack.dev.js --type=bootstrap",
     "samples": "webpack --config webpack.samples.js",
-    "examples": "webpack --display-modules --config ./webpack.examples.js",
     "print-licenses": "print-licenses"
   }
 }

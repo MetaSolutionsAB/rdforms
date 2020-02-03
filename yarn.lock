@@ -691,9 +691,9 @@
     to-fast-properties "^2.0.0"
 
 "@entryscape/rdfjson@^2.2.3":
-  version "2.2.6"
-  resolved "https://registry.yarnpkg.com/@entryscape/rdfjson/-/rdfjson-2.2.6.tgz#f45e4e3032d7112512988a4975432d455818de1d"
-  integrity sha512-WqMLlw0rSJjqBohd8NsHOxabT3AvacMp9yg0lGnEHnpnFRh0+bv5LBFn2xthd3aXaFuY5KMQmHSJFSJgDPdm/g==
+  version "2.2.9"
+  resolved "https://registry.yarnpkg.com/@entryscape/rdfjson/-/rdfjson-2.2.9.tgz#bcb35dbd0976a521cc6dafc43e934fb9ee4a80c5"
+  integrity sha512-79B71t25STy4SPnGjriEtdkFRTLnS3a0SbApKfN266gAZxhtu+Kbem+zTNjZq2uTEVikDKe3dv4WJeJE9G8TBg==
   dependencies:
     core-js "^3.4.0"
     md5 "^2.2.1"
@@ -2358,10 +2358,15 @@ core-js@^2.4.0, core-js@^2.5.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.10.tgz#8a5b8391f8cc7013da703411ce5b585706300d7f"
   integrity sha512-I39t74+4t+zau64EN1fE5v2W31Adtc/REhzWN+gWRRXg6WH5qAsZm62DHpQ1+Yhe4047T55jvzz7MUqF/dBBlA==
 
-core-js@^3.1.4, core-js@^3.4.0:
+core-js@^3.1.4:
   version "3.4.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.4.7.tgz#57c35937da80fe494fbc3adcf9cf3dc00eb86b34"
   integrity sha512-qaPVGw30J1wQ0GR3GvoPqlGf9GZfKKF4kFC7kiHlcsPTqH3txrs9crCp3ZiMAXuSenhz89Jnl4GZs/67S5VOSg==
+
+core-js@^3.4.0:
+  version "3.6.4"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.4.tgz#440a83536b458114b9cb2ac1580ba377dc470647"
+  integrity sha512-4paDGScNgZP2IXXilaffL9X7968RuvwlkK3xWtZRVqgd8SYNiVKRJvkFd1aqqEuPfN7E68ZHEp9hDj6lHj4Hyw==
 
 core-util-is@~1.0.0:
   version "1.0.2"
@@ -8462,9 +8467,9 @@ ws@~6.1.0:
     async-limiter "~1.0.0"
 
 xmldom@~0.1.19:
-  version "0.1.27"
-  resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
-  integrity sha1-1QH5ezvbQDr4757MIFcxh6rawOk=
+  version "0.1.31"
+  resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.31.tgz#b76c9a1bd9f0a9737e5a72dc37231cf38375e2ff"
+  integrity sha512-yS2uJflVQs6n+CyjHoaBmVSqIDevTAWrzMmjG1Gc7h1qQ7uVozNhEPJAwZXWyGQ/Gafo3fCwrcaokezLPupVyQ==
 
 xmlhttprequest-ssl@~1.5.4:
   version "1.5.5"

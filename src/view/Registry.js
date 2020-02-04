@@ -1,4 +1,4 @@
-import {namespaces as ns} from '@entryscape/rdfjson';
+import { namespaces as ns } from '@entryscape/rdfjson';
 
 const matchRdfType = (item, type) => {
   const constr = item.getConstraints();
@@ -132,7 +132,19 @@ export default class Registry {
 
     if (filter.datatype) {
       prio += this.priorities.DATATYPE;
-      if (item.getDatatype() !== filter.datatype) {
+
+      /** @type {Array|string} */
+      const itemDatatype = item.getDatatype();
+
+      let noMatch = true;
+
+      if (itemDatatype) {
+        noMatch = Array.isArray(itemDatatype)
+          ? !itemDatatype.includes(filter.datatype)
+          : itemDatatype !== filter.datatype;
+      }
+
+      if (noMatch) {
         return -1;
       }
     }
@@ -218,7 +230,7 @@ export default class Registry {
   }
 
   register(filter, component) {
-    this.components.push({component, filter});
+    this.components.push({ component, filter });
   }
 
   itemtype(itemtype) {

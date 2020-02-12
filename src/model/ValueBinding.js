@@ -35,7 +35,7 @@ export default class ValueBinding extends Binding {
    * @param {String} value
    */
   setValue(value, silent) {
-    const _value = typeof _value === 'string' ? value.trim() : value;
+    const _value = typeof value === 'string' ? value.trim() : value;
     var oValidObject = this._validObject;
     if (this._isValidObjectValue(_value)) {
       this._statement.setValue(_value, silent);

@@ -1,8 +1,7 @@
 /// #if BLOCKS
   import 'bootstrap';
-  import './src/view/bootstrap/Select2'
-  import './src/view/bootstrap/DateTimeFuelux';
-  import 'fuelux/dist/css/fuelux.min.css';
+  import './src/view/bootstrap/Select2';
+  import './src/view/bootstrap/DateTimeBootstrapDatepicker';
   import 'select2/dist/css/select2.css';
   import './src/view/bootstrap/style.css';
 /// #else

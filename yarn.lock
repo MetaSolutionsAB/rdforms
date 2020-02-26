@@ -1745,7 +1745,7 @@ bootstrap-datepicker@^1.9.0:
 
 "bootstrap-material-datetimepicker@https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#webpack":
   version "2.7.1-entryscape"
-  resolved "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#394c47a740d682193dc50e66f8c98cb80c6aa7f2"
+  resolved "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#2d2c23052a94d9938719b9c03a8b1ea335a5ac23"
   dependencies:
     bootstrap-material-design "^4.1.2"
     jquery "^3.3.1"

@@ -54,6 +54,7 @@ export default class Item {
       "autoValue",
       "showURI",
       "showLink",
+      "textAsChoice"
     ];
     this._getLocalizedValue = utils.getLocalizedValue;
   }

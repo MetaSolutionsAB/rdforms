@@ -55,7 +55,7 @@
     vertical-align: top;
 }
 
-.rdformsDateValue .fa {
+.rdformsDateValue .fas {
     line-height: 21px;
 }
 
@@ -101,7 +101,7 @@
     top: 0px;
 }
 
-.rdformsLabelRow>.action.fa {
+.rdformsLabelRow>.action.fas {
     vertical-align: middle;
 }
 

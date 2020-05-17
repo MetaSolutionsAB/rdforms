@@ -32,5 +32,18 @@
 .rdforms .form-group.rdforms-upgrade {
     display: inline-block;
     width: 300px;
-    margin: 0px;
+    margin: 0;
+}
+
+.rdforms .durationLabel:first-child {
+    padding-left: 0;
+}
+
+.rdforms .durationLabel {
+    padding-right: 7px;
+    padding-left: 13px;
+}
+
+.rdforms .durationValue {
+    width: 4em;
 }

@@ -4,7 +4,7 @@ const { Graph } = rdfjson;
 const { ItemStore, Presenter, bundleLoader } = rdforms;
 const graph = new Graph(rdfGraph);
 
-bundleLoader(new ItemStore(), [['../templates/templatebundle.json']], (bundles) => {
+bundleLoader(new ItemStore(), [['../templates/templateBundle.json']], (bundles) => {
   Presenter({
     graph,
     resource: 'http://example.org/about',

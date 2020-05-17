@@ -6,7 +6,7 @@ registeryDummyChooser();
 const { Graph } = rdfjson;
 const { ItemStore, bundleLoader, Editor } = rdforms;
 const graph = new Graph(rdfGraph);
-bundleLoader(new ItemStore(), [['../templates/templatebundle.json']], (bundles) => {
+bundleLoader(new ItemStore(), [['../templates/templateBundle.json']], (bundles) => {
   Editor({
     graph,
     resource: 'http://example.org/about',

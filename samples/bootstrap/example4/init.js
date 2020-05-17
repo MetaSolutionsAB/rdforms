@@ -5,7 +5,7 @@ const { Graph } = rdfjson;
 const { ItemStore, bundleLoader, ValidationPresenter } = rdforms;
 const graph = new Graph(rdfGraph);
 
-bundleLoader(new ItemStore(), [['../templates/templatebundle.json']], (bundles) => {
+bundleLoader(new ItemStore(), [['../templates/templateBundle.json']], (bundles) => {
   ValidationPresenter({
     graph,
     resource: 'http://example.org/about',

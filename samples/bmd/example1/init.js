@@ -21,7 +21,7 @@ itemStore.createItem({
   'nodetype': 'URI',
   'id': 'ex:color',
   'property': 'http://example.com/terms/colorOfHouse',
-  'label': { 'en': 'Color of house', 'sv': 'FÃ¤rg pÃ¥ huset' },
+  'label': { 'en': 'Color of house', 'sv': 'Färg på huset' },
   'choices': [
     { 'value': 'http://example.com/color/blue', 'label': { 'en': 'Blue' } },
     { 'value': 'http://example.com/color/red', 'label': { 'en': 'Red' } }

@@ -9,7 +9,7 @@ const bundles = [
   ['../templates/vcard.json'],
   ['../templates/dcat_props.json'],
   ['../templates/dcat.json'],
-  ['../templates/templatebundle.json'],
+  ['../templates/templateBundle.json'],
 ];
 
 registeryDummyChooser();

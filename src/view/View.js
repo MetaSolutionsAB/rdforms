@@ -3,85 +3,29 @@ import GroupBinding from '../model/GroupBinding';
 import * as engine from '../model/engine';
 import { bindingReport} from "../model/validate";
 
-'../model/validate';
-import declare from 'dojo/_base/declare';
-import _Widget from 'dijit/_Widget';
-
-export default declare(_Widget, {
-  // ===================================================
-  // Public attributes
-  // ===================================================
-  binding: null,
-  template: null,
-  graph: null,
-  resource: '',
-  topLevel: true,
-  compact: false,
-  styleCls: '',
-  filterPredicates: null,
-
-  // ===================================================
-  // Public API
-  // ===================================================
-
-  /**
-   * Tells wether something should be shown for the provided bindings and belonging item.
-   * @param {Object} item
-   * @param {Object} bindings
-   * @return {Boolean} true if something should be shown.
-   */
-  showNow(/* item,  bindings */) {
-    return true;
-  },
-
-  skipBinding(/* binding */) {
-    return false;
-  },
-
-  /**
-   * This function may change the array of bindings, for instance remove all but
-   * the best language or complement the existing bindings
-   * until the min cardinality is reached.
-   *
-   * @param {Object} item
-   * @param {Array} bindings
-   * @return {Array} of bindings
-   */
-  prepareBindings(/* item, bindings */) {
-  },
-
-  /**
-   * Adds a table with headers for the given firstBinding.
-   * @param {Node} lastRow if provided it is the last row as a DOM element.
-   * @param {Object} firstBinding the first binding to show in this table.
-   */
-  addTable(/* lastRow, firstBinding */) {
-  },
-
-  /**
-   * Fills the table with one row for each binding in bindings.
-   *
-   * @param {Object} table a table DOM element
-   * @param {Array} bindings an array of bindings
-   */
-  fillTable(/* table, bindings */) {
-  },
-
-  addLabel(/* rowDiv, labelDiv, binding */) {
-  },
-
-  addComponent(/* fieldDiv, binding, noCardinalityButtons */) {
-  },
-
-  showAsTable(item) {
-    return item.getType() === 'group' && (item.hasStyle('table') || item.hasClass('rdformsTable'));
-  },
-  // ===================================================
-  // Inherited methods
-  // ===================================================
-  constructor(params) {
+export default class View {
+  constructor(params, srcNodeRef) {
+    this.binding = params.binding || null;
+    this.template = params.template || null;
+    this.graph = params.graph || null;
+    this.resource = params.resource || '';
+    this.topLevel = params.topLevel !== false;
+    this.compact = params.compact !== false;
+    this.styleCls = params.styleCls || '';
+    this.filterPredicates = params.filterPredicates || null;
+    this.fuzzy = params.fuzzy === true;
     this._handleParams(params);
-  },
+    if (srcNodeRef instanceof Node) {
+      this.domNode = srcNodeRef;
+    } else if (typeof srcNodeRef === 'string') {
+      this.domNode = document.getElementById(srcNodeRef);
+    } else {
+      this.domNode = document.createElement('div');
+    }
+    renderingContext.domClassToggle(this.domNode, 'rdforms', true);
+    renderingContext.domClassToggle(this.domNode, this.styleCls, true);
+    this.render();
+  }
 
   _handleParams(params) {
     if (params.binding) {
@@ -100,24 +44,70 @@ export default declare(_Widget, {
         this.binding = engine.match(this.graph, this.resource, this.template);
       }
     }
-  },
+  }
+
+  /**
+   * Tells wether something should be shown for the provided bindings and belonging item.
+   * @param {Object} item
+   * @param {Object} bindings
+   * @return {Boolean} true if something should be shown.
+   */
+  showNow(/* item,  bindings */) {
+    return true;
+  }
+
+  skipBinding(/* binding */) {
+    return false;
+  }
+
+  /**
+   * This function may change the array of bindings, for instance remove all but
+   * the best language or complement the existing bindings
+   * until the min cardinality is reached.
+   *
+   * @param {Object} item
+   * @param {Array} bindings
+   * @return {Array} of bindings
+   */
+  prepareBindings(/* item, bindings */) {
+  }
+
+  /**
+   * Adds a table with headers for the given firstBinding.
+   * @param {Node} lastRow if provided it is the last row as a DOM element.
+   * @param {Object} firstBinding the first binding to show in this table.
+   */
+  addTable(/* lastRow, firstBinding */) {
+  }
+
+  /**
+   * Fills the table with one row for each binding in bindings.
+   *
+   * @param {Object} table a table DOM element
+   * @param {Array} bindings an array of bindings
+   */
+  fillTable(/* table, bindings */) {
+  }
+
+  addLabel(/* rowDiv, labelDiv, binding */) {
+  }
+
+  addComponent(/* fieldDiv, binding, noCardinalityButtons */) {
+  }
+
+  showAsTable(item) {
+    return item.getType() === 'group' && (item.hasStyle('table') || item.hasClass('rdformsTable'));
+  }
+
+  show(params) {
+    this._handleParams(params);
+    this.render();
+  }
 
   /**
    * Builds the user interface by iterating over the child bindings of the current binding
    * and recursively creates new views for all groupbindings.
    */
-  buildRendering() {
-    this.domNode = this.srcNodeRef;
-    renderingContext.domClassToggle(this.domNode, 'rdforms', true);
-    renderingContext.domClassToggle(this.domNode, this.styleCls, true);
-    this.render();
-  },
-
-  show(params) {
-    this._handleParams(params);
-    this.render();
-  },
-
   render() {
     renderingContext.domText(this.domNode, '');
     if (this.binding == null) {
@@ -190,7 +180,7 @@ export default declare(_Widget, {
         }
       }
     });
-  },
+  }
 
   /**
    * Adds a single row corresponding to a binding.
@@ -244,7 +234,8 @@ export default declare(_Widget, {
       renderingContext.domClassToggle(newRow || lastRow, 'rdformsInvisible', true);
     }
     return newRow || lastRow;
-  },
+  }
+
   createRowNode(lastRowNode, binding, item) {
     let rowNode;
 
@@ -269,11 +260,12 @@ export default declare(_Widget, {
       renderingContext.domClassToggle(rowNode, 'hiddenProperty', true);
     }
     return rowNode;
-  },
+  }
 
   _getFilterPredicates() {
     return this.parentView ? this.parentView._getFilterPredicates() : this.filterPredicates;
-  },
+  }
+
   filterBinding(binding) {
     const fp = this._getFilterPredicates();
     const stmt = binding.getStatement();
@@ -293,9 +285,10 @@ export default declare(_Widget, {
       return !hasNonFilteredChild;
     }
     return false;
-  },
+  }
+
   filterProperty(property) {
     const fp = this._getFilterPredicates() || {};
     return fp[property] === true;
-  },
-});
+  }
+};

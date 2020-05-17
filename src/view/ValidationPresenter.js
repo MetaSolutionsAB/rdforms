@@ -16,18 +16,19 @@ const addValidationMessage = (fieldDiv, cls, message) => {
   return n;
 };
 
-export default declare(Presenter, {
-  //= ==================================================
-  // Public attributes
-  //= ==================================================
-  showLanguage: true,
-  filterTranslations: false,
-  styleCls: 'rdformsPresenter rdformsValidator',
-  fuzzy: true,
+export default class ValidationPresenter extends Presenter {
 
-  //= ==================================================
-  // Public API
-  //= ==================================================
+  _handleParams(params) {
+    params.showLanguage = params.showLanguage !== false;
+    params.filterTranslations = false;
+    params.styleCls = params.styleCls || 'rdformsPresenter rdformsValidator';
+    params.fuzzy = params.fuzzy !== false;
+    super._handleParams(params);
+    if (this.binding) {
+      bindingReport(this.binding);
+    }
+  }
+
   showNow(item, bindings) {
     if (item.hasStyle('invisible')) {
       return false;
@@ -52,11 +53,11 @@ export default declare(Presenter, {
       default:
         return true;
     }
-  },
+  }
 
   showAsTable() {
     return false;
-  },
+  }
 
   /**
    * Has no effect on items that with node type different than LANGUAGE_LITERAL or if
@@ -109,18 +110,11 @@ export default declare(Presenter, {
       }
     }
     return _bindings;
-  },
+  }
 
   skipBinding(/* binding */) {
     return false;
-  },
-
-  _handleParams(/* params */) {
-    this.inherited('_handleParams', arguments);
-    if (this.binding) {
-      bindingReport(this.binding);
-    }
-  },
+  }
 
   addValidationMarker(fieldDiv, binding) {
     const item = binding.getItem();
@@ -166,9 +160,10 @@ export default declare(Presenter, {
       return true;
     }
     return false;
-  },
+  }
+
   addComponent(fieldDiv, binding) {
-    this.inherited('addComponent', arguments);
+    super.addComponent(fieldDiv, binding);
     this.addValidationMarker(fieldDiv, binding);
-  },
-});
+  }
+};

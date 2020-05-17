@@ -29,7 +29,7 @@ itemStore.createItem({
   'cardinality': { 'min': 1, 'pref': 1, 'max': 1 }
 });
 
-Editor({
+new Editor({
   graph,
   resource: 'http://example.org/about',
   template: itemStore.createTemplateFromChildren(['ex:color']),

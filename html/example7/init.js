@@ -19,7 +19,7 @@ const { Graph } = rdfjson;
 const graph = new Graph(rdfGraph);
 
 bundleLoader(itemStore, bundles, () => {
-  Editor({
+  new Editor({
     graph,
     resource: 'http://example.org/about',
     template: itemStore.getItem('dcat:OnlyDataset'),

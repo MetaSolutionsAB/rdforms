@@ -1,0 +1,11 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+import bundleLoader from './src/template/bundleLoader';
+import ItemStore from './src/template/ItemStore';
+import './src/view/jquery/all';
+import Editor from './src/view/Editor';
+import Presenter from './src/view/Presenter';
+import renderingContext from './src/view/renderingContext';
+import ValidationPresenter from './src/view/ValidationPresenter';
+
+export { bundleLoader, ItemStore, Editor, Presenter, ValidationPresenter, renderingContext };

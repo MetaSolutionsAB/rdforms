@@ -17,7 +17,7 @@
     "dijit": "^1.14.2",
     "dojo": "^1.14.2",
     "dojo-util": "^1.13.0",
-    "esi18n": "https://bitbucket.org/metasolutions/esi18n.git#1.5",
+    "esi18n": "https://bitbucket.org/metasolubmdtions/esi18n.git#1.5",
     "ifdef-loader": "^2.1.1",
     "jquery": "^3.3.1",
     "jquery-mousewheel": "^3.1.13",
@@ -89,6 +89,7 @@
     "build:node:dev": "webpack --mode=development --display-modules --config webpack.node.js",
     "dev": "webpack-dev-server --watch --config webpack.dev.js",
     "dev:bootstrap": "webpack-dev-server --watch --config webpack.dev.js --type=bootstrap",
+    "dev:jquery": "webpack-dev-server --watch --config webpack.dev.js --type=jquery",
     "samples": "webpack --config webpack.samples.js",
     "print-licenses": "print-licenses"
   }

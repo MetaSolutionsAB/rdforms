@@ -1,4 +1,5 @@
 import renderingContext from '../renderingContext';
+import jquery from 'jquery';
 
 renderingContext.addPresenterTable = (newRow, firstBinding, context) => {
   const item = firstBinding.getItem();
@@ -11,4 +12,33 @@ renderingContext.addPresenterTable = (newRow, firstBinding, context) => {
     renderingContext.attachItemInfo(item, jquery('<span>').text(childItems[colInd].getLabel()).appendTo($th), context);
   }
   return $table[0];
+};
+
+renderingContext.fillPresenterTable = (table, bindings, context) => {
+  if (bindings.length === 0) {
+    return;
+  }
+  let rowInd;
+  let colInd;
+  let childBindingsGroups;
+  let $trEl;
+
+  const tl = context.view.topLevel;
+  context.view.topLevel = false; // Table-cells are never toplevel, hence intermediate override.
+  for (rowInd = 0; rowInd < bindings.length; rowInd++) {
+    childBindingsGroups = bindings[rowInd].getItemGroupedChildBindings();
+    $trEl = jquery('<tr>').appendTo(table);
+
+    for (colInd = 0; colInd < childBindingsGroups.length; colInd++) {
+      if (childBindingsGroups[colInd].length > 0) {
+        renderingContext.renderPresenter(jquery('<td>').appendTo($trEl), childBindingsGroups[colInd][0], {
+          view: context.view,
+          noCardinalityButtons: true
+        });
+      } else {
+        jquery('<td>').appendTo($trEl);
+      }
+    }
+  }
+  context.view.topLevel = tl;
 };

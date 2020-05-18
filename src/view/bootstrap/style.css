@@ -1,4 +1,4 @@
-@import "../resources/rdforms.css";
+@import "../jquery/style.css";
 
 .test-class {
     color: red !important;
@@ -20,10 +20,6 @@
 
 .rdformsEditor .rdformsField .rdformsLangFieldControl {
     width: 146px;
-}
-
-.rdformsLabelRow {
-    vertical-align: top;
 }
 
 .rdformsDateValue .form-control:invalid,
@@ -119,21 +115,8 @@
     min-width: 12em;
 }
 
-.compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow,
-.compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel {
+.compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow {
     padding-top: 6px;
-}
-
-.rdformsLabelRow.rdformsLabel {
-    display: inline-block;
-}
-
-.compact .rdformsLabelRow.rdformsLabel {
-    display: block;
-}
-
-.rdformsRow.rdformsTopLevel {
-    padding-bottom: 0.5em;
 }
 
 .rdformsEditor .rdformsField.rdformsLangcontrolledfield {
@@ -171,28 +154,6 @@
 .rdformsDateValue.rdformsDatepicker>.input-group {
     width: 150px;
 }
-/*.rdformsEditor.compact>.rdformsTopLevel:nth-child(odd) {
-    background: #E6E6E6
-}*/
-
-/*.fuelux .rdformsDatepicker>.input-group>.input-group-btn>.dropdown-menu-left {*/
-/*    left: -128px;*/
-/*}*/
-
-.cardgroup>.rdformsFields>.rdformsGroup {
-    padding: 2px 5px 5px 10px;
-    margin-right: -5px;
-    margin-bottom: 14px;
-    background-color: #f7f7f9;
-    border: 1px solid #e1e1e8;
-    border-radius: 4px;
-}
-
-.rdforms .form-group.rdforms-upgrade {
-    display: inline-block;
-    width: 300px;
-    margin: 0px;
-}
 
 /* Autoexpand style */
 .rdforms .rdformsFields textarea.form-control {
@@ -216,8 +177,3 @@
     margin-top: 4px;
     float: left;
 }
-
-
-/*.rdforms .rdformsFields textarea.form-control:focus {
-  max-height: 400px;
-}*/

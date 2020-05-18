@@ -1,4 +1,4 @@
-import DurationPresenter from './DurationPresenter';
+import fromDuration from './util';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import system from '../../model/system';
@@ -67,10 +67,15 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
 
 // Presenter for duration
 presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding, context) => {
-  // eslint-disable-next-line no-new
-  new DurationPresenter({
-    value: binding.getValue(),
-  }, jquery('<div>').appendTo(fieldDiv)[0]);
+  const data = fromDuration(binding.getValue());
+  const bundle = context.view.messages
+  const node = jquery('<div>').appendTo(fieldDiv)[0];
+  ['years', 'months', 'days', 'hours', 'minutes'].forEach((key) => {
+    if (data.hasOwnProperty(key)) {
+      jquery(`<span class="durationlabel">${bundle['duration_'+key]}:</span><span class="durationValue">${data[key]}</span>`)
+        .appendTo(node);
+    }
+  });
 });
 
 const datePresenter = (fieldDiv, binding, context) => {

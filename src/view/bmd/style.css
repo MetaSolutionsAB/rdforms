@@ -51,11 +51,10 @@
 }
 
 .rdforms .form-group.selectizeException {
-  position:relative;
   display: inline-block;
   min-width: 300px;
-  margin: 0px;
-  vertical-align: top;
+  margin: 0;
+  padding-top: 0;
 }
 
 .rdforms .browseChoices.btn.bmd-btn-fab{

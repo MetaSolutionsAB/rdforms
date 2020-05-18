@@ -11,10 +11,9 @@ stepdefinitions:
         - npm --version
         - yarn --version
         - yarn cache dir
-        - export RDFORMS_VERSION=`jq -r .version package.json`
-        - echo $RDFORMS_VERSION
-        # We allow anything between x.y and x.y.z-SNAPSHOT
-        - if [ ${#RDFORMS_VERSION} -lt 3 ] || [ ${#RDFORMS_VERSION} -gt 14 ]; then exit 1 ; fi
+        - export VERSION=`jq -r .version package.json` && echo $VERSION
+        # We allow semantic versioning plus x.y-z (e.g. 4.10-SNAPSHOT which does not exactly conform to semver)
+        - echo $VERSION | grep -P -q '^(0|[1-9]\d*)\.(0|[1-9]\d*)(\.*)(0*|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
         - yarn
         - yarn build:all
         - ls -al dist/

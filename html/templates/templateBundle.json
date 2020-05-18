@@ -117,11 +117,11 @@
           ],
           "label": {
             "en": "Subject",
-            "sv": "Ã„mne"
+            "sv": "Ämne"
           },
           "description": {
             "en": "A subject for this resource.",
-            "sv": "Ett Ã¤mne fÃ¶r denna resurs."
+            "sv": "Ett ämne för denna resurs."
           }
         },
         {
@@ -176,6 +176,19 @@
           "description": {
             "en": "A relation to another resource.",
             "sv": "En relation till en annan resurs."
+          }
+        },
+        {
+          "type": "text",
+          "nodetype": "DATATYPE_LITERAL",
+          "property": "dcterms:extent",
+          "datatype": "xsd:duration",
+          "cardinality": {
+            "max": 1
+          },
+          "label": {
+            "en": "Duration",
+            "sv": "Tidsperiod"
           }
         },
         {

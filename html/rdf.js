@@ -15,6 +15,7 @@ export default {
       'value': 'http://example.com/chemistry',
       'type': 'uri',
     }],
+    'http://purl.org/dc/terms/extent': [{ 'value': 'P5Y2M10DT15H', 'type': 'literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#duration' }],
   },
   '_:person': {
     'http://www.w3.org/1999/02/22-rdf-syntax-ns#type': [{

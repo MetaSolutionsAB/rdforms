@@ -8,6 +8,10 @@
     color: green !important;
 }
 
+.rdformsEditor .rdformsRow.rdformsTopLevel {
+    margin-bottom: 1em;
+}
+
 .input-group-btn > .form-control {
     margin-left: -1px;
     width: auto;
@@ -58,7 +62,18 @@
 .rdformsDuration>div {
     width: 10em;
     display: inline-block;
-    margin-right: 1em;
+    margin-right: 10px;
+}
+
+.rdformsEditor .rdformsDuration>div {
+    margin-bottom: 10px;
+    margin-right: 40px;
+}
+
+.rdformsEditor .rdformsDuration>div .input-group-addon {
+    margin-right: 10px;
+    margin-top: 7px;
+    min-width: 60px;
 }
 
 .popover strong {
@@ -133,6 +148,7 @@
 
 .rdformsEditor .browseChoices {
     margin-left: 4px;
+    height: calc(1.5em + .75rem + 2px);
 }
 
 .browseChoices .fa-search.fa-stack-1x {
@@ -176,4 +192,44 @@
 .rdformsEditor .rdformsExtLink {
     margin-top: 4px;
     float: left;
+}
+
+
+/*  Test */
+.rdformsEditor .rdformsFieldControl .action {
+    float: right;
+}
+
+.rdforms .action {
+    margin-top: 7px;
+}
+
+.rdformsEditor .rdformsFieldControl>.action,
+.rdformsEditor .rdformsLangFieldControl>.action {
+    margin-top: 11px;
+}
+
+.rdformsEditor .form-check {
+    padding-left: 0;
+}
+
+.rdformsField .radio.form-check input {
+    margin-right: 8px;
+}
+
+.rdformsEditor .select2-container .select2-selection--single .select2-selection__rendered {
+    padding-left: 0;
+}
+
+.rdformsEditor .select2-container .select2-selection--single {
+    padding: .275rem .75rem;
+    height: calc(1.5em + .75rem + 2px);
+}
+
+.rdformsEditor .select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 6px;
+}
+
+.rdformsEditor .select2-container--default .select2-selection--single {
+    border: 1px solid #ced4da;
 }

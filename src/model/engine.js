@@ -8,8 +8,7 @@ import GroupBinding from './GroupBinding';
 import ValueBinding from './ValueBinding';
 import ChoiceBinding from './ChoiceBinding';
 import utils from '../utils';
-
-const kernel = require('dojo/_base/kernel'); // TODO replace
+import { i18n } from 'esi18n';
 
 // See public API at the bottom of this file.
 
@@ -581,6 +580,7 @@ const findFirstValueBinding = (binding, createIfMissing) => {
     return binding;
   }
   const cbs = binding.getItemGroupedChildBindings();
+  const loc = i18n.getLocalization();
   for (let idx = 0; idx < cbs.length; idx++) {
     const vbs = cbs[idx];
     const childItem = binding.getItem().getChildren()[idx];
@@ -593,9 +593,9 @@ const findFirstValueBinding = (binding, createIfMissing) => {
           const l = vbs[i].getLanguage();
           if (l == null) {
             result.emptyLanguageValue = vbs[i];
-          } else if (l === kernel.locale) {
+          } else if (l === loc) {
             result.perfectLocaleLanguageValue = vbs[i];
-          } else if (l.substring(0, 1) === kernel.locale.substring(0, 1)) {
+          } else if (l.substring(0, 1) === loc.substring(0, 1)) {
             result.localeLanguageValue = vbs[i];
           } else if (l.indexOf('en') !== -1) {
             result.defaultLanguageValue = vbs[i];
@@ -613,7 +613,7 @@ const findFirstValueBinding = (binding, createIfMissing) => {
     } else if (createIfMissing) {
       const b = create(binding, childItem, {});
       if (b instanceof ValueBinding) {
-        b.setLanguage(kernel.locale);
+        b.setLanguage(loc);
         return b;
       }
       return findFirstValueBinding(b, true);

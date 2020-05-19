@@ -3,7 +3,6 @@ import Presenter from './Presenter';
 import engine from '../model/engine';
 import {bindingReport} from '../model/validate';
 import {i18n} from 'esi18n';
-import declare from 'dojo/_base/declare';
 
 const addValidationMessage = (fieldDiv, cls, message) => {
   const nw = renderingContext.domCreate('div', fieldDiv);

@@ -1,4 +1,4 @@
-import fromDuration from './util';
+import { fromDuration } from './util';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import system from '../../model/system';
@@ -55,7 +55,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
       .appendTo(fieldDiv);
     system.attachLinkBehaviour($a[0], parentBinding);
   } else {
-    jquery('<div>').toggleClass('rdformsField', context.inEditor === true).html(text).appendTo(fieldDiv);
+    jquery('<div>').html(text).appendTo(fieldDiv);
   }
 
   if (binding.getItem().hasStyle('multiline')) {
@@ -90,7 +90,7 @@ const datePresenter = (fieldDiv, binding, context) => {
       } else {
         str = i18n.getDate(data, {selector: 'date', datePattern: 'YYYY'});
       }
-      jquery('<div>').html(str).toggleClass('rdformsField', context.inEditor === true).appendTo(fieldDiv);
+      jquery('<div>').html(str).appendTo(fieldDiv);
     } catch (e) {
       console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 (potentially with time given after a 'T' character as well) but found '${data}' instead.`);
     }

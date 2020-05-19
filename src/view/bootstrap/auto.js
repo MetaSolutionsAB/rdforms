@@ -1,6 +1,5 @@
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
-import stamp from 'dojo/date/stamp';
 import engine from '../../model/engine';
 
 const pr = renderingContext.presenterRegistry;
@@ -29,10 +28,10 @@ const autoDateFactory = (reg) => {
     if (context.inEditor) {
       if (data == null || data === '') {
         if (item.hasStyle('autoInitDate') || item.hasStyle('autoUpdateDate')) {
-          binding.setValue(stamp.toISOString(new Date()), true);
+          binding.setValue(new Date().toISOString(), true);
         }
       } else if (item.hasStyle('autoUpdateDate')) {
-        binding.setValue(stamp.toISOString(new Date()), true);
+        binding.setValue(new Date().toISOString(), true);
       }
     }
     reg.getComponentBefore(binding.getItem(), autoDate)(fieldDiv, binding, context);

@@ -1,7 +1,6 @@
 import renderingContext from '../renderingContext';
 import * as engine from '../../model/engine';
 import utils from '../../utils';
-import aspect from 'dojo/aspect';
 import jquery from 'jquery';
 
 
@@ -75,7 +74,7 @@ const addTableRow = (table, binding, context) => {
     const $remove = jquery('<span>').addClass('action editDelete')
       .attr('title', context.view.messages.edit_remove).appendTo($lastTd);
     const cardTr = binding.getCardinalityTracker();
-    const cardConnect1 = aspect.after(cardTr, 'cardinalityChanged', () => {
+    const cardConnect1 = cardTr.addListener(() => {
       $remove.toggleClass('disabled', cardTr.isMin());
     });
     $remove.click(() => {
@@ -86,7 +85,7 @@ const addTableRow = (table, binding, context) => {
           const nBinding = engine.create(parentBinding, item);
           addTableRow(table, nBinding, context);
         }
-        cardConnect1.remove();
+        cardTr.removeListener(cardConnect1);
         removeConnect.remove();
         binding.remove();
         $trEl.remove();
@@ -123,7 +122,7 @@ renderingContext.addEditorTable = (newRow, firstBinding, context) => {
           addTableRow($tBody[0], nBinding, context);
         }
       });
-    aspect.after(cardTr, 'cardinalityChanged', () => {
+    cardTr.addListener(() => {
       $add.toggleClass('disabled', cardTr.isMax());
     });
   }

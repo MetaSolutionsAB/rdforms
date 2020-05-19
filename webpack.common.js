@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const DojoWebpackPlugin = require('dojo-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -26,15 +25,6 @@ module.exports = {
       Popper: ['popper.js', 'default'],
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new DojoWebpackPlugin({
-      loaderConfig: require('./config/dojoConfig'),
-      locales: ['en'],
-      environment: { dojoRoot: 'dist' },	// used at run time for non-packed resources (e.g.
-      // blank.gif)
-      buildEnvironment: { dojoRoot: 'node_modules' }, // used at build time
-      noConsole: true,
-      // loader: path.join(__dirname, './config/dojo/dojo.js'),
-    }),
     new CleanWebpackPlugin(),
   ],
   module: {

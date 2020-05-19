@@ -16,8 +16,8 @@
     display: block;
 }
 
-.rdformsRow.rdformsTopLevel {
-    padding-bottom: 0.5em;
+.rdformsPresenter .rdformsRow.rdformsTopLevel {
+    margin-bottom: 0.5em;
 }
 
 .cardgroup>.rdformsFields>.rdformsGroup {

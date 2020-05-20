@@ -1,8 +1,6 @@
-import { i18n } from 'esi18n';
 import Registry from './Registry';
 import system from '../model/system';
-
-import nlsRdforms from './nls/rdforms.nls';
+import nlsRdforms from './nls/rdforms';
 
 let popoverContainer = 'body';
 let messages;
@@ -119,7 +117,7 @@ const renderingContext = {
     messages = msgs;
   },
   getMessages() {
-    return messages || i18n.getLocalization(nlsRdforms);
+    return messages || nlsRdforms; // i18n.getLocalization(nlsRdforms);
   },
   /**
    * This method returns a list of language-codes and their labels (in several translations)

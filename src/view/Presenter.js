@@ -1,6 +1,6 @@
+import moment from 'moment';
 import renderingContext from './renderingContext';
 import View from './View';
-import {i18n} from 'esi18n';
 
 export default class Presenter extends View {
   _handleParams(params) {
@@ -48,11 +48,12 @@ export default class Presenter extends View {
     }
     for (index = 0; index < bindings.length; index++) {
       const lang = bindings[index].getLanguage();
+      const locale = moment.locale();
       if (lang === '' || lang == null) {
         alts.noLanguage = bindings[index];
-      } else if (lang === i18n.getLocale()) {
+      } else if (lang === locale) {
         alts.best = bindings[index];
-      } else if (lang.indexOf(i18n.getLocale()) !== -1 || i18n.getLocale().indexOf(lang) !== -1) {
+      } else if (lang.indexOf(locale) !== -1 || locale.indexOf(lang) !== -1) {
         alts.close = bindings[index];
       } else if (lang.indexOf(this.defaultLanguage) === 0) {
         alts.defaultLanguage = bindings[index];
@@ -71,20 +72,18 @@ export default class Presenter extends View {
   }
 
   addTable(newRow, firstBinding) {
-    return renderingContext.addPresenterTable(newRow, firstBinding, {view: this});
+    return renderingContext.addPresenterTable(newRow, firstBinding, { view: this });
   }
 
   fillTable(table, bindings) {
-    return renderingContext.fillPresenterTable(table, bindings, {view: this});
+    return renderingContext.fillPresenterTable(table, bindings, { view: this });
   }
 
   preRenderView() {
-    renderingContext.prePresenterViewRenderer(this.domNode, this.binding, {view: this, topLevel: this.topLevel});
+    renderingContext.prePresenterViewRenderer(this.domNode, this.binding, { view: this, topLevel: this.topLevel });
   }
 
   addComponent(fieldDiv, binding) {
     renderingContext.renderPresenter(fieldDiv, binding, this.context);
   }
-};
-
-
+}

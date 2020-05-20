@@ -2481,10 +2481,6 @@ doctrine@^2.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dojo@^1.14.1:
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/dojo/-/dojo-1.16.0.tgz#e242cc7d73ae829e60562a2c00dfd827482fdb59"
-
 dom-converter@^0.2:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/dom-converter/-/dom-converter-0.2.0.tgz#6721a9daee2e293682955b6afe416771627bb768"
@@ -2767,15 +2763,6 @@ escope@^3.6.0:
     es6-weak-map "^2.0.1"
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
-
-"esi18n@https://bitbucket.org/metasolutions/esi18n.git#1.5":
-  version "1.5.0"
-  resolved "https://bitbucket.org/metasolutions/esi18n.git#30272b6b1364c2a8f29b6a263c683415c31a8071"
-  dependencies:
-    dojo "^1.14.1"
-    lodash-es "^4.17.10"
-    moment "^2.22.2"
-    pubsub-js "https://bitbucket.org/metasolutions/pubsubjs.git"
 
 eslint-config-airbnb-base@^11.1.1:
   version "11.3.2"
@@ -5507,10 +5494,6 @@ public-encrypt@^4.0.0:
     parse-asn1 "^5.0.0"
     randombytes "^2.0.1"
     safe-buffer "^5.1.2"
-
-"pubsub-js@https://bitbucket.org/metasolutions/pubsubjs.git":
-  version "1.7.0"
-  resolved "https://bitbucket.org/metasolutions/pubsubjs.git#9aba34cdd397cfbe80e6541087d69349d607f216"
 
 pump@^2.0.0:
   version "2.0.1"

@@ -2,7 +2,6 @@ import renderingContext from './renderingContext';
 import Presenter from './Presenter';
 import engine from '../model/engine';
 import {bindingReport} from '../model/validate';
-import {i18n} from 'esi18n';
 
 const addValidationMessage = (fieldDiv, cls, message) => {
   const nw = renderingContext.domCreate('div', fieldDiv);
@@ -13,6 +12,14 @@ const addValidationMessage = (fieldDiv, cls, message) => {
   renderingContext.domClassToggle(n, 'rdformsValidationMessage');
   renderingContext.domText(n, message);
   return n;
+};
+
+const localize = (bundle, key, val) => {
+  if (val === 1) {
+    return bundle[`${key}_one`];
+  } else {
+    return bundle[`${key}_more`].replace('$1', val);
+  }
 };
 
 export default class ValidationPresenter extends Presenter {
@@ -127,9 +134,9 @@ export default class ValidationPresenter extends Presenter {
       renderingContext.domClassToggle(fieldDiv, 'error', true);
       let tmpl;
       if (code === engine.CODES.TOO_FEW_VALUES_MIN) {
-        tmpl = i18n.renderNLSTemplate(this.messages.validation_min_required, min);
+        tmpl = localize(this.messages, 'validation_min_required', min);
       } else if (code === engine.CODES.TOO_MANY_VALUES) {
-        tmpl = i18n.renderNLSTemplate(this.messages.validation_max, card.max || 1);
+        tmpl = localize(this.messages, 'validation_max', card.max || 1);
       } else if (code === engine.CODES.TOO_MANY_VALUES_DISJOINT) {
         tmpl = this.messages.validation_disjoint;
       } else if (code === engine.CODES.WRONG_NODETYPE) {
@@ -150,7 +157,8 @@ export default class ValidationPresenter extends Presenter {
       return true;
     } else if (warning) {
       renderingContext.domClassToggle(fieldDiv, 'warning', true);
-      const tmpl = i18n.renderNLSTemplate(this.messages.validation_min_recommended, pref);
+      const tmpl = localize(this.messages, 'validation_min_recommended', pref);
+        this.messages.validation_min_recommended_more;
       addValidationMessage(fieldDiv, 'exclamation-circle', tmpl);
       return true;
     } else if (item.hasStyle('deprecated')) {

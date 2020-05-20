@@ -29,15 +29,6 @@ module.exports = {
   ],
   module: {
     rules: [{
-      test: /\.nls$/,
-      use: [{
-        loader: 'nls-loader',
-        options: {
-          // context: APP_PATH,
-          locales: ["en", "sv"],
-        },
-      }],
-    }, {
       test: /\.js$/,
       exclude: /node_modules\/(?!(bootstrap|bootstrap-material-design|esi18n|@entryscape)\/).*/,
       use: [{

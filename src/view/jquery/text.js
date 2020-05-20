@@ -1,8 +1,8 @@
 import { fromDuration } from './util';
+import moment from 'moment';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import system from '../../model/system';
-import { i18n } from 'esi18n';
 import { escape } from 'lodash-es';
 
 const presenters = renderingContext.presenterRegistry;
@@ -84,11 +84,11 @@ const datePresenter = (fieldDiv, binding, context) => {
     try {
       let str;
       if (data.indexOf('T') > 0) {
-        str = i18n.getDate(data);
+        str = moment(data).format('lll');
       } else if (data.length > 4) {
-        str = i18n.getDate(data, {selector: 'date'});
+        str = moment(data).format('LL');
       } else {
-        str = i18n.getDate(data, {selector: 'date', datePattern: 'YYYY'});
+        str = moment(data).format('YYYY');
       }
       jquery('<div>').html(str).appendTo(fieldDiv);
     } catch (e) {

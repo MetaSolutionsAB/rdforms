@@ -114,72 +114,71 @@ export default class View {
       return;
     }
 
-    renderingContext.getMessages((messages) => {
-      renderingContext.domText(this.domNode, '');
-      this.messages = messages;
-      if (this.binding == null) {
-        // Just in case loading messages takes time
-        // and someone does a reset of the view meanwhile.
-        return;
-      }
-      let groupIndex;
-      let table;
-      let lastRow;
-      const groupedItemsArr = this.binding.getItem().getChildren();
-      const groupedBindingsArr = this.binding.getItemGroupedChildBindings();
-      let bindings;
-      let item;
-      this._binding2node = {};
+    const messages = renderingContext.getMessages();
+    renderingContext.domText(this.domNode, '');
+    this.messages = messages;
+    if (this.binding == null) {
+      // Just in case loading messages takes time
+      // and someone does a reset of the view meanwhile.
+      return;
+    }
+    let groupIndex;
+    let table;
+    let lastRow;
+    const groupedItemsArr = this.binding.getItem().getChildren();
+    const groupedBindingsArr = this.binding.getItemGroupedChildBindings();
+    let bindings;
+    let item;
+    this._binding2node = {};
 
-      if ((this.compact || this.binding.getItem().hasStyle('compact')) &&
-        !this.binding.getItem().hasStyle('nonCompact')) {
-        renderingContext.domClassToggle(this.domNode, 'compact', true);
-      } else {
-        renderingContext.domClassToggle(this.domNode, 'compact', false);
-      }
+    if ((this.compact || this.binding.getItem().hasStyle('compact')) &&
+      !this.binding.getItem().hasStyle('nonCompact')) {
+      renderingContext.domClassToggle(this.domNode, 'compact', true);
+    } else {
+      renderingContext.domClassToggle(this.domNode, 'compact', false);
+    }
 
-      this.preRenderView();
+    this.preRenderView();
 
-      for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
-        bindings = groupedBindingsArr[groupIndex];
-        item = groupedItemsArr[groupIndex];
+    for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
+      bindings = groupedBindingsArr[groupIndex];
+      item = groupedItemsArr[groupIndex];
 
-        if (!this.showNow(item, bindings)) {
-          // Invisible not not part of showNow check due to things like autoUUID
-          /*if (item.hasStyle('invisible')) { // In this case, create some bindings anyway
-            this.prepareBindings(item, bindings);
-          }*/
+      if (!this.showNow(item, bindings)) {
+        // Invisible not not part of showNow check due to things like autoUUID
+        /*if (item.hasStyle('invisible')) { // In this case, create some bindings anyway
+          this.prepareBindings(item, bindings);
+        }*/
 // eslint-disable-next-line no-continue
-          continue;
-        }
-        bindings = this.prepareBindings(item, bindings);
-
-        // Table case
-        if (this.showAsTable(item)) {
-          lastRow = this.createRowNode(lastRow, bindings[0], item);
-          if (bindings.length > 0) {
-            table = this.addTable(lastRow, bindings[0], item);
-            this.fillTable(table, bindings);
-          }
-
-          // Non table case
-        } else if (bindings.length > 0) {
-          for (let i = 0; i < bindings.length; i++) {
-            // Add row with label if first row of same item or the binding is a group.
-            this.context = {view: this};
-            lastRow = this.addRow(lastRow, bindings[i], i === 0 ||
-              bindings[i] instanceof GroupBinding);
-          }
-        } else {
-          lastRow = this.createRowNode(lastRow, null, item);
-        }
-
-        // Activates/deactivates buttons at startup if needed
-        if (bindings.length > 0) {
-          bindings[0].getCardinalityTracker().checkCardinality();
-        }
+        continue;
       }
-    });
+      bindings = this.prepareBindings(item, bindings);
+
+      // Table case
+      if (this.showAsTable(item)) {
+        lastRow = this.createRowNode(lastRow, bindings[0], item);
+        if (bindings.length > 0) {
+          table = this.addTable(lastRow, bindings[0], item);
+          this.fillTable(table, bindings);
+        }
+
+        // Non table case
+      } else if (bindings.length > 0) {
+        for (let i = 0; i < bindings.length; i++) {
+          // Add row with label if first row of same item or the binding is a group.
+          this.context = { view: this };
+          lastRow = this.addRow(lastRow, bindings[i], i === 0 ||
+            bindings[i] instanceof GroupBinding);
+        }
+      } else {
+        lastRow = this.createRowNode(lastRow, null, item);
+      }
+
+      // Activates/deactivates buttons at startup if needed
+      if (bindings.length > 0) {
+        bindings[0].getCardinalityTracker().checkCardinality();
+      }
+    }
   }
 
   /**

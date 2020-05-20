@@ -99,11 +99,10 @@ export default class LevelEditor {
   }
 
   localize() {
-    renderingContext.getMessages((messages) => {
-      renderingContext.domText(this._mandatoryButton, messages.mandatoryLabel);
-      renderingContext.domText(this._recommendedButton, messages.recommendedLabel);
-      renderingContext.domText(this._optionalButton, messages.optionalLabel);
-    });
+    const messages = renderingContext.getMessages();
+    renderingContext.domText(this._mandatoryButton, messages.mandatoryLabel);
+    renderingContext.domText(this._recommendedButton, messages.recommendedLabel);
+    renderingContext.domText(this._optionalButton, messages.optionalLabel);
   }
 
   setExternalEditor(editor) {

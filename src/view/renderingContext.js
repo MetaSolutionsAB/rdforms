@@ -1,30 +1,22 @@
+import { i18n } from 'esi18n';
 import Registry from './Registry';
 import system from '../model/system';
 
-import {i18n, NLSMixin} from 'esi18n';
 import nlsRdforms from './nls/rdforms.nls';
 
-system.getChoice = function (item, value) {
-  const chooser = renderingContext.chooserRegistry.getComponent(item);
-  if (chooser == null) {
-    throw new Error(`Error, no chooser available to retrieve a choice for item: ${item.getId()}`);
-  }
-  return chooser.getChoice(item, value);
-};
 let popoverContainer = 'body';
 let messages;
-let language;
 let languages;
 let primaryLanguageCodes;
 let primaryLanguages;
 let nonPrimaryLanguages;
 const defaultLanguages = [
-  {value: '', label: {en: ''}},
-  {value: 'bg', label: {en: 'Bulgarian', bg: 'български'}},
-  {value: 'es', label: {en: 'Spanish', es: 'Español'}},
-  {value: 'cs', label: {en: 'Czech', cs: 'čeština'}},
-  {value: 'da', label: {en: 'Danish', da: 'Dansk'}},
-  {value: 'no', label: {en: 'Norwegian', no: 'Norsk', nb: 'Norsk', nn: 'Norsk nynorsk'}},
+  { value: '', label: { en: '' } },
+  { value: 'bg', label: { en: 'Bulgarian', bg: 'български' } },
+  { value: 'es', label: { en: 'Spanish', es: 'Español' } },
+  { value: 'cs', label: { en: 'Czech', cs: 'čeština' } },
+  { value: 'da', label: { en: 'Danish', da: 'Dansk' } },
+  { value: 'no', label: { en: 'Norwegian', no: 'Norsk', nb: 'Norsk', nn: 'Norsk nynorsk' } },
   {
     value: 'nb',
     label: {
@@ -43,26 +35,26 @@ const defaultLanguages = [
       nn: 'Norsk nynorsk',
     },
   },
-  {value: 'de', label: {en: 'German', de: 'Deutsch'}},
-  {value: 'et', label: {en: 'Estonian', et: 'Eesti keel'}},
-  {value: 'el', label: {en: 'Greek', el: 'ελληνικά'}},
-  {value: 'en', label: {en: 'English'}},
-  {value: 'fr', label: {en: 'French', fr: 'Français'}},
-  {value: 'ga', label: {en: 'Irish', ga: 'Gaeilge'}},
-  {value: 'hr', label: {en: 'Croatian', hr: 'Hrvatski'}},
-  {value: 'it', label: {en: 'Italian', it: 'Italiano'}},
-  {value: 'lv', label: {en: 'Latvian', lv: 'Latviešu valoda'}},
-  {value: 'lt', label: {en: 'Lithuanian', lt: 'Lietuvių kalba'}},
-  {value: 'hu', label: {en: 'Hungarian', hu: 'Magyar'}},
-  {value: 'mt', label: {en: 'Maltese', mt: 'Malti'}},
-  {value: 'nl', label: {en: 'Dutch', nl: 'Nederlands'}},
-  {value: 'pl', label: {en: 'Polish', pl: 'Polski'}},
-  {value: 'pt', label: {en: 'Portuguese', pt: 'Português'}},
-  {value: 'ro', label: {en: 'Romanian', ro: 'Română'}},
-  {value: 'sk', label: {en: 'Slovak', sk: 'Slovenčina'}},
-  {value: 'sl', label: {en: 'Slovenian', sl: 'Slovenščina'}},
-  {value: 'fi', label: {en: 'Finnish', fi: 'Suomi'}},
-  {value: 'sv', label: {en: 'Swedish', sv: 'Svenska'}},
+  { value: 'de', label: { en: 'German', de: 'Deutsch' } },
+  { value: 'et', label: { en: 'Estonian', et: 'Eesti keel' } },
+  { value: 'el', label: { en: 'Greek', el: 'ελληνικά' } },
+  { value: 'en', label: { en: 'English' } },
+  { value: 'fr', label: { en: 'French', fr: 'Français' } },
+  { value: 'ga', label: { en: 'Irish', ga: 'Gaeilge' } },
+  { value: 'hr', label: { en: 'Croatian', hr: 'Hrvatski' } },
+  { value: 'it', label: { en: 'Italian', it: 'Italiano' } },
+  { value: 'lv', label: { en: 'Latvian', lv: 'Latviešu valoda' } },
+  { value: 'lt', label: { en: 'Lithuanian', lt: 'Lietuvių kalba' } },
+  { value: 'hu', label: { en: 'Hungarian', hu: 'Magyar' } },
+  { value: 'mt', label: { en: 'Maltese', mt: 'Malti' } },
+  { value: 'nl', label: { en: 'Dutch', nl: 'Nederlands' } },
+  { value: 'pl', label: { en: 'Polish', pl: 'Polski' } },
+  { value: 'pt', label: { en: 'Portuguese', pt: 'Português' } },
+  { value: 'ro', label: { en: 'Romanian', ro: 'Română' } },
+  { value: 'sk', label: { en: 'Slovak', sk: 'Slovenčina' } },
+  { value: 'sl', label: { en: 'Slovenian', sl: 'Slovenščina' } },
+  { value: 'fi', label: { en: 'Finnish', fi: 'Suomi' } },
+  { value: 'sv', label: { en: 'Swedish', sv: 'Svenska' } },
 ];
 
 const renderingContext = {
@@ -126,13 +118,8 @@ const renderingContext = {
   setMessages(msgs) {
     messages = msgs;
   },
-  getMessages(callback) {
-    if (messages) {
-      callback(messages);
-    } else {
-      const newMessages = i18n.getLocalization(nlsRdforms);
-      callback(newMessages);
-    }
+  getMessages() {
+    return messages || i18n.getLocalization(nlsRdforms);
   },
   /**
    * This method returns a list of language-codes and their labels (in several translations)
@@ -220,14 +207,6 @@ const renderingContext = {
     languages = langs;
   },
 
-  setDefaultLanguage(newLanguage) {
-    language = newLanguage;
-  },
-
-  getDefaultLanguage() {
-    return i18n.getLocale();
-  },
-
   setPopoverContainer(container) {
     popoverContainer = container;
   },
@@ -237,8 +216,10 @@ const renderingContext = {
   },
 
   // Override the following methods
+  // eslint-disable-next-line no-unused-vars
   preEditorViewRenderer(viewNode, binding) {
   },
+  // eslint-disable-next-line no-unused-vars
   prePresenterViewRenderer(viewNode, binding) {
   },
   preEditorRenderer() {
@@ -273,6 +254,14 @@ const renderingContext = {
   },
 };
 
+system.getChoice = function (item, value) {
+  const chooser = renderingContext.chooserRegistry.getComponent(item);
+  if (chooser == null) {
+    throw new Error(`Error, no chooser available to retrieve a choice for item: ${item.getId()}`);
+  }
+  return chooser.getChoice(item, value);
+};
+
 const groupPresenter = (fieldDiv, binding, context) => {
   const Cls = context.view.constructor;
   // eslint-disable-next-line no-new
@@ -302,39 +291,5 @@ const groupEditor = (fieldDiv, binding, context) => {
 };
 renderingContext.editorRegistry.itemtype('group').register(groupEditor);
 renderingContext.editorRegistry.itemtype('propertygroup').register(groupEditor);
-const bundle = {
-
-  edit_add: "Add",
-  edit_remove: "Remove",
-  edit_browse: "Browse and select",
-  edit_expand: "Expand",
-  edit_upgrade: "Provide additional information for this web address",
-  info_label: "Label",
-  info_property: "Property",
-  info_description: "Description",
-  address_label: "Address",
-  validation_min_required: "{{PLURAL:$1|at least one value is|a minimum of $1 values is}} required",
-  validation_min_recommended: "{{PLURAL:$1|at least one value is|a minimum of $1 values is}} recommended",
-  validation_max: "{{PLURAL:$1|at most one value is|a maximum of $1 values are}} allowed",
-  validation_disjoint: "A maximum of one value is allowed",
-  validation_deprecated: "This field is deprecated",
-  date_date: "Date",
-  date_year: "Year",
-  date_date_and_time: "Date and time",
-  duration_years: "Years",
-  duration_months: "Months",
-  duration_days: "Days",
-  duration_hours: "Hours",
-  duration_minutes: "Minutes",
-  mandatoryLabel: "Mandatory",
-  recommendedLabel: "Recommended",
-  optionalLabel: "Optional",
-  today: "Today",
-  mandatoryMark: "*",
-  recommendedMark: "(Recommended)",
-  optionalMark: "(Optional)"
-
-};
-renderingContext.setMessages(bundle);
 
 export default renderingContext;

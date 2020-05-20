@@ -1,3 +1,4 @@
+import { i18n } from 'esi18n';
 import durationEditor from './durationEditor';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
@@ -159,7 +160,7 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
     if (binding.isValid()) {
       $lselect.val(binding.getLanguage());
     } else {
-      const defLang = renderingContext.getDefaultLanguage();
+      const defLang = i18n.getLocale();
       if (typeof defLang === 'string' && defLang !== '') {
         $lselect.val(defLang);
         binding.setLanguage(defLang);

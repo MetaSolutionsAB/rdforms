@@ -1,6 +1,6 @@
 // import 'node-fetch';
 
-global.fetch = require('node-fetch/lib/index');
+global.fetch = require('node-fetch').default;
 
 export { default as ItemStore } from './src/template/ItemStore';
 export { default as bundleLoader } from './src/template/bundleLoader';

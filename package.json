@@ -1,6 +1,6 @@
 {
   "name": "@entryscape/rdforms",
-  "version": "9.5.13",
+  "version": "9.5.14",
   "main": "dist/rdforms.node.js",
   "browser": "dist/rdforms.bmd.js",
   "module": "main.js",

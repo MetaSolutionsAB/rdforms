@@ -68,6 +68,16 @@ const renderingContext = {
   },
   domText(/* node, text */) {
   },
+  createDomNode(srcNodeRef /* , view */) {
+    if (srcNodeRef instanceof Node) {
+      return srcNodeRef;
+    } else if (typeof srcNodeRef === 'string') {
+      return document.getElementById(srcNodeRef);
+    }
+    return document.createElement('div');
+  },
+  destroyDomNode(/* domNode, view */) {
+  },
   presenterRegistry: new Registry(),
   editorRegistry: new Registry(),
   /**

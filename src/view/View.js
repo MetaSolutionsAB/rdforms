@@ -5,6 +5,7 @@ import { bindingReport} from "../model/validate";
 
 export default class View {
   constructor(params, srcNodeRef) {
+    this.srcNodeRef = srcNodeRef;
     this.binding = params.binding || null;
     this.template = params.template || null;
     this.graph = params.graph || null;
@@ -15,16 +16,14 @@ export default class View {
     this.filterPredicates = params.filterPredicates || null;
     this.fuzzy = params.fuzzy === true;
     this._handleParams(params);
-    if (srcNodeRef instanceof Node) {
-      this.domNode = srcNodeRef;
-    } else if (typeof srcNodeRef === 'string') {
-      this.domNode = document.getElementById(srcNodeRef);
-    } else {
-      this.domNode = document.createElement('div');
-    }
+    this.domNode = renderingContext.createDomNode(srcNodeRef, this);
     renderingContext.domClassToggle(this.domNode, 'rdforms', true);
     renderingContext.domClassToggle(this.domNode, this.styleCls, true);
     this.render();
+  }
+
+  destroy() {
+    renderingContext.destroyDomNode(this.domNode, this);
   }
 
   _handleParams(params) {
@@ -115,7 +114,6 @@ export default class View {
     }
 
     const messages = renderingContext.getMessages();
-    renderingContext.domText(this.domNode, '');
     this.messages = messages;
     if (this.binding == null) {
       // Just in case loading messages takes time

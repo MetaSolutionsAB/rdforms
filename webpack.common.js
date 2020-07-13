@@ -41,6 +41,7 @@ module.exports = {
             '@babel/plugin-proposal-class-properties',
             '@babel/plugin-syntax-dynamic-import',
             ['@babel/plugin-transform-modules-commonjs', { strictMode: false }],
+            ['@babel/plugin-transform-react-jsx', {}],
           ],
         },
       }, {

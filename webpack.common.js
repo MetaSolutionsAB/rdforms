@@ -4,8 +4,10 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    bootstrap: 'index.bootstrap.js',
-    bmd: 'index.bmd.js',
+    bootstrap: './index.bootstrap.js',
+    bmd: './index.bmd.js',
+    react: './index.react.js',
+    jquery: './index.jquery.js',
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -30,7 +32,7 @@ module.exports = {
   module: {
     rules: [{
       test: /\.js$/,
-      exclude: /node_modules\/(?!(bootstrap|bootstrap-material-design|esi18n|@entryscape)\/).*/,
+      exclude: /node_modules\/(?!(bootstrap|bootstrap-material-design|@entryscape)\/).*/,
       use: [{
         loader: 'babel-loader',
         options: {

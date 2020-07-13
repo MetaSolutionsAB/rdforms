@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Presenter from '../Presenter';
 import renderingContext from '../renderingContext';
@@ -24,13 +24,13 @@ const fixIt = (Cls) => {
       }
     }
   };
-  FixCls.Component = class Component extends React.Component {
+  FixCls.Component = class extends Component {
     constructor(props) {
-      super();
-      this.presenterFix = new PresenterFix(props);
+      super(props);
+      this.fix = new FixCls(props);
     }
     render() {
-      return this.presenterFix.domNode.component;
+      return this.fix.domNode.component;
     }
   };
   return FixCls;

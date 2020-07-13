@@ -44,7 +44,7 @@ const getDateValue = (value, datatype) => {
       case 'Date':
         return value.toISOString().substr(0, 10);
       case 'Year':
-        return value.toISOString().substr(0, 10);
+        return value.toISOString().substr(0, 4);
     }
   }
   return '';
@@ -76,7 +76,7 @@ const dateEditor = (fieldDiv, binding, context) => {
 
     const onDatatypeChange = (event) => {
       binding.setDatatype(getDatatypeURI(event.target.value));
-      binding.setValue(getDateValue(selectedDate, selectedDatatype));
+      binding.setValue(getDateValue(selectedDate, event.target.value));
       setDatatype(event.target.value);
     };
 

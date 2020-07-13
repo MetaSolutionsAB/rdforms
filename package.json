@@ -83,7 +83,7 @@
     "src",
     "main*",
     "index*",
-    "loadBootstrapOptions.js"
+    "loadViewOptions.js"
   ],
   "scripts": {
     "build:all": "webpack --display-modules --mode=production --config webpack.all.js",

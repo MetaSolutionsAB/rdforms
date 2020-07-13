@@ -142,7 +142,7 @@ renderingContext.domClassToggle = (struct, classStr, addOrRemove = true) => stru
  */
 renderingContext.createDomNode = (srcNodeRef /* , view */) => {
   let domNode;
-  if (srcNodeRef.component) {
+  if (srcNodeRef?.component) {
     return srcNodeRef;
   } else if (srcNodeRef instanceof Node) {
     domNode = srcNodeRef;

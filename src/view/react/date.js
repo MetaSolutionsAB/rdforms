@@ -6,9 +6,8 @@ import MomentUtils from '@date-io/moment';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import moment from 'moment';
 import renderingContext from '../renderingContext';
-
-const editors = renderingContext.editorRegistry;
 
 const getDatatype = (binding) => {
   switch (binding.getDatatype()) {
@@ -45,10 +44,36 @@ const getDateValue = (value, datatype) => {
         return value.toISOString().substr(0, 10);
       case 'Year':
         return value.toISOString().substr(0, 4);
+      default:
+        return '';
     }
   }
   return '';
 };
+
+
+const datePresenter = (fieldDiv, binding, context) => {
+  const data = binding.getValue();
+  if (data != null && data !== '') {
+    try {
+      let str;
+      if (data.indexOf('T') > 0) {
+        str = moment(data).format('lll');
+      } else if (data.length > 4) {
+        str = moment(data).format('LL');
+      } else {
+        str = moment(data).format('YYYY');
+      }
+      fieldDiv.appendChild(<div>{str}</div>);
+    } catch (e) {
+      console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 (potentially with time given after a 'T' character as well) but found '${data}' instead.`);
+    }
+  }
+};
+
+const presenters = renderingContext.presenterRegistry;
+presenters.itemtype('text').datatype('xsd:date').register(datePresenter);
+presenters.itemtype('text').datatype('dcterms:W3CDTF').register(datePresenter);
 
 
 const dateEditor = (fieldDiv, binding, context) => {
@@ -84,12 +109,13 @@ const dateEditor = (fieldDiv, binding, context) => {
 
     return (
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <span>
+        <span className="rdformsDatePicker">
           <KeyboardDatePicker value={selectedDate} minDate={new Date('0000-01-01')} format={dateFormat}
-                               onChange={onDateChange} autoOk={true}/>
-          {selectedDatatype === 'Datetime' &&
-          (<KeyboardTimePicker value={selectedDate} onChange={onDateChange} ampm={false} autoOk={true}/>)}
-          <FormControl className="">
+                               onChange={onDateChange} autoOk={true} inputVariant={renderingContext.materialVariant}/>
+          <KeyboardTimePicker { ...(selectedDatatype === 'Datetime' ? {} : { disabled: true })}
+                              value={selectedDate} onChange={onDateChange} ampm={false} autoOk={true}
+                              inputVariant={renderingContext.materialVariant}/>
+          <FormControl variant={renderingContext.materialVariant}>
             <Select
               value={selectedDatatype}
               onChange={onDatatypeChange}>
@@ -105,7 +131,7 @@ const dateEditor = (fieldDiv, binding, context) => {
   fieldDiv.appendChild(<DateComp></DateComp>);
 };
 
-
+const editors = renderingContext.editorRegistry;
 editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#date').register(dateEditor);
 editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#dateTime').register(dateEditor);
 editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#gYear').register(dateEditor);

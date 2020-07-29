@@ -90,6 +90,9 @@ const renderingContext = {
    *   (I.e. a function that given a binding launches the chooser dialog, when the user is
    *   finished and has made his selection the onSelect method will be called with the
    *   selected choice.)
+   * query - function(item, term) -> promise with choices
+   *   (I.e. a function that given an item and a searchterm gives back a promise with
+   *   matching choices.)
    */
   chooserRegistry: new Registry(),
   renderPresenter(node, binding, context) {
@@ -110,7 +113,16 @@ const renderingContext = {
   },
   renderSelect(/* fieldDiv, binding, context */) {
   },
-  getChoice: system.getChoice,
+  getChoice(item, value) {
+    const chooser = renderingContext.chooserRegistry.getComponent(item);
+    if (chooser == null) {
+      throw new Error(`Error, no chooser available to retrieve a choice for item: ${item.getId()}`);
+    }
+    return chooser.getChoice(item, value);
+  },
+  hasOpenChoiceSelector(binding) {
+    return renderingContext.chooserRegistry.getComponent(binding.getItem()) != null;
+  },
   openChoiceSelector(binding, callback) {
     const chooser = renderingContext.chooserRegistry.getComponent(binding.getItem());
     if (chooser == null) {
@@ -262,13 +274,7 @@ const renderingContext = {
   },
 };
 
-system.getChoice = function (item, value) {
-  const chooser = renderingContext.chooserRegistry.getComponent(item);
-  if (chooser == null) {
-    throw new Error(`Error, no chooser available to retrieve a choice for item: ${item.getId()}`);
-  }
-  return chooser.getChoice(item, value);
-};
+system.getChoice = renderingContext.getChoice;
 
 const groupPresenter = (fieldDiv, binding, context) => {
   const Cls = context.view.constructor;

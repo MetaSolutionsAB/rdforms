@@ -61,3 +61,53 @@
 .rdformsLabelRow .action.indentRemove {
     margin-left: 10px;
 }
+
+.rdformsEditor .rdformsField .mismatch .MuiFormControlLabel-label {
+    color: rgba(255, 0, 0, 0.38);
+}
+
+/* Make the input fields fill the whole width */
+.rdformsField>.MuiFormControl-root {
+    width: 100%;
+}
+
+/* Bigger distance between repeated values when filled */
+.rdformsEditor .rdformsField.rdformsRepeatedValue {
+    margin-top: 5px;
+}
+
+/* .MuiFilledInput-input padding top is just too big
+.rdformsEditor .MuiFilledInput-input {
+    padding-top: 10px;
+} */
+
+.rdformsEditor .rdformsSearch {
+    margin-right: 10px;
+    width: calc(66.66% - 7px);
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.rdformsEditor .rdformsDatePicker {
+    display: flex;
+    justify-content: start;
+}
+
+.rdformsEditor .rdformsDatePicker>* {
+    margin-right: 10px;
+    width: calc(33.33% - 7px);
+}
+
+.rdformsEditor .rdformsDatePicker>*:last-child {
+    margin-right: 0px;
+}
+
+/* Two thirds text input*/
+.rdformsEditor .rdformsTwoThirds {
+    margin-right: 10px;
+    width: calc(66.66% - 7px);
+}
+
+.rdformsEditor .rdformsLangControl {
+    width: calc(33.33% - 7px);
+}

@@ -12,7 +12,19 @@ export default {
     }],
     'http://purl.org/dc/terms/creator': [{ 'value': '_:person', 'type': 'bnode' }],
     'http://purl.org/dc/terms/subject': [{
-      'value': 'http://example.com/chemistry',
+      'value': 'http://example.com/cheeemistry',
+      'type': 'uri',
+    }],
+    'http://purl.org/dc/terms/license': [{
+      'value': 'http://creativecommons.org/licenses/byy/4.0/',
+      'type': 'uri',
+    }],
+    'http://purl.org/dc/terms/relation': [{
+      'value': 'http://example.com/4',
+      'type': 'uri',
+    }],
+    'http://www.w3.org/2000/01/rdf-schema#seeAlso': [{
+      'value': 'http://example.com',
       'type': 'uri',
     }],
     'http://purl.org/dc/terms/extent': [{ 'value': 'P5Y2M10DT15H', 'type': 'literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#duration' }],

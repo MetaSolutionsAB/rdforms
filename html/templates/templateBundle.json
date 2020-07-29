@@ -46,6 +46,21 @@
         },
         {
           "type": "text",
+          "nodetype": "LANGUAGE_LITERAL",
+          "property": "dcterms:description",
+          "cardinality": {
+            "pref": "1"
+          },
+          "label": {
+            "en": "Description",
+            "sv": "Beskrivning"
+          },
+          "styles": [
+            "multiline"
+          ]
+        },
+        {
+          "type": "text",
           "nodetype": "DATATYPE_LITERAL",
           "property": "dcterms:modified",
           "datatype": "xsd:date",
@@ -83,7 +98,7 @@
           },
           "description": {
             "en": "A date for this resource.",
-            "sv": "Ett datum fÃ¶r denna resurs."
+            "sv": "Ett datum för denna resurs."
           },
           "styles": [
             "autoInitDate"
@@ -96,8 +111,8 @@
           "property": "http://purl.org/dc/terms/subject",
           "cardinality": {
             "min": 1,
-            "pref": "1",
-            "max": 2
+            "pref": 1,
+            "max": 1
           },
           "choices": [
             {
@@ -112,6 +127,9 @@
               "label": {
                 "en": "Chemistry",
                 "sv": "Kemi"
+              },
+              "description": {
+                "en": "Chemistry is the field of study of atoms and their reactions."
               }
             }
           ],
@@ -131,7 +149,7 @@
           "cardinality": {
             "min": 1,
             "pref": 1,
-            "max": 1
+            "max": 3
           },
           "choices": [
             {
@@ -177,6 +195,19 @@
             "en": "A relation to another resource.",
             "sv": "En relation till en annan resurs."
           }
+        },
+        {
+          "type": "text",
+          "nodetype": "URI",
+          "property": "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+          "label": {
+            "en": "See also",
+            "sv": "Se vidare"
+          },
+          "styles": [
+            "externalLink"
+          ],
+          "pattern": "https?:\/\/.*"
         },
         {
           "type": "text",

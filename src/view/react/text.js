@@ -1,9 +1,16 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
+import TextField from '@material-ui/core/TextField';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import IconButton from '@material-ui/core/IconButton';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import renderingContext from '../renderingContext';
 import { fromDuration } from './util';
-import TextField from '@material-ui/core/TextField';
+import utils from '../../utils';
+
 
 const presenters = renderingContext.presenterRegistry;
 
@@ -58,47 +65,82 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
   }
 });
 
-const datePresenter = (fieldDiv, binding) => {
-  const data = binding.getValue();
-  if (data != null && data !== '') {
-    try {
-      let str;
-      if (data.indexOf('T') > 0) {
-        str = i18n.getDate(data);
-      } else if (data.length > 4) {
-        str = i18n.getDate(data, { selector: 'date' });
-      } else {
-        str = i18n.getDate(data, { selector: 'date', datePattern: 'YYYY' });
-      }
-      fieldDiv.appendChild(<div>{str}</div>);
-    } catch (e) {
-      console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 (potentially with time given after a 'T' character as well) but found '${data}' instead.`);
-    }
-  }
+const LanguageControl = (props) => {
+  const [lang, setLang] = useState(props.binding.getLanguage() || '');
+  const langs = useMemo(() => {
+    const primaryLangs = utils.cloneArrayWithLabels(renderingContext.getPrimaryLanguageList());
+    const langList = utils.cloneArrayWithLabels(renderingContext.getNonPrimaryLanguageList());
+    return primaryLangs.length === 0 ? langList : primaryLangs.concat([null], langList);
+  });
+  const onLangChange = (event) => {
+    props.binding.setLanguage(event.target.value);
+    setLang(event.target.value);
+  };
+
+  useEffect(() => {
+    props.context.clearLanguage = () => {
+      setLang('');
+    };
+  }, []);
+
+  return <FormControl className="rdformsLangControl" variant={renderingContext.materialVariant}>
+    <Select
+      value={lang}
+      onChange={onLangChange}>
+      {langs.map(langOption => (langOption === null ?
+        (<MenuItem key="_none" value="_none" disabled>─────</MenuItem>) :
+        (<MenuItem key={langOption.value} value={langOption.value}>{langOption.label}</MenuItem>)
+      ))}
+    </Select>
+  </FormControl>;
 };
-presenters.itemtype('text').datatype('xsd:date').register(datePresenter);
-presenters.itemtype('text').datatype('dcterms:W3CDTF').register(datePresenter);
+
 
 // -------------- Editors ----------------
 const editors = renderingContext.editorRegistry;
 
 editors.itemtype('text').register((fieldDiv, binding, context) => {
+  const item = binding.getItem();
+  const nodeType = item.getNodetype();
+  const multiline = item.hasStyle('multiline');
+  const extLink = item.hasStyle('externalLink');
+  const pattern = item.getPattern();
+  const regex = pattern ? new RegExp(pattern) : null;
+  const langlit = nodeType === 'LANGUAGE_LITERAL' || nodeType === 'PLAIN_LITERAL';
+
   const TextComp = () => {
-    const [value, setValue] = useState(binding.getGist());
+    const [gist, setGist] = useState(binding.getGist());
+    const value = binding.getValue();
     useEffect(() => {
       context.clear = () => {
-        setValue('');
+        setGist('');
+        if (context.clearLanguage) {
+          context.clearLanguage();
+        }
       };
     }, []);
+    const valid = regex ? regex.test(gist) : true;
 
     const iprops = {
-      value,
+      value: gist,
       onChange: (e) => {
-        setValue(e.target.value);
-        binding.setGist(e.target.value);
+        const newValue = e.target.value;
+        if (!regex || regex.test(newValue)) {
+          binding.setGist(newValue);
+        } else {
+          binding.setGist('');
+        }
+        setGist(newValue);
       },
     };
-    return <TextField variant={renderingContext.materialVariant} inputProps={iprops}/>;
+    return <><TextField
+      className={extLink || langlit ? 'rdformsTwoThirds' : ''}
+      multiline={multiline}
+      error={!valid}
+      variant={renderingContext.materialVariant} inputProps={iprops}
+    />{extLink && (value != null || value === '') &&
+    (<IconButton disabled={!valid} target='_blank' href={value} title={value}><OpenInNewIcon/></IconButton>)
+    }{ langlit ? (<LanguageControl binding={binding} context={context}></LanguageControl>) : '' }</>;
   };
 
   fieldDiv.appendChild(<TextComp></TextComp>);

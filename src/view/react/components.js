@@ -1,11 +1,12 @@
-/* eslint-disable prefer-const */
 import React, { useState, useEffect } from 'react';
 import renderingContext from '../renderingContext';
 import './labels';
 import './text';
 import './choice';
+import './choiceEditors';
 import './buttons';
 import './date';
+import '../bootstrap/auto';
 
 /**
  * Utility to toggle a set of classes potentially separated by spaces in a set.
@@ -65,37 +66,42 @@ const newStruct = (Tag, parent) => {
     destroy: () => ext.parent.removeChild(ext),
 
     component: () => {
-      let [clsSet, setCls] = useState(firstClsSet);
-      let [childArr, setChildArr] = useState(firstChildArr);
+      const [clsSet, setCls] = useState(firstClsSet);
+      const [childArr, setChildArr] = useState(firstChildArr);
       const [text, setText] = useState(firstTextStr);
-      let [attrs, setAttrs] = useState(firstAttrs);
+      // eslint-disable-next-line no-unused-vars
+      const [attrs, setAttrs] = useState(firstAttrs);
 
       // -- START: Override with react hook friendly methods that utilizes the current state and set methods.
+      ext.domQuery = selector => (selectorInClasses(selector, clsSet) ? ext : findStruct(selector, childArr));
       useEffect(() => {
         ext.toggleClass = (clsStr, addOrNot) => {
-          clsSet = new Set(clsSet); // (*)
-          toggleClass(clsSet, clsStr, addOrNot);
-          setCls(clsSet);
+          setCls((oldClsSet) => { // (*)
+            const newClsSet = new Set(oldClsSet);
+            toggleClass(newClsSet, clsStr, addOrNot);
+            return newClsSet;
+          });
         };
-        ext.domQuery = selector => (selectorInClasses(selector, clsSet) ? ext : findStruct(selector, childArr));
         ext.appendChild = (struct) => {
-          childArr = childArr.concat([struct]); // (*)
-          setChildArr(childArr);
+          setChildArr(oldChildArr => oldChildArr.concat([struct])); // (*)
         };
         ext.appendAfter = (struct, sibling) => {
-          childArr = childArr.slice(0); // (*)
-          childArr.splice(childArr.indexOf(sibling), 0, struct);
-          setChildArr(childArr);
+          setChildArr((oldChildArr) => {  // (*)
+            const newChildArr = oldChildArr.slice(0);
+            newChildArr.splice(sibling ? newChildArr.indexOf(sibling) || 0 : 0, 0, struct);
+            return newChildArr;
+          });
         };
         ext.text = str => setText(str);
         ext.removeChild = (struct) => {
-          childArr = childArr.slice(0); // (*)
-          childArr.splice(childArr.indexOf(struct), 1);
-          setChildArr(childArr);
+          setChildArr((oldChildArr) => { // (*)
+            const newChildArr = oldChildArr.slice(0);
+            newChildArr.splice(newChildArr.indexOf(struct), 1);
+            return newChildArr;
+          });
         };
         ext.attr = (attr, value) => {
-          attrs = updateObjAttr(Object.assign({}, attrs), attr, value); // (*)
-          setAttrs(attrs);
+          setAttrs(oldAttrs => updateObjAttr(Object.assign({}, oldAttrs), attr, value)); // (*)
         };
       }, []);
       // *) Due to initialization phase (when creating tree from binding tree) being quicker than rendering updates
@@ -167,7 +173,7 @@ renderingContext.destroyDomNode = (struct /* , view */) => {
 
 renderingContext.prePresenterViewRenderer = () => {};
 
-renderingContext.materialVariant = 'standard';
+renderingContext.materialVariant = 'filled';
 
 renderingContext.preEditorRenderer = (fieldDiv, binding, context) => {
   context.controlDiv = newStruct('div', fieldDiv);

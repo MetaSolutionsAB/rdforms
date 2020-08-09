@@ -173,6 +173,9 @@ export default class Editor extends Presenter {
   addLabel(rowDiv, binding, item) {
     renderingContext.renderEditorLabel(rowDiv, binding, item, this.context);
   }
+  createEndOfRowNode(rowNode, binding, item) {
+    renderingContext.renderEditorLabelScopeEnd(rowNode, binding, item, this.context);
+  }
 
   addTable(newRow, firstBinding) {
     if (firstBinding.getItem().hasStyle('nonEditable')) {

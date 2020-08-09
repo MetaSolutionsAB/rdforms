@@ -111,7 +111,8 @@ const dateEditor = (fieldDiv, binding, context) => {
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <span className="rdformsDatePicker">
           <KeyboardDatePicker value={selectedDate} minDate={new Date('0000-01-01')} format={dateFormat}
-                               onChange={onDateChange} autoOk={true} inputVariant={renderingContext.materialVariant}/>
+                              views={selectedDatatype === 'Year' ? ['year'] : ['date']}
+                              onChange={onDateChange} autoOk={true} inputVariant={renderingContext.materialVariant}/>
           <KeyboardTimePicker { ...(selectedDatatype === 'Datetime' ? {} : { disabled: true })}
                               value={selectedDate} onChange={onDateChange} ampm={false} autoOk={true}
                               inputVariant={renderingContext.materialVariant}/>

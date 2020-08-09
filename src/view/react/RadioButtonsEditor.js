@@ -8,7 +8,7 @@ import { useLocalizedSortedChoices, useName } from './hooks';
 
 const ChoiceOption = props => <FormControlLabel
   label={props.choice.label} value={props.choice.value} control={<Radio/>}
-  {...(props.choice.mismatch ? { className: 'mismatch', disabled: true } : {})}
+  {...(props.choice.mismatch ? { className: 'mismatch' } : {})}
   title={props.choice.description || props.choice.seeAlso || props.choice.value}/>;
 
 export default function RadioButtonsEditor(props) {

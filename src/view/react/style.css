@@ -1,7 +1,25 @@
 @import "../resources/rdforms.css";
 
+.rdforms.rdformsEditor .rdformsField {
+    padding-right: 36px;
+}
+
+.rdforms.rdformsEditor .rdformsFieldControl {
+    width: 26px;
+    top: 14px;
+}
+
 .rdformsLabelRow {
     vertical-align: top;
+}
+
+.rdformsLabelRow .MuiButtonBase-root {
+    margin-top: -4px;
+    margin-left: 7px;
+}
+
+.rdformsLabelRow .MuiButtonBase-root.rdformsButtonSeparator {
+    margin-left: 0;
 }
 
 .compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel {
@@ -110,4 +128,46 @@
 
 .rdformsEditor .rdformsLangControl {
     width: calc(33.33% - 7px);
+}
+
+/* Duration */
+.rdformsEditor .rdformsDurationInput {
+    margin-left: 10px;
+    width: calc(20% - 8px);
+}
+.rdformsEditor .rdformsDurationInput:first-child {
+    margin-left: 0;
+}
+
+/* Fixes for tooltip*/
+div.MuiTooltip-tooltip {
+    font-weight: normal;
+    border-radius: 0;
+    padding: 20px;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* More air and no indent */
+.rdformsGroup,
+.rdformsField {
+    margin-left: 0;
+}
+.rdformsRow.rdformsTopLevel {
+    padding-bottom: 1.5em;
+}
+.rdforms .rdformsRow.rdformsTopLevel:last-child {
+    padding-bottom: 0;
+}
+.rdformsGroup .rdformsRow {
+    padding-bottom: 1em;
+}
+.rdformsGroup .rdformsRow:last-child {
+    padding-bottom: 0;
+}
+.rdformsEditor .rdformsTopLevel>.rdformsLabelRow>.rdformsLabel {
+    font-weight: bold;
+}
+
+.cardgroup>.rdformsFields>.rdformsGroup {
+    margin-bottom: 5px;
 }

@@ -1,6 +1,6 @@
 import Registry from './Registry';
 import system from '../model/system';
-import nlsRdforms from './nls/rdforms';
+import nls from './resources/nls';
 
 let popoverContainer = 'body';
 let messages;
@@ -139,7 +139,7 @@ const renderingContext = {
     messages = msgs;
   },
   getMessages() {
-    return messages || nlsRdforms; // i18n.getLocalization(nlsRdforms);
+    return messages || nls; // i18n.getLocalization(nlsRdforms);
   },
   /**
    * This method returns a list of language-codes and their labels (in several translations)
@@ -251,6 +251,8 @@ const renderingContext = {
   postPresenterRenderer() {
   },
   renderEditorLabel(/* rowNode, binding, item, context */) {
+  },
+  renderEditorLabelScopeEnd(/* rowNode, binding, item, context */) {
   },
   renderPresenterLabel(/* rowNode, binding, item, context */) {
   },

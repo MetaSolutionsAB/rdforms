@@ -3,6 +3,7 @@
     /*	font-weight:bold;*/
     color: black;
     margin-bottom: 5px;
+    display: inline-block;
 }
 
 .rdformsPresenter .rdformsLabel {
@@ -123,7 +124,6 @@
 	width: auto;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	display: inline-block;
 	zoom:1;
 	*display: inline;
     vertical-align: middle;
@@ -707,3 +707,6 @@ a.rdformsUrl:hover {
     padding-right: 15px;
 }
 
+.rdformsLinebreaks {
+    white-space: pre-line;
+}

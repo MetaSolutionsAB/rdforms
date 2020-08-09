@@ -207,6 +207,7 @@ export default class View {
       const n = renderingContext.domCreate('div', newRow);
       renderingContext.domClassToggle(n, 'rdformsFields', true);
       fieldDiv = renderingContext.domCreate('div', n);
+      this.createEndOfRowNode(newRow, binding, item);
     } else {
       // No new rowDiv since we have a repeated value under the same label.
       const rdformsFields = renderingContext.domQuery('.rdformsFields', lastRow);
@@ -217,6 +218,7 @@ export default class View {
         const n = renderingContext.domCreate('div', lastRow);
         renderingContext.domClassToggle(n, 'rdformsFields', true);
         fieldDiv = renderingContext.domCreate('div', n);
+        this.createEndOfRowNode(newRow, binding, item);
       }
     }
     if (item.getType() === 'group') {
@@ -257,6 +259,9 @@ export default class View {
       renderingContext.domClassToggle(rowNode, 'hiddenProperty', true);
     }
     return rowNode;
+  }
+
+  createEndOfRowNode(newRow, binding, item) {
   }
 
   _getFilterPredicates() {

@@ -58,6 +58,7 @@ const ChoiceSelector = (props) => {
 
   return <Autocomplete
     className="rdformsSearch"
+    disableClearable={true}
     value={value}
     options={choices}
     onChange={ (event, newChoice) => { binding.setChoice(newChoice.original); setValue(newChoice); }}
@@ -157,6 +158,7 @@ const ChoiceLookupAndInlineSearch = (props) => {
 
   return <><Autocomplete
     className="rdformsSearch"
+    disableClearable={true}
     fullWidth={false}
     value={value}
     options={options}

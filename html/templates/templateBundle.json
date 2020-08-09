@@ -192,7 +192,7 @@
             "sv": "Relation"
           },
           "description": {
-            "en": "A relation to another resource.",
+            "en": "A relation to another resource.\nSome more information.",
             "sv": "En relation till en annan resurs."
           }
         },

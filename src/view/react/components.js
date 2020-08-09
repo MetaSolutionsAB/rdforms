@@ -2,23 +2,33 @@ import React, { useState, useEffect } from 'react';
 import renderingContext from '../renderingContext';
 import './labels';
 import './text';
+import './textEditors';
 import './choice';
 import './choiceEditors';
 import './buttons';
 import './date';
+import './duration';
 import '../bootstrap/auto';
 
 /**
  * Utility to toggle a set of classes potentially separated by spaces in a set.
  */
 const toggleClass = (clsSet, clsStr, addOrNot) => {
+  let change = false;
   clsStr.split(' ').forEach((cls) => {
     if (addOrNot) {
-      clsSet.add(cls);
+      if (!clsSet.has(cls)) {
+        clsSet.add(cls);
+        change = true;
+      }
     } else {
-      clsSet.delete(cls);
+      if (clsSet.has(cls)) {
+        clsSet.delete(cls);
+        change = true;
+      }
     }
   });
+  return change;
 };
 
 // Utility to see if selector is among the classes
@@ -76,40 +86,36 @@ const newStruct = (Tag, parent) => {
       ext.domQuery = selector => (selectorInClasses(selector, clsSet) ? ext : findStruct(selector, childArr));
       useEffect(() => {
         ext.toggleClass = (clsStr, addOrNot) => {
-          setCls((oldClsSet) => { // (*)
+          setCls((oldClsSet) => {
             const newClsSet = new Set(oldClsSet);
-            toggleClass(newClsSet, clsStr, addOrNot);
-            return newClsSet;
+            if (toggleClass(newClsSet, clsStr, addOrNot)) {
+              return newClsSet;
+            }
+            return oldClsSet;
           });
         };
         ext.appendChild = (struct) => {
-          setChildArr(oldChildArr => oldChildArr.concat([struct])); // (*)
+          setChildArr(oldChildArr => oldChildArr.concat([struct]));
         };
         ext.appendAfter = (struct, sibling) => {
-          setChildArr((oldChildArr) => {  // (*)
+          setChildArr((oldChildArr) => {
             const newChildArr = oldChildArr.slice(0);
-            newChildArr.splice(sibling ? newChildArr.indexOf(sibling) || 0 : 0, 0, struct);
+            newChildArr.splice(sibling ? newChildArr.indexOf(sibling) + 1 || 0 : 0, 0, struct);
             return newChildArr;
           });
         };
         ext.text = str => setText(str);
         ext.removeChild = (struct) => {
-          setChildArr((oldChildArr) => { // (*)
+          setChildArr((oldChildArr) => {
             const newChildArr = oldChildArr.slice(0);
             newChildArr.splice(newChildArr.indexOf(struct), 1);
             return newChildArr;
           });
         };
         ext.attr = (attr, value) => {
-          setAttrs(oldAttrs => updateObjAttr(Object.assign({}, oldAttrs), attr, value)); // (*)
+          setAttrs(oldAttrs => updateObjAttr(Object.assign({}, oldAttrs), attr, value));
         };
       }, []);
-      // *) Due to initialization phase (when creating tree from binding tree) being quicker than rendering updates
-      // we have to keep a reference to the latest array available from the closure. Also to be efficient these
-      // overridden methods are placed inside of a useEffect that runs only initially, hence the redraw will not affect
-      // this code and the closure references will never update unless we do it manually.
-      // TODO: this may imply that this code is better rewritten as a class component instead of being driven by hooks.
-      // -- END
 
       return <Tag className={clsSet.join(' ')}>{childArr.map((struct, index) =>
         <React.Fragment key={index}>{struct.component ? React.createElement(struct.component) :
@@ -176,9 +182,9 @@ renderingContext.prePresenterViewRenderer = () => {};
 renderingContext.materialVariant = 'filled';
 
 renderingContext.preEditorRenderer = (fieldDiv, binding, context) => {
-  context.controlDiv = newStruct('div', fieldDiv);
-  renderingContext.domClassToggle(context.controlDiv, 'rdformsFieldControl');
   if (binding.getItem().getType() !== 'group' && context.noCardinalityButtons !== true) {
+    context.controlDiv = newStruct('div', fieldDiv);
+    renderingContext.domClassToggle(context.controlDiv, 'rdformsFieldControl');
     // eslint-disable-next-line no-unused-vars
     const RemoveButton = renderingContext.addRemoveButton(fieldDiv, binding, context);
     context.controlDiv.appendChild(<RemoveButton></RemoveButton>);
@@ -186,6 +192,8 @@ renderingContext.preEditorRenderer = (fieldDiv, binding, context) => {
 };
 
 renderingContext.postEditorRenderer = (fieldDiv, binding, context) => {
-  fieldDiv.appendChild(context.controlDiv);
+  if (context.controlDiv) {
+    fieldDiv.appendChild(context.controlDiv);
+  }
 };
 

@@ -21,7 +21,7 @@ export default class CardinalityTracker {
   }
 
   removeListener(listener) {
-    this._listeners.slice(this._listeners.indexOf(listener), 1);
+    this._listeners.splice(this._listeners.indexOf(listener), 1);
   }
 
   cardinalityChanged() {

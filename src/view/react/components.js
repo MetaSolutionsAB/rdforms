@@ -47,6 +47,8 @@ const updateObjAttr = (obj, attr, value) => {
   return obj;
 };
 
+let structId = 0;
+
 /**
  * A struct must be allowed to be created, modified and allow new substructures to be added both before and
  * after rendered by react. This is the reason for methods being declared first and later being overridden
@@ -60,21 +62,22 @@ const newStruct = (Tag, parent) => {
   const firstChildArr = [];
   let firstTextStr;
   const firstAttrs = {};
+  structId += 1;
   const ext = {
+    id: `struct_${structId}`,
     parent,
-
     // -- START: Initial methods used before react kicks in.
     toggleClass: (clsStr, addOrNot) => toggleClass(firstClsSet, clsStr, addOrNot),
     domQuery: selector => (selectorInClasses(selector, firstClsSet) ? ext : findStruct(selector, firstChildArr)),
     appendChild: struct => firstChildArr.push(struct),
     appendAfter: (struct, sibling) => firstChildArr.splice(firstChildArr.indexOf(sibling) + 1, 0, struct),
-    text: (str) => { firstTextStr = str; },
+    text: (str) => {
+      firstTextStr = str;
+    },
     attr: (attr, value) => updateObjAttr(firstAttrs, attr, value),
     // -- END
-
     // Utility method, always works
     destroy: () => ext.parent.removeChild(ext),
-
     component: () => {
       const [clsSet, setCls] = useState(firstClsSet);
       const [childArr, setChildArr] = useState(firstChildArr);
@@ -109,6 +112,7 @@ const newStruct = (Tag, parent) => {
           setChildArr((oldChildArr) => {
             const newChildArr = oldChildArr.slice(0);
             newChildArr.splice(newChildArr.indexOf(struct), 1);
+            struct.ugly = true;
             return newChildArr;
           });
         };
@@ -116,12 +120,11 @@ const newStruct = (Tag, parent) => {
           setAttrs(oldAttrs => updateObjAttr(Object.assign({}, oldAttrs), attr, value));
         };
       }, []);
-
-      return <Tag className={clsSet.join(' ')}>{childArr.map((struct, index) =>
-        <React.Fragment key={index}>{struct.component ? React.createElement(struct.component) :
-          struct}</React.Fragment>)}{text}</Tag>;
+      return <Tag className={clsSet.join(' ')}>{childArr.map(child =>
+        (child.component ? React.createElement(child.component, { key: child.id }) : child))}{text}</Tag>;
     },
   };
+
   return ext;
 };
 
@@ -187,7 +190,7 @@ renderingContext.preEditorRenderer = (fieldDiv, binding, context) => {
     renderingContext.domClassToggle(context.controlDiv, 'rdformsFieldControl');
     // eslint-disable-next-line no-unused-vars
     const RemoveButton = renderingContext.addRemoveButton(fieldDiv, binding, context);
-    context.controlDiv.appendChild(<RemoveButton></RemoveButton>);
+    context.controlDiv.appendChild(<RemoveButton key={`${binding.getHash()}_removeButton`}></RemoveButton>);
   }
 };
 
@@ -196,4 +199,3 @@ renderingContext.postEditorRenderer = (fieldDiv, binding, context) => {
     fieldDiv.appendChild(context.controlDiv);
   }
 };
-

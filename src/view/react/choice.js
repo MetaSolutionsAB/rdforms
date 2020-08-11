@@ -23,14 +23,15 @@ const choicify = func => (fieldDiv, binding) => {
 // Presenter for image.
 presenters.itemtype('choice').style('image').register(choicify(
   (fieldDiv, binding, choice, desc) => {
-    fieldDiv.appendChild(<img className="rdformsImage" title={desc || choice.value} src={choice.value}/>);
+    fieldDiv.appendChild(<img key={binding.getHash()} className="rdformsImage" title={
+      desc || choice.value} src={choice.value}/>);
   }));
 
 // Presenter for stars
 presenters.itemtype('choice').style('stars').register(choicify(
   (fieldDiv, binding, choice) => {
     if (!isNaN(parseInt(choice.value, 10))) {
-      fieldDiv.appendChild(<span className="rdformsStar"></span>);
+      fieldDiv.appendChild(<span key={binding.getHash()} className="rdformsStar"></span>);
     }
   }));
 
@@ -40,7 +41,7 @@ presenters.itemtype('choice').register(choicify(
     const item = binding.getItem();
     const title = desc || choice.seeAlso || choice.value;
     if ((item.hasStaticChoices() && !item.hasStyle('externalLink')) || item.hasStyle('noLink')) {
-      fieldDiv.appendChild(<div title={title} src={choice.value
+      fieldDiv.appendChild(<div key={binding.getHash()} title={title} src={choice.value
       }>{utils.getLocalizedValue(choice.label).value}</div>);
     } else {
 /*      if (item.hasStyle('externalLink')) {
@@ -48,8 +49,8 @@ presenters.itemtype('choice').register(choicify(
       } else {
         system.attachLinkBehaviour($a[0], binding);
       }*/
-      fieldDiv.appendChild(() => {
-        const [ label, setLabel ] = useState(utils.getLocalizedValue(choice.label).value);
+      fieldDiv.appendChild(React.createElement(() => {
+        const [label, setLabel] = useState(utils.getLocalizedValue(choice.label).value);
         if (choice.load != null) {
           useEffect(() => {
             choice.load(() => {
@@ -58,6 +59,6 @@ presenters.itemtype('choice').register(choicify(
           });
         }
         return <a title={title} href={choice.seeAlso || choice.value}>{label}</a>;
-      });
+      }, { key: binding.getHash() }));
     }
   }));

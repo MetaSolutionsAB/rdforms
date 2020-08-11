@@ -70,7 +70,7 @@ export default class Editor extends Presenter {
     for (let j = 0; j < _report.errors.length; j++) {
       const err = _report.errors[j];
       if (err.parentBinding === this.binding) {
-        if (err.code === engine.CODES.TOO_FEW_VALUES) {
+        if (err.code === engine.CODES.TOO_FEW_VALUES_MIN) {
           const item = err.item;
           let counter = item.getCardinality().min;
 
@@ -231,9 +231,14 @@ export default class Editor extends Presenter {
       if (!engine.matchPathBelowBinding(fromBinding, path)) {
         f(false);
       }
-      fromBinding.addListener((/* changedBinding */) => {
-        f(engine.matchPathBelowBinding(fromBinding, path));
-      });
+      const listener = (/* changedBinding */) => {
+        if (!binding.getParent()) { // Current binding has been removed, remove the listener
+          fromBinding.removeListener(listener);
+        } else {
+          f(engine.matchPathBelowBinding(fromBinding, path));
+        }
+      };
+      fromBinding.addListener(listener);
     }
     if (this.filterBinding(binding)) {
       renderingContext.domClassToggle(newNode, 'hiddenProperty', true);

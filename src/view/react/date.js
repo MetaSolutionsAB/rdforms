@@ -64,7 +64,7 @@ const datePresenter = (fieldDiv, binding, context) => {
       } else {
         str = moment(data).format('YYYY');
       }
-      fieldDiv.appendChild(<div>{str}</div>);
+      fieldDiv.appendChild(<div key={binding.getHash()} >{str}</div>);
     } catch (e) {
       console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 (potentially with time given after a 'T' character as well) but found '${data}' instead.`);
     }
@@ -129,7 +129,7 @@ const dateEditor = (fieldDiv, binding, context) => {
       </MuiPickersUtilsProvider>
     );
   };
-  fieldDiv.appendChild(<DateComp></DateComp>);
+  fieldDiv.appendChild(<DateComp key={binding.getHash()}></DateComp>);
 };
 
 const editors = renderingContext.editorRegistry;

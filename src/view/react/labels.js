@@ -43,7 +43,7 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelR
   } else {
     label = '';
   }
-  rowNode.appendChild(<ItemTooltip item={item}><span tabIndex="0" className={
+  rowNode.appendChild(<ItemTooltip key={`${binding.getHash()}_label`} item={item}><span tabIndex="0" className={
     labelRow ? 'rdformsLabel rdformsLabelRow' : 'rdformsLabel'}><span className="rdformsLabel">{
     label}</span></span></ItemTooltip>);
 };
@@ -77,7 +77,8 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     } else if (item.getType() === 'group' && !context.view.showAsTable(item)) {
       Button = renderingContext.addRemoveButton(rowNode, binding, context);
     }
-    rowNode.appendChild(<div className="rdformsLabelRow">{label}{mark}{Button && <Button></Button>}</div>);
+    rowNode.appendChild(<div key={`${binding.getHash()}_label`} className="rdformsLabelRow">{
+      label}{mark}{Button && <Button></Button>}</div>);
   }
 };
 
@@ -90,6 +91,6 @@ renderingContext.renderEditorLabelScopeEnd = (rowNode, binding, item, context) =
     Button = renderingContext.addCreateChildButton(rowNode, null, binding, context);
   }
   if (Button) {
-    rowNode.appendChild(<Button></Button>);
+    rowNode.appendChild(<Button key={`${binding.getHash()}_labelEnd`}></Button>);
   }
 };

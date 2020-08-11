@@ -108,6 +108,7 @@ export default class GroupBinding extends Binding {
       }
     }
     this.oneChildValidityChanged();
+    this.bindingChange(binding);
   }
 
   getChildBindingsFor(item) {

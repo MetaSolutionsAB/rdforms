@@ -9,22 +9,23 @@ const presenters = renderingContext.presenterRegistry;
 presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding, context) => {
   const data = fromDuration(binding.getValue());
   const keys = ['years', 'months', 'days', 'hours', 'minutes'];
-  fieldDiv.appendChild(<div>{keys.map(key => (
-    data[key] && <><span className="durationlabel">{context.view.messages[`duration_${key}`]}:</span><span className="durationValue">{data[key]}</span></>
+  fieldDiv.appendChild(<div key={binding.getHash()}>{keys.map(key => (
+    data[key] && <><span className="durationlabel">{
+      context.view.messages[`duration_${key}`]}:</span><span className="durationValue">{data[key]}</span></>
   ))}</div>);
 });
 
 presenters.itemtype('text').nodetype('URI').style('externalLink').register((fieldDiv, binding) => {
   const vmap = utils.getLocalizedMap(binding);
   const val = binding.getValue();
-  fieldDiv.appendChild(<a title={val} href={val} target="_blank">{vmap ?
+  fieldDiv.appendChild(<a key={binding.getHash()} title={val} href={val} target="_blank">{vmap ?
     utils.getLocalizedValue(vmap).value : binding.getGist()}</a>);
 });
 
 // TODO Non-external links.
 
 presenters.itemtype('text').nodetype('URI').style('image').register((fieldDiv, binding) => {
-  fieldDiv.appendChild(<img className="rdformsImage" src={binding.getGixt()}/>);
+  fieldDiv.appendChild(<img key={binding.getHash()} className="rdformsImage" src={binding.getGixt()}/>);
 });
 
 // Presenter for text.
@@ -49,10 +50,11 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
     && this.topLevel !== true
     && parentBinding != null && parentBinding.getItem().getChildren()[0] === binding.getItem()
     && parentBinding.getStatement() != null && parentBinding.getStatement().getType() === 'uri') {
-    fieldDiv.appendChild(<a className="rdformsUrl" href={parentBinding.getStatement().getValue()}>{text}</a>);
+    fieldDiv.appendChild(<a key={binding.getHash()} className="rdformsUrl" href={
+      parentBinding.getStatement().getValue()}>{text}</a>);
     // TODO attachLinkBehaviour
     // system.attachLinkBehaviour($a[0], parentBinding);
   } else {
-    fieldDiv.appendChild(<div>{binding.getGist()}</div>);
+    fieldDiv.appendChild(<div key={binding.getHash()}>{binding.getGist()}</div>);
   }
 });

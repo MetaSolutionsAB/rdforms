@@ -192,18 +192,18 @@ const ChoiceLookupAndInlineSearch = (props) => {
 const editors = renderingContext.editorRegistry;
 editors.itemtype('choice').choices().check(radioCheck).register((fieldDiv, binding, context) => {
   // eslint-disable-next-line no-new
-  fieldDiv.appendChild(<RadioButtonsEditor binding={binding} context={context}/>);
+  fieldDiv.appendChild(<RadioButtonsEditor key={binding.getHash()} binding={binding} context={context}/>);
 });
 
 editors.itemtype('choice').choices().register((fieldDiv, binding, context) => {
-  fieldDiv.appendChild(<ChoiceSelector binding={binding} context={context}/>);
+  fieldDiv.appendChild(<ChoiceSelector key={binding.getHash()} binding={binding} context={context}/>);
 });
 
 editors.itemtype('choice').choices('none').register((fieldDiv, binding, context) => {
   context.chooser = renderingContext.chooserRegistry.getComponent(binding.getItem());
   if (typeof context.chooser.search === 'function') {
-    fieldDiv.appendChild(<ChoiceLookupAndInlineSearch binding={binding} context={context}/>);
+    fieldDiv.appendChild(<ChoiceLookupAndInlineSearch key={binding.getHash()} binding={binding} context={context}/>);
   } else {
-    fieldDiv.appendChild(<ChoiceLookup binding={binding} context={context}/>);
+    fieldDiv.appendChild(<ChoiceLookup key={binding.getHash()} binding={binding} context={context}/>);
   }
 });

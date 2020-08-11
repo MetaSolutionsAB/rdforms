@@ -86,7 +86,7 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
     }{ langlit ? (<LanguageControl binding={binding} context={context}></LanguageControl>) : '' }</>;
   };
 
-  fieldDiv.appendChild(<TextComp></TextComp>);
+  fieldDiv.appendChild(<TextComp key={binding.getHash()}></TextComp>);
 });
 
 const bindToPattern = pattern => (fieldDiv, binding, context) => {
@@ -117,7 +117,7 @@ const bindToPattern = pattern => (fieldDiv, binding, context) => {
     />;
   };
 
-  fieldDiv.appendChild(<TextComp></TextComp>);
+  fieldDiv.appendChild(<TextComp key={binding.getHash()}></TextComp>);
 };
 
 editors.itemtype('text').datatype('xsd:integer').register(bindToPattern('^-?[0-9][0-9][0-9][0-9]$'));

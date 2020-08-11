@@ -54,5 +54,5 @@ editors.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding, c
     />))}</>;
   };
 
-  fieldDiv.appendChild(<TextComp></TextComp>);
+  fieldDiv.appendChild(<TextComp key={binding.getHash()} ></TextComp>);
 });

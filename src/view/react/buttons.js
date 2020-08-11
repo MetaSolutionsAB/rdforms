@@ -30,7 +30,7 @@ renderingContext.addRemoveButton = (rowDiv, binding, context) => () => {
   }, []);
 
   const onClick = useMemo(() => () => {
-    if (isClearButton(binding, context) || !cardTr.isDepsOk()) {
+    if (isClearButton(binding, context) || (!cardTr.isDepsOk() && cardTr.getCardinality() === 1)) {
       if (context.clear) {
         context.clear();
       }

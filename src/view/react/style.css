@@ -171,3 +171,9 @@ div.MuiTooltip-tooltip {
 .cardgroup>.rdformsFields>.rdformsGroup {
     margin-bottom: 5px;
 }
+
+/* Better style for error reports */
+.rdforms .rdformsField.errorReport, .rdforms .rdformsGroup.errorReport {
+    border-left: 2px solid red;
+    padding-left: 10px;
+}

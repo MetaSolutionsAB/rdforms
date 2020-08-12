@@ -51,13 +51,13 @@ presenters.itemtype('choice').register(choicify(
       }*/
       fieldDiv.appendChild(React.createElement(() => {
         const [label, setLabel] = useState(utils.getLocalizedValue(choice.label).value);
-        if (choice.load != null) {
-          useEffect(() => {
+        useEffect(() => {
+          if (choice.load != null) {
             choice.load(() => {
               setLabel(utils.getLocalizedValue(choice.label).value);
             });
-          });
-        }
+          }
+        }, []);
         return <a title={title} href={choice.seeAlso || choice.value}>{label}</a>;
       }, { key: binding.getHash() }));
     }

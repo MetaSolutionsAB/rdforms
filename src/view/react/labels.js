@@ -36,15 +36,15 @@ const ItemTooltip = (props) => {
     props.children}</StyledTooltip>;
 };
 
-renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelRow) => {
+renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
   let label = item.getLabel();
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
     label = '';
   }
-  rowNode.appendChild(<ItemTooltip key={`${binding.getHash()}_label`} item={item}><span tabIndex="0" className={
-    labelRow ? 'rdformsLabel rdformsLabelRow' : 'rdformsLabel'}><span className="rdformsLabel">{
+  rowNode.appendChild(<ItemTooltip key={`${binding.getHash()}_label`} item={item
+  }><span tabIndex="0" className="rdformsLabelRow"><span className="rdformsLabel">{
     label}</span></span></ItemTooltip>);
 };
 

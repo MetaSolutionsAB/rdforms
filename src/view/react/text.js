@@ -10,8 +10,8 @@ presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding
   const data = fromDuration(binding.getValue());
   const keys = ['years', 'months', 'days', 'hours', 'minutes'];
   fieldDiv.appendChild(<div key={binding.getHash()}>{keys.map(key => (
-    data[key] && <><span className="durationlabel">{
-      context.view.messages[`duration_${key}`]}:</span><span className="durationValue">{data[key]}</span></>
+    data[key] && <React.Fragment key={key}><span className="durationlabel">{
+      context.view.messages[`duration_${key}`]}:</span><span className="durationValue">{data[key]}</span></React.Fragment>
   ))}</div>);
 });
 
@@ -19,7 +19,7 @@ presenters.itemtype('text').nodetype('URI').style('externalLink').register((fiel
   const vmap = utils.getLocalizedMap(binding);
   const val = binding.getValue();
   fieldDiv.appendChild(<a key={binding.getHash()} title={val} href={val} target="_blank">{vmap ?
-    utils.getLocalizedValue(vmap).value : binding.getGist()}</a>);
+    utils.getLocalizedValue(vmap).value || val : binding.getGist()}</a>);
 });
 
 // TODO Non-external links.

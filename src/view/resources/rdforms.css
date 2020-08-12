@@ -1,13 +1,9 @@
 /* === Colors === */
 .rdformsLabel {
-    /*	font-weight:bold;*/
+    font-weight:bold;
     color: black;
     margin-bottom: 5px;
     display: inline-block;
-}
-
-.rdformsPresenter .rdformsLabel {
-    border-bottom: 1px solid #E6E6E6;
 }
 
 .compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow,

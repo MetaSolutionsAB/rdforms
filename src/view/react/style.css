@@ -164,9 +164,6 @@ div.MuiTooltip-tooltip {
 .rdformsGroup .rdformsRow:last-child {
     padding-bottom: 0;
 }
-.rdformsEditor .rdformsTopLevel>.rdformsLabelRow>.rdformsLabel {
-    font-weight: bold;
-}
 
 .cardgroup>.rdformsFields>.rdformsGroup {
     margin-bottom: 5px;

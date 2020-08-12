@@ -1,4 +1,7 @@
+import registeryDummyChooser from '../chooser/dummy.js';
 import rdfGraph from '../rdf.js';
+
+registeryDummyChooser();
 
 const { Graph } = rdfjson;
 const { ItemStore, Presenter, bundleLoader } = rdforms;

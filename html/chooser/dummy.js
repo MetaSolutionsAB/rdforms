@@ -33,7 +33,11 @@ export default () => {
       };
       return choice;
     },
-    show(binding, onSelect) {
+    show(binding, onSelect, field) {
+      if (field) {
+        const struct = renderingContext.domCreate('div', field);
+        renderingContext.domText(struct, 'Browse and select or create clicked');
+      }
       onSelect({ value: 'http://example.com/3', label: { en: 'Example 3' } });
     },
     search() {

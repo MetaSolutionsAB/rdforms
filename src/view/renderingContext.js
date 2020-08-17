@@ -123,14 +123,14 @@ const renderingContext = {
   hasOpenChoiceSelector(binding) {
     return renderingContext.chooserRegistry.getComponent(binding.getItem()) != null;
   },
-  openChoiceSelector(binding, callback) {
+  openChoiceSelector(binding, callback, field) {
     const chooser = renderingContext.chooserRegistry.getComponent(binding.getItem());
     if (chooser == null) {
       const item = binding.getItem();
       alert(`Error, no chooser available to open a choice selector for: ${item}`);
       return;
     }
-    chooser.show(binding, callback);
+    chooser.show(binding, callback, field);
   },
   getExtLinkClass() {
     return '';

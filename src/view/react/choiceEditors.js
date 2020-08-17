@@ -109,7 +109,7 @@ const ChoiceLookup = (props) => {
     onClick={() => renderingContext.openChoiceSelector(props.binding, (newChoice) => {
       props.binding.setChoice(newChoice);
       setChoice(newChoice);
-    })}/></>;
+    }, props.field)}/></>;
 };
 
 let globalChoiceQueryThrottle;
@@ -178,7 +178,7 @@ const ChoiceLookupAndInlineSearch = (props) => {
   /><ShowButton
     {...props}
     onClick={() => renderingContext.openChoiceSelector(props.binding,
-      (choice) => { binding.setChoice(choice); setValue(localizedChoice(choice)); })}
+      (choice) => { binding.setChoice(choice); setValue(localizedChoice(choice)); }, props.field)}
   />{value && value.original.upgrade && (
     <IconButton
       aria-label={props.context.view.messages.edit_upgrade}
@@ -202,8 +202,9 @@ editors.itemtype('choice').choices().register((fieldDiv, binding, context) => {
 editors.itemtype('choice').choices('none').register((fieldDiv, binding, context) => {
   context.chooser = renderingContext.chooserRegistry.getComponent(binding.getItem());
   if (typeof context.chooser.search === 'function') {
-    fieldDiv.appendChild(<ChoiceLookupAndInlineSearch key={binding.getHash()} binding={binding} context={context}/>);
+    fieldDiv.appendChild(<ChoiceLookupAndInlineSearch key={binding.getHash()} binding={binding} context={context}
+                                                      field={fieldDiv}/>);
   } else {
-    fieldDiv.appendChild(<ChoiceLookup key={binding.getHash()} binding={binding} context={context}/>);
+    fieldDiv.appendChild(<ChoiceLookup key={binding.getHash()} binding={binding} context={context} field={fieldDiv}/>);
   }
 });

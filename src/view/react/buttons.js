@@ -98,6 +98,7 @@ renderingContext.addCreateChildButton = (rowDiv, labelDiv, binding, context) => 
   }
   const title = context.view.messages.edit_add;
   return <Button
+    className="rdformsAddChild"
     onClick={onClick}
     aria-label={title}
     title={title}

@@ -39,7 +39,7 @@
 }
 
 .cardgroup>.rdformsFields>.rdformsGroup {
-    padding: 2px 5px 5px 10px;
+    padding: 6px 6px 6px 12px;
     margin-right: -5px;
     margin-bottom: 14px;
     background-color: #f7f7f9;
@@ -58,8 +58,8 @@
 }
 
 .rdforms .durationLabel {
-    padding-right: 7px;
-    padding-left: 13px;
+    padding-right: 8px;
+    padding-left: 12px;
 }
 
 .rdforms .durationValue {
@@ -112,8 +112,8 @@
 }
 
 .rdformsEditor .rdformsDatePicker>* {
-    margin-right: 10px;
-    width: calc(33.33% - 7px);
+    margin-right: 12px;
+    width: calc(33.33% - 8px);
 }
 
 .rdformsEditor .rdformsDatePicker>*:last-child {
@@ -122,18 +122,18 @@
 
 /* Two thirds text input*/
 .rdformsEditor .rdformsTwoThirds {
-    margin-right: 10px;
-    width: calc(66.66% - 7px);
+    margin-right: 12px;
+    width: calc(66.66% - 8px);
 }
 
 .rdformsEditor .rdformsLangControl {
-    width: calc(33.33% - 7px);
+    width: calc(33.33% - 8px);
 }
 
 /* Duration */
 .rdformsEditor .rdformsDurationInput {
-    margin-left: 10px;
-    width: calc(20% - 8px);
+    margin-left: 12px;
+    width: calc(20% - 10px);
 }
 .rdformsEditor .rdformsDurationInput:first-child {
     margin-left: 0;
@@ -169,8 +169,16 @@ div.MuiTooltip-tooltip {
     margin-bottom: 5px;
 }
 
+.rdformsEditor .rdformsAddChild {
+    margin-top: 6px;
+}
+
+.rdformsEditor .rdformsRow.rdformsTopLevel {
+    padding-bottom: 36px;
+}
+
 /* Better style for error reports */
 .rdforms .rdformsField.errorReport, .rdforms .rdformsGroup.errorReport {
     border-left: 2px solid red;
-    padding-left: 10px;
+    padding-left: 12px;
 }

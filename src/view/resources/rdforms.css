@@ -111,7 +111,7 @@
 .rdformsEditor .rdformsTopLevel.rdformsHeading>.rdformsLabelRow,
 .rdformsPresenter .rdformsTopLevel.rdformsHeading>.rdformsLabel {
     width: auto !important;
-    border-bottom: 1px solid lightgrey;
+/*    border-bottom: 1px solid lightgrey;*/
 }
 
 

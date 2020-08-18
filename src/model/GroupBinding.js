@@ -155,7 +155,7 @@ export default class GroupBinding extends Binding {
   }
 
   getPredicate() {
-    return this._statement.getPredicate();
+    return this._statement ? this._statement.getPredicate() : undefined;
   }
 
   remove() {

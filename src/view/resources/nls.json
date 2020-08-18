@@ -9,6 +9,7 @@
   "info_label": "Label",
   "info_property": "Property",
   "info_description": "Description",
+  "info_missing": "No information",
   "address_label": "Address",
   "validation_min_required_one": "at least one value is required",
   "validation_min_required_more": "a minimum of $1 values is required",

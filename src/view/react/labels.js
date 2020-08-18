@@ -18,19 +18,13 @@ const StyledTooltip = withStyles(theme => ({
 }))(Tooltip);
 
 const ItemTooltip = (props) => {
-  const description = props.item.getDescription() || '';
   let propinfo = '';
   const property = props.item.getProperty();
   if (property) {
     propinfo = <div className="rdformsProperty"><a target="_blank" href={property}>{property}</a></div>;
   }
+  const description = props.item.getDescription() || (property ? '' : props.context.view.messages.info_missing || '');
 
-  let label = props.item.getLabel();
-  if (label != null && label !== '') {
-    label = label.charAt(0).toUpperCase() + label.slice(1);
-  } else {
-    label = '';
-  }
   return <StyledTooltip placement="bottom-start" interactive enterTouchDelay={0} leaveTouchDelay={50000} title={
     (<><p className="rdformsLinebreaks rdformsDescription">{description}</p>{propinfo}</>)}>{
     props.children}</StyledTooltip>;
@@ -43,9 +37,11 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
   } else {
     label = '';
   }
-  rowNode.appendChild(<ItemTooltip key={`${binding.getHash()}_label`} item={item
-  }><span tabIndex="0" className="rdformsLabelRow"><span className="rdformsLabel">{
-    label}</span></span></ItemTooltip>);
+  label = item.hasStyle('heading') ?
+    <h2 tabIndex="0" className="rdformsLabelRow"><span className="rdformsLabel">{label}</span></h2> :
+    <span tabIndex="0" className="rdformsLabelRow"><span className="rdformsLabel">{label}</span></span>;
+  rowNode.appendChild(<ItemTooltip key={`${binding.getHash()}_label`} context={context} item={item
+  }>{label}</ItemTooltip>);
 };
 
 renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
@@ -58,7 +54,9 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     } else {
       label = '';
     }
-    label = <ItemTooltip item={item}><span tabIndex="0" className="rdformsLabel">{label}</span></ItemTooltip>;
+    label = item.hasStyle('heading') ? <h2 tabIndex="0" className="rdformsLabel">{label}</h2> :
+      <span tabIndex="0" className="rdformsLabel">{label}</span>;
+    label = <ItemTooltip item={item} context={context}>{label}</ItemTooltip>;
 
     const card = item.getCardinality();
     const b = context.view.messages;
@@ -87,7 +85,8 @@ renderingContext.renderEditorLabelScopeEnd = (rowNode, binding, item, context) =
   const card = item.getCardinality();
   if (binding == null) {
     Button = renderingContext.addExpandButton(rowNode, null, item, context);
-  } else if (!context.view.showAsTable(item) && card.max !== 1 && (card.max == null || card.max !== card.min)) {
+  } else if (binding.getPredicate() && !context.view.showAsTable(item) && card.max !== 1 &&
+    (card.max == null || card.max !== card.min)) {
     Button = renderingContext.addCreateChildButton(rowNode, null, binding, context);
   }
   if (Button) {

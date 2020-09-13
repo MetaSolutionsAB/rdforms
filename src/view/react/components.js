@@ -113,7 +113,6 @@ const newStruct = (Tag, parent) => {
           setChildArr((oldChildArr) => {
             const newChildArr = oldChildArr.slice(0);
             newChildArr.splice(newChildArr.indexOf(struct), 1);
-            struct.ugly = true;
             return newChildArr;
           });
         };

@@ -113,7 +113,7 @@ presenters.itemtype('text').datatype('dcterms:W3CDTF').register(datePresenter);
 const editors = renderingContext.editorRegistry;
 
 // Editor for duration
-editors.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding) => {
+editors.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding, context) => {
   const tb = new DurationEditor({
     disabled: !binding.getItem().isEnabled(),
     value: binding.getValue(),

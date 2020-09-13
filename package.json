@@ -1,13 +1,13 @@
 {
   "name": "@entryscape/rdforms",
-  "version": "9.5.14",
+  "version": "9.5.15",
   "main": "dist/rdforms.node.js",
   "browser": "dist/rdforms.bmd.js",
   "module": "main.js",
   "repository": "https://bitbucket.org/metasolutions/rdforms.git",
   "license": "LGPL-3.0-only",
   "dependencies": {
-    "@entryscape/rdfjson": "^2.2.3",
+    "@entryscape/rdfjson": "^2.2.12",
     "arrive": "^2.4.1",
     "bootstrap": "^4.3.1",
     "bootstrap-datepicker": "^1.9.0",

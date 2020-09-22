@@ -222,7 +222,7 @@ const renderForm = (item, node, toc, id) => {
   createEl('colgroup', null, table).setAttribute('span', 2);
   const thead = createEl('thead', null, table);
   const htr = createEl('tr', null, thead);
-  createEl('th', null, htr);
+  createEl('td', null, htr);
   createEl('th', i18n.localize(specNLS, 'fieldTableHeaderProperty', {}), htr);
   createEl('th', i18n.localize(specNLS, 'fieldTableHeaderLevel', {}), htr);
   const tbody = createEl('tbody', null, table);

@@ -76,9 +76,9 @@ const openChoiceSelector = (binding, callback) => {
   });
 };
 
-const attachExternalLinkBehaviour = (node, binding) => node.setAttribute("target", "_blank");
+const attachExternalLinkBehaviour = (node, binding) => false; //node.setAttribute("target", "_blank");
 
-const attachLinkBehaviour = (node, binding) => {
+const attachLinkBehaviour = (node, binding) => false; /*{
   //Deprecated default behaviour, should not be given per choice...
   //remove and let each implementation override this function instead
   //so the behaviour is added for all links.
@@ -95,7 +95,7 @@ const attachLinkBehaviour = (node, binding) => {
     }
   }
   //---end deprecated code---
-};
+};*/
 
 const hasDnDSupport = binding => false
 const addDnD = (binding, node, onDrop) => ({});

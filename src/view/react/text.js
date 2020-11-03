@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useMemo } from 'react';
+import system from '../../model/system';
 import renderingContext from '../renderingContext';
 import { fromDuration } from './util';
 import utils from '../../utils';
@@ -15,14 +16,23 @@ presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding
   ))}</div>);
 });
 
+presenters.itemtype('text').nodetype('URI').register((fieldDiv, binding) => {
+  const vmap = utils.getLocalizedMap(binding);
+  const val = binding.getValue();
+  if (!system.attachLinkBehaviour(fieldDiv, binding)) {
+    fieldDiv.appendChild(<a key={binding.getHash()} title={val} href={val}>{vmap ?
+      utils.getLocalizedValue(vmap).value || val : binding.getGist()}</a>);
+  }
+});
+
 presenters.itemtype('text').nodetype('URI').style('externalLink').register((fieldDiv, binding) => {
   const vmap = utils.getLocalizedMap(binding);
   const val = binding.getValue();
-  fieldDiv.appendChild(<a key={binding.getHash()} title={val} href={val} target="_blank">{vmap ?
-    utils.getLocalizedValue(vmap).value || val : binding.getGist()}</a>);
+  if (!system.attachExternalLinkBehaviour(fieldDiv, binding)) {
+    fieldDiv.appendChild(<a key={binding.getHash()} title={val} href={val} target="_blank">{vmap ?
+      utils.getLocalizedValue(vmap).value || val : binding.getGist()}</a>);
+  }
 });
-
-// TODO Non-external links.
 
 presenters.itemtype('text').nodetype('URI').style('image').register((fieldDiv, binding) => {
   fieldDiv.appendChild(<img key={binding.getHash()} className="rdformsImage" src={binding.getGixt()}/>);
@@ -50,10 +60,13 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
     && this.topLevel !== true
     && parentBinding != null && parentBinding.getItem().getChildren()[0] === binding.getItem()
     && parentBinding.getStatement() != null && parentBinding.getStatement().getType() === 'uri') {
-    fieldDiv.appendChild(<a key={binding.getHash()} className="rdformsUrl" href={
-      parentBinding.getStatement().getValue()}>{text}</a>);
-    // TODO attachLinkBehaviour
-    // system.attachLinkBehaviour($a[0], parentBinding);
+    if (!system.attachLinkBehaviour(fieldDiv, binding, parentBinding)) {
+      const vmap = utils.getLocalizedMap(binding);
+      const val = parentBinding.getGist();
+      fieldDiv.appendChild(<a key={binding.getHash()} className="rdformsUrl" href={
+        parentBinding.getStatement().getValue()}>{vmap ?
+        utils.getLocalizedValue(vmap).value || val : val}</a>);
+    }
   } else {
     fieldDiv.appendChild(<div key={binding.getHash()}>{binding.getGist()}</div>);
   }

@@ -81,15 +81,17 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
 };
 
 renderingContext.renderEditorLabelScopeEnd = (rowNode, binding, item, context) => {
-  let Button;
-  const card = item.getCardinality();
-  if (binding == null) {
-    Button = renderingContext.addExpandButton(rowNode, null, item, context);
-  } else if (binding.getPredicate() && !context.view.showAsTable(item) && card.max !== 1 &&
-    (card.max == null || card.max !== card.min)) {
-    Button = renderingContext.addCreateChildButton(rowNode, null, binding, context);
-  }
-  if (Button) {
-    rowNode.appendChild(<Button key={`${binding.getHash()}_labelEnd`}></Button>);
+  if (!item.hasStyle('nonEditable') && !item.hasStyle('heading')) {
+    let Button;
+    const card = item.getCardinality();
+    if (binding == null) {
+      Button = renderingContext.addExpandButton(rowNode, null, item, context);
+    } else if (binding.getPredicate() && !context.view.showAsTable(item) && card.max !== 1 &&
+      (card.max == null || card.max !== card.min)) {
+      Button = renderingContext.addCreateChildButton(rowNode, null, binding, context);
+    }
+    if (Button) {
+      rowNode.appendChild(<Button key={`${binding.getHash()}_labelEnd`}></Button>);
+    }
   }
 };

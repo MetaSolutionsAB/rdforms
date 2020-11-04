@@ -9,10 +9,9 @@ const fixIt = (Cls) => {
     render() {
       if (this.initiatedAlready) {
         if (this.domNode.parent instanceof Node) {
-          ReactDOM.unmountComponentAtNode(struct.parent);
+          ReactDOM.unmountComponentAtNode(this.domNode.parent);
         }
-        this.domNode.destroy();
-        this.domNode = renderingContext.createDomNode(srcNodeRef, this);
+        this.domNode.clear();
       }
       this.initiatedAlready = true;
 

@@ -22,11 +22,9 @@ const toggleClass = (clsSet, clsStr, addOrNot) => {
         clsSet.add(cls);
         change = true;
       }
-    } else {
-      if (clsSet.has(cls)) {
-        clsSet.delete(cls);
-        change = true;
-      }
+    } else if (clsSet.has(cls)) {
+      clsSet.delete(cls);
+      change = true;
     }
   });
   return change;
@@ -60,7 +58,7 @@ let structId = 0;
  */
 const newStruct = (Tag, parent) => {
   const firstClsSet = new Set();
-  const firstChildArr = [];
+  let firstChildArr = [];
   let firstTextStr;
   const firstAttrs = {};
   structId += 1;
@@ -78,7 +76,8 @@ const newStruct = (Tag, parent) => {
     attr: (attr, value) => updateObjAttr(firstAttrs, attr, value),
     // -- END
     // Utility method, always works
-    destroy: () => ext.parent.removeChild(ext),
+    destroy: () => !(ext.parent instanceof Node) && ext.parent.removeChild(ext),
+    clear: () => { firstChildArr = []; },
     component: () => {
       const [clsSet, setCls] = useState(firstClsSet);
       const [childArr, setChildArr] = useState(firstChildArr);
@@ -115,6 +114,9 @@ const newStruct = (Tag, parent) => {
             newChildArr.splice(newChildArr.indexOf(struct), 1);
             return newChildArr;
           });
+        };
+        ext.clear = () => {
+          setChildArr([]);
         };
         ext.attr = (attr, value) => {
           setAttrs(oldAttrs => updateObjAttr(Object.assign({}, oldAttrs), attr, value));

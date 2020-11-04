@@ -103,6 +103,7 @@ renderingContext.addCreateChildButton = (rowDiv, labelDiv, binding, context) => 
     aria-label={title}
     title={title}
     disabled={disabled}
+    variant="text"
     color="primary"
     startIcon={<AddIcon/>}
   >{label}</Button>;

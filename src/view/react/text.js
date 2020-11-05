@@ -19,19 +19,22 @@ presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding
 presenters.itemtype('text').nodetype('URI').register((fieldDiv, binding) => {
   const vmap = utils.getLocalizedMap(binding);
   const val = binding.getValue();
-  if (!system.attachLinkBehaviour(fieldDiv, binding)) {
-    fieldDiv.appendChild(<a key={binding.getHash()} title={val} href={val}>{vmap ?
-      utils.getLocalizedValue(vmap).value || val : binding.getGist()}</a>);
-  }
+  const attrs = system.attachLinkBehaviour(fieldDiv, binding) || {};
+  const component = attrs.component || null;
+  delete attrs.component;
+  fieldDiv.appendChild(<a {...attrs} key={binding.getHash()} title={val} href={val}><span>{vmap ?
+    utils.getLocalizedValue(vmap).value || val : binding.getGist()}</span>{component}</a>);
 });
 
 presenters.itemtype('text').nodetype('URI').style('externalLink').register((fieldDiv, binding) => {
   const vmap = utils.getLocalizedMap(binding);
   const val = binding.getValue();
-  if (!system.attachExternalLinkBehaviour(fieldDiv, binding)) {
-    fieldDiv.appendChild(<a key={binding.getHash()} title={val} href={val} target="_blank">{vmap ?
-      utils.getLocalizedValue(vmap).value || val : binding.getGist()}</a>);
-  }
+  const attrs = system.attachExternalLinkBehaviour(fieldDiv, binding) || {};
+  attrs.target = attrs.target || '_blank';
+  const component = attrs.component || null;
+  delete attrs.component;
+  fieldDiv.appendChild(<a {...attrs} key={binding.getHash()} title={val} href={val}><span>{vmap ?
+    utils.getLocalizedValue(vmap).value || val : binding.getGist()}</span>{component}</a>);
 });
 
 presenters.itemtype('text').nodetype('URI').style('image').register((fieldDiv, binding) => {
@@ -60,13 +63,14 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
     && this.topLevel !== true
     && parentBinding != null && parentBinding.getItem().getChildren()[0] === binding.getItem()
     && parentBinding.getStatement() != null && parentBinding.getStatement().getType() === 'uri') {
-    if (!system.attachLinkBehaviour(fieldDiv, binding, parentBinding)) {
-      const vmap = utils.getLocalizedMap(binding);
-      const val = parentBinding.getGist();
-      fieldDiv.appendChild(<a key={binding.getHash()} className="rdformsUrl" href={
-        parentBinding.getStatement().getValue()}>{vmap ?
-        utils.getLocalizedValue(vmap).value || val : val}</a>);
-    }
+    const attrs = system.attachLinkBehaviour(fieldDiv, binding, parentBinding)
+    const component = attrs.component || null;
+    delete attrs.component;
+    const vmap = utils.getLocalizedMap(binding);
+    const val = parentBinding.getGist();
+    fieldDiv.appendChild(<a {...attrs} key={binding.getHash()} className="rdformsUrl" href={
+      parentBinding.getStatement().getValue()}><span>{vmap ?
+      utils.getLocalizedValue(vmap).value || val : val}</span>{component}</a>);
   } else {
     fieldDiv.appendChild(<div key={binding.getHash()}>{binding.getGist()}</div>);
   }

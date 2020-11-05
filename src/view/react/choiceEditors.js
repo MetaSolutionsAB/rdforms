@@ -56,6 +56,15 @@ const ChoiceSelector = (props) => {
     props.context.clear = () => setValue(null);
   }, []);
 
+  const labelledBy = props.context.view.getLabelIndex(binding);
+
+  const renderInput = (params) => {
+    params.inputProps = params.inputProps || {};
+    params.inputProps['aria-labelledby'] = labelledBy;
+    return (<TextField {...params} {...(value && value.mismatch ? { error: true } : {})}
+                       variant={renderingContext.materialVariant}/>);
+  };
+
   return <Autocomplete
     className="rdformsSearch"
     disableClearable={true}
@@ -66,9 +75,7 @@ const ChoiceSelector = (props) => {
     getOptionLabel={ choice => (choice === null ? '' : choice.label) }
     getOptionDisabled={ option => option.mismatch === true}
     filterSelectedOptions
-    renderInput={params =>
-      <TextField {...params} { ...(value && value.mismatch ? { error: true } : {}) }
-                 variant={renderingContext.materialVariant} />}
+    renderInput={renderInput}
   />;
 };
 
@@ -98,7 +105,11 @@ const ChoiceLookup = (props) => {
     title = choice.description ? utils.getLocalizedValue(choice.description).value : choice.seeAlso || choice.value;
     label = choice.label ? utils.getLocalizedValue(choice.label).value : choice.value;
   }
+
+  const labelledBy = context.view.getLabelIndex(binding);
+
   return <><TextField
+    inputProps={{ 'aria-labelledby': labelledBy }}
     className="rdformsSearch"
     disabled {...(choice && choice.mismatch ? { mismatch: true } : {})}
     title={title}
@@ -156,6 +167,15 @@ const ChoiceLookupAndInlineSearch = (props) => {
     };
   }, [inputValue, open]);
 
+  const labelledBy = props.context.view.getLabelIndex(binding);
+  const renderInput = (params) => {
+    params.inputProps = params.inputProps || {};
+    params.inputProps['aria-labelledby'] = labelledBy;
+    return <TextField aria-labelledby={labelledBy}
+               {...params} { ...(value && value.mismatch ? { error: true } : {}) }
+               variant={renderingContext.materialVariant} />;
+  };
+
   return <><Autocomplete
     className="rdformsSearch"
     disableClearable={true}
@@ -171,10 +191,7 @@ const ChoiceLookupAndInlineSearch = (props) => {
     getOptionSelected={ (option, choice) => option.value === choice.value }
     getOptionLabel={ choice => (choice === null ? '' : choice.label || choice.value) }
     getOptionDisabled={ option => option.mismatch === true}
-    renderInput={params =>
-      <TextField
-        {...params} { ...(value && value.mismatch ? { error: true } : {}) }
-        variant={renderingContext.materialVariant} />}
+    renderInput={renderInput}
   /><ShowButton
     {...props}
     onClick={() => renderingContext.openChoiceSelector(props.binding,

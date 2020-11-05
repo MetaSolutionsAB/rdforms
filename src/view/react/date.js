@@ -104,21 +104,31 @@ const dateEditor = (fieldDiv, binding, context) => {
       binding.setValue(getDateValue(selectedDate, event.target.value));
       setDatatype(event.target.value);
     };
-
+    const bundle = context.view.messages;
+    const inputProps = { 'aria-labelledby': context.view.getLabelIndex(binding) };
     const dateFormat = selectedDatatype === 'Year' ? 'YYYY' : 'YYYY-MM-DD';
-
     return (
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <span className="rdformsDatePicker">
-          <KeyboardDatePicker value={selectedDate} minDate={new Date('0000-01-01')} format={dateFormat}
-                              views={selectedDatatype === 'Year' ? ['year'] : ['date']}
-                              onChange={onDateChange} autoOk={true} inputVariant={renderingContext.materialVariant}/>
-          <KeyboardTimePicker { ...(selectedDatatype === 'Datetime' ? {} : { disabled: true })}
-                              value={selectedDate} onChange={onDateChange} ampm={false} autoOk={true}
-                              inputVariant={renderingContext.materialVariant}/>
+          <KeyboardDatePicker
+            KeyboardButtonProps={{ 'aria-label': selectedDatatype === 'Year' ?
+                bundle.date_openYearPicker : bundle.date_openDatePicker }}
+            label={selectedDatatype === 'Year' ? bundle.date_year : bundle.date_date}
+            value={selectedDate} minDate={new Date('0000-01-01')} format={dateFormat}
+            views={selectedDatatype === 'Year' ? ['year'] : ['date']}
+            inputProps={inputProps}
+            onChange={onDateChange} autoOk={true} inputVariant={renderingContext.materialVariant}/>
+          <KeyboardTimePicker
+            label={bundle.date_time}
+            { ...(selectedDatatype === 'Datetime' ? {} : { disabled: true })}
+            KeyboardButtonProps={{ 'aria-label': bundle.date_openTimePicker }}
+            value={selectedDate} onChange={onDateChange} ampm={false} autoOk={true}
+            inputProps={inputProps}
+            inputVariant={renderingContext.materialVariant}/>
           <FormControl variant={renderingContext.materialVariant}>
             <Select
               value={selectedDatatype}
+              inputProps={inputProps}
               onChange={onDatatypeChange}>
               <MenuItem value="Datetime">{bundle.date_date_and_time}</MenuItem>
               <MenuItem value="Date">{bundle.date_date}</MenuItem>

@@ -44,24 +44,25 @@ presenters.itemtype('choice').register(choicify(
       fieldDiv.appendChild(<div key={binding.getHash()} title={title} src={choice.value
       }>{utils.getLocalizedValue(choice.label).value}</div>);
     } else {
-      let done = false;
+      let attrs;
       if (item.hasStyle('externalLink')) {
-        done = system.attachExternalLinkBehaviour(fieldDiv, binding);
+        attrs = system.attachExternalLinkBehaviour(fieldDiv, binding) || {};
       } else {
-        done = system.attachLinkBehaviour(fieldDiv, binding);
+        attrs = system.attachLinkBehaviour(fieldDiv, binding) || {};
       }
-      if (!done) {
-        fieldDiv.appendChild(React.createElement(() => {
-          const [label, setLabel] = useState(utils.getLocalizedValue(choice.label).value);
-          useEffect(() => {
-            if (choice.load != null) {
-              choice.load(() => {
-                setLabel(utils.getLocalizedValue(choice.label).value);
-              });
-            }
-          }, []);
-          return <a title={title} href={choice.seeAlso || choice.value}>{label}</a>;
-        }, { key: binding.getHash() }));
-      }
+      const component = attrs.component || null;
+      delete attrs.component;
+
+      fieldDiv.appendChild(React.createElement(() => {
+        const [label, setLabel] = useState(utils.getLocalizedValue(choice.label).value);
+        useEffect(() => {
+          if (choice.load != null) {
+            choice.load(() => {
+              setLabel(utils.getLocalizedValue(choice.label).value);
+            });
+          }
+        }, []);
+        return <a {...attrs} title={title} href={choice.seeAlso || choice.value}><span>{label}</span>{component}</a>;
+      }, { key: binding.getHash() }));
     }
   }));

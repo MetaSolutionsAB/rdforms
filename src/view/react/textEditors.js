@@ -30,6 +30,8 @@ const LanguageControl = (props) => {
 
   return <FormControl className="rdformsLangControl" variant={renderingContext.materialVariant}>
     <Select
+      inputProps={{ 'aria-labelledby': props.labelledby }}
+
       value={lang}
       onChange={onLangChange}>
       {langs.map(langOption => (langOption === null ?
@@ -64,8 +66,10 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
     }, []);
     const valid = gist !== null && gist !== '' && regex ? regex.test(gist) : true;
 
+    const labelledBy = context.view.getLabelIndex(binding);
     const iprops = {
       value: gist,
+      'aria-labelledby': labelledBy,
       onChange: (e) => {
         const newValue = e.target.value;
         if (!regex || regex.test(newValue)) {
@@ -83,7 +87,7 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
       variant={renderingContext.materialVariant} inputProps={iprops}
     />{extLink && (value != null || value === '') &&
     (<IconButton disabled={!valid} target='_blank' href={value} title={value}><OpenInNewIcon/></IconButton>)
-    }{ langlit ? (<LanguageControl binding={binding} context={context}></LanguageControl>) : '' }</>;
+    }{ langlit ? (<LanguageControl binding={binding} context={context} labelledby={labelledBy}></LanguageControl>) : '' }</>;
   };
 
   fieldDiv.appendChild(<TextComp key={binding.getHash()}></TextComp>);

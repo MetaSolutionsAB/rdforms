@@ -141,6 +141,9 @@ export default class Editor extends Presenter {
    * @param {Object} bindings
    */
   prepareBindings(item, bindings) {
+    if (item.hasStyle('nonEditable')) {
+      return bindings;
+    }
     let _bindings = bindings;
     const card = item.getCardinality();
     let target;
@@ -204,6 +207,9 @@ export default class Editor extends Presenter {
   }
 
   createRowNode(lastRowNode, binding, item) {
+    if (binding == null && item.hasStyle('nonEditable')) {
+      return;
+    }
     const newNode = super.createRowNode(lastRowNode, binding, item);
     if (item.getType() === 'choice' && typeof item.getProperty() === 'undefined') {
       const popular = engine.findPopularChoice(item, binding.getParent());

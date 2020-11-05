@@ -3,8 +3,12 @@ import GroupBinding from '../model/GroupBinding';
 import * as engine from '../model/engine';
 import { bindingReport} from "../model/validate";
 
+let viewCounter = 0;
 export default class View {
   constructor(params, srcNodeRef) {
+    this._viewId = viewCounter;
+    viewCounter += 1;
+    this.parentView = params.parentView
     this.srcNodeRef = srcNodeRef;
     this.binding = params.binding || null;
     this.template = params.template || null;
@@ -16,6 +20,7 @@ export default class View {
     this.filterPredicates = params.filterPredicates || null;
     this.fuzzy = params.fuzzy === true;
     this._handleParams(params);
+    this._labelIndex = {};
     this.domNode = renderingContext.createDomNode(srcNodeRef, this);
     renderingContext.domClassToggle(this.domNode, 'rdforms', true);
     renderingContext.domClassToggle(this.domNode, this.styleCls, true);
@@ -293,4 +298,26 @@ export default class View {
     const fp = this._getFilterPredicates() || {};
     return fp[property] === true;
   }
-};
+
+  getLabelIndex(binding) {
+    const labelItem = binding.getItem();
+    let idx;
+    binding.getParent().getChildBindingsFor(binding.getItem()).reverse().find((b) => {
+      idx = this._labelIndex[b.getHash()];
+      return idx !== undefined;
+    });
+    if (idx !== undefined) {
+      return idx;
+    }
+    if (this.parentView) {
+      return this.parentView.getLabelIndex(binding.getParent());
+    }
+    return '';
+  }
+
+  createLabelIndex(binding) {
+    const idx = `${binding.getHash()}_${this._viewId}_label`;
+    this._labelIndex[binding.getHash()] = idx;
+    return idx;
+  }
+}

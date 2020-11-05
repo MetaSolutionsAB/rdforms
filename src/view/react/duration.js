@@ -42,6 +42,9 @@ editors.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding, c
       };
       return accum;
     }, {}));
+
+    const descBy = context.view.getLabelIndex(binding);
+
     return <>{keys.map(key => (<TextField
       key={key}
       className="rdformsDurationInput"
@@ -49,7 +52,7 @@ editors.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding, c
       label={bundle[`duration_${key}`]}
       type="number"
       onChange={onChange[key]}
-      inputProps={{ min: 0 }}
+      inputProps={{ min: 0, 'aria-label': bundle[`duration_${key}`], 'aria-describedby': descBy }}
       variant={renderingContext.materialVariant}
     />))}</>;
   };

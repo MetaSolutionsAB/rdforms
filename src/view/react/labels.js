@@ -75,7 +75,8 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     } else if (item.getType() === 'group' && !context.view.showAsTable(item)) {
       Button = renderingContext.addRemoveButton(rowNode, binding, context);
     }
-    rowNode.appendChild(<div key={`${binding.getHash()}_label`} className="rdformsLabelRow">{
+    const labelId = context.view.createLabelIndex(binding);
+    rowNode.appendChild(<div key={`${binding.getHash()}_label`} id={labelId} className="rdformsLabelRow">{
       label}{mark}{Button && <Button></Button>}</div>);
   }
 };

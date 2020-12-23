@@ -171,9 +171,18 @@ const ChoiceLookupAndInlineSearch = (props) => {
   const renderInput = (params) => {
     params.inputProps = params.inputProps || {};
     params.inputProps['aria-labelledby'] = labelledBy;
-    return <TextField aria-labelledby={labelledBy}
-               {...params} { ...(value && value.mismatch ? { error: true } : {}) }
-               variant={renderingContext.materialVariant} />;
+    return (
+      <TextField
+        aria-labelledby={labelledBy}
+        {...params}
+        { ...(value && value.mismatch ? { error: true } : {}) }
+        onKeyDown={(e) => {
+          if (e.keyCode === 13 && !open) {
+            setOpen(!open);
+          }
+        }}
+        variant={renderingContext.materialVariant} />
+    );
   };
 
   return <><Autocomplete

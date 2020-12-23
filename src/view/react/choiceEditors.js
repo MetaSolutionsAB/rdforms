@@ -176,8 +176,9 @@ const ChoiceLookupAndInlineSearch = (props) => {
         aria-labelledby={labelledBy}
         {...params}
         { ...(value && value.mismatch ? { error: true } : {}) }
-        onKeyDown={({ keyCode }) => {
-          if (keyCode === 13 && !open) {
+        onKeyDown={({ key, keyCode }) => {
+          const isEnterKey = key === 'Enter' || keyCode === 13;
+          if (isEnterKey && !open) {
             setOpen(true);
           }
         }}

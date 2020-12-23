@@ -154,7 +154,7 @@ const ChoiceLookupAndInlineSearch = (props) => {
       }
       globalChoiceQueryThrottle = setTimeout(() => {
         globalChoiceQueryThrottle = undefined;
-        props.context.chooser.search(binding.getItem(), inputValue).then((results) => {
+        props.context.chooser.search(binding.getItem(), inputValue.trimStart()).then((results) => {
           if (active) {
             setOptions(results.map(localizedChoice));
           }
@@ -176,9 +176,9 @@ const ChoiceLookupAndInlineSearch = (props) => {
         aria-labelledby={labelledBy}
         {...params}
         { ...(value && value.mismatch ? { error: true } : {}) }
-        onKeyDown={(e) => {
-          if (e.keyCode === 13 && !open) {
-            setOpen(!open);
+        onKeyDown={({ keyCode }) => {
+          if (keyCode === 13 && !open) {
+            setOpen(true);
           }
         }}
         variant={renderingContext.materialVariant} />

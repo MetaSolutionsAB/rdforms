@@ -48,10 +48,6 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
   } else {
     renderingContext.domClassToggle(fieldDiv, 'rdformsSingleline', true);
   }
-  if (context.view.showLanguage && binding.getLanguage()) {
-    // TODO language
-   // jquery('<div className="rdformsLanguage">').text(binding.getLanguage()).appendTo(fieldDiv);
-  }
 
   // The text is shown as a link to the parents bindings URI if:
   // 1) The current item is indicated to be a label.
@@ -72,6 +68,9 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
       parentBinding.getStatement().getValue()}><span>{vmap ?
       utils.getLocalizedValue(vmap).value || val : val}</span>{component}</a>);
   } else {
-    fieldDiv.appendChild(<div key={binding.getHash()}>{binding.getGist()}</div>);
+    fieldDiv.appendChild(<span key={binding.getHash()}>{binding.getGist()}</span>);
+  }
+  if (context.view.showLanguage && binding.getLanguage()) {
+    fieldDiv.appendChild(<span className="rdformsLanguage" key={`lang_${binding.getHash()}`}>{binding.getLanguage()}</span>);
   }
 });

@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import WarningIcon from '@material-ui/icons/Warning';
+import ErrorIcon from '@material-ui/icons/Error';
+import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
 import renderingContext from '../renderingContext';
 import './labels';
 import './text';
@@ -200,4 +203,18 @@ renderingContext.postEditorRenderer = (fieldDiv, binding, context) => {
   if (context.controlDiv) {
     fieldDiv.appendChild(context.controlDiv);
   }
+};
+
+const type2icon = {
+  error: ErrorIcon,
+  warning: WarningIcon,
+  deprecated: OfflineBoltIcon,
+};
+
+let validationCounter = 0;
+renderingContext.renderValidationMessage = (fieldDiv, type, message) => {
+  const ValidationIcon = type2icon[type];
+  validationCounter += 1;
+  fieldDiv.appendChild(<div className="rdformsValidationMessageWrapper" key={ `rdforms_valcount_${validationCounter}`}
+  ><ValidationIcon/><span className="rdformsValidationMessage">{message}</span></div>);
 };

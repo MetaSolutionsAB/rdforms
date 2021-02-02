@@ -12,6 +12,8 @@ bundleLoader(new ItemStore(), [['../templates/templateBundle.json']], (bundles) 
     graph,
     resource: 'http://example.org/about',
     template: bundles[0].getRoot(),
-    compact: true,
+    filterTranslations: false,
+    showLanguage: true,
+    compact: false,
   }, 'node');
 });

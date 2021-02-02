@@ -182,3 +182,14 @@ div.MuiTooltip-tooltip {
     border-left: 2px solid red;
     padding-left: 12px;
 }
+.rdforms .rdformsLanguage {
+    margin: 0 10px 0px;
+    background: #474747;
+    color: white;
+    padding: 3px 5px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: bolder;
+    font-family: sans-serif;
+}

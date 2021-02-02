@@ -150,7 +150,8 @@
           "description": {
             "en": "A subject for this resource.",
             "sv": "Ett ämne för denna resurs."
-          }
+          },
+          "styles": ["verticalradiobuttons"]
         },
         {
           "type": "choice",
@@ -204,6 +205,9 @@
           "description": {
             "en": "A relation to another resource.\nSome more information.",
             "sv": "En relation till en annan resurs."
+          },
+          "constraints": {
+            "rdf:type": "skos:Concept"
           }
         },
         {
@@ -254,7 +258,7 @@
             "dcterms:subject",
             "http://example.com/physics"
           ],
-          "content": [
+          "items": [
             {
               "type": "text",
               "nodetype": "ONLY_LITERAL",
@@ -276,7 +280,8 @@
               },
               "label": {
                 "en": "Surname"
-              }
+              },
+              "styles": ["deprecated"]
             }
           ]
         }

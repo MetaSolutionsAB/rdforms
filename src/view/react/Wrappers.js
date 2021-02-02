@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Presenter from '../Presenter';
-import renderingContext from '../renderingContext';
 import Editor from '../Editor';
+import ValidationPresenter from '../ValidationPresenter';
 
 const fixIt = (Cls) => {
   const FixCls = class extends Cls {
@@ -37,5 +37,6 @@ const fixIt = (Cls) => {
 
 const ReactEditor = fixIt(Editor);
 const ReactPresenter = fixIt(Presenter);
+const ReactValidationPresenter = fixIt(ValidationPresenter);
 
-export { ReactEditor as Editor, ReactPresenter as Presenter };
+export { ReactEditor as Editor, ReactPresenter as Presenter, ReactValidationPresenter as ValidationPresenter };

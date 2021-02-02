@@ -111,6 +111,8 @@ const renderingContext = {
       renderingContext.postEditorRenderer(node, binding, context);
     }
   },
+  renderValidationMessage(node, type, message) {
+  },
   renderSelect(/* fieldDiv, binding, context */) {
   },
   getChoice(item, value) {
@@ -286,6 +288,8 @@ const groupPresenter = (fieldDiv, binding, context) => {
     messages: context.view.messages,
     binding,
     topLevel: false,
+    showLanguage: context.view.showLanguage,
+    filterTranslations: context.view.filterTranslations,
     includeLevel: context.view.includeLevel, // Copied from groupEditor, was this.includeLevel but that 'this' does not make sense here
   }, fieldDiv);
 };

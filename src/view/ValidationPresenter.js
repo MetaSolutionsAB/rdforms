@@ -1,25 +1,13 @@
 import renderingContext from './renderingContext';
 import Presenter from './Presenter';
-import engine from '../model/engine';
-import {bindingReport} from '../model/validate';
-
-const addValidationMessage = (fieldDiv, cls, message) => {
-  const nw = renderingContext.domCreate('div', fieldDiv);
-  renderingContext.domClassToggle(nw, 'rdformsValidationMessageWrapper');
-  const i = renderingContext.domCreate('i', nw);
-  renderingContext.domClassToggle(i, `fas fa-${cls}`);
-  const n = renderingContext.domCreate('span', nw);
-  renderingContext.domClassToggle(n, 'rdformsValidationMessage');
-  renderingContext.domText(n, message);
-  return n;
-};
+import engine, { CODES } from '../model/engine';
+import { bindingReport } from '../model/validate';
 
 const localize = (bundle, key, val) => {
   if (val === 1) {
     return bundle[`${key}_one`];
-  } else {
-    return bundle[`${key}_more`].replace('$1', val);
   }
+  return bundle[`${key}_more`].replace('$1', val);
 };
 
 export default class ValidationPresenter extends Presenter {
@@ -46,7 +34,7 @@ export default class ValidationPresenter extends Presenter {
       return false;
     }
     const code = this.binding.getMatchingCode();
-    if (code === engine.CODES.MISSING_CONSTRAINTS || code === engine.CODES.WRONG_NODETYPE) {
+    if (code === CODES.MISSING_CONSTRAINTS || code === CODES.WRONG_NODETYPE) {
       return false;
     }
 
@@ -61,6 +49,7 @@ export default class ValidationPresenter extends Presenter {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   showAsTable() {
     return false;
   }
@@ -98,19 +87,19 @@ export default class ValidationPresenter extends Presenter {
     }
     const code = this.binding.getMatchingCode();
     const noDisjointHinder = !this.binding.getItem().hasStyle('disjoint') ||
-      code === engine.CODES.TOO_FEW_VALUES_MIN ||
-      code === engine.CODES.TOO_FEW_VALUES_PREF;
-    const groupError = code === engine.CODES.MISSING_CONSTRAINTS || code === engine.CODES.WRONG_NODETYPE;
+      code === CODES.TOO_FEW_VALUES_MIN ||
+      code === CODES.TOO_FEW_VALUES_PREF;
+    const groupError = code === CODES.MISSING_CONSTRAINTS || code === CODES.WRONG_NODETYPE;
     if (target > _bindings.length && noDisjointHinder && !groupError) {
       _bindings = _bindings.concat([]);
       while (target > _bindings.length) {
         const binding = engine.create(this.binding, item);
         if (_bindings.length < min) {
-          binding.setMatchingCode(engine.CODES.TOO_FEW_VALUES_MIN);
-          //binding.error = engine.CODES.TOO_FEW_VALUES;
+          binding.setMatchingCode(CODES.TOO_FEW_VALUES_MIN);
+          // binding.error = CODES.TOO_FEW_VALUES;
         } else if (_bindings.length < pref) {
-          binding.setMatchingCode(engine.CODES.TOO_FEW_VALUES_PREF);
-          //binding.warning = engine.CODES.TOO_FEW_VALUES;
+          binding.setMatchingCode(CODES.TOO_FEW_VALUES_PREF);
+          // binding.warning = CODES.TOO_FEW_VALUES;
         }
         _bindings.push(binding);
       }
@@ -118,7 +107,8 @@ export default class ValidationPresenter extends Presenter {
     return _bindings;
   }
 
-  skipBinding(/* binding */) {
+  // eslint-disable-next-line class-methods-use-this
+  skipBinding() {
     return false;
   }
 
@@ -128,42 +118,41 @@ export default class ValidationPresenter extends Presenter {
     const min = card.min != null ? card.min : 0;
     const pref = card.pref != null ? card.pref : 0;
     const code = binding.getMatchingCode();
-    const error = code !== engine.CODES.TOO_FEW_VALUES_PREF && code !== engine.CODES.OK;
-    const warning = code === engine.CODES.TOO_FEW_VALUES_PREF;
+    const error = code !== CODES.TOO_FEW_VALUES_PREF && code !== CODES.OK;
+    const warning = code === CODES.TOO_FEW_VALUES_PREF;
     if (error) {
       renderingContext.domClassToggle(fieldDiv, 'error', true);
       let tmpl;
-      if (code === engine.CODES.TOO_FEW_VALUES_MIN) {
+      if (code === CODES.TOO_FEW_VALUES_MIN) {
         tmpl = localize(this.messages, 'validation_min_required', min);
-      } else if (code === engine.CODES.TOO_MANY_VALUES) {
+      } else if (code === CODES.TOO_MANY_VALUES) {
         tmpl = localize(this.messages, 'validation_max', card.max || 1);
-      } else if (code === engine.CODES.TOO_MANY_VALUES_DISJOINT) {
+      } else if (code === CODES.TOO_MANY_VALUES_DISJOINT) {
         tmpl = this.messages.validation_disjoint;
-      } else if (code === engine.CODES.WRONG_NODETYPE) {
+      } else if (code === CODES.WRONG_NODETYPE) {
         tmpl = this.messages.validation_nodetype;
-      } else if (code === engine.CODES.WRONG_VALUE) {
+      } else if (code === CODES.WRONG_VALUE) {
         tmpl = this.messages.validation_value;
-      } else if (code === engine.CODES.WRONG_DATATYPE) {
+      } else if (code === CODES.WRONG_DATATYPE) {
         tmpl = this.messages.validation_datatype;
-      } else if (code === engine.CODES.MISSING_CONSTRAINTS) {
+      } else if (code === CODES.MISSING_CONSTRAINTS) {
         tmpl = this.messages.validation_constraints;
-      } else if (code === engine.CODES.WRONG_PATTERN) {
+      } else if (code === CODES.WRONG_PATTERN) {
         tmpl = this.messages.validation_pattern;
-      } else if (code === engine.CODES.MISSING_LANGUAGE) {
+      } else if (code === CODES.MISSING_LANGUAGE) {
         tmpl = this.messages.validation_language;
       }
 
-      addValidationMessage(fieldDiv, 'exclamation-triangle', tmpl);
+      renderingContext.renderValidationMessage(fieldDiv, 'error', tmpl);
       return true;
     } else if (warning) {
       renderingContext.domClassToggle(fieldDiv, 'warning', true);
       const tmpl = localize(this.messages, 'validation_min_recommended', pref);
-        this.messages.validation_min_recommended_more;
-      addValidationMessage(fieldDiv, 'exclamation-circle', tmpl);
+      renderingContext.renderValidationMessage(fieldDiv, 'warning', tmpl);
       return true;
     } else if (item.hasStyle('deprecated')) {
       renderingContext.domClassToggle(fieldDiv, 'deprecated', true);
-      addValidationMessage(fieldDiv, 'question-circle', this.messages.validation_deprecated);
+      renderingContext.renderValidationMessage(fieldDiv, 'deprecated', this.messages.validation_deprecated);
       return true;
     }
     return false;
@@ -173,4 +162,4 @@ export default class ValidationPresenter extends Presenter {
     super.addComponent(fieldDiv, binding);
     this.addValidationMarker(fieldDiv, binding);
   }
-};
+}

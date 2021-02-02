@@ -5,7 +5,7 @@ import View from './View';
 export default class Presenter extends View {
   _handleParams(params) {
     this.showLanguage = params.showLanguage === true;
-    this.filterTranslations = this.filterTranslations !== false;
+    this.filterTranslations = params.filterTranslations !== false;
     this.styleCls = params.styleCls || 'rdformsPresenter';
     super._handleParams(params);
   }

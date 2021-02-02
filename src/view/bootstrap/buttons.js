@@ -111,7 +111,7 @@ renderingContext.addGroupButtons = (rowDiv, labelDiv, binding, context) => {
         }
         jquery(rowDiv).remove();
       } else {
-        con.remove();
+        cardTr.removeListener(con);
         if ($add) {
           $add.unbind('click');
         }

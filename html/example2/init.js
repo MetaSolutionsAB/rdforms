@@ -13,7 +13,10 @@ bundleLoader(new ItemStore(), [['../templates/templateBundle.json']], (bundles) 
     template: bundles[0].getRoot(),
     compact: false,
   }, 'node');
-  document.getElementById('button').onclick = function() {
+  document.getElementById('buttonMissing').onclick = function() {
     editor.report();
+  };
+  document.getElementById('buttonMandatory').onclick = function() {
+    editor.setIncludeLevel('mandatory');
   };
 });

@@ -2,7 +2,8 @@ import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import ArrayAdapter from 'select2/src/js/select2/data/array';
 import Select2QueryAdapter from './Select2QueryAdapter';
-import 'select2/src/js/jquery.select2';
+import 'select2';
+//import 'select2/src/js/jquery.select2';
 
 renderingContext.renderSelect = (fieldDiv, binding, context) => {
   const choices = context.choices;

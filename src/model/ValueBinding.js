@@ -1,4 +1,4 @@
-import Binding from "./Binding";
+import Binding from './Binding';
 import utils from '../utils';
 
 export default class ValueBinding extends Binding {

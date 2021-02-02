@@ -1,12 +1,13 @@
 const webpack = require('webpack');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const DojoWebpackPlugin = require('dojo-webpack-plugin');
 
 module.exports = {
   entry: {
-    bootstrap: 'index.bootstrap.js',
-    bmd: 'index.bmd.js',
+    bootstrap: './index.bootstrap.js',
+    bmd: './index.bmd.js',
+    react: './index.react.js',
+    jquery: './index.jquery.js',
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -26,30 +27,12 @@ module.exports = {
       Popper: ['popper.js', 'default'],
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new DojoWebpackPlugin({
-      loaderConfig: require('./config/dojoConfig'),
-      locales: ['en'],
-      environment: { dojoRoot: 'dist' },	// used at run time for non-packed resources (e.g.
-      // blank.gif)
-      buildEnvironment: { dojoRoot: 'node_modules' }, // used at build time
-      noConsole: true,
-      // loader: path.join(__dirname, './config/dojo/dojo.js'),
-    }),
     new CleanWebpackPlugin(),
   ],
   module: {
     rules: [{
-      test: /\.nls$/,
-      use: [{
-        loader: 'nls-loader',
-        options: {
-          // context: APP_PATH,
-          locales: ["en", "sv"],
-        },
-      }],
-    }, {
       test: /\.js$/,
-      exclude: /node_modules\/(?!(bootstrap|bootstrap-material-design|esi18n|@entryscape)\/).*/,
+      exclude: /node_modules\/(?!(bootstrap|bootstrap-material-design|@entryscape)\/).*/,
       use: [{
         loader: 'babel-loader',
         options: {
@@ -60,6 +43,7 @@ module.exports = {
             '@babel/plugin-proposal-class-properties',
             '@babel/plugin-syntax-dynamic-import',
             ['@babel/plugin-transform-modules-commonjs', { strictMode: false }],
+            ['@babel/plugin-transform-react-jsx', {}],
           ],
         },
       }, {

@@ -1,30 +1,20 @@
 import Registry from './Registry';
 import system from '../model/system';
+import nls from './resources/nls';
 
-import {i18n, NLSMixin} from 'esi18n';
-import nlsRdforms from './nls/rdforms.nls';
-
-system.getChoice = function (item, value) {
-  const chooser = renderingContext.chooserRegistry.getComponent(item);
-  if (chooser == null) {
-    throw new Error(`Error, no chooser available to retrieve a choice for item: ${item.getId()}`);
-  }
-  return chooser.getChoice(item, value);
-};
 let popoverContainer = 'body';
 let messages;
-let language;
 let languages;
 let primaryLanguageCodes;
 let primaryLanguages;
 let nonPrimaryLanguages;
 const defaultLanguages = [
-  {value: '', label: {en: ''}},
-  {value: 'bg', label: {en: 'Bulgarian', bg: 'български'}},
-  {value: 'es', label: {en: 'Spanish', es: 'Español'}},
-  {value: 'cs', label: {en: 'Czech', cs: 'čeština'}},
-  {value: 'da', label: {en: 'Danish', da: 'Dansk'}},
-  {value: 'no', label: {en: 'Norwegian', no: 'Norsk', nb: 'Norsk', nn: 'Norsk nynorsk'}},
+  { value: '', label: { en: '' } },
+  { value: 'bg', label: { en: 'Bulgarian', bg: 'български' } },
+  { value: 'es', label: { en: 'Spanish', es: 'Español' } },
+  { value: 'cs', label: { en: 'Czech', cs: 'čeština' } },
+  { value: 'da', label: { en: 'Danish', da: 'Dansk' } },
+  { value: 'no', label: { en: 'Norwegian', no: 'Norsk', nb: 'Norsk', nn: 'Norsk nynorsk' } },
   {
     value: 'nb',
     label: {
@@ -43,26 +33,26 @@ const defaultLanguages = [
       nn: 'Norsk nynorsk',
     },
   },
-  {value: 'de', label: {en: 'German', de: 'Deutsch'}},
-  {value: 'et', label: {en: 'Estonian', et: 'Eesti keel'}},
-  {value: 'el', label: {en: 'Greek', el: 'ελληνικά'}},
-  {value: 'en', label: {en: 'English'}},
-  {value: 'fr', label: {en: 'French', fr: 'Français'}},
-  {value: 'ga', label: {en: 'Irish', ga: 'Gaeilge'}},
-  {value: 'hr', label: {en: 'Croatian', hr: 'Hrvatski'}},
-  {value: 'it', label: {en: 'Italian', it: 'Italiano'}},
-  {value: 'lv', label: {en: 'Latvian', lv: 'Latviešu valoda'}},
-  {value: 'lt', label: {en: 'Lithuanian', lt: 'Lietuvių kalba'}},
-  {value: 'hu', label: {en: 'Hungarian', hu: 'Magyar'}},
-  {value: 'mt', label: {en: 'Maltese', mt: 'Malti'}},
-  {value: 'nl', label: {en: 'Dutch', nl: 'Nederlands'}},
-  {value: 'pl', label: {en: 'Polish', pl: 'Polski'}},
-  {value: 'pt', label: {en: 'Portuguese', pt: 'Português'}},
-  {value: 'ro', label: {en: 'Romanian', ro: 'Română'}},
-  {value: 'sk', label: {en: 'Slovak', sk: 'Slovenčina'}},
-  {value: 'sl', label: {en: 'Slovenian', sl: 'Slovenščina'}},
-  {value: 'fi', label: {en: 'Finnish', fi: 'Suomi'}},
-  {value: 'sv', label: {en: 'Swedish', sv: 'Svenska'}},
+  { value: 'de', label: { en: 'German', de: 'Deutsch' } },
+  { value: 'et', label: { en: 'Estonian', et: 'Eesti keel' } },
+  { value: 'el', label: { en: 'Greek', el: 'ελληνικά' } },
+  { value: 'en', label: { en: 'English' } },
+  { value: 'fr', label: { en: 'French', fr: 'Français' } },
+  { value: 'ga', label: { en: 'Irish', ga: 'Gaeilge' } },
+  { value: 'hr', label: { en: 'Croatian', hr: 'Hrvatski' } },
+  { value: 'it', label: { en: 'Italian', it: 'Italiano' } },
+  { value: 'lv', label: { en: 'Latvian', lv: 'Latviešu valoda' } },
+  { value: 'lt', label: { en: 'Lithuanian', lt: 'Lietuvių kalba' } },
+  { value: 'hu', label: { en: 'Hungarian', hu: 'Magyar' } },
+  { value: 'mt', label: { en: 'Maltese', mt: 'Malti' } },
+  { value: 'nl', label: { en: 'Dutch', nl: 'Nederlands' } },
+  { value: 'pl', label: { en: 'Polish', pl: 'Polski' } },
+  { value: 'pt', label: { en: 'Portuguese', pt: 'Português' } },
+  { value: 'ro', label: { en: 'Romanian', ro: 'Română' } },
+  { value: 'sk', label: { en: 'Slovak', sk: 'Slovenčina' } },
+  { value: 'sl', label: { en: 'Slovenian', sl: 'Slovenščina' } },
+  { value: 'fi', label: { en: 'Finnish', fi: 'Suomi' } },
+  { value: 'sv', label: { en: 'Swedish', sv: 'Svenska' } },
 ];
 
 const renderingContext = {
@@ -78,6 +68,16 @@ const renderingContext = {
   },
   domText(/* node, text */) {
   },
+  createDomNode(srcNodeRef /* , view */) {
+    if (srcNodeRef instanceof Node) {
+      return srcNodeRef;
+    } else if (typeof srcNodeRef === 'string') {
+      return document.getElementById(srcNodeRef);
+    }
+    return document.createElement('div');
+  },
+  destroyDomNode(/* domNode, view */) {
+  },
   presenterRegistry: new Registry(),
   editorRegistry: new Registry(),
   /**
@@ -90,6 +90,9 @@ const renderingContext = {
    *   (I.e. a function that given a binding launches the chooser dialog, when the user is
    *   finished and has made his selection the onSelect method will be called with the
    *   selected choice.)
+   * query - function(item, term) -> promise with choices
+   *   (I.e. a function that given an item and a searchterm gives back a promise with
+   *   matching choices.)
    */
   chooserRegistry: new Registry(),
   renderPresenter(node, binding, context) {
@@ -108,17 +111,28 @@ const renderingContext = {
       renderingContext.postEditorRenderer(node, binding, context);
     }
   },
+  renderValidationMessage(node, type, message) {
+  },
   renderSelect(/* fieldDiv, binding, context */) {
   },
-  getChoice: system.getChoice,
-  openChoiceSelector(binding, callback) {
+  getChoice(item, value) {
+    const chooser = renderingContext.chooserRegistry.getComponent(item);
+    if (chooser == null) {
+      throw new Error(`Error, no chooser available to retrieve a choice for item: ${item.getId()}`);
+    }
+    return chooser.getChoice(item, value);
+  },
+  hasOpenChoiceSelector(binding) {
+    return renderingContext.chooserRegistry.getComponent(binding.getItem()) != null;
+  },
+  openChoiceSelector(binding, callback, field) {
     const chooser = renderingContext.chooserRegistry.getComponent(binding.getItem());
     if (chooser == null) {
       const item = binding.getItem();
       alert(`Error, no chooser available to open a choice selector for: ${item}`);
       return;
     }
-    chooser.show(binding, callback);
+    chooser.show(binding, callback, field);
   },
   getExtLinkClass() {
     return '';
@@ -126,13 +140,8 @@ const renderingContext = {
   setMessages(msgs) {
     messages = msgs;
   },
-  getMessages(callback) {
-    if (messages) {
-      callback(messages);
-    } else {
-      const newMessages = i18n.getLocalization(nlsRdforms);
-      callback(newMessages);
-    }
+  getMessages() {
+    return messages || nls; // i18n.getLocalization(nlsRdforms);
   },
   /**
    * This method returns a list of language-codes and their labels (in several translations)
@@ -220,14 +229,6 @@ const renderingContext = {
     languages = langs;
   },
 
-  setDefaultLanguage(newLanguage) {
-    language = newLanguage;
-  },
-
-  getDefaultLanguage() {
-    return i18n.getLocale();
-  },
-
   setPopoverContainer(container) {
     popoverContainer = container;
   },
@@ -237,8 +238,10 @@ const renderingContext = {
   },
 
   // Override the following methods
+  // eslint-disable-next-line no-unused-vars
   preEditorViewRenderer(viewNode, binding) {
   },
+  // eslint-disable-next-line no-unused-vars
   prePresenterViewRenderer(viewNode, binding) {
   },
   preEditorRenderer() {
@@ -250,6 +253,8 @@ const renderingContext = {
   postPresenterRenderer() {
   },
   renderEditorLabel(/* rowNode, binding, item, context */) {
+  },
+  renderEditorLabelScopeEnd(/* rowNode, binding, item, context */) {
   },
   renderPresenterLabel(/* rowNode, binding, item, context */) {
   },
@@ -273,6 +278,8 @@ const renderingContext = {
   },
 };
 
+system.getChoice = renderingContext.getChoice;
+
 const groupPresenter = (fieldDiv, binding, context) => {
   const Cls = context.view.constructor;
   // eslint-disable-next-line no-new
@@ -281,6 +288,8 @@ const groupPresenter = (fieldDiv, binding, context) => {
     messages: context.view.messages,
     binding,
     topLevel: false,
+    showLanguage: context.view.showLanguage,
+    filterTranslations: context.view.filterTranslations,
     includeLevel: context.view.includeLevel, // Copied from groupEditor, was this.includeLevel but that 'this' does not make sense here
   }, fieldDiv);
 };
@@ -302,34 +311,5 @@ const groupEditor = (fieldDiv, binding, context) => {
 };
 renderingContext.editorRegistry.itemtype('group').register(groupEditor);
 renderingContext.editorRegistry.itemtype('propertygroup').register(groupEditor);
-const bundle = {
-
-  edit_add: "Add",
-  edit_remove: "Remove",
-  edit_browse: "Browse and select",
-  edit_expand: "Expand",
-  edit_upgrade: "Provide additional information for this web address",
-  info_label: "Label",
-  info_property: "Property",
-  info_description: "Description",
-  address_label: "Address",
-  validation_min_required: "{{PLURAL:$1|at least one value is|a minimum of $1 values is}} required",
-  validation_min_recommended: "{{PLURAL:$1|at least one value is|a minimum of $1 values is}} recommended",
-  validation_max: "{{PLURAL:$1|at most one value is|a maximum of $1 values are}} allowed",
-  validation_disjoint: "A maximum of one value is allowed",
-  validation_deprecated: "This field is deprecated",
-  date_date: "Date",
-  date_year: "Year",
-  date_date_and_time: "Date and time",
-  mandatoryLabel: "Mandatory",
-  recommendedLabel: "Recommended",
-  optionalLabel: "Optional",
-  today: "Today",
-  mandatoryMark: "*",
-  recommendedMark: "(Recommended)",
-  optionalMark: "(Optional)"
-
-};
-renderingContext.setMessages(bundle);
 
 export default renderingContext;

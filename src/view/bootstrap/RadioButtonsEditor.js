@@ -1,24 +1,22 @@
-import declare from 'dojo/_base/declare';
-import _WidgetBase from 'dijit/_WidgetBase';
-
 let uniqueRadioButtonGroupNr = 0;
-export default declare([_WidgetBase], {
-  constructor(args) {
+
+export default class RadioButtonsEditor {
+  constructor(args, node) {
     this.binding = args.binding;
     this.item = this.binding.getItem();
     this.choices = this.item.getChoices();
     this.choice = this.binding.getChoice();
     this.context = args.context;
     this.context.clear = this.clear.bind(this);
-  },
+    this.domNode = node;
+    this.buildRendering();
+  }
 
   clear() {
     jquery(this.domNode).find('input').prop('checked', false);
-  },
+  }
 
   buildRendering() {
-    this.domNode = this.srcNodeRef || jquery('<div>')[0];
-
     // Add mismatched choice to copy of choice list.
     if (this.choice != null && this.choice.mismatch) {
       this.choices = this.choices.slice(0);
@@ -59,5 +57,5 @@ export default declare([_WidgetBase], {
       }
     }
     uniqueRadioButtonGroupNr += 1;
-  },
-});
+  }
+}

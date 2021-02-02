@@ -1,4 +1,4 @@
-@import "../resources/rdforms.css";
+@import "../jquery/style.css";
 
 .test-class {
     color: red !important;
@@ -6,6 +6,10 @@
 
 .test-class2 {
     color: green !important;
+}
+
+.rdformsEditor .rdformsRow.rdformsTopLevel {
+    margin-bottom: 1em;
 }
 
 .input-group-btn > .form-control {
@@ -20,10 +24,6 @@
 
 .rdformsEditor .rdformsField .rdformsLangFieldControl {
     width: 146px;
-}
-
-.rdformsLabelRow {
-    vertical-align: top;
 }
 
 .rdformsDateValue .form-control:invalid,
@@ -62,7 +62,18 @@
 .rdformsDuration>div {
     width: 10em;
     display: inline-block;
-    margin-right: 1em;
+    margin-right: 10px;
+}
+
+.rdformsEditor .rdformsDuration>div {
+    margin-bottom: 10px;
+    margin-right: 40px;
+}
+
+.rdformsEditor .rdformsDuration>div .input-group-addon {
+    margin-right: 10px;
+    margin-top: 7px;
+    min-width: 60px;
 }
 
 .popover strong {
@@ -119,21 +130,8 @@
     min-width: 12em;
 }
 
-.compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow,
-.compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel {
+.compact.rdformsEditor .rdformsTopLevel>.rdformsLabelRow {
     padding-top: 6px;
-}
-
-.rdformsLabelRow.rdformsLabel {
-    display: inline-block;
-}
-
-.compact .rdformsLabelRow.rdformsLabel {
-    display: block;
-}
-
-.rdformsRow.rdformsTopLevel {
-    padding-bottom: 0.5em;
 }
 
 .rdformsEditor .rdformsField.rdformsLangcontrolledfield {
@@ -150,6 +148,7 @@
 
 .rdformsEditor .browseChoices {
     margin-left: 4px;
+    height: calc(1.5em + .75rem + 2px);
 }
 
 .browseChoices .fa-search.fa-stack-1x {
@@ -171,28 +170,6 @@
 .rdformsDateValue.rdformsDatepicker>.input-group {
     width: 150px;
 }
-/*.rdformsEditor.compact>.rdformsTopLevel:nth-child(odd) {
-    background: #E6E6E6
-}*/
-
-/*.fuelux .rdformsDatepicker>.input-group>.input-group-btn>.dropdown-menu-left {*/
-/*    left: -128px;*/
-/*}*/
-
-.cardgroup>.rdformsFields>.rdformsGroup {
-    padding: 2px 5px 5px 10px;
-    margin-right: -5px;
-    margin-bottom: 14px;
-    background-color: #f7f7f9;
-    border: 1px solid #e1e1e8;
-    border-radius: 4px;
-}
-
-.rdforms .form-group.rdforms-upgrade {
-    display: inline-block;
-    width: 300px;
-    margin: 0px;
-}
 
 /* Autoexpand style */
 .rdforms .rdformsFields textarea.form-control {
@@ -213,11 +190,51 @@
 }
 
 .rdformsEditor .rdformsExtLink {
-    margin-top: 4px;
+    margin-top: 11px;
     float: left;
+    margin-left: 17px;
 }
 
 
-/*.rdforms .rdformsFields textarea.form-control:focus {
-  max-height: 400px;
-}*/
+/*  Test */
+.rdformsEditor .rdformsFieldControl .action {
+    float: right;
+}
+
+.rdforms .action {
+    margin-top: 7px;
+}
+
+.rdformsEditor .rdformsFieldControl>.action,
+.rdformsEditor .rdformsLangFieldControl>.action {
+    margin-top: 11px;
+}
+
+.rdformsEditor .form-check {
+    padding-left: 0;
+}
+
+.rdformsField .radio.form-check input {
+    margin-right: 8px;
+}
+
+.rdformsEditor .select2-container .select2-selection--single .select2-selection__rendered {
+    padding-left: 0;
+}
+
+.rdformsEditor .select2-container .select2-selection--single {
+    padding: .275rem .75rem;
+    height: calc(1.5em + .75rem + 2px);
+}
+
+.rdformsEditor .select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 6px;
+}
+
+.rdformsEditor .select2-container--default .select2-selection--single {
+    border: 1px solid #ced4da;
+}
+
+.rdformsValidator .rdformsValidationMessageWrapper {
+    margin-left: -22px;
+}

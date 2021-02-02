@@ -1,7 +1,5 @@
 import Group from './Group';
 
-const lang = require('dojo/_base/lang'); // TODO
-
 export default class PropertyGroup extends Group {
   /**
    * A PropertyGroup captures the special case when both the predicate and object of a
@@ -12,13 +10,13 @@ export default class PropertyGroup extends Group {
    */
   getChildren(original) {
     if (this._delegatedChildren == null) {
-      let override = {
-        getCardinality: function () {
-          return {"min": 1, "max": 1, "pref": 1};
-        }
-      };
+      const getCardinality = () => ({ min: 1, max: 1, pref: 1 });
       const children = super.getChildren(original) || [];
-      this._delegatedChildren = children.map(child => lang.delegate(child, override));
+      this._delegatedChildren = children.map((child) => {
+        const delegate = Object.create(child);
+        delegate.getCardinality = getCardinality;
+        return delegate;
+      });
     }
     return this._delegatedChildren;
   }

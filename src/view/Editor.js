@@ -2,7 +2,6 @@ import renderingContext from './renderingContext';
 import Presenter from './Presenter';
 import * as engine from '../model/engine';
 import {bindingReport} from '../model/validate';
-import declare from 'dojo/_base/declare';
 
 const showNow = (editor, item, bindings, includeLevel) => {
   // Invisible should be created as components and hidden using display: none
@@ -51,18 +50,17 @@ const showNow = (editor, item, bindings, includeLevel) => {
   }
 };
 
-export default declare(Presenter, {
-  //= ==================================================
-  // Public attributes
-  //= ==================================================
-  filterTranslations: false,
-  styleCls: 'rdformsEditor',
-  includeLevel: 'recommended',
-  hideAddress: false, // For instance when you expose address in surrounding application
+export default class Editor extends Presenter {
 
-  //= ==================================================
-  // Public methods
-  //= ==================================================
+  _handleParams(params) {
+    this._subEditors = this._subEditors || [];
+    this.includeLevel = params.includeLevel || 'recommended';
+    this.hideAddress = params.hideAddress !== false; // For instance when you expose address in surrounding application
+    params.styleCls = params.styleCls || 'rdformsEditor';
+    params.filterTranslations = params.filterTranslations !== undefined ? params.filterTranslations : false;
+    super._handleParams(params);
+  }
+
   report(report) {
     const _report = report || bindingReport(this.binding);
 
@@ -72,7 +70,7 @@ export default declare(Presenter, {
     for (let j = 0; j < _report.errors.length; j++) {
       const err = _report.errors[j];
       if (err.parentBinding === this.binding) {
-        if (err.code === engine.CODES.TOO_FEW_VALUES) {
+        if (err.code === engine.CODES.TOO_FEW_VALUES_MIN) {
           const item = err.item;
           let counter = item.getCardinality().min;
 
@@ -98,10 +96,12 @@ export default declare(Presenter, {
     for (let i = 0; i < this._subEditors.length; i++) {
       this._subEditors[i].report(_report);
     }
-  },
+  }
+
   getIncludeLevel() {
     return this.includeLevel;
-  },
+  }
+
   setIncludeLevel(includeLevel) {
     this.includeLevel = includeLevel;
     if (this.graph == null || this.resource == null || this.template == null) {
@@ -109,19 +109,16 @@ export default declare(Presenter, {
     }
     this.binding = engine.match(this.graph, this.resource, this.template);
     this.render();
-  },
+  }
+
   //= ==================================================
   // Inherited methods
   //= ==================================================
-  buildRendering() {
-    this._subEditors = [];
-    this.inherited('buildRendering', arguments);
-  },
 
-  show(/* params */) {
+  show(params) {
     this._subEditors = [];
-    this.inherited('show', arguments);
-  },
+    super.show(params);
+  }
 
   /**
    * Will only show something for the given item if there is anything to show, or if the
@@ -132,16 +129,21 @@ export default declare(Presenter, {
    */
   showNow(item, bindings) {
     return showNow(this, item, bindings, this.includeLevel);
-  },
+  }
+
   skipBinding(/* binding */) {
     return false;
-  },
+  }
+
   /**
    * Will add bindings until the min cardinality is reached.
    * @param {Object} item
    * @param {Object} bindings
    */
   prepareBindings(item, bindings) {
+    if (item.hasStyle('nonEditable')) {
+      return bindings;
+    }
     let _bindings = bindings;
     const card = item.getCardinality();
     let target;
@@ -169,28 +171,32 @@ export default declare(Presenter, {
       }
     }
     return _bindings;
-  },
+  }
 
   addLabel(rowDiv, binding, item) {
     renderingContext.renderEditorLabel(rowDiv, binding, item, this.context);
-  },
+  }
+  createEndOfRowNode(rowNode, binding, item) {
+    renderingContext.renderEditorLabelScopeEnd(rowNode, binding, item, this.context);
+  }
 
   addTable(newRow, firstBinding) {
     if (firstBinding.getItem().hasStyle('nonEditable')) {
       return this.addComponent(newRow, firstBinding);
     }
     return renderingContext.addEditorTable(newRow, firstBinding, {view: this});
-  },
+  }
 
   fillTable(table, bindings) {
     renderingContext.fillEditorTable(table, bindings, {view: this});
-  },
+  }
 
   preRenderView() {
     renderingContext.preEditorViewRenderer(this.domNode, this.binding, {
       view: this, inEditor: true, topLevel: this.topLevel, hideAddress: this.hideAddress
     });
-  },
+  }
+
   addComponent(fieldDiv, binding) {
     this.context.inEditor = true;
     if (binding.getItem().hasStyle('nonEditable')) {
@@ -198,9 +204,13 @@ export default declare(Presenter, {
     } else {
       renderingContext.renderEditor(fieldDiv, binding, this.context);
     }
-  },
+  }
+
   createRowNode(lastRowNode, binding, item) {
-    const newNode = this.inherited('createRowNode', arguments);
+    if (binding == null && item.hasStyle('nonEditable')) {
+      return;
+    }
+    const newNode = super.createRowNode(lastRowNode, binding, item);
     if (item.getType() === 'choice' && typeof item.getProperty() === 'undefined') {
       const popular = engine.findPopularChoice(item, binding.getParent());
       if (popular) {
@@ -227,13 +237,18 @@ export default declare(Presenter, {
       if (!engine.matchPathBelowBinding(fromBinding, path)) {
         f(false);
       }
-      fromBinding.addListener((/* changedBinding */) => {
-        f(engine.matchPathBelowBinding(fromBinding, path));
-      });
+      const listener = (/* changedBinding */) => {
+        if (!binding.getParent()) { // Current binding has been removed, remove the listener
+          fromBinding.removeListener(listener);
+        } else {
+          f(engine.matchPathBelowBinding(fromBinding, path));
+        }
+      };
+      fromBinding.addListener(listener);
     }
     if (this.filterBinding(binding)) {
       renderingContext.domClassToggle(newNode, 'hiddenProperty', true);
     }
     return newNode;
-  },
-});
+  }
+};

@@ -1,0 +1,195 @@
+@import "../resources/rdforms.css";
+
+.rdforms.rdformsEditor .rdformsField {
+    padding-right: 36px;
+}
+
+.rdforms.rdformsEditor .rdformsFieldControl {
+    width: 26px;
+    top: 14px;
+}
+
+.rdformsLabelRow {
+    vertical-align: top;
+}
+
+.rdformsLabelRow .MuiButtonBase-root {
+    margin-top: -4px;
+    margin-left: 7px;
+}
+
+.rdformsLabelRow .MuiButtonBase-root.rdformsButtonSeparator {
+    margin-left: 0;
+}
+
+.compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel {
+    padding-top: 6px;
+}
+
+.rdformsLabelRow.rdformsLabel {
+    display: inline-block;
+}
+
+.compact .rdformsLabelRow.rdformsLabel {
+    display: block;
+}
+
+.rdformsPresenter .rdformsRow.rdformsTopLevel {
+    margin-bottom: 0.5em;
+}
+
+.cardgroup>.rdformsFields>.rdformsGroup {
+    padding: 6px 6px 6px 12px;
+    margin-right: -5px;
+    margin-bottom: 14px;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+}
+
+.rdforms .form-group.rdforms-upgrade {
+    display: inline-block;
+    width: 300px;
+    margin: 0;
+}
+
+.rdforms .durationLabel:first-child {
+    padding-left: 0;
+}
+
+.rdforms .durationLabel {
+    padding-right: 8px;
+    padding-left: 12px;
+}
+
+.rdforms .durationValue {
+    width: 4em;
+}
+
+.rdformsEditor .rdformsFieldControl {
+    top: 8px;
+    width: 1em;
+}
+
+.rdformsLabelRow .action {
+    margin-top: 2px;
+    margin-left: 5px;
+}
+.rdformsLabelRow .action.fa-plus,
+.rdformsLabelRow .action.indentRemove {
+    margin-left: 10px;
+}
+
+.rdformsEditor .rdformsField .mismatch .MuiFormControlLabel-label {
+    color: rgba(255, 0, 0, 0.38);
+}
+
+/* Make the input fields fill the whole width */
+.rdformsField>.MuiFormControl-root {
+    width: 100%;
+}
+
+/* Bigger distance between repeated values when filled */
+.rdformsEditor .rdformsField.rdformsRepeatedValue {
+    margin-top: 5px;
+}
+
+/* .MuiFilledInput-input padding top is just too big
+.rdformsEditor .MuiFilledInput-input {
+    padding-top: 10px;
+} */
+
+.rdformsEditor .rdformsSearch {
+    margin-right: 10px;
+    width: calc(66.66% - 7px);
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.rdformsEditor .rdformsDatePicker {
+    display: flex;
+    justify-content: start;
+}
+
+.rdformsEditor .rdformsDatePicker>* {
+    margin-right: 12px;
+    width: calc(33.33% - 8px);
+}
+
+.rdformsEditor .rdformsDatePicker>*:last-child {
+    margin-right: 0px;
+}
+
+/* Two thirds text input*/
+.rdformsEditor .rdformsTwoThirds {
+    margin-right: 12px;
+    width: calc(66.66% - 8px);
+}
+
+.rdformsEditor .rdformsLangControl {
+    width: calc(33.33% - 8px);
+}
+
+/* Duration */
+.rdformsEditor .rdformsDurationInput {
+    margin-left: 12px;
+    width: calc(20% - 10px);
+}
+.rdformsEditor .rdformsDurationInput:first-child {
+    margin-left: 0;
+}
+
+/* Fixes for tooltip*/
+div.MuiTooltip-tooltip {
+    font-weight: normal;
+    border-radius: 0;
+    padding: 20px;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* More air and no indent */
+.rdformsGroup,
+.rdformsField {
+    margin-left: 0;
+}
+.rdformsRow.rdformsTopLevel {
+    padding-bottom: 1.5em;
+}
+.rdforms .rdformsRow.rdformsTopLevel:last-child {
+    padding-bottom: 0;
+}
+.rdformsGroup .rdformsRow {
+    padding-bottom: 1em;
+}
+.rdformsGroup .rdformsRow:last-child {
+    padding-bottom: 0;
+}
+
+.cardgroup>.rdformsFields>.rdformsGroup {
+    margin-bottom: 5px;
+}
+
+.rdformsEditor .rdformsAddChild {
+    margin-top: 6px;
+}
+
+.rdformsEditor .rdformsRow.rdformsTopLevel {
+    padding-bottom: 36px;
+}
+
+/* Better style for error reports */
+.rdforms .rdformsField.errorReport, .rdforms .rdformsGroup.errorReport {
+    border-left: 2px solid red;
+    padding-left: 12px;
+}
+.rdforms .rdformsLanguage {
+    margin: 0 10px 0px;
+    background: #474747;
+    color: white;
+    padding: 3px 5px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: bolder;
+    font-family: sans-serif;
+}

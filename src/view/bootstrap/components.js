@@ -1,33 +1,13 @@
+import jquery from 'jquery';
 import renderingContext from '../renderingContext';
 import system from '../../model/system';
+import '../jquery/components';
 import './auto';
 import './labels';
 import './text';
 import './choice';
 import './buttons';
 import './table';
-import jquery from 'jquery';
-
-renderingContext.domQuery = (selector, node) => jquery(selector, node)[0];
-
-renderingContext.domCreate = (nodeStr, parent) => jquery(`<${nodeStr}>`).appendTo(parent)[0];
-
-renderingContext.domCreateAfter = (nodeStr, sibling) => {
-  const node = jquery(`<${nodeStr}>`);
-  jquery(sibling).after(node);
-  return node;
-};
-renderingContext.domSetAttr = (node, attr, value) => {
-  jquery(node).attr(attr, value);
-};
-
-renderingContext.domText = (node, text) => {
-  jquery(node).text(text);
-};
-
-renderingContext.domClassToggle = (node, classStr, addOrRemove) => {
-  jquery(node).toggleClass(classStr, addOrRemove);
-};
 
 renderingContext.preEditorRenderer = (fieldDiv, binding, context) => {
   context.$controlDiv = jquery('<div class="rdformsFieldControl">');
@@ -60,8 +40,24 @@ renderingContext.preEditorViewRenderer = (viewNode, binding, context) => {
     }
   }
 };
-renderingContext.prePresenterViewRenderer = renderingContext.preEditorViewRenderer;
 
 renderingContext.postEditorRenderer = (fieldDiv, binding, context) => {
   context.$controlDiv.appendTo(fieldDiv);
+};
+
+const type2class = {
+  error: 'exclamation-triangle',
+  warning: 'exclamation-circle',
+  deprecated: 'question-circle',
+};
+
+renderingContext.renderValidationMessage = (fieldDiv, type, message) => {
+  const cls = type2class[type];
+  const nw = renderingContext.domCreate('div', fieldDiv);
+  renderingContext.domClassToggle(nw, 'rdformsValidationMessageWrapper', true);
+  const i = renderingContext.domCreate('i', nw);
+  renderingContext.domClassToggle(i, `fas fa-${cls}`, true);
+  const n = renderingContext.domCreate('span', nw);
+  renderingContext.domClassToggle(n, 'rdformsValidationMessage', true);
+  renderingContext.domText(n, message);
 };

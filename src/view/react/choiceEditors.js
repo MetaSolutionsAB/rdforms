@@ -154,7 +154,7 @@ const ChoiceLookupAndInlineSearch = (props) => {
       }
       globalChoiceQueryThrottle = setTimeout(() => {
         globalChoiceQueryThrottle = undefined;
-        props.context.chooser.search(binding.getItem(), inputValue).then((results) => {
+        props.context.chooser.search(binding.getItem(), inputValue.trimStart()).then((results) => {
           if (active) {
             setOptions(results.map(localizedChoice));
           }
@@ -171,9 +171,19 @@ const ChoiceLookupAndInlineSearch = (props) => {
   const renderInput = (params) => {
     params.inputProps = params.inputProps || {};
     params.inputProps['aria-labelledby'] = labelledBy;
-    return <TextField aria-labelledby={labelledBy}
-               {...params} { ...(value && value.mismatch ? { error: true } : {}) }
-               variant={renderingContext.materialVariant} />;
+    return (
+      <TextField
+        aria-labelledby={labelledBy}
+        {...params}
+        { ...(value && value.mismatch ? { error: true } : {}) }
+        onKeyDown={({ key, keyCode }) => {
+          const isEnterKey = key === 'Enter' || keyCode === 13;
+          if (isEnterKey && !open) {
+            setOpen(true);
+          }
+        }}
+        variant={renderingContext.materialVariant} />
+    );
   };
 
   return <><Autocomplete

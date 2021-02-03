@@ -18,7 +18,7 @@ const { Graph } = rdfjson;
 const { ItemStore, bundleLoader, Editor } = rdforms;
 
 bundleLoader(new ItemStore(), bundles, (loadedBundles) => {
-  Editor({
+  new Editor({
     graph: new Graph(rdfGraph),
     resource: 'http://example.org/about',
     template: loadedBundles[7].getRoot(),

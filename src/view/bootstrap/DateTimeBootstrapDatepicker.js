@@ -1,18 +1,43 @@
 import 'bootstrap-datepicker/dist/js/bootstrap-datepicker';
-import declare from 'dojo/_base/declare';
 import jquery from 'jquery';
 import DateTimeBase from './DateTimeBase';
-import templateString from './DateTimeBootstrapDatepickerTemplate.html';
 
 /**
  * A Date and time picker.
  */
-const DateTimeBootstrapDatepicker = declare([DateTimeBase], {
-  templateString,
+export default class DateTimeBootstrapDatepicker extends DateTimeBase {
 
-  //= ==================================================
-  // Inherited methods
-  //= ==================================================
+  buildUI() {
+    const bundle = this.context.view.messages;
+    this.domNode.innerHTML = `<div class="rdformsDateValue rdformsFieldInput" xmlns="http://www.w3.org/1999/html">
+    <div class="rdformsDatepicker datepicker">
+        <div class="input-group date">
+            <input type="text" class="form-control">
+            <div class="input-group-append">
+                <span class="input-group-text">
+                <i class="fas fa-calendar"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <span style="display: none">
+        <input type="text" class="form-control timeInput" placeholder="23:59"/>
+    </span>
+    <span style="display: none">
+        <input type="text" class="form-control yearInput" placeholder="1999"/>
+    </span>
+    <select class="form-control dateControl">
+        <option value="Year">${bundle.date_year}</option>
+        <option value="Date" selected="true">${bundle.date_date}</option>
+        <option value="DateTime">${bundle.date_date_and_time}</option>
+    </select>
+</div>`;
+    this.cal = jquery(this.domNode).find('.date')[0];
+    this.timeInput = jquery(this.domNode).find('.timeInput')[0];
+    this.yearInput = jquery(this.domNode).find('.yearInput')[0];
+    this.dateControl = jquery(this.domNode).find('.dateControl')[0];
+  }
+
 
   initDatePicker() {
     this.$datepicker = jquery(this.cal).datepicker({
@@ -36,11 +61,10 @@ const DateTimeBootstrapDatepicker = declare([DateTimeBase], {
     if (!this.item.isEnabled()) {
       this.$datepicker.datepicker('disabled');
     }
-  },
+  }
   setDateInPicker(d) {
     this.$datepicker.datepicker('update', d);
-  },
-});
+  }
+}
 
 DateTimeBase.register(DateTimeBootstrapDatepicker);
-export default DateTimeBootstrapDatepicker;

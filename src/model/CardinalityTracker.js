@@ -12,18 +12,20 @@ export default class CardinalityTracker {
     this._limits = item.getCardinality() || {};
     this._counter = 0;
     this._depsOk = true;
+    this._listeners = [];
   }
 
-  // ===================================================
-  // Public hooks
-  // ===================================================
-  maxReached() {
+  addListener(listener) {
+    this._listeners.push(listener);
+    return listener;
   }
 
-  minReached() {
+  removeListener(listener) {
+    this._listeners.splice(this._listeners.indexOf(listener), 1);
   }
 
   cardinalityChanged() {
+    this._listeners.forEach(listener => listener());
   }
 
   // ===================================================
@@ -80,16 +82,12 @@ export default class CardinalityTracker {
   _checkCounter() {
     if (this._limits.max != null && this._counter === this._limits.max) {
       this._fine = true;
-      this.maxReached();
     } else if (this._limits.max != null && this._counter > this._limits.max) {
       this._fine = false;
-      this.maxReached();
     } else if (this._limits.min != null && this._counter === this._limits.min) {
       this._fine = true;
-      this.minReached();
     } else if (this._limits.min != null && this._counter < this._limits.min) {
       this._fine = false;
-      this.minReached();
     }
     this.cardinalityChanged();
   }

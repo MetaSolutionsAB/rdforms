@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+import moment from 'moment';
 import system from './system';
 import PropertyGroup from '../template/PropertyGroup';
 import Text from '../template/Text';
@@ -9,8 +11,6 @@ import ValueBinding from './ValueBinding';
 import ChoiceBinding from './ChoiceBinding';
 import utils from '../utils';
 
-const kernel = require('dojo/_base/kernel'); // TODO replace
-
 // See public API at the bottom of this file.
 
 let _matchGroupItemChildren;
@@ -21,14 +21,14 @@ let _createStatementsForConstraints;
 let _fuzzy = false;
 
 const match = (graph, uri, template) => {
-  const rootBinding = new GroupBinding({item: template, childrenRootUri: uri, graph});
+  const rootBinding = new GroupBinding({ item: template, childrenRootUri: uri, graph });
   _matchGroupItemChildren(rootBinding);
   _clearDibbs(rootBinding);
   return rootBinding;
 };
 
 const fuzzyMatch = (graph, uri, template) => {
-  const rootBinding = new GroupBinding({item: template, childrenRootUri: uri, graph});
+  const rootBinding = new GroupBinding({ item: template, childrenRootUri: uri, graph });
   _matchGroupItemChildren(rootBinding);
   _fuzzy = true;
   _matchGroupItemChildren(rootBinding);
@@ -95,14 +95,14 @@ const getFirstDataType = item => (Array.isArray(item.getDatatype()) ? item.getDa
 const _createTextItem = (parentBinding, item) => {
   const graph = parentBinding.getGraph();
   const nt = item.getNodetype();
-  const obj = {value: '', type: 'literal'};
+  const obj = { value: '', type: 'literal' };
   if (nt === 'URI') {
     obj.type = 'uri';
   } else if (nt === 'DATATYPE_LITERAL') {
     obj.datatype = getFirstDataType(item);
   }
   const stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), obj, false);
-  const nbinding = new ValueBinding({item, statement: stmt});
+  const nbinding = new ValueBinding({ item, statement: stmt });
   parentBinding.addChildBinding(nbinding);
   const defaultValue = item.getValue();
   const cardTracker = nbinding.getCardinalityTracker();
@@ -122,14 +122,14 @@ const _createTextItem = (parentBinding, item) => {
 const _createChoiceItem = (parentBinding, item) => {
   const graph = parentBinding.getGraph();
   const nt = item.getNodetype();
-  const obj = {type: 'literal', value: ''};
+  const obj = { type: 'literal', value: '' };
   if (nt === 'DATATYPE_LITERAL') {
     obj.datatype = getFirstDataType(item);
   } else if (nt === 'RESOURCE' || nt === 'URI') {
     obj.type = 'uri';
   }
   const stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), obj, false);
-  const nbinding = new ChoiceBinding({item, statement: stmt});
+  const nbinding = new ChoiceBinding({ item, statement: stmt });
   parentBinding.addChildBinding(nbinding);
   const defaultValue = item.getValue();
   const cardTracker = nbinding.getCardinalityTracker();
@@ -147,7 +147,7 @@ const _createGroupItem = (parentBinding, item, parentItems) => {
     if (item.getNodetype() === 'URI') {
       stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), {
         type: 'uri',
-        value: system.createURI(item, parentBinding)
+        value: system.createURI(item, parentBinding),
       }, false);
     } else {
       stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), null, false);
@@ -155,7 +155,7 @@ const _createGroupItem = (parentBinding, item, parentItems) => {
     constr = _createStatementsForConstraints(graph, stmt.getValue(), item);
   }
 
-  const nBinding = new GroupBinding({item, statement: stmt, constraints: constr});
+  const nBinding = new GroupBinding({ item, statement: stmt, constraints: constr });
   parentBinding.addChildBinding(nBinding);
 
   // Only do loop detection for items that are stored in the itemStore and hence are
@@ -173,7 +173,7 @@ const _createGroupItem = (parentBinding, item, parentItems) => {
   /*
   array.forEach(item.getChildren(), function(childItem) {
        create(nBinding, childItem, parentItems);
-  });*/
+  }); */
   return nBinding;
 };
 
@@ -186,15 +186,15 @@ const _createPropertyGroupItem = (parentBinding, item) => {
     stmt = graph.create(parentBinding.getChildrenRootUri(), '', null, false);
     constr = _createStatementsForConstraints(graph, stmt.getSubject(), oItem);
   } else if (oItem instanceof Choice) {
-    stmt = graph.create(parentBinding.getChildrenRootUri(), '', {type: 'uri', value: ''}, false);
+    stmt = graph.create(parentBinding.getChildrenRootUri(), '', { type: 'uri', value: '' }, false);
   } else {
     stmt = graph.create(parentBinding.getChildrenRootUri(), '', {
       type: 'literal',
-      value: ''
+      value: '',
     }, false);
   }
 
-  const nBinding = new PropertyGroupBinding({item, statement: stmt, constraints: constr});
+  const nBinding = new PropertyGroupBinding({ item, statement: stmt, constraints: constr });
   parentBinding.addChildBinding(nBinding);
   if (oItem instanceof Group) {
     oItem.getChildren().forEach((childItem) => {
@@ -284,7 +284,7 @@ const _matchGroupItem = (pb, item) => {
     }
     // Case 2: there is no property in the item, i.e. a layout item.
   } else {
-    groupBinding = new GroupBinding({item});
+    groupBinding = new GroupBinding({ item });
     pb.addChildBindings([groupBinding]);
     _matchGroupItemChildren(groupBinding); // Recursive call
   }
@@ -319,12 +319,12 @@ const _matchPropertyGroupItem = (pb, item) => {
           oChoice = _findChoice(oItem, stmt.getValue(), stmt.getGraph());
           if (oChoice !== undefined) {
             _dibbs(stmt);
-            binding = new PropertyGroupBinding({item, statement: stmt});
+            binding = new PropertyGroupBinding({ item, statement: stmt });
             binding.getObjectBinding().setChoice(oChoice);
           }
         } else {
           _dibbs(stmt);
-          binding = new PropertyGroupBinding({item, statement: stmt});
+          binding = new PropertyGroupBinding({ item, statement: stmt });
         }
 
         if (binding !== null) {
@@ -354,7 +354,7 @@ const _matchTextItem = (pb, item) => {
         if (!dtMatch) {
           matchingCode = CODES.WRONG_DATATYPE;
         }
-        bindings.push(new ValueBinding({ item, statement: stmt, matchingCode}));
+        bindings.push(new ValueBinding({ item, statement: stmt, matchingCode }));
       }
     }
   });
@@ -472,7 +472,7 @@ _findStatementsForConstraints = (graph, uri, item) => {
   const constr = item.getConstraints();
   const results = [];
   const f = (predicate, object) => {
-    stmts = graph.find(uri, predicate, {type: 'uri', value: object});
+    stmts = graph.find(uri, predicate, { type: 'uri', value: object });
     if (stmts.length === 1) {
       results.push(stmts[0]);
       return undefined;
@@ -510,9 +510,9 @@ _createStatementsForConstraints = (graph, uri, item) => {
     Object.keys(constr).forEach((key) => {
       const obj = constr[key];
       if (Array.isArray(obj)) {
-        results.push(graph.create(uri, key, {type: 'uri', value: obj[0]}, false));
+        results.push(graph.create(uri, key, { type: 'uri', value: obj[0] }, false));
       } else {
-        results.push(graph.create(uri, key, {type: 'uri', value: obj}, false));
+        results.push(graph.create(uri, key, { type: 'uri', value: obj }, false));
       }
     });
   }
@@ -530,16 +530,16 @@ _findChoice = (item, obj, graph) => {
       }
     }
     if (!item.hasStyle('strictmatch') || _fuzzy) {
-      return {value: obj, label: {'': obj}, mismatch: true};
+      return { value: obj, label: { '': obj }, mismatch: true };
     }
   } else {
     let label = utils.getLocalizedMap(graph, obj, item.getLabelProperties());
     if (label == null && _fuzzy) {
-      label = {'': obj, mismatch: true};
+      label = { '': obj, mismatch: true };
     }
     const sa = graph.findFirstValue(obj, ChoiceBinding.seeAlso);
     if (label != null) {
-      const choice = {label, value: obj};
+      const choice = { label, value: obj };
       if (sa) {
         choice.seeAlso = sa;
       }
@@ -581,6 +581,7 @@ const findFirstValueBinding = (binding, createIfMissing) => {
     return binding;
   }
   const cbs = binding.getItemGroupedChildBindings();
+  const loc = moment.locale();
   for (let idx = 0; idx < cbs.length; idx++) {
     const vbs = cbs[idx];
     const childItem = binding.getItem().getChildren()[idx];
@@ -588,14 +589,14 @@ const findFirstValueBinding = (binding, createIfMissing) => {
       if (!(childItem instanceof Text)) {
         return findFirstValueBinding(vbs[0]);
       } else if (childItem.getNodetype() === 'LANGUAGE_LITERAL') {
-        const result = {firstValue: vbs[0]};
+        const result = { firstValue: vbs[0] };
         for (let i = 0; i < vbs.length; i++) {
           const l = vbs[i].getLanguage();
           if (l == null) {
             result.emptyLanguageValue = vbs[i];
-          } else if (l === kernel.locale) {
+          } else if (l === loc) {
             result.perfectLocaleLanguageValue = vbs[i];
-          } else if (l.substring(0, 1) === kernel.locale.substring(0, 1)) {
+          } else if (l.substring(0, 1) === loc.substring(0, 1)) {
             result.localeLanguageValue = vbs[i];
           } else if (l.indexOf('en') !== -1) {
             result.defaultLanguageValue = vbs[i];
@@ -613,7 +614,7 @@ const findFirstValueBinding = (binding, createIfMissing) => {
     } else if (createIfMissing) {
       const b = create(binding, childItem, {});
       if (b instanceof ValueBinding) {
-        b.setLanguage(kernel.locale);
+        b.setLanguage(loc);
         return b;
       }
       return findFirstValueBinding(b, true);
@@ -744,7 +745,7 @@ const _levelProfile = (profile, item, ignoreTopLevelGroup) => {
 };
 
 const levelProfile = (item) => {
-  const profile = _levelProfile({mandatory: 0, recommended: 0, optional: 0}, item, true);
+  const profile = _levelProfile({ mandatory: 0, recommended: 0, optional: 0 }, item, true);
   profile.itemCount = profile.mandatory + profile.recommended + profile.optional;
   return profile;
 };
@@ -785,12 +786,12 @@ const detectLevel = (profile) => {
  * @param {rdforms/template/Item} template
  * @return {rdforms/model/GroupBinding} which is the root of binding tree.
  */
-export {match};
+export { match };
 
-export {fuzzyMatch};
+export { fuzzyMatch };
 
-export {matchPathBelowBinding};
-export {findBindingRelativeToParentBinding}
+export { matchPathBelowBinding };
+export { findBindingRelativeToParentBinding };
 
 /**
  * Finds the choice in a choice item that are the most popular, i.e. the choice that most
@@ -798,7 +799,7 @@ export {findBindingRelativeToParentBinding}
  * @param {rdforms/template/Choice} choiceItem
  * @param {rdforms/model/GroupBinding} rootBinding
  */
-export {findPopularChoice}
+export { findPopularChoice };
 
 /**
  * Constructs a template by finding an item per outgoing property for provided graph and
@@ -811,7 +812,7 @@ export {findPopularChoice}
  * will be enforced independent of corresponding property exists in the graph or not.
  * @return {rdforms/template/Item} the constructed template.
  */
-export {constructTemplate};
+export { constructTemplate };
 
 /**
  * Creates a new binding below the given parentBinding according to what the item specifies.
@@ -823,7 +824,7 @@ export {constructTemplate};
  * @param {rdforms/template/Item} item
  * @param {Object} parentItems is a hash of parent Items to use for loop detection.
  */
-export {create};
+export { create };
 
 /**
  * Finds the first value binding in a binding tree, depth first.
@@ -838,7 +839,7 @@ export {create};
  *
  * @return {rdforms/model/ValueBinding}
  */
-export {findFirstValueBinding};
+export { findFirstValueBinding };
 
 /**
  * Calculates the level profile, i.e. the amount of items on mandatory, recommended
@@ -847,7 +848,7 @@ export {findFirstValueBinding};
  * @param {rdforms/template/Item} item
  * @return {Object} with keys mandatory, recommended and optional, each pointing to an integer.
  */
-export {levelProfile};
+export { levelProfile };
 
 /**
  * Investigates a level profile and provides the following responses:
@@ -861,7 +862,7 @@ export {levelProfile};
  * @param {object} profile as provided by the levelProfile function.
  * @return {string} one of the responses outlined
  */
-export {detectLevel};
+export { detectLevel };
 
 const CODES = {
   OK: 'correct',
@@ -875,10 +876,10 @@ const CODES = {
   WRONG_NODETYPE: 'nodetype',
   WRONG_DATATYPE: 'datatype',
   MISSING_LANGUAGE: 'language',
-  MISSING_CONSTRAINTS: 'constraints'
+  MISSING_CONSTRAINTS: 'constraints',
 };
 
-export {CODES}
+export { CODES };
 
 
 export default { // TODO @valentino anti-pattern. This is done because engine is used in EntryScape. It shouldn't really...
@@ -893,4 +894,4 @@ export default { // TODO @valentino anti-pattern. This is done because engine is
   matchPathBelowBinding,
   findBindingRelativeToParentBinding,
   CODES,
-}
+};

@@ -1,10 +1,7 @@
-import DurationEditor from './DurationEditor';
-import DurationPresenter from './DurationPresenter';
+import moment from 'moment';
+import durationEditor from './durationEditor';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
-import system from '../../model/system';
-import { i18n } from 'esi18n';
-import { escape } from 'lodash-es';
 
 /**
  * Try to guess the number of rows needed for a textarea element by looking at the value of the element
@@ -18,103 +15,13 @@ const countLines = (text, charsInLine = 70) => {
   return rows;
 };
 
-// -------------- Presenters ----------------
-const presenters = renderingContext.presenterRegistry;
-
-// Presenter for URIs.
-presenters.itemtype('text').nodetype('URI').register((fieldDiv, binding/* , context */) => {
-  const vmap = utils.getLocalizedMap(binding);
-  const $a = jquery('<a class="rdformsUrl">')
-    .attr('title', binding.getValue())
-    .attr('href', binding.getValue())
-    .appendTo(fieldDiv);
-  if (vmap) {
-    $a.text(utils.getLocalizedValue(vmap).value);
-  } else {
-    $a.text(binding.getGist());
-  }
-  if (binding.getItem().hasStyle('externalLink')) {
-    system.attachExternalLinkBehaviour($a[0], binding);
-  } else {
-    system.attachLinkBehaviour($a[0], binding);
-  }
-});
-
-// Presenter for images.
-presenters.itemtype('text').nodetype('URI').style('image')
-  .register((fieldDiv, binding/* , context */) => {
-    jquery('<img class="rdformsImage">').attr('src', binding.getGist()).appendTo(fieldDiv);
-  });
-
-// Presenter for text.
-presenters.itemtype('text').register((fieldDiv, binding, context) => {
-  if (context.view.showLanguage && binding.getLanguage()) {
-    jquery('<div class="rdformsLanguage">').text(binding.getLanguage()).appendTo(fieldDiv);
-  }
-  const text = escape(binding.getGist());
-
-  // The text is shown as a link to the parents bindings URI if:
-  // 1) The current item is indicated to be a label.
-  // 2) The presenter is not at topLevel.
-  // 3) The current item is first in the parents list of children.
-  // 4) The parent binding corresponds to a URI
-  const parentBinding = binding.getParent();
-  if (binding.getItem().hasStyle('label')
-    && this.topLevel !== true
-    && parentBinding != null && parentBinding.getItem().getChildren()[0] === binding.getItem()
-    && parentBinding.getStatement() != null && parentBinding.getStatement().getType() === 'uri') {
-    const $a = jquery('<a class="rdformsUrl">')
-      .attr('href', parentBinding.getStatement().getValue())
-      .html(text)
-      .appendTo(fieldDiv);
-    system.attachLinkBehaviour($a[0], parentBinding);
-  } else {
-    jquery('<div>').toggleClass('rdformsField', context.inEditor === true).html(text).appendTo(fieldDiv);
-  }
-
-  if (binding.getItem().hasStyle('multiline')) {
-    jquery(fieldDiv).toggleClass('rdformsMultiline', true);
-  } else {
-    jquery(fieldDiv).toggleClass('rdformsSingleline', true);
-  }
-});
-
-// Presenter for duration
-presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding, context) => {
-  // eslint-disable-next-line no-new
-  new DurationPresenter({
-    value: binding.getValue(),
-  }, jquery('<div>').appendTo(fieldDiv)[0]);
-});
-
-const datePresenter = (fieldDiv, binding, context) => {
-  const data = binding.getValue();
-  if (data != null && data !== '') {
-    try {
-      let str;
-      if (data.indexOf('T') > 0) {
-        str = i18n.getDate(data);
-      } else if (data.length > 4) {
-        str = i18n.getDate(data, {selector: 'date'});
-      } else {
-        str = i18n.getDate(data, {selector: 'date', datePattern: 'YYYY'});
-      }
-      jquery('<div>').html(str).toggleClass('rdformsField', context.inEditor === true).appendTo(fieldDiv);
-    } catch (e) {
-      console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 (potentially with time given after a 'T' character as well) but found '${data}' instead.`);
-    }
-  }
-};
-presenters.itemtype('text').datatype('xsd:date').register(datePresenter);
-presenters.itemtype('text').datatype('dcterms:W3CDTF').register(datePresenter);
-
-
 // -------------- Editors ----------------
 const editors = renderingContext.editorRegistry;
 
 // Editor for duration
-editors.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding, context) => {
-  const tb = new DurationEditor({
+
+editors.itemtype('text').datatype('xsd:duration').register(durationEditor);
+/* {
     disabled: !binding.getItem().isEnabled(),
     value: binding.getValue(),
     onChange(value) {
@@ -123,8 +30,7 @@ editors.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding, c
   }, jquery('<div>').appendTo(fieldDiv)[0]);
   context.clear = () => {
     tb.set('value', '');
-  };
-});
+  }; */
 
 const addChangeListener = (inp, binding, regex, extLink) => {
   let to = null;
@@ -135,14 +41,14 @@ const addChangeListener = (inp, binding, regex, extLink) => {
     if (!regex || regex.test(val)) {
       binding.setGist(val);
       if (extLink && val) {
-        extLink.prop("href", binding.getValue());
+        extLink.prop('href', binding.getValue());
         disableExtLink = false;
       }
     }
     if (extLink) {
-      extLink.toggleClass("rdformsExtLinkDisabled", disableExtLink);
+      extLink.toggleClass('rdformsExtLinkDisabled', disableExtLink);
     }
-    inp.toggleClass("rdformsEmpty", val === "");
+    inp.toggleClass('rdformsEmpty', val === '');
   };
   const c = () => {
     if (to != null) {
@@ -193,11 +99,11 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
   if (item.hasStyle('multiline')) {
     const originalNrOfLines = countLines(binding.getGist());
     $input = jquery(`<textarea class="form-control rdformsFieldInput autoExpand" rows="${originalNrOfLines}">`);
-    $input.on('input focus', function(){
+    $input.on('input focus', function () {
       if (this.baseScrollHeight === undefined) {
         const originalHeight = $input.height();
         this.baseScrollHeight = $input.innerHeight() - originalHeight;
-        this.baseLineHeight = originalHeight/originalNrOfLines;
+        this.baseLineHeight = originalHeight / originalNrOfLines;
       }
       this.rows = 1;
       const rows = 1 + Math.ceil((this.scrollHeight - this.baseScrollHeight) / this.baseLineHeight);
@@ -255,7 +161,7 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
     if (binding.isValid()) {
       $lselect.val(binding.getLanguage());
     } else {
-      const defLang = renderingContext.getDefaultLanguage();
+      const defLang = moment.locale();
       if (typeof defLang === 'string' && defLang !== '') {
         $lselect.val(defLang);
         binding.setLanguage(defLang);

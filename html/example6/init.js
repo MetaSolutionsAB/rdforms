@@ -9,7 +9,7 @@ const bundles = [
   ['../templates/vcard.json'],
   ['../templates/dcat_props.json'],
   ['../templates/dcat.json'],
-  ['../templates/templatebundle.json'],
+  ['../templates/templateBundle.json'],
 ];
 
 registeryDummyChooser();
@@ -19,7 +19,7 @@ const { ItemStore, bundleLoader, Editor } = rdforms;
 const itemStore = new ItemStore();
 const graph = new Graph(rdfGraph);
 bundleLoader(itemStore, bundles, () => {
-  Editor({
+  new Editor({
     graph,
     resource: 'http://example.org/about',
     template: itemStore.getItem('test'),

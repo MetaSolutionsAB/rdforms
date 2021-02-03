@@ -1,19 +1,15 @@
+import moment from 'moment';
 import renderingContext from './renderingContext';
 import View from './View';
-import {i18n} from 'esi18n';
-import declare from 'dojo/_base/declare';
 
-export default declare(View, {
-  // ===================================================
-  // Public attributes
-  // ===================================================
-  showLanguage: true,
-  filterTranslations: true,
-  styleCls: 'rdformsPresenter',
+export default class Presenter extends View {
+  _handleParams(params) {
+    this.showLanguage = params.showLanguage === true;
+    this.filterTranslations = params.filterTranslations !== false;
+    this.styleCls = params.styleCls || 'rdformsPresenter';
+    super._handleParams(params);
+  }
 
-  // ===================================================
-  // Public API
-  // ===================================================
   /**
    * Show only if any bindings exists for the given item.
    * @param {Object} item
@@ -24,7 +20,7 @@ export default declare(View, {
       return false;
     }
     return bindings.length > 0 && !item.hasStyle('invisible');
-  },
+  }
 
   skipBinding(binding) {
     const item = binding.getItem();
@@ -32,7 +28,7 @@ export default declare(View, {
       return false; // Corresponds to an extention or pure heading, since no children.
     }
     return item.getType() === 'group' && binding.getChildBindings().length === 0;
-  },
+  }
 
   /**
    * Has no effect on items that with node type different than LANGUAGE_LITERAL
@@ -52,11 +48,12 @@ export default declare(View, {
     }
     for (index = 0; index < bindings.length; index++) {
       const lang = bindings[index].getLanguage();
+      const locale = moment.locale();
       if (lang === '' || lang == null) {
         alts.noLanguage = bindings[index];
-      } else if (lang === i18n.getLocale()) {
+      } else if (lang === locale) {
         alts.best = bindings[index];
-      } else if (lang.indexOf(i18n.getLocale()) !== -1 || i18n.getLocale().indexOf(lang) !== -1) {
+      } else if (lang.indexOf(locale) !== -1 || locale.indexOf(lang) !== -1) {
         alts.close = bindings[index];
       } else if (lang.indexOf(this.defaultLanguage) === 0) {
         alts.defaultLanguage = bindings[index];
@@ -64,7 +61,7 @@ export default declare(View, {
     }
     const singleBinding = alts.best || alts.close || alts.defaultLanguage || alts.noLanguage;
     return singleBinding !== undefined ? [singleBinding] : bindings;
-  },
+  }
 
   addLabel(rowDiv, binding, item) {
     if (item.hasStyle('noLabelInPresent')) {
@@ -72,19 +69,21 @@ export default declare(View, {
     } else {
       renderingContext.renderPresenterLabel(rowDiv, binding, item, this.context);
     }
-  },
+  }
+
   addTable(newRow, firstBinding) {
-    return renderingContext.addPresenterTable(newRow, firstBinding, {view: this});
-  },
+    return renderingContext.addPresenterTable(newRow, firstBinding, { view: this });
+  }
+
   fillTable(table, bindings) {
-    return renderingContext.fillPresenterTable(table, bindings, {view: this});
-  },
+    return renderingContext.fillPresenterTable(table, bindings, { view: this });
+  }
+
   preRenderView() {
-    renderingContext.prePresenterViewRenderer(this.domNode, this.binding, {view: this, topLevel: this.topLevel});
-  },
+    renderingContext.prePresenterViewRenderer(this.domNode, this.binding, { view: this, topLevel: this.topLevel });
+  }
+
   addComponent(fieldDiv, binding) {
     renderingContext.renderPresenter(fieldDiv, binding, this.context);
-  },
-});
-
-
+  }
+}

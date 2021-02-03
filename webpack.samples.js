@@ -80,7 +80,7 @@ const getCopyPlugins = (type) => new CopyWebpackPlugin([
   }]);
 
 const variants = {
-  type: ['bmd', 'bootstrap'],
+  type: ['bmd', 'bootstrap', 'react'],
 };
 
 function createConfig(options) {

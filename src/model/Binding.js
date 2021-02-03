@@ -11,6 +11,10 @@ let counter = 0;
  * the statement is asserted, that is, inserted into the RDF graph.
  */
 export default class Binding {
+  /**
+   * @exports {Binding}
+   * @class
+   */
   constructor({ item, statement, graph, matchingCode }) {
     this._item = item;
     this._statement = statement;

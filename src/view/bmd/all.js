@@ -1,5 +1,6 @@
 import renderingContext from '../renderingContext';
 // bootstrap + rdforms components + bmd
+import '../bootstrap/components';
 import 'arrive';
 import 'bootstrap-material-design';
 import 'bootstrap-material-datetimepicker';

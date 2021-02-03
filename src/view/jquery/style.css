@@ -1,0 +1,49 @@
+@import "../resources/rdforms.css";
+
+.rdformsLabelRow {
+    vertical-align: top;
+}
+
+.compact.rdformsPresenter .rdformsTopLevel>.rdformsLabel {
+    padding-top: 6px;
+}
+
+.rdformsLabelRow.rdformsLabel {
+    display: inline-block;
+}
+
+.compact .rdformsLabelRow.rdformsLabel {
+    display: block;
+}
+
+.rdformsPresenter .rdformsRow.rdformsTopLevel {
+    margin-bottom: 0.5em;
+}
+
+.cardgroup>.rdformsFields>.rdformsGroup {
+    padding: 2px 5px 5px 10px;
+    margin-right: -5px;
+    margin-bottom: 14px;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+}
+
+.rdforms .form-group.rdforms-upgrade {
+    display: inline-block;
+    width: 300px;
+    margin: 0;
+}
+
+.rdforms .durationLabel:first-child {
+    padding-left: 0;
+}
+
+.rdforms .durationLabel {
+    padding-right: 7px;
+    padding-left: 13px;
+}
+
+.rdforms .durationValue {
+    width: 4em;
+}

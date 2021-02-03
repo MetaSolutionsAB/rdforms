@@ -91,11 +91,12 @@
     "build:all": "webpack --display-modules --mode=production --config webpack.all.js",
     "build:node": "webpack --display-modules --config webpack.node.js",
     "build:node:dev": "webpack --mode=development --display-modules --config webpack.node.js",
-    "dev": "webpack-dev-server --watch --config webpack.dev.js",
+    "build:samples": "webpack --config webpack.samples.js",
+    "dev:bmd": "webpack-dev-server --watch --config webpack.dev.js",
     "dev:bootstrap": "webpack-dev-server --watch --config webpack.dev.js --type=bootstrap",
     "dev:jquery": "webpack-dev-server --watch --config webpack.dev.js --type=jquery",
     "dev:react": "webpack-dev-server --watch --config webpack.dev.js --type=react",
-    "samples": "webpack --config webpack.samples.js",
+    "serve:samples": "webpack-dev-server --config webpack.samples.serve.js",
     "print-licenses": "print-licenses"
   }
 }

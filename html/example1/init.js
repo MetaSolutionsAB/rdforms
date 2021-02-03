@@ -6,11 +6,6 @@ const graph = new Graph({
       {
         type: 'uri',
         value: 'http://example.com/color/blue',
-        ng: 'http://example.com',
-      },
-      {
-        type: 'uri',
-        value: 'http://example.com/color/blue',
       }],
   },
 });

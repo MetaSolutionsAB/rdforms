@@ -16,7 +16,7 @@ export default class ValidationPresenter extends Presenter {
     params.showLanguage = params.showLanguage !== false;
     params.filterTranslations = false;
     params.styleCls = params.styleCls || 'rdformsPresenter rdformsValidator';
-    params.fuzzy = params.fuzzy !== false;
+    this.fuzzy = params.fuzzy !== false;
     super._handleParams(params);
     if (this.binding) {
       bindingReport(this.binding);
@@ -43,9 +43,8 @@ export default class ValidationPresenter extends Presenter {
       case 'mandatory':
         return card && card.min >= 1;
       case 'recommended':
-        return card && (card.min >= 1 || card.pref >= 1);
       default:
-        return true;
+        return card && (card.min >= 1 || card.pref >= 1);
     }
   }
 

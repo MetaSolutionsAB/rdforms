@@ -40,7 +40,7 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
   label = item.hasStyle('heading') ?
     <h2 tabIndex="0" className="rdformsLabelRow"><span className="rdformsLabel">{label}</span></h2> :
     <span tabIndex="0" className="rdformsLabelRow"><span className="rdformsLabel">{label}</span></span>;
-  rowNode.appendChild(<ItemTooltip key={`${binding.getHash()}_label`} context={context} item={item
+  rowNode.appendChild(<ItemTooltip key={`${binding ? binding.getHash() : item._internalId}_label` } context={context} item={item
   }>{label}</ItemTooltip>);
 };
 

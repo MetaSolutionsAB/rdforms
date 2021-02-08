@@ -81,8 +81,8 @@
             "max": 1
           },
           "label": {
-            "en": "Date",
-            "sv": "Datum"
+            "en": "Modification date",
+            "sv": "Modifieringsdatum"
           },
           "description": {
             "en": "A date when this resource was modified.",

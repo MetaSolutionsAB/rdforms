@@ -20,6 +20,7 @@ presenters.itemtype('text').nodetype('URI').register((fieldDiv, binding) => {
   const vmap = utils.getLocalizedMap(binding);
   const val = binding.getValue();
   const attrs = system.attachLinkBehaviour(fieldDiv, binding) || {};
+  attrs.target = attrs.target || '_blank';
   const component = attrs.component || null;
   delete attrs.component;
   fieldDiv.appendChild(<a {...attrs} key={binding.getHash()} title={val} href={val}><span>{vmap ?

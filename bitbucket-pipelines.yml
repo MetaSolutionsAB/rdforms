@@ -1,4 +1,4 @@
-image: metasolutions/openjdk-node:latest
+image: metasolutions/node-yarn:latest
 
 options:
   max-time: 10

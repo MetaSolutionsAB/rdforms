@@ -95,7 +95,7 @@ const ShowButton = (props) => {
 };
 
 const ChoiceLookup = (props) => {
-  const [choice, setChoice] = useState(props.binding.getChoice());
+  const [choice, setChoice] = loadLocalizedChoice(props.binding);
   useEffect(() => {
     props.context.clear = () => setChoice(null);
   }, []);
@@ -106,7 +106,7 @@ const ChoiceLookup = (props) => {
     label = choice.label ? utils.getLocalizedValue(choice.label).value : choice.value;
   }
 
-  const labelledBy = context.view.getLabelIndex(binding);
+  const labelledBy = props.context.view.getLabelIndex(props.binding);
 
   return <><TextField
     inputProps={{ 'aria-labelledby': labelledBy }}

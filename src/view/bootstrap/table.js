@@ -65,8 +65,10 @@ const addTableRow = (table, binding, context) => {
     }
   });
   groupedBindings.forEach((bindings) => {
-    renderingContext.renderEditor(jquery('<td>').appendTo($trEl)[0], bindings[0],
-      {view: context.view, noCardinalityButtons: true});
+    if (bindings.length > 0) {
+      renderingContext.renderEditor(jquery('<td>').appendTo($trEl)[0], bindings[0],
+        { view: context.view, noCardinalityButtons: true });
+    }
   });
 
   if (!binding.getItem().hasStyle('firstcolumnfixedtable')) {

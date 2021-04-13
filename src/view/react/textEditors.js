@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import moment from 'moment';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 
@@ -17,6 +18,15 @@ const LanguageControl = (props) => {
     const langList = utils.cloneArrayWithLabels(renderingContext.getNonPrimaryLanguageList());
     return primaryLangs.length === 0 ? langList : primaryLangs.concat([null], langList);
   });
+  useEffect(() => {
+    if (!props.binding.isValid()) {
+      const defLang = moment.locale();
+      if (typeof defLang === 'string' && defLang !== '') {
+        setLang(defLang);
+        props.binding.setLanguage(defLang);
+      }
+    }
+  }, []);
   const onLangChange = (event) => {
     props.binding.setLanguage(event.target.value);
     setLang(event.target.value);

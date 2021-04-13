@@ -159,6 +159,7 @@ export default class View {
 
       // Table case
       if (this.showAsTable(item)) {
+        this.context = { view: this };
         lastRow = this.createRowNode(lastRow, bindings[0], item);
         if (bindings.length > 0) {
           table = this.addTable(lastRow, bindings[0], item);

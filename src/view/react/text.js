@@ -22,8 +22,10 @@ presenters.itemtype('text').nodetype('URI').register((fieldDiv, binding) => {
   const attrs = system.attachLinkBehaviour(fieldDiv, binding) || {};
   const component = attrs.component || null;
   delete attrs.component;
-  fieldDiv.appendChild(<a {...attrs} key={binding.getHash()} title={val} href={val}><span>{vmap ?
-    utils.getLocalizedValue(vmap).value || val : binding.getGist()}</span>{component}</a>);
+  // eslint-disable-next-line no-nested-ternary
+  const lbl = binding.getItem().hasStyle('showValue') ? val :
+    (vmap ? utils.getLocalizedValue(vmap).value || val : binding.getGist());
+  fieldDiv.appendChild(<a {...attrs} key={binding.getHash()} title={val} href={val}><span>{lbl}</span>{component}</a>);
 });
 
 presenters.itemtype('text').nodetype('URI').style('externalLink').register((fieldDiv, binding) => {
@@ -33,8 +35,10 @@ presenters.itemtype('text').nodetype('URI').style('externalLink').register((fiel
   attrs.target = attrs.target || '_blank';
   const component = attrs.component || null;
   delete attrs.component;
-  fieldDiv.appendChild(<a {...attrs} key={binding.getHash()} title={val} href={val}><span>{vmap ?
-    utils.getLocalizedValue(vmap).value || val : binding.getGist()}</span>{component}</a>);
+  // eslint-disable-next-line no-nested-ternary
+  const lbl = binding.getItem().hasStyle('showValue') ? val :
+    (vmap ? utils.getLocalizedValue(vmap).value || val : binding.getGist());
+  fieldDiv.appendChild(<a {...attrs} key={binding.getHash()} title={val} href={val}><span>{lbl}</span>{component}</a>);
 });
 
 presenters.itemtype('text').nodetype('URI').style('image').register((fieldDiv, binding) => {
@@ -68,7 +72,8 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
       parentBinding.getStatement().getValue()}><span>{vmap ?
       utils.getLocalizedValue(vmap).value || val : val}</span>{component}</a>);
   } else {
-    fieldDiv.appendChild(<span key={binding.getHash()}>{binding.getGist()}</span>);
+    const lbl = binding.getItem().hasStyle('showValue') ? binding.getValue() : binding.getGist();
+    fieldDiv.appendChild(<span key={binding.getHash()}>{lbl}</span>);
   }
   if (context.view.showLanguage && binding.getLanguage()) {
     fieldDiv.appendChild(<span className="rdformsLanguage" key={`lang_${binding.getHash()}`}>{binding.getLanguage()}</span>);

@@ -141,9 +141,6 @@ export default class Editor extends Presenter {
    * @param {Object} bindings
    */
   prepareBindings(item, bindings) {
-    if (item.hasStyle('nonEditable')) {
-      return bindings;
-    }
     let _bindings = bindings;
     const card = item.getCardinality();
     let target;

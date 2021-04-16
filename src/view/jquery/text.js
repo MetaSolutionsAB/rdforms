@@ -14,7 +14,9 @@ presenters.itemtype('text').nodetype('URI').register((fieldDiv, binding/* , cont
     .attr('title', binding.getValue())
     .attr('href', binding.getValue())
     .appendTo(fieldDiv);
-  if (vmap) {
+  if (binding.getItem().hasStyle('showValue')) {
+    $a.text(binding.getValue());
+  } else if (vmap) {
     $a.text(utils.getLocalizedValue(vmap).value);
   } else {
     $a.text(binding.getGist());
@@ -37,7 +39,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
   if (context.view.showLanguage && binding.getLanguage()) {
     jquery('<div class="rdformsLanguage">').text(binding.getLanguage()).appendTo(fieldDiv);
   }
-  const text = escape(binding.getGist());
+  const text = escape(binding.getItem().hasStyle('showValue') ? binding.getValue() : binding.getGist());
 
   // The text is shown as a link to the parents bindings URI if:
   // 1) The current item is indicated to be a label.

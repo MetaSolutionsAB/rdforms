@@ -10,7 +10,7 @@ const uuidFactory = (reg) => {
     const data = binding.getValue();
     if (context.inEditor) {
       if (data == null || data === '') {
-        binding.setValue(utils.generateUUID(), true);
+        binding.setGist(utils.generateUUID(), true);
       }
     }
     reg.getComponentBefore(binding.getItem(), uuid)(fieldDiv, binding, context);

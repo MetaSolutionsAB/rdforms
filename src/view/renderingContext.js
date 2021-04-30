@@ -127,7 +127,7 @@ const renderingContext = {
   },
   openChoiceSelector(binding, callback, field) {
     const chooser = renderingContext.chooserRegistry.getComponent(binding.getItem());
-    if (chooser == null) {
+    if (chooser == null || !(chooser && chooser.getChoice)) {
       const item = binding.getItem();
       alert(`Error, no chooser available to open a choice selector for: ${item}`);
       return;

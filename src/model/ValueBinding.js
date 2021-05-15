@@ -140,7 +140,7 @@ export default class ValueBinding extends Binding {
 
   updateAssertions() {
     var assert = this._ancestorValid && this._validObject && this._validPredicate;
-    this._statement.setAsserted(assert);
+    this._statement.setAsserted(assert, true);
     this.bindingChange(this);
   }
 

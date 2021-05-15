@@ -734,9 +734,9 @@
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.8.0.tgz#bbbff68978fefdbe68ccb533bc8cbe1d1afb5413"
 
-"@entryscape/rdfjson@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@entryscape/rdfjson/-/rdfjson-2.3.0.tgz#7209334474a7b3d16708fb4ccf51a2932f6228f9"
+"@entryscape/rdfjson@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@entryscape/rdfjson/-/rdfjson-2.4.1.tgz#f65833341e30cddeab5fe3b802c8e332fda454a0"
   dependencies:
     core-js "^3.4.0"
     md5 "^2.2.1"

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import renderingContext from '../renderingContext';
 
 
@@ -18,6 +19,13 @@ const StyledTooltip = withStyles(theme => ({
 }))(Tooltip);
 
 const ItemTooltip = (props) => {
+  const [open, setOpen] = useState(false);
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+  const handleTooltipOpen = () => {
+    setOpen(true);
+  };
   let propinfo = '';
   const property = props.item.getProperty();
   if (property) {
@@ -25,9 +33,14 @@ const ItemTooltip = (props) => {
   }
   const description = props.item.getDescription() || (property ? '' : props.context.view.messages.info_missing || '');
 
-  return <StyledTooltip placement="bottom-start" interactive enterTouchDelay={0} leaveTouchDelay={50000} title={
-    (<><p className="rdformsLinebreaks rdformsDescription">{description}</p>{propinfo}</>)}>{
-    props.children}</StyledTooltip>;
+  return <ClickAwayListener onClickAway={handleTooltipClose}><div>
+    <StyledTooltip title={(<><p className="rdformsLinebreaks rdformsDescription">{description}</p>{propinfo}</>)}
+                   placement="bottom-start" disableHoverListener disableTouchListener
+                   onClose={handleTooltipClose}
+                   onOpen={handleTooltipOpen}
+                   open={open}
+    ><span onClick={handleTooltipOpen}>{
+      props.children}</span></StyledTooltip></div></ClickAwayListener>;
 };
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {

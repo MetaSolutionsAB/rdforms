@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import ChoiceBinding from './ChoiceBinding';
 
 export default class PropertyChoiceBinding extends ChoiceBinding {
@@ -47,4 +48,4 @@ export default class PropertyChoiceBinding extends ChoiceBinding {
    */
   updateAssertions() {
   }
-};
+}

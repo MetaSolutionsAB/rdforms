@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 /**
  * Check if there's any iterations left in a hypothetical array with 'length' given.
  *
@@ -47,7 +48,7 @@ const fetchBundle = async (urls) => {
           bundle = await response.json();
           break;
         } else {
-          throw Error(`Failed fetching template ${urls[i]}. Expected a JSON file and got ${contentType}`)
+          throw new Error(`Failed fetching template ${urls[i]}. Expected a JSON file and got ${contentType}`);
         }
       } catch (e) {
         stopFetchingOrJustLog(i, totalUrls, urls[i]);
@@ -66,7 +67,8 @@ const fetchBundle = async (urls) => {
  * @param bundles
  * @returns {Promise<*>}
  */
-const promisifyBundles = bundles => bundles.map(bundle => bundle instanceof Array ? fetchBundle(bundle) : Promise.resolve(bundle));
+const promisifyBundles = bundles => bundles.map(bundle =>
+  (bundle instanceof Array ? fetchBundle(bundle) : Promise.resolve(bundle)));
 
 /**
  * Register bundle templates
@@ -83,8 +85,8 @@ const registerBundles = (itemStore, bundles = []) => bundles.map(source => itemS
  * @param callback
  */
 export default async (itemStore, bundlePaths = [], callback = () => {}) => {
-  if (bundlePaths.length === 0) { // nothing to load
-    callback && callback([]);
+  if (bundlePaths.length === 0 && callback) { // nothing to load
+    callback([]);
   }
 
   // Fetch or if loaded just wrap it in Promise.resolve

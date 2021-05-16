@@ -1,9 +1,9 @@
-import ValueBinding from "./ValueBinding";
-import Group from "../template/Group";
-import Choice from "../template/Choice";
-import ChoiceBinding from "./ChoiceBinding";
-import GroupBinding from "./GroupBinding";
-import PropertyChoiceBinding from "./PropertyChoiceBinding";
+import ValueBinding from './ValueBinding';
+import Group from '../template/Group';
+import Choice from '../template/Choice';
+import ChoiceBinding from './ChoiceBinding';
+import GroupBinding from './GroupBinding';
+import PropertyChoiceBinding from './PropertyChoiceBinding';
 
 export default class PropertyGroupBinding extends GroupBinding {
   /**
@@ -20,31 +20,29 @@ export default class PropertyGroupBinding extends GroupBinding {
     const { statement, constraints } = params;
 
     this._statement = undefined;
-    this._validPredicate = true; //Reset to initial value to ignore check from incorrect given statement in this case.
+    this._validPredicate = true; // Reset to initial value to ignore check from incorrect given statement in this case.
     this._constraints = [];
 
     const children = this._item.getChildren();
-    const pItem = children[0];
     const item = children[1];
-    let pBinding;
     let oBinding;
 
     if (item instanceof Group) {
-      oBinding = new GroupBinding({item, statement, constraints});
+      oBinding = new GroupBinding({ item, statement, constraints });
     } else if (item instanceof Choice) {
-      oBinding = new ChoiceBinding({item, statement});
+      oBinding = new ChoiceBinding({ item, statement });
     } else {
-      oBinding = new ValueBinding({item, statement});
+      oBinding = new ValueBinding({ item, statement });
     }
-    pBinding = new PropertyChoiceBinding({item: children[0], objectBinding: oBinding});
+    const pBinding = new PropertyChoiceBinding({ item: children[0], objectBinding: oBinding });
 
     this.addChildBinding(pBinding);
     this.addChildBinding(oBinding);
   }
 
-  //===================================================
+  // ===================================================
   // Public API
-  //===================================================
+  // ===================================================
   getPredicateBinding() {
     return this._childBindings[0][0];
   }
@@ -56,4 +54,4 @@ export default class PropertyGroupBinding extends GroupBinding {
   getGraph() {
     return this.getObjectBinding().getGraph();
   }
-};
+}

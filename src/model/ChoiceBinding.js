@@ -1,15 +1,15 @@
-import ValueBinding from "./ValueBinding";
+import ValueBinding from './ValueBinding';
 
-const label = "http://www.w3.org/2000/01/rdf-schema#label";
-const seeAlso = "http://www.w3.org/2000/01/rdf-schema#seeAlso";
+const label = 'http://www.w3.org/2000/01/rdf-schema#label';
+const seeAlso = 'http://www.w3.org/2000/01/rdf-schema#seeAlso';
 
 /**
  * A ValueBinding that only accepts uris from a controlled vocabulary encoded as choices.
  * @see rforms.template.Choice#getChoices
  */
 export default class ChoiceBinding extends ValueBinding {
-  constructor({choice, item, statement, matchingCode}) {
-    super({choice, item, statement, matchingCode});
+  constructor({ choice, item, statement, matchingCode }) {
+    super({ choice, item, statement, matchingCode });
     this._choice = choice;
     this._validPredicate = item.getProperty() != null;
   }
@@ -21,7 +21,7 @@ export default class ChoiceBinding extends ValueBinding {
     this._choice = choice;
     if (choice == null) {
       this.setValue(null, null, silent);
-    } else if (this.getValue() != choice.value) {
+    } else if (this.getValue() !== choice.value) {
       this.setValue(choice.value, choice, silent);
     }
   }
@@ -32,16 +32,16 @@ export default class ChoiceBinding extends ValueBinding {
 
   remove() {
     this.setValue(null);
-    //Removed line below as it is also done in superclass
-    //and therefore causes an error
-    //this._parent.removeChildBinding(this);
+    // Removed line below as it is also done in superclass
+    // and therefore causes an error
+    // this._parent.removeChildBinding(this);
     super.remove();
   }
 
   setValue(value, choice, silent) {
     super.setValue(value, choice, silent);
-    var oldval = this.getValue();
-    var graph = this._statement.getGraph();
+    const oldval = this.getValue();
+    const graph = this._statement.getGraph();
     graph.findAndRemove(oldval, label, undefined, silent);
     graph.findAndRemove(oldval, seeAlso, undefined, silent);
 
@@ -51,12 +51,10 @@ export default class ChoiceBinding extends ValueBinding {
       }
 
       if (choice.inlineLabel === true) {
-        var labelMap = choice.label || {};
-        for (var lang in labelMap) if (labelMap.hasOwnProperty(lang)) {
-          graph.create(value, label,
-            {value: labelMap[lang], lang: lang, type: "literal"}, true, silent);
-        }
+        const labelMap = choice.label || {};
+        Object.keys(labelMap).forEach(lang => graph.create(value, label,
+            { value: labelMap[lang], lang, type: 'literal' }, true, silent));
       }
     }
   }
-};
+}

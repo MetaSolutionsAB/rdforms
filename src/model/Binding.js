@@ -1,5 +1,5 @@
+/* eslint-disable class-methods-use-this */
 import utils from '../utils';
-//import engine from './engine';
 
 let counter = 0;
 
@@ -21,14 +21,14 @@ export default class Binding {
     this._graph = graph;
     this._ancestorValid = true;
     this._cardinalityTracker = null;
-    this._hash = "b_" + counter;
+    this._hash = `b_${counter}`;
     this._matchingCode = matchingCode || 'correct';
-    counter++;
+    counter += 1;
   }
 
-  //===================================================
+  // ===================================================
   // Public API
-  //===================================================
+  // ===================================================
   getGraph() {
     if (!this._graph) {
       if (this._statement) {
@@ -87,7 +87,6 @@ export default class Binding {
    * <li>if it is a predicategroup and both the predicate and the object binding are valid.</ol>
    */
   isValid() {
-    //Override
   }
 
   getMatchingCode() {
@@ -110,7 +109,6 @@ export default class Binding {
    *
    */
   updateAssertions() {
-    //Override
   }
 
   getHash() {
@@ -126,7 +124,7 @@ export default class Binding {
 
   removeListener(listener) {
     if (this._listeners) {
-      var idx = this._listeners.indexOf(listener);
+      const idx = this._listeners.indexOf(listener);
       if (idx !== -1) {
         this._listeners.splice(idx, 1);
       }
@@ -135,7 +133,7 @@ export default class Binding {
 
   bindingChange(binding) {
     if (this._listeners) {
-      for (var i = 0; i < this._listeners.length; i++) {
+      for (let i = 0; i < this._listeners.length; i++) {
         this._listeners[i](binding);
       }
     }
@@ -144,27 +142,27 @@ export default class Binding {
     }
   }
 
-  //===================================================
+  // ===================================================
   // Private methods
-  //===================================================
+  // ===================================================
   _isValidObjectValue(value) {
-    if (typeof value !== "string" && value !== null) {
-      throw "In a binding every object value need to be a string!";
+    let _value = value;
+    if (typeof _value !== 'string' && _value !== null) {
+      throw new Error('In a binding every object value need to be a string!');
     }
-    var pattern = this._item.getPattern();
+    const pattern = this._item.getPattern();
     if (pattern) {
-      value = utils.extractGist(value, this.getItem().getValueTemplate());
-      return value !== undefined && value !== null && value !== "" &&
-        (new RegExp("^" + pattern + "$")).test(value);
-    } else {
-      return value !== undefined && value !== null && value !== "";
+      _value = utils.extractGist(_value, this.getItem().getValueTemplate());
+      return _value !== undefined && _value !== null && _value !== '' &&
+        (new RegExp(`^${pattern}$`)).test(_value);
     }
+    return _value !== undefined && _value !== null && _value !== '';
   }
 
   _isValidPredicateValue(value) {
-    if (typeof value !== "string" && value !== null) {
-      throw "In a binding every predicate need to be a string!";
+    if (typeof value !== 'string' && value !== null) {
+      throw new Error('In a binding every predicate need to be a string!');
     }
-    return value !== undefined && value !== null && value !== "";
+    return value !== undefined && value !== null && value !== '';
   }
-};
+}

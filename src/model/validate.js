@@ -1,5 +1,5 @@
+import { namespaces as ns } from '@entryscape/rdfjson';
 import * as engine from './engine';
-import {namespaces as ns} from '@entryscape/rdfjson';
 
 /**
  * Generates a report for the given binding. Below is an example of a report:
@@ -20,21 +20,23 @@ import {namespaces as ns} from '@entryscape/rdfjson';
  * @type {Object}
  */
 const bindingReport = (groupbinding, reportObj) => {
-  if (reportObj == null) {
-    reportObj = { errors: [], warnings: [], deprecated: [] };
+  let _reportObj = reportObj;
+  if (_reportObj == null) {
+    _reportObj = { errors: [], warnings: [], deprecated: [] };
   } else {
-    reportObj.errors = reportObj.errors || [];
-    reportObj.warnings = reportObj.warnings || [];
-    reportObj.deprecated = reportObj.deprecated || [];
+    _reportObj.errors = _reportObj.errors || [];
+    _reportObj.warnings = _reportObj.warnings || [];
+    _reportObj.deprecated = _reportObj.deprecated || [];
   }
-  return _createReport(groupbinding, reportObj, true);
+  // eslint-disable-next-line no-use-before-define
+  return _createReport(groupbinding, _reportObj, true);
 };
 
 const _countValidBindings = (bindings) => {
   let counter = 0;
   for (let i = 0; i < bindings.length; i++) {
     if (bindings[i].isValid()) {
-      counter++;
+      counter += 1;
     }
   }
   return counter;
@@ -42,87 +44,87 @@ const _countValidBindings = (bindings) => {
 
 const _createReport = (groupbinding, report, firstLevel) => {
   if (groupbinding.getMatchingCode() !== engine.CODES.OK) {
-    return;
+    return undefined;
   }
-  let groupitem = groupbinding.getItem();
-  let path = groupitem.getDeps();
+  const groupitem = groupbinding.getItem();
+  const path = groupitem.getDeps();
   if (path && groupbinding.getParent() != null) {
-    let fromBinding = engine.findBindingRelativeToParentBinding(groupbinding.getParent(), path);
+    const fromBinding = engine.findBindingRelativeToParentBinding(groupbinding.getParent(), path);
     if (!engine.matchPathBelowBinding(fromBinding, path)) {
-      return;
+      return undefined;
     }
   }
 
   if (firstLevel === true || groupbinding.isValid() || groupitem.getProperty() == null) {
-    let childrenItems = groupitem.getChildren();
+    const childrenItems = groupitem.getChildren();
 
-    if (groupitem.hasStyle("disjoint")) {
-      let bindings = groupbinding.getChildBindings();
-      let nrOfValid = _countValidBindings(bindings);
+    if (groupitem.hasStyle('disjoint')) {
+      const bindings = groupbinding.getChildBindings();
+      const nrOfValid = _countValidBindings(bindings);
       if (nrOfValid > 1) {
         groupbinding.setMatchingCode(engine.CODES.TOO_MANY_VALUES);
         report.errors.push({
           parentBinding: groupbinding,
           item: bindings[0].getItem(),
-          code: engine.CODES.TOO_MANY_VALUES_DISJOINT
+          code: engine.CODES.TOO_MANY_VALUES_DISJOINT,
         });
         let counter = 0;
-        bindings.forEach((binding, idx) => {
+        bindings.forEach((binding) => {
           if (binding.isValid()) {
             if (counter > 0) {
               binding.setMatchingCode(engine.CODES.TOO_MANY_VALUES_DISJOINT);
             }
-            counter++;
+            counter += 1;
           }
         });
       }
       bindings.forEach((binding) => {
-        let item = binding.getItem();
-        if (item.hasStyle("deprecated")) {
+        const item = binding.getItem();
+        if (item.hasStyle('deprecated')) {
           report.deprecated.push(binding);
         }
       });
     } else {
       groupbinding.getItemGroupedChildBindings().forEach((bindings, index) => {
-        let item = childrenItems[index];
-        if (item.hasStyle("deprecated")) {
-          bindings.forEach((binding) => report.deprecated.push(binding));
+        const childItem = childrenItems[index];
+        if (childItem.hasStyle('deprecated')) {
+          bindings.forEach(binding => report.deprecated.push(binding));
           return;
         }
-        let path = item.getDeps();
-        if (path) {
-          let fromBinding = engine.findBindingRelativeToParentBinding(groupbinding, path);
-          if (!engine.matchPathBelowBinding(fromBinding, path)) {
+        const childPath = childItem.getDeps();
+        if (childPath) {
+          const fromBinding = engine.findBindingRelativeToParentBinding(groupbinding, childPath);
+          if (!engine.matchPathBelowBinding(fromBinding, childPath)) {
             return;
           }
         }
 
-        if (item.getProperty() != null) {
-          let nrOfValid = _countValidBindings(bindings);
-          let card = item.getCardinality();
+        if (childItem.getProperty() != null) {
+          const nrOfValid = _countValidBindings(bindings);
+          const card = childItem.getCardinality();
           if (card.min != null && card.min > nrOfValid) {
             report.errors.push({
               parentBinding: groupbinding,
-              item: item,
-              code: engine.CODES.TOO_FEW_VALUES_MIN
+              item: childItem,
+              code: engine.CODES.TOO_FEW_VALUES_MIN,
             });
           } else if (card.pref != null && card.pref > nrOfValid) {
             report.warnings.push({
               parentBinding: groupbinding,
-              item: item,
-              code: engine.CODES.TOO_FEW_VALUES_PREF
+              item: childItem,
+              code: engine.CODES.TOO_FEW_VALUES_PREF,
             });
           }
           if (card.max != null && card.max < nrOfValid) {
             report.errors.push({
               parentBinding: groupbinding,
-              item: item,
-              code: engine.CODES.TOO_MANY_VALUES
+              item: childItem,
+              code: engine.CODES.TOO_MANY_VALUES,
             });
             let counter = 0;
             bindings.forEach((binding) => {
               if (binding.isValid()) {
-                counter++;
+                counter += 1;
                 if (counter > card.max) {
                   binding.setMatchingCode(engine.CODES.TOO_MANY_VALUES);
                 }
@@ -131,7 +133,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
           }
         }
         // if (item instanceof GroupBinding){
-        if (item.getType() === "group") {
+        if (childItem.getType() === 'group') {
           bindings.forEach(binding => _createReport(binding, report));
         }
       }, this);
@@ -183,35 +185,42 @@ const _createReport = (groupbinding, report, firstLevel) => {
  * }
  *
  * @param {rdfjson/Graph} graph an rdf graph against which all validation is done
- * @param {Object} type2template a map between each type to check for and the template to use for validation (the type may be given with namespace abbreviations)
+ * @param {Object} type2template a map between each type to check for and the template to use for validation
+ * (the type may be given with namespace abbreviations)
  * @param {Array} mandatoryTypes an array of types to check that there are instances for
  * @return {Object} a report of the validity of the graph
  */
-const graphReport = (graph, type2template, mandatoryTypes=[]) => {
-  let resources, type2resources = {}, allResources = {}, cls, template, rr,
-    report = { errors: 0, warnings: 0, deprecated: 0, resources: [] };
-  for (cls in type2template) if (type2template.hasOwnProperty(cls)) {
-    resources = type2resources[cls] = _findResources(graph, cls);
+const graphReport = (graph, type2template, mandatoryTypes = []) => {
+  const type2resources = {};
+  const allResources = {};
+  let template;
+  let rr;
+  const report = { errors: 0, warnings: 0, deprecated: 0, resources: [] };
+  Object.keys(type2template).forEach((type) => {
+    // eslint-disable-next-line no-use-before-define
+    const resources = _findResources(graph, type);
+    type2resources[type] = resources;
     resources.forEach((resource) => {
-      allResources[resource] = true
+      allResources[resource] = true;
     });
-  }
+  });
 
-  for (cls in type2resources) if (type2resources.hasOwnProperty(cls)) {
-    template = type2template[cls];
-    type2resources[cls].forEach((resource) => {
+  Object.keys(type2resources).forEach((type) => {
+    template = type2template[type];
+    type2resources[type].forEach((resource) => {
+      // eslint-disable-next-line no-use-before-define
       rr = _resourceReport(resource, graph, template, allResources);
       rr.uri = resource;
-      rr.type = cls;
+      rr.type = type;
       rr.template = template.getId();
       report.resources.push(rr);
       report.errors += rr.errors.length;
       report.warnings += rr.warnings.length;
       report.deprecated += rr.deprecated.length;
     });
-  }
+  });
 
-  let mandatoryError = [];
+  const mandatoryError = [];
   mandatoryTypes.forEach((mt) => {
     if (type2resources[mt].length === 0) {
       mandatoryError.push(mt);
@@ -224,29 +233,14 @@ const graphReport = (graph, type2template, mandatoryTypes=[]) => {
   return report;
 };
 
-const _findResources = (graph, cls) => graph.find(null, "rdf:type", cls)
+const _findResources = (graph, cls) => graph.find(null, 'rdf:type', cls)
   .map(stmt => stmt.getSubject());
-
-const _resourceReport = (resource, graph, template, ignoreResources) => {
-  let binding = engine.fuzzyMatch(graph, resource, template);
-  let report = bindingReport(binding);
-  _filterReport(report, resource, ignoreResources || {});
-  _simplifyReport(report);
-  return report;
-};
-
-const _filterReport = (report, resource, otherResources) => {
-  const { errors, warnings, deprecated } = report;
-  report.errors = errors.filter((err) => _includeIssue(err.parentBinding, resource, otherResources));
-  report.warnings = warnings.filter((warn) => _includeIssue(warn.parentBinding, resource, otherResources));
-  report.deprecated = deprecated.filter((depr) => _includeIssue(depr, resource, otherResources));
-};
 
 const _includeIssue = (binding, resource, otherResources) => {
   let pb = binding;
   while (true) {
-    let uri = pb.getChildrenRootUri ? pb.getChildrenRootUri() : pb.getParent().getChildrenRootUri();
-    if (uri == resource) {
+    const uri = pb.getChildrenRootUri ? pb.getChildrenRootUri() : pb.getParent().getChildrenRootUri();
+    if (uri === resource) {
       return true;
     } else if (otherResources[uri]) {
       return false;
@@ -255,47 +249,57 @@ const _includeIssue = (binding, resource, otherResources) => {
   }
 };
 
-const _simplifyReport = (report) => {
-  const { errors, warnings, deprecated } = report;
-  report.errors = errors.map((err) => {
-    return { path: _createPath(err.parentBinding, err.item), code: err.code }
-  });
-  report.warnings = warnings.map((warn) => {
-    return { path: _createPath(warn.parentBinding, warn.item), code: warn.code }
-  });
-  report.deprecated = deprecated.map((dep) => {
-    return _createDepPath(dep)
-  });
-};
-
 const _createPath = (binding, item) => {
-  let path = [];
-  if (item.getProperty() != null && binding.getItem() != item) {
+  let _binding = binding;
+  const path = [];
+  if (item.getProperty() != null && _binding.getItem() !== item) {
     path.push(ns.shorten(item.getProperty()));
   }
   while (true) {
-    if (binding.getItem().getProperty() != null) {
-      path.push(ns.shorten(binding.getItem().getProperty()));
+    if (_binding.getItem().getProperty() != null) {
+      path.push(ns.shorten(_binding.getItem().getProperty()));
     }
 
-    if (binding.getParent() == null) {
+    if (_binding.getParent() == null) {
       break;
     } else {
-      binding = binding.getParent();
+      _binding = _binding.getParent();
     }
   }
   path.reverse();
-  return path.join(" > ");
+  return path.join(' > ');
 };
 
-const _createDepPath = dep => _createPath(dep.getParent(), dep.getItem()) + " > " + dep.getValue();
+const _filterReport = (report, resource, otherResources) => {
+  const { errors, warnings, deprecated } = report;
+  report.errors = errors.filter(err => _includeIssue(err.parentBinding, resource, otherResources));
+  report.warnings = warnings.filter(warn => _includeIssue(warn.parentBinding, resource, otherResources));
+  report.deprecated = deprecated.filter(depr => _includeIssue(depr, resource, otherResources));
+};
+
+const _createDepPath = dep => `${_createPath(dep.getParent(), dep.getItem())} > ${dep.getValue()}`;
+
+const _simplifyReport = (report) => {
+  const { errors, warnings, deprecated } = report;
+  report.errors = errors.map(err => ({ path: _createPath(err.parentBinding, err.item), code: err.code }));
+  report.warnings = warnings.map(warn => ({ path: _createPath(warn.parentBinding, warn.item), code: warn.code }));
+  report.deprecated = deprecated.map(dep => _createDepPath(dep));
+};
+
+const _resourceReport = (resource, graph, template, ignoreResources) => {
+  const binding = engine.fuzzyMatch(graph, resource, template);
+  const report = bindingReport(binding);
+  _filterReport(report, resource, ignoreResources || {});
+  _simplifyReport(report);
+  return report;
+};
 
 export {
   graphReport,
   bindingReport,
-}
+};
 
 export default { // TODO @valentino don't export default. Used in EntryScape
   graphReport,
   bindingReport,
-}
+};

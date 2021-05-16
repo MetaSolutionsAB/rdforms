@@ -10,16 +10,16 @@ export default class GroupBinding extends Binding {
    * the parent group can be checked and possibly updated.
    * Potential statement and constraints are asserted when both parents are valid and this GroupBinding is valid.
    *
-   * @see rforms.template.Group
+   * @see template/Group
    */
   constructor(params) {
     super(params);
 
-    const {constraints = [], childrenRootUri = null} = params;
+    const { constraints = [], childrenRootUri = null } = params;
     this._constraints = constraints;
-    //Generates an array of arrays, one array for each child item.
+    // Generates an array of arrays, one array for each child item.
 
-    this._childBindings = this._item.getChildren().map(child => ([]));
+    this._childBindings = this._item.getChildren().map(() => ([]));
     this._rootUri = childrenRootUri;
     this._validPredicate = true;
     if (this._statement) {
@@ -28,9 +28,9 @@ export default class GroupBinding extends Binding {
     this._cachedChildBindings = null;
   }
 
-  //===================================================
+  // ===================================================
   // Public API
-  //===================================================
+  // ===================================================
 
   getValue() {
     return this.getChildrenRootUri();
@@ -38,35 +38,36 @@ export default class GroupBinding extends Binding {
 
   oneChildValidityChanged(valid) {
     if (valid === this._oneValidChild) {
-      return;
+      return false; // No change
     }
     if (!valid) {
-      //Since we do not keep track of which children have valid values,
-      //we need to iterate through all children to check if some other child has a valid value
-      //(and check if valid predicate) if so, abort change.
+      // Since we do not keep track of which children have valid values,
+      // we need to iterate through all children to check if some other child has a valid value
+      // (and check if valid predicate) if so, abort change.
       delete this._oneValidChild;
       if (this.isValid()) {
-        return false; //No change
+        return false; // No change
       }
     }
 
-    //Below we change the valid state of this group.
+    // Below we change the valid state of this group.
     this._oneValidChild = valid;
-    //If there is no parent or it's valid state did not change,
-    //then the groups assertions has not been changed and the children
-    //have not been notified of this group change in validity.
+    // If there is no parent or it's valid state did not change,
+    // then the groups assertions has not been changed and the children
+    // have not been notified of this group change in validity.
     this._notifyValidityChange(valid && this._validPredicate);
-    return this._validPredicate; //Validity of group changed only if valid predicate.
+    return this._validPredicate; // Validity of group changed only if valid predicate.
   }
 
   getChildrenRootUri() {
-    if (this._statement) { //Either the object of the statement.
+    if (this._statement) { // Either the object of the statement.
       return this._statement.getValue();
     } else if (this._rootUri != null) {
       return this._rootUri;
     } else if (this._parent != null) {
       return this._parent.getChildrenRootUri();
     }
+    return undefined;
   }
 
   addChildBinding(binding) {
@@ -80,9 +81,9 @@ export default class GroupBinding extends Binding {
     }
     const item = bindings[0].getItem();
     const children = this._item.getChildren();
-    for (var i = children.length; i >= 0; i--) {
+    for (let i = children.length; i >= 0; i--) {
       if (item === children[i]) {
-        var cardTracker = this._childBindings[i].length > 0 ?
+        const cardTracker = this._childBindings[i].length > 0 ?
           this._childBindings[i][0].getCardinalityTracker() :
           new CardinalityTracker(item);
         this._childBindings[i] = this._childBindings[i].concat(bindings);
@@ -98,8 +99,8 @@ export default class GroupBinding extends Binding {
 
   removeChildBinding(binding) {
     this._cachedChildBindings = null;
-    var children = this._item.getChildren();
-    for (var i = children.length; i >= 0; i--) {
+    const children = this._item.getChildren();
+    for (let i = children.length; i >= 0; i--) {
       if (binding.getItem() === children[i]) {
         this._childBindings[i].splice(this._childBindings[i].indexOf(binding), 1);
         delete binding._parent;
@@ -112,12 +113,13 @@ export default class GroupBinding extends Binding {
   }
 
   getChildBindingsFor(item) {
-    var children = this._item.getChildren();
-    for (var i = children.length; i >= 0; i--) {
+    const children = this._item.getChildren();
+    for (let i = children.length; i >= 0; i--) {
       if (item === children[i]) {
         return this._childBindings[i];
       }
     }
+    return undefined;
   }
 
   getItemGroupedChildBindings() {
@@ -127,8 +129,7 @@ export default class GroupBinding extends Binding {
   getChildBindings() {
     if (this._cachedChildBindings == null) {
       if (this._childBindings && this._childBindings.length > 0) {
-        var arr = [];
-        this._cachedChildBindings = arr.concat.apply(arr, this._childBindings);
+        this._cachedChildBindings = [].concat(...this._childBindings);
       } else {
         this._cachedChildBindings = [];
       }
@@ -137,7 +138,7 @@ export default class GroupBinding extends Binding {
   }
 
   setPredicate(predicate) {
-    var oValidPredicate = this._validPredicate;
+    const oValidPredicate = this._validPredicate;
     if (this._isValidPredicateValue(predicate)) {
       this._statement.setPredicate(predicate);
       this._validPredicate = true;
@@ -145,7 +146,7 @@ export default class GroupBinding extends Binding {
         this._notifyValidityChange(true);
       }
     } else {
-      //Note that we actually do not set the invalid value, just unassert the statement.
+      // Note that we actually do not set the invalid value, just unassert the statement.
       this._validPredicate = false;
       if (oValidPredicate !== false && this._oneValidChild === true) {
         this._notifyValidityChange(false);
@@ -188,7 +189,7 @@ export default class GroupBinding extends Binding {
     if (this._oneValidChild == null) {
       this.isValid();
     }
-    var assert = this._ancestorValid && this._oneValidChild && this._validPredicate;
+    const assert = this._ancestorValid && this._oneValidChild && this._validPredicate;
     if (this._statement != null) {
       this._statement.setAsserted(assert);
     }
@@ -196,18 +197,18 @@ export default class GroupBinding extends Binding {
     this.getChildBindings().forEach(binding => binding.updateAssertions());
   }
 
-  //===================================================
+  // ===================================================
   // Private methods
-  //===================================================
+  // ===================================================
   _forceOneValidChildCheck() {
     return this._childBindings.some(arr => arr.some(binding => binding.isValid()));
   }
 
   _notifyValidityChange(newValidity) {
     if (!this._parent || !this._parent.oneChildValidityChanged(newValidity)) {
-      //We can reuse the setAncestorValid method by setting the current value.
+      // We can reuse the setAncestorValid method by setting the current value.
       this.updateAssertions();
       this._childBindings.forEach(bindingArr => bindingArr.forEach(binding => binding.setAncestorValid(newValidity)));
     }
   }
-};
+}

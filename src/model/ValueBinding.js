@@ -32,11 +32,14 @@ export default class ValueBinding extends Binding {
   }
 
   /**
-   * @param {String} value
+   * @param {String} value the value to set, the value will be trimmed and if the value is empty
+   * (like the empty string or null) the statement will be unasserted.
+   * @param {Boolean} silent if true the graph will not be marked as changed,
+   * useful when initializing with default empty values.
    */
   setValue(value, silent) {
     const _value = typeof value === 'string' ? value.trim() : value;
-    var oValidObject = this._validObject;
+    const oValidObject = this._validObject;
     if (this._isValidObjectValue(_value)) {
       this._statement.setValue(_value, silent);
       this._validObject = true;
@@ -44,11 +47,11 @@ export default class ValueBinding extends Binding {
         this._parent.oneChildValidityChanged(true);
       }
     } else {
-      //If it is a null value, change the statement.
-      if (_value === "" || _value === null) {
-        this._statement.setValue("", silent);
+      // If it is a null value, change the statement.
+      if (_value === '' || _value === null) {
+        this._statement.setValue('', silent);
       }
-      //And unassert the statement.
+      // And unassert the statement.
       this._validObject = false;
       if (oValidObject !== false && this._validPredicate === true) {
         this._parent.oneChildValidityChanged(false);
@@ -62,14 +65,15 @@ export default class ValueBinding extends Binding {
   }
 
   setGist(value, silent) {
-    var vt = this.getItem().getValueTemplate();
-    if (vt && value.length > 0) {
-      if (vt.indexOf("$1") === -1) {
-        vt = vt + "$1";
+    let _value = value;
+    let vt = this.getItem().getValueTemplate();
+    if (vt && _value.length > 0) {
+      if (vt.indexOf('$1') === -1) {
+        vt += '$1';
       }
-      value = vt.replace("$1", value);
+      _value = vt.replace('$1', _value);
     }
-    this.setValue(value, silent);
+    this.setValue(_value, silent);
   }
 
   /**
@@ -83,7 +87,7 @@ export default class ValueBinding extends Binding {
    * @param {String} predicate corresponding to a uri.
    */
   setPredicate(predicate) {
-    var oValidPredicate = this._validPredicate;
+    const oValidPredicate = this._validPredicate;
     if (this._isValidPredicateValue(predicate)) {
       this._statement.setPredicate(predicate);
       this._validPredicate = true;
@@ -91,7 +95,7 @@ export default class ValueBinding extends Binding {
         this._parent.oneChildValidityChanged(true);
       }
     } else {
-      //Note that we actually do not set the invalid value, just unassert the statement.
+      // Note that we actually do not set the invalid value, just unassert the statement.
       this._validPredicate = false;
       if (oValidPredicate !== false && this._validObject === true) {
         this._parent.oneChildValidityChanged(false);
@@ -139,7 +143,7 @@ export default class ValueBinding extends Binding {
   }
 
   updateAssertions() {
-    var assert = this._ancestorValid && this._validObject && this._validPredicate;
+    const assert = this._ancestorValid && this._validObject && this._validPredicate;
     this._statement.setAsserted(assert, true);
     this.bindingChange(this);
   }
@@ -147,4 +151,4 @@ export default class ValueBinding extends Binding {
   isValid() {
     return this._validObject && this._validPredicate && !this._excludeFromTreeValidityCheck;
   }
-};
+}

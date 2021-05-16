@@ -1,10 +1,10 @@
-import {namespaces as ns} from '@entryscape/rdfjson';
+import { namespaces as ns } from '@entryscape/rdfjson';
 import utils from '../utils';
 
 let itemCount = 0;
 
 const setObjAttr = (obj, attr, value) => {
-  if (value === null || typeof value === "undefined" || value === "" || (Array.isArray(value) && value.length === 0)) {
+  if (value === null || typeof value === 'undefined' || value === '' || (Array.isArray(value) && value.length === 0)) {
     delete obj[attr];
   } else {
     obj[attr] = value;
@@ -15,77 +15,78 @@ export default class Item {
   /**
    * Base functionality of Text, Group and Choice item classes.
    */
-  constructor({source = {}, bundle, itemStore}) {
+  constructor({ source = {}, bundle, itemStore }) {
     this._itemStore = itemStore;
     this._source = source;
     this._bundle = bundle;
-    this._internalId = itemCount++;
+    itemCount += 1;
+    this._internalId = itemCount;
     this._styles = [
-      "heading",
-      "invisible",
-      "invisibleGroup",
-      "stars",
-      "commentOn",
-      "multiline",
-      "horizontalRadioButtons",
-      "verticalRadioButtons",
-      "nonEditable",
-      "expandable",
-      "compact",
-      "nonCompact",
-      "dropDown",
-      "table",
-      "firstcolumnfixedtable",
-      "tree",
-      "externalLink",
-      "internalLink",
-      "noLink",
-      "image",
-      "label",
-      "strictmatch",
-      "viewAllTranslations",
-      "email",
-      "disjoint",
-      "deprecated",
-      "noLabelInPresent",
-      "autoInitDate",
-      "autoUpdateDate",
-      "autoUUID",
-      "autoValue",
-      "showURI",
-      "showLink",
-      "showValue",
-      "textAsChoice"
+      'heading',
+      'invisible',
+      'invisibleGroup',
+      'stars',
+      'commentOn',
+      'multiline',
+      'horizontalRadioButtons',
+      'verticalRadioButtons',
+      'nonEditable',
+      'expandable',
+      'compact',
+      'nonCompact',
+      'dropDown',
+      'table',
+      'firstcolumnfixedtable',
+      'tree',
+      'externalLink',
+      'internalLink',
+      'noLink',
+      'image',
+      'label',
+      'strictmatch',
+      'viewAllTranslations',
+      'email',
+      'disjoint',
+      'deprecated',
+      'noLabelInPresent',
+      'autoInitDate',
+      'autoUpdateDate',
+      'autoUUID',
+      'autoValue',
+      'showURI',
+      'showLink',
+      'showValue',
+      'textAsChoice',
     ];
     this._getLocalizedValue = utils.getLocalizedValue;
   }
 
-  //===================================================
+  //= ==================================================
   // Public API
-  //===================================================
+  //= ==================================================
   getId() {
-    var s = this.getSource(true);
-    return s.id || s["@id"];
+    const s = this.getSource(true);
+    return s.id || s['@id'];
   }
 
   setId(id) {
-    setObjAttr(this.getSource(true), "id", id);
-    delete s["@id"];
+    setObjAttr(this.getSource(true), 'id', id);
+    delete s['@id'];
   }
 
   getType(original) {
-    var s = this.getSource(original);
-    return s.type || s["@type"];
+    const s = this.getSource(original);
+    return s.type || s['@type'];
   }
 
   setType(typeStr) {
-    setObjAttr(this.getSource(true), "type", typeStr);
-    delete s["@type"];
+    setObjAttr(this.getSource(true), 'type', typeStr);
+    delete s['@type'];
     this.refreshExtends();
   }
 
   getExtends() {
-    return this.getSource(true)["extends"] || "";
+    return this.getSource(true).extends || '';
   }
 
   refreshExtends() {
@@ -95,17 +96,17 @@ export default class Item {
   }
 
   setExtends(extendsStr) {
-    var s = this.getSource(true);
-    var ei = this._itemStore.getItem(extendsStr);
+    const s = this.getSource(true);
+    const ei = this._itemStore.getItem(extendsStr);
     if (ei == null) {
       this._source = s;
     } else {
       this._source = this._itemStore.createExtendedSource(ei.getSource(), s);
     }
-    if (extendsStr == "" || extendsStr == null) {
-      delete s["extends"];
+    if (extendsStr === '' || extendsStr == null) {
+      delete s.extends;
     } else {
-      s["extends"] = extendsStr;
+      s.extends = extendsStr;
     }
   }
 
@@ -114,12 +115,12 @@ export default class Item {
   }
 
   getLabel(returnDetails, original) {
-    var s = this.getSource(original);
+    const s = this.getSource(original);
     return returnDetails ? utils.getLocalizedValue(s.label) : utils.getLocalizedValue(s.label).value;
   }
 
   setLabel(value, lang) {
-    var s = this.getSource(true);
+    const s = this.getSource(true);
     s.label = this._setLangHash(s.label, value, lang);
     this.refreshExtends();
   }
@@ -129,17 +130,17 @@ export default class Item {
   }
 
   setLabelMap(map) {
-    setObjAttr(this.getSource(true), "label", map);
+    setObjAttr(this.getSource(true), 'label', map);
     this.refreshExtends();
   }
 
   getDescription(returnDetails, original) {
-    var s = this.getSource(original);
+    const s = this.getSource(original);
     return returnDetails ? utils.getLocalizedValue(s.description) : utils.getLocalizedValue(s.description).value;
   }
 
   setDescription(value, lang) {
-    var s = this.getSource(true);
+    const s = this.getSource(true);
     s.description = this._setLangHash(s.description, value, lang);
     this.refreshExtends();
   }
@@ -149,17 +150,17 @@ export default class Item {
   }
 
   setDescriptionMap(map) {
-    setObjAttr(this.getSource(true), "description", map);
+    setObjAttr(this.getSource(true), 'description', map);
     this.refreshExtends();
   }
 
   getPlaceholder(returnDetails, original) {
-    var s = this.getSource(original);
+    const s = this.getSource(original);
     return returnDetails ? utils.getLocalizedValue(s.placeholder) : utils.getLocalizedValue(s.placeholder).value;
   }
 
   setPlaceholder(value, lang) {
-    var s = this.getSource(true);
+    const s = this.getSource(true);
     s.placeholder = this._setLangHash(s.placeholder, value, lang);
     this.refreshExtends();
   }
@@ -169,7 +170,7 @@ export default class Item {
   }
 
   setPlaceholderMap(map) {
-    setObjAttr(this.getSource(true), "placeholder", map);
+    setObjAttr(this.getSource(true), 'placeholder', map);
     this.refreshExtends();
   }
 
@@ -191,7 +192,7 @@ export default class Item {
   }
 
   setProperty(prop) {
-    setObjAttr(this.getSource(true), "property", prop);
+    setObjAttr(this.getSource(true), 'property', prop);
     this.refreshExtends();
   }
 
@@ -209,17 +210,15 @@ export default class Item {
    * The property value pairs corresponds to predicate and objects in required tripples.
    */
   getURIValueLabelProperties(original) {
-    let arr = this.getSource(original).uriValueLabelProperties;
+    const arr = this.getSource(original).uriValueLabelProperties;
     if (arr != null) {
-      return arr.map(function (uri) {
-        return ns.expand(uri);
-      });
+      return arr.map(uri => ns.expand(uri));
     }
     return arr;
   }
 
   setURIValueLabelProperties(props) {
-    setObjAttr(this.getSource(true), "uriValueLabelProperties", props);
+    setObjAttr(this.getSource(true), 'uriValueLabelProperties', props);
     this.refreshExtends();
   }
 
@@ -231,12 +230,10 @@ export default class Item {
     const constr = this.getSource(original).constraints;
     if (constr != null) {
       const nc = {};
-      Object.keys(constr).forEach(function (key) {
+      Object.keys(constr).forEach((key) => {
         const val = constr[key];
         if (Array.isArray(val)) {
-          nc[ns.expand(key)] = val.map(function (v) {
-            return ns.expand(v);
-          });
+          nc[ns.expand(key)] = val.map(v => ns.expand(v));
         } else {
           nc[ns.expand(key)] = ns.expand(val);
         }
@@ -247,7 +244,7 @@ export default class Item {
   }
 
   setConstraints(constr) {
-    setObjAttr(this.getSource(true), "constraints", constr);
+    setObjAttr(this.getSource(true), 'constraints', constr);
     this.refreshExtends();
   }
 
@@ -263,9 +260,9 @@ export default class Item {
    *
    */
   getDeps(original) {
-    let deps = this.getSource(original).deps;
+    const deps = this.getSource(original).deps;
     if (deps != null) {
-      return deps.map(function (d) {
+      return deps.map((d) => {
         if (d !== '*' && d !== '..') {
           return ns.expand(d);
         }
@@ -276,7 +273,7 @@ export default class Item {
   }
 
   setDeps(deps) {
-    setObjAttr(this.getSource(true), "deps", deps);
+    setObjAttr(this.getSource(true), 'deps', deps);
     this.refreshExtends();
   }
 
@@ -285,14 +282,14 @@ export default class Item {
    */
   getDatatype(original) {
     const dt = this.getSource(original).datatype;
-    if (dt != null && dt != '') {
-      return Array.isArray(dt) ? dt.map((d) => ns.expand(d)) : ns.expand(dt);
+    if (dt != null && dt !== '') {
+      return Array.isArray(dt) ? dt.map(d => ns.expand(d)) : ns.expand(dt);
     }
     return dt;
   }
 
   setDatatype(dt) {
-    setObjAttr(this.getSource(true), "datatype", dt);
+    setObjAttr(this.getSource(true), 'datatype', dt);
     this.refreshExtends();
   }
 
@@ -301,7 +298,7 @@ export default class Item {
   }
 
   setPattern(pattern) {
-    setObjAttr(this.getSource(true), "pattern", pattern);
+    setObjAttr(this.getSource(true), 'pattern', pattern);
     this.refreshExtends();
   }
 
@@ -314,7 +311,7 @@ export default class Item {
   }
 
   setLanguage(lang) {
-    setObjAttr(this.getSource(true), "language", lang);
+    setObjAttr(this.getSource(true), 'language', lang);
     this.refreshExtends();
   }
 
@@ -323,7 +320,7 @@ export default class Item {
   }
 
   setMember(member) {
-    setObjAttr(this.getSource(true), "member", member);
+    setObjAttr(this.getSource(true), 'member', member);
     this.refreshExtends();
   }
 
@@ -332,12 +329,12 @@ export default class Item {
    * LITERAL, RESOURCE, URI, BLANK, PLAIN_LITERAL, ONLY_LITERAL, LANGUAGE_LITERAL, DATATYPE_LITERAL
    */
   getNodetype(original) {
-    var s = this.getSource(original);
-    return s.nodetype || s.nodeType; //Ugly fix because it is often wrong written in SIRFF.
+    const s = this.getSource(original);
+    return s.nodetype || s.nodeType; // Ugly fix because it is often wrong written in SIRFF.
   }
 
   setNodetype(nt) {
-    setObjAttr(this.getSource(true), "nodetype", nt);
+    setObjAttr(this.getSource(true), 'nodetype', nt);
     this.refreshExtends();
   }
 
@@ -346,7 +343,7 @@ export default class Item {
   }
 
   setValue(value) {
-    setObjAttr(this.getSource(true), "value", value);
+    setObjAttr(this.getSource(true), 'value', value);
     this.refreshExtends();
   }
 
@@ -355,7 +352,7 @@ export default class Item {
   }
 
   setValueTemplate(valueTemplate) {
-    setObjAttr(this.getSource(true), "valueTemplate", valueTemplate);
+    setObjAttr(this.getSource(true), 'valueTemplate', valueTemplate);
     this.refreshExtends();
   }
 
@@ -373,17 +370,17 @@ export default class Item {
   }
 
   setCardinality(card) {
-    setObjAttr(this.getSource(true), "cardinality", card);
+    setObjAttr(this.getSource(true), 'cardinality', card);
     this.refreshExtends();
   }
 
   isEnabled(original) {
-    var s = this.getSource(original);
+    const s = this.getSource(original);
     return s.enabled == null ? true : s.enabled;
   }
 
   setEnabled(en) {
-    var s = this.getSource(true);
+    const s = this.getSource(true);
     if (en) {
       delete s.enabled;
     } else {
@@ -415,7 +412,7 @@ export default class Item {
    * @returns {boolean}
    */
   hasClass(cls, original) {
-    var s = this.getSource(original)
+    const s = this.getSource(original);
     if (this.hasStyle(cls, original)) {
       return true;
     }
@@ -442,7 +439,7 @@ export default class Item {
   }
 
   setStyles(arr) {
-    setObjAttr(this.getSource(true), "styles", arr);
+    setObjAttr(this.getSource(true), 'styles', arr);
     this.refreshExtends();
   }
 
@@ -458,15 +455,13 @@ export default class Item {
     if (original === true) {  // Get the original source
       return this._source._extendedSource || this._source;
     } else if (original === false) {  // Get the extended source
-      var entryItem = this._itemStore.getItem(this.getExtends());
+      const entryItem = this._itemStore.getItem(this.getExtends());
       if (entryItem == null) {
         return this._source;
-      } else {
-        return entryItem.getSource();
       }
-    } else {  //Get the merged source.
-      return this._source;
-    }
+      return entryItem.getSource();
+    }   // Get the merged source.
+    return this._source;
   }
 
   getBundle() {
@@ -474,43 +469,44 @@ export default class Item {
   }
 
   toStringShort() {
-    return "'" + this.getLabel() + "'" + (this.getId() ? " (ID: '" + this.getId() + "')" : "");
+    return `'${this.getLabel()}'${this.getId() ? ` (ID: '${this.getId()}')` : ''}`;
   }
 
   toString() {
-    var detailsArr = [];
+    const detailsArr = [];
     if (this.getId()) {
-      detailsArr.push("ID: '" + this.getId() + "'");
+      detailsArr.push(`ID: '${this.getId()}'`);
     }
-    detailsArr.push("TYPE: '" + this.getType() + "'");
+    detailsArr.push(`TYPE: '${this.getType()}'`);
     if (this.getProperty()) {
-      detailsArr.push("PROPERTY: '" + this.getProperty() + "'");
+      detailsArr.push(`PROPERTY: '${this.getProperty()}'`);
     }
     if (this.getExtends()) {
-      detailsArr.push("EXTENDS: '" + this.getExtends() + "'");
+      detailsArr.push(`EXTENDS: '${this.getExtends()}'`);
     }
-    return "'" + this.getLabel() + "' (" + detailsArr.join(", ") + ")";
+    return `'${this.getLabel()}' (${detailsArr.join(', ')})`;
   }
 
-  //===================================================
+  //= ==================================================
   // Inherited methods
-  //===================================================
+  //= ==================================================
 
-  //===================================================
+  //= ==================================================
   // Private methods
-  //===================================================
+  //= ==================================================
 
+  // eslint-disable-next-line class-methods-use-this
   _setLangHash(hash, value, lang) {
-    hash = hash || {};
-    if (typeof value == 'string') {
-      if (typeof lang == 'string') {
-        hash[lang] = value;
+    const _hash = hash || {};
+    if (typeof value === 'string') {
+      if (typeof lang === 'string') {
+        _hash[lang] = value;
       } else {
-        hash[""] = value;
+        _hash[''] = value;
       }
     } else if (typeof value === 'object' && value !== null) {
       return value;
     }
-    return hash;
+    return _hash;
   }
-};
+}

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardTimePicker } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
@@ -9,27 +9,51 @@ import Select from '@material-ui/core/Select';
 import moment from 'moment';
 import renderingContext from '../renderingContext';
 
-const getDatatype = (binding) => {
-  switch (binding.getDatatype()) {
-    case 'http://www.w3.org/2001/XMLSchema.xsd#dateTime':
+const getDatatype = (datatype) => {
+  switch (datatype) {
+    case 'http://www.w3.org/2001/XMLSchema#dateTime':
+    case 'http://purl.org/dc/terms/W3CDTF':
       return 'Datetime';
-    case 'http://www.w3.org/2001/XMLSchema.xsd#date':
+    case 'http://www.w3.org/2001/XMLSchema#date':
       return 'Date';
-    case 'http://www.w3.org/2001/XMLSchema.xsd#gYear':
+    case 'http://www.w3.org/2001/XMLSchema#gYear':
       return 'Year';
     default:
-      return 'Datetime';
+      return undefined;
   }
 };
+
+const getDatatypeFromItem = (item) => {
+  const dt = item.getDatatype();
+  if (Array.isArray(dt)) {
+    return getDatatype(dt[0]);
+  }
+  return getDatatype(dt);
+};
+
+const getAllowedDateAlternatives = (item) => {
+  const dateAllowedDataAlternatives = {};
+  const dt = item.getDatatype();
+  const alts = Array.isArray(dt) ? dt : [dt];
+  alts.forEach((datatype) => {
+    const alt = getDatatype(datatype);
+    if (alt) {
+      dateAllowedDataAlternatives[alt] = true;
+    }
+  });
+  return dateAllowedDataAlternatives;
+};
+
+const getDatatypeFromBinding = binding => getDatatype(binding.getDatatype()) || getDatatypeFromItem(binding.getItem());
 
 const getDatatypeURI = (datatype) => {
   switch (datatype) {
     case 'Datetime':
-      return 'http://www.w3.org/2001/XMLSchema.xsd#dateTime';
+      return 'http://www.w3.org/2001/XMLSchema#dateTime';
     case 'Date':
-      return 'http://www.w3.org/2001/XMLSchema.xsd#date';
+      return 'http://www.w3.org/2001/XMLSchema#date';
     case 'Year':
-      return 'http://www.w3.org/2001/XMLSchema.xsd#gYear';
+      return 'http://www.w3.org/2001/XMLSchema#gYear';
     default:
       return '';
   }
@@ -80,12 +104,14 @@ const dateEditor = (fieldDiv, binding, context) => {
   const bundle = context.view.messages;
   const DateComp = () => {
     const value = binding.getGist();
+    const alternatives = useMemo(() => getAllowedDateAlternatives(binding.getItem()));
+    const onlyOneAlternative = Object.keys(alternatives).length === 1;
     const [selectedDate, setSelectedDate] = useState(value === '' ? null : new Date(value));
-    const [selectedDatatype, setDatatype] = useState(getDatatype(binding));
+    const [selectedDatatype, setDatatype] = useState(getDatatypeFromBinding(binding));
     useEffect(() => {
       context.clear = () => {
         setSelectedDate(null);
-        setDatatype(getDatatype(binding));
+        setDatatype(getDatatypeFromBinding(binding));
       };
     }, []);
 
@@ -118,23 +144,24 @@ const dateEditor = (fieldDiv, binding, context) => {
             views={selectedDatatype === 'Year' ? ['year'] : ['date']}
             inputProps={inputProps}
             onChange={onDateChange} autoOk={true} inputVariant={renderingContext.materialVariant}/>
-          <KeyboardTimePicker
+          {alternatives.Datetime && (<KeyboardTimePicker
             label={bundle.date_time}
             { ...(selectedDatatype === 'Datetime' ? {} : { disabled: true })}
             KeyboardButtonProps={{ 'aria-label': bundle.date_openTimePicker }}
-            value={selectedDate} onChange={onDateChange} ampm={false} autoOk={true}
+            value={selectedDatatype === 'Datetime' ? selectedDate : null}
+            onChange={onDateChange} ampm={false} autoOk={true}
             inputProps={inputProps}
-            inputVariant={renderingContext.materialVariant}/>
-          <FormControl variant={renderingContext.materialVariant}>
+            inputVariant={renderingContext.materialVariant}/>)}
+          {!onlyOneAlternative && (<FormControl variant={renderingContext.materialVariant}>
             <Select
               value={selectedDatatype}
               inputProps={inputProps}
               onChange={onDatatypeChange}>
-              <MenuItem value="Datetime">{bundle.date_date_and_time}</MenuItem>
-              <MenuItem value="Date">{bundle.date_date}</MenuItem>
-              <MenuItem value="Year">{bundle.date_year}</MenuItem>
+              {alternatives.Year && (<MenuItem value="Year">{bundle.date_year}</MenuItem>)}
+              {alternatives.Date && (<MenuItem value="Date">{bundle.date_date}</MenuItem>)}
+              {alternatives.Datetime && (<MenuItem value="Datetime">{bundle.date_date_and_time}</MenuItem>)}
             </Select>
-          </FormControl>
+          </FormControl>)}
         </span>
       </MuiPickersUtilsProvider>
     );

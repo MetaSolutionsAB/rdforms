@@ -1,5 +1,7 @@
+import { namespaces } from '@entryscape/rdfjson';
 import Binding from './Binding';
 import utils from '../utils';
+
 
 export default class ValueBinding extends Binding {
   /**
@@ -129,7 +131,7 @@ export default class ValueBinding extends Binding {
    * @param {String} dt corresponding to a uri.
    */
   setDatatype(dt) {
-    this._statement.setDatatype(dt);
+    this._statement.setDatatype(namespaces.expand(dt));
   }
 
   setExcludeFromTreeValidityCheck(value) {

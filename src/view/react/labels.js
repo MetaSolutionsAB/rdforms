@@ -33,14 +33,14 @@ const ItemTooltip = (props) => {
   }
   const description = props.item.getDescription() || (property ? '' : props.context.view.messages.info_missing || '');
 
-  return <ClickAwayListener onClickAway={handleTooltipClose}><div>
+  return <ClickAwayListener onClick={handleTooltipOpen} onClickAway={handleTooltipClose}>
     <StyledTooltip title={(<><p className="rdformsLinebreaks rdformsDescription">{description}</p>{propinfo}</>)}
                    placement="bottom-start" disableHoverListener disableTouchListener
                    onClose={handleTooltipClose}
                    onOpen={handleTooltipOpen}
                    open={open}
     ><span onClick={handleTooltipOpen}>{
-      props.children}</span></StyledTooltip></div></ClickAwayListener>;
+      props.children}</span></StyledTooltip></ClickAwayListener>;
 };
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {

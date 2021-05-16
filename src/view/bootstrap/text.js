@@ -85,7 +85,7 @@ const registerPattern = (pattern, datatype) => {
     });
 };
 // Editor for gYear
-registerPattern('^-?[0-9][0-9][0-9][0-9]$', 'xsd:gYear');
+// registerPattern('^-?[0-9][0-9][0-9][0-9]$', 'xsd:gYear');
 // Editor for integers
 registerPattern('^\\d+$', 'xsd:integer');
 // Editor for decimals

@@ -2,11 +2,41 @@
 import moment from 'moment';
 import renderingContext from '../renderingContext';
 
+
+const getDatatype = (datatype) => {
+  switch (datatype) {
+    case 'http://www.w3.org/2001/XMLSchema#dateTime':
+    case 'http://purl.org/dc/terms/W3CDTF':
+      return 'Datetime';
+    case 'http://www.w3.org/2001/XMLSchema#date':
+      return 'Date';
+    case 'http://www.w3.org/2001/XMLSchema#gYear':
+      return 'Year';
+    default:
+      return undefined;
+  }
+};
+
+const getAllowedDateAlternatives = (item) => {
+  const dateAllowedDataAlternatives = {};
+  const dt = item.getDatatype();
+  const alts = Array.isArray(dt) ? dt : [dt];
+  alts.forEach((datatype) => {
+    const alt = getDatatype(datatype);
+    if (alt) {
+      dateAllowedDataAlternatives[alt] = true;
+    }
+  });
+  return dateAllowedDataAlternatives;
+};
+
+
 export default class DateTimeBase {
   constructor(params, node) {
     this.binding = params.binding;
     this.context = params.context;
     this.item = this.binding.getItem();
+    this.allowedOptions = getAllowedDateAlternatives(this.item);
     this._date = null;
     this._valid = false;
     this._excludeTime = true;
@@ -14,6 +44,15 @@ export default class DateTimeBase {
     this.buildUI();
     this.initDatePicker();
     this.initialize();
+  }
+  includeDateOption() {
+    return this.allowedOptions.Date;
+  }
+  includeDateTimeOption() {
+    return this.allowedOptions.Datetime;
+  }
+  includeYearOption() {
+    return this.allowedOptions.Year;
   }
 
   buildUI() {
@@ -118,6 +157,7 @@ export default class DateTimeBase {
       const str = this._date.toISOString();
       if (!this._firstTime) {
         this.binding.setValue(str.substring(0, str.indexOf('T')));
+        this.binding.setDatatype('xsd:date');
       }
     } else {
       this.setDateInPicker(null);
@@ -143,6 +183,7 @@ export default class DateTimeBase {
       this.setDateInPicker(this._date);
       if (!this._firstTime) {
         this.binding.setValue(this._date.toISOString());
+        this.binding.setDatatype('xsd:dateTime');
       }
     } else {
       this.setDateInPicker(null);
@@ -160,6 +201,7 @@ export default class DateTimeBase {
       this.$yearInput.val(this._date.getFullYear());
       if (!this._firstTime) {
         this.binding.setValue(`${this._date.getFullYear()}`);
+        this.binding.setDatatype('xsd:gYear');
       }
     } else {
       this.$yearInput.val('');
@@ -185,5 +227,7 @@ DateTimeBase.register = (DTCls) => {
   };
   const editors = renderingContext.editorRegistry;
   editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#date').register(dateEditor);
+  editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#dateTime').register(dateEditor);
+  editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#gYear').register(dateEditor);
   editors.itemtype('text').datatype('http://purl.org/dc/terms/W3CDTF').register(dateEditor);
 };

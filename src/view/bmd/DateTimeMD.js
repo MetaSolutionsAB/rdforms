@@ -10,6 +10,10 @@ export default class DateTimeMD extends DateTimeBase {
     this.tpdate = null;
     this.dpdate = null;
     const bundle = this.context.view.messages;
+    const yearOption = this.includeYearOption() ? `<option value="Year">${bundle.date_year}</option>` : '';
+    const dateOption = this.includeDateOption() ? `<option value="Date" selected="true">${bundle.date_date}</option>` : '';
+    const dateTimeOption = this.includeDateTimeOption() ? `<option value="DateTime">${bundle.date_date_and_time}</option>` : '';
+
     this.domNode.innerHTML = `<div class="rdformsDateValue rdformsFieldInput" xmlns="http://www.w3.org/1999/html">
     <div class="rdformsDatepicker form-group input" style="padding-right: 15px;">
         <input class="form-control dateInput date" type="text" placeholder="YYYY-MM-DD" />
@@ -29,9 +33,9 @@ export default class DateTimeMD extends DateTimeBase {
     </div>
 
     <select class="form-control dateControl">
-        <option value="Year">${bundle.date_year}</option>
-        <option value="Date" selected="true">${bundle.date_date}</option>
-        <option value="DateTime">${bundle.date_date_and_time}</option>
+        ${yearOption}
+        ${dateOption}
+        ${dateTimeOption}
     </select>
 </div>`;
     this.cal = jquery(this.domNode).find('.date')[0];

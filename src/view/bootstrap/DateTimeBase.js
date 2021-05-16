@@ -1,4 +1,5 @@
 import renderingContext from '../renderingContext';
+import moment from 'moment';
 
 export default class DateTimeBase {
   constructor(params, node) {
@@ -62,7 +63,7 @@ export default class DateTimeBase {
   setDateInBinding(d) {
     this._valid = true;
     this._date.setFullYear(d.getFullYear(), d.getMonth(), d.getDate());
-    const str = d.toISOString();
+    const str = moment(d).toISOString();
     if (this._excludeTime) {
       this.binding.setValue(str.substring(0, str.indexOf('T')));
     } else {

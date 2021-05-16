@@ -21,10 +21,10 @@ export default class DateTimeBootstrapDatepicker extends DateTimeBase {
         </div>
     </div>
     <span style="display: none">
-        <input type="text" class="form-control timeInput" placeholder="23:59"/>
+        <input type="text" class="form-control timeInput" placeholder="HH:MM"/>
     </span>
     <span style="display: none">
-        <input type="text" class="form-control yearInput" placeholder="1999"/>
+        <input type="text" class="form-control yearInput" placeholder="YYYY"/>
     </span>
     <select class="form-control dateControl">
         <option value="Year">${bundle.date_year}</option>

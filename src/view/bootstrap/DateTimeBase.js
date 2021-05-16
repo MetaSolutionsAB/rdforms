@@ -1,15 +1,16 @@
-import renderingContext from '../renderingContext';
+/* eslint-disable class-methods-use-this */
 import moment from 'moment';
+import renderingContext from '../renderingContext';
 
 export default class DateTimeBase {
   constructor(params, node) {
     this.binding = params.binding;
-    this.context = params.context
+    this.context = params.context;
     this.item = this.binding.getItem();
     this._date = null;
     this._valid = false;
     this._excludeTime = true;
-    this.domNode = node
+    this.domNode = node;
     this.buildUI();
     this.initDatePicker();
     this.initialize();
@@ -83,7 +84,7 @@ export default class DateTimeBase {
 
   _binding2Gui() {
     this._firstTime = true;
-    let data = this.binding.getValue();
+    const data = this.binding.getValue();
     this._valid = data != null && data !== '';
     if (this._valid) {
       this._date = new Date(data);
@@ -168,7 +169,7 @@ export default class DateTimeBase {
   _setValueAttr(v) {
     this.binding.setValue(v);
   }
-};
+}
 
 DateTimeBase.register = (DTCls) => {
   // Editor for dates and dates with time.

@@ -103,11 +103,15 @@ export default class Editor extends Presenter {
   }
 
   setIncludeLevel(includeLevel) {
+    if (this.includeLevel === includeLevel) {
+      return;
+    }
     this.includeLevel = includeLevel;
     if (this.graph == null || this.resource == null || this.template == null) {
       return;
     }
     this.binding = engine.match(this.graph, this.resource, this.template);
+    this._subEditors = [];
     this.render();
   }
 
@@ -245,6 +249,9 @@ export default class Editor extends Presenter {
     }
     if (this.filterBinding(binding)) {
       renderingContext.domClassToggle(newNode, 'hiddenProperty', true);
+    }
+    if (item.hasStyle('deprecated')) {
+      renderingContext.domClassToggle(newNode, 'deprecated', true);
     }
     return newNode;
   }

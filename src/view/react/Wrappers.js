@@ -7,20 +7,14 @@ import ValidationPresenter from '../ValidationPresenter';
 const fixIt = (Cls) => {
   const FixCls = class extends Cls {
     render() {
-      if (this.initiatedAlready) {
-        if (this.domNode.parent instanceof Node) {
-          ReactDOM.unmountComponentAtNode(this.domNode.parent);
-        }
-        this.domNode.clear();
+      this.domNode.clear();
+      super.render();
+      if (!this.initiatedAlready && this.domNode.parent instanceof Node) {
+        // eslint-disable-next-line no-unused-vars
+        const Cmp = this.domNode.component;
+        ReactDOM.render(<Cmp></Cmp>, this.domNode.parent);
       }
       this.initiatedAlready = true;
-
-      super.render();
-      // eslint-disable-next-line no-unused-vars
-      const Component = this.domNode.component;
-      if (this.domNode.parent instanceof Node) {
-        ReactDOM.render(<Component></Component>, this.domNode.parent);
-      }
     }
   };
   FixCls.Component = class extends Component {

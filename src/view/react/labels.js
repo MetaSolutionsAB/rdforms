@@ -33,7 +33,7 @@ const ItemTooltip = (props) => {
   }
   const description = props.item.getDescription() || (property ? '' : props.context.view.messages.info_missing || '');
 
-  return <ClickAwayListener onClick={handleTooltipOpen} onClickAway={handleTooltipClose}>
+  return <ClickAwayListener onClickAway={handleTooltipClose}>
     <StyledTooltip title={(<><p className="rdformsLinebreaks rdformsDescription">{description}</p>{propinfo}</>)}
                    placement="bottom-start" disableHoverListener disableTouchListener
                    onClose={handleTooltipClose}

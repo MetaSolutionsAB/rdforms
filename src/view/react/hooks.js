@@ -11,6 +11,7 @@ export const localizedChoice = choice => ({
   label: utils.getLocalizedValue(choice.label).value,
   description: choice.description ? utils.getLocalizedValue(choice.description).value : undefined,
   seeAlso: choice.seeAlso,
+  mismatch: choice.mismatch,
   original: choice,
 });
 

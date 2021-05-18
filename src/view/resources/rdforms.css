@@ -30,20 +30,20 @@
 
 
 /* --- Validation colors --- */
-.rdforms .rdformsField.errorReport,
-.rdforms .rdformsGroup.errorReport {
+.rdformsValidator .rdformsField.errorReport,
+.rdformsValidator .rdformsGroup.errorReport {
     border-left: 2px dotted red;
 }
 
-.rdforms .error {
+.rdformsValidator .error {
     color: red;
 }
 
-.rdforms .warning {
+.rdformsValidator .warning {
     color: orange;
 }
 
-.rdforms .deprecated {
+.rdformsValidator .deprecated {
     color: #00766c;
 }
 
@@ -697,17 +697,24 @@ a.rdformsUrl:hover {
     display: none !important;
 }
 
+.rdformsError,
 .rdformsRow.missingDepsWithValue {
-    background: lightsalmon;
-}
-
-.rdformsTopLevel.rdformsRow.missingDepsWithValue {
-    margin-left: -5px;
-    padding-left: 5px;
-    margin-right: -15px;
-    padding-right: 15px;
+    border: 2px solid red;
+    padding: 12px;
 }
 
 .rdformsLinebreaks {
     white-space: pre-line;
+}
+
+.rdformsWarning {
+    font-weight: bold;
+    color: red;
+    padding-bottom: 6px;
+    padding-top: 6px;
+}
+
+.rdformsDeprecated {
+    border: 2px solid red;
+    padding: 12px;
 }

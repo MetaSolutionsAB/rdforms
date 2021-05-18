@@ -251,7 +251,7 @@ export default class Editor extends Presenter {
       renderingContext.domClassToggle(newNode, 'hiddenProperty', true);
     }
     if (item.hasStyle('deprecated')) {
-      renderingContext.domClassToggle(newNode, 'deprecated', true);
+      renderingContext.domClassToggle(newNode, 'rdformsDeprecated', true);
     }
     return newNode;
   }

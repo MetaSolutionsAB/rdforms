@@ -140,6 +140,9 @@ export default class Binding {
     if (this._parent) {
       this._parent.bindingChange(binding);
     }
+    if (this._cardinalityTracker) {
+      this._cardinalityTracker.touch();
+    }
   }
 
   // ===================================================

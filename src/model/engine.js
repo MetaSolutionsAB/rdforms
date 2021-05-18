@@ -865,6 +865,7 @@ export { levelProfile };
 export { detectLevel };
 
 const CODES = {
+  UNKNOWN: 'unknown', // Used as a marker initially, to not mark everything red initially
   OK: 'correct',
   TOO_FEW_VALUES: 'few', // deprecated
   TOO_FEW_VALUES_MIN: 'min',

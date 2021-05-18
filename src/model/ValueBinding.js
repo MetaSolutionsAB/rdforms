@@ -118,6 +118,7 @@ export default class ValueBinding extends Binding {
    */
   setLanguage(lang) {
     this._statement.setLanguage(lang);
+    this.updateAssertions();
   }
 
   /**
@@ -132,6 +133,7 @@ export default class ValueBinding extends Binding {
    */
   setDatatype(dt) {
     this._statement.setDatatype(namespaces.expand(dt));
+    this.updateAssertions();
   }
 
   setExcludeFromTreeValidityCheck(value) {

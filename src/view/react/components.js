@@ -7,7 +7,7 @@ import './labels';
 import './text';
 import './textEditors';
 import './choice';
-import './choiceEditors';
+import './choiceEditors/index';
 import './buttons';
 import './date';
 import './duration';

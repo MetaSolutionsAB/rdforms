@@ -106,6 +106,10 @@
     vertical-align: middle;
 }
 
+.rdformsEditor .rdformsSearch>div {
+    width: 100%;
+}
+
 .rdformsEditor .rdformsDatePicker {
     display: flex;
     justify-content: start;
@@ -174,14 +178,38 @@ div.MuiTooltip-tooltip {
 }
 
 .rdformsEditor .rdformsRow.rdformsTopLevel {
-    padding-bottom: 36px;
+    margin-bottom: 36px;
+    padding-bottom: 0;
 }
 
 /* Better style for error reports */
-.rdforms .rdformsField.errorReport, .rdforms .rdformsGroup.errorReport {
-    border-left: 2px solid red;
-    padding-left: 12px;
+.mismatchReport {
+    border: 2px solid red;
+    border-radius: 4px;
+    padding: 12px 2px 0px 12px;
 }
+
+.mismatchReport .rdformsWarning {
+    padding-top: 12px;
+}
+
+.rdformsError,
+.rdformsDeprecated {
+    padding: 12px 2px 0px 12px;
+}
+
+.rdformsEditor .rdformsLangControl {
+    width: calc(33.33% - 8px);
+}
+
+.rdformsDependency {
+    display: none;
+}
+
+.missingDepsWithValue .rdformsDependency {
+    display: block;
+}
+
 .rdforms .rdformsLanguage {
     margin: 0 10px 0px;
     background: #474747;

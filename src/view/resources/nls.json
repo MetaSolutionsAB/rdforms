@@ -43,5 +43,9 @@
   "today": "Today",
   "mandatoryMark": "*",
   "recommendedMark": "(Recommended)",
-  "optionalMark": "(Optional)"
+  "optionalMark": "(Optional)",
+  "deprecatedField": "This field has been deprecated, please remove it.",
+  "missingValueField": "This field is required, please provide a value.",
+  "dependencyField": "This field depends on another field, please review the field it depends on or remove this value.",
+  "wrongValueField": "This is an invalid value, please change or remove it."
 }

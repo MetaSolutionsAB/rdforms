@@ -42,6 +42,13 @@ const _countValidBindings = (bindings) => {
   return counter;
 };
 
+const updateViaCardinalityTracker = (bindings, code) => {
+  if (bindings.length > 0) {
+    const cardTr = bindings[0].getCardinalityTracker();
+    cardTr.setCode(code);
+  }
+};
+
 const _createReport = (groupbinding, report, firstLevel) => {
   if (groupbinding.getMatchingCode() !== engine.CODES.OK) {
     return undefined;
@@ -68,6 +75,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
           item: bindings[0].getItem(),
           code: engine.CODES.TOO_MANY_VALUES_DISJOINT,
         });
+        updateViaCardinalityTracker(bindings, engine.CODES.TOO_MANY_VALUES_DISJOINT);
         let counter = 0;
         bindings.forEach((binding) => {
           if (binding.isValid()) {
@@ -108,6 +116,16 @@ const _createReport = (groupbinding, report, firstLevel) => {
               item: childItem,
               code: engine.CODES.TOO_FEW_VALUES_MIN,
             });
+            updateViaCardinalityTracker(bindings, engine.CODES.TOO_FEW_VALUES_MIN);
+            let counter = 0;
+            bindings.forEach((binding) => {
+              if (!binding.isValid()) {
+                if (counter < card.min) {
+                  counter += 1;
+                  binding.setMatchingCode(engine.CODES.TOO_FEW_VALUES_MIN);
+                }
+              }
+            });
           } else if (card.pref != null && card.pref > nrOfValid) {
             report.warnings.push({
               parentBinding: groupbinding,
@@ -121,6 +139,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
               item: childItem,
               code: engine.CODES.TOO_MANY_VALUES,
             });
+            updateViaCardinalityTracker(bindings, engine.CODES.TOO_MANY_VALUES);
             let counter = 0;
             bindings.forEach((binding) => {
               if (binding.isValid()) {

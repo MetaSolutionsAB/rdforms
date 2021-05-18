@@ -13,9 +13,11 @@ renderingContext.addExpandButton = (rowDiv, labelDiv, item, context) => {
 };
 
 const isClearButton = (binding, context) => {
+  const item = binding.getItem();
   const cardTr = binding.getCardinalityTracker();
   const showOne = context.view.showNow(binding.getItem(), []);
-  return cardTr.isMin() || (cardTr.getCardinality() === 1 && showOne && cardTr.isDepsOk());
+  return !item.hasStyle('deprecated') &&
+    (cardTr.isMin() || (cardTr.getCardinality() === 1 && showOne && cardTr.isDepsOk()));
 };
 renderingContext.addRemoveButton = (rowDiv, binding, context) => () => {
   const item = binding.getItem();
@@ -76,7 +78,8 @@ renderingContext.addRemoveButton = (rowDiv, binding, context) => () => {
 
 renderingContext.addCreateChildButton = (rowDiv, labelDiv, binding, context) => () => {
   const cardTr = binding.getCardinalityTracker();
-  const [disabled, setDisabled] = useState(cardTr.isMax() || !cardTr.isDepsOk());
+  const item = binding.getItem();
+  const [disabled, setDisabled] = useState(cardTr.isMax() || !cardTr.isDepsOk() || item.hasStyle('deprecated'));
   useEffect(() => {
     context.rememberParent = binding.getParent(); // If the current binding is removed and the label is not redrawn
     const listener = cardTr.addListener(() => {
@@ -86,11 +89,11 @@ renderingContext.addCreateChildButton = (rowDiv, labelDiv, binding, context) => 
   }, []);
   const onClick = () => {
     if (!cardTr.isMax()) {
-      const nBinding = engine.create(context.rememberParent, binding.getItem());
+      const nBinding = engine.create(context.rememberParent, item);
       context.view.addRow(rowDiv, nBinding); // not the first binding...
     }
   };
-  let label = binding.getItem().getLabel();
+  let label = item.getLabel();
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {

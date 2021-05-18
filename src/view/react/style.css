@@ -198,6 +198,10 @@ div.MuiTooltip-tooltip {
     padding: 12px 2px 0px 12px;
 }
 
+.rdformsError.cardgroup>.rdformsFields>.rdformsGroup {
+    margin-right: 11px;
+}
+
 .rdformsEditor .rdformsLangControl {
     width: calc(33.33% - 8px);
 }

@@ -1,6 +1,13 @@
 import { namespaces as ns } from '@entryscape/rdfjson';
 import * as engine from './engine';
 
+const _clearMatchingCodes = (binding) => {
+  binding.setMatchingCode(engine.CODES.OK);
+  if (binding.getItem().getType() === 'group') {
+    binding.getChildBindings().forEach(childBinding => _clearMatchingCodes(childBinding));
+  }
+};
+
 /**
  * Generates a report for the given binding. Below is an example of a report:
  * {
@@ -28,6 +35,7 @@ const bindingReport = (groupbinding, reportObj) => {
     _reportObj.warnings = _reportObj.warnings || [];
     _reportObj.deprecated = _reportObj.deprecated || [];
   }
+  _clearMatchingCodes(groupbinding);
   // eslint-disable-next-line no-use-before-define
   return _createReport(groupbinding, _reportObj, true);
 };
@@ -69,22 +77,18 @@ const _createReport = (groupbinding, report, firstLevel) => {
       const bindings = groupbinding.getChildBindings();
       const nrOfValid = _countValidBindings(bindings);
       if (nrOfValid > 1) {
-        groupbinding.setMatchingCode(engine.CODES.TOO_MANY_VALUES);
+        updateViaCardinalityTracker([groupbinding], engine.CODES.TOO_MANY_VALUES_DISJOINT);
+        groupbinding.setMatchingCode(engine.CODES.TOO_MANY_VALUES_DISJOINT);
         report.errors.push({
           parentBinding: groupbinding,
           item: bindings[0].getItem(),
           code: engine.CODES.TOO_MANY_VALUES_DISJOINT,
         });
-        updateViaCardinalityTracker(bindings, engine.CODES.TOO_MANY_VALUES_DISJOINT);
-        let counter = 0;
-        bindings.forEach((binding) => {
+/*        bindings.forEach((binding) => {
           if (binding.isValid()) {
-            if (counter > 0) {
-              binding.setMatchingCode(engine.CODES.TOO_MANY_VALUES_DISJOINT);
-            }
-            counter += 1;
+            binding.setMatchingCode(engine.CODES.TOO_MANY_VALUES_DISJOINT);
           }
-        });
+        });*/
       }
       bindings.forEach((binding) => {
         const item = binding.getItem();

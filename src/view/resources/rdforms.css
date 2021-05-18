@@ -35,15 +35,15 @@
     border-left: 2px dotted red;
 }
 
-.rdformsValidator .error {
+.rdformsValidator .error .rdformsValidationMessageWrapper {
     color: red;
 }
 
-.rdformsValidator .warning {
+.rdformsValidator .warning .rdformsValidationMessageWrapper {
     color: orange;
 }
 
-.rdformsValidator .deprecated {
+.rdformsValidator .deprecated .rdformsValidationMessageWrapper {
     color: #00766c;
 }
 
@@ -427,10 +427,10 @@ a.rdformsUrl:hover {
     color: red;
 }
 
-/* To override some nested rdformsField background settings */
+/* To override some nested rdformsField background settings
 .rdformsPresenter.rdformsValidator.error .rdformsField {
     background: red;
-}
+}*/
 
 .rdformsValidator .rdformsField.warning {
     color: orange;

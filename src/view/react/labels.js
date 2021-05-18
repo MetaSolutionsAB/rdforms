@@ -102,7 +102,7 @@ const ERR = (props) => {
     const cardTr = binding.getCardinalityTracker();
     const listener = cardTr.addListener(() => {
       const newCode = cardTr.getCode();
-      renderingContext.domClassToggle(rowNode, 'rdformsERROR', newCode !== CODES.UNKNOWN);
+      renderingContext.domClassToggle(rowNode, 'rdformsError', newCode !== CODES.UNKNOWN);
       setCode(newCode);
     });
     return () => cardTr.removeListener(listener);

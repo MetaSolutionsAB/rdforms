@@ -3,14 +3,14 @@ export default class Bundle {
   /**
    * A Bundle corresponds to a set of items typically managed in a single file.
    */
-  constructor({itemStore, source, path, readOnly = false}) {
+  constructor({ itemStore, source, path, readOnly = false }) {
     this._itemStore = itemStore;
     this._source = source;
     this._path = path;
     this._readOnly = readOnly;
     this._items = [];
-    counter++;
-    this._id = "_bundle_" + counter;
+    counter += 1;
+    this._id = `_bundle_${counter}`;
 
     this._root = null;
     this._modified = false;
@@ -25,13 +25,15 @@ export default class Bundle {
   }
 
   setRoot(itemId) {
-    return this._source.root = itemId;
+    this._source.root = itemId;
+    return itemId;
   }
 
   getRoot() {
     if (this._source.root) {
       return this._itemStore.getItem(this._source.root);
     }
+    return undefined;
   }
 
   getItemStore() {
@@ -65,4 +67,4 @@ export default class Bundle {
   isReadOnly() {
     return this._readOnly || this._path == null;
   }
-};
+}

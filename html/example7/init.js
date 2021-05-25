@@ -29,7 +29,7 @@ bundleLoader(itemStore, bundles, () => {
   const ta = document.getElementById('output');
   const updateOutput = () => {
     // Export RDF/XML
-    ta.value = rdfjson.converters.rdfjson2rdfxml(graph);
+    ta.value = rdfjson.converters.rdfjson2rdfxml(new Graph(graph.exportRDFJSON()));
 
     // Export RDF/JSON
     // ta.value = JSON.stringify(graph.exportRDFJSON(), null, "  ");

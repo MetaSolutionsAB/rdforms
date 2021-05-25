@@ -33,6 +33,15 @@ export default class ValidationPresenter extends Presenter {
     if (item.hasStyle('deprecated')) {
       return false;
     }
+    if (item.hasStyle('atMostOneChild')) {
+      debugger;
+    }
+    if (item.hasStyle('atLeastOneChild') || item.hasStyle('exactlyOneChild')) {
+      return true;
+    }
+    if (item.hasStyle('atLeastOneChild') || item.hasStyle('exactlyOneChild')) {
+      return true;
+    }
     const code = this.binding.getMatchingCode();
     if (code === CODES.MISSING_CONSTRAINTS || code === CODES.WRONG_NODETYPE) {
       return false;
@@ -40,11 +49,11 @@ export default class ValidationPresenter extends Presenter {
 
     const card = item.getCardinality();
     switch (this.includeLevel) {
-      case 'mandatory':
-        return card && card.min >= 1;
       case 'recommended':
-      default:
         return card && (card.min >= 1 || card.pref >= 1);
+      case 'mandatory':
+      default:
+        return card && card.min >= 1;
     }
   }
 
@@ -85,11 +94,14 @@ export default class ValidationPresenter extends Presenter {
       target = 0;
     }
     const code = this.binding.getMatchingCode();
-    const noDisjointHinder = !this.binding.getItem().hasStyle('disjoint') ||
+    const groupChildRequirementHinder = !(this.binding.getItem().hasStyle('atleastOneChild')
+      || this.binding.getItem().hasStyle('atMostOneChild')
+      || this.binding.getItem().hasStyle('disjoint')
+      || this.binding.getItem().hasStyle('exactlyOneChild')) ||
       code === CODES.TOO_FEW_VALUES_MIN ||
       code === CODES.TOO_FEW_VALUES_PREF;
     const groupError = code === CODES.MISSING_CONSTRAINTS || code === CODES.WRONG_NODETYPE;
-    if (target > _bindings.length && noDisjointHinder && !groupError) {
+    if (target > _bindings.length && groupChildRequirementHinder && !groupError) {
       _bindings = _bindings.concat([]);
       while (target > _bindings.length) {
         const binding = engine.create(this.binding, item);
@@ -126,8 +138,12 @@ export default class ValidationPresenter extends Presenter {
         tmpl = localize(this.messages, 'validation_min_required', min);
       } else if (code === CODES.TOO_MANY_VALUES) {
         tmpl = localize(this.messages, 'validation_max', card.max || 1);
-      } else if (code === CODES.TOO_MANY_VALUES_DISJOINT) {
-        tmpl = this.messages.validation_disjoint;
+      } else if (code === CODES.AT_MOST_ONE_CHILD) {
+        tmpl = this.messages.validation_at_most_one_child;
+      } else if (code === CODES.AT_LEAST_ONE_CHILD) {
+        tmpl = this.messages.validation_at_least_one_child;
+      } else if (code === CODES.EXACTLY_ONE_CHILD) {
+        tmpl = this.messages.validation_exactly_one_child;
       } else if (code === CODES.WRONG_NODETYPE) {
         tmpl = this.messages.validation_nodetype;
       } else if (code === CODES.WRONG_VALUE) {

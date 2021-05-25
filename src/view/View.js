@@ -1,14 +1,15 @@
+/* eslint-disable class-methods-use-this,no-unused-vars */
 import renderingContext from './renderingContext';
 import GroupBinding from '../model/GroupBinding';
 import * as engine from '../model/engine';
-import { bindingReport} from "../model/validate";
+import { bindingReport } from '../model/validate';
 
 let viewCounter = 0;
 export default class View {
   constructor(params, srcNodeRef) {
     this._viewId = viewCounter;
     viewCounter += 1;
-    this.parentView = params.parentView
+    this.parentView = params.parentView;
     this.srcNodeRef = srcNodeRef;
     this.binding = params.binding || null;
     this.template = params.template || null;
@@ -29,6 +30,10 @@ export default class View {
 
   destroy() {
     renderingContext.destroyDomNode(this.domNode, this);
+  }
+
+  getBinding() {
+    return this.binding;
   }
 
   _handleParams(params) {
@@ -149,9 +154,9 @@ export default class View {
 
       if (!this.showNow(item, bindings)) {
         // Invisible not not part of showNow check due to things like autoUUID
-        /*if (item.hasStyle('invisible')) { // In this case, create some bindings anyway
+        /* if (item.hasStyle('invisible')) { // In this case, create some bindings anyway
           this.prepareBindings(item, bindings);
-        }*/
+        } */
 // eslint-disable-next-line no-continue
         continue;
       }

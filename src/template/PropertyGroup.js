@@ -28,4 +28,4 @@ export default class PropertyGroup extends Group {
   getObjectItem() {
     return this.getChildren()[1];
   }
-};
+}

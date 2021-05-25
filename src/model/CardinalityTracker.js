@@ -1,3 +1,4 @@
+import { CODES } from './engine';
 export default class CardinalityTracker {
   /**
    * A counter paired with a item with cardinality restrictions.
@@ -13,6 +14,7 @@ export default class CardinalityTracker {
     this._counter = 0;
     this._depsOk = true;
     this._listeners = [];
+    this._code = 0;
   }
 
   addListener(listener) {
@@ -51,8 +53,20 @@ export default class CardinalityTracker {
     return this._depsOk;
   }
 
+  getCode() {
+    return this._code;
+  }
+
+  setCode(code) {
+    if (this._code !== code) {
+      this._code = code;
+      this.cardinalityChanged();
+    }
+  }
+
   setDepsOk(ok) {
     if (this._depsOk !== ok) {
+      this._code = CODES.UNKNOWN;
       this._depsOk = ok;
       this.cardinalityChanged();
     }
@@ -60,11 +74,13 @@ export default class CardinalityTracker {
 
   increment() {
     this._counter += 1;
+    this._code = CODES.UNKNOWN;
     this._checkCounter();
   }
 
   decrement() {
     this._counter -= 1;
+    this._code = CODES.UNKNOWN;
     this._checkCounter();
   }
 
@@ -74,6 +90,11 @@ export default class CardinalityTracker {
 
   checkCardinality() {
     this._checkCounter();
+  }
+
+  touch() {
+    this._code = CODES.UNKNOWN;
+    this.cardinalityChanged();
   }
 
   // ===================================================
@@ -91,4 +112,4 @@ export default class CardinalityTracker {
     }
     this.cardinalityChanged();
   }
-};
+}

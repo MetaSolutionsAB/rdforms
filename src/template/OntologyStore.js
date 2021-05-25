@@ -8,56 +8,58 @@ export default class OntologyStore {
     this._registry = {};
   }
 
-  //===================================================
+  //= ==================================================
   // Public API
-  //===================================================
+  //= ==================================================
   importRegistry(registry) {
     Object.assign(this._registry, registry);
   }
 
   getChoices(choiceItem, callback) {
-    var choices = this._findChoices(choiceItem);
+    const choices = this._findChoices(choiceItem);
     if (choices == null) {
-      //TODO load via xhr and deferred.
+      // TODO load via xhr and deferred.
     } else {
       if (callback == null) {
         return choices;
-      } else {
-        callback(choices);
       }
+      callback(choices);
     }
+    return undefined;
   }
 
-  //===================================================
+  //= ==================================================
   // Private methods
-  //===================================================
+  //= ==================================================
   _findChoices(item) {
-    var ontologyChoiceArr = this._registry[item.getOntologyUrl()];
+    const ontologyChoiceArr = this._registry[item.getOntologyUrl()];
     if (ontologyChoiceArr != null) {
-      for (var ind = 0; ind < ontologyChoiceArr.length; ind++) {
-        var obj = ontologyChoiceArr[ind];
+      for (let ind = 0; ind < ontologyChoiceArr.length; ind++) {
+        const obj = ontologyChoiceArr[ind];
         if (isEqual(obj.constraints, item.getConstraints()) &&
-          item.getParentProperty() == obj.parentProperty &&
-          item.getHierarchyProperty() == obj.hierarchyProperty &&
-          item.isParentPropertyInverted() == (obj.isParentPropertyInverted || false) &&
-          item.isHierarchyPropertyInverted() == (obj.isHierarchyPropertyInverted || false)) {
+          item.getParentProperty() === obj.parentProperty &&
+          item.getHierarchyProperty() === obj.hierarchyProperty &&
+          item.isParentPropertyInverted() === (obj.isParentPropertyInverted || false) &&
+          item.isHierarchyPropertyInverted() === (obj.isHierarchyPropertyInverted || false)) {
           return obj.choices;
         }
       }
     }
+    return undefined;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   _constructLoadUrl(choiceItem) {
-    var params = [];
-    params.push("constr=" + encodeURIComponent(JSON.stringify(choiceItem.getConstraints())));
+    const params = [];
+    params.push(`constr=${encodeURIComponent(JSON.stringify(choiceItem.getConstraints()))}`);
     if (choiceItem.getParentProperty() != null) {
-      var pp = choiceItem.isParentPropertyInverted() === true ? "ipp=" : "pp=";
+      const pp = choiceItem.isParentPropertyInverted() === true ? 'ipp=' : 'pp=';
       params.push(pp + encodeURIComponent(choiceItem.getParentProperty()));
     }
     if (choiceItem.getHierarchyProperty() != null) {
-      var hp = choiceItem.isHierarchyPropertyInverted() === true ? "ihp=" : "hp=";
+      const hp = choiceItem.isHierarchyPropertyInverted() === true ? 'ihp=' : 'hp=';
       params.push(hp + encodeURIComponent(choiceItem.getHierarchyProperty()));
     }
-    return choiceItem.getOntologyUrl() + "?" + params.join("&");
+    return `${choiceItem.getOntologyUrl()}?${params.join('&')}`;
   }
-};
+}

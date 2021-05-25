@@ -82,7 +82,7 @@ export default class Editor extends Presenter {
             }
             return counter === 0;
           });
-        } else if (err.code === engine.CODES.TOO_MANY_VALUES_DISJOINT) {
+        } else if (err.code === engine.CODES.AT_MOST_ONE_CHILD) {
           this.binding.getChildBindings().forEach((binding) => {
             if (binding.getMatchingCode() !== engine.CODES.OK) {
               renderingContext.domClassToggle(this._binding2node[binding.getHash()],
@@ -103,11 +103,15 @@ export default class Editor extends Presenter {
   }
 
   setIncludeLevel(includeLevel) {
+    if (this.includeLevel === includeLevel) {
+      return;
+    }
     this.includeLevel = includeLevel;
     if (this.graph == null || this.resource == null || this.template == null) {
       return;
     }
     this.binding = engine.match(this.graph, this.resource, this.template);
+    this._subEditors = [];
     this.render();
   }
 
@@ -245,6 +249,9 @@ export default class Editor extends Presenter {
     }
     if (this.filterBinding(binding)) {
       renderingContext.domClassToggle(newNode, 'hiddenProperty', true);
+    }
+    if (item.hasStyle('deprecated')) {
+      renderingContext.domClassToggle(newNode, 'rdformsDeprecated', true);
     }
     return newNode;
   }

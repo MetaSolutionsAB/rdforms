@@ -51,7 +51,8 @@
               "description": {
                 "en": "A short title of the resource",
                 "sv": "En kort titel fÃ¶r resursen"
-              }
+              },
+              "styles": ["deprecated"]
             }
           ]
         },

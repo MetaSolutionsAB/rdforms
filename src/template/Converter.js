@@ -18,7 +18,7 @@ export default class Converter {
    * an object with two arrays of items, one corresponding to
    * found properties and one corresponding to found classes:
    * {
-   * 	   properties: [item1, item2],
+   *     properties: [item1, item2],
    *     classes: [item3, item4]
    * }
    *

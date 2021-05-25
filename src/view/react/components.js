@@ -7,7 +7,7 @@ import './labels';
 import './text';
 import './textEditors';
 import './choice';
-import './choiceEditors';
+import './choiceEditors/index';
 import './buttons';
 import './date';
 import './duration';
@@ -71,8 +71,12 @@ const newStruct = (Tag, parent) => {
     // -- START: Initial methods used before react kicks in.
     toggleClass: (clsStr, addOrNot) => toggleClass(firstClsSet, clsStr, addOrNot),
     domQuery: selector => (selectorInClasses(selector, firstClsSet) ? ext : findStruct(selector, firstChildArr)),
-    appendChild: struct => firstChildArr.push(struct),
-    appendAfter: (struct, sibling) => firstChildArr.splice(firstChildArr.indexOf(sibling) + 1, 0, struct),
+    appendChild: struct => {
+      firstChildArr.push(struct);
+    },
+    appendAfter: (struct, sibling) => {
+      firstChildArr.splice(firstChildArr.indexOf(sibling) + 1, 0, struct)
+    },
     text: (str) => {
       firstTextStr = str;
     },
@@ -90,41 +94,41 @@ const newStruct = (Tag, parent) => {
 
       // -- START: Override with react hook friendly methods that utilizes the current state and set methods.
       ext.domQuery = selector => (selectorInClasses(selector, clsSet) ? ext : findStruct(selector, childArr));
-      useEffect(() => {
-        ext.toggleClass = (clsStr, addOrNot) => {
-          setCls((oldClsSet) => {
-            const newClsSet = new Set(oldClsSet);
-            if (toggleClass(newClsSet, clsStr, addOrNot)) {
-              return newClsSet;
-            }
-            return oldClsSet;
-          });
-        };
-        ext.appendChild = (struct) => {
-          setChildArr(oldChildArr => oldChildArr.concat([struct]));
-        };
-        ext.appendAfter = (struct, sibling) => {
-          setChildArr((oldChildArr) => {
-            const newChildArr = oldChildArr.slice(0);
-            newChildArr.splice(sibling ? newChildArr.indexOf(sibling) + 1 || 0 : 0, 0, struct);
-            return newChildArr;
-          });
-        };
-        ext.text = str => setText(str);
-        ext.removeChild = (struct) => {
-          setChildArr((oldChildArr) => {
-            const newChildArr = oldChildArr.slice(0);
-            newChildArr.splice(newChildArr.indexOf(struct), 1);
-            return newChildArr;
-          });
-        };
-        ext.clear = () => {
-          setChildArr([]);
-        };
-        ext.attr = (attr, value) => {
-          setAttrs(oldAttrs => updateObjAttr(Object.assign({}, oldAttrs), attr, value));
-        };
-      }, []);
+      ext.toggleClass = (clsStr, addOrNot) => {
+        setCls((oldClsSet) => {
+          const newClsSet = new Set(oldClsSet);
+          if (toggleClass(newClsSet, clsStr, addOrNot)) {
+            return newClsSet;
+          }
+          return oldClsSet;
+        });
+      };
+      ext.appendChild = (struct) => {
+        setChildArr(oldChildArr => oldChildArr.concat([struct]));
+      };
+      ext.appendAfter = (struct, sibling) => {
+        setChildArr((oldChildArr) => {
+          const newChildArr = oldChildArr.slice(0);
+          newChildArr.splice(sibling ? newChildArr.indexOf(sibling) + 1 || 0 : 0, 0, struct);
+          return newChildArr;
+        });
+      };
+      ext.text = str => setText(str);
+      ext.removeChild = (struct) => {
+        setChildArr((oldChildArr) => {
+          const newChildArr = oldChildArr.slice(0);
+          newChildArr.splice(newChildArr.indexOf(struct), 1);
+          return newChildArr;
+        });
+      };
+      ext.clear = () => {
+        setChildArr([]);
+      };
+      ext.attr = (attr, value) => {
+        setAttrs(oldAttrs => updateObjAttr(Object.assign({}, oldAttrs), attr, value));
+      };
+      // -- END
+
       return <Tag className={clsSet.join(' ')}>{childArr.map(child =>
         (child.component ? React.createElement(child.component, { key: child.id }) : child))}{text}</Tag>;
     },

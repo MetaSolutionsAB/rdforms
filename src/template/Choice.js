@@ -1,5 +1,5 @@
+import { namespaces as ns } from '@entryscape/rdfjson';
 import Item from './Item';
-import {namespaces as ns} from '@entryscape/rdfjson';
 import utils from '../utils';
 
 const sortChoices = (choices, shouldExpand) => {
@@ -7,18 +7,18 @@ const sortChoices = (choices, shouldExpand) => {
     return;
   }
   if (shouldExpand) {
-    choices.forEach(c => c.value = ns.expand(c.value));
+    // eslint-disable-next-line no-return-assign
+    choices.forEach(c => (c.value = ns.expand(c.value)));
   }
-  choices.sort(function (c1, c2) {
-    var lab1 = utils.getLocalizedValue(c1.label).value || c1.value;
-    var lab2 = utils.getLocalizedValue(c2.label).value || c2.value;
+  choices.sort((c1, c2) => {
+    const lab1 = utils.getLocalizedValue(c1.label).value || c1.value;
+    const lab2 = utils.getLocalizedValue(c2.label).value || c2.value;
     if (lab1 > lab2) {
       return 1;
     } else if (lab1 < lab2) {
       return -1;
-    } else {
-      return 0;
     }
+    return 0;
   });
 };
 
@@ -34,12 +34,11 @@ export default class Choice extends Item {
   constructor(params) {
     super(params);
     this._ontologyStore = params.ontologyStore;
-    //this._choices = {};
   }
 
-  //===================================================
+  // ===================================================
   // Public API
-  //===================================================
+  // ===================================================
   /**
    *  A choice is an object which looks like:
    * {"value": "http://example.com/choice1",
@@ -56,12 +55,12 @@ export default class Choice extends Item {
    * @return {Boolean} true if there is an ontology or static choices.
    */
   hasChoices(original) {
-    var s = this.getSource(original);
+    const s = this.getSource(original);
     return s.ontologyUrl != null || s.choices != null;
   }
 
   hasStaticChoices(original) {
-    var s = this.getSource(original);
+    const s = this.getSource(original);
     return s.choices != null;
   }
 
@@ -69,7 +68,7 @@ export default class Choice extends Item {
    * @return {Array} of choices defined manually in the Template.
    */
   getStaticChoices(original) {
-    var s = this.getSource(original);
+    const s = this.getSource(original);
     if (s.choices) {
       const isURI = this.getNodetype().indexOf('LITERAL') === -1;
       if (original && this.isExtention()) {
@@ -77,18 +76,16 @@ export default class Choice extends Item {
           sortChoices(s.choices, isURI);
           this._origStaticIsSorted = true;
         }
-      } else {
-        if (!this._staticIsSorted) {
-          sortChoices(s.choices, isURI);
-          this._staticIsSorted = true;
-        }
+      } else if (!this._staticIsSorted) {
+        sortChoices(s.choices, isURI);
+        this._staticIsSorted = true;
       }
     }
     return s.choices;
   }
 
   setStaticChoices(choices) {
-    var s = this.getSource(true);
+    const s = this.getSource(true);
     if (s.choices === choices) {
       return;
     }
@@ -118,24 +115,22 @@ export default class Choice extends Item {
         this._dynamicChoices = this._ontologyStore.getChoices(this);
         sortChoices(this._dynamicChoices);
         return this._dynamicChoices;
-      } else {
-        this._ontologyStore.getChoices(this, (choices) => {
-          sortChoices(choices);
-          if (this._dynamicChoices == null) {
-            console.log("Failed lookup of choices for " + this.getLabel());
-            console.log("  OntologyUrl is: " + this._source.ontologyUrl);
-          }
-          callback(this._dynamicChoices);
-        });
-        return;
       }
+      this._ontologyStore.getChoices(this, (choices) => {
+        sortChoices(choices);
+        if (this._dynamicChoices == null) {
+          console.log(`Failed lookup of choices for ${this.getLabel()}`);
+          console.log(`OntologyUrl is: ${this._source.ontologyUrl}`);
+        }
+        callback(this._dynamicChoices);
+      });
     } else {
       if (callback == null) {
         return this._dynamicChoices;
-      } else {
-        callback(this._dynamicChoices);
       }
+      callback(this._dynamicChoices);
     }
+    return undefined;
   }
 
   getOntologyUrl(original) {
@@ -147,8 +142,8 @@ export default class Choice extends Item {
   }
 
   setOntologyUrl(url) {
-    var s = this.getSource(true);
-    if (url == null || url == "") {
+    const s = this.getSource(true);
+    if (url == null || url === '') {
       delete s.ontologyUrl;
     } else {
       s.ontologyUrl = url;
@@ -159,7 +154,7 @@ export default class Choice extends Item {
 
   getLabelProperties(original) {
     return this.getSource(original).labelProperties ||
-      ["http://www.w3.org/2000/01/rdf-schema#label"];
+      ['http://www.w3.org/2000/01/rdf-schema#label'];
   }
 
   getParentProperty(original) {
@@ -171,8 +166,8 @@ export default class Choice extends Item {
   }
 
   setParentProperty(prop) {
-    var s = this.getSource(true);
-    if (prop == null || prop == "") {
+    const s = this.getSource(true);
+    if (prop == null || prop === '') {
       delete s.parentProperty;
     } else {
       s.parentProperty = prop;
@@ -189,8 +184,8 @@ export default class Choice extends Item {
   }
 
   setHierarchyProperty(prop) {
-    var s = this.getSource(true);
-    if (prop == null || prop == "") {
+    const s = this.getSource(true);
+    if (prop == null || prop === '') {
       delete s.hierarchyProperty;
     } else {
       s.hierarchyProperty = prop;
@@ -203,7 +198,7 @@ export default class Choice extends Item {
   }
 
   setParentPropertyInverted(inverted) {
-    var s = this.getSource(true);
+    const s = this.getSource(true);
     if (inverted === true) {
       s.isParentPropertyInverted = true;
     } else {
@@ -217,7 +212,7 @@ export default class Choice extends Item {
   }
 
   setHierarchyPropertyInverted(inverted) {
-    var s = this.getSource(true);
+    const s = this.getSource(true);
     if (inverted) {
       s.isHierarchyPropertyInverted = true;
     } else {
@@ -225,4 +220,4 @@ export default class Choice extends Item {
     }
     this.refreshExtends();
   }
-};
+}

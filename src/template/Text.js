@@ -7,4 +7,4 @@ export default class Text extends Item {
   getLabelProperties(original) {
     return this.getSource(original).labelProperties;
   }
-};
+}

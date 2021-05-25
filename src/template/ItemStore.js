@@ -1,12 +1,11 @@
+import { namespaces as ns } from '@entryscape/rdfjson';
 import PropertyGroup from './PropertyGroup';
 import Group from './Group';
 import Text from './Text';
 import Choice from './Choice';
 import OntologyStore from './OntologyStore';
 import Bundle from './Bundle';
-
-import {constructTemplate} from '../model/engine';
-import {namespaces as ns} from '@entryscape/rdfjson';
+import { constructTemplate } from '../model/engine';
 
 export default class ItemStore {
   /**
@@ -19,19 +18,18 @@ export default class ItemStore {
     this.automaticSortAllowed = true;
     this.ignoreMissingItems = true;
 
-    //==================================================;
+    //= =================================================;
     // Private Attribute;
-    //==================================================;
+    //= =================================================;
     this._bundles = [];
     this._registry = {};
     this._registryByProperty = {};
     this._ontologyStore = ontologyStore || new OntologyStore();
-
   }
 
-  //===================================================
+  //= ==================================================
   // Public API
-  //===================================================
+  //= ==================================================
   getTemplate(id) {
     return this.getItem(id);
   }
@@ -40,76 +38,61 @@ export default class ItemStore {
     if (group == null) {
       return [];
     }
-    let origSource = group.getSource(true);
-    let origSourceContent = origSource.content || origSource.items || [];
+    const origSource = group.getSource(true);
+    const origSourceContent = origSource.content || origSource.items || [];
     if (original) {
       return this._createItems(origSourceContent, group._forceChildrenClones, group.getBundle());
-    } else {
-      let ext = this.getItem(origSource['extends']);
-      if (ext) {
-        return ext.getChildren().concat(group.getChildren(true));
-      } else {
-        return group.getChildren(true);
-      }
     }
+    const ext = this.getItem(origSource.extends);
+    if (ext) {
+      return ext.getChildren().concat(group.getChildren(true));
+    }
+    return group.getChildren(true);
   }
 
   getItem(id) {
     if (id != null) {
       return this._registry[id];
     }
+    return undefined;
   }
 
   getItems() {
-    let arr = [];
-    for (let key in this._registry) {
-      if (this._registry.hasOwnProperty(key)) {
-        arr.push(this._registry[key]);
-      }
-    }
-    /*  for (let key in this._registryByProperty) {
-          if (this._registryByProperty.hasOwnProperty(key)) {
-              let item = this._registryByProperty[key]
-              if (item.getId() == null) {
-                  arr.push(item);
-              }
-          }
-      }*/
-    return arr;
+    return Object.keys(this._registry).map(key => this._registry[key]);
   }
 
   renameItem(from, to) {
     if (this._registry[to]) {
-      throw 'Cannot rename to ' + to + ' since an item with that id already exists.';
+      throw new Error(`Cannot rename to ${to} since an item with that id already exists.`);
     }
     if (to === '' || to === null) {
-      throw 'Cannot give an item an empty string or null as id.';
+      throw new Error('Cannot give an item an empty string or null as id.');
     }
-    let item = this._registry[from];
+    const item = this._registry[from];
     if (item) {
       delete this._registry[from];
       this._registry[to] = item;
       item.setId(to);
     }
-    let renameInGroup = function (source) {
-      let children = source.content;
+    const renameInGroup = (source) => {
+      const children = source.content;
       if (children) {
         for (let j = 0; j < children.length; j++) {
-          let child = children[j];
+          const child = children[j];
           if (child.id === from || child['@id'] === from) {
             child.id = to;
-            delete child['@id']; //Clean up backward compatability.
+            delete child['@id']; // Clean up backward compatability.
           }
           if (child.content) {
             renameInGroup(child);
           }
         }
       }
-    }
+    };
 
-    let items = this.getItems();
+    const items = this.getItems();
     for (let i = 0; i < items.length; i++) {
-      let childItem = items[i];
+      const childItem = items[i];
       if (childItem instanceof Group) {
         renameInGroup(childItem._source);
       }
@@ -117,13 +100,7 @@ export default class ItemStore {
   }
 
   getItemIds() {
-    let arr = [];
-    for (let key in this._registry) {
-      if (this._registry.hasOwnProperty(key)) {
-        arr.push(key);
-      }
-    }
-    return arr;
+    return Object.keys(this._registry);
   }
 
   getItemByProperty(property) {
@@ -144,14 +121,14 @@ export default class ItemStore {
    */
   registerBundle(bundle) {
     bundle.itemStore = this;
-    let b = new Bundle(bundle);
+    const b = new Bundle(bundle);
     this._bundles.push(b);
 
     if (bundle.source && bundle.source.namespaces) {
       ns.add(bundle.source.namespaces);
     }
 
-    let templates = bundle.source.templates || bundle.source.auxilliary;
+    const templates = bundle.source.templates || bundle.source.auxilliary;
     if (templates instanceof Array) {
       this._createItems(templates, false, b);
     }
@@ -166,26 +143,27 @@ export default class ItemStore {
     return this._bundles;
   }
 
-  //Backward compatability
+  // Backward compatability
   createTemplate(source) {
-    let b = this.registerBundle({source: source});
+    const b = this.registerBundle({ source });
     return b.getRoot();
   }
 
   createTemplateFromChildren(children) {
-    let childrenObj = (children || []).map(child => typeof child === 'string' ? this.getItem(child) : child, this);
-    return new Group({source: {}, children: childrenObj, itemStore: this});
+    const childrenObj = (children || []).map(child => (typeof child === 'string' ? this.getItem(child) : child));
+    return new Group({ source: {}, children: childrenObj, itemStore: this });
   }
 
   setPriorities(priorities) {
     this.priorities = priorities;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   createExtendedSource(origSource, extSource) {
-    let newSource = Object.assign(Object.assign({}, origSource), extSource);
-    newSource['_extendedSource'] = extSource;
-    newSource['extends'] = null; //Avoid infinite recursion when creating the fleshed out item.
-    delete newSource['children'];
+    const newSource = Object.assign(Object.assign({}, origSource), extSource);
+    newSource._extendedSource = extSource;
+    newSource.extends = null; // Avoid infinite recursion when creating the fleshed out item.
+    delete newSource.children;
     return newSource;
   }
 
@@ -196,43 +174,46 @@ export default class ItemStore {
    * @returns {*}
    */
   createItem(source, forceClone, skipRegistration, bundle) {
-    let item, id = source.id || source['@id'], type = source['type'] || source['@type'];
-    if (source['extends']) {
-      //Explicit extends given
-      let extItem = this._registry[source['extends']];
+    let item;
+    const id = source.id || source['@id'];
+    const type = source.type || source['@type'];
+    if (source.extends) {
+      // Explicit extends given
+      const extItem = this._registry[source.extends];
       if (extItem == null && !this.ignoreMissingItems) {
-        throw 'Cannot find item to extend with id: ' + source['extends'];
+        throw new Error(`Cannot find item to extend with id: ${source.extends}`);
       }
       if (extItem) {
-        let newSource = this.createExtendedSource(extItem.getSource(), source);
+        const newSource = this.createExtendedSource(extItem.getSource(), source);
         return this.createItem(newSource, false, false, bundle);
       }
     }
 
     if (type != null) {
-      //If there is a type in the source then it means that the object is a new item.
+      // If there is a type in the source then it means that the object is a new item.
+      // eslint-disable-next-line default-case
       switch (type) {
         case 'text':
-          item = new Text({source: source, itemStore: this, bundle: bundle});
+          item = new Text({ source, itemStore: this, bundle });
           break;
         case 'choice':
           item = new Choice({
-            source: source,
+            source,
             itemStore: this,
             ontologyStore: this._ontologyStore,
-            bundle: bundle
+            bundle,
           });
           break;
         case 'group':
-          item = new Group({source: source, children: null, itemStore: this, bundle: bundle}); //Lazy loading of children.
+          item = new Group({ source, children: null, itemStore: this, bundle }); // Lazy loading of children.
           break;
         case 'propertygroup':
           item = new PropertyGroup({
-            source: source,
+            source,
             children: null,
             itemStore: this,
-            bundle: bundle
-          }); //Lazy loading of children.
+            bundle,
+          }); // Lazy loading of children.
           break;
       }
       if (skipRegistration !== true) {
@@ -250,59 +231,49 @@ export default class ItemStore {
         }
       }
       return item;
-    } else {
-      //No type means it is a reference, check that the referred item (via id) exists
-      if (id == null) {
-        throw 'Cannot create subitem, `type` for creating new or `id` for referencing external are required.';
-      }
-      if (this._registry[id] == null) {
-        throw 'Cannot find referenced subitem using identifier: ' + id;
-      }
-      //Check if there are any overlay properties, if so force clone mode.
-      for (let key in source) {
-        if (source.hasOwnProperty(key) && (key !== 'id' && key !== '@id')) {
-          forceClone = true;
-          break;
-        }
-      }
-
-      if (forceClone === true) {
-        let newSource = Object.assign(Object.assign({}, this._registry[id]._source), source);
-        return this.createItem(newSource, false, true);
-      } else {
-        return this._registry[id];
-      }
     }
+    // No type means it is a reference, check that the referred item (via id) exists
+    if (id == null) {
+      throw new Error('Cannot create subitem, `type` for creating new or `id` for referencing external are required.');
+    }
+    if (this._registry[id] == null) {
+      throw new Error(`Cannot find referenced subitem using identifier: ${id}`);
+    }
+
+    // Clone if forceClone set to true or if the source contains non-id properties.
+    if (forceClone === true || Object.keys(source).find(key => (key !== 'id' && key !== '@id'))) {
+      const newSource = Object.assign(Object.assign({}, this._registry[id]._source), source);
+      return this.createItem(newSource, false, true);
+    }
+    return this._registry[id];
   }
 
   removeItem(item, removereferences) {
-    let b = item.getBundle();
+    const b = item.getBundle();
     if (b != null) {
       b.removeItem(item);
     }
     if (item.getId() != null) {
       delete this._registry[item.getId()];
     }
-    let prop = item.getProperty();
+    const prop = item.getProperty();
     if (prop != null && this._registryByProperty[prop] === item) {
       delete this._registryByProperty[prop];
     }
     if (removereferences) {
-      //TODO
+      // TODO
 
     }
   }
 
-  //===================================================
+  //= ==================================================
   // Private methods
-  //===================================================
+  //= ==================================================
   _createItems(sourceArray, forceClone, bundle) {
     return sourceArray.map((child, index) => {
-      if (typeof child === 'string') {  //If child is not a object but a direct string reference,
-        // create a object.
-        child = sourceArray[index] = {id: child};
-      }
-      return this.createItem(child, forceClone, false, bundle);
-    }, this);
+      // If child is not a object but a direct string reference,
+      const childToUse = typeof child === 'string' ? sourceArray[index] = { id: child } : child;
+      return this.createItem(childToUse, forceClone, false, bundle);
+    });
   }
-};
+}

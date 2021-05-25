@@ -16,7 +16,7 @@ export default class LevelEditor {
     this.resource = params.resource;
     this.graph = params.graph;
     this.compact = params.compact === undefined ? true : params.compact;
-    this.includeLevel = params.inclideLevel || 'mandatory';
+    this.includeLevel = params.includeLevel || 'mandatory';
     this.includeLevelControllsVisible = params.includeLevelControllsVisible === undefined ?
       true : params.includeLevelControllsVisible;
     this.externalEditor = params.externalEditor === undefined ? false : params.externalEditor;

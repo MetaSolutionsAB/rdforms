@@ -2,7 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import renderingContext from '../renderingContext';
+import { CODES } from '../../model/engine';
 
 
 const StyledTooltip = withStyles(theme => ({
@@ -18,6 +20,13 @@ const StyledTooltip = withStyles(theme => ({
 }))(Tooltip);
 
 const ItemTooltip = (props) => {
+  const [open, setOpen] = useState(false);
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+  const handleTooltipOpen = () => {
+    setOpen(true);
+  };
   let propinfo = '';
   const property = props.item.getProperty();
   if (property) {
@@ -25,9 +34,14 @@ const ItemTooltip = (props) => {
   }
   const description = props.item.getDescription() || (property ? '' : props.context.view.messages.info_missing || '');
 
-  return <StyledTooltip placement="bottom-start" interactive enterTouchDelay={0} leaveTouchDelay={50000} title={
-    (<><p className="rdformsLinebreaks rdformsDescription">{description}</p>{propinfo}</>)}>{
-    props.children}</StyledTooltip>;
+  return <ClickAwayListener onClickAway={handleTooltipClose}>
+    <StyledTooltip title={(<><p className="rdformsLinebreaks rdformsDescription">{description}</p>{propinfo}</>)}
+                   placement="bottom-start" disableHoverListener disableTouchListener
+                   onClose={handleTooltipClose}
+                   onOpen={handleTooltipOpen}
+                   open={open}
+    ><span onClick={handleTooltipOpen}>{
+      props.children}</span></StyledTooltip></ClickAwayListener>;
 };
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
@@ -81,6 +95,40 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
   }
 };
 
+const ERR = (props) => {
+  const { rowNode, binding, item, context } = props;
+  const [code, setCode] = useState(binding.getCardinalityTracker().getCode());
+  useEffect(() => {
+    const cardTr = binding.getCardinalityTracker();
+    const listener = cardTr.addListener(() => {
+      const newCode = cardTr.getCode();
+      renderingContext.domClassToggle(rowNode, 'rdformsError', newCode !== CODES.UNKNOWN);
+      setCode(newCode);
+    });
+    return () => cardTr.removeListener(listener);
+  }, []);
+  if (code === CODES.UNKNOWN) {
+    return '';
+  }
+  let message;
+  switch (code) {
+    case CODES.TOO_MANY_VALUES:
+    case CODES.AT_MOST_ONE_CHILD:
+      message = context.view.messages.validation_at_most_one_child;
+      break;
+    case CODES.AT_LEAST_ONE_CHILD:
+      message = context.view.messages.validation_at_least_one_child;
+      break;
+    case CODES.EXACTLY_ONE_CHILD:
+      message = context.view.messages.validation_exactly_one_child;
+      break;
+    case CODES.TOO_FEW_VALUES_MIN:
+    default:
+      message = context.view.messages.missingValueField;
+  }
+  return <div className="rdformsWarning">{message}</div>;
+};
+
 renderingContext.renderEditorLabelScopeEnd = (rowNode, binding, item, context) => {
   if (!item.hasStyle('nonEditable') && !item.hasStyle('heading')) {
     let Button;
@@ -94,5 +142,26 @@ renderingContext.renderEditorLabelScopeEnd = (rowNode, binding, item, context) =
     if (Button) {
       rowNode.appendChild(<Button key={`${binding.getHash()}_labelEnd`}></Button>);
     }
+    // If the item is deprecated and there are at least one matching value (binding),
+    // provide a message and make sure the entire row (including the label) is deleted when
+    // the last faulty binding have been removed
+    if (item.hasStyle('deprecated')) {
+      const cardTr = binding.getCardinalityTracker();
+      const listener = cardTr.addListener(() => {
+        if (cardTr.getCardinality() === 0) {
+          cardTr.removeListener(listener);
+          rowNode.destroy();
+        }
+      });
+      rowNode.appendChild(<div className="rdformsWarning">{context.view.messages.deprecatedField}</div>);
+    }
+
+    // If there are dependencies that are not fulfilled, notify.
+    if (item.getDeps()) {
+      rowNode.appendChild(<div className="rdformsWarning rdformsDependency">
+        {context.view.messages.dependencyField}</div>);
+    }
+
+    rowNode.appendChild(<ERR rowNode={rowNode} binding={binding} item={item} context={context}></ERR>);
   }
 };

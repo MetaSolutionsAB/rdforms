@@ -2,24 +2,23 @@ import Item from './Item';
 
 const sortItems = (items) => {
   items.forEach((item) => {
-    item.__label = (item.getLabel() || "").toLowerCase();
+    item.__label = (item.getLabel() || '').toLowerCase();
   });
-  items.sort(function (o1, o2) {
+  items.sort((o1, o2) => {
     if (o1._source.priority != null) {
       if (o2._source.priority != null) {
-        return o1._source.priority > o2._source.priority ? -1 : o1._source.priority < o2._source.priority ? 1 : 0;
-      } else {
-        return o1._source.priority > 0 ? -1 : 1;
+        // eslint-disable-next-line no-nested-ternary
+        return o1._source.priority > o2._source.priority ? -1 : (o1._source.priority < o2._source.priority ? 1 : 0);
       }
+      return o1._source.priority > 0 ? -1 : 1;
     } else if (o2._source.priority != null) {
       return o2._source.priority > 0 ? 1 : -1;
     } else if (o1.__label > o2.__label) {
       return 1;
     } else if (o1.__label < o2.__label) {
       return -1;
-    } else {
-      return 0;
     }
+    return 0;
   });
 };
 
@@ -39,19 +38,19 @@ export default class Group extends Item {
     this._parent = null;
   }
 
-  //===================================================
+  // ===================================================
   // Public API
-  //===================================================
+  // ===================================================
   getChildren(original) {
-    original = original && this.isExtention();
-    var children = original ? this._ochildren : this._children;
+    const _original = original && this.isExtention();
+    let children = _original ? this._ochildren : this._children;
 
     if (children == null) {
-      children = this._itemStore.getChildren(this, original);
+      children = this._itemStore.getChildren(this, _original);
       if (this.getSource().automatic === true && this._itemStore.automaticSortAllowed) {
         sortItems(children);
       }
-      this["_" + (original ? "o" : "") + "children"] = children;
+      this[`_${_original ? 'o' : ''}children`] = children;
     }
     return children;
   }
@@ -68,11 +67,11 @@ export default class Group extends Item {
     delete this._ochildren;
   }
 
-  //===================================================
+  // ===================================================
   // Inherited methods
-  //===================================================
+  // ===================================================
 
   getNodetype() {
-    return super.getNodetype() || "RESOURCE";//Ugly fix because it is often wrong written in SIRFF.
+    return super.getNodetype() || 'RESOURCE'; // Ugly fix because it is often wrong written in SIRFF.
   }
-};
+}

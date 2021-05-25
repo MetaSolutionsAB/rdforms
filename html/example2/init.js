@@ -12,11 +12,15 @@ bundleLoader(new ItemStore(), [['../templates/templateBundle.json']], (bundles) 
     resource: 'http://example.org/about',
     template: bundles[0].getRoot(),
     compact: false,
+    includeLevel: 'recommended',
   }, 'node');
   document.getElementById('buttonMissing').onclick = function() {
     editor.report();
   };
   document.getElementById('buttonMandatory').onclick = function() {
     editor.setIncludeLevel('mandatory');
+  };
+  document.getElementById('buttonRecommended').onclick = function() {
+    editor.setIncludeLevel('recommended');
   };
 });

@@ -828,10 +828,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.8.0.tgz#bbbff68978fefdbe68ccb533bc8cbe1d1afb5413"
   integrity sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==
 
-"@entryscape/rdfjson@^2.4.1":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@entryscape/rdfjson/-/rdfjson-2.5.0.tgz#f6a50b8475deeff30b480f09bebc2c7c77918acd"
-  integrity sha512-UHF2XFicRSuB0gYICTzx128xldwc78hBTV+nllhHGrUU2ElS5uPVglKq3zMAwp37I2DiKC6WW80i/UxxW9Be6A==
+"@entryscape/rdfjson@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@entryscape/rdfjson/-/rdfjson-2.5.1.tgz#add39f0c95bc2a6050348d6cfe8ef645e081a505"
+  integrity sha512-DkrTD9cTPiOoY7hVrjLTBJC2rkw7yeLzQ0RMaTEwozWD2XHJYncTwY2aaZ+EhmmcnqnGnXXaliT87R+/Rfff4g==
   dependencies:
     core-js "^3.4.0"
     md5 "^2.2.1"

@@ -57,58 +57,67 @@ const updateViaCardinalityTracker = (bindings, code) => {
   }
 };
 
+const doNotProceedFurther = (groupBinding, childItem) => {
+  // Don't check further if the childItem is deprecated
+  if (childItem.hasStyle('deprecated')) {
+    return true;
+  }
+
+  // Don't check further if the binding is hidden due to missing dependencies
+  const childPath = childItem.getDeps();
+  if (childPath) {
+    const fromBinding = engine.findBindingRelativeToParentBinding(groupbinding, childPath);
+    if (!engine.matchPathBelowBinding(fromBinding, childPath)) {
+      return true;
+    }
+  }
+  return false;
+};
+
 const _createReport = (groupbinding, report, firstLevel) => {
   if (groupbinding.getMatchingCode() !== engine.CODES.OK) {
     return undefined;
   }
   const groupitem = groupbinding.getItem();
-  const path = groupitem.getDeps();
+
+  // Abort check if the groupbinding is hidden due to a missing dependency.
+  // Check disabled since it is done for each child before recursive call
+ /* const path = groupitem.getDeps();
   if (path && groupbinding.getParent() != null) {
     const fromBinding = engine.findBindingRelativeToParentBinding(groupbinding.getParent(), path);
     if (!engine.matchPathBelowBinding(fromBinding, path)) {
       return undefined;
     }
-  }
+  } */
 
-  if (firstLevel === true || groupbinding.isValid() || groupitem.getProperty() == null) {
+  if (firstLevel === true || groupbinding.isValid() || groupitem.getProperty() == null
+  || groupitem.hasStyle('atLeastOneChild') || groupitem.hasStyle('exactlyOneChild')) {
     const childrenItems = groupitem.getChildren();
 
-    if (groupitem.hasStyle('disjoint')) {
+    // disjoint is deprecated in favour of atMostOneChild
+    if (groupitem.hasStyle('disjoint') || groupitem.hasStyle('atMostOneChild')
+      || groupitem.hasStyle('atLeastOneChild') || groupitem.hasStyle('exactlyOneChild')) {
       const bindings = groupbinding.getChildBindings();
       const nrOfValid = _countValidBindings(bindings);
-      if (nrOfValid > 1) {
-        updateViaCardinalityTracker([groupbinding], engine.CODES.TOO_MANY_VALUES_DISJOINT);
-        groupbinding.setMatchingCode(engine.CODES.TOO_MANY_VALUES_DISJOINT);
-        report.errors.push({
-          parentBinding: groupbinding,
-          item: bindings[0].getItem(),
-          code: engine.CODES.TOO_MANY_VALUES_DISJOINT,
-        });
-/*        bindings.forEach((binding) => {
-          if (binding.isValid()) {
-            binding.setMatchingCode(engine.CODES.TOO_MANY_VALUES_DISJOINT);
-          }
-        });*/
+      let code;
+      if (nrOfValid > 1 && (groupitem.hasStyle('disjoint') || groupitem.hasStyle('atMostOneChild'))) {
+        code = engine.CODES.AT_MOST_ONE_CHILD;
+      } else if (nrOfValid !== 1 && groupitem.hasStyle('exactlyOneChild')) {
+        code = engine.CODES.EXACTLY_ONE_CHILD;
+      } else if (nrOfValid === 0 && groupitem.hasStyle('atLeastOneChild')) {
+        code = engine.CODES.AT_LEAST_ONE_CHILD;
       }
-      bindings.forEach((binding) => {
-        const item = binding.getItem();
-        if (item.hasStyle('deprecated')) {
-          report.deprecated.push(binding);
-        }
-      });
+      if (code) {
+        updateViaCardinalityTracker([groupbinding], code);
+        groupbinding.setMatchingCode(code);
+        // Correct to set only on first child?
+       // report.errors.push({ parentBinding: groupbinding, item: bindings[0].getItem(), code });
+      }
     } else {
       groupbinding.getItemGroupedChildBindings().forEach((bindings, index) => {
         const childItem = childrenItems[index];
-        if (childItem.hasStyle('deprecated')) {
-          bindings.forEach(binding => report.deprecated.push(binding));
+        if (doNotProceedFurther(groupbinding, childItem)) {
           return;
-        }
-        const childPath = childItem.getDeps();
-        if (childPath) {
-          const fromBinding = engine.findBindingRelativeToParentBinding(groupbinding, childPath);
-          if (!engine.matchPathBelowBinding(fromBinding, childPath)) {
-            return;
-          }
         }
 
         if (childItem.getProperty() != null) {
@@ -155,12 +164,9 @@ const _createReport = (groupbinding, report, firstLevel) => {
             });
           }
         }
-        // if (item instanceof GroupBinding){
-        if (childItem.getType() === 'group') {
-          bindings.forEach(binding => _createReport(binding, report));
-        }
       }, this);
     }
+
     groupbinding.getChildBindings().forEach((binding) => {
       const item = binding.getItem();
       if (binding.getMatchingCode() !== engine.CODES.OK) {
@@ -169,6 +175,17 @@ const _createReport = (groupbinding, report, firstLevel) => {
           item,
           code: binding.getMatchingCode(),
         });
+      }
+
+      if (item.hasStyle('deprecated')) {
+        report.deprecated.push(binding);
+      }
+
+      if (!doNotProceedFurther(groupbinding, item)) {
+        // Recursive step
+        if (item.getType() === 'group') {
+          _createReport(binding, report);
+        }
       }
     });
   }

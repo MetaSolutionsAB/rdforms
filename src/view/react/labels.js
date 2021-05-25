@@ -113,8 +113,14 @@ const ERR = (props) => {
   let message;
   switch (code) {
     case CODES.TOO_MANY_VALUES:
-    case CODES.TOO_MANY_VALUES_DISJOINT:
-      message = context.view.messages.validation_max_one;
+    case CODES.AT_MOST_ONE_CHILD:
+      message = context.view.messages.validation_at_most_one_child;
+      break;
+    case CODES.AT_LEAST_ONE_CHILD:
+      message = context.view.messages.validation_at_least_one_child;
+      break;
+    case CODES.EXACTLY_ONE_CHILD:
+      message = context.view.messages.validation_exactly_one_child;
       break;
     case CODES.TOO_FEW_VALUES_MIN:
     default:

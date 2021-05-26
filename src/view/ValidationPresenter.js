@@ -33,9 +33,6 @@ export default class ValidationPresenter extends Presenter {
     if (item.hasStyle('deprecated')) {
       return false;
     }
-    if (item.hasStyle('atMostOneChild')) {
-      debugger;
-    }
     if (item.hasStyle('atLeastOneChild') || item.hasStyle('exactlyOneChild')) {
       return true;
     }
@@ -128,7 +125,8 @@ export default class ValidationPresenter extends Presenter {
     const card = item.getCardinality();
     const min = card.min != null ? card.min : 0;
     const pref = card.pref != null ? card.pref : 0;
-    const code = binding.getMatchingCode();
+    const cardCode = item.getType() === 'group' ? binding.getCardinalityTracker()?.getCode() : undefined;
+    const code = cardCode && cardCode !== CODES.OK && cardCode !== CODES.UNKNOWN ? cardCode : binding.getMatchingCode();
     const error = code !== CODES.TOO_FEW_VALUES_PREF && code !== CODES.OK;
     const warning = code === CODES.TOO_FEW_VALUES_PREF;
     if (error) {

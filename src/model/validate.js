@@ -35,7 +35,7 @@ const bindingReport = (groupbinding, reportObj) => {
     _reportObj.warnings = _reportObj.warnings || [];
     _reportObj.deprecated = _reportObj.deprecated || [];
   }
-  _clearMatchingCodes(groupbinding);
+//  _clearMatchingCodes(groupbinding);
   // eslint-disable-next-line no-use-before-define
   return _createReport(groupbinding, _reportObj, true);
 };
@@ -109,9 +109,11 @@ const _createReport = (groupbinding, report, firstLevel) => {
       }
       if (code) {
         updateViaCardinalityTracker([groupbinding], code);
-        groupbinding.setMatchingCode(code);
+//        groupbinding.setMatchingCode(code);
         // Correct to set only on first child?
-       // report.errors.push({ parentBinding: groupbinding, item: bindings[0].getItem(), code });
+        if (childrenItems.length > 0) {
+          report.errors.push({ parentBinding: groupbinding, item: childrenItems[0], code });
+        }
       }
     } else {
       groupbinding.getItemGroupedChildBindings().forEach((bindings, index) => {
@@ -130,7 +132,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
               code: engine.CODES.TOO_FEW_VALUES_MIN,
             });
             updateViaCardinalityTracker(bindings, engine.CODES.TOO_FEW_VALUES_MIN);
-            let counter = 0;
+/*            let counter = 0;
             bindings.forEach((binding) => {
               if (!binding.isValid()) {
                 if (counter < card.min) {
@@ -138,13 +140,14 @@ const _createReport = (groupbinding, report, firstLevel) => {
                   binding.setMatchingCode(engine.CODES.TOO_FEW_VALUES_MIN);
                 }
               }
-            });
+            }); */
           } else if (card.pref != null && card.pref > nrOfValid) {
             report.warnings.push({
               parentBinding: groupbinding,
               item: childItem,
               code: engine.CODES.TOO_FEW_VALUES_PREF,
             });
+//            updateViaCardinalityTracker(bindings, engine.CODES.TOO_FEW_VALUES_PREF);
           }
           if (card.max != null && card.max < nrOfValid) {
             report.errors.push({
@@ -153,7 +156,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
               code: engine.CODES.TOO_MANY_VALUES,
             });
             updateViaCardinalityTracker(bindings, engine.CODES.TOO_MANY_VALUES);
-            let counter = 0;
+/*            let counter = 0;
             bindings.forEach((binding) => {
               if (binding.isValid()) {
                 counter += 1;
@@ -161,7 +164,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
                   binding.setMatchingCode(engine.CODES.TOO_MANY_VALUES);
                 }
               }
-            });
+            }); */
           }
         }
       }, this);

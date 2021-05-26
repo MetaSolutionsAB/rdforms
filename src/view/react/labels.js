@@ -153,15 +153,16 @@ renderingContext.renderEditorLabelScopeEnd = (rowNode, binding, item, context) =
           rowNode.destroy();
         }
       });
-      rowNode.appendChild(<div className="rdformsWarning">{context.view.messages.deprecatedField}</div>);
+      rowNode.appendChild(<div key="deprecatedWarning"
+                               className="rdformsWarning">{context.view.messages.deprecatedField}</div>);
     }
 
     // If there are dependencies that are not fulfilled, notify.
     if (item.getDeps()) {
-      rowNode.appendChild(<div className="rdformsWarning rdformsDependency">
+      rowNode.appendChild(<div key="dependencyWarning" className="rdformsWarning rdformsDependency">
         {context.view.messages.dependencyField}</div>);
     }
 
-    rowNode.appendChild(<ERR rowNode={rowNode} binding={binding} item={item} context={context}></ERR>);
+    rowNode.appendChild(<ERR key="errMessage" rowNode={rowNode} binding={binding} item={item} context={context}></ERR>);
   }
 };

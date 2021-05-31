@@ -46,11 +46,11 @@ export default class ValidationPresenter extends Presenter {
 
     const card = item.getCardinality();
     switch (this.includeLevel) {
-      case 'recommended':
-        return card && (card.min >= 1 || card.pref >= 1);
       case 'mandatory':
-      default:
         return card && card.min >= 1;
+      case 'recommended':
+      default:
+        return card && (card.min >= 1 || card.pref >= 1);
     }
   }
 

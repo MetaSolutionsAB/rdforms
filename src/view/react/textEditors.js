@@ -111,7 +111,7 @@ const bindToPattern = pattern => (fieldDiv, binding, context) => {
     useEffect(() => {
       context.clear = () => setGist('');
     }, []);
-    const valid = regex ? regex.test(gist) : true;
+    const valid = gist && regex ? regex.test(gist) : true;
 
     const iprops = {
       value: gist,

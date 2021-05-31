@@ -66,7 +66,7 @@ const doNotProceedFurther = (groupBinding, childItem) => {
   // Don't check further if the binding is hidden due to missing dependencies
   const childPath = childItem.getDeps();
   if (childPath) {
-    const fromBinding = engine.findBindingRelativeToParentBinding(groupbinding, childPath);
+    const fromBinding = engine.findBindingRelativeToParentBinding(groupBinding, childPath);
     if (!engine.matchPathBelowBinding(fromBinding, childPath)) {
       return true;
     }

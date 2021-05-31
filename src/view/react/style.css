@@ -113,6 +113,7 @@
 .rdformsEditor .rdformsDatePicker {
     display: flex;
     justify-content: start;
+    flex-grow: 1;
 }
 
 .rdformsEditor .rdformsDatePicker>* {

@@ -90,14 +90,17 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
         setGist(newValue);
       },
     };
+    const bundle = context.view.messages;
     return <><TextField
       className={extLink || langlit ? 'rdformsTwoThirds' : ''}
       multiline={multiline}
       error={!valid}
       variant={renderingContext.materialVariant} inputProps={iprops}
     />{extLink && (value != null || value === '') &&
-    (<IconButton disabled={!valid} target='_blank' href={value} title={value}><OpenInNewIcon/></IconButton>)
-    }{ langlit ? (<LanguageControl binding={binding} context={context} labelledby={labelledBy}></LanguageControl>) : '' }</>;
+    (<IconButton aria-label={bundle.openLinkExternally} disabled={!valid} target='_blank' href={value}
+                 title={value}><OpenInNewIcon/></IconButton>)
+    }{ langlit ? (<LanguageControl binding={binding} context={context}
+                                   labelledby={labelledBy}></LanguageControl>) : '' }</>;
   };
 
   fieldDiv.appendChild(<TextComp key={binding.getHash()}></TextComp>);
@@ -113,8 +116,10 @@ const bindToPattern = pattern => (fieldDiv, binding, context) => {
     }, []);
     const valid = gist && regex ? regex.test(gist) : true;
 
+    const labelledBy = context.view.getLabelIndex(binding);
     const iprops = {
       value: gist,
+      'aria-labelledby': labelledBy,
       onChange: (e) => {
         const newValue = e.target.value;
         if (!regex || regex.test(newValue)) {

@@ -34,6 +34,8 @@
   "date_openDatePicker": "Open date picker dialog",
   "date_openTimePicker": "Open time picker dialog",
   "date_openYearPicker": "Open year picker dialog",
+  "date_nextMonth": "Next month",
+  "date_previousMonth": "Previous month",
   "duration_years": "Years",
   "duration_months": "Months",
   "duration_days": "Days",
@@ -49,5 +51,6 @@
   "deprecatedField": "This field has been deprecated, please remove it.",
   "missingValueField": "This field is required, please provide a value.",
   "dependencyField": "This field depends on another field, please review the field it depends on or remove this value.",
-  "wrongValueField": "This is an invalid value, please change or remove it."
+  "wrongValueField": "This is an invalid value, please change or remove it.",
+  "openLinkExternally": "Open link externally"
 }

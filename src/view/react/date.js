@@ -130,13 +130,14 @@ const dateEditor = (fieldDiv, binding, context) => {
       binding.setValue(getDateValue(selectedDate, event.target.value));
       setDatatype(event.target.value);
     };
-    const bundle = context.view.messages;
     const inputProps = { 'aria-labelledby': context.view.getLabelIndex(binding) };
     const dateFormat = selectedDatatype === 'Year' ? 'YYYY' : 'YYYY-MM-DD';
     return (
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <span className="rdformsDatePicker">
           <KeyboardDatePicker
+            leftArrowButtonProps={{ 'aria-label': bundle.date_previousMonth }}
+            rightArrowButtonProps={{ 'aria-label': bundle.date_nextMonth }}
             KeyboardButtonProps={{ 'aria-label': selectedDatatype === 'Year' ?
                 bundle.date_openYearPicker : bundle.date_openDatePicker }}
             label={selectedDatatype === 'Year' ? bundle.date_year : bundle.date_date}

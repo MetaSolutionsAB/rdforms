@@ -60,10 +60,10 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
   // 4) The parent binding corresponds to a URI
   const parentBinding = binding.getParent();
   if (binding.getItem().hasStyle('label')
-    && this.topLevel !== true
+    && context.view.topLevel !== true
     && parentBinding != null && parentBinding.getItem().getChildren()[0] === binding.getItem()
     && parentBinding.getStatement() != null && parentBinding.getStatement().getType() === 'uri') {
-    const attrs = system.attachLinkBehaviour(fieldDiv, binding, parentBinding)
+    const attrs = system.attachLinkBehaviour(fieldDiv, binding, parentBinding);
     const component = attrs.component || null;
     delete attrs.component;
     const vmap = utils.getLocalizedMap(binding);

@@ -1,11 +1,12 @@
-import moment from 'moment';
+import moment, {locale} from 'moment';
 import renderingContext from './renderingContext';
 import View from './View';
 
 export default class Presenter extends View {
   _handleParams(params) {
-    this.showLanguage = params.showLanguage === true;
+    this.showLanguage = params.showLanguage !== false;
     this.filterTranslations = params.filterTranslations !== false;
+    this.defaultLanguage = params.defaultLanguage;
     this.styleCls = params.styleCls || 'rdformsPresenter';
     super._handleParams(params);
   }
@@ -46,21 +47,42 @@ export default class Presenter extends View {
     if (!this.filterTranslations || item.getNodetype() !== 'LANGUAGE_LITERAL' || item.hasStyle('viewAllTranslations')) {
       return bindings;
     }
+    // Detect the various available languages
+    // noLanguage - a binding exists with no lanugage set
+    // best - a binding exists with the current locale
+    // close - a binding exists with a language close to the current locale,
+    //        e.g. en_US when the locale is en or the opposite
+    // defaultLanguage - a binding exists with a language corresponding to the defaultLanguage
+    const loc = moment.locale();
     for (index = 0; index < bindings.length; index++) {
       const lang = bindings[index].getLanguage();
-      const locale = moment.locale();
       if (lang === '' || lang == null) {
-        alts.noLanguage = bindings[index];
-      } else if (lang === locale) {
-        alts.best = bindings[index];
-      } else if (lang.indexOf(locale) !== -1 || locale.indexOf(lang) !== -1) {
-        alts.close = bindings[index];
+        alts.noLanguage = true;
+      } else if (lang === loc) {
+        alts.best = true;
+      } else if (lang.indexOf(loc) !== -1 || loc.indexOf(lang) !== -1) {
+        alts.close = true;
       } else if (lang.indexOf(this.defaultLanguage) === 0) {
-        alts.defaultLanguage = bindings[index];
+        alts.defaultLanguage = true;
       }
     }
-    const singleBinding = alts.best || alts.close || alts.defaultLanguage || alts.noLanguage;
-    return singleBinding !== undefined ? [singleBinding] : bindings;
+    // Filter to bindings that are best, close and defaultLanguage in that order
+    if (alts.best) {
+      return bindings.filter(b => b.getLanguage() === loc);
+    } else if (alts.close) {
+      return bindings.filter((b) => {
+        const lang = b.getLanguage();
+        return lang && (lang.indexOf(loc) !== -1 || loc.indexOf(lang) !== -1);
+      });
+    } else if (alts.defaultLanguage) {
+      return bindings.filter((b) => {
+        const lang = b.getLanguage();
+        return lang && lang.indexOf(this.defaultLanguage) === 0;
+      });
+    }
+
+    // If there are no best, close or defaultLanguage bindings, don't do any filtering
+    return bindings;
   }
 
   addLabel(rowDiv, binding, item) {

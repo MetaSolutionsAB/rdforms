@@ -19,6 +19,7 @@ export default class View {
     this.compact = params.compact !== false;
     this.styleCls = params.styleCls || '';
     this.filterPredicates = params.filterPredicates || null;
+    this.restrictToItem = params.restrictToItem;
     this.fuzzy = params.fuzzy === true;
     this._handleParams(params);
     this._labelIndex = {};
@@ -151,6 +152,11 @@ export default class View {
     for (groupIndex = 0; groupIndex < groupedBindingsArr.length; groupIndex++) {
       bindings = groupedBindingsArr[groupIndex];
       item = groupedItemsArr[groupIndex];
+
+      if (this.restrictToItem && this.restrictToItem !== item) {
+// eslint-disable-next-line no-continue
+        continue;
+      }
 
       if (!this.showNow(item, bindings)) {
         // Invisible not not part of showNow check due to things like autoUUID

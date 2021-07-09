@@ -116,8 +116,8 @@ export default class ValueBinding extends Binding {
   /**
    * @param {Object} lang a two or three character language code.
    */
-  setLanguage(lang) {
-    this._statement.setLanguage(lang);
+  setLanguage(lang, silent) {
+    this._statement.setLanguage(lang, silent);
     this.updateAssertions();
   }
 

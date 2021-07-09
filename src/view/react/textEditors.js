@@ -23,7 +23,7 @@ const LanguageControl = (props) => {
       const defLang = moment.locale();
       if (typeof defLang === 'string' && defLang !== '') {
         setLang(defLang);
-        props.binding.setLanguage(defLang);
+        props.binding.setLanguage(defLang, true);
       }
     }
   }, []);

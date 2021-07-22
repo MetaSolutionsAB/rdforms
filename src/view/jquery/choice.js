@@ -38,26 +38,38 @@ presenters.itemtype('choice').style('stars').register(choicify(
 presenters.itemtype('choice').register(choicify(
   (fieldDiv, binding, choice, desc) => {
     const item = binding.getItem();
+    const locValue = utils.getLocalizedValue(choice.label);
+    let $el;
+
     if (item.hasStaticChoices() && !item.hasStyle('externalLink') || item.hasStyle('noLink')) {
-      jquery('<div>')
+      $el = jquery('<div>')
         .attr('title', desc || choice.seeAlso || choice.value)
         .text(utils.getLocalizedValue(choice.label).value)
         .appendTo(fieldDiv);
     } else {
-      const $a = jquery('<a class="rdformsUrl">')
+      $el = jquery('<a class="rdformsUrl">')
         .attr('href', choice.seeAlso || choice.value)
         .attr('title', desc || choice.seeAlso || choice.value)
-        .text(utils.getLocalizedValue(choice.label).value)
+        .text(locValue.value)
         .appendTo(fieldDiv);
       if (item.hasStyle('externalLink')) {
-        system.attachExternalLinkBehaviour($a[0], binding);
+        system.attachExternalLinkBehaviour($el[0], binding);
       } else {
-        system.attachLinkBehaviour($a[0], binding);
+        system.attachLinkBehaviour($el[0], binding);
       }
       if (choice.load != null) {
         choice.load(() => {
-          $a.text(utils.getLocalizedValue(choice.label).value);
+          const locValue2 = utils.getLocalizedValue(choice.label);
+          $el.text(locValue2.value);
+          if (locValue2.lang) {
+            $el.attr('lang', locValue2.lang);
+          } else {
+            $el.attr('lang', undefined);
+          }
         });
       }
+    }
+    if (locValue.lang) {
+      $el.attr('lang', locValue.lang);
     }
   }));

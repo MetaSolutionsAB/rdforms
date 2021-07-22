@@ -24,10 +24,12 @@ editors.itemtype('choice').choices().register((fieldDiv, binding, context) => {
     text: item._getLocalizedValue(c.label).value,
     choice: c,
   }));
+  if (!item.hasStyle('preserveOrderOfChoices')) {
 // eslint-disable-next-line arrow-body-style
-  choices.sort((c1, c2) => {
-    return c1.text < c2.text ? -1 : 1;
-  });
+    choices.sort((c1, c2) => {
+      return c1.text < c2.text ? -1 : 1;
+    });
+  }
   context.choices = choices;
   renderingContext.renderSelect(fieldDiv, binding, context);
   const setValue = context.setValue;

@@ -152,7 +152,7 @@
             "en": "A subject for this resource.",
             "sv": "Ett ämne för denna resurs."
           },
-          "styles": ["verticalradiobuttons"]
+          "styles": ["verticalradiobuttons", "preserveOrderOfChoices"]
         },
         {
           "type": "choice",

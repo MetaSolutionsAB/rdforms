@@ -59,6 +59,7 @@ export default class Item {
       'showLink',
       'showValue',
       'textAsChoice',
+      'preserveOrderOfChoices',
     ];
     this._getLocalizedValue = utils.getLocalizedValue;
   }

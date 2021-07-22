@@ -1,24 +1,12 @@
 import { namespaces as ns } from '@entryscape/rdfjson';
 import Item from './Item';
-import utils from '../utils';
 
-const sortChoices = (choices, shouldExpand) => {
+const expandValues = (choices) => {
   if (choices == null) {
     return;
   }
-  if (shouldExpand) {
-    // eslint-disable-next-line no-return-assign
-    choices.forEach(c => (c.value = ns.expand(c.value)));
-  }
-  choices.sort((c1, c2) => {
-    const lab1 = utils.getLocalizedValue(c1.label).value || c1.value;
-    const lab2 = utils.getLocalizedValue(c2.label).value || c2.value;
-    if (lab1 > lab2) {
-      return 1;
-    } else if (lab1 < lab2) {
-      return -1;
-    }
-    return 0;
+  choices.forEach((c) => {
+    c.value = ns.expand(c.value);
   });
 };
 
@@ -73,11 +61,13 @@ export default class Choice extends Item {
       const isURI = this.getNodetype().indexOf('LITERAL') === -1;
       if (original && this.isExtention()) {
         if (!this._origStaticIsSorted) {
-          sortChoices(s.choices, isURI);
+          if (isURI) {
+            expandValues(s.choices);
+          }
           this._origStaticIsSorted = true;
         }
       } else if (!this._staticIsSorted) {
-        sortChoices(s.choices, isURI);
+        if (isURI) expandValues(s.choices);
         this._staticIsSorted = true;
       }
     }
@@ -90,7 +80,6 @@ export default class Choice extends Item {
       return;
     }
     if (choices != null) {
-      sortChoices(choices);
       this._origStaticIsSorted = true;
     }
     s.choices = choices;
@@ -113,11 +102,10 @@ export default class Choice extends Item {
     if (this._dynamicChoices == null) {
       if (callback == null) {
         this._dynamicChoices = this._ontologyStore.getChoices(this);
-        sortChoices(this._dynamicChoices);
         return this._dynamicChoices;
       }
       this._ontologyStore.getChoices(this, (choices) => {
-        sortChoices(choices);
+        this._dynamicChoices = choices;
         if (this._dynamicChoices == null) {
           console.log(`Failed lookup of choices for ${this.getLabel()}`);
           console.log(`OntologyUrl is: ${this._source.ontologyUrl}`);

@@ -249,6 +249,7 @@ a.rdformsUrl:hover {
 
 .rdformsPresenter .rdformsField.rdformsMultiline {
   word-break: break-word;
+  white-space: pre-line;
 }
 
 .rdformsPresenter th,

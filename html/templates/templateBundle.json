@@ -152,7 +152,7 @@
             "en": "A subject for this resource.",
             "sv": "Ett ämne för denna resurs."
           },
-          "styles": ["verticalradiobuttons"]
+          "styles": ["verticalradiobuttons", "preserveOrderOfChoices"]
         },
         {
           "type": "choice",
@@ -197,7 +197,7 @@
           "cardinality": {
             "min": 1,
             "pref": 1,
-            "max": 1
+            "max": 2
           },
           "label": {
             "en": "Relation",
@@ -212,17 +212,55 @@
           }
         },
         {
-          "type": "text",
+          "type": "group",
           "nodetype": "URI",
           "property": "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+          "constraints": {
+            "rdf:type": "foaf:Document"
+          },
           "label": {
             "en": "See also",
             "sv": "Se vidare"
           },
+          "cardinality": {
+            "min": 1
+          },
           "styles": [
             "externalLink"
           ],
-          "pattern": "https?:\/\/.*"
+          "cls": [
+            "cardgroup"
+          ],
+          "pattern": ".*\\..*\\/",
+          "valueTemplate": "http://",
+          "items": [
+            {
+              "type": "text",
+              "nodetype": "URI",
+              "label": {
+                "en": "URI"
+              },
+              "description": {
+                "en": "The web address you want to link to"
+              }
+            },
+            {
+              "type": "text",
+              "nodetype": "LANGUAGE_LITERAL",
+              "property": "dcterms:title",
+              "cardinality": {
+                "min": 1
+              },
+              "label": {
+                "en": "Title",
+                "sv": "Titel"
+              },
+              "description": {
+                "en": "A short title of the resource",
+                "sv": "En kort titel fÃ¶r resursen"
+              }
+            }
+          ]
         },
         {
           "type": "text",

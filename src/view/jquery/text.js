@@ -36,10 +36,12 @@ presenters.itemtype('text').nodetype('URI').style('image')
 
 // Presenter for text.
 presenters.itemtype('text').register((fieldDiv, binding, context) => {
-  if (context.view.showLanguage && binding.getLanguage()) {
-    jquery('<div class="rdformsLanguage">').text(binding.getLanguage()).appendTo(fieldDiv);
+  const language = binding.getLanguage();
+  if (context.view.showLanguage && language) {
+    jquery('<div class="rdformsLanguage">').text(language).appendTo(fieldDiv);
   }
-  const text = escape(binding.getItem().hasStyle('showValue') ? binding.getValue() : binding.getGist());
+  const text = escape(binding.getItem().hasStyle('showValue') ? binding.getValue() : binding.getGist())
+    .replace(/(\r\n|\r|\n)/g, '\n');
 
   // The text is shown as a link to the parents bindings URI if:
   // 1) The current item is indicated to be a label.
@@ -55,9 +57,15 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
       .attr('href', parentBinding.getStatement().getValue())
       .html(text)
       .appendTo(fieldDiv);
+    if (language) {
+      $a.attr('lang', language);
+    }
     system.attachLinkBehaviour($a[0], parentBinding);
   } else {
-    jquery('<div>').html(text).appendTo(fieldDiv);
+    const $t = jquery('<div>').html(text).appendTo(fieldDiv);
+    if (language) {
+      $t.attr('lang', language);
+    }
   }
 
   if (binding.getItem().hasStyle('multiline')) {

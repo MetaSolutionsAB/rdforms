@@ -4,7 +4,17 @@ export default class RadioButtonsEditor {
   constructor(args, node) {
     this.binding = args.binding;
     this.item = this.binding.getItem();
-    this.choices = this.item.getChoices();
+    this.choices = this.item.getChoices().map(c => ({
+      label: c.label,
+      description: c.description,
+      value: c.value,
+      text: this.item._getLocalizedValue(c.label).value,
+      choice: c,
+    }));
+
+    if (!this.item.hasStyle('preserveOrderOfChoices')) {
+      this.choices.sort((c1, c2) => (c1.text < c2.text ? -1 : 1));
+    }
     this.choice = this.binding.getChoice();
     this.context = args.context;
     this.context.clear = this.clear.bind(this);
@@ -19,7 +29,6 @@ export default class RadioButtonsEditor {
   buildRendering() {
     // Add mismatched choice to copy of choice list.
     if (this.choice != null && this.choice.mismatch) {
-      this.choices = this.choices.slice(0);
       this.choices.push(this.choice);
     }
 

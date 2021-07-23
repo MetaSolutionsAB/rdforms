@@ -21,7 +21,7 @@ export default () => {
             choice.description = foundChoice.description;
             onSuccess();
           } else {
-            choice.label = { '': 'Upgradable choice' };
+            choice.label = { en: 'Upgradable choice' };
             choice.upgrade = function(binding, callback) {
               delete choice.upgrade;
               choice.label = { '': 'Upgraded choice' };

@@ -25,8 +25,11 @@ export const localizedChoice = choice => ({
  * @return {Array}
  */
 export const useLocalizedSortedChoices = binding => useMemo(() => {
-  const choices = binding.getItem().getChoices().map(localizedChoice);
-  choices.sort((c1, c2) => (c1.label < c2.label ? -1 : 1));
+  const item = binding.getItem();
+  const choices = item.getChoices().map(localizedChoice);
+  if (!item.hasStyle('preserveOrderOfChoices')) {
+    choices.sort((c1, c2) => (c1.label < c2.label ? -1 : 1));
+  }
   const currentChoice = binding.getChoice();
   if (currentChoice != null && currentChoice.mismatch) {
     choices.unshift({

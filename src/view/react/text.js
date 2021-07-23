@@ -53,6 +53,11 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
     renderingContext.domClassToggle(fieldDiv, 'rdformsSingleline', true);
   }
 
+  const language = binding.getLanguage();
+  if (context.view.showLanguage && language) {
+    fieldDiv.appendChild(<span className="rdformsLanguage" key={`lang_${binding.getHash()}`}>{language}</span>);
+  }
+
   // The text is shown as a link to the parents bindings URI if:
   // 1) The current item is indicated to be a label.
   // 2) The presenter is not at topLevel.
@@ -66,6 +71,9 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
     const attrs = system.attachLinkBehaviour(fieldDiv, binding, parentBinding);
     const component = attrs.component || null;
     delete attrs.component;
+    if (language) {
+      attrs.lang = language;
+    }
     const vmap = utils.getLocalizedMap(binding);
     const val = parentBinding.getGist();
     fieldDiv.appendChild(<a {...attrs} key={binding.getHash()} className="rdformsUrl" href={
@@ -73,9 +81,10 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
       utils.getLocalizedValue(vmap).value || val : val}</span>{component}</a>);
   } else {
     const lbl = binding.getItem().hasStyle('showValue') ? binding.getValue() : binding.getGist();
-    fieldDiv.appendChild(<span key={binding.getHash()}>{lbl}</span>);
-  }
-  if (context.view.showLanguage && binding.getLanguage()) {
-    fieldDiv.appendChild(<span className="rdformsLanguage" key={`lang_${binding.getHash()}`}>{binding.getLanguage()}</span>);
+    if (language) {
+      fieldDiv.appendChild(<span lang={language} key={binding.getHash()}>{lbl}</span>);
+    } else {
+      fieldDiv.appendChild(<span key={binding.getHash()}>{lbl}</span>);
+    }
   }
 });

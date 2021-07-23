@@ -363,10 +363,17 @@ export default class Item {
    * @return {Object} containing max, min, and preferred properties.
    */
   getCardinality(original) {
-    const source = this.getSource(original);
+    if (!this.getProperty() && this.getType() === 'text') {
+      return { min: 1, max: 1 };
+    }
 
+    const source = this.getSource(original);
     if (source && ('cardinality' in source)) {
       return source.cardinality;
+    }
+
+    if (!this.getProperty()) {
+      return { max: 1 };
     }
 
     return {};

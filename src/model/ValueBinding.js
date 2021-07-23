@@ -62,20 +62,8 @@ export default class ValueBinding extends Binding {
     this.updateAssertions();
   }
 
-  getGist() {
-    return utils.extractGist(this.getValue(), this.getItem().getValueTemplate());
-  }
-
-  setGist(value, silent) {
-    let _value = value;
-    let vt = this.getItem().getValueTemplate();
-    if (vt && _value.length > 0) {
-      if (vt.indexOf('$1') === -1) {
-        vt += '$1';
-      }
-      _value = vt.replace('$1', _value);
-    }
-    this.setValue(_value, silent);
+  setSubject(uri) {
+    this._statement.setSubject(uri);
   }
 
   /**

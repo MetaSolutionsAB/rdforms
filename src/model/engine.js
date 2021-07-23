@@ -9,6 +9,7 @@ import PropertyGroupBinding from './PropertyGroupBinding';
 import GroupBinding from './GroupBinding';
 import ValueBinding from './ValueBinding';
 import ChoiceBinding from './ChoiceBinding';
+import GroupURIBinding from './GroupURIBinding';
 import utils from '../utils';
 
 // See public API at the bottom of this file.
@@ -93,6 +94,12 @@ const constructTemplate = (graph, uri, itemStore, requiredItems) => {
 const getFirstDataType = item => (Array.isArray(item.getDatatype()) ? item.getDatatype()[0] : item.getDatatype());
 
 const _createTextItem = (parentBinding, item) => {
+  if (!item.getProperty()) {
+    const groupURIBinding = new GroupURIBinding({ item, statement: null, matchingCode: CODES.OK });
+    parentBinding.addChildBinding(groupURIBinding);
+    return groupURIBinding;
+  }
+
   const graph = parentBinding.getGraph();
   const nt = item.getNodetype();
   const obj = { value: '', type: 'literal' };
@@ -145,10 +152,12 @@ const _createGroupItem = (parentBinding, item, parentItems) => {
   if (item.getProperty() !== undefined) {
     const graph = parentBinding.getGraph();
     if (item.getNodetype() === 'URI') {
-      stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), {
+      /*stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), {
         type: 'uri',
         value: system.createURI(item, parentBinding),
-      }, false);
+      }, false);*/
+      // Create as a blank, will not be asserted until changed into a uri.
+      stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), null, false);
     } else {
       stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), null, false);
     }
@@ -340,24 +349,25 @@ const _matchPropertyGroupItem = (pb, item) => {
 };
 
 const _matchTextItem = (pb, item) => {
-  if (item.getProperty() == null) {
-    return;
-  }
   const bindings = [];
-  pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
-    if (_noDibbs(stmt) && _isPatternMatch(item, stmt)) {
-      const ntMatch = _isNodeTypeMatch(item, stmt);
-      const dtMatch = _isDataTypeMatch(item, stmt);
-      if ((ntMatch && dtMatch) || _fuzzy) {
-        _dibbs(stmt);
-        let matchingCode = ntMatch ? CODES.OK : CODES.WRONG_NODETYPE;
-        if (!dtMatch) {
-          matchingCode = CODES.WRONG_DATATYPE;
+  if (item.getProperty() == null) {
+    bindings.push(new GroupURIBinding({ item, statement: null, matchingCode: CODES.OK }));
+  } else {
+    pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
+      if (_noDibbs(stmt) && _isPatternMatch(item, stmt)) {
+        const ntMatch = _isNodeTypeMatch(item, stmt);
+        const dtMatch = _isDataTypeMatch(item, stmt);
+        if ((ntMatch && dtMatch) || _fuzzy) {
+          _dibbs(stmt);
+          let matchingCode = ntMatch ? CODES.OK : CODES.WRONG_NODETYPE;
+          if (!dtMatch) {
+            matchingCode = CODES.WRONG_DATATYPE;
+          }
+          bindings.push(new ValueBinding({ item, statement: stmt, matchingCode }));
         }
-        bindings.push(new ValueBinding({ item, statement: stmt, matchingCode }));
       }
-    }
-  });
+    });
+  }
   if (bindings.length > 0) {
     pb.addChildBindings(bindings);
   }

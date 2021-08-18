@@ -139,5 +139,5 @@ const bindToPattern = pattern => (fieldDiv, binding, context) => {
   fieldDiv.appendChild(<TextComp key={binding.getHash()}></TextComp>);
 };
 
-editors.itemtype('text').datatype('xsd:integer').register(bindToPattern('^-?[0-9][0-9][0-9][0-9]$'));
-editors.itemtype('text').datatype('xsd:decimal').register(bindToPattern('^(\\d+(\\.\\d+)?)$'));
+editors.itemtype('text').datatype('xsd:integer').register(bindToPattern('^-?\\d+$'));
+editors.itemtype('text').datatype('xsd:decimal').register(bindToPattern('^-?(\\d+(\\.\\d+)?)$'));

@@ -6,7 +6,6 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import renderingContext from '../renderingContext';
 import { CODES } from '../../model/engine';
 
-
 const StyledTooltip = withStyles(theme => ({
   tooltip: {
     backgroundColor: theme.palette.background.default,
@@ -16,6 +15,9 @@ const StyledTooltip = withStyles(theme => ({
   },
   tooltipPlacementBottom: {
     margin: '2px 0 24px 0',
+  },
+  popper: {
+    pointerEvents: 'auto',
   },
 }))(Tooltip);
 

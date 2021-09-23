@@ -65,8 +65,12 @@ const getDateValue = (value, datatype) => {
       case 'Datetime':
         return value.toISOString();
       case 'Date':
+        // Since we cut of the timezone section at the end we need to compensate for it
+        value.setMinutes(value.getMinutes() - value.getTimezoneOffset());
         return value.toISOString().substr(0, 10);
       case 'Year':
+        // Since we cut of the timezone section at the end we need to compensate for it
+        value.setMinutes(value.getMinutes() - value.getTimezoneOffset());
         return value.toISOString().substr(0, 4);
       default:
         return '';

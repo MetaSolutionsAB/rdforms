@@ -62,6 +62,7 @@ export default class Item {
       'textAsChoice',
       'preserveOrderOfChoices',
       'linkWithLabel',
+      'deprecated',
     ];
     this._getLocalizedValue = utils.getLocalizedValue;
   }

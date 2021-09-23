@@ -84,7 +84,7 @@ renderingContext.attachItemInfo = function (item, aroundNode/* , context */) {
     html: true,
     container: renderingContext.getPopoverContainer(),
     placement: 'auto',
-    trigger: 'click',
+    trigger: 'click focus',
     title: label,
     content: `<div class="description">${
       description.replace(/(\r\n|\r|\n)/g, '<br/>')

@@ -43,6 +43,7 @@ export default class Item {
       'noLink',
       'image',
       'label',
+      'tooltip',
       'strictmatch',
       'viewAllTranslations',
       'email',
@@ -60,6 +61,7 @@ export default class Item {
       'showValue',
       'textAsChoice',
       'preserveOrderOfChoices',
+      'linkWithLabel',
     ];
     this._getLocalizedValue = utils.getLocalizedValue;
   }

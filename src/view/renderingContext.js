@@ -229,6 +229,46 @@ const renderingContext = {
     languages = langs;
   },
 
+  filterTranslations(bindings, currentLanguage, defaultLanguage) {
+    const alts = {};
+
+    // Detect the various available languages
+    // noLanguage - a binding exists with no lanugage set
+    // best - a binding exists with the current locale
+    // close - a binding exists with a language close to the current locale,
+    //        e.g. en_US when the locale is en or the opposite
+    // defaultLanguage - a binding exists with a language corresponding to the defaultLanguage
+    for (let index = 0; index < bindings.length; index++) {
+      const lang = bindings[index].getLanguage();
+      if (lang === '' || lang == null) {
+        alts.noLanguage = true;
+      } else if (lang === currentLanguage) {
+        alts.best = true;
+      } else if (lang.indexOf(currentLanguage) !== -1 || currentLanguage.indexOf(lang) !== -1) {
+        alts.close = true;
+      } else if (lang.indexOf(defaultLanguage) === 0) {
+        alts.defaultLanguage = true;
+      }
+    }
+    // Filter to bindings that are best, close and defaultLanguage in that order
+    if (alts.best) {
+      return bindings.filter(b => b.getLanguage() === currentLanguage);
+    } else if (alts.close) {
+      return bindings.filter((b) => {
+        const lang = b.getLanguage();
+        return lang && (lang.indexOf(currentLanguage) !== -1 || currentLanguage.indexOf(lang) !== -1);
+      });
+    } else if (alts.defaultLanguage) {
+      return bindings.filter((b) => {
+        const lang = b.getLanguage();
+        return lang && lang.indexOf(defaultLanguage) === 0;
+      });
+    }
+
+    // If there are no best, close or defaultLanguage bindings, don't do any filtering
+    return bindings;
+  },
+
   setPopoverContainer(container) {
     popoverContainer = container;
   },

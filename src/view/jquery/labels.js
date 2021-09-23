@@ -9,7 +9,7 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelR
     label = '';
   }
 
-  const $labelDiv = jquery('<div class="rdformsLabel">').text(label).appendTo(rowNode);
+  const $labelDiv = jquery('<div class="rdformsLabel" tabindex="0">').text(label).appendTo(rowNode);
   if (labelRow) {
     $labelDiv.addClass('rdformsLabelRow');
   }

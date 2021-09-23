@@ -38,6 +38,7 @@
     margin-bottom: 0.5em;
 }
 
+.rdformsEditor .cardgroupEditor>.rdformsFields>.rdformsGroup,
 .cardgroup>.rdformsFields>.rdformsGroup {
     padding: 6px 6px 6px 12px;
     margin-right: -5px;
@@ -169,7 +170,7 @@ div.MuiTooltip-tooltip {
 .rdformsGroup .rdformsRow:last-child {
     padding-bottom: 0;
 }
-
+.rdformsEditor .cardgroupEditor>.rdformsFields>.rdformsGroup,
 .cardgroup>.rdformsFields>.rdformsGroup {
     margin-bottom: 5px;
 }
@@ -199,6 +200,7 @@ div.MuiTooltip-tooltip {
     padding: 12px 2px 0px 12px;
 }
 
+.rdformsEditor .rdformsError.cardgroupEditor>.rdformsFields>.rdformsGroup,
 .rdformsError.cardgroup>.rdformsFields>.rdformsGroup {
     margin-right: 11px;
 }

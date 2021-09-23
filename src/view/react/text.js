@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useMemo } from 'react';
+import moment from 'moment';
 import system from '../../model/system';
 import renderingContext from '../renderingContext';
 import { fromDuration } from './util';
 import utils from '../../utils';
+
 
 const presenters = renderingContext.presenterRegistry;
 
@@ -19,13 +21,46 @@ presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding
 presenters.itemtype('text').nodetype('URI').register((fieldDiv, binding) => {
   const vmap = utils.getLocalizedMap(binding);
   const val = binding.getValue();
-  const attrs = system.attachLinkBehaviour(fieldDiv, binding) || {};
+  const attrs = binding.getItem().hasStyle('externalLink') ?
+    system.attachExternalLinkBehaviour(fieldDiv, binding) || {} :
+    system.attachLinkBehaviour(fieldDiv, binding) || {};
   const component = attrs.component || null;
   delete attrs.component;
   // eslint-disable-next-line no-nested-ternary
   const lbl = binding.getItem().hasStyle('showValue') ? val :
     (vmap ? utils.getLocalizedValue(vmap).value || val : binding.getGist());
   fieldDiv.appendChild(<a {...attrs} key={binding.getHash()} title={val} href={val}><span>{lbl}</span>{component}</a>);
+});
+
+presenters.itemtype('group').nodetype('URI').style('linkWithLabel').register((fieldDiv, binding, context) => {
+  const val = binding.getValue();
+  const attrs = binding.getItem().hasStyle('externalLink') ?
+    system.attachExternalLinkBehaviour(fieldDiv, binding) || {} :
+    system.attachLinkBehaviour(fieldDiv, binding) || {};
+  const component = attrs.component || null;
+  delete attrs.component;
+  const labelItem = binding.getItem().getChildren().find(i => i.hasStyle('label'));
+  const labelBindings = labelItem ?
+    renderingContext.filterTranslations(binding.getChildBindingsFor(labelItem), moment.locale(),
+      context.view.defaultLanguage) : [];
+
+  const tooltipItem = binding.getItem().getChildren().find(i => i.hasStyle('tooltip'));
+  const tooltipBindings = tooltipItem ?
+    renderingContext.filterTranslations(binding.getChildBindingsFor(tooltipItem), moment.locale(),
+      context.view.defaultLanguage) : [];
+  const tooltip = tooltipBindings.length > 0 ? tooltipBindings[0].getValue() : val;
+
+  let lbl;
+  if (labelBindings.length > 0) {
+    lbl = labelBindings[0].getValue();
+  } else {
+    const vmap = utils.getLocalizedMap(binding);
+    // eslint-disable-next-line no-nested-ternary
+    lbl = binding.getItem().hasStyle('showValue') ? val :
+      (vmap ? utils.getLocalizedValue(vmap).value || val : binding.getGist());
+  }
+  fieldDiv.appendChild(<a {...attrs} key={binding.getHash()} title={tooltip}
+                          href={val}><span>{lbl}</span>{component}</a>);
 });
 
 presenters.itemtype('text').nodetype('URI').style('externalLink').register((fieldDiv, binding) => {

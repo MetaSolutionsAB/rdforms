@@ -1,9 +1,9 @@
-import { fromDuration } from './util';
 import moment from 'moment';
+import { escape } from 'lodash-es';
+import { fromDuration } from './util';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import system from '../../model/system';
-import { escape } from 'lodash-es';
 
 const presenters = renderingContext.presenterRegistry;
 
@@ -28,6 +28,45 @@ presenters.itemtype('text').nodetype('URI').register((fieldDiv, binding/* , cont
   }
 });
 
+
+// Presenter for URIs.
+presenters.itemtype('group').nodetype('URI').style('linkWithLabel').register((fieldDiv, binding, context) => {
+  const val = binding.getValue();
+  const labelItem = binding.getItem().getChildren().find(i => i.hasStyle('label'));
+  const labelBindings = labelItem ?
+    renderingContext.filterTranslations(binding.getChildBindingsFor(labelItem), moment.locale(),
+      context.view.defaultLanguage) : [];
+
+  const tooltipItem = binding.getItem().getChildren().find(i => i.hasStyle('tooltip'));
+  const tooltipBindings = tooltipItem ?
+    renderingContext.filterTranslations(binding.getChildBindingsFor(tooltipItem), moment.locale(),
+      context.view.defaultLanguage) : [];
+  const tooltip = tooltipBindings.length > 0 ? tooltipBindings[0].getValue() : val;
+
+  const $a = jquery('<a class="rdformsUrl">')
+    .attr('title', tooltip)
+    .attr('href', val)
+    .appendTo(fieldDiv);
+
+  let lbl;
+  if (labelBindings.length > 0) {
+    lbl = labelBindings[0].getValue();
+  } else {
+    const vmap = utils.getLocalizedMap(binding);
+    // eslint-disable-next-line no-nested-ternary
+    lbl = binding.getItem().hasStyle('showValue') ? val :
+      (vmap ? utils.getLocalizedValue(vmap).value || val : binding.getGist());
+  }
+
+  $a.text(lbl);
+  if (binding.getItem().hasStyle('externalLink')) {
+    system.attachExternalLinkBehaviour($a[0], binding);
+  } else {
+    system.attachLinkBehaviour($a[0], binding);
+  }
+});
+
+
 // Presenter for images.
 presenters.itemtype('text').nodetype('URI').style('image')
   .register((fieldDiv, binding/* , context */) => {
@@ -50,7 +89,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
   // 4) The parent binding corresponds to a URI
   const parentBinding = binding.getParent();
   if (binding.getItem().hasStyle('label')
-    && this.topLevel !== true
+    && context.view.topLevel !== true
     && parentBinding != null && parentBinding.getItem().getChildren()[0] === binding.getItem()
     && parentBinding.getStatement() != null && parentBinding.getStatement().getType() === 'uri') {
     const $a = jquery('<a class="rdformsUrl">')

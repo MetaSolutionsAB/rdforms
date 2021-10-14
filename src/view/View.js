@@ -3,6 +3,7 @@ import renderingContext from './renderingContext';
 import GroupBinding from '../model/GroupBinding';
 import * as engine from '../model/engine';
 import { bindingReport } from '../model/validate';
+import {namespaces} from "@entryscape/rdfjson";
 
 let viewCounter = 0;
 export default class View {
@@ -286,24 +287,37 @@ export default class View {
   }
 
   filterBinding(binding) {
-    const fp = this._getFilterPredicates();
-    const stmt = binding.getStatement();
-    const item = binding.getItem();
-    if (fp && stmt) {
-      return fp[stmt.getPredicate()] === true;
-    }
-    if (fp && item.getType() === 'group' && !item.getProperty()) {
-      // Checks one level below if there is a child that is visible
-      const childBindings = item.getChildren() || [];
-      let hasNonFilteredChild = false;
-      childBindings.forEach((child) => {
-        if (fp[child.getProperty()] !== true) {
-          hasNonFilteredChild = true;
-        }
-      });
-      return !hasNonFilteredChild;
-    }
-    return false;
+    return this.filterItem(binding.getItem());
+  }
+
+  filterItem(itemToCheck) {
+    const filterPredicates = this._getFilterPredicates();
+
+    const filter = (item, fp) => {
+      // Exclude based on item id.
+      const id = item.getId();
+      if (id && fp && Object.keys(fp).includes(id)) {
+        return true;
+      }
+      // Exclude if property matches.
+      const prop = item.getProperty();
+      if (fp && prop) {
+        return fp[prop] === true || fp[namespaces.shortenKnown(prop)] === true;
+      }
+      if (fp && item.getType() === 'group' && !item.getProperty()) {
+        // Checks one level below if there is a child that is visible
+        const childBindings = item.getChildren() || [];
+        let hasNonFilteredChild = false;
+        childBindings.forEach((child) => {
+          if (!filter(child, fp)) {
+            hasNonFilteredChild = true;
+          }
+        });
+        return !hasNonFilteredChild;
+      }
+      return false;
+    };
+    return filter(itemToCheck, filterPredicates);
   }
 
   filterProperty(property) {

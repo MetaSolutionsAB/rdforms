@@ -18,7 +18,7 @@ const showNow = (editor, item, bindings, includeLevel) => {
   const prop = item.getProperty();
   if (bindings.length > 0) {
     if (prop) {
-      return !editor.filterProperty(prop);
+      return !editor.filterItem(item);
     }
 
     // Take care of layout grouping by checking recursively.

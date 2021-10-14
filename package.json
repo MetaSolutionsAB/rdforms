@@ -2,7 +2,7 @@
   "name": "@entryscape/rdforms",
   "description": "RDForms (aka RDF Forms) is a JavaScript library that uses templates to describe how to edit, present and validate RDF. The library is intended to be used in web applications to ease the burden of developers to deal natively with RDF.",
   "keywords": ["RDF", "editor", "metadata", "application profile", "linked data"],
-  "version": "10.3.1",
+  "version": "10.3.2",
   "main": "dist/rdforms.node.js",
   "browser": "dist/rdforms.react.js",
   "module": "main.js",

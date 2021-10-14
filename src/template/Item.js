@@ -45,6 +45,7 @@ export default class Item {
       'label',
       'tooltip',
       'strictmatch',
+      'relaxedDatatypeMatch',
       'viewAllTranslations',
       'email',
       'atLeastOneChild',

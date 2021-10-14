@@ -357,7 +357,7 @@ const _matchTextItem = (pb, item) => {
       if (_noDibbs(stmt) && _isPatternMatch(item, stmt)) {
         const ntMatch = _isNodeTypeMatch(item, stmt);
         const dtMatch = _isDataTypeMatch(item, stmt);
-        if ((ntMatch && dtMatch) || _fuzzy) {
+        if ((ntMatch && (dtMatch || item.hasStyle('relaxedDatatypeMatch'))) || _fuzzy) {
           _dibbs(stmt);
           let matchingCode = ntMatch ? CODES.OK : CODES.WRONG_NODETYPE;
           if (!dtMatch) {

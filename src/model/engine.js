@@ -108,21 +108,18 @@ const _createTextItem = (parentBinding, item) => {
   } else if (nt === 'DATATYPE_LITERAL') {
     obj.datatype = getFirstDataType(item);
   }
+  const defaultValue = item.getValue();
+  if (defaultValue != null && parentBinding.getChildBindingsFor(item).length === 0) {
+    obj.value = defaultValue;
+    const la = item.getLanguage();
+    if (la != null) {
+      obj.lang = la;
+    }
+  }
+
   const stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), obj, false);
   const nbinding = new ValueBinding({ item, statement: stmt });
   parentBinding.addChildBinding(nbinding);
-  const defaultValue = item.getValue();
-  const cardTracker = nbinding.getCardinalityTracker();
-  if (defaultValue != null && cardTracker.getCounter() === 1) {
-    stmt.setValue(defaultValue, true);
-    const dt = getFirstDataType(item);
-    const la = item.getLanguage();
-    if (dt != null) {
-      stmt.setDatatype(dt, true);
-    } else if (la != null) {
-      stmt.setLanguage(la, true);
-    }
-  }
   return nbinding;
 };
 

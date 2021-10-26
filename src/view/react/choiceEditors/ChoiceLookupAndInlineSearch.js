@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import BuildIcon from '@material-ui/icons/Build';
-import IconButton from '@material-ui/core/IconButton';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import BuildIcon from '@mui/icons-material/Build';
+import IconButton from '@mui/material/IconButton';
 import renderingContext from '../../renderingContext';
 import { loadLocalizedChoice, localizedChoice } from '../hooks';
 import ShowButton from './ShowButton';
@@ -70,7 +70,7 @@ export default (props) => {
       <TextField
         aria-labelledby={labelledBy}
         {...params}
-        { ...(value && value.mismatch ? { error: true } : {}) }
+        {...(value && value.mismatch ? { error: true } : {})}
         onKeyDown={({ key, keyCode }) => {
           const isEnterKey = key === 'Enter' || keyCode === 13;
           if (isEnterKey && !open) {
@@ -96,29 +96,42 @@ export default (props) => {
     });
   };
 
-  return <><Autocomplete
-    className="rdformsSearch"
-    disableClearable={true}
-    fullWidth={false}
-    value={value}
-    options={options}
-    filterOptions={fopts => fopts}
-    open={open}
-    onOpen={() => setOpen(true)}
-    onClose={() => setOpen(false)}
-    onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
-    onChange={onChange}
-    getOptionSelected={ (option, choice) => option.value === choice.value }
-    getOptionLabel={ choice => (choice === null ? '' : choice.label || choice.value) }
-    getOptionDisabled={ option => option.mismatch === true}
-    renderInput={renderInput}
-  /><ShowButton {...props} onClick={showHandler}
-  />{value && value.original.upgrade && (
-    <IconButton
-      aria-label={props.context.view.messages.edit_upgrade}
-      title={props.context.view.messages.edit_upgrade}
-      onClick={upgradeHandler}
-    ><BuildIcon/></IconButton>
-  )}{ error && (<div key="warning" className="rdformsWarning">{
-    props.context.view.messages.wrongValueField}</div>)}</>;
+  return (
+    <>
+      <Autocomplete
+        className="rdformsSearch"
+        disableClearable={true}
+        fullWidth={false}
+        value={value}
+        options={options}
+        filterOptions={(fopts) => fopts}
+        open={open}
+        onOpen={() => setOpen(true)}
+        onClose={() => setOpen(false)}
+        onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
+        onChange={onChange}
+        isOptionEqualToValue={(option, choice) => option.value === choice.value}
+        getOptionLabel={(choice) =>
+          choice === null ? '' : choice.label || choice.value
+        }
+        getOptionDisabled={(option) => option.mismatch === true}
+        renderInput={renderInput}
+      />
+      <ShowButton {...props} onClick={showHandler} />
+      {value && value.original.upgrade && (
+        <IconButton
+          aria-label={props.context.view.messages.edit_upgrade}
+          title={props.context.view.messages.edit_upgrade}
+          onClick={upgradeHandler}
+        >
+          <BuildIcon />
+        </IconButton>
+      )}
+      {error && (
+        <div key="warning" className="rdformsWarning">
+          {props.context.view.messages.wrongValueField}
+        </div>
+      )}
+    </>
+  );
 };

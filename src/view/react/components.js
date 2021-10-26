@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import WarningIcon from '@material-ui/icons/Warning';
-import ErrorIcon from '@material-ui/icons/Error';
-import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
+import React, { useState } from 'react';
+import WarningIcon from '@mui/icons-material/Warning';
+import ErrorIcon from '@mui/icons-material/Error';
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import renderingContext from '../renderingContext';
 import './labels';
 import './text';
@@ -12,7 +12,6 @@ import './buttons';
 import './date';
 import './duration';
 import '../bootstrap/auto';
-
 
 /**
  * Utility to toggle a set of classes potentially separated by spaces in a set.
@@ -187,7 +186,6 @@ renderingContext.destroyDomNode = (struct /* , view */) => {
     struct.destroy();
   }
 };
-
 
 renderingContext.prePresenterViewRenderer = () => {};
 

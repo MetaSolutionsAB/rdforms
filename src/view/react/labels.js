@@ -1,25 +1,26 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import Tooltip from '@material-ui/core/Tooltip';
-import { withStyles } from '@material-ui/core/styles';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 import renderingContext from '../renderingContext';
 import { CODES } from '../../model/engine';
 
-const StyledTooltip = withStyles(theme => ({
-  tooltip: {
+const StyledTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.background.default,
     fontSize: 12,
     color: 'black',
     boxShadow: theme.shadows[10],
-  },
-  tooltipPlacementBottom: {
-    margin: '2px 0 24px 0',
-  },
-  popper: {
     pointerEvents: 'auto',
   },
-}))(Tooltip);
+  [`& .${tooltipClasses.tooltipPlacementBottom}`]: {
+    margin: '2px 0 24px 0',
+    marginTop: '0px !important',
+  },
+}));
 
 const ItemTooltip = (props) => {
   const [open, setOpen] = useState(false);
@@ -36,14 +37,28 @@ const ItemTooltip = (props) => {
   }
   const description = props.item.getDescription() || (property ? '' : props.context.view.messages.info_missing || '');
 
-  return <ClickAwayListener onClickAway={handleTooltipClose}>
-    <StyledTooltip title={(<><p className="rdformsLinebreaks rdformsDescription">{description}</p>{propinfo}</>)}
-                   placement="bottom-start" disableHoverListener disableTouchListener
-                   onClose={handleTooltipClose}
-                   onOpen={handleTooltipOpen}
-                   open={open}
-    ><span onClick={handleTooltipOpen}>{
-      props.children}</span></StyledTooltip></ClickAwayListener>;
+  return (
+    <ClickAwayListener onClickAway={handleTooltipClose}>
+      <StyledTooltip
+        title={
+          <>
+            <p className="rdformsLinebreaks rdformsDescription">
+              {description}
+            </p>
+            {propinfo}
+          </>
+        }
+        placement="bottom-start"
+        disableHoverListener
+        disableTouchListener
+        onClose={handleTooltipClose}
+        onOpen={handleTooltipOpen}
+        open={open}
+      >
+        <span onClick={handleTooltipOpen}>{props.children}</span>
+      </StyledTooltip>
+    </ClickAwayListener>
+  );
 };
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {

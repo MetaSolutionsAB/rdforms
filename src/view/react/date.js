@@ -134,6 +134,7 @@ const dateEditor = (fieldDiv, binding, context) => {
     };
     const inputProps = {
       'aria-labelledby': context.view.getLabelIndex(binding),
+      variant: renderingContext.materialVariant,
     };
     const dateFormat = selectedDatatype === 'Year' ? 'YYYY' : 'YYYY-MM-DD';
     return (
@@ -180,8 +181,6 @@ const dateEditor = (fieldDiv, binding, context) => {
               onChange={onDateChange}
               ampm={false}
               autoOk={true}
-              inputProps={inputProps}
-              inputVariant={renderingContext.materialVariant}
               PopperProps={{
                 modifiers: [
                   {

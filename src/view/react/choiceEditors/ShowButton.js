@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars,max-len */
 import React, { useMemo } from 'react';
-import SearchIcon from '@material-ui/icons/Search';
-import IconButton from '@material-ui/core/IconButton';
-import SvgIcon from '@material-ui/core/SvgIcon';
+import SearchIcon from '@mui/icons-material/Search';
+import IconButton from '@mui/material/IconButton';
+import SvgIcon from '@mui/material/SvgIcon';
 
 function SearchAndCreateIcon(props) {
   return (

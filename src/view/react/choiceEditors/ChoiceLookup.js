@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField';
 import renderingContext from '../../renderingContext';
 import { loadLocalizedChoice } from '../hooks';
 import utils from '../../../utils';

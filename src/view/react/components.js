@@ -13,8 +13,6 @@ import './date';
 import './duration';
 import '../bootstrap/auto';
 
-<<<<<<< HEAD
-=======
 /**
  * A wrapper for adding a dom element to
  * a react component.
@@ -40,7 +38,6 @@ const getReactComponent = (child, index) => {
   return child; // Assumes child a react component
 };
 
->>>>>>> 4252845 (Support append dom elements in react)
 /**
  * Utility to toggle a set of classes potentially separated by spaces in a set.
  */

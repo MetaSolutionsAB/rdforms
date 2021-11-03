@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect, useMemo } from 'react';
-import TextField from '@material-ui/core/TextField';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import TextField from '@mui/material/TextField';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import IconButton from '@mui/material/IconButton';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import moment from 'moment';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
@@ -41,7 +41,6 @@ const LanguageControl = (props) => {
   return <FormControl className="rdformsLangControl" variant={renderingContext.materialVariant}>
     <Select
       inputProps={{ 'aria-labelledby': props.labelledby }}
-
       value={lang}
       onChange={onLangChange}>
       {langs.map(langOption => (langOption === null ?

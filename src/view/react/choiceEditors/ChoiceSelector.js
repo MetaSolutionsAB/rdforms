@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 import renderingContext from '../../renderingContext';
 import { useLocalizedSortedChoices, useLocalizedChoice } from '../hooks';
 
@@ -35,8 +35,13 @@ export default (props) => {
   const renderInput = (params) => {
     params.inputProps = params.inputProps || {};
     params.inputProps['aria-labelledby'] = labelledBy;
-    return (<TextField {...params} {...(value && value.mismatch ? { error: true } : {})}
-                       variant={renderingContext.materialVariant}/>);
+    return (
+      <TextField
+        {...params}
+        {...(value && value.mismatch ? { error: true } : {})}
+        variant={renderingContext.materialVariant}
+      />
+    );
   };
   const handleChange = (event, newChoice) => {
     binding.setChoice(newChoice.original);
@@ -44,17 +49,25 @@ export default (props) => {
     setError(newChoice.original.mismatch === true);
   };
 
-  return <><Autocomplete
-    className="rdformsSearch"
-    disableClearable={true}
-    value={value}
-    options={choices}
-    onChange={handleChange}
-    getOptionSelected={ (option, choice) => option.value === choice.value }
-    getOptionLabel={ choice => (choice === null ? '' : choice.label) }
-    getOptionDisabled={ option => option.mismatch === true}
-    filterSelectedOptions
-    renderInput={renderInput}
-  />{ error && (<div key="warning" className="rdformsWarning">{
-    props.context.view.messages.wrongValueField}</div>)}</>;
+  return (
+    <>
+      <Autocomplete
+        className="rdformsSearch"
+        disableClearable={true}
+        value={value}
+        options={choices}
+        onChange={handleChange}
+        isOptionEqualToValue={(option, choice) => option.value === choice.value}
+        getOptionLabel={(choice) => (choice === null ? '' : choice.label)}
+        getOptionDisabled={(option) => option.mismatch === true}
+        filterSelectedOptions
+        renderInput={renderInput}
+      />
+      {error && (
+        <div key="warning" className="rdformsWarning">
+          {props.context.view.messages.wrongValueField}
+        </div>
+      )}
+    </>
+  );
 };

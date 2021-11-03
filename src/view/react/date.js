@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useMemo } from 'react';
-import Grid from '@material-ui/core/Grid';
-import { MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardTimePicker } from '@material-ui/pickers';
-import MomentUtils from '@date-io/moment';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import { DatePicker, TimePicker, LocalizationProvider } from '@mui/lab';
+import DateAdapter from '@mui/lab/AdapterMoment';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import { TextField } from '@mui/material';
+import Select from '@mui/material/Select';
 import moment from 'moment';
 import renderingContext from '../renderingContext';
 
@@ -79,7 +79,6 @@ const getDateValue = (value, datatype) => {
   return '';
 };
 
-
 const datePresenter = (fieldDiv, binding, context) => {
   const data = binding.getValue();
   if (data != null && data !== '') {
@@ -102,7 +101,6 @@ const datePresenter = (fieldDiv, binding, context) => {
 const presenters = renderingContext.presenterRegistry;
 presenters.itemtype('text').datatype('xsd:date').register(datePresenter);
 presenters.itemtype('text').datatype('dcterms:W3CDTF').register(datePresenter);
-
 
 const dateEditor = (fieldDiv, binding, context) => {
   const bundle = context.view.messages;
@@ -134,41 +132,88 @@ const dateEditor = (fieldDiv, binding, context) => {
       binding.setValue(getDateValue(selectedDate, event.target.value));
       setDatatype(event.target.value);
     };
-    const inputProps = { 'aria-labelledby': context.view.getLabelIndex(binding) };
+    const inputProps = {
+      'aria-labelledby': context.view.getLabelIndex(binding),
+      variant: renderingContext.materialVariant,
+    };
     const dateFormat = selectedDatatype === 'Year' ? 'YYYY' : 'YYYY-MM-DD';
     return (
-      <MuiPickersUtilsProvider utils={MomentUtils}>
+      <LocalizationProvider dateAdapter={DateAdapter}>
         <span className="rdformsDatePicker">
-          <KeyboardDatePicker
+          <DatePicker
+            renderInput={(props) => <TextField {...props} {...inputProps} />}
             leftArrowButtonProps={{ 'aria-label': bundle.date_previousMonth }}
             rightArrowButtonProps={{ 'aria-label': bundle.date_nextMonth }}
-            KeyboardButtonProps={{ 'aria-label': selectedDatatype === 'Year' ?
-                bundle.date_openYearPicker : bundle.date_openDatePicker }}
-            label={selectedDatatype === 'Year' ? bundle.date_year : bundle.date_date}
-            value={selectedDate} minDate={new Date('0000-01-01')} format={dateFormat}
-            views={selectedDatatype === 'Year' ? ['year'] : ['date']}
-            inputProps={inputProps}
-            onChange={onDateChange} autoOk={true} inputVariant={renderingContext.materialVariant}/>
-          {alternatives.Datetime && (<KeyboardTimePicker
-            label={bundle.date_time}
-            { ...(selectedDatatype === 'Datetime' ? {} : { disabled: true })}
-            KeyboardButtonProps={{ 'aria-label': bundle.date_openTimePicker }}
-            value={selectedDatatype === 'Datetime' ? selectedDate : null}
-            onChange={onDateChange} ampm={false} autoOk={true}
-            inputProps={inputProps}
-            inputVariant={renderingContext.materialVariant}/>)}
-          {!onlyOneAlternative && (<FormControl variant={renderingContext.materialVariant}>
-            <Select
-              value={selectedDatatype}
-              inputProps={inputProps}
-              onChange={onDatatypeChange}>
-              {alternatives.Year && (<MenuItem value="Year">{bundle.date_year}</MenuItem>)}
-              {alternatives.Date && (<MenuItem value="Date">{bundle.date_date}</MenuItem>)}
-              {alternatives.Datetime && (<MenuItem value="Datetime">{bundle.date_date_and_time}</MenuItem>)}
-            </Select>
-          </FormControl>)}
+            KeyboardButtonProps={{
+              'aria-label':
+                selectedDatatype === 'Year'
+                  ? bundle.date_openYearPicker
+                  : bundle.date_openDatePicker,
+            }}
+            label={
+              selectedDatatype === 'Year' ? bundle.date_year : bundle.date_date
+            }
+            value={selectedDate}
+            minDate={moment(new Date('0000-01-01'))}
+            inputFormat={dateFormat}
+            views={selectedDatatype === 'Year' ? ['year'] : ['day']}
+            onChange={onDateChange}
+            autoOk={true}
+            mask={selectedDatatype === 'Year' ? '____' : '____-__-__'}
+            PopperProps={{
+              modifiers: [
+                {
+                  name: 'flip',
+                  enabled: false,
+                },
+              ],
+            }}
+          />
+          {alternatives.Datetime && (
+            <TimePicker
+              renderInput={(props) => <TextField {...props} {...inputProps} />}
+              label={bundle.date_time}
+              {...(selectedDatatype === 'Datetime' ? {} : { disabled: true })}
+              KeyboardButtonProps={{
+                'aria-label': bundle.date_openTimePicker,
+              }}
+              value={selectedDatatype === 'Datetime' ? selectedDate : null}
+              onChange={onDateChange}
+              ampm={false}
+              autoOk={true}
+              PopperProps={{
+                modifiers: [
+                  {
+                    name: 'flip',
+                    enabled: false,
+                  },
+                ],
+              }}
+            />
+          )}
+          {!onlyOneAlternative && (
+            <FormControl variant={renderingContext.materialVariant}>
+              <Select
+                value={selectedDatatype}
+                inputProps={inputProps}
+                onChange={onDatatypeChange}
+              >
+                {alternatives.Year && (
+                  <MenuItem value="Year">{bundle.date_year}</MenuItem>
+                )}
+                {alternatives.Date && (
+                  <MenuItem value="Date">{bundle.date_date}</MenuItem>
+                )}
+                {alternatives.Datetime && (
+                  <MenuItem value="Datetime">
+                    {bundle.date_date_and_time}
+                  </MenuItem>
+                )}
+              </Select>
+            </FormControl>
+          )}
         </span>
-      </MuiPickersUtilsProvider>
+      </LocalizationProvider>
     );
   };
   fieldDiv.appendChild(<DateComp key={binding.getHash()}></DateComp>);

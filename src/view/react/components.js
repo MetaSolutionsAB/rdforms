@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import WarningIcon from '@material-ui/icons/Warning';
-import ErrorIcon from '@material-ui/icons/Error';
-import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
+import React, { useState, useEffect, useRef } from 'react';
+import WarningIcon from '@mui/icons-material/Warning';
+import ErrorIcon from '@mui/icons-material/Error';
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import renderingContext from '../renderingContext';
 import './labels';
 import './text';
@@ -13,6 +13,30 @@ import './date';
 import './duration';
 import '../bootstrap/auto';
 
+/**
+ * A wrapper for adding a dom element to
+ * a react component.
+ */
+const DOMElementWrapper = ({ element }) => {
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current.appendChild(element);
+  }, [element]);
+
+  return <div ref={ref} />;
+};
+
+/**
+ * If child is not a react component, it creates one.
+ */
+const getReactComponent = (child, index) => {
+  // In case child is a dom element
+  if (child instanceof Node) return <DOMElementWrapper key={index} element={child} />;
+  // In case child is a struct
+  if (child.component) return React.createElement(child.component, { key: child.id });
+  return child; // Assumes child a react component
+};
 
 /**
  * Utility to toggle a set of classes potentially separated by spaces in a set.
@@ -128,9 +152,12 @@ const newStruct = (Tag, parent) => {
         setAttrs(oldAttrs => updateObjAttr(Object.assign({}, oldAttrs), attr, value));
       };
       // -- END
-
-      return <Tag className={clsSet.join(' ')}>{childArr.map(child =>
-        (child.component ? React.createElement(child.component, { key: child.id }) : child))}{text}</Tag>;
+      return (
+        <Tag className={clsSet.join(' ')}>
+          {childArr.map((child, index) => getReactComponent(child, index))}
+          {text}
+        </Tag>
+      );
     },
   };
 
@@ -187,7 +214,6 @@ renderingContext.destroyDomNode = (struct /* , view */) => {
     struct.destroy();
   }
 };
-
 
 renderingContext.prePresenterViewRenderer = () => {};
 

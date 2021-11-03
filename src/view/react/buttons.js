@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useMemo } from 'react';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import CancelIcon from '@material-ui/icons/Cancel';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import IconButton from '@material-ui/core/IconButton';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import IconButton from '@mui/material/IconButton';
 import renderingContext from '../renderingContext';
 import * as engine from '../../model/engine';
 

@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
 import { useLocalizedSortedChoices, useName } from '../hooks';
 
 const ChoiceOption = props => <FormControlLabel
@@ -46,13 +46,27 @@ export default function RadioButtonsEditor(props) {
     };
   }, []);
 
-  return (<><FormControl component="fieldset">
-      <RadioGroup {...row} key="radio" aria-label={item.getLabel()} name={name} value={value} onChange={handleChange}>
-        {(choices).map(choice =>
-          <ChoiceOption key={choice.value} choice={choice} />,
-        )}
-      </RadioGroup>
-    </FormControl>{ error && (<div key="warning" className="rdformsWarning">{
-      props.context.view.messages.wrongValueField}</div>)}</>
+  return (
+    <>
+      <FormControl component="fieldset">
+        <RadioGroup
+          {...row}
+          key="radio"
+          aria-label={item.getLabel()}
+          name={name}
+          value={value}
+          onChange={handleChange}
+        >
+          {choices.map((choice) => (
+            <ChoiceOption key={choice.value} choice={choice} />
+          ))}
+        </RadioGroup>
+      </FormControl>
+      {error && (
+        <div key="warning" className="rdformsWarning">
+          {props.context.view.messages.wrongValueField}
+        </div>
+      )}
+    </>
   );
 }

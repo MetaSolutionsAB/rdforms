@@ -910,7 +910,6 @@
   resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.8.0.tgz#bbbff68978fefdbe68ccb533bc8cbe1d1afb5413"
   integrity sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==
 
-<<<<<<< HEAD
 "@emotion/is-prop-valid@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@emotion/is-prop-valid/-/is-prop-valid-1.1.0.tgz#29ef6be1e946fb4739f9707def860f316f668cde"
@@ -978,16 +977,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
-"@entryscape/rdfjson@^2.5.1":
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/@entryscape/rdfjson/-/rdfjson-2.5.1.tgz#add39f0c95bc2a6050348d6cfe8ef645e081a505"
-  integrity sha512-DkrTD9cTPiOoY7hVrjLTBJC2rkw7yeLzQ0RMaTEwozWD2XHJYncTwY2aaZ+EhmmcnqnGnXXaliT87R+/Rfff4g==
-=======
 "@entryscape/rdfjson@^2.5.3":
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/@entryscape/rdfjson/-/rdfjson-2.5.3.tgz#a40f6cbd8114849bccaa6e712c1b915b41abf31c"
   integrity sha512-301Yuo74vYE/BvGesZidgY0hTQLQy6vdFfjS8mr1aVZ7jptP8zh/KyAoXC63hBN/6AhF+XAVDDJgWKItaTbpBw==
->>>>>>> feature/bump-rdfjson
   dependencies:
     core-js "^3.4.0"
     md5 "^2.2.1"

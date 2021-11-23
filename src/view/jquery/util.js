@@ -29,3 +29,19 @@ export const toDuration = (data) => {
   }
   return null;
 };
+
+export const getDate = (value) => {
+  try {
+    // xsd:time
+    if (value.includes(':') && !value.includes('T')) {
+      const datePart = new Date().toISOString().substr(0, 11);
+      const timeDate = new Date(`${datePart}${value}`);
+      timeDate.setMinutes(timeDate.getMinutes() + timeDate.getTimezoneOffset());
+      return timeDate;
+    }
+    // all other cases
+    return new Date(value);
+  } catch (e) {
+    return null;
+  }
+};

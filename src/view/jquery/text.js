@@ -1,9 +1,10 @@
 import moment from 'moment';
 import { escape } from 'lodash-es';
-import { fromDuration } from './util';
+import { getDate, fromDuration } from './util';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import system from '../../model/system';
+
 
 const presenters = renderingContext.presenterRegistry;
 
@@ -130,15 +131,23 @@ presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding
 const datePresenter = (fieldDiv, binding, context) => {
   const data = binding.getValue();
   if (data != null && data !== '') {
+    const date = getDate(data);
     try {
       let str;
       if (data.indexOf('T') > 0) {
-        str = moment(data).format('lll');
+        // DateTime
+        str = moment(date).format('lll');
+      } else if (data.indexOf(':') > 0) {
+        // Time
+        str = moment(date).format('LT');
       } else if (data.length > 4) {
-        str = moment(data).format('LL');
+        // Full date
+        str = moment(date).format('LL');
       } else {
-        str = moment(data).format('YYYY');
+        // Year only
+        str = moment(date).format('YYYY');
       }
+
       jquery('<div>').html(str).appendTo(fieldDiv);
     } catch (e) {
       console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 (potentially with time given after a 'T' character as well) but found '${data}' instead.`);

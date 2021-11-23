@@ -30,6 +30,8 @@ export default class Item {
       'multiline',
       'horizontalRadioButtons',
       'verticalRadioButtons',
+      'horizontalCheckBoxes',
+      'verticalCheckBoxes',
       'nonEditable',
       'expandable',
       'compact',

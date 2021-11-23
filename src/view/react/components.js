@@ -95,11 +95,11 @@ const newStruct = (Tag, parent) => {
     // -- START: Initial methods used before react kicks in.
     toggleClass: (clsStr, addOrNot) => toggleClass(firstClsSet, clsStr, addOrNot),
     domQuery: selector => (selectorInClasses(selector, firstClsSet) ? ext : findStruct(selector, firstChildArr)),
-    appendChild: struct => {
+    appendChild: (struct) => {
       firstChildArr.push(struct);
     },
     appendAfter: (struct, sibling) => {
-      firstChildArr.splice(firstChildArr.indexOf(sibling) + 1, 0, struct)
+      firstChildArr.splice(firstChildArr.indexOf(sibling) + 1, 0, struct);
     },
     text: (str) => {
       firstTextStr = str;
@@ -248,3 +248,5 @@ renderingContext.renderValidationMessage = (fieldDiv, type, message) => {
   fieldDiv.appendChild(<div className="rdformsValidationMessageWrapper" key={ `rdforms_valcount_${validationCounter}`}
   ><ValidationIcon/><span className="rdformsValidationMessage">{message}</span></div>);
 };
+
+renderingContext.multiValueSupport = true;

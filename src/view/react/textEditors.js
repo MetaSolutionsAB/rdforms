@@ -45,7 +45,7 @@ const LanguageControl = (props) => {
       onChange={onLangChange}>
       {langs.map(langOption => (langOption === null ?
         (<MenuItem key="_none" value="_none" disabled>─────</MenuItem>) :
-        (<MenuItem key={langOption.value} value={langOption.value}>{langOption.label}</MenuItem>)
+        (<MenuItem key={langOption.value} value={langOption.value}>{langOption.label || '\u00A0'}</MenuItem>)
       ))}
     </Select>
   </FormControl>;

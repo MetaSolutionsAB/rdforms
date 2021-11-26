@@ -31,6 +31,8 @@
   "date_time": "Time",
   "date_year": "Year",
   "date_date_and_time": "Date and time",
+  "date_year_and_month": "Year and month",
+  "date_month_and_day": "Month and day",
   "date_openDatePicker": "Open date picker dialog",
   "date_openTimePicker": "Open time picker dialog",
   "date_openYearPicker": "Open year picker dialog",

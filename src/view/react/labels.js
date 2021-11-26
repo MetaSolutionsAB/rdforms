@@ -1,14 +1,16 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import renderingContext from '../renderingContext';
 import { CODES } from '../../model/engine';
 
-const StyledTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
+const StyledTooltip = styled(
+  forwardRef(({ className, ...props }, ref) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))
+)(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.background.default,
     fontSize: 12,

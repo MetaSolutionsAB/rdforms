@@ -14,9 +14,13 @@ renderingContext.addExpandButton = (rowDiv, labelDiv, item, context) => {
 
 const isClearButton = (binding, context) => {
   const item = binding.getItem();
+  const notDeprecated = !item.hasStyle('deprecated');
+  if (context.view.isMultiValued(item) && notDeprecated) {
+    return true;
+  }
   const cardTr = binding.getCardinalityTracker();
   const showOne = context.view.showNow(binding.getItem(), []);
-  return !item.hasStyle('deprecated') &&
+  return notDeprecated &&
     (cardTr.isMin() || (cardTr.getCardinality() === 1 && showOne && cardTr.isDepsOk()));
 };
 renderingContext.addRemoveButton = (rowDiv, binding, context) => () => {
@@ -61,6 +65,13 @@ renderingContext.addRemoveButton = (rowDiv, binding, context) => () => {
           binding.setLanguage('');
         }
       }
+    } else if (context.view.isMultiValued(item)) {
+      // This case corresponds to multivalued and deprecated.
+      // Slice so we have a copy of the array... since it will change behind the scenes otherwise
+      binding.getParent().getChildBindingsFor(item).slice(0).forEach((b) => {
+        b.remove();
+      });
+      rowDiv.parent.destroy();
     } else {
       binding.remove();
       rowDiv.destroy();
@@ -77,8 +88,8 @@ renderingContext.addRemoveButton = (rowDiv, binding, context) => () => {
 };
 
 renderingContext.addCreateChildButton = (rowDiv, labelDiv, binding, context) => () => {
-  const cardTr = binding.getCardinalityTracker();
   const item = binding.getItem();
+  const cardTr = binding.getCardinalityTracker();
   const [disabled, setDisabled] = useState(cardTr.isMax() || !cardTr.isDepsOk() || item.hasStyle('deprecated'));
   useEffect(() => {
     context.rememberParent = binding.getParent(); // If the current binding is removed and the label is not redrawn

@@ -1,14 +1,16 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import renderingContext from '../renderingContext';
 import { CODES } from '../../model/engine';
 
-const StyledTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
+const StyledTooltip = styled(
+  forwardRef(({ className, ...props }, ref) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))
+)(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.background.default,
     fontSize: 12,
@@ -148,16 +150,18 @@ const ERR = (props) => {
 
 renderingContext.renderEditorLabelScopeEnd = (rowNode, binding, item, context) => {
   if (!item.hasStyle('nonEditable') && !item.hasStyle('heading')) {
-    let Button;
-    const card = item.getCardinality();
-    if (binding == null) {
-      Button = renderingContext.addExpandButton(rowNode, null, item, context);
-    } else if (binding.getPredicate() && !context.view.showAsTable(item) && card.max !== 1 &&
-      (card.max == null || card.max !== card.min)) {
-      Button = renderingContext.addCreateChildButton(rowNode, null, binding, context);
-    }
-    if (Button) {
-      rowNode.appendChild(<Button key={`${binding.getHash()}_labelEnd`}></Button>);
+    if (!context.view.isMultiValued(item)) {
+      let Button;
+      const card = item.getCardinality();
+      if (binding == null) {
+        Button = renderingContext.addExpandButton(rowNode, null, item, context);
+      } else if (binding.getPredicate() && !context.view.showAsTable(item) && card.max !== 1 &&
+        (card.max == null || card.max !== card.min)) {
+        Button = renderingContext.addCreateChildButton(rowNode, null, binding, context);
+      }
+      if (Button) {
+        rowNode.appendChild(<Button key={`${binding.getHash()}_labelEnd`}></Button>);
+      }
     }
     // If the item is deprecated and there are at least one matching value (binding),
     // provide a message and make sure the entire row (including the label) is deleted when

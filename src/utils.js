@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash-es';
 import system from './model/system';
 
 const getLocalizedValue = (hash) => {
-  const locale = moment.locale();
+  const locale = moment.locale('sv');
   if (hash == null) {
     return { precision: 'none' };
   } else if (typeof hash === 'string') {

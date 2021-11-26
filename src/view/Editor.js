@@ -1,14 +1,14 @@
 import renderingContext from './renderingContext';
 import Presenter from './Presenter';
 import * as engine from '../model/engine';
-import {bindingReport} from '../model/validate';
+import { bindingReport } from '../model/validate';
 
 const showNow = (editor, item, bindings, includeLevel) => {
   // Invisible should be created as components and hidden using display: none
   // Otherwise certain extentions such as autoUUID does not work.
-  /*if (item.hasStyle('invisible')) {
+  /* if (item.hasStyle('invisible')) {
     return false;
-  }*/
+  } */
   if (item.hasStyle('presenterOnly')) {
     return false;
   }
@@ -135,6 +135,7 @@ export default class Editor extends Presenter {
     return showNow(this, item, bindings, this.includeLevel);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   skipBinding(/* binding */) {
     return false;
   }
@@ -185,16 +186,16 @@ export default class Editor extends Presenter {
     if (firstBinding.getItem().hasStyle('nonEditable')) {
       return this.addComponent(newRow, firstBinding);
     }
-    return renderingContext.addEditorTable(newRow, firstBinding, {view: this});
+    return renderingContext.addEditorTable(newRow, firstBinding, { view: this });
   }
 
   fillTable(table, bindings) {
-    renderingContext.fillEditorTable(table, bindings, {view: this});
+    renderingContext.fillEditorTable(table, bindings, { view: this });
   }
 
   preRenderView() {
     renderingContext.preEditorViewRenderer(this.domNode, this.binding, {
-      view: this, inEditor: true, topLevel: this.topLevel, hideAddress: this.hideAddress
+      view: this, inEditor: true, topLevel: this.topLevel, hideAddress: this.hideAddress,
     });
   }
 
@@ -209,7 +210,7 @@ export default class Editor extends Presenter {
 
   createRowNode(lastRowNode, binding, item) {
     if (binding == null && item.hasStyle('nonEditable')) {
-      return;
+      return undefined;
     }
     const newNode = super.createRowNode(lastRowNode, binding, item);
     if (item.getType() === 'choice' && typeof item.getProperty() === 'undefined') {
@@ -255,4 +256,10 @@ export default class Editor extends Presenter {
     }
     return newNode;
   }
-};
+
+  // eslint-disable-next-line class-methods-use-this
+  isMultiValued(item) {
+    return renderingContext.multiValueSupport &&
+    (item.hasStyle('horizontalCheckBoxes') || item.hasStyle('verticalCheckBoxes'));
+  }
+}

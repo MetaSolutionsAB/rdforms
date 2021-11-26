@@ -18,11 +18,14 @@ export default {
     'http://purl.org/dc/terms/subject': [{
       'value': 'http://example.com/cheeemistry',
       'type': 'uri',
+    },{
+      'value': 'http://example.com/physics',
+      'type': 'uri',
     }],
     'http://purl.org/dc/terms/date': [{
       'value': '2019-10-06T12:28:59.685000+00:00',
       'type': 'literal',
-      'datatype': 'http://www.w3.org/2001/XMLSchema#date'
+      'datatype': 'http://www.w3.org/2001/XMLSchema#gYear'
     }],
     'http://purl.org/dc/terms/license': [{
       'value': 'http://creativecommons.org/licenses/byy/4.0/',

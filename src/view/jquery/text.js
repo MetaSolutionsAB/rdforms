@@ -1,9 +1,10 @@
 import moment from 'moment';
 import { escape } from 'lodash-es';
-import { fromDuration } from './util';
+import { getDatePresentation, fromDuration } from './util';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import system from '../../model/system';
+
 
 const presenters = renderingContext.presenterRegistry;
 
@@ -117,33 +118,29 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
 // Presenter for duration
 presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding, context) => {
   const data = fromDuration(binding.getValue());
-  const bundle = context.view.messages
+  const bundle = context.view.messages;
   const node = jquery('<div>').appendTo(fieldDiv)[0];
   ['years', 'months', 'days', 'hours', 'minutes'].forEach((key) => {
     if (data.hasOwnProperty(key)) {
-      jquery(`<span class="durationlabel">${bundle['duration_'+key]}:</span><span class="durationValue">${data[key]}</span>`)
+      jquery(`<span class="durationlabel">${bundle[`duration_${key}`]}:</span><span class="durationValue">${data[key]}</span>`)
         .appendTo(node);
     }
   });
 });
 
-const datePresenter = (fieldDiv, binding, context) => {
-  const data = binding.getValue();
-  if (data != null && data !== '') {
-    try {
-      let str;
-      if (data.indexOf('T') > 0) {
-        str = moment(data).format('lll');
-      } else if (data.length > 4) {
-        str = moment(data).format('LL');
-      } else {
-        str = moment(data).format('YYYY');
-      }
-      jquery('<div>').html(str).appendTo(fieldDiv);
-    } catch (e) {
-      console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 (potentially with time given after a 'T' character as well) but found '${data}' instead.`);
-    }
+const datePresenter = (fieldDiv, binding) => {
+  try {
+    const pres = getDatePresentation(binding);
+    jquery('<div>').html(pres).appendTo(fieldDiv);
+  } catch (e) {
+    console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 
+    (potentially with time given after a 'T' character as well) but found '${binding.getValue()}' instead.`);
   }
 };
+presenters.itemtype('text').datatype('xsd:dateTime').register(datePresenter);
 presenters.itemtype('text').datatype('xsd:date').register(datePresenter);
+presenters.itemtype('text').datatype('xsd:time').register(datePresenter);
+presenters.itemtype('text').datatype('xsd:gYear').register(datePresenter);
+presenters.itemtype('text').datatype('xsd:gYearMonth').register(datePresenter);
+presenters.itemtype('text').datatype('xsd:gMonthDay').register(datePresenter);
 presenters.itemtype('text').datatype('dcterms:W3CDTF').register(datePresenter);

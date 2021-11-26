@@ -2,6 +2,7 @@
 import React from 'react';
 import renderingContext from '../../renderingContext';
 import RadioButtonsEditor from './RadioButtonsEditor';
+import CheckBoxesEditor from './CheckBoxesEditor';
 import ChoiceSelector from './ChoiceSelector';
 import ChoiceLookup from './ChoiceLookup';
 import ChoiceLookupAndInlineSearch from './ChoiceLookupAndInlineSearch';
@@ -26,6 +27,14 @@ editors.itemtype('choice').choices().check(radioCheck).register((fieldDiv, bindi
   fieldDiv.appendChild(<RadioButtonsEditor key={binding.getHash()} binding={binding} context={context}
                                            field={fieldDiv}/>);
 });
+
+const checkBoxComponent = (fieldDiv, binding, context) => {
+  // eslint-disable-next-line no-new
+  fieldDiv.appendChild(<CheckBoxesEditor key={binding.getHash()} binding={binding} context={context}
+                                         field={fieldDiv}/>);
+};
+editors.itemtype('choice').choices().style('verticalCheckBoxes').register(checkBoxComponent);
+editors.itemtype('choice').choices().style('horizontalCheckBoxes').register(checkBoxComponent);
 
 editors.itemtype('choice').choices().register((fieldDiv, binding, context) => {
   fieldDiv.appendChild(<ChoiceSelector key={binding.getHash()} binding={binding} context={context} field={fieldDiv}/>);

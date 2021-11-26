@@ -180,11 +180,16 @@ export default class View {
 
         // Non table case
       } else if (bindings.length > 0) {
-        for (let i = 0; i < bindings.length; i++) {
-          // Add row with label if first row of same item or the binding is a group.
+        if (this.isMultiValued(item)) {
           this.context = { view: this };
-          lastRow = this.addRow(lastRow, bindings[i], i === 0 ||
-            bindings[i] instanceof GroupBinding);
+          lastRow = this.addRow(lastRow, bindings[0], true);
+        } else {
+          for (let i = 0; i < bindings.length; i++) {
+            // Add row with label if first row of same item or the binding is a group.
+            this.context = { view: this };
+            lastRow = this.addRow(lastRow, bindings[i], i === 0 ||
+              bindings[i] instanceof GroupBinding);
+          }
         }
       } else {
         lastRow = this.createRowNode(lastRow, null, item);
@@ -345,5 +350,9 @@ export default class View {
     const idx = `${binding.getHash()}_${this._viewId}_label`;
     this._labelIndex[binding.getHash()] = idx;
     return idx;
+  }
+
+  isMultiValued(item) {
+    return false;
   }
 }

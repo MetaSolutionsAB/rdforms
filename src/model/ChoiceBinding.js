@@ -30,14 +30,6 @@ export default class ChoiceBinding extends ValueBinding {
     return this._choice;
   }
 
-  remove() {
-    this.setValue(null);
-    // Removed line below as it is also done in superclass
-    // and therefore causes an error
-    // this._parent.removeChildBinding(this);
-    super.remove();
-  }
-
   setValue(value, choice, silent) {
     super.setValue(value, choice, silent);
     const oldval = this.getValue();

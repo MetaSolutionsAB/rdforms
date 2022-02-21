@@ -49,17 +49,6 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
   }
   return undefined;
 };
-// TODO this is listening for any click and popover showings... too much! especially considering
-// that is being used in another application. Rewrite!
-jquery(document).ready(() => {
-  jquery(document.body).on('show.bs.popover click', (e) => {
-    jquery('[data-toggle="popover"]').each((node, a) => {
-      if (e.target.innerHTML !== a.innerHTML) {
-        jquery(a).popover('hide');
-      }
-    });
-  });
-});
 
 renderingContext.attachItemInfo = function (item, aroundNode/* , context */) {
   if (item == null || (item.getProperty() == null && item.getDescription() == null)) {
@@ -84,7 +73,7 @@ renderingContext.attachItemInfo = function (item, aroundNode/* , context */) {
     html: true,
     container: renderingContext.getPopoverContainer(),
     placement: 'auto',
-    trigger: 'click focus',
+    trigger: 'focus',
     title: label,
     content: `<div class="description">${
       description.replace(/(\r\n|\r|\n)/g, '<br/>')

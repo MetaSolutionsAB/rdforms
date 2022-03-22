@@ -32,18 +32,21 @@ editors.itemtype('text').datatype('xsd:duration').register(durationEditor);
     tb.set('value', '');
   }; */
 
-const addChangeListener = (inp, binding, regex, extLink) => {
+const addChangeListener = (inp, binding, regex, extLink, help) => {
   let to = null;
   const s = () => {
     to = null;
-    const val = inp.val();
+    const val = inp.val().trim();
     let disableExtLink = true;
-    if (!regex || regex.test(val)) {
+    if (val === '' || !regex || regex.test(val)) {
       binding.setGist(val);
       if (extLink && val) {
         extLink.prop('href', binding.getValue());
         disableExtLink = false;
       }
+      help.toggleClass('rdformsHelpActive', false);
+    } else {
+      help.toggleClass('rdformsHelpActive', true);
     }
     if (extLink) {
       extLink.toggleClass('rdformsExtLinkDisabled', disableExtLink);
@@ -63,19 +66,27 @@ const registerPattern = (pattern, datatype) => {
   const regex = new RegExp(pattern);
   editors.itemtype('text').datatype(datatype)
     .register((fieldDiv, binding, context) => {
-      const $input = jquery('<input type="text" class="form-control rdformsFieldInput">');
+      const $input = jquery(`<input type="text" class="form-control rdformsFieldInput"
+         placeholder="${binding.getItem().getPlaceholder() || ''}">`);
       $input.val(binding.getGist())
         .attr('pattern', pattern)
         .appendTo(fieldDiv);
+
+      const help = binding.getItem().getHelp();
+      let $help;
+      if (help) {
+        $help = jquery(`<span class="rdformsHelp">${help}</span>`);
+        $help.appendTo(fieldDiv);
+      }
 
       if (binding.getItem().hasStyle('externalLink')) {
         const $extLink = jquery(`<a class="fas fa-external-link-alt rdformsExtLink ${renderingContext.getExtLinkClass()}" target="_blank">`);
         $extLink.appendTo(context.controlDiv);
         jquery(fieldDiv).addClass('rdformsExtLinkControl');
-        addChangeListener($input, binding, regex, $extLink);
+        addChangeListener($input, binding, regex, $extLink, $help);
         $input.keyup();
       } else {
-        addChangeListener($input, binding, regex);
+        addChangeListener($input, binding, regex, undefined, $help);
       }
 
 
@@ -98,7 +109,7 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
   let $input;
   if (item.hasStyle('multiline')) {
     const originalNrOfLines = countLines(binding.getGist());
-    $input = jquery(`<textarea class="form-control rdformsFieldInput autoExpand" rows="${originalNrOfLines}">`);
+    $input = jquery(`<textarea class="form-control rdformsFieldInput autoExpand" placeholder="${item.getPlaceholder() || ''}" rows="${originalNrOfLines}">`);
     $input.on('input focus', function () {
       if (this.baseScrollHeight === undefined) {
         const originalHeight = $input.height();
@@ -110,12 +121,19 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
       this.rows = rows;
     });
   } else if (item.hasStyle('email')) {
-    $input = jquery('<input type="email" class="form-control rdformsFieldInput">');
+    $input = jquery(`<input type="email" class="form-control rdformsFieldInput" placeholder="${item.getPlaceholder() || ''}">`);
   } else {
-    $input = jquery('<input type="text" class="form-control rdformsFieldInput">');
+    $input = jquery(`<input type="text" class="form-control rdformsFieldInput" placeholder="${item.getPlaceholder() || ''}">`);
   }
   $input.val(binding.getGist())
     .appendTo(fieldDiv);
+
+  const help = item.getHelp();
+  let $help;
+  if (help) {
+    $help = jquery(`<span class="rdformsHelp">${help}</span>`);
+    $help.appendTo(fieldDiv);
+  }
 
   const pattern = item.getPattern();
   let regex = null;
@@ -127,10 +145,10 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
     const $extLink = jquery(`<a class="fas fa-external-link-alt rdformsExtLink ${renderingContext.getExtLinkClass()}" target="_blank">`);
     $extLink.appendTo(context.controlDiv);
     jquery(fieldDiv).addClass('rdformsExtLinkControl');
-    addChangeListener($input, binding, regex, $extLink);
+    addChangeListener($input, binding, regex, $extLink, $help);
     $input.keyup();
   } else {
-    addChangeListener($input, binding, regex);
+    addChangeListener($input, binding, regex, undefined, $help);
   }
 
   // If language control should be present

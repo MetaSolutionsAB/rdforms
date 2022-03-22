@@ -5,7 +5,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import BuildIcon from '@mui/icons-material/Build';
 import IconButton from '@mui/material/IconButton';
 import renderingContext from '../../renderingContext';
-import { loadLocalizedChoice, localizedChoice } from '../hooks';
+import { useLocalizedChoice, editLocalizedChoice } from '../hooks';
 import ShowButton from './ShowButton';
 
 let globalChoiceQueryThrottle;
@@ -13,7 +13,7 @@ let globalChoiceQueryThrottle;
 export default (props) => {
   const binding = props.binding;
   const [options, setOptions] = useState([]);
-  const [value, setValue] = loadLocalizedChoice(binding, options);
+  const [value, setValue] = useLocalizedChoice(binding, options);
   const [inputValue, setInputValue] = useState('');
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(binding.getChoice()?.mismatch === true);
@@ -51,7 +51,7 @@ export default (props) => {
         globalChoiceQueryThrottle = undefined;
         props.context.chooser.search(binding.getItem(), inputValue.trimStart()).then((results) => {
           if (active) {
-            setOptions(results.map(localizedChoice));
+            setOptions(results.map(editLocalizedChoice));
           }
         });
       }, 200);
@@ -71,6 +71,7 @@ export default (props) => {
         aria-labelledby={labelledBy}
         {...params}
         {...(value && value.mismatch ? { error: true } : {})}
+        placeholder={binding.getItem().getPlaceholder()}
         onKeyDown={({ key, keyCode }) => {
           const isEnterKey = key === 'Enter' || keyCode === 13;
           if (isEnterKey && !open) {
@@ -84,14 +85,14 @@ export default (props) => {
   const showHandler = () => {
     renderingContext.openChoiceSelector(props.binding, (selectedChoice) => {
       binding.setChoice(selectedChoice);
-      setValue(localizedChoice(selectedChoice));
+      setValue(editLocalizedChoice(selectedChoice));
       setError(selectedChoice.mismatch === true);
     }, props.field);
   };
 
   const upgradeHandler = () => {
     value.original.upgrade(props.binding, (upgradedChoice) => {
-      setValue(localizedChoice(upgradedChoice));
+      setValue(editLocalizedChoice(upgradedChoice));
       setError(upgradedChoice.mismatch === true);
     });
   };

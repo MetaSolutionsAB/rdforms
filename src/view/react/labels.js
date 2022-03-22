@@ -4,6 +4,7 @@ import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import renderingContext from '../renderingContext';
+import { Editor } from './Wrappers';
 import { CODES } from '../../model/engine';
 
 const StyledTooltip = styled(
@@ -37,7 +38,9 @@ const ItemTooltip = (props) => {
   if (property) {
     propinfo = <div className="rdformsProperty"><a target="_blank" href={property}>{property}</a></div>;
   }
-  const description = props.item.getDescription() || (property ? '' : props.context.view.messages.info_missing || '');
+  const description = props.context.view instanceof Editor ?
+    props.item.getEditDescription() || props.item.getDescription() : props.item.getDescription()
+    || (property ? '' : props.context.view.messages.info_missing || '');
 
   return (
     <ClickAwayListener onClickAway={handleTooltipClose}>
@@ -64,7 +67,8 @@ const ItemTooltip = (props) => {
 };
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
-  let label = item.getLabel();
+  let label = context.view instanceof Editor ?
+    item.getEditLabel() || item.getLabel() : item.getLabel();
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
@@ -81,7 +85,7 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
   if (item.hasStyle('nonEditable') || item.hasStyle('heading')) {
     renderingContext.renderPresenterLabel(rowNode, binding, item, context, true);
   } else {
-    let label = item.getLabel();
+    let label = item.getEditLabel() || item.getLabel();
     if (label != null && label !== '') {
       label = label.charAt(0).toUpperCase() + label.slice(1);
     } else {

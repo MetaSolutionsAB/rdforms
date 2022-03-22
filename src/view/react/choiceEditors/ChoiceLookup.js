@@ -8,7 +8,7 @@ import ShowButton from './ShowButton';
 
 export default (props) => {
   const binding = props.binding;
-  const [choice, setChoice] = loadLocalizedChoice(binding);
+  const [choice, setChoice] = loadLocalizedChoice(binding, true);
   const [error, setError] = useState(binding.getChoice()?.mismatch === true);
 
   useEffect(() => {
@@ -44,6 +44,7 @@ export default (props) => {
     disabled {...(choice && choice.mismatch ? { mismatch: true } : {})}
     title={title}
     value={label}
+    placeholder={binding.getItem().getPlaceholder()}
     error={error}
     variant={renderingContext.materialVariant}
   /><ShowButton

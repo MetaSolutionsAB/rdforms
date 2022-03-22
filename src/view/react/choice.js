@@ -3,20 +3,26 @@ import React, { useState, useEffect } from 'react';
 import renderingContext from '../renderingContext';
 import system from '../../model/system';
 import utils from '../../utils';
+import { Editor } from './Wrappers';
 
 // -------------- Presenters ----------------
 const presenters = renderingContext.presenterRegistry;
 
-const choicify = func => (fieldDiv, binding) => {
+const choicify = func => (fieldDiv, binding, context) => {
   const choice = binding.getChoice();
+  const isEditor = context.view instanceof Editor;
   let desc;
   if (!choice) {
     return;
   }
-  if (choice.description) {
+
+  if (isEditor && choice.editdescription) {
+    desc = utils.getLocalizedValue(choice.editdescription).value;
+  } else if (choice.description) {
     desc = utils.getLocalizedValue(choice.description).value;
   }
-  func(fieldDiv, binding, choice, desc);
+
+  func(fieldDiv, binding, choice, desc, isEditor);
 };
 
 // Presenter for image.
@@ -34,13 +40,16 @@ presenters.itemtype('choice').style('stars').register(choicify(
     }
   }));
 
+const getLocalizedLabel = (choice, isEditor) =>
+  utils.getLocalizedValue(isEditor ? choice.editlabel || choice.label : choice.label);
+
 // Presenter for choices.
 presenters.itemtype('choice').register(choicify(
-  (fieldDiv, binding, choice, desc) => {
+  (fieldDiv, binding, choice, desc, isEditor) => {
     const item = binding.getItem();
     const title = desc || choice.seeAlso || choice.value;
     if ((item.hasStaticChoices() && !item.hasStyle('externalLink')) || item.hasStyle('noLink')) {
-      const locValue = utils.getLocalizedValue(choice.label);
+      const locValue = getLocalizedLabel(choice, isEditor);
       const langAttr = locValue.lang ? { lang: locValue.lang } : {};
       fieldDiv.appendChild(<div key={binding.getHash()} {...langAttr} title={title} src={choice.value
       }>{locValue.value}</div>);
@@ -55,11 +64,11 @@ presenters.itemtype('choice').register(choicify(
       delete attrs.component;
 
       fieldDiv.appendChild(React.createElement(() => {
-        const [locValue, setLocValue] = useState(utils.getLocalizedValue(choice.label));
+        const [locValue, setLocValue] = useState(getLocalizedLabel(choice, isEditor));
         useEffect(() => {
           if (choice.load != null) {
             choice.load(() => {
-              setLocValue(utils.getLocalizedValue(choice.label));
+              setLocValue(getLocalizedLabel(choice, isEditor));
             });
           }
         }, []);

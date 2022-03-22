@@ -15,7 +15,7 @@ import { useLocalizedSortedChoices, useLocalizedChoice } from '../hooks';
  */
 export default (props) => {
   const binding = props.binding;
-  const choices = useLocalizedSortedChoices(binding);
+  const choices = useLocalizedSortedChoices(binding, true);
   const [value, setValue] = useLocalizedChoice(binding, choices);
   const [error, setError] = useState(binding.getChoice()?.mismatch === true);
 
@@ -37,6 +37,7 @@ export default (props) => {
     params.inputProps['aria-labelledby'] = labelledBy;
     return (
       <TextField
+        placeholder={binding.getItem().getPlaceholder()}
         {...params}
         {...(value && value.mismatch ? { error: true } : {})}
         variant={renderingContext.materialVariant}

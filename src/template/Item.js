@@ -123,65 +123,59 @@ export default class Item {
     return this.getExtends() != null;
   }
 
-  getLabel(returnDetails, original) {
+  _getText(attr, returnDetails, original) {
     const s = this.getSource(original);
-    return returnDetails ? utils.getLocalizedValue(s.label) : utils.getLocalizedValue(s.label).value;
+    return returnDetails ? utils.getLocalizedValue(s[attr]) : utils.getLocalizedValue(s[attr]).value;
   }
-
-  setLabel(value, lang) {
+  _setText(attr, value, lang) {
     const s = this.getSource(true);
-    s.label = this._setLangHash(s.label, value, lang);
+    s[attr] = this._setLangHash(s[attr], value, lang);
+    this.refreshExtends();
+  }
+  _setTextMap(attr, map) {
+    setObjAttr(this.getSource(true), attr, map);
     this.refreshExtends();
   }
 
-  getLabelMap(original) {
-    return this.getSource(original).label;
-  }
+  getLabel(returnDetails, original) { return this._getText('label', returnDetails, original); }
+  setLabel(value, lang) { this._setText('label', value, lang); }
+  getLabelMap(original) { return this.getSource(original).label; }
+  setLabelMap(map) { this._setTextMap('label', map); }
 
-  setLabelMap(map) {
-    setObjAttr(this.getSource(true), 'label', map);
-    this.refreshExtends();
-  }
+  getEditLabel(returnDetails, original) { return this._getText('editlabel', returnDetails, original); }
+  setEditLabel(value, lang) { this._setText('editlabel', value, lang); }
+  getEditLabelMap(original) { return this.getSource(original).editlabel; }
+  setEditLabelMap(map) { this._setTextMap('editlabel', map); }
 
-  getDescription(returnDetails, original) {
-    const s = this.getSource(original);
-    return returnDetails ? utils.getLocalizedValue(s.description) : utils.getLocalizedValue(s.description).value;
-  }
+  getDescription(returnDetails, original) { return this._getText('description', returnDetails, original); }
+  setDescription(value, lang) { this._setText('description', value, lang); }
+  getDescriptionMap(original) { return this.getSource(original).description; }
+  setDescriptionMap(map) { this._setTextMap('description', map); }
 
-  setDescription(value, lang) {
-    const s = this.getSource(true);
-    s.description = this._setLangHash(s.description, value, lang);
-    this.refreshExtends();
-  }
+  getEditDescription(returnDetails, original) { return this._getText('editdescription', returnDetails, original); }
+  setEditDescription(value, lang) { this._setText('editdescription', value, lang); }
+  getEditDescriptionMap(original) { return this.getSource(original).editdescription; }
+  setEditDescriptionMap(map) { this._setTextMap('editdescription', map); }
 
-  getDescriptionMap(original) {
-    return this.getSource(original).description;
-  }
+  getHelp(returnDetails, original) { return this._getText('help', returnDetails, original); }
+  setHelp(value, lang) { this._setText('help', value, lang); }
+  getHelpMap(original) { return this.getSource(original).help; }
+  setHelpMap(map) { this._setTextMap('help', map); }
 
-  setDescriptionMap(map) {
-    setObjAttr(this.getSource(true), 'description', map);
-    this.refreshExtends();
-  }
+  getPlaceholder(returnDetails, original) { return this._getText('placeholder', returnDetails, original); }
+  setPlaceholder(value, lang) { this._setText('placeholder', value, lang); }
+  getPlaceholderMap(original) { return this.getSource(original).placeholder; }
+  setPlaceholderMap(map) { this._setTextMap('placeholder', map); }
 
-  getPlaceholder(returnDetails, original) {
-    const s = this.getSource(original);
-    return returnDetails ? utils.getLocalizedValue(s.placeholder) : utils.getLocalizedValue(s.placeholder).value;
-  }
+  getPurpose(returnDetails, original) { return this._getText('purpose', returnDetails, original); }
+  setPurpose(value, lang) { this._setText('purpose', value, lang); }
+  getPurposeMap(original) { return this.getSource(original).purpose; }
+  setPurposeMap(map) { this._setTextMap('purpose', map); }
 
-  setPlaceholder(value, lang) {
-    const s = this.getSource(true);
-    s.placeholder = this._setLangHash(s.placeholder, value, lang);
-    this.refreshExtends();
-  }
-
-  getPlaceholderMap(original) {
-    return this.getSource(original).placeholder;
-  }
-
-  setPlaceholderMap(map) {
-    setObjAttr(this.getSource(true), 'placeholder', map);
-    this.refreshExtends();
-  }
+  getSpecification(returnDetails, original) { return this._getText('specification', returnDetails, original); }
+  setSpecification(value, lang) { this._setText('specification', value, lang); }
+  getSpecificationMap(original) { return this.getSource(original).specification; }
+  setSpecificationMap(map) { this._setTextMap('specification', map); }
 
   /**
    * @return {String|null} as a URI, may be null for Groups, never null for Text or choice

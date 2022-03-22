@@ -32,6 +32,17 @@
     background-color: lightcoral;
 }
 
+.rdformsHelp {
+    color: red;
+    font-size: small;
+    display: none;
+    padding: 2px 0 6px;
+}
+
+.rdformsHelp.rdformsHelpActive {
+    display: block;
+}
+
 .rdformsDateValue .rdformsDatepicker {
     width: 12em;
     display: inline-block;

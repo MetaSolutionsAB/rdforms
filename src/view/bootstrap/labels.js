@@ -1,12 +1,13 @@
 import jquery from 'jquery';
 import renderingContext from '../renderingContext';
+import Editor from '../Editor';
 
 renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
   if (item.hasStyle('nonEditable') || item.hasStyle('heading')) {
     return renderingContext.renderPresenterLabel(rowNode, binding, item, context, true);
   }
 
-  let label = item.getLabel();
+  let label = item.getEditLabel() || item.getLabel();
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
@@ -50,20 +51,22 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
   return undefined;
 };
 
-renderingContext.attachItemInfo = function (item, aroundNode/* , context */) {
-  if (item == null || (item.getProperty() == null && item.getDescription() == null)) {
+renderingContext.attachItemInfo = function (item, aroundNode, context) {
+  if (item == null || (item.getProperty() == null && item.getDescription() == null
+    && item.getEditDescription() == null)) {
     jquery(aroundNode).addClass('noPointer');
     return;
   }
 
-  const description = item.getDescription() || '';
+  const description = (context.view instanceof Editor ?
+    item.getEditDescription() || item.getDescription() : item.getDescription()) || '';
   let propinfo = '';
   if (item.getProperty()) {
     propinfo = `<div class="property"><a target="_blank" href="${item.getProperty()}">${
       item.getProperty()}</a></div>`;
   }
 
-  let label = item.getLabel();
+  let label = context.view instanceof Editor ? item.getEditLabel() || item.getLabel() : item.getLabel();
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {

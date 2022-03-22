@@ -104,7 +104,7 @@ renderingContext.addCreateChildButton = (rowDiv, labelDiv, binding, context) => 
       context.view.addRow(rowDiv, nBinding); // not the first binding...
     }
   };
-  let label = item.getLabel();
+  let label = item.getEditLabel() || item.getLabel();
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {

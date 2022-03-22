@@ -2,6 +2,7 @@ import renderingContext from '../renderingContext';
 import * as engine from '../../model/engine';
 import utils from '../../utils';
 import jquery from 'jquery';
+import Editor from '../Editor';
 
 
 const createChildBindingsForFirstFixedColumn = (bindings/* , context*/) => {
@@ -108,8 +109,11 @@ renderingContext.addEditorTable = (newRow, firstBinding, context) => {
   for (colInd = 0; colInd < childItems.length; colInd++) {
     const $th = jquery('<th>').appendTo($tHeadRow);
     jquery($th).addClass(`rdformsColumnHeader${colInd}`);
+    const childItem = childItems[colInd];
+    const label = context.view instanceof Editor ?
+      childItem.getEditLabel() || childItem.getLabel() : childItem.getLabel();
     renderingContext.attachItemInfo(item,
-      jquery('<span>').text(childItems[colInd].getLabel()).appendTo($th)[0], context);
+      jquery('<span>').text(label).appendTo($th)[0], context);
   }
   if (!firstBinding.getItem().hasStyle('firstcolumnfixedtable')) {
     const $addTh = jquery('<th>').addClass('rdformsTableControl').appendTo($tHeadRow);

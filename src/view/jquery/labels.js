@@ -1,8 +1,9 @@
 import jquery from 'jquery';
 import renderingContext from '../renderingContext';
+import Editor from '../Editor';
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelRow) => {
-  let label = item.getLabel();
+  let label = context.view instanceof Editor ? item.getEditLabel() || item.getLabel() : item.getLabel();
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {

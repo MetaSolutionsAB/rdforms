@@ -314,7 +314,7 @@ a.rdformsUrl:hover {
  	padding-right: 55px;
 	position: relative;
  }
- 
+
  .rdformsEditor .rdformsField .rdformsChoiceLabel {
  	margin-left: 0.2em;
  	margin-right: 1em;
@@ -475,7 +475,6 @@ a.rdformsUrl:hover {
 
 .compact .rdformsRow.rdformsTopLevel {
 	display: table;
-	width: 98%;
 }
 .compact .rdformsRow.rdformsTopLevel>div {
 	display: table-cell;

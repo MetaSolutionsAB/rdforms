@@ -11,6 +11,9 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelR
   }
 
   const $labelDiv = jquery('<div class="rdformsLabel" tabindex="0">').text(label).appendTo(rowNode);
+  if (binding) {
+    $labelDiv.attr('id', context.view.createLabelIndex(binding));
+  }
   if (labelRow) {
     $labelDiv.addClass('rdformsLabelRow');
   }

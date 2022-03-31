@@ -4,12 +4,20 @@ import './text';
 import './choice';
 import './table';
 
+const createElement = (nodeStr, id) => {
+  const el = document.createElement(nodeStr);
+  if (id) {
+    el.id = id;
+  }
+  return el;
+};
+
 renderingContext.domQuery = (selector, node) => node.querySelector(selector);
 
-renderingContext.domCreate = (nodeStr, parent) => parent.appendChild(document.createElement(nodeStr));
+renderingContext.domCreate = (nodeStr, parent, id) => parent.appendChild(createElement(nodeStr, id));
 
-renderingContext.domCreateAfter = (nodeStr, sibling) =>
-  sibling.parentNode.insertBefore(document.createElement(nodeStr), sibling.nextSibling);
+renderingContext.domCreateAfter = (nodeStr, sibling, id) =>
+  sibling.parentNode.insertBefore(createElement(nodeStr, id), sibling.nextSibling);
 
 renderingContext.domSetAttr = (node, attr, value) => {
   if (value === '' || value === null) {

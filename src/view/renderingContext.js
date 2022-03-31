@@ -58,9 +58,9 @@ const defaultLanguages = [
 const renderingContext = {
   domQuery(/* selector, node */) {
   },
-  domCreate(/* domStr, node */) {
+  domCreate(/* domStr, node, id */) {
   },
-  domCreateAfter(/* domStr, node */) {
+  domCreateAfter(/* domStr, node, id */) {
   },
   domClassToggle(/* node, classStr, addOrRemove */) {
   },

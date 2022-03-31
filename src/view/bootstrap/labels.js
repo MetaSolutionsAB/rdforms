@@ -14,6 +14,9 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     label = '';
   }
   const $labelDiv = jquery('<div class="rdformsLabelRow">').appendTo(rowNode);
+  if (binding) {
+    $labelDiv.attr('id', context.view.createLabelIndex(binding));
+  }
   context.labelNode = $labelDiv[0];
   const $label = jquery('<span class="rdformsLabel">').text(label).appendTo($labelDiv);
   const card = item.getCardinality();

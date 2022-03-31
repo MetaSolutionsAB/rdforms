@@ -61,6 +61,10 @@ export default class Editor extends Presenter {
     super._handleParams(params);
   }
 
+  getSubEditorForBinding(binding) {
+    return this._subEditors.find(editor => editor.getBinding() === binding);
+  }
+
   report(report) {
     const _report = report || bindingReport(this.binding);
 

@@ -74,11 +74,12 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
   } else {
     label = '';
   }
+  const labelId = binding ? context.view.createLabelIndex(binding) : undefined;
   label = item.hasStyle('heading') ?
-    <h2 tabIndex="0" className="rdformsLabelRow"><span className="rdformsLabel">{label}</span></h2> :
-    <span tabIndex="0" className="rdformsLabelRow"><span className="rdformsLabel">{label}</span></span>;
-  rowNode.appendChild(<ItemTooltip key={`${binding ? binding.getHash() : item._internalId}_label` } context={context} item={item
-  }>{label}</ItemTooltip>);
+    <h2 tabIndex="0" id={labelId} className="rdformsLabelRow"><span className="rdformsLabel">{label}</span></h2> :
+    <span tabIndex="0" id={labelId} className="rdformsLabelRow"><span className="rdformsLabel">{label}</span></span>;
+  rowNode.appendChild(<ItemTooltip key={`${binding ? binding.getHash() : item._internalId}_label` }
+                                   context={context} item={item}>{label}</ItemTooltip>);
 };
 
 renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {

@@ -25,7 +25,7 @@ export default function CheckBoxesEditor(props) {
   const [resetCount, setResetCount] = React.useState(0);
   const binding = props.binding;
   const item = binding.getItem();
-  const choices = useLocalizedSortedChoices(binding);
+  const choices = useLocalizedSortedChoices(binding, true);
   const choiceBindingPairs = useMemo(() => {
     const parentBinding = binding.getParent();
     const val2binding = {};

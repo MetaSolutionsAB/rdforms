@@ -83,7 +83,7 @@ let structId = 0;
  * Note that all update of state variables are done by replacing the value (even for arrays and sets) to allow
  * correct diffing of react.
  */
-const newStruct = (Tag, parent) => {
+const newStruct = (Tag, parent, nodeId) => {
   const firstClsSet = new Set();
   let firstChildArr = [];
   let firstTextStr;
@@ -153,7 +153,7 @@ const newStruct = (Tag, parent) => {
       };
       // -- END
       return (
-        <Tag className={clsSet.join(' ')}>
+        <Tag id={nodeId} className={clsSet.join(' ')}>
           {childArr.map((child, index) => getReactComponent(child, index))}
           {text}
         </Tag>
@@ -166,15 +166,15 @@ const newStruct = (Tag, parent) => {
 
 renderingContext.domQuery = (selector, struct) => struct.domQuery(selector);
 
-renderingContext.domCreate = (nodeStr, parentStruct) => {
-  const struct = newStruct(nodeStr, parentStruct);
+renderingContext.domCreate = (nodeStr, parentStruct, nodeId) => {
+  const struct = newStruct(nodeStr, parentStruct, nodeId);
   parentStruct.appendChild(struct);
   return struct;
 };
 
-renderingContext.domCreateAfter = (nodeStr, siblingStruct) => {
+renderingContext.domCreateAfter = (nodeStr, siblingStruct, nodeId) => {
   if (siblingStruct.parent) {
-    const struct = newStruct(nodeStr, siblingStruct.parent);
+    const struct = newStruct(nodeStr, siblingStruct.parent, nodeId);
     siblingStruct.parent.appendAfter(struct, siblingStruct);
     return struct;
   }

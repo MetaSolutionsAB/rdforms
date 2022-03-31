@@ -15,7 +15,7 @@ export default function RadioButtonsEditor(props) {
   const binding = props.binding;
   const item = binding.getItem();
   const name = useName();
-  const choices = useLocalizedSortedChoices(binding);
+  const choices = useLocalizedSortedChoices(binding, true);
   const [error, setError] = useState(binding.getChoice()?.mismatch === true);
   const [value, setValue] = useState(() => {
     const choice = binding.getChoice();
@@ -52,7 +52,7 @@ export default function RadioButtonsEditor(props) {
         <RadioGroup
           {...row}
           key="radio"
-          aria-label={item.getLabel()}
+          aria-label={item.getEditLabel() || item.getLabel()}
           name={name}
           value={value}
           onChange={handleChange}

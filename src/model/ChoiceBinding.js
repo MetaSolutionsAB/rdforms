@@ -1,4 +1,5 @@
 import ValueBinding from './ValueBinding';
+import {CODES} from './engine';
 
 const label = 'http://www.w3.org/2000/01/rdf-schema#label';
 const seeAlso = 'http://www.w3.org/2000/01/rdf-schema#seeAlso';
@@ -24,6 +25,11 @@ export default class ChoiceBinding extends ValueBinding {
     } else if (this.getValue() !== choice.value) {
       this.setValue(choice.value, choice, silent);
     }
+    if (choice && choice.mismatch) {
+      this.setMatchingCode(CODES.WRONG_VALUE);
+    } else if ((!choice || !choice.mismatch) && this.getMatchingCode() === CODES.WRONG_VALUE) {
+      this.setMatchingCode(CODES.OK);
+    }
   }
 
   getChoice() {
@@ -31,8 +37,8 @@ export default class ChoiceBinding extends ValueBinding {
   }
 
   setValue(value, choice, silent) {
-    super.setValue(value, choice, silent);
     const oldval = this.getValue();
+    super.setValue(value, choice, silent);
     const graph = this._statement.getGraph();
     graph.findAndRemove(oldval, label, undefined, silent);
     graph.findAndRemove(oldval, seeAlso, undefined, silent);

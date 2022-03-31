@@ -1,8 +1,9 @@
 import jquery from 'jquery';
 import renderingContext from '../renderingContext';
+import Editor from '../Editor';
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelRow) => {
-  let label = item.getLabel();
+  let label = context.view instanceof Editor ? item.getEditLabel() || item.getLabel() : item.getLabel();
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
@@ -10,6 +11,9 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelR
   }
 
   const $labelDiv = jquery('<div class="rdformsLabel" tabindex="0">').text(label).appendTo(rowNode);
+  if (binding) {
+    $labelDiv.attr('id', context.view.createLabelIndex(binding));
+  }
   if (labelRow) {
     $labelDiv.addClass('rdformsLabelRow');
   }

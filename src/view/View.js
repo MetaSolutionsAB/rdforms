@@ -263,9 +263,9 @@ export default class View {
 
     // New rowDiv since we have a label
     if (lastRowNode == null) {
-      rowNode = renderingContext.domCreate('div', this.domNode);
+      rowNode = renderingContext.domCreate('div', this.domNode, binding ? this.getRowIndex(binding) : undefined);
     } else {
-      rowNode = renderingContext.domCreateAfter('div', lastRowNode);
+      rowNode = renderingContext.domCreateAfter('div', lastRowNode, binding ? this.getRowIndex(binding) : undefined);
     }
 
     item.getClasses().forEach((cls) => {
@@ -331,7 +331,6 @@ export default class View {
   }
 
   getLabelIndex(binding) {
-    const labelItem = binding.getItem();
     let idx;
     binding.getParent().getChildBindingsFor(binding.getItem()).reverse().find((b) => {
       idx = this._labelIndex[b.getHash()];
@@ -350,6 +349,10 @@ export default class View {
     const idx = `${binding.getHash()}_${this._viewId}_label`;
     this._labelIndex[binding.getHash()] = idx;
     return idx;
+  }
+
+  getRowIndex(binding) {
+    return `${binding.getHash()}_${this._viewId}_row`;
   }
 
   isMultiValued(item) {

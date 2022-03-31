@@ -1,18 +1,22 @@
 import jquery from 'jquery';
 import renderingContext from '../renderingContext';
+import Editor from '../Editor';
 
 renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
   if (item.hasStyle('nonEditable') || item.hasStyle('heading')) {
     return renderingContext.renderPresenterLabel(rowNode, binding, item, context, true);
   }
 
-  let label = item.getLabel();
+  let label = item.getEditLabel() || item.getLabel();
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
     label = '';
   }
   const $labelDiv = jquery('<div class="rdformsLabelRow">').appendTo(rowNode);
+  if (binding) {
+    $labelDiv.attr('id', context.view.createLabelIndex(binding));
+  }
   context.labelNode = $labelDiv[0];
   const $label = jquery('<span class="rdformsLabel">').text(label).appendTo($labelDiv);
   const card = item.getCardinality();
@@ -49,32 +53,23 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
   }
   return undefined;
 };
-// TODO this is listening for any click and popover showings... too much! especially considering
-// that is being used in another application. Rewrite!
-jquery(document).ready(() => {
-  jquery(document.body).on('show.bs.popover click', (e) => {
-    jquery('[data-toggle="popover"]').each((node, a) => {
-      if (e.target.innerHTML !== a.innerHTML) {
-        jquery(a).popover('hide');
-      }
-    });
-  });
-});
 
-renderingContext.attachItemInfo = function (item, aroundNode/* , context */) {
-  if (item == null || (item.getProperty() == null && item.getDescription() == null)) {
+renderingContext.attachItemInfo = function (item, aroundNode, context) {
+  if (item == null || (item.getProperty() == null && item.getDescription() == null
+    && item.getEditDescription() == null)) {
     jquery(aroundNode).addClass('noPointer');
     return;
   }
 
-  const description = item.getDescription() || '';
+  const description = (context.view instanceof Editor ?
+    item.getEditDescription() || item.getDescription() : item.getDescription()) || '';
   let propinfo = '';
   if (item.getProperty()) {
     propinfo = `<div class="property"><a target="_blank" href="${item.getProperty()}">${
       item.getProperty()}</a></div>`;
   }
 
-  let label = item.getLabel();
+  let label = context.view instanceof Editor ? item.getEditLabel() || item.getLabel() : item.getLabel();
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
@@ -84,7 +79,7 @@ renderingContext.attachItemInfo = function (item, aroundNode/* , context */) {
     html: true,
     container: renderingContext.getPopoverContainer(),
     placement: 'auto',
-    trigger: 'click focus',
+    trigger: 'focus',
     title: label,
     content: `<div class="description">${
       description.replace(/(\r\n|\r|\n)/g, '<br/>')

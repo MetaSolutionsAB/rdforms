@@ -93,7 +93,9 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
     return <><TextField
       className={extLink || langlit ? 'rdformsTwoThirds' : ''}
       multiline={multiline}
+      placeholder={item.getPlaceholder()}
       error={!valid}
+      helperText={!valid ? item.getHelp() || '' : ''}
       variant={renderingContext.materialVariant} inputProps={iprops}
     />{extLink && (value != null || value === '') &&
     (<IconButton aria-label={bundle.openLinkExternally} disabled={!valid} target='_blank' href={value}
@@ -107,6 +109,7 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
 
 const bindToPattern = pattern => (fieldDiv, binding, context) => {
   const regex = pattern ? new RegExp(pattern) : null;
+  const item = binding.getItem();
 
   const TextComp = () => {
     const [gist, setGist] = useState(binding.getGist());
@@ -131,6 +134,8 @@ const bindToPattern = pattern => (fieldDiv, binding, context) => {
     };
     return <TextField
       error={!valid}
+      placeholder={item.getPlaceholder()}
+      helperText={!valid ? item.getHelp() || '' : ''}
       variant={renderingContext.materialVariant} inputProps={iprops}
     />;
   };

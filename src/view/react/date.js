@@ -140,14 +140,6 @@ const dateEditor = (fieldDiv, binding, context) => {
               onChange={onDateChange}
               autoOk={true}
               mask={datePickerConfig.mask[selectedDatatype]}
-              PopperProps={{
-                modifiers: [
-                  {
-                    name: 'flip',
-                    enabled: false,
-                  },
-                ],
-              }}
             />
           )}
           {(alternatives.DateTime || alternatives.Time) && (
@@ -162,14 +154,6 @@ const dateEditor = (fieldDiv, binding, context) => {
               onChange={onDateChange}
               ampm={false}
               autoOk={true}
-              PopperProps={{
-                modifiers: [
-                  {
-                    name: 'flip',
-                    enabled: false,
-                  },
-                ],
-              }}
             />
           )}
           {!onlyOneAlternative && (

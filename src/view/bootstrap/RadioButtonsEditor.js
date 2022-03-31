@@ -5,10 +5,10 @@ export default class RadioButtonsEditor {
     this.binding = args.binding;
     this.item = this.binding.getItem();
     this.choices = this.item.getChoices().map(c => ({
-      label: c.label,
+      label: c.editlabel || c.label,
       description: c.description,
       value: c.value,
-      text: this.item._getLocalizedValue(c.label).value,
+      text: this.item._getLocalizedValue(c.editlabel || c.label).value,
       choice: c,
     }));
 
@@ -45,7 +45,7 @@ export default class RadioButtonsEditor {
           .appendTo($divWrap);
       }
       if (c.description) {
-        $label.attr('title', this.item._getLocalizedValue(c.description).value
+        $label.attr('title', this.item._getLocalizedValue(c.editdescription || c.description).value
           || c.seeAlso || c.value);
       }
 
@@ -54,7 +54,7 @@ export default class RadioButtonsEditor {
         .attr('checked', c.value === currentValue)
         .attr('name', `rdformsRadio_${uniqueRadioButtonGroupNr}`)
         .appendTo($label);
-      $label.append(this.item._getLocalizedValue(c.label).value);
+      $label.append(this.item._getLocalizedValue(c.editlabel || c.label).value);
 
       if (c.mismatch) {
         $label.addClass('mismatch disabled');

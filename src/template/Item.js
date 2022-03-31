@@ -49,6 +49,7 @@ export default class Item {
       'strictmatch',
       'relaxedDatatypeMatch',
       'viewAllTranslations',
+      'filterTranslations',
       'email',
       'atLeastOneChild',
       'atMostOneChild',

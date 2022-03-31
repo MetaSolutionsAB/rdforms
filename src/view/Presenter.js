@@ -43,7 +43,8 @@ export default class Presenter extends View {
    * otherwise same as input bindings.
    */
   prepareBindings(item, bindings) {
-    if (!this.filterTranslations || item.getNodetype() !== 'LANGUAGE_LITERAL' || item.hasStyle('viewAllTranslations')) {
+    if (!item.hasStyle('filterTranslations') &&
+      (!this.filterTranslations || item.getNodetype() !== 'LANGUAGE_LITERAL' || item.hasStyle('viewAllTranslations'))) {
       return bindings;
     }
 

@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import renderingContext from '../renderingContext';
 import { Editor } from './Wrappers';
-import { CODES } from '../../model/engine';
+import CODES from '../../model/CODES';
 
 const StyledTooltip = styled(
   forwardRef(({ className, ...props }, ref) => (

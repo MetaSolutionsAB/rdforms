@@ -1,8 +1,9 @@
 import { namespaces as ns } from '@entryscape/rdfjson';
-import * as engine from './engine';
+import { fuzzyMatch, findBindingRelativeToParentBinding, matchPathBelowBinding } from './engine';
+import CODES from './CODES';
 
 const _clearMatchingCodes = (binding) => {
-  binding.setMatchingCode(engine.CODES.OK);
+  binding.setMatchingCode(CODES.OK);
   if (binding.getItem().getType() === 'group') {
     binding.getChildBindings().forEach(childBinding => _clearMatchingCodes(childBinding));
   }
@@ -66,8 +67,8 @@ const doNotProceedFurther = (groupBinding, childItem) => {
   // Don't check further if the binding is hidden due to missing dependencies
   const childPath = childItem.getDeps();
   if (childPath) {
-    const fromBinding = engine.findBindingRelativeToParentBinding(groupBinding, childPath);
-    if (!engine.matchPathBelowBinding(fromBinding, childPath)) {
+    const fromBinding = findBindingRelativeToParentBinding(groupBinding, childPath);
+    if (!matchPathBelowBinding(fromBinding, childPath)) {
       return true;
     }
   }
@@ -75,7 +76,7 @@ const doNotProceedFurther = (groupBinding, childItem) => {
 };
 
 const _createReport = (groupbinding, report, firstLevel) => {
-  if (groupbinding.getMatchingCode() !== engine.CODES.OK) {
+  if (groupbinding.getMatchingCode() !== CODES.OK) {
     return undefined;
   }
   const groupitem = groupbinding.getItem();
@@ -84,8 +85,8 @@ const _createReport = (groupbinding, report, firstLevel) => {
   // Check disabled since it is done for each child before recursive call
  /* const path = groupitem.getDeps();
   if (path && groupbinding.getParent() != null) {
-    const fromBinding = engine.findBindingRelativeToParentBinding(groupbinding.getParent(), path);
-    if (!engine.matchPathBelowBinding(fromBinding, path)) {
+    const fromBinding = findBindingRelativeToParentBinding(groupbinding.getParent(), path);
+    if (!matchPathBelowBinding(fromBinding, path)) {
       return undefined;
     }
   } */
@@ -101,11 +102,11 @@ const _createReport = (groupbinding, report, firstLevel) => {
       const nrOfValid = _countValidBindings(bindings);
       let code;
       if (nrOfValid > 1 && (groupitem.hasStyle('disjoint') || groupitem.hasStyle('atMostOneChild'))) {
-        code = engine.CODES.AT_MOST_ONE_CHILD;
+        code = CODES.AT_MOST_ONE_CHILD;
       } else if (nrOfValid !== 1 && groupitem.hasStyle('exactlyOneChild')) {
-        code = engine.CODES.EXACTLY_ONE_CHILD;
+        code = CODES.EXACTLY_ONE_CHILD;
       } else if (nrOfValid === 0 && groupitem.hasStyle('atLeastOneChild')) {
-        code = engine.CODES.AT_LEAST_ONE_CHILD;
+        code = CODES.AT_LEAST_ONE_CHILD;
       }
       if (code) {
         updateViaCardinalityTracker([groupbinding], code);
@@ -129,15 +130,15 @@ const _createReport = (groupbinding, report, firstLevel) => {
             report.errors.push({
               parentBinding: groupbinding,
               item: childItem,
-              code: engine.CODES.TOO_FEW_VALUES_MIN,
+              code: CODES.TOO_FEW_VALUES_MIN,
             });
-            updateViaCardinalityTracker(bindings, engine.CODES.TOO_FEW_VALUES_MIN);
+            updateViaCardinalityTracker(bindings, CODES.TOO_FEW_VALUES_MIN);
 /*            let counter = 0;
             bindings.forEach((binding) => {
               if (!binding.isValid()) {
                 if (counter < card.min) {
                   counter += 1;
-                  binding.setMatchingCode(engine.CODES.TOO_FEW_VALUES_MIN);
+                  binding.setMatchingCode(CODES.TOO_FEW_VALUES_MIN);
                 }
               }
             }); */
@@ -145,23 +146,23 @@ const _createReport = (groupbinding, report, firstLevel) => {
             report.warnings.push({
               parentBinding: groupbinding,
               item: childItem,
-              code: engine.CODES.TOO_FEW_VALUES_PREF,
+              code: CODES.TOO_FEW_VALUES_PREF,
             });
-//            updateViaCardinalityTracker(bindings, engine.CODES.TOO_FEW_VALUES_PREF);
+//            updateViaCardinalityTracker(bindings, CODES.TOO_FEW_VALUES_PREF);
           }
           if (card.max != null && card.max < nrOfValid) {
             report.errors.push({
               parentBinding: groupbinding,
               item: childItem,
-              code: engine.CODES.TOO_MANY_VALUES,
+              code: CODES.TOO_MANY_VALUES,
             });
-            updateViaCardinalityTracker(bindings, engine.CODES.TOO_MANY_VALUES);
+            updateViaCardinalityTracker(bindings, CODES.TOO_MANY_VALUES);
 /*            let counter = 0;
             bindings.forEach((binding) => {
               if (binding.isValid()) {
                 counter += 1;
                 if (counter > card.max) {
-                  binding.setMatchingCode(engine.CODES.TOO_MANY_VALUES);
+                  binding.setMatchingCode(CODES.TOO_MANY_VALUES);
                 }
               }
             }); */
@@ -172,7 +173,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
 
     groupbinding.getChildBindings().forEach((binding) => {
       const item = binding.getItem();
-      if (binding.getMatchingCode() !== engine.CODES.OK) {
+      if (binding.getMatchingCode() !== CODES.OK) {
         report.errors.push({
           parentBinding: binding,
           item,
@@ -330,7 +331,7 @@ const _simplifyReport = (report) => {
 };
 
 const _resourceReport = (resource, graph, template, ignoreResources) => {
-  const binding = engine.fuzzyMatch(graph, resource, template);
+  const binding = fuzzyMatch(graph, resource, template);
   const report = bindingReport(binding);
   _filterReport(report, resource, ignoreResources || {});
   _simplifyReport(report);

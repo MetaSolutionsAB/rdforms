@@ -1,5 +1,5 @@
 import ValueBinding from './ValueBinding';
-import {CODES} from './engine';
+import CODES from './CODES';
 
 const label = 'http://www.w3.org/2000/01/rdf-schema#label';
 const seeAlso = 'http://www.w3.org/2000/01/rdf-schema#seeAlso';

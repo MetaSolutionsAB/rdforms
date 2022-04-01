@@ -1,5 +1,6 @@
 import renderingContext from './renderingContext';
 import Presenter from './Presenter';
+import CODES from '../model/CODES';
 import * as engine from '../model/engine';
 import { bindingReport } from '../model/validate';
 
@@ -74,7 +75,7 @@ export default class Editor extends Presenter {
     for (let j = 0; j < _report.errors.length; j++) {
       const err = _report.errors[j];
       if (err.parentBinding === this.binding) {
-        if (err.code === engine.CODES.TOO_FEW_VALUES_MIN) {
+        if (err.code === CODES.TOO_FEW_VALUES_MIN) {
           const item = err.item;
           let counter = item.getCardinality().min;
 
@@ -86,9 +87,9 @@ export default class Editor extends Presenter {
             }
             return counter === 0;
           });
-        } else if (err.code === engine.CODES.AT_MOST_ONE_CHILD) {
+        } else if (err.code === CODES.AT_MOST_ONE_CHILD) {
           this.binding.getChildBindings().forEach((binding) => {
-            if (binding.getMatchingCode() !== engine.CODES.OK) {
+            if (binding.getMatchingCode() !== CODES.OK) {
               renderingContext.domClassToggle(this._binding2node[binding.getHash()],
                 'errorReport', true);
             }

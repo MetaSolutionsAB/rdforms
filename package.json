@@ -8,7 +8,7 @@
     "application profile",
     "linked data"
   ],
-  "version": "10.6.0",
+  "version": "10.6.1",
   "main": "dist/rdforms.node.js",
   "browser": "dist/rdforms.react.js",
   "module": "main.js",
@@ -29,6 +29,7 @@
     "bootstrap-material-datetimepicker": "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#webpack",
     "bootstrap-material-design": "^4.1.1",
     "core-js": "^3.1.4",
+    "circular-dependency-plugin": "^5.2.2",
     "ifdef-loader": "^2.1.1",
     "jquery": "^3.3.1",
     "jquery-mousewheel": "^3.1.13",

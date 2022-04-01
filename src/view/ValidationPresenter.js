@@ -1,6 +1,7 @@
 import renderingContext from './renderingContext';
 import Presenter from './Presenter';
-import engine, { CODES } from '../model/engine';
+import CODES from '../model/CODES';
+import engine from '../model/engine';
 import { bindingReport } from '../model/validate';
 
 const localize = (bundle, key, val) => {

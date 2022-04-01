@@ -1,4 +1,5 @@
-import { CODES } from './engine';
+import CODES from './CODES';
+
 export default class CardinalityTracker {
   /**
    * A counter paired with a item with cardinality restrictions.

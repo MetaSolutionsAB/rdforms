@@ -5,7 +5,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import BuildIcon from '@mui/icons-material/Build';
 import IconButton from '@mui/material/IconButton';
 import renderingContext from '../../renderingContext';
-import { useLocalizedChoice, editLocalizedChoice } from '../hooks';
+import { editLocalizedChoice, loadLocalizedChoice } from '../hooks';
 import ShowButton from './ShowButton';
 
 let globalChoiceQueryThrottle;
@@ -13,7 +13,7 @@ let globalChoiceQueryThrottle;
 export default (props) => {
   const binding = props.binding;
   const [options, setOptions] = useState([]);
-  const [value, setValue] = useLocalizedChoice(binding, options);
+  const [value, setValue] = loadLocalizedChoice(binding, true);
   const [inputValue, setInputValue] = useState('');
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(binding.getChoice()?.mismatch === true);

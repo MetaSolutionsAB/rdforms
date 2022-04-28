@@ -78,7 +78,8 @@ export default (props) => {
             setOpen(true);
           }
         }}
-        variant={renderingContext.materialVariant} />
+        variant={renderingContext.materialVariant}
+      />
     );
   };
 
@@ -117,6 +118,7 @@ export default (props) => {
         }
         getOptionDisabled={(option) => option.mismatch === true}
         renderInput={renderInput}
+        disablePortal
       />
       <ShowButton {...props} onClick={showHandler} />
       {value && value.original.upgrade && (

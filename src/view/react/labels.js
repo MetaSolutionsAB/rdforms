@@ -38,9 +38,9 @@ const ItemTooltip = (props) => {
   if (property) {
     propinfo = <div className="rdformsProperty"><a target="_blank" href={property}>{property}</a></div>;
   }
-  const description = props.context.view instanceof Editor ?
+  const description = props.context?.view instanceof Editor ?
     props.item.getEditDescription() || props.item.getDescription() : props.item.getDescription()
-    || (property ? '' : props.context.view.messages.info_missing || '');
+    || (property ? '' : props.context?.view.messages.info_missing || '');
 
   return (
     <ClickAwayListener onClickAway={handleTooltipClose}>
@@ -67,7 +67,7 @@ const ItemTooltip = (props) => {
 };
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
-  let label = context.view instanceof Editor ?
+  let label = context?.view instanceof Editor ?
     item.getEditLabel() || item.getLabel() : item.getLabel();
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);

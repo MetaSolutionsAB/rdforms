@@ -28,6 +28,7 @@
     "bootstrap-datepicker": "^1.9.0",
     "bootstrap-material-datetimepicker": "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#webpack",
     "bootstrap-material-design": "^4.1.1",
+    "@fortawesome/fontawesome-free": "^5.8.1",
     "core-js": "^3.1.4",
     "circular-dependency-plugin": "^5.2.2",
     "ifdef-loader": "^2.1.1",

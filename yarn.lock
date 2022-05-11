@@ -991,6 +991,11 @@
     md5 "^2.2.1"
     xmldom "^0.6.0"
 
+"@fortawesome/fontawesome-free@^5.8.1":
+  version "5.15.4"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.15.4.tgz#ecda5712b61ac852c760d8b3c79c96adca5554e5"
+  integrity sha512-eYm8vijH/hpzr/6/1CJ/V/Eb1xQFW2nnUKArb3z+yUWv7HTwj6M7SP957oMjfZjAHU6qpoNc2wQvIxBLWYa/Jg==
+
 "@mui/base@5.0.0-alpha.70":
   version "5.0.0-alpha.70"
   resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-alpha.70.tgz#e280ee3b69d86034f2cff445161747940129d576"

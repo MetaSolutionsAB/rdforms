@@ -65,6 +65,7 @@ export default (props) => {
         getOptionDisabled={option => option.mismatch === true}
         filterSelectedOptions
         renderInput={renderInput}
+        disablePortal
       />
       {error && (
         <div key="warning" className="rdformsWarning">

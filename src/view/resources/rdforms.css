@@ -420,10 +420,6 @@ a.rdformsUrl:hover {
     padding-left: 0px;
 }
 
-.rdformsValidator .rdformsValidationMessageWrapper {
-    margin-left: -30px;
-}
-
 .rdformsValidator .rdformsField.error {
     color: red;
 }

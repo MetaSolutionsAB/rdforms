@@ -133,7 +133,7 @@
 }
 
 .rdformsEditor .rdformsLangControl {
-    width: calc(33.33% - 8px);
+    width: calc(33.33% - 4px);
 }
 
 /* Duration */
@@ -203,10 +203,6 @@ div.MuiTooltip-tooltip {
 .rdformsEditor .rdformsError.cardgroupEditor>.rdformsFields>.rdformsGroup,
 .rdformsError.cardgroup>.rdformsFields>.rdformsGroup {
     margin-right: 11px;
-}
-
-.rdformsEditor .rdformsLangControl {
-    width: calc(33.33% - 8px);
 }
 
 .rdformsDependency {

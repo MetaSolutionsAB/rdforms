@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import utils from '../../utils';
+import { getNamedGraphId } from '../viewUtils';
 
 /**
  * Wraps a choice in an object where the current label, and description is localized.
@@ -91,3 +92,5 @@ export const useName = () => useMemo(() => {
   nameCounter += 1;
   return `_rdforms_${nameCounter}`;
 }, []);
+
+export const useNamedGraphId = (binding, context) => useMemo(() => getNamedGraphId(binding, context));

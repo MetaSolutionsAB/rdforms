@@ -1,6 +1,7 @@
 import renderingContext from '../renderingContext';
 import system from '../../model/system';
-import {default as RadioButtonsEditor} from './RadioButtonsEditor';
+import RadioButtonsEditor from './RadioButtonsEditor';
+import { getNamedGraphId } from '../viewUtils';
 
 const editors = renderingContext.editorRegistry;
 
@@ -14,7 +15,7 @@ const radioCheck = (item) => {
 };
 editors.itemtype('choice').choices().check(radioCheck).register((fieldDiv, binding, context) => {
   // eslint-disable-next-line no-new
-  new RadioButtonsEditor({binding, context}, fieldDiv);
+  new RadioButtonsEditor({ binding, context }, fieldDiv);
 });
 
 editors.itemtype('choice').choices().register((fieldDiv, binding, context) => {
@@ -52,13 +53,14 @@ editors.itemtype('choice').choices('none').register((fieldDiv, binding, context)
   context.chooser = renderingContext.chooserRegistry.getComponent(binding.getItem());
   context.choices = undefined; // Reset choices so no bleeding over when reusing context between fields.
 
+  const disabledAttr = getNamedGraphId(binding, context) ? 'disabled' : '';
   const renderSelect = () => {
     renderingContext.renderSelect(fieldDiv, binding, context);
     // remember the function since the context object is reused and may
     // reference to the wrong setValue function later on.
     const setValue = context.setValue;
 
-    const $search = jquery('<button class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm browseChoices" type="button">')
+    const $search = jquery(`<button ${disabledAttr} class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm browseChoices" type="button">`)
       .attr('title', context.view.messages.edit_browse)
       .appendTo(fieldDiv);
     if (context.chooser && context.chooser.supportsInlineCreate &&
@@ -109,7 +111,7 @@ editors.itemtype('choice').choices('none').register((fieldDiv, binding, context)
       c.load(() => {
         // If the value can be upgraded into its own entity.
         if (c.upgrade) {
-          const $button = jquery('<button class="btn btn-default bmd-btn-fab bmd-btn-fab-sm' +
+          const $button = jquery(`<button ${disabledAttr} class="btn btn-default bmd-btn-fab bmd-btn-fab-sm` +
             ' browseChoices" type="button">')
             .attr('title', context.view.messages.edit_upgrade)
             .click(() => {

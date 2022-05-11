@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import TextField from '@mui/material/TextField';
 import renderingContext from '../renderingContext';
-import { toDuration, fromDuration } from './util';
+import { toDuration, fromDuration } from '../viewUtils';
+import { useNamedGraphId } from './hooks';
 
 const keys = ['years', 'months', 'days', 'hours', 'minutes'];
 const editors = renderingContext.editorRegistry;
@@ -44,11 +45,12 @@ editors.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding, c
     }, {}));
 
     const descBy = context.view.getLabelIndex(binding);
-
+    const ngId = useNamedGraphId(binding, context);
     return <>{keys.map(key => (<TextField
       key={key}
       className="rdformsDurationInput"
       value={`${duration[key] || ''}`}
+      disabled={!!ngId}
       label={bundle[`duration_${key}`]}
       type="number"
       onChange={onChange[key]}

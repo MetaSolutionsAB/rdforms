@@ -1,9 +1,9 @@
 /* eslint-disable class-methods-use-this,no-unused-vars */
+import { namespaces } from '@entryscape/rdfjson';
 import renderingContext from './renderingContext';
 import GroupBinding from '../model/GroupBinding';
 import * as engine from '../model/engine';
 import { bindingReport } from '../model/validate';
-import {namespaces} from "@entryscape/rdfjson";
 
 let viewCounter = 0;
 export default class View {
@@ -22,12 +22,39 @@ export default class View {
     this.filterPredicates = params.filterPredicates || null;
     this.restrictToItem = params.restrictToItem;
     this.fuzzy = params.fuzzy === true;
+    this.markOrigin = params.markOrigin !== false;
     this._handleParams(params);
     this._labelIndex = {};
     this.domNode = renderingContext.createDomNode(srcNodeRef, this);
     renderingContext.domClassToggle(this.domNode, 'rdforms', true);
     renderingContext.domClassToggle(this.domNode, this.styleCls, true);
     this.render();
+  }
+
+  getParentView() {
+    return this.parentView;
+  }
+
+  getNamedGraphId(namedGraph) {
+    if (!this.markOrigin) {
+      return undefined;
+    }
+    if (!this.namedGraphs) {
+      this.namedGraphs = {};
+      this.namedGraphCounter = 65; // 'A'
+    }
+
+    let id = this.namedGraphs[namedGraph];
+    if (id === undefined) {
+      id = String.fromCharCode(this.namedGraphCounter);
+      this.namedGraphs[namedGraph] = id;
+      this.namedGraphCounter += 1;
+    }
+    return id;
+  }
+
+  getNamedGraphFromId(id) {
+    return this.namedGraphs ? Object.keys(this.namedGraphs).find(key => this.namedGraphs[key] === id) : undefined;
   }
 
   destroy() {
@@ -192,6 +219,7 @@ export default class View {
           }
         }
       } else {
+        this.context = { view: this };
         lastRow = this.createRowNode(lastRow, null, item);
       }
 
@@ -244,6 +272,17 @@ export default class View {
         this.createEndOfRowNode(newRow, binding, item);
       }
     }
+    if (this.markOrigin) {
+      const ngId = this.getNamedGraphId(binding);
+      if (ngId) {
+        renderingContext.domClassToggle(fieldDiv, 'rdformsOrigin', true);
+        renderingContext.domClassToggle(fieldDiv, `rdformsOrigin_${ngId}`, true);
+      } else {
+        renderingContext.domClassToggle(fieldDiv, 'rdformsOrigin', true);
+        renderingContext.domClassToggle(fieldDiv, 'rdformsOrigin_default', true);
+      }
+    }
+
     if (item.getType() === 'group') {
       renderingContext.domClassToggle(fieldDiv, 'rdformsGroup', true);
     } else {

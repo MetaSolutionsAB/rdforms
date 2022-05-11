@@ -1,13 +1,16 @@
+import ArrayAdapter from 'select2/src/js/select2/data/array';
+import 'select2';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
-import ArrayAdapter from 'select2/src/js/select2/data/array';
 import Select2QueryAdapter from './Select2QueryAdapter';
-import 'select2';
-//import 'select2/src/js/jquery.select2';
+import { getNamedGraphId } from '../viewUtils';
+// import 'select2/src/js/jquery.select2';
+
 
 renderingContext.renderSelect = (fieldDiv, binding, context) => {
   const choices = context.choices;
-  const $select = jquery('<select>').appendTo(fieldDiv).append('<option></option>');
+  const disabledAttr = getNamedGraphId(binding, context) ? 'disabled' : '';
+  const $select = jquery(`<select ${disabledAttr}>`).appendTo(fieldDiv).append('<option></option>');
 
   const options = {
     placeholder: binding.getItem().getPlaceholder() || '',
@@ -34,7 +37,7 @@ renderingContext.renderSelect = (fieldDiv, binding, context) => {
       $select.trigger({
         type: 'select2:select',
         params: {
-          data: {id: choice.val, text: label, choice},
+          data: { id: choice.val, text: label, choice },
         },
       });
     } else {

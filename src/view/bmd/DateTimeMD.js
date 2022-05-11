@@ -1,12 +1,14 @@
 import moment from 'moment';
 import jquery from 'jquery';
 import DateTimeBase from '../bootstrap/DateTimeBase';
+import { getNamedGraphId } from '../viewUtils';
 
 /**
  * A Date and time picker.
  */
 export default class DateTimeMD extends DateTimeBase {
   buildUI() {
+    const disabledAttr = getNamedGraphId(this.binding, this.context) ? 'disabled' : '';
     this.tpdate = null;
     this.dpdate = null;
     const bundle = this.context.view.messages;
@@ -16,23 +18,23 @@ export default class DateTimeMD extends DateTimeBase {
 
     this.domNode.innerHTML = `<div class="rdformsDateValue rdformsFieldInput" xmlns="http://www.w3.org/1999/html">
     <div class="rdformsDatepicker form-group input" style="padding-right: 15px;">
-        <input class="form-control dateInput date" type="text" placeholder="YYYY-MM-DD" />
+        <input ${disabledAttr} class="form-control dateInput date" type="text" placeholder="YYYY-MM-DD" />
         <span >
-            <button type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm dateButton"><span class="fa fa-calendar"></span>
+            <button ${disabledAttr} type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm dateButton"><span class="fa fa-calendar"></span>
                 <div class="ripple-container"></div></button>
         </span>
     </div>
     <div class="form-group input" style="display:none;">
-        <input type="text" class="form-control timeInput" placeholder="HH:MM"/>
+        <input ${disabledAttr} type="text" class="form-control timeInput" placeholder="HH:MM"/>
         <span>
-            <button type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm timeButton"><span class="fa fa-clock"></span></button>
+            <button ${disabledAttr} type="button" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm timeButton"><span class="fa fa-clock"></span></button>
         </span>
     </div>
     <div class="form-group input" style="display:none;">
-        <input type="text" class="form-control yearInput" placeholder="YYYY"/>
+        <input ${disabledAttr} type="text" class="form-control yearInput" placeholder="YYYY"/>
     </div>
 
-    <select class="form-control dateControl">
+    <select ${disabledAttr} class="form-control dateControl">
         ${yearOption}
         ${dateOption}
         ${dateTimeOption}
@@ -68,10 +70,8 @@ export default class DateTimeMD extends DateTimeBase {
     jquery(this.dateButton).click(() => {
       this.$datepicker.bootstrapMaterialDatePicker('_fireCalendar');
     });
-    this.$datepicker.on('change', (evt, m) => {
-      if (!m) {
-        m = moment(evt.target.value);
-      }
+    this.$datepicker.on('change', (evt, mInstance) => {
+      const m = mInstance || moment(evt.target.value);
 
       if (this.tpdate) {
         const tpd = moment(this.tpdate);
@@ -90,10 +90,8 @@ export default class DateTimeMD extends DateTimeBase {
       this.$timepicker.bootstrapMaterialDatePicker('_fireCalendar');
     });
 
-    this.$timepicker.on('change', (evt, m) => {
-      if (!m) {
-        m = moment(evt.target.value);
-      }
+    this.$timepicker.on('change', (evt, mInstance) => {
+      const m = mInstance || moment(evt.target.value);
 
       if (this.dpdate != null) {
         const dpd = moment(this.dpdate);

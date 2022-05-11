@@ -1,4 +1,4 @@
-import { fromDuration, toDuration } from '../jquery/util';
+import { fromDuration, toDuration, getNamedGraphId } from '../viewUtils';
 
 let counter = 0;
 export default (fieldDiv, binding, context) => {
@@ -6,6 +6,7 @@ export default (fieldDiv, binding, context) => {
   let data = fromDuration(binding.getValue());
 
   const wrapper = jquery('<div>').addClass('rdformsDuration rdformsFieldInput').appendTo(fieldDiv);
+  const disabledAttr = getNamedGraphId(binding, context) ? 'disabled' : '';
   const render = () => {
     wrapper.empty();
     ['years', 'months', 'days', 'hours', 'minutes'].forEach((key) => {
@@ -17,7 +18,7 @@ export default (fieldDiv, binding, context) => {
         .attr('id', id)
         .text(bundle[`duration_${key}`])
         .appendTo(group);
-      const inp = jquery('<input>').addClass('form-control')
+      const inp = jquery(`<input ${disabledAttr}>`).addClass('form-control')
         .attr('type', 'number')
         .attr('aria-describedby', id)
         .appendTo(group);

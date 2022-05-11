@@ -1,7 +1,7 @@
 import 'selectize';
 import renderingContext from '../renderingContext';
-import system from '../../model/system';
 import utils from '../../utils';
+import { getNamedGraphId } from '../viewUtils';
 
 renderingContext.renderSelect = function (fieldDiv, binding, context) {
   const formgroup = jquery('<div class="form-group selectizeException">').appendTo(fieldDiv);
@@ -48,7 +48,7 @@ renderingContext.renderSelect = function (fieldDiv, binding, context) {
   }
   sel = $select.selectize(settings)[0].selectize;
 
-  if (disable) {
+  if (disable || getNamedGraphId(binding, context)) {
     sel.disable();
   }
 
@@ -60,7 +60,7 @@ renderingContext.renderSelect = function (fieldDiv, binding, context) {
     const label = utils.getLocalizedValue(choice.label).value || '';
     const op = sel.options[choice.value];
     if (!op) {
-      sel.addOption({id: choice.value, text: label, choice});
+      sel.addOption({ id: choice.value, text: label, choice });
     }
     sel.addItem(choice.value, true);
     // $select.val(choice.value).trigger('change');

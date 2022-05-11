@@ -54,7 +54,6 @@ export default class Item {
       'atLeastOneChild',
       'atMostOneChild',
       'exactlyOneChild',
-      'deprecated',
       'noLabelInPresent',
       'autoInitDate',
       'autoUpdateDate',

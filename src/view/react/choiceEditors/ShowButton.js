@@ -24,6 +24,7 @@ export default (props) => {
     props.context.view.messages.edit_browse;
   if (props.context.chooser.show) {
     return <IconButton
+      disabled={props.disabled}
       aria-label={title}
       title={title}
       onClick={props.onClick}

@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { escape } from 'lodash-es';
-import { getDatePresentation, fromDuration } from './util';
+import { getDatePresentation, fromDuration } from '../viewUtils';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import system from '../../model/system';

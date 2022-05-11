@@ -1,11 +1,11 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars,quotes */
 import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import BuildIcon from '@mui/icons-material/Build';
 import IconButton from '@mui/material/IconButton';
 import renderingContext from '../../renderingContext';
-import { editLocalizedChoice, loadLocalizedChoice } from '../hooks';
+import { editLocalizedChoice, loadLocalizedChoice, useNamedGraphId } from '../hooks';
 import ShowButton from './ShowButton';
 
 let globalChoiceQueryThrottle;
@@ -97,6 +97,8 @@ export default (props) => {
     });
   };
 
+  const ngId = useNamedGraphId(binding, props.context);
+  const UpgradeComponent = value.original.upgradeComponent;
   return (
     <>
       <Autocomplete
@@ -105,29 +107,34 @@ export default (props) => {
         fullWidth={false}
         value={value}
         options={options}
-        filterOptions={(fopts) => fopts}
+        filterOptions={fopts => fopts}
         open={open}
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
         onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
         onChange={onChange}
+        disabled={!!ngId}
         isOptionEqualToValue={(option, choice) => option.value === choice.value}
-        getOptionLabel={(choice) =>
+        getOptionLabel={choice =>
           choice === null ? '' : choice.label || choice.value
         }
-        getOptionDisabled={(option) => option.mismatch === true}
+        getOptionDisabled={option => option.mismatch === true}
         renderInput={renderInput}
       />
-      <ShowButton {...props} onClick={showHandler} />
+      <ShowButton {...props} onClick={showHandler} disabled={!!ngId}/>
       {value && value.original.upgrade && (
-        <IconButton
-          aria-label={props.context.view.messages.edit_upgrade}
-          title={props.context.view.messages.edit_upgrade}
-          onClick={upgradeHandler}
-        >
-          <BuildIcon />
-        </IconButton>
-      )}
+        <>
+          <IconButton
+            aria-label={props.context.view.messages.edit_upgrade}
+            title={props.context.view.messages.edit_upgrade}
+            disabled={!!ngId}
+            onClick={upgradeHandler}
+          >
+            <BuildIcon />
+          </IconButton>
+          {UpgradeComponent}
+        </>
+        )}
       {error && (
         <div key="warning" className="rdformsWarning">
           {props.context.view.messages.wrongValueField}

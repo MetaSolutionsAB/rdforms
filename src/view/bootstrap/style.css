@@ -108,13 +108,14 @@
     font-size: small;
 }
 
-.rdformsFieldControl>.fa.action {
+.rdformsFieldControl>.fas.action {
     float: right;
     position: initial;
     margin-top: 8px;
 }
 
-.fa.action.disabled {
+.fas.action:disabled,
+.fas.action.disabled {
     cursor: default;
 }
 
@@ -185,7 +186,6 @@
 /* Autoexpand style */
 .rdforms .rdformsFields textarea.form-control {
     display: block;
-    box-sizing: padding-box;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -248,4 +248,10 @@
 
 .rdformsValidator .rdformsValidationMessageWrapper {
     margin-left: -22px;
+}
+
+.rdformsActionButton {
+    border: none;
+    background: transparent;
+    padding: 0;
 }

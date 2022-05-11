@@ -1,8 +1,11 @@
 import renderingContext from '../renderingContext';
 import * as engine from '../../model/engine';
+import { getNamedGraphId } from '../viewUtils';
+
 
 renderingContext.addRemoveButton = (fieldDiv, binding, context) => {
-  const $remove = jquery('<span class="fas fa-times action">')
+  const disabledAttr = getNamedGraphId(binding, context) ? 'disabled' : '';
+  const $remove = jquery(`<button ${disabledAttr} class="fas fa-times action rdformsActionButton">`)
     .attr('title', context.view.messages.edit_remove)
     .appendTo(context.controlDiv);
   const cardTr = binding.getCardinalityTracker();
@@ -39,7 +42,7 @@ renderingContext.addRemoveButton = (fieldDiv, binding, context) => {
 };
 
 renderingContext.addExpandButton = (rowDiv, labelDiv, item, context) => {
-  const $expand = jquery('<span class="fas fa-plus action">')
+  const $expand = jquery('<button class="fas fa-plus action rdformsActionButton">')
     .attr('title', context.view.messages.edit_expand)
     .appendTo(labelDiv)
     .click(() => {
@@ -62,7 +65,7 @@ renderingContext.addGroupButtons = (rowDiv, labelDiv, binding, context) => {
   const card = item.getCardinality();
   let $add;
   if (card.max !== 1) {
-    $add = jquery('<span class="action fas fa-plus ">')
+    $add = jquery('<button class="action fas fa-plus rdformsActionButton">')
       .attr('title', context.view.messages.edit_add)
       .appendTo(labelDiv);
     $add.click(() => {
@@ -72,7 +75,8 @@ renderingContext.addGroupButtons = (rowDiv, labelDiv, binding, context) => {
       }
     });
   }
-  const $remove = jquery('<span class="action fas fa-times">')
+  const disabledAttr = getNamedGraphId(binding, context) ? 'disabled' : '';
+  const $remove = jquery(`<button ${disabledAttr} class="action fas fa-times rdformsActionButton">`)
     .attr('title', context.view.messages.edit_remove)
     .appendTo(labelDiv);
 
@@ -127,7 +131,7 @@ renderingContext.addCreateChildButton = (rowDiv, labelDiv, binding, context) => 
   const parentBinding = binding.getParent();
   const item = binding.getItem();
   const cardTr = binding.getCardinalityTracker();
-  const $add = jquery('<span class="action fas fa-plus">')
+  const $add = jquery('<button class="action fas fa-plus rdformsActionButton">')
     .attr('title', context.view.messages.edit_add)
     .appendTo(labelDiv)
     .click(() => {

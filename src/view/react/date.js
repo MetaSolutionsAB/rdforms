@@ -16,8 +16,8 @@ import {
   getDateValue,
   getAllowedDateAlternatives,
   getDatePresentation,
-} from '../jquery/util';
-
+} from '../viewUtils';
+import { useNamedGraphId } from './hooks';
 
 const getDatatypeFromBinding = binding => getDatatype(binding.getDatatype()) || getDatatypeFromItem(binding.getItem());
 
@@ -118,10 +118,11 @@ const dateEditor = (fieldDiv, binding, context) => {
       'aria-labelledby': context.view.getLabelIndex(binding),
       variant: renderingContext.materialVariant,
     };
+    const ngId = useNamedGraphId(binding, context);
     const visibleDatePicker = alternatives.Date || alternatives.DateTime || alternatives.Year
       || alternatives.YearMonth || alternatives.MonthDay;
-    const enabledDatePicker = selectedDatatype === 'DateTime' || selectedDatatype === 'Date'
-      || selectedDatatype === 'Year' || selectedDatatype === 'YearMonth' || selectedDatatype === 'MonthDay';
+    const enabledDatePicker = !ngId && (selectedDatatype === 'DateTime' || selectedDatatype === 'Date'
+      || selectedDatatype === 'Year' || selectedDatatype === 'YearMonth' || selectedDatatype === 'MonthDay');
     return (
       <LocalizationProvider dateAdapter={DateAdapter}>
         <span className="rdformsDatePicker">
@@ -146,7 +147,7 @@ const dateEditor = (fieldDiv, binding, context) => {
             <TimePicker
               renderInput={props => <TextField {...props} {...inputProps} />}
               label={bundle.date_time}
-              {...(selectedDatatype === 'DateTime' || selectedDatatype === 'Time' ? {} : { disabled: true })}
+              {...(!ngId && (selectedDatatype === 'DateTime' || selectedDatatype === 'Time') ? {} : { disabled: true })}
               KeyboardButtonProps={{
                 'aria-label': bundle.date_openTimePicker,
               }}
@@ -162,6 +163,7 @@ const dateEditor = (fieldDiv, binding, context) => {
                 value={selectedDatatype}
                 inputProps={inputProps}
                 onChange={onDatatypeChange}
+                disabled={!!ngId}
               >
                 {alternatives.Year && (
                   <MenuItem value="Year">{bundle.date_year}</MenuItem>

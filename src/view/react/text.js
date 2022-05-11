@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import moment from 'moment';
 import system from '../../model/system';
 import renderingContext from '../renderingContext';
-import { fromDuration } from './util';
+import { fromDuration } from '../viewUtils';
 import utils from '../../utils';
 
 

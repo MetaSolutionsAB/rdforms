@@ -490,8 +490,7 @@ a.rdformsUrl:hover {
 }
 
 .compact .rdformsRow>.rdformsLabelRow {
-	width: 1px;
-	white-space: nowrap;
+    white-space: nowrap;
 }
 
 .compact .rdformsTopLevel.rdformsRow>.rdformsLabelRow .action {

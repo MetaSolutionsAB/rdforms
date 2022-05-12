@@ -99,7 +99,7 @@ export default (props) => {
   };
 
   const ngId = useNamedGraphId(binding, props.context);
-  const UpgradeComponent = value.original.upgradeComponent;
+  const UpgradeComponent = value && value.original.upgradeComponent;
   return (
     <>
       <Autocomplete

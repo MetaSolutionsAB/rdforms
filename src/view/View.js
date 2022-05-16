@@ -18,8 +18,11 @@ export default class View {
     this.resource = params.resource || '';
     this.topLevel = params.topLevel !== false;
     this.compact = params.compact !== false;
+    this.showDescription = params.showDescription === true;
     this.styleCls = params.styleCls || '';
-    this.filterPredicates = params.filterPredicates || null;
+    this.filterPredicates = Array.isArray(params.filterPredicates) ?
+      params.filterPredicates.reduce((prev, current) => { prev[current] = true; return prev; }, {}) :
+      params.filterPredicates || null;
     this.restrictToItem = params.restrictToItem;
     this.fuzzy = params.fuzzy === true;
     this.markOrigin = params.markOrigin !== false;
@@ -314,7 +317,8 @@ export default class View {
     renderingContext.domClassToggle(rowNode, 'rdformsTopLevel', this.topLevel);
     renderingContext.domClassToggle(rowNode, 'rdformsInvisibleGroup', item.hasStyle('invisibleGroup'));
     renderingContext.domClassToggle(rowNode, 'rdformsHeading', item.hasStyle('heading'));
-    renderingContext.domClassToggle(rowNode, 'notCompact', item.getType() === 'group');
+    renderingContext.domClassToggle(rowNode, 'notCompact', item.getType() === 'group' || item.hasStyle('nonCompact'));
+    renderingContext.domClassToggle(rowNode, 'rdformsCompactItem', item.hasStyle('compact'));
 
     this.addLabel(rowNode, binding, item);
     if (binding && this.filterBinding(binding)) {
@@ -340,16 +344,15 @@ export default class View {
     const filter = (item, fp) => {
       // Exclude based on item id.
       const id = item.getId();
-      if (id && fp && Object.keys(fp).includes(id)) {
+      if (id && Object.keys(fp).includes(id)) {
         return true;
       }
-      // Exclude if property matches.
       const prop = item.getProperty();
-      if (fp && prop) {
+      // Exclude if property matches.
+      if (prop) {
         return fp[prop] === true || fp[namespaces.shortenKnown(prop)] === true;
-      }
-      if (fp && item.getType() === 'group' && !item.getProperty()) {
-        // Checks one level below if there is a child that is visible
+      } else if (item.getType() === 'group') {
+        // Exclude group headers if all children hidden
         const childBindings = item.getChildren() || [];
         let hasNonFilteredChild = false;
         childBindings.forEach((child) => {
@@ -361,7 +364,7 @@ export default class View {
       }
       return false;
     };
-    return filter(itemToCheck, filterPredicates);
+    return filterPredicates ? filter(itemToCheck, filterPredicates) : false;
   }
 
   filterProperty(property) {

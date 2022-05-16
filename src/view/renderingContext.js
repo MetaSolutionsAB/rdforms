@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Registry from './Registry';
 import system from '../model/system';
 import nls from './resources/nls';
@@ -328,7 +329,9 @@ const groupPresenter = (fieldDiv, binding, context) => {
     messages: context.view.messages,
     binding,
     topLevel: false,
+    compact: context.view.compact,
     showLanguage: context.view.showLanguage,
+    showDescription: context.view.showDescription,
     defaultLanguage: context.view.defaultLanguage,
     filterTranslations: context.view.filterTranslations,
     includeLevel: context.view.includeLevel, // Copied from groupEditor, was this.includeLevel but that 'this' does not make sense here
@@ -346,6 +349,8 @@ const groupEditor = (fieldDiv, binding, context) => {
     languages: context.view.languages,
     binding,
     topLevel: false,
+    compact: context.view.compact,
+    showDescription: context.view.showDescription,
     includeLevel: context.view.includeLevel,
   }, fieldDiv);
   context.view._subEditors.push(subView);

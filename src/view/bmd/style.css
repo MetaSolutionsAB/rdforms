@@ -137,5 +137,13 @@
 }
 
 .rdforms.rdformsEditor .rdformsLangFieldControl>.action {
-  margin-top: 0px;
+  margin-top: 10px;
+}
+
+.rdformsActionButton:focus {
+  color: #009688;
+}
+
+.rdforms .rdformsLabelRow>.rdformsActionButton.action {
+  margin-top: -5px;
 }

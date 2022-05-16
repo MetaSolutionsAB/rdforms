@@ -1,7 +1,7 @@
 import renderingContext from './renderingContext';
 import Presenter from './Presenter';
 import CODES from '../model/CODES';
-import engine from '../model/engine';
+import { create } from '../model/engine';
 import { bindingReport } from '../model/validate';
 
 const localize = (bundle, key, val) => {
@@ -102,7 +102,7 @@ export default class ValidationPresenter extends Presenter {
     if (target > _bindings.length && groupChildRequirementHinder && !groupError) {
       _bindings = _bindings.concat([]);
       while (target > _bindings.length) {
-        const binding = engine.create(this.binding, item);
+        const binding = create(this.binding, item);
         if (_bindings.length < min) {
           binding.setMatchingCode(CODES.TOO_FEW_VALUES_MIN);
           // binding.error = CODES.TOO_FEW_VALUES;

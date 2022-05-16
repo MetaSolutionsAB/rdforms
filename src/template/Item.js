@@ -62,6 +62,8 @@ export default class Item {
       'showURI',
       'showLink',
       'showValue',
+      'showDescriptionInPresent',
+      'showDescriptionInEdit',
       'textAsChoice',
       'preserveOrderOfChoices',
       'linkWithLabel',

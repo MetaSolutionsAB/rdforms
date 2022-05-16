@@ -224,3 +224,7 @@ div.MuiTooltip-tooltip {
     font-weight: bolder;
     font-family: sans-serif;
 }
+
+.rdformsHeading>.rdformsDescription {
+    margin: -20px 0 20px;
+}

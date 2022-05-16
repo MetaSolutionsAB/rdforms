@@ -12,6 +12,7 @@ bundleLoader(new ItemStore(), [['../templates/templateBundle.json']], (bundles) 
     resource: 'http://example.org/about',
     template: bundles[0].getRoot(),
     compact: false,
+    showDescription: true,
     includeLevel: 'recommended',
   }, 'node');
   document.getElementById('buttonMissing').onclick = function() {

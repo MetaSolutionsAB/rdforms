@@ -74,12 +74,30 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
   } else {
     label = '';
   }
+
+  const view = context.view;
+  let description;
+  if (item.hasStyle('showDescriptionInPresent') || view.showDescription) {
+    // An item is compact if it is exclicitly set as compact or
+    // the view is set as compact and the item is not explicitly set as not compact AND
+    // we are at the top
+    const compactField = item.hasStyle('compact') ||
+      (view.compact && !item.hasStyle('nonCompact') && (
+        (view.topLevel && item.getType() !== 'group') ||
+        (view.parentView && view.parentView.topLevel && view.binding.getItem().hasStyle('heading'))));
+    const desc = view instanceof Editor ? item.getEditDescription() || item.getDescription() :
+      item.getDescription();
+    if (!compactField && desc) {
+      description = <div className="rdformsDescription" tabIndex="0">{desc}</div>;
+    }
+  }
+
   const labelId = binding ? context.view.createLabelIndex(binding) : undefined;
   label = item.hasStyle('heading') ?
     <h2 tabIndex="0" id={labelId} className="rdformsLabelRow"><span className="rdformsLabel">{label}</span></h2> :
     <span tabIndex="0" id={labelId} className="rdformsLabelRow"><span className="rdformsLabel">{label}</span></span>;
-  rowNode.appendChild(<ItemTooltip key={`${binding ? binding.getHash() : item._internalId}_label` }
-                                   context={context} item={item}>{label}</ItemTooltip>);
+  rowNode.appendChild(<><ItemTooltip key={`${binding ? binding.getHash() : item._internalId}_label` }
+                                   context={context} item={item}>{label}</ItemTooltip>{description}</>);
 };
 
 renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
@@ -113,9 +131,27 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     } else if (item.getType() === 'group' && !context.view.showAsTable(item)) {
       Button = renderingContext.addRemoveButton(rowNode, binding, context);
     }
+
+    const view = context.view;
+    let description;
+    if (item.hasStyle('showDescriptionInEdit') || view.showDescription) {
+      // An item is compact if it is exclicitly set as compact or
+      // the view is set as compact and the item is not explicitly set as not compact AND
+      // we are at the top
+      const compactField = item.hasStyle('compact') ||
+        (view.compact && !item.hasStyle('nonCompact') && (
+          (view.topLevel && item.getType() !== 'group') ||
+          (view.parentView && view.parentView.topLevel && view.binding.getItem().hasStyle('heading'))));
+      const desc = view instanceof Editor ? item.getEditDescription() || item.getDescription() :
+        item.getDescription();
+      if (!compactField && desc) {
+        description = <div className="rdformsDescription" tabIndex="0">{desc}</div>;
+      }
+    }
+
     const labelId = context.view.createLabelIndex(binding);
-    rowNode.appendChild(<div key={`${binding.getHash()}_label`} id={labelId} className="rdformsLabelRow">{
-      label}{mark}{Button && <Button></Button>}</div>);
+    rowNode.appendChild(<><div key={`${binding.getHash()}_label`} id={labelId} className="rdformsLabelRow">{
+      label}{mark}{Button && <Button></Button>}</div>{description}</>);
   }
 };
 

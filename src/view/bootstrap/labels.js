@@ -18,7 +18,7 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     $labelDiv.attr('id', context.view.createLabelIndex(binding));
   }
   context.labelNode = $labelDiv[0];
-  const $label = jquery('<span class="rdformsLabel">').text(label).appendTo($labelDiv);
+  const $label = jquery('<span class="rdformsLabel" tabindex="0">').text(label).appendTo($labelDiv);
   const card = item.getCardinality();
   const b = context.view.messages;
   if (card.min > 0) {
@@ -32,25 +32,36 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
       .appendTo($labelDiv);
   }
 
-  renderingContext.attachItemInfo(item, $label[0], context);
-
+  // Buttons of various sorts
   if (binding == null) {
     renderingContext.addExpandButton(rowNode, $labelDiv[0], item, context);
-    return undefined;
-  }
-  // If table, no add or remove buttons.
-  if (context.view.showAsTable(item)) {
-    return undefined;
-  }
-  if (card.max != null && (card.max === card.min)) {
-    return undefined;
+  } else if (!context.view.showAsTable(item) &&
+    (card.max === null || card.max !== card.min)) {
+    // If not table or min and max are not the same, then add buttons.
+    if (item.getType() === 'group') {
+      renderingContext.addGroupButtons(rowNode, $labelDiv[0], binding, context);
+    } else {
+      renderingContext.addCreateChildButton(rowNode, $labelDiv[0], binding, context);
+    }
   }
 
-  if (item.getType() === 'group') {
-    renderingContext.addGroupButtons(rowNode, $labelDiv[0], binding, context);
-  } else {
-    renderingContext.addCreateChildButton(rowNode, $labelDiv[0], binding, context);
+  const view = context.view;
+  if (item.hasStyle('showDescriptionInEdit') || view.showDescription) {
+    // An item is compact if it is exclicitly set as compact or
+    // the view is set as compact and the item is not explicitly set as not compact AND
+    // we are at the top
+    const compactField = item.hasStyle('compact') ||
+      (view.compact && !item.hasStyle('nonCompact') && (
+        (view.topLevel && item.getType() !== 'group') ||
+        (view.parentView && view.parentView.topLevel && view.binding.getItem().hasStyle('heading'))));
+    const desc = context.view instanceof Editor ? item.getEditDescription() || item.getDescription() :
+      item.getDescription();
+    if (!compactField && desc) {
+      jquery('<div class="rdformsDescription" tabindex="0">').text(desc).appendTo(rowNode);
+    }
   }
+  renderingContext.attachItemInfo(item, $label[0], context);
+
   return undefined;
 };
 

@@ -272,4 +272,4 @@ export default class Registry {
   check(func) {
     return (new Filter(this)).check(func);
   }
-};
+}

@@ -1,4 +1,5 @@
-import 'selectize';
+import '@selectize/selectize/dist/js/standalone/selectize.min';
+//import '@selectize/selectize/dist/css/selectize.bootstrap4.css';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import { getNamedGraphId } from '../viewUtils';

@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { escape } from 'lodash-es';
-import { getDatePresentation, fromDuration } from './util';
+import { getDatePresentation, fromDuration } from '../viewUtils';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import system from '../../model/system';
@@ -122,7 +122,7 @@ presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding
   const node = jquery('<div>').appendTo(fieldDiv)[0];
   ['years', 'months', 'days', 'hours', 'minutes'].forEach((key) => {
     if (data.hasOwnProperty(key)) {
-      jquery(`<span class="durationlabel">${bundle[`duration_${key}`]}:</span><span class="durationValue">${data[key]}</span>`)
+      jquery(`<span class="durationLabel">${bundle[`duration_${key}`]}:</span><span class="durationValue">${data[key]}</span>`)
         .appendTo(node);
     }
   });

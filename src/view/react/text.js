@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import moment from 'moment';
 import system from '../../model/system';
 import renderingContext from '../renderingContext';
-import { fromDuration } from './util';
+import { fromDuration } from '../viewUtils';
 import utils from '../../utils';
 
 
@@ -13,7 +13,7 @@ presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding
   const data = fromDuration(binding.getValue());
   const keys = ['years', 'months', 'days', 'hours', 'minutes'];
   fieldDiv.appendChild(<div key={binding.getHash()}>{keys.map(key => (
-    data[key] && <React.Fragment key={key}><span className="durationlabel">{
+    data[key] && <React.Fragment key={key}><span className="durationLabel">{
       context.view.messages[`duration_${key}`]}:</span><span className="durationValue">{data[key]}</span></React.Fragment>
   ))}</div>);
 });

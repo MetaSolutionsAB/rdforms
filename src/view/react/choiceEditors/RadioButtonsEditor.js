@@ -1,12 +1,13 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars,quotes */
 import React, { useState, useEffect } from 'react';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import { useLocalizedSortedChoices, useName } from '../hooks';
+import { useLocalizedSortedChoices, useName, useNamedGraphId } from '../hooks';
 
 const ChoiceOption = props => <FormControlLabel
+  disabled={props.disabled}
   label={props.choice.label} value={props.choice.value} control={<Radio/>}
   {...(props.choice.mismatch ? { className: 'mismatch' } : {})}
   title={props.choice.description || props.choice.seeAlso || props.choice.value}/>;
@@ -46,6 +47,7 @@ export default function RadioButtonsEditor(props) {
     };
   }, []);
 
+  const ngId = useNamedGraphId(binding, props.context);
   return (
     <>
       <FormControl component="fieldset">
@@ -57,8 +59,10 @@ export default function RadioButtonsEditor(props) {
           value={value}
           onChange={handleChange}
         >
-          {choices.map((choice) => (
-            <ChoiceOption key={choice.value} choice={choice} />
+          {choices.map(choice => (
+            <ChoiceOption key={choice.value}
+                          disabled={!!ngId}
+                          choice={choice} />
           ))}
         </RadioGroup>
       </FormControl>

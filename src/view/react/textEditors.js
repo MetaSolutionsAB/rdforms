@@ -10,6 +10,7 @@ import Select from '@mui/material/Select';
 import moment from 'moment';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
+import { useNamedGraphId } from './hooks';
 
 const LanguageControl = (props) => {
   const [lang, setLang] = useState(props.binding.getLanguage() || '');
@@ -38,10 +39,12 @@ const LanguageControl = (props) => {
     };
   }, []);
 
+  const ngId = useNamedGraphId(props.binding, props.context);
   return <FormControl className="rdformsLangControl" variant={renderingContext.materialVariant}>
     <Select
       inputProps={{ 'aria-labelledby': props.labelledby }}
       value={lang}
+      disabled={!!ngId}
       onChange={onLangChange}>
       {langs.map(langOption => (langOption === null ?
         (<MenuItem key="_none" value="_none" disabled>─────</MenuItem>) :
@@ -90,11 +93,13 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
       },
     };
     const bundle = context.view.messages;
+    const ngId = useNamedGraphId(binding, context);
     return <><TextField
       className={extLink || langlit ? 'rdformsTwoThirds' : ''}
       multiline={multiline}
       placeholder={item.getPlaceholder()}
       error={!valid}
+      disabled={!!ngId}
       helperText={!valid ? item.getHelp() || '' : ''}
       variant={renderingContext.materialVariant} inputProps={iprops}
     />{extLink && (value != null || value === '') &&

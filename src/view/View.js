@@ -1,9 +1,9 @@
 /* eslint-disable class-methods-use-this,no-unused-vars */
+import { namespaces } from '@entryscape/rdfjson';
 import renderingContext from './renderingContext';
 import GroupBinding from '../model/GroupBinding';
 import * as engine from '../model/engine';
 import { bindingReport } from '../model/validate';
-import {namespaces} from "@entryscape/rdfjson";
 
 let viewCounter = 0;
 export default class View {
@@ -18,16 +18,46 @@ export default class View {
     this.resource = params.resource || '';
     this.topLevel = params.topLevel !== false;
     this.compact = params.compact !== false;
+    this.showDescription = params.showDescription === true;
     this.styleCls = params.styleCls || '';
-    this.filterPredicates = params.filterPredicates || null;
+    this.filterPredicates = Array.isArray(params.filterPredicates) ?
+      params.filterPredicates.reduce((prev, current) => { prev[current] = true; return prev; }, {}) :
+      params.filterPredicates || null;
     this.restrictToItem = params.restrictToItem;
     this.fuzzy = params.fuzzy === true;
+    this.markOrigin = params.markOrigin !== false;
     this._handleParams(params);
     this._labelIndex = {};
     this.domNode = renderingContext.createDomNode(srcNodeRef, this);
     renderingContext.domClassToggle(this.domNode, 'rdforms', true);
     renderingContext.domClassToggle(this.domNode, this.styleCls, true);
     this.render();
+  }
+
+  getParentView() {
+    return this.parentView;
+  }
+
+  getNamedGraphId(namedGraph) {
+    if (!this.markOrigin) {
+      return undefined;
+    }
+    if (!this.namedGraphs) {
+      this.namedGraphs = {};
+      this.namedGraphCounter = 65; // 'A'
+    }
+
+    let id = this.namedGraphs[namedGraph];
+    if (id === undefined) {
+      id = String.fromCharCode(this.namedGraphCounter);
+      this.namedGraphs[namedGraph] = id;
+      this.namedGraphCounter += 1;
+    }
+    return id;
+  }
+
+  getNamedGraphFromId(id) {
+    return this.namedGraphs ? Object.keys(this.namedGraphs).find(key => this.namedGraphs[key] === id) : undefined;
   }
 
   destroy() {
@@ -192,6 +222,7 @@ export default class View {
           }
         }
       } else {
+        this.context = { view: this };
         lastRow = this.createRowNode(lastRow, null, item);
       }
 
@@ -244,6 +275,17 @@ export default class View {
         this.createEndOfRowNode(newRow, binding, item);
       }
     }
+    if (this.markOrigin) {
+      const ngId = this.getNamedGraphId(binding);
+      if (ngId) {
+        renderingContext.domClassToggle(fieldDiv, 'rdformsOrigin', true);
+        renderingContext.domClassToggle(fieldDiv, `rdformsOrigin_${ngId}`, true);
+      } else {
+        renderingContext.domClassToggle(fieldDiv, 'rdformsOrigin', true);
+        renderingContext.domClassToggle(fieldDiv, 'rdformsOrigin_default', true);
+      }
+    }
+
     if (item.getType() === 'group') {
       renderingContext.domClassToggle(fieldDiv, 'rdformsGroup', true);
     } else {
@@ -275,7 +317,8 @@ export default class View {
     renderingContext.domClassToggle(rowNode, 'rdformsTopLevel', this.topLevel);
     renderingContext.domClassToggle(rowNode, 'rdformsInvisibleGroup', item.hasStyle('invisibleGroup'));
     renderingContext.domClassToggle(rowNode, 'rdformsHeading', item.hasStyle('heading'));
-    renderingContext.domClassToggle(rowNode, 'notCompact', item.getType() === 'group');
+    renderingContext.domClassToggle(rowNode, 'notCompact', item.getType() === 'group' || item.hasStyle('nonCompact'));
+    renderingContext.domClassToggle(rowNode, 'rdformsCompactItem', item.hasStyle('compact'));
 
     this.addLabel(rowNode, binding, item);
     if (binding && this.filterBinding(binding)) {
@@ -301,16 +344,15 @@ export default class View {
     const filter = (item, fp) => {
       // Exclude based on item id.
       const id = item.getId();
-      if (id && fp && Object.keys(fp).includes(id)) {
+      if (id && Object.keys(fp).includes(id)) {
         return true;
       }
-      // Exclude if property matches.
       const prop = item.getProperty();
-      if (fp && prop) {
+      // Exclude if property matches.
+      if (prop) {
         return fp[prop] === true || fp[namespaces.shortenKnown(prop)] === true;
-      }
-      if (fp && item.getType() === 'group' && !item.getProperty()) {
-        // Checks one level below if there is a child that is visible
+      } else if (item.getType() === 'group') {
+        // Exclude group headers if all children hidden
         const childBindings = item.getChildren() || [];
         let hasNonFilteredChild = false;
         childBindings.forEach((child) => {
@@ -322,7 +364,7 @@ export default class View {
       }
       return false;
     };
-    return filter(itemToCheck, filterPredicates);
+    return filterPredicates ? filter(itemToCheck, filterPredicates) : false;
   }
 
   filterProperty(property) {

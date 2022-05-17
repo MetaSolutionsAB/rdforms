@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import renderingContext from '../../renderingContext';
-import { loadLocalizedChoice } from '../hooks';
+import { loadLocalizedChoice, useNamedGraphId } from '../hooks';
 import utils from '../../../utils';
 import ShowButton from './ShowButton';
 
@@ -38,10 +38,11 @@ export default (props) => {
     }, props.field);
   };
 
+  const ngId = useNamedGraphId(binding, props.context);
   return <><TextField
     inputProps={{ 'aria-labelledby': labelledBy }}
     className="rdformsSearch"
-    disabled {...(choice && choice.mismatch ? { mismatch: true } : {})}
+    disabled {...(!!ngId || (choice && choice.mismatch) ? { mismatch: true } : {})}
     title={title}
     value={label}
     placeholder={binding.getItem().getPlaceholder()}
@@ -49,6 +50,7 @@ export default (props) => {
     variant={renderingContext.materialVariant}
   /><ShowButton
     {... props}
+    disabled={!!ngId}
     onClick={choiceSelectorHandler}/>{ error && (<div key="warning" className="rdformsWarning">{
     props.context.view.messages.wrongValueField}</div>)}</>;
 };

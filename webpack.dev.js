@@ -28,11 +28,13 @@ const getHTMLPlugins = () => {
         type: 'css',
         publicPath: false,
       }, {
-        path: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css',
+//        path: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css',
+        path: '/fontawesome-free/css/all.min.css',
         type: 'css',
         publicPath: false,
       }, {
-        path: 'https://unpkg.com/@entryscape/rdfjson/dist/rdfjson.js',
+//        path: 'https://unpkg.com/@entryscape/rdfjson/dist/rdfjson.js',
+        path: '/rdfjson/dist/rdfjson.js',
         type: 'js',
         publicPath: false,
       },
@@ -85,7 +87,11 @@ module.exports = (env, argv) => {
       process: false,
     },
     devServer: {
-      contentBase: path.join(__dirname, '/html'),
+      contentBase: [
+        path.join(__dirname, '/html'),
+        path.join(__dirname, 'node_modules', '@entryscape'),
+        path.join(__dirname, 'node_modules', '@fortawesome'),
+      ],
       hot: true,
       open: true,
       publicPath: '/',

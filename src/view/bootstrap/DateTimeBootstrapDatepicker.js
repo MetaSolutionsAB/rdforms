@@ -1,12 +1,14 @@
 import 'bootstrap-datepicker/dist/js/bootstrap-datepicker';
 import jquery from 'jquery';
 import DateTimeBase from './DateTimeBase';
+import { getNamedGraphId } from '../viewUtils';
 
 /**
  * A Date and time picker.
  */
 export default class DateTimeBootstrapDatepicker extends DateTimeBase {
   buildUI() {
+    const disabledAttr = getNamedGraphId(this.binding, this.context) ? 'disabled' : '';
     const bundle = this.context.view.messages;
     const yearOption = this.includeYearOption() ? `<option value="Year">${bundle.date_year}</option>` : '';
     const dateOption = this.includeDateOption() ? `<option value="Date" selected="true">${bundle.date_date}</option>` : '';
@@ -14,7 +16,7 @@ export default class DateTimeBootstrapDatepicker extends DateTimeBase {
     this.domNode.innerHTML = `<div class="rdformsDateValue rdformsFieldInput" xmlns="http://www.w3.org/1999/html">
     <div class="rdformsDatepicker datepicker">
         <div class="input-group date">
-            <input type="text" class="form-control">
+            <input ${disabledAttr} type="text" class="form-control">
             <div class="input-group-append">
                 <span class="input-group-text">
                 <i class="fas fa-calendar"></i>
@@ -23,12 +25,12 @@ export default class DateTimeBootstrapDatepicker extends DateTimeBase {
         </div>
     </div>
     <span style="display: none">
-        <input type="text" class="form-control timeInput" placeholder="HH:MM"/>
+        <input ${disabledAttr} type="text" class="form-control timeInput" placeholder="HH:MM"/>
     </span>
     <span style="display: none">
-        <input type="text" class="form-control yearInput" placeholder="YYYY"/>
+        <input ${disabledAttr} type="text" class="form-control yearInput" placeholder="YYYY"/>
     </span>
-    <select class="form-control dateControl">
+    <select ${disabledAttr} class="form-control dateControl">
         ${yearOption}
         ${dateOption}
         ${dateTimeOption}

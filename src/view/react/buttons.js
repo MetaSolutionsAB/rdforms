@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
 import renderingContext from '../renderingContext';
 import * as engine from '../../model/engine';
+import { useNamedGraphId } from './hooks';
 
 renderingContext.addExpandButton = (rowDiv, labelDiv, item, context) => {
   console.log('Expand button not yet supported');
@@ -78,10 +79,12 @@ renderingContext.addRemoveButton = (rowDiv, binding, context) => () => {
     }
   });
 
+  const ngId = useNamedGraphId(binding, context);
   const title = clear ? context.view.messages.edit_clear : context.view.messages.edit_remove;
   return <IconButton
     size="small"
     aria-label={title}
+    disabled={!!ngId}
     title={title}
     onClick={onClick}
   >{clear ? (<CancelIcon fontSize="small"/>) : (<RemoveCircleIcon fontSize="small"/>)}</IconButton>;

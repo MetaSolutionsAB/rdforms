@@ -2,6 +2,8 @@ import moment from 'moment';
 import durationEditor from './durationEditor';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
+import { getNamedGraphId } from '../viewUtils';
+
 
 /**
  * Try to guess the number of rows needed for a textarea element by looking at the value of the element
@@ -107,9 +109,10 @@ registerPattern('^(\\d+(\\.\\d+)?)$', 'xsd:decimal');
 editors.itemtype('text').register((fieldDiv, binding, context) => {
   const item = binding.getItem();
   let $input;
+  const disabledAttr = getNamedGraphId(binding, context) ? 'disabled' : '';
   if (item.hasStyle('multiline')) {
     const originalNrOfLines = countLines(binding.getGist());
-    $input = jquery(`<textarea class="form-control rdformsFieldInput autoExpand" placeholder="${item.getPlaceholder() || ''}" rows="${originalNrOfLines}">`);
+    $input = jquery(`<textarea ${disabledAttr} class="form-control rdformsFieldInput autoExpand" placeholder="${item.getPlaceholder() || ''}" rows="${originalNrOfLines}">`);
     $input.on('input focus', function () {
       if (this.baseScrollHeight === undefined) {
         const originalHeight = $input.height();
@@ -121,9 +124,9 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
       this.rows = rows;
     });
   } else if (item.hasStyle('email')) {
-    $input = jquery(`<input type="email" class="form-control rdformsFieldInput" placeholder="${item.getPlaceholder() || ''}">`);
+    $input = jquery(`<input ${disabledAttr} type="email" class="form-control rdformsFieldInput" placeholder="${item.getPlaceholder() || ''}">`);
   } else {
-    $input = jquery(`<input type="text" class="form-control rdformsFieldInput" placeholder="${item.getPlaceholder() || ''}">`);
+    $input = jquery(`<input ${disabledAttr} type="text" class="form-control rdformsFieldInput" placeholder="${item.getPlaceholder() || ''}">`);
   }
   $input.val(binding.getGist())
     .appendTo(fieldDiv);
@@ -156,7 +159,7 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
   if (nodeType === 'LANGUAGE_LITERAL' || nodeType === 'PLAIN_LITERAL') {
     jquery(fieldDiv).addClass('rdformsLangcontrolledfield');
     jquery(context.controlDiv).addClass('rdformsLangFieldControl');
-    const $lselect = jquery('<select class="form-control rdformsLanguage">')
+    const $lselect = jquery(`<select ${disabledAttr} class="form-control rdformsLanguage">`)
       .appendTo(context.controlDiv);
     let primaryLangs = renderingContext.getPrimaryLanguageList();
     let langList = renderingContext.getNonPrimaryLanguageList();

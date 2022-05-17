@@ -14,6 +14,7 @@ bundleLoader(new ItemStore(), [['../templates/templateBundle.json']], (bundles) 
     template: bundles[0].getRoot(),
     filterTranslations: false,
     showLanguage: true,
-    compact: false,
+    showDescription: true,
+    compact: true,
   }, 'node');
 });

@@ -1,6 +1,34 @@
-import moment, {locale} from 'moment';
+/* eslint-disable class-methods-use-this */
+import moment from 'moment';
 import renderingContext from './renderingContext';
 import View from './View';
+
+
+const showNow = (editor, item, bindings) => {
+  if (bindings.length === 0 ||
+//    item.hasStyle('deprecated') ||
+    item.hasStyle('invisible')) {
+    return false;
+  }
+  const prop = item.getProperty();
+  if (prop) {
+    return !editor.filterItem(item);
+  }
+
+    // Take care of layout grouping by checking recursively.
+  if (item.getType() === 'group') {
+    const groupedItemsArr = item.getChildren();
+    if (groupedItemsArr.length === 0) {
+      return true; // Corresponds to an extention or pure heading, since no children.
+    }
+    if (bindings[0].getItemGroupedChildBindings().find((childBindings, idx) =>
+      showNow(editor, groupedItemsArr[idx], childBindings))) {
+      return true;
+    }
+    return false;
+  }
+  return true;
+};
 
 export default class Presenter extends View {
   _handleParams(params) {
@@ -17,10 +45,11 @@ export default class Presenter extends View {
    * @param {Object} bindings
    */
   showNow(item, bindings) {
-    if (item.hasStyle('deprecated') && bindings.length === 0) {
+    return showNow(this, item, bindings);
+/*    if (item.hasStyle('deprecated') && bindings.length === 0) {
       return false;
     }
-    return bindings.length > 0 && !item.hasStyle('invisible');
+    return bindings.length > 0 && !item.hasStyle('invisible');*/
   }
 
   skipBinding(binding) {

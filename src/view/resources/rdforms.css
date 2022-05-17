@@ -136,11 +136,11 @@ a.rdformsUrl:hover {
 
 /* compact anyway for first level*/
 .compact .rdformsTopLevel.rdformsRow.notCompact {
-	display: table;
+	display: inherit;
 	width: 98%;
 }
 .compact .rdformsTopLevel.rdformsRow.notCompact>div {
-	display: table-cell;
+	display: block;
 }
 
 .compact .rdformsTopLevel.rdformsRow.rdformsHeading.notCompact>div {
@@ -149,6 +149,27 @@ a.rdformsUrl:hover {
 
 .compact .rdformsTopLevel.rdformsRow.notCompact>.rdformsFields>.rdformsGroup {
 	margin-left: 0px;
+}
+
+.compact .rdformsRow.notCompact {
+    display: block;
+    width: auto;
+}
+
+.compact .rdformsRow.notCompact>div {
+    display: inherit;
+}
+
+.rdformsPresenter .rdformsRow.rdformsCompactItem {
+    display: table;
+    width: 98%;
+}
+
+.rdformsPresenter .rdformsRow.rdformsCompactItem>.rdformsLabel {
+    width: 10em;
+}
+.rdformsPresenter .rdformsRow.rdformsCompactItem>div {
+    display: table-cell;
 }
 
 /* compact anyway for first level*/
@@ -160,6 +181,16 @@ a.rdformsUrl:hover {
 .compact .rdformsTopLevel.rdformsRow.rdformsHeading>.rdformsFields>.rdformsGroup>.rdformsRow>div {
     display: table-cell;
 }
+
+.compact .rdformsTopLevel.rdformsRow.rdformsHeading>.rdformsFields>.rdformsGroup>.rdformsRow.notCompact {
+    display: inherit;
+    width: auto;
+}
+
+.compact .rdformsTopLevel.rdformsRow.rdformsHeading>.rdformsFields>.rdformsGroup>.rdformsRow.notCompact>div {
+    display: inherit;
+}
+
 
 
 
@@ -420,10 +451,6 @@ a.rdformsUrl:hover {
     padding-left: 0px;
 }
 
-.rdformsValidator .rdformsValidationMessageWrapper {
-    margin-left: -30px;
-}
-
 .rdformsValidator .rdformsField.error {
     color: red;
 }
@@ -484,18 +511,8 @@ a.rdformsUrl:hover {
     padding-left: 0px;
 }
 
-.compact .rdformsRow.notCompact {
-	display: block;
-	width: auto;
-}
-
-.compact .rdformsRow.notCompact>div {
-	display: inherit;
-}
-
 .compact .rdformsRow>.rdformsLabelRow {
-	width: 1px;
-	white-space: nowrap;
+    white-space: nowrap;
 }
 
 .compact .rdformsTopLevel.rdformsRow>.rdformsLabelRow .action {
@@ -717,4 +734,9 @@ a.rdformsUrl:hover {
 .rdformsDeprecated {
     border: 2px solid red;
     padding: 12px;
+}
+
+.rdformsDescription {
+    font-style: italic;
+    margin-bottom: 10px;
 }

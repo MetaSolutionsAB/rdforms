@@ -9,6 +9,7 @@ export default {
       'value': "Anna's Homepage",
       'type': 'literal',
       'lang': 'en',
+      'ng': 'http://example.com'
     }, {
       'value': "Andreas Homepage",
       'type': 'literal',

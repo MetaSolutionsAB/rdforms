@@ -133,7 +133,7 @@
 }
 
 .rdformsEditor .rdformsLangControl {
-    width: calc(33.33% - 8px);
+    width: calc(33.33% - 4px);
 }
 
 /* Duration */
@@ -205,10 +205,6 @@ div.MuiTooltip-tooltip {
     margin-right: 11px;
 }
 
-.rdformsEditor .rdformsLangControl {
-    width: calc(33.33% - 8px);
-}
-
 .rdformsDependency {
     display: none;
 }
@@ -227,4 +223,8 @@ div.MuiTooltip-tooltip {
     font-size: 10px;
     font-weight: bolder;
     font-family: sans-serif;
+}
+
+.rdformsHeading>.rdformsDescription {
+    margin: -20px 0 20px;
 }

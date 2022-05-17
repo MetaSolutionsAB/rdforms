@@ -3,8 +3,10 @@ import React, { useState, useEffect, useMemo } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { FormGroup } from '@mui/material';
-import { useLocalizedSortedChoices, useName } from '../hooks';
+import { useLocalizedSortedChoices, useNamedGraphId } from '../hooks';
+import { getNamedGraphId } from '../../viewUtils';
 import * as engine from '../../../model/engine';
+
 
 const CheckOption = (props) => {
   const { choice, binding, onChoiceChange } = props;
@@ -16,6 +18,7 @@ const CheckOption = (props) => {
     onChoiceChange();
   };
   return <FormControlLabel
+    disabled={props.disabled}
     label={choice.label} control={<Checkbox checked={checked} onChange={handleChange}/>}
     {...(choice.mismatch ? { className: 'mismatch' } : {})}
     title={choice.description || choice.seeAlso || choice.value}/>;
@@ -35,9 +38,9 @@ export default function CheckBoxesEditor(props) {
       const existingbinding = val2binding[c.value];
       if (existingbinding) {
         delete val2binding[c.value];
-        return [c, existingbinding];
+        return [c, existingbinding, getNamedGraphId(existingbinding, props.context)];
       }
-      return [c, engine.create(parentBinding, item)];
+      return [c, engine.create(parentBinding, item), undefined];
     });
     // Add checks for values that are non-conforming (should have mismatch on their choices).
     Object.values(val2binding).forEach((b) => {
@@ -70,12 +73,14 @@ export default function CheckBoxesEditor(props) {
     setResetCount(resetCount + 1);
   };
 
+  const ngId = useNamedGraphId(binding, props.context);
   return (
     <><FormGroup {...row}>
       {choiceBindingPairs.map(pair => (
         <CheckOption key={`${resetCount}-${pair[1].getHash()}`}
                      choice={pair[0]}
                      binding={pair[1]}
+                     disabled={!!pair[2] || !!ngId}
                      onChoiceChange={onChoiceChange} />
       ))}
     </FormGroup>{error && (

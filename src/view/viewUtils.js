@@ -32,6 +32,7 @@ export const toDuration = (data) => {
   return null;
 };
 
+
 export const getDate = (value) => {
   try {
     // xsd:time
@@ -196,6 +197,16 @@ export const getDatePresentation = (binding) => {
       }
       return getDatePresentationFromDatatype(datatype, date);
     }
+  }
+  return undefined;
+};
+
+export const getNamedGraphId = (binding, context) => {
+  const ng = (binding.getStatement() || binding.getParent().getStatement())?.getNamedGraph();
+  if (ng) {
+    let view = context.view;
+    while (view.getParentView()) view = view.getParentView();
+    return view.getNamedGraphId(ng);
   }
   return undefined;
 };

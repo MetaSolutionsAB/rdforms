@@ -1,3 +1,5 @@
+import { getNamedGraphId } from '../viewUtils';
+
 let uniqueRadioButtonGroupNr = 0;
 
 export default class RadioButtonsEditor {
@@ -49,7 +51,8 @@ export default class RadioButtonsEditor {
           || c.seeAlso || c.value);
       }
 
-      const $input = jquery('<input type="radio">')
+      const disabledAttr = getNamedGraphId(this.binding, this.context) ? 'disabled' : '';
+      const $input = jquery(`<input ${disabledAttr} type="radio">`)
         .val(c.value)
         .attr('checked', c.value === currentValue)
         .attr('name', `rdformsRadio_${uniqueRadioButtonGroupNr}`)
@@ -60,7 +63,7 @@ export default class RadioButtonsEditor {
         $label.addClass('mismatch disabled');
         $input.attr('disabled', true);
       } else {
-        $label.click((inp) => {
+        $label.click(() => {
           this.binding.setValue($input.val());
         });
       }

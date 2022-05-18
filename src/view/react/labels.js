@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect, forwardRef } from 'react';
+import React, { Fragment, useState, useEffect, forwardRef } from 'react';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
@@ -96,8 +96,8 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
   label = item.hasStyle('heading') ?
     <h2 tabIndex="0" id={labelId} className="rdformsLabelRow"><span className="rdformsLabel">{label}</span></h2> :
     <span tabIndex="0" id={labelId} className="rdformsLabelRow"><span className="rdformsLabel">{label}</span></span>;
-  rowNode.appendChild(<><ItemTooltip key={`${binding ? binding.getHash() : item._internalId}_label` }
-                                   context={context} item={item}>{label}</ItemTooltip>{description}</>);
+  rowNode.appendChild(<Fragment key={`${binding ? binding.getHash() : item._internalId}_label` }><ItemTooltip
+                                   context={context} item={item}>{label}</ItemTooltip>{description}</Fragment>);
 };
 
 renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
@@ -150,8 +150,8 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     }
 
     const labelId = context.view.createLabelIndex(binding);
-    rowNode.appendChild(<><div key={`${binding.getHash()}_label`} id={labelId} className="rdformsLabelRow">{
-      label}{mark}{Button && <Button></Button>}</div>{description}</>);
+    rowNode.appendChild(<Fragment key={`${binding.getHash()}_label`}><div id={labelId} className="rdformsLabelRow">{
+      label}{mark}{Button && <Button></Button>}</div>{description}</Fragment>);
   }
 };
 

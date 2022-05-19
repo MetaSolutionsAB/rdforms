@@ -228,3 +228,7 @@ div.MuiTooltip-tooltip {
 .rdformsHeading>.rdformsDescription {
     margin: -20px 0 20px;
 }
+
+.Mui-disabled.rdformsDatatypeOption {
+    color: red;
+}

@@ -54,5 +54,6 @@
   "missingValueField": "This field is required, please provide a value.",
   "dependencyField": "This field depends on another field, please review the field it depends on or remove this value.",
   "wrongValueField": "This is an invalid value, please change or remove it.",
+  "wrongDatatypeField": "The value has an invalid datatype, please change or remove it.",
   "openLinkExternally": "Open link externally"
 }

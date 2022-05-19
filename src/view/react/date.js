@@ -7,6 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import { TextField } from '@mui/material';
 import Select from '@mui/material/Select';
 import moment from 'moment';
+import CODES from '../../model/CODES';
 import renderingContext from '../renderingContext';
 import {
   getDate,
@@ -19,7 +20,13 @@ import {
 } from '../viewUtils';
 import { useNamedGraphId } from './hooks';
 
-const getDatatypeFromBinding = binding => getDatatype(binding.getDatatype()) || getDatatypeFromItem(binding.getItem());
+const getDatatypeFromBinding = (binding, alternatives) => {
+  const currentDatatype = getDatatype(binding.getDatatype());
+  if (!alternatives[currentDatatype]) {
+    alternatives[currentDatatype] = 'error';
+  }
+  return currentDatatype || getDatatypeFromItem(binding.getItem());
+};
 
 const datePresenter = (fieldDiv, binding, context) => {
   try {
@@ -89,13 +96,20 @@ const dateEditor = (fieldDiv, binding, context) => {
   const DateComp = () => {
     const value = binding.getGist();
     const alternatives = useMemo(() => getAllowedDateAlternatives(binding.getItem()), []);
-    const onlyOneAlternative = Object.keys(alternatives).length === 1;
     const [selectedDate, setSelectedDate] = useState(value === '' ? null : getDate(value));
-    const [selectedDatatype, setDatatype] = useState(getDatatypeFromBinding(binding));
+    const [selectedDatatype, setDatatype] = useState(getDatatypeFromBinding(binding, alternatives));
+    const onlyOneAlternative = Object.keys(alternatives).length === 1;
+    const [error, setError] = useState(binding.getMatchingCode() === CODES.WRONG_DATATYPE);
+
+    useEffect(() => {
+      fieldDiv.toggleClass('mismatchReport', error);
+    }, [error]);
+
     useEffect(() => {
       context.clear = () => {
         setSelectedDate(null);
-        setDatatype(getDatatypeFromBinding(binding));
+        setDatatype(getDatatypeFromItem(binding.getItem()));
+        setError(false);
       };
     }, []);
 
@@ -113,6 +127,7 @@ const dateEditor = (fieldDiv, binding, context) => {
       binding.setDatatype(getDatatypeURI(event.target.value));
       binding.setValue(getDateValue(selectedDate, event.target.value));
       setDatatype(event.target.value);
+      setError(alternatives[event.target.value] === 'error');
     };
     const inputProps = {
       'aria-labelledby': context.view.getLabelIndex(binding),
@@ -124,6 +139,7 @@ const dateEditor = (fieldDiv, binding, context) => {
     const enabledDatePicker = !ngId && (selectedDatatype === 'DateTime' || selectedDatatype === 'Date'
       || selectedDatatype === 'Year' || selectedDatatype === 'YearMonth' || selectedDatatype === 'MonthDay');
     return (
+      <>
       <LocalizationProvider dateAdapter={DateAdapter}>
         <span className="rdformsDatePicker">
           {visibleDatePicker && (
@@ -162,34 +178,47 @@ const dateEditor = (fieldDiv, binding, context) => {
               <Select
                 value={selectedDatatype}
                 inputProps={inputProps}
+                error={alternatives[selectedDatatype] === 'error'}
                 onChange={onDatatypeChange}
                 disabled={!!ngId}
               >
                 {alternatives.Year && (
-                  <MenuItem value="Year">{bundle.date_year}</MenuItem>
+                  <MenuItem disabled={alternatives.Year === 'error'} className="rdformsDatatypeOption"
+                            value="Year">{bundle.date_year}</MenuItem>
                 )}
                 {alternatives.Date && (
-                  <MenuItem value="Date">{bundle.date_date}</MenuItem>
+                  <MenuItem disabled={alternatives.Date === 'error'} className="rdformsDatatypeOption"
+                            value="Date">{bundle.date_date}</MenuItem>
                 )}
                 {alternatives.DateTime && (
-                  <MenuItem value="DateTime">
+                  <MenuItem disabled={alternatives.DateTime === 'error'} className="rdformsDatatypeOption"
+                            value="DateTime">
                     {bundle.date_date_and_time}
                   </MenuItem>
                 )}
                 {alternatives.YearMonth && (
-                  <MenuItem value="YearMonth">{bundle.date_year_and_month}</MenuItem>
+                  <MenuItem disabled={alternatives.YearMonth === 'error'} className="rdformsDatatypeOption"
+                            value="YearMonth">{bundle.date_year_and_month}</MenuItem>
                 )}
                 {alternatives.MonthDay && (
-                  <MenuItem value="MonthDay">{bundle.date_month_and_day}</MenuItem>
+                  <MenuItem disabled={alternatives.MonthDay === 'error'} className="rdformsDatatypeOption"
+                            value="MonthDay">{bundle.date_month_and_day}</MenuItem>
                 )}
                 {alternatives.Time && (
-                  <MenuItem value="Time">{bundle.date_time}</MenuItem>
+                  <MenuItem disabled={alternatives.Time === 'error'} className="rdformsDatatypeOption"
+                            value="Time">{bundle.date_time}</MenuItem>
                 )}
               </Select>
             </FormControl>
           )}
         </span>
       </LocalizationProvider>
+        {error && (
+          <div key="warning" className="rdformsWarning">
+            {context.view.messages.wrongDatatypeField}
+          </div>
+        )}
+        </>
     );
   };
   fieldDiv.appendChild(<DateComp key={binding.getHash()}></DateComp>);

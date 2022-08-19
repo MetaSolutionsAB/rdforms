@@ -96,8 +96,7 @@
     "dist",
     "src",
     "main*",
-    "index*",
-    "loadViewOptions.js"
+    "index*"
   ],
   "scripts": {
     "build:all": "webpack --display-modules --mode=production --config webpack.all.js",

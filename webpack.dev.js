@@ -60,7 +60,7 @@ module.exports = (env, argv) => {
   const type = argv.type ? argv.type : 'bmd';
 
   const devConfig = {
-    entry: `./index.${type}.js`,
+    entry: `./renderers/${type}.js`,
     output: {
       filename: 'rdforms.[name].js',
       library: 'rdforms',

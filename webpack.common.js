@@ -4,10 +4,10 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    bootstrap: './index.bootstrap.js',
-    bmd: './index.bmd.js',
-    react: './index.react.js',
-    jquery: './index.jquery.js',
+    bootstrap: './renderers/bootstrap.js',
+    bmd: './renderers/bmd.js',
+    react: './renderers/react.js',
+    jquery: './renderers/jquery.js',
   },
   output: {
     path: path.join(__dirname, 'dist'),

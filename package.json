@@ -96,7 +96,7 @@
     "dist",
     "src",
     "main*",
-    "index*"
+    "renderers"
   ],
   "scripts": {
     "build:all": "webpack --display-modules --mode=production --config webpack.all.js",

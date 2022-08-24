@@ -230,15 +230,14 @@ export default class Editor extends Presenter {
         if (!match) {
           if (binding.isValid()) {
             renderingContext.domClassToggle(newNode, 'missingDepsWithValue', true);
-            binding.getCardinalityTracker().setDepsOk(false);
           } else {
             renderingContext.domClassToggle(newNode, 'missingDeps', true);
           }
         } else {
           renderingContext.domClassToggle(newNode, 'missingDepsWithValue', false);
-          binding.getCardinalityTracker().setDepsOk(true);
           renderingContext.domClassToggle(newNode, 'missingDeps', false);
         }
+        binding.getCardinalityTracker().setDepsOk(match);
       };
       const fromBinding = engine.findBindingRelativeToParentBinding(binding.getParent(), path);
       if (!engine.matchPathBelowBinding(fromBinding, path)) {

@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime';
 import '../src/view/bootstrap/all';
 
 export { default as Editor } from '../src/view/Editor';

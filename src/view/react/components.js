@@ -153,7 +153,7 @@ const newStruct = (Tag, parent, nodeId) => {
       };
       // -- END
       return (
-        <Tag id={nodeId} className={clsSet.join(' ')}>
+        <Tag id={nodeId} className={Array.from(clsSet).join(' ')}>
           {childArr.map((child, index) => getReactComponent(child, index))}
           {text}
         </Tag>

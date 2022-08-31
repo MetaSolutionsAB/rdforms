@@ -1,5 +1,4 @@
 import 'whatwg-fetch';
-import 'regenerator-runtime/runtime';
 import '../src/view/bmd/all';
 import '../src/view/bmd/style.css';
 

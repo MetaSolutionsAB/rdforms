@@ -36,7 +36,12 @@ module.exports = {
       use: [{
         loader: 'babel-loader',
         options: {
-          presets: [['@babel/preset-env', { targets: { ie: 11 } }]],
+          presets: [['@babel/preset-env', {
+            useBuiltIns: 'usage',
+            corejs: 3,
+            shippedProposals: true,
+            targets: { ie: 11 },
+          }]],
           plugins: [
             'lodash',
             '@babel/plugin-proposal-object-rest-spread',

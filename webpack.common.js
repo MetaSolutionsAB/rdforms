@@ -4,10 +4,10 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    bootstrap: './index.bootstrap.js',
-    bmd: './index.bmd.js',
-    react: './index.react.js',
-    jquery: './index.jquery.js',
+    bootstrap: './renderers/bootstrap.js',
+    bmd: './renderers/bmd.js',
+    react: './renderers/react.js',
+    jquery: './renderers/jquery.js',
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -36,7 +36,12 @@ module.exports = {
       use: [{
         loader: 'babel-loader',
         options: {
-          presets: [['@babel/preset-env', { targets: { ie: 11 } }]],
+          presets: [['@babel/preset-env', {
+            useBuiltIns: 'usage',
+            corejs: 3,
+            shippedProposals: true,
+            targets: { ie: 11 },
+          }]],
           plugins: [
             'lodash',
             '@babel/plugin-proposal-object-rest-spread',

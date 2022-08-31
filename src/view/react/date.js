@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useMemo } from 'react';
-import { DatePicker, TimePicker, LocalizationProvider } from '@mui/lab';
-import DateAdapter from '@mui/lab/AdapterMoment';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { TextField } from '@mui/material';
@@ -140,7 +142,7 @@ const dateEditor = (fieldDiv, binding, context) => {
       || selectedDatatype === 'Year' || selectedDatatype === 'YearMonth' || selectedDatatype === 'MonthDay');
     return (
       <>
-      <LocalizationProvider dateAdapter={DateAdapter}>
+      <LocalizationProvider dateAdapter={AdapterMoment}>
         <span className="rdformsDatePicker">
           {visibleDatePicker && (
             <DatePicker

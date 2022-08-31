@@ -46,8 +46,10 @@ const addChangeListener = (inp, binding, regex, extLink, help) => {
         extLink.prop('href', binding.getValue());
         disableExtLink = false;
       }
-      help.toggleClass('rdformsHelpActive', false);
-    } else {
+      if (help) {
+        help.toggleClass('rdformsHelpActive', false);
+      }
+    } else if (help) {
       help.toggleClass('rdformsHelpActive', true);
     }
     if (extLink) {

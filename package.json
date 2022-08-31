@@ -8,7 +8,7 @@
     "application profile",
     "linked data"
   ],
-  "version": "10.7.2",
+  "version": "10.8.0",
   "main": "dist/rdforms.node.js",
   "browser": "dist/rdforms.react.js",
   "module": "main.js",
@@ -18,12 +18,12 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
-    "@entryscape/rdfjson": "^2.5.4",
+    "@entryscape/rdfjson": "^2.5.7",
     "@fortawesome/fontawesome-free": "^5.8.1",
     "@mui/icons-material": "^5.0.3",
-    "@mui/lab": "^5.0.0-alpha.51",
     "@mui/material": "^5.0.3",
     "@mui/styles": "^5.0.1",
+    "@mui/x-date-pickers": "^5.0.0-beta.7",
     "@selectize/selectize": "^0.13.5",
     "arrive": "^2.4.1",
     "bootstrap": "^4.3.1",
@@ -31,7 +31,7 @@
     "bootstrap-material-datetimepicker": "https://bitbucket.org/metasolutions/bootstrap-material-datetimepicker.git#webpack",
     "bootstrap-material-design": "^4.1.1",
     "circular-dependency-plugin": "^5.2.2",
-    "core-js": "^3.1.4",
+    "core-js": "^3.4.0",
     "ifdef-loader": "^2.1.1",
     "jquery": "^3.3.1",
     "jquery-mousewheel": "^3.1.13",
@@ -67,7 +67,7 @@
     "clean-webpack-plugin": "^0.1.18",
     "copy-webpack-plugin": "^5.0.5",
     "css-loader": "^3.5.3",
-    "eslint": "^3.17.1",
+    "eslint": "^8.23.0",
     "eslint-config-airbnb-base": "^11.1.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-requirejs": "^3.1.1",
@@ -96,8 +96,7 @@
     "dist",
     "src",
     "main*",
-    "index*",
-    "loadViewOptions.js"
+    "renderers"
   ],
   "scripts": {
     "build:all": "webpack --display-modules --mode=production --config webpack.all.js",

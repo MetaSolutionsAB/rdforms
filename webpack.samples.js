@@ -85,7 +85,7 @@ const variants = {
 
 function createConfig(options) {
   const devConfig = {
-    entry: `./index.${options.type}.js`,
+    entry: `./renderers/${options.type}.js`,
     output: {
       path: path.join(__dirname, 'samples', options.type),
       filename: 'rdforms.js',
@@ -120,5 +120,3 @@ function createConfig(options) {
 
 
 module.exports = createVariants({}, variants, createConfig);
-
-

@@ -20,9 +20,18 @@ export default class View {
     this.compact = params.compact !== false;
     this.showDescription = params.showDescription === true;
     this.styleCls = params.styleCls || '';
-    this.filterPredicates = Array.isArray(params.filterPredicates) ?
-      params.filterPredicates.reduce((prev, current) => { prev[current] = true; return prev; }, {}) :
-      params.filterPredicates || null;
+    if (Array.isArray(params.filterPredicates)) {
+      this.filterPredicates =
+        params.filterPredicates.reduce((prev, current) => { prev[current] = true; return prev; }, {});
+    } else if (typeof params.filterPredicates === 'object') {
+      this.filterPredicates = params.filterPredicates;
+    } else if (typeof params.filterPredicates === 'string') {
+      this.filterPredicates = params.filterPredicates.split(',')
+        .reduce((prev, current) => { prev[current] = true; return prev; }, {});
+    } else {
+      this.filterPredicates = null;
+    }
+
     this.restrictToItem = params.restrictToItem;
     this.fuzzy = params.fuzzy === true;
     this.markOrigin = params.markOrigin !== false;
@@ -350,7 +359,23 @@ export default class View {
       const prop = item.getProperty();
       // Exclude if property matches.
       if (prop) {
-        return fp[prop] === true || fp[namespaces.shortenKnown(prop)] === true;
+        // Check if we are in a root-like position,
+        // i.e. either directly at the root or further down below groups without property set.
+        let rootLike = true;
+        let view = this;
+        while (view.parentView) {
+          if (view.getBinding().getItem().getProperty()) {
+            rootLike = false;
+          }
+          view = view.parentView;
+        }
+        const shortedProp = namespaces.shortenKnown(prop);
+        if (rootLike) {
+          return fp[prop] === true || fp[shortedProp] === true ||
+            fp[`*${prop}`] === true || fp[`${shortedProp}`] === true;
+        } else {
+          return fp[`*${prop}`] === true || fp[`*${shortedProp}`] === true;
+        }
       } else if (item.getType() === 'group') {
         // Exclude group headers if all children hidden
         const childBindings = item.getChildren() || [];

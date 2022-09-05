@@ -28,6 +28,9 @@ const showNow = (editor, item, bindings, includeLevel) => {
       if (groupedItemsArr.length === 0) {
         return true; // Corresponds to an extention or pure heading, since no children.
       }
+      if (item.hasStyle('atLeastOneChild') || item.hasStyle('exactlyOneChild')) {
+        return true;
+      }
       if (bindings[0].getItemGroupedChildBindings().find((childBindings, idx) =>
         showNow(editor, groupedItemsArr[idx], childBindings, includeLevel))) {
         return true;

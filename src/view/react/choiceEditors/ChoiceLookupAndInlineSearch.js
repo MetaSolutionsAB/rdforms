@@ -95,7 +95,7 @@ export default (props) => {
     value.original.upgrade(props.binding, (upgradedChoice) => {
       setValue(editLocalizedChoice(upgradedChoice));
       setError(upgradedChoice.mismatch === true);
-    });
+    }, props.field);
   };
 
   const ngId = useNamedGraphId(binding, props.context);

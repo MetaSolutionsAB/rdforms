@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import WarningIcon from '@mui/icons-material/Warning';
 import ErrorIcon from '@mui/icons-material/Error';
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
+import Button from '@mui/material/Button';
 import renderingContext from '../renderingContext';
 import './labels';
 import './text';
@@ -223,6 +224,7 @@ renderingContext.preEditorRenderer = (fieldDiv, binding, context) => {
   if (binding.getItem().getType() !== 'group' && context.noCardinalityButtons !== true) {
     context.controlDiv = newStruct('div', fieldDiv);
     renderingContext.domClassToggle(context.controlDiv, 'rdformsFieldControl');
+
     // eslint-disable-next-line no-unused-vars
     const RemoveButton = renderingContext.addRemoveButton(fieldDiv, binding, context);
     context.controlDiv.appendChild(<RemoveButton key={`${binding.getHash()}_removeButton`}></RemoveButton>);
@@ -250,3 +252,27 @@ renderingContext.renderValidationMessage = (fieldDiv, type, message) => {
 };
 
 renderingContext.multiValueSupport = true;
+
+
+renderingContext.addTruncateControl = (fieldsDiv, context) => {
+  const Component = () => {
+    const [truncated, setTruncated] = useState(true);
+    const bundle = context.view.messages;
+    const showLess = () => {
+      renderingContext.domClassToggle(fieldsDiv, 'rdformsTruncated', true);
+      setTruncated(true);
+    };
+
+    const showMore = () => {
+      renderingContext.domClassToggle(fieldsDiv, 'rdformsTruncated', false);
+      setTruncated(false);
+    };
+
+    return <>
+      {truncated ?
+        (<Button className="rdformsShowMore" size="small" onClick={showMore}>{bundle.showMore}</Button>) :
+        (<Button className="rdformsShowLess" size="small" onClick={showLess}>{bundle.showLess}</Button>)}
+    </>;
+  };
+  fieldsDiv.appendChild(<Component></Component>);
+};

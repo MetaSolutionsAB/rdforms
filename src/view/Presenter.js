@@ -103,4 +103,21 @@ export default class Presenter extends View {
   addComponent(fieldDiv, binding) {
     renderingContext.renderPresenter(fieldDiv, binding, this.context);
   }
+
+  /**
+   * Truncate for presentations when:
+   * - not a group (repeated labels does not look nice being truncated)
+   * - if truncate setting is enabled on the presenter or the individual item ('truncate' and not 'noTruncate' is set)
+   * - if the truncate limit is exceeded
+   *
+   * @param item
+   * @param bindings
+   * @return {number}
+   */
+  truncateAt(item, bindings) {
+    return item.getType() !== 'group' &&
+      bindings && bindings.length > this.truncateLimit &&
+      (this.truncate || item.hasStyle('truncate')) &&
+      !item.hasStyle('noTruncate') ? this.truncateLimit : -1;
+  }
 }

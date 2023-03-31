@@ -81,16 +81,36 @@ presenters.itemtype('text').nodetype('URI').style('image').register((fieldDiv, b
 });
 
 // Presenter for text.
-presenters.itemtype('text').register((fieldDiv, binding, context) => {
-  if (binding.getItem().hasStyle('multiline')) {
-    renderingContext.domClassToggle(fieldDiv, 'rdformsMultiline', true);
-  } else {
-    renderingContext.domClassToggle(fieldDiv, 'rdformsSingleline', true);
-  }
-
+/*presenters.itemtype('text').style('inline').register((fieldDiv, binding, context) => {
   const language = binding.getLanguage();
-  if (context.view.showLanguage && language) {
-    fieldDiv.appendChild(<span className="rdformsLanguage" key={`lang_${binding.getHash()}`}>{language}</span>);
+
+  // HERE
+  const val2binding = {};
+  // eslint-disable-next-line no-return-assign
+  parentBinding.getChildBindingsFor(item).forEach(b => (val2binding[b.getValue()] = b));
+
+
+  const lbl = binding.getItem().hasStyle('showValue') ? binding.getValue() : binding.getGist();
+  if (language) {
+    fieldDiv.appendChild(<span lang={language} key={binding.getHash()}>{lbl}</span>);
+  } else {
+    fieldDiv.appendChild(<span key={binding.getHash()}>{lbl}</span>);
+  }
+});*/
+
+presenters.itemtype('text').register((fieldDiv, binding, context) => {
+  const item = binding.getItem();
+  const language = binding.getLanguage();
+  if (!item.hasStyle('inline')) {
+    if (item.hasStyle('multiline')) {
+      renderingContext.domClassToggle(fieldDiv, 'rdformsMultiline', true);
+    } else {
+      renderingContext.domClassToggle(fieldDiv, 'rdformsSingleline', true);
+    }
+
+    if (context.view.showLanguage && language) {
+      fieldDiv.appendChild(<span className="rdformsLanguage" key={`lang_${binding.getHash()}`}>{language}</span>);
+    }
   }
 
   // The text is shown as a link to the parents bindings URI if:
@@ -99,9 +119,9 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
   // 3) The current item is first in the parents list of children.
   // 4) The parent binding corresponds to a URI
   const parentBinding = binding.getParent();
-  if (binding.getItem().hasStyle('label')
+  if (item.hasStyle('label')
     && context.view.topLevel !== true
-    && parentBinding != null && parentBinding.getItem().getChildren()[0] === binding.getItem()
+    && parentBinding != null && parentBinding.getItem().getChildren()[0] === item
     && parentBinding.getStatement() != null && parentBinding.getStatement().getType() === 'uri') {
     const attrs = system.attachLinkBehaviour(fieldDiv, binding, parentBinding);
     const component = attrs.component || null;
@@ -115,7 +135,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
       parentBinding.getStatement().getValue()}><span>{vmap ?
       utils.getLocalizedValue(vmap).value || val : val}</span>{component}</a>);
   } else {
-    const lbl = binding.getItem().hasStyle('showValue') ? binding.getValue() : binding.getGist();
+    const lbl = item.hasStyle('showValue') ? binding.getValue() : binding.getGist();
     if (language) {
       fieldDiv.appendChild(<span lang={language} key={binding.getHash()}>{lbl}</span>);
     } else {

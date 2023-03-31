@@ -269,4 +269,7 @@ export default class Editor extends Presenter {
     return renderingContext.multiValueSupport &&
     (item.hasStyle('horizontalCheckBoxes') || item.hasStyle('verticalCheckBoxes'));
   }
+  truncateAt(item, bindings) {
+    return -1;
+  }
 }

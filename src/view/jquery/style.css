@@ -20,8 +20,9 @@
     margin-bottom: 0.5em;
 }
 
-.rdformsEditor .cardgroupEditor>.rdformsFields>.rdformsGroup
-.cardgroup>.rdformsFields>.rdformsGroup {
+.rdformsEditor .cardgroupEditor>.rdformsFields>.rdformsGroup,
+.cardgroup>.rdformsFields>.rdformsGroup,
+.rdformsCard>.rdformsFields>.rdformsGroup {
     padding: 2px 5px 5px 10px;
     margin-right: -5px;
     margin-bottom: 14px;

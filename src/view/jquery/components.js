@@ -42,3 +42,21 @@ renderingContext.domClassToggle = (node, classStr, addOrRemove) => {
 };
 
 renderingContext.prePresenterViewRenderer = renderingContext.preEditorViewRenderer;
+
+renderingContext.addTruncateControl = (fieldsDiv, context) => {
+  const bundle = context.view.messages;
+  const showMore = renderingContext.domCreate('button', fieldsDiv);
+  renderingContext.domClassToggle(showMore, 'rdformsShowMore', true);
+  showMore.innerText = bundle.showMore;
+  showMore.onclick = () => {
+    renderingContext.domClassToggle(fieldsDiv, 'rdformsTruncated', false);
+  };
+
+  const showLess = renderingContext.domCreate('button', fieldsDiv);
+  renderingContext.domClassToggle(showLess, 'rdformsShowLess', true);
+
+  showLess.innerText = bundle.showLess;
+  showLess.onclick = () => {
+    renderingContext.domClassToggle(fieldsDiv, 'rdformsTruncated', true);
+  };
+}

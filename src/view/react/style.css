@@ -39,7 +39,8 @@
 }
 
 .rdformsEditor .cardgroupEditor>.rdformsFields>.rdformsGroup,
-.cardgroup>.rdformsFields>.rdformsGroup {
+.cardgroup>.rdformsFields>.rdformsGroup,
+.rdformsCard>.rdformsFields>.rdformsGroup {
     padding: 6px 6px 6px 12px;
     margin-right: -5px;
     margin-bottom: 14px;
@@ -171,7 +172,8 @@ div.MuiTooltip-tooltip {
     padding-bottom: 0;
 }
 .rdformsEditor .cardgroupEditor>.rdformsFields>.rdformsGroup,
-.cardgroup>.rdformsFields>.rdformsGroup {
+.cardgroup>.rdformsFields>.rdformsGroup,
+.rdformsCard>.rdformsFields>.rdformsGroup {
     margin-bottom: 5px;
 }
 
@@ -201,7 +203,8 @@ div.MuiTooltip-tooltip {
 }
 
 .rdformsEditor .rdformsError.cardgroupEditor>.rdformsFields>.rdformsGroup,
-.rdformsError.cardgroup>.rdformsFields>.rdformsGroup {
+.rdformsError.cardgroup>.rdformsFields>.rdformsGroup,
+.rdformsError.rdformsCard>.rdformsFields>.rdformsGroup {
     margin-right: 11px;
 }
 
@@ -231,4 +234,13 @@ div.MuiTooltip-tooltip {
 
 .Mui-disabled.rdformsDatatypeOption {
     color: red;
+}
+
+.rdformsPresenter .rdformsShowLess,
+.rdformsPresenter .rdformsShowMore {
+    margin-left: 0;
+}
+
+.rdformsPresenter .rdformsInline {
+    padding-left: 0em;
 }

@@ -21,15 +21,18 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
   const $label = jquery('<span class="rdformsLabel" tabindex="0">').text(label).appendTo($labelDiv);
   const card = item.getCardinality();
   const b = context.view.messages;
-  if (card.min > 0) {
-    jquery('<span class="rdformsMark rdformsMandatoryMark">').text(b.mandatoryMark)
-      .appendTo($labelDiv);
-  } else if (card.pref > 0) {
-    jquery('<span class="rdformsMark rdformsRecommendedMark">').text(b.recommendedMark)
-      .appendTo($labelDiv);
-  } else {
-    jquery('<span class="rdformsMark rdformsOptionalMark">').text(b.optionalMark)
-      .appendTo($labelDiv);
+  // Only show mark if there is a property that allows the item to have an expression on its own
+  if (item.getProperty()) {
+    if (card.min > 0) {
+      jquery('<span class="rdformsMark rdformsMandatoryMark">').text(b.mandatoryMark)
+        .appendTo($labelDiv);
+    } else if (card.pref > 0) {
+      jquery('<span class="rdformsMark rdformsRecommendedMark">').text(b.recommendedMark)
+        .appendTo($labelDiv);
+    } else {
+      jquery('<span class="rdformsMark rdformsOptionalMark">').text(b.optionalMark)
+        .appendTo($labelDiv);
+    }
   }
 
   // Buttons of various sorts
@@ -39,7 +42,9 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     (card.max === null || card.max !== card.min)) {
     // If not table or min and max are not the same, then add buttons.
     if (item.getType() === 'group') {
-      renderingContext.addGroupButtons(rowNode, $labelDiv[0], binding, context);
+      if (item.getProperty()) {
+        renderingContext.addGroupButtons(rowNode, $labelDiv[0], binding, context);
+      }
     } else {
       renderingContext.addCreateChildButton(rowNode, $labelDiv[0], binding, context);
     }

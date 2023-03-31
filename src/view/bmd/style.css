@@ -111,7 +111,8 @@
 }
 
 .rdformsEditor .cardgroupEditor>.rdformsFields>.rdformsGroup,
-.cardgroup>.rdformsFields>.rdformsGroup {
+.cardgroup>.rdformsFields>.rdformsGroup,
+.rdformsCard>.rdformsFields>.rdformsGroup {
   border-radius: 2px;
   color: rgba(0,0,0, 0.87);
   background: #fff;

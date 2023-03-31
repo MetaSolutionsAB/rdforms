@@ -20,6 +20,8 @@ export default class View {
     this.compact = params.compact !== false;
     this.showDescription = params.showDescription === true;
     this.styleCls = params.styleCls || '';
+    this.truncateLimit = params.truncateLimit !== undefined ? params.truncateLimit : 10;
+    this.truncate = params.truncate !== undefined ? params.truncate : false;
     if (Array.isArray(params.filterPredicates)) {
       this.filterPredicates =
         params.filterPredicates.reduce((prev, current) => { prev[current] = true; return prev; }, {});
@@ -223,11 +225,16 @@ export default class View {
           this.context = { view: this };
           lastRow = this.addRow(lastRow, bindings[0], true);
         } else {
+          const truncateLimit = this.truncateAt(item, bindings);
           for (let i = 0; i < bindings.length; i++) {
             // Add row with label if first row of same item or the binding is a group.
             this.context = { view: this };
             lastRow = this.addRow(lastRow, bindings[i], i === 0 ||
-              bindings[i] instanceof GroupBinding);
+              bindings[i] instanceof GroupBinding, i, truncateLimit);
+          }
+          if (truncateLimit !== -1) {
+            const rdformsFields = renderingContext.domQuery('.rdformsFields', lastRow);
+            if (rdformsFields) renderingContext.addTruncateControl(rdformsFields, this.context);
           }
         }
       } else {
@@ -250,7 +257,7 @@ export default class View {
    * @param {Boolean} includeLabel, tells if a label should be added, if undefined a label is
    * added only when the binding is a GroupBinding.
    */
-  addRow(lastRow, binding, includeLabel) {
+  addRow(lastRow, binding, includeLabel, index, truncateLimit) {
     let _includeLabel = includeLabel;
     let fieldDiv;
     let newRow;
@@ -269,6 +276,12 @@ export default class View {
       newRow = this.createRowNode(lastRow, binding, item);
       const n = renderingContext.domCreate('div', newRow);
       renderingContext.domClassToggle(n, 'rdformsFields', true);
+      if (truncateLimit !== -1) {
+        renderingContext.domClassToggle(n, 'rdformsTruncated', true);
+      }
+      if (item.hasStyle('inline')) {
+        renderingContext.domClassToggle(n, 'rdformsInline', true);
+      }
       fieldDiv = renderingContext.domCreate('div', n);
       this.createEndOfRowNode(newRow, binding, item);
     } else {
@@ -277,9 +290,15 @@ export default class View {
       if (rdformsFields != null) {
         fieldDiv = renderingContext.domCreate('div', rdformsFields);
         renderingContext.domClassToggle(fieldDiv, 'rdformsRepeatedValue', true);
+        if (truncateLimit !== -1 && index >= truncateLimit) {
+          renderingContext.domClassToggle(fieldDiv, 'rdformsMaybeTruncated', true);
+        }
       } else { // Unless we have an non-expanded row.
         const n = renderingContext.domCreate('div', lastRow);
         renderingContext.domClassToggle(n, 'rdformsFields', true);
+        if (item.hasStyle('inline')) {
+          renderingContext.domClassToggle(n, 'rdformsInline', true);
+        }
         fieldDiv = renderingContext.domCreate('div', n);
         this.createEndOfRowNode(newRow, binding, item);
       }
@@ -332,6 +351,10 @@ export default class View {
     this.addLabel(rowNode, binding, item);
     if (binding && this.filterBinding(binding)) {
       renderingContext.domClassToggle(rowNode, 'hiddenProperty', true);
+    }
+
+    if (item.hasStyle('card')) {
+      renderingContext.domClassToggle(rowNode, 'rdformsCard', true);
     }
     return rowNode;
   }
@@ -424,5 +447,9 @@ export default class View {
 
   isMultiValued(item) {
     return false;
+  }
+
+  truncateAt(item, bindings) {
+    return -1;
   }
 }

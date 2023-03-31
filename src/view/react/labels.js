@@ -118,18 +118,23 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     const b = context.view.messages;
     let mark;
 
-    if (card.min > 0) {
-      mark = <span className="rdformsMark rdformsMandatoryMark">{b.mandatoryMark}</span>;
-    } else if (card.pref > 0) {
-      mark = <span className="rdformsMark rdformsRecommendedMark">{b.recommendedMark}</span>;
-    } else {
-      mark = <span className="rdformsMark rdformsOptionalMark">{b.optionalMark}</span>;
+    // Only show mark if there is a property that allows the item to have an expression on its own
+    if (item.getProperty()) {
+      if (card.min > 0) {
+        mark = <span className="rdformsMark rdformsMandatoryMark">{b.mandatoryMark}</span>;
+      } else if (card.pref > 0) {
+        mark = <span className="rdformsMark rdformsRecommendedMark">{b.recommendedMark}</span>;
+      } else {
+        mark = <span className="rdformsMark rdformsOptionalMark">{b.optionalMark}</span>;
+      }
     }
     let Button;
     if (binding == null) {
       Button = renderingContext.addExpandButton(rowNode, null, item, context);
     } else if (item.getType() === 'group' && !context.view.showAsTable(item)) {
-      Button = renderingContext.addRemoveButton(rowNode, binding, context);
+      if (item.getProperty()) {
+        Button = renderingContext.addRemoveButton(rowNode, binding, context);
+      }
     }
 
     const view = context.view;
@@ -160,11 +165,13 @@ const ERR = (props) => {
   const [code, setCode] = useState(binding.getCardinalityTracker().getCode());
   useEffect(() => {
     const cardTr = binding.getCardinalityTracker();
-    const listener = cardTr.addListener(() => {
+    const checkAndSetCode = () => {
       const newCode = cardTr.getCode();
       renderingContext.domClassToggle(rowNode, 'rdformsError', newCode !== CODES.UNKNOWN);
       setCode(newCode);
-    });
+    };
+    checkAndSetCode();  // We call it here to be sure, not depending on a potential callback from cardTr
+    const listener = cardTr.addListener(checkAndSetCode);
     return () => cardTr.removeListener(listener);
   }, []);
   if (code === CODES.UNKNOWN) {

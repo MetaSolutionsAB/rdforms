@@ -317,6 +317,8 @@ const renderingContext = {
   },
   fillEditorTable(/* table, bindings, context */) {
   },
+  addTruncateControl(/* fieldsDiv */) {
+  }
 };
 
 system.getChoice = renderingContext.getChoice;
@@ -334,6 +336,8 @@ const groupPresenter = (fieldDiv, binding, context) => {
     showDescription: context.view.showDescription,
     defaultLanguage: context.view.defaultLanguage,
     filterTranslations: context.view.filterTranslations,
+    truncate: context.view.truncate,
+    truncateLimit: context.view.truncateLimit,
     includeLevel: context.view.includeLevel, // Copied from groupEditor, was this.includeLevel but that 'this' does not make sense here
   }, fieldDiv);
 };
@@ -351,6 +355,8 @@ const groupEditor = (fieldDiv, binding, context) => {
     topLevel: false,
     compact: context.view.compact,
     showDescription: context.view.showDescription,
+    truncate: context.view.truncate,
+    truncateLimit: context.view.truncateLimit,
     includeLevel: context.view.includeLevel,
   }, fieldDiv);
   context.view._subEditors.push(subView);

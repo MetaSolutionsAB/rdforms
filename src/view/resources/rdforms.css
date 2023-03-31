@@ -740,3 +740,48 @@ a.rdformsUrl:hover {
     font-style: italic;
     margin-bottom: 10px;
 }
+
+.rdformsPresenter .rdformsInline>.rdformsRepeatedValue,
+.rdformsPresenter .rdformsInline>.rdformsOrigin {
+    border: 1px solid #E6E6E6;
+    padding: 4px 8px;
+    margin-top: initial;
+    margin-right: 5px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.rdformsPresenter .rdformsShowLess,
+.rdformsPresenter .rdformsShowMore {
+    margin-left: 1em;
+    margin-top: 5px;
+}
+
+.rdformsPresenter .rdformsInline>.rdformsShowLess,
+.rdformsPresenter .rdformsInline>.rdformsShowMore {
+    margin-left: 0;
+    margin-top: initial;
+}
+
+.rdformsPresenter .rdformsTruncated>.rdformsMaybeTruncated {
+    display: none;
+}
+
+.rdformsPresenter .rdformsTruncated>.rdformsShowLess {
+    display: none;
+}
+.rdformsPresenter .rdformsShowMore {
+    display: none;
+}
+.rdformsPresenter .rdformsTruncated>.rdformsShowMore {
+    display: initial;
+}
+
+.rdformsPresenter .rdformsInline>.rdformsField {
+    margin-left: 0;
+}
+
+.rdformsPresenter .rdformsInline {
+    padding-left: 1em;
+}

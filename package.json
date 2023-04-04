@@ -8,7 +8,7 @@
     "application profile",
     "linked data"
   ],
-  "version": "10.9.0",
+  "version": "10.9.1",
   "main": "dist/rdforms.node.js",
   "browser": "dist/rdforms.react.js",
   "module": "main.js",
@@ -18,7 +18,7 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
-    "@entryscape/rdfjson": "^2.6.0",
+    "@entryscape/rdfjson": "2.5.8",
     "@fortawesome/fontawesome-free": "^5.8.1",
     "@mui/icons-material": "^5.0.3",
     "@mui/material": "^5.0.3",

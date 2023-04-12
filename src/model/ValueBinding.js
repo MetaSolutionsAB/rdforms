@@ -106,7 +106,9 @@ export default class ValueBinding extends Binding {
    */
   setLanguage(lang, silent) {
     this._statement.setLanguage(lang, silent);
-    this.updateAssertions();
+    if (!silent) {
+      this.bindingChange(this);
+    }
   }
 
   /**

@@ -174,6 +174,9 @@ export default class Editor extends Presenter {
     } else {
       target = 1;
     }
+    if (item.hasStyle('nonEditable') && !item.hasStyle('autoInitDate') && !item.hasStyle('autoUpdateDate') && !item.hasStyle('autoUUID') && !item.hasStyle('autoValue')) {
+      return _bindings;
+    }
     if (target > _bindings.length) {
       _bindings = _bindings.concat([]);
       while (target > _bindings.length) {

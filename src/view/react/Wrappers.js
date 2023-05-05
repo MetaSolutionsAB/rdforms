@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import Presenter from '../Presenter';
 import Editor from '../Editor';
 import ValidationPresenter from '../ValidationPresenter';
@@ -12,7 +12,8 @@ const fixIt = (Cls) => {
       if (!this.initiatedAlready && this.domNode.parent instanceof Node) {
         // eslint-disable-next-line no-unused-vars
         const Cmp = this.domNode.component;
-        ReactDOM.render(<Cmp></Cmp>, this.domNode.parent);
+        const root = createRoot(this.domNode.parent);
+        root.render(<Cmp></Cmp>);
       }
       this.initiatedAlready = true;
     }
@@ -33,4 +34,8 @@ const ReactEditor = fixIt(Editor);
 const ReactPresenter = fixIt(Presenter);
 const ReactValidationPresenter = fixIt(ValidationPresenter);
 
-export { ReactEditor as Editor, ReactPresenter as Presenter, ReactValidationPresenter as ValidationPresenter };
+export {
+  ReactEditor as Editor,
+  ReactPresenter as Presenter,
+  ReactValidationPresenter as ValidationPresenter,
+};

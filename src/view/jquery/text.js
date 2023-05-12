@@ -121,7 +121,7 @@ presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding
   const bundle = context.view.messages;
   const node = jquery('<div>').appendTo(fieldDiv)[0];
   ['years', 'months', 'days', 'hours', 'minutes'].forEach((key) => {
-    if (data.hasOwnProperty(key)) {
+    if (data.hasOwnProperty(key) && data[key] !== 0) {
       jquery(`<span class="durationLabel">${bundle[`duration_${key}`]}:</span><span class="durationValue">${data[key]}</span>`)
         .appendTo(node);
     }

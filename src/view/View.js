@@ -353,7 +353,11 @@ export default class View {
       renderingContext.domClassToggle(rowNode, 'hiddenProperty', true);
     }
 
-    if (item.hasStyle('card')) {
+    const isEditor = this._subEditors !== undefined;
+    if (item.hasStyle('card') ||
+      (item.hasStyle('cardInEdit') && isEditor) ||
+      (item.hasStyle('cardInPresent') && !isEditor)
+    ) {
       renderingContext.domClassToggle(rowNode, 'rdformsCard', true);
     }
     return rowNode;

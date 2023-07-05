@@ -70,7 +70,10 @@ export default class Item {
       'deprecated',
       'inline',
       'truncate',
-      'noTruncate'
+      'noTruncate',
+      'card',
+      'cardInPresent',
+      'cardInEdit'
     ];
     this._getLocalizedValue = utils.getLocalizedValue;
   }

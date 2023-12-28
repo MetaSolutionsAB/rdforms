@@ -6,7 +6,7 @@ export const fromDuration = (value) => {
   const days = f(value.match(/([0-9])*D/));
   const hours = f(value.match(/([0-9])*H/));
   let months;
-  let minutes;
+  let minutes = 0;
   if (value.indexOf('T') === -1) {
     months = f(value.match(/([0-9])*M/));
   } else {

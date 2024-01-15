@@ -16,7 +16,11 @@ export default class ItemStore {
    */
   constructor(ontologyStore) {
     this.automaticSortAllowed = true;
-    this.ignoreMissingItems = true;
+    /**
+     * Value may be console methods or 'throw'.
+     * @type {string}
+     */
+    this.handleErrorAs = 'throw';
 
     //= =================================================;
     // Private Attribute;
@@ -63,10 +67,12 @@ export default class ItemStore {
 
   renameItem(from, to) {
     if (this._registry[to]) {
-      throw new Error(`Cannot rename to ${to} since an item with that id already exists.`);
+      this._handleError(`Cannot rename to ${to} since an item with that id already exists.`);
+      return;
     }
     if (to === '' || to === null) {
-      throw new Error('Cannot give an item an empty string or null as id.');
+      this._handleError('Cannot give an item an empty string or null as id.');
+      return;
     }
     const item = this._registry[from];
     if (item) {
@@ -180,8 +186,8 @@ export default class ItemStore {
     if (source.extends) {
       // Explicit extends given
       const extItem = this._registry[source.extends];
-      if (extItem == null && !this.ignoreMissingItems) {
-        throw new Error(`Cannot find item to extend with id: ${source.extends}`);
+      if (extItem == null) {
+        this._handleError(`Cannot find item to extend with id: ${source.extends}`);
       }
       if (extItem) {
         const newSource = this.createExtendedSource(extItem.getSource(), source);
@@ -234,10 +240,12 @@ export default class ItemStore {
     }
     // No type means it is a reference, check that the referred item (via id) exists
     if (id == null) {
-      throw new Error('Cannot create subitem, `type` for creating new or `id` for referencing external are required.');
+      this._handleError('Cannot create subitem, `type` for creating new or `id` for referencing external are required.');
+      return;
     }
     if (this._registry[id] == null) {
-      throw new Error(`Cannot find referenced subitem using identifier: ${id}`);
+      this._handleError(`Cannot find referenced subitem using identifier: ${id}`);
+      return;
     }
 
     // Clone if forceClone set to true or if the source contains non-id properties.
@@ -274,6 +282,13 @@ export default class ItemStore {
       // If child is not a object but a direct string reference,
       const childToUse = typeof child === 'string' ? sourceArray[index] = { id: child } : child;
       return this.createItem(childToUse, forceClone, false, bundle);
-    });
+    }).filter(item => item);
+  }
+
+  _handleError(message) {
+    if (this.handleErrorAs === 'throw') {
+      throw new Error(message);
+    }
+    console[this.handleErrorAs](message);
   }
 }

@@ -35,7 +35,7 @@ module.exports = {
   module: {
     rules: [{
       test: /\.js$/,
-      exclude: /node_modules\/(?!(bootstrap|bootstrap-material-design|@entryscape)\/).*/,
+      exclude: /node_modules\/(?!(@entryscape)\/).*/,
       use: [{
         loader: 'babel-loader',
         options: {

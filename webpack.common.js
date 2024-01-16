@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -26,13 +26,16 @@ module.exports = {
       'window.jquery': 'jquery',
       Popper: ['popper.js', 'default'],
     }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment/,
+    }),
     new CleanWebpackPlugin(),
   ],
   module: {
     rules: [{
       test: /\.js$/,
-      exclude: /node_modules\/(?!(bootstrap|bootstrap-material-design|@entryscape)\/).*/,
+      exclude: /node_modules\/(?!(@entryscape)\/).*/,
       use: [{
         loader: 'babel-loader',
         options: {
@@ -45,9 +48,8 @@ module.exports = {
           plugins: [
             'lodash',
             '@babel/plugin-proposal-object-rest-spread',
-            '@babel/plugin-proposal-class-properties',
+            '@babel/plugin-transform-class-properties',
             '@babel/plugin-syntax-dynamic-import',
-            ['@babel/plugin-transform-modules-commonjs', { strictMode: false }],
             ['@babel/plugin-transform-react-jsx', {}],
           ],
         },
@@ -65,8 +67,8 @@ module.exports = {
       use: ['raw-loader'],
     }, {
       test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+      type: 'asset/resource',
       use: [{
-        loader: 'file-loader',
         options: {
           name: '[name].[ext]',
           outputPath: 'fonts/',
@@ -76,8 +78,6 @@ module.exports = {
     }],
   },
   node: {
-    fs: 'empty',
-    process: false,
     global: true,
   },
   resolve: {
@@ -86,6 +86,13 @@ module.exports = {
       jquery: path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
       moment: path.resolve(path.join(__dirname, 'node_modules', 'moment')),
     },
+    fallback: {
+      fs: false,
+      process: false,
+    },
+  },
+  stats: {
+    modules: true,
   },
   context: __dirname, // string (absolute path!)
 };

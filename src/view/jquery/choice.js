@@ -57,17 +57,17 @@ presenters.itemtype('choice').register(choicify(
       } else {
         system.attachLinkBehaviour($el[0], binding);
       }
-      if (choice.load != null) {
-        choice.load(() => {
-          const locValue2 = utils.getLocalizedValue(choice.label);
-          $el.text(locValue2.value);
-          if (locValue2.lang) {
-            $el.attr('lang', locValue2.lang);
-          } else {
-            $el.attr('lang', undefined);
-          }
-        });
-      }
+    }
+    if (choice.load != null) {
+      choice.load(() => {
+        const locValue2 = utils.getLocalizedValue(choice.label);
+        $el.text(locValue2.value);
+        if (locValue2.lang) {
+          $el.attr('lang', locValue2.lang);
+        } else {
+          $el.attr('lang', undefined);
+        }
+      });
     }
     if (locValue.lang) {
       $el.attr('lang', locValue.lang);

@@ -1,4 +1,4 @@
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
@@ -56,8 +56,8 @@ const getHTMLPlugins = () => {
   ];
 };
 
-module.exports = (env, argv) => {
-  const type = argv.type ? argv.type : 'bmd';
+module.exports = (env) => {
+  const type = env.type ? env.type : 'bmd';
 
   const devConfig = {
     entry: `./renderers/${type}.js`,
@@ -65,6 +65,7 @@ module.exports = (env, argv) => {
       filename: 'rdforms.[name].js',
       library: 'rdforms',
       libraryTarget: "umd",
+      publicPath: '/',      
     },
     mode: 'development',
     devtool: 'inline-source-map',
@@ -82,33 +83,31 @@ module.exports = (env, argv) => {
        //  cwd: process.cwd(),
        //}),
     ],
-    node: {
-      fs: 'empty',
-      process: false,
-    },
     devServer: {
-      contentBase: [
-        path.join(__dirname, '/html'),
-        path.join(__dirname, 'node_modules', '@entryscape'),
-        path.join(__dirname, 'node_modules', '@fortawesome'),
-      ],
       hot: true,
       open: true,
-      publicPath: '/',
+      static: [{
+        directory: path.join(__dirname, '/html'),
+      }, {
+        directory: path.join(__dirname, 'node_modules', '@entryscape'),
+      }, {
+        directory: path.join(__dirname, 'node_modules', '@fortawesome'),
+      }],      
     },
   };
 
-  // Customizing object behavior
-  return merge({
-    customizeObject(a, b, key) {
-      if (key === 'entry') {
-        // Custom merging
-        return b;
-      }
+  // // Customizing object behavior
+  // return merge({
+  //   customizeObject(a, b, key) {
+  //     if (key === 'entry') {
+  //       // Custom merging
+  //       return b;
+  //     }
 
-      // Fall back to default merging
-      return undefined;
-    }
-  })(common, devConfig);
+  //     // Fall back to default merging
+  //     return undefined;
+  //   }
+  // })(common, devConfig);
+  return merge(common, devConfig);
 };
 

@@ -10,7 +10,9 @@ module.exports = {
     libraryTarget: 'commonjs2',
   },
   plugins: [
-    new webpack.IgnorePlugin(/\.css$/),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /\.css$/,
+    }),
   ],
   context: __dirname, // string (absolute path!)
 };

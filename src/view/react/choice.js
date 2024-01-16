@@ -49,10 +49,18 @@ presenters.itemtype('choice').register(choicify(
     const item = binding.getItem();
     const title = desc || choice.seeAlso || choice.value;
     if ((item.hasStaticChoices() && !item.hasStyle('externalLink')) || item.hasStyle('noLink')) {
-      const locValue = getLocalizedLabel(choice, isEditor);
-      const langAttr = locValue.lang ? { lang: locValue.lang } : {};
-      fieldDiv.appendChild(<div key={binding.getHash()} {...langAttr} title={title} src={choice.value
-      }>{locValue.value}</div>);
+      fieldDiv.appendChild(React.createElement(() => {
+        const [locValue, setLocValue] = useState(getLocalizedLabel(choice, isEditor));
+        useEffect(() => {
+          if (choice.load != null) {
+            choice.load(() => {
+              setLocValue(getLocalizedLabel(choice, isEditor));
+            });
+          }
+        }, []);
+        const langAttr = locValue.lang ? {lang: locValue.lang} : {};
+        return <div key={binding.getHash()} {...langAttr} title={title}>{locValue.value}</div>
+      }));
     } else {
       let attrs;
       if (item.hasStyle('externalLink')) {

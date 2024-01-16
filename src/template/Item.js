@@ -185,6 +185,24 @@ export default class Item {
   getSpecificationMap(original) { return this.getSource(original).specification; }
   setSpecificationMap(map) { this._setTextMap('specification', map); }
 
+  getText(attr, returnDetails, original) {
+    const s = this.getSource(original);
+    const t = s.text || {};
+    return returnDetails ? utils.getLocalizedValue(t[attr]) : utils.getLocalizedValue(t[attr]).value;
+  }
+  setText(attr, value, lang) {
+    const s = this.getSource(true);
+    const t = s.text = s.text || {};
+    t[attr] = this._setLangHash(t[attr], value, lang);
+    this.refreshExtends();
+  }
+  setTextMap(attr, map) {
+    const s = this.getSource(true);
+    const t = s.text = s.text || {};
+    setObjAttr(t, attr, map);
+    this.refreshExtends();
+  }
+
   /**
    * @return {String|null} as a URI, may be null for Groups, never null for Text or choice
    * item types.

@@ -8,7 +8,7 @@
     "application profile",
     "linked data"
   ],
-  "version": "10.11.0",
+  "version": "10.11.1",
   "main": "dist/rdforms.node.js",
   "browser": "dist/rdforms.react.js",
   "module": "main.js",
@@ -53,9 +53,9 @@
   "devDependencies": {
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.0",
-    "@babel/plugin-transform-class-properties": "^7.23.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.16.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-class-properties": "^7.23.3",
     "@babel/plugin-transform-modules-commonjs": "^7.16.0",
     "@babel/plugin-transform-react-jsx": "^7.16.0",
     "@babel/preset-env": "^7.18.6",
@@ -76,7 +76,6 @@
     "mini-css-extract-plugin": "^0.4.1",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
     "parallel-webpack": "^2.6.0",
-    "print-licenses": "https://bitbucket.org/metasolutions/print-licenses#master",
     "q": "^1.5.0",
     "raw-loader": "^4.0.2",
     "style-loader": "^3.3.1",
@@ -102,8 +101,7 @@
     "dev:bootstrap": "webpack serve --config webpack.dev.js --env type=bootstrap",
     "dev:jquery": "webpack serve --config webpack.dev.js --env type=jquery",
     "dev:react": "webpack serve --config webpack.dev.js --env type=react",
-    "serve:samples": "webpack serve --config webpack.samples.serve.js",
-    "print-licenses": "print-licenses"
+    "serve:samples": "webpack serve --config webpack.samples.serve.js"
   },
   "author": {
     "name": "Matthias Palmér",

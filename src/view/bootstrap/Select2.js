@@ -15,6 +15,7 @@ renderingContext.renderSelect = (fieldDiv, binding, context) => {
   const options = {
     placeholder: binding.getItem().getPlaceholder() || '',
     rdformsItem: binding.getItem(),
+    binding,
     chooser: context.chooser,
   };
   if (choices && choices.length > 0) {

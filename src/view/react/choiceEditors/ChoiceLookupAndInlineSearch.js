@@ -49,7 +49,7 @@ export default (props) => {
       }
       globalChoiceQueryThrottle = setTimeout(() => {
         globalChoiceQueryThrottle = undefined;
-        props.context.chooser.search(binding.getItem(), inputValue.trimStart()).then((results) => {
+        props.context.chooser.search(binding, inputValue.trimStart()).then((results) => {
           if (active) {
             setOptions(results.map(editLocalizedChoice));
           }

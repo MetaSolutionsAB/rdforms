@@ -38,7 +38,7 @@ renderingContext.renderSelect = function (fieldDiv, binding, context) {
   } else if (context.chooser && typeof context.chooser.search === 'function') {
     disable = false;
     settings.load = (query, callback) => {
-      context.chooser.search(binding.getItem(), query).then((choices) => {
+      context.chooser.search(binding, query).then((choices) => {
         callback(choices.map(c => ({
           id: c.value,
           text: utils.getLocalizedValue(c.label).value || '',

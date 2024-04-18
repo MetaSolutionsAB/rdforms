@@ -15,10 +15,12 @@
   "repository": "https://bitbucket.org/metasolutions/rdforms.git",
   "license": "LGPL-3.0-only",
   "homepage": "https://rdforms.org",
+  "peerDependencies": {
+    "@entryscape/rdfjson": "2.7.6"
+  },
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
-    "@entryscape/rdfjson": "2.7.6",
     "@fortawesome/fontawesome-free": "^5.8.1",
     "@mui/icons-material": "^5.0.3",
     "@mui/material": "^5.0.3",
@@ -83,7 +85,7 @@
     "ttf-loader": "^1.0.2",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1",
+    "webpack-dev-server": "^4.15.2",
     "webpack-merge": "^5.8.0"
   },
   "files": [

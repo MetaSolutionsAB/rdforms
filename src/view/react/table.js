@@ -1,4 +1,5 @@
 import renderingContext from '../renderingContext';
+import utils from '../../utils';
 import jquery from 'jquery';
 
 renderingContext.addPresenterTable = (newRow, firstBinding, context) => {
@@ -9,7 +10,8 @@ renderingContext.addPresenterTable = (newRow, firstBinding, context) => {
   const $tHeadRow = jquery('<tr>').appendTo($table);
   for (let colInd = 0; colInd < childItems.length; colInd++) {
     const $th = jquery('<th>').appendTo($tHeadRow);
-    renderingContext.attachItemInfo(item, jquery('<span>').text(childItems[colInd].getLabel()).appendTo($th), context);
+    let label = utils.getLocalizedValue(childItems[colInd].getLabelMap(), context.view.getLocale()).value
+    renderingContext.attachItemInfo(item, jquery('<span>').text(label).appendTo($th), context);
   }
   return $table[0];
 };

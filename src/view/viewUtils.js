@@ -142,20 +142,20 @@ export const getDateValue = (value, datatype) => {
   return '';
 };
 
-export const getDatePresentationFromDatatype = (datatype, date) => {
+export const getDatePresentationFromDatatype = (datatype, date, locale) => {
   switch (datatype) {
     case 'DateTime':
-      return moment(date).format('lll');
+      return moment(date).locale(locale).format('lll');
     case 'Date':
-      return moment(date).format('LL');
+      return moment(date).locale(locale).format('LL');
     case 'Time':
-      return moment(date).format('LT');
+      return moment(date).locale(locale).format('LT');
     case 'Year':
-      return moment(date).format('YYYY');
+      return moment(date).locale(locale).format('YYYY');
     case 'YearMonth':
-      return moment(date).format('MMMM YYYY');
+      return moment(date).locale(locale).format('MMMM YYYY');
     case 'MonthDay':
-      return moment(date).format('D MMMM');
+      return moment(date).locale(locale).format('D MMMM');
     default:
       return '';
   }
@@ -174,7 +174,7 @@ export const getAllowedDateAlternatives = (item) => {
   return dateAllowedDataAlternatives;
 };
 
-export const getDatePresentation = (binding) => {
+export const getDatePresentation = (binding, locale) => {
   const data = binding.getValue();
   if (data != null && data !== '') {
     const item = binding.getItem();
@@ -195,7 +195,7 @@ export const getDatePresentation = (binding) => {
         // Rely on the datatype from the item if everything else fails
         datatype = itemSuggestedDatatype;
       }
-      return getDatePresentationFromDatatype(datatype, date);
+      return getDatePresentationFromDatatype(datatype, date, locale);
     }
   }
   return undefined;

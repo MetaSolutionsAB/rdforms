@@ -32,7 +32,7 @@ const getDatatypeFromBinding = (binding, alternatives) => {
 
 const datePresenter = (fieldDiv, binding, context) => {
   try {
-    const pres = getDatePresentation(binding);
+    const pres = getDatePresentation(binding, context.view.getLocale());
     fieldDiv.appendChild(<div key={binding.getHash()} >{pres}</div>);
   } catch (e) {
     console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 

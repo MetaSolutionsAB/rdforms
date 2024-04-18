@@ -106,12 +106,13 @@ renderingContext.addEditorTable = (newRow, firstBinding, context) => {
   const $tHead = jquery('<thead>').appendTo($table);
   const $tBody = jquery('<tbody>').appendTo($table);
   const $tHeadRow = jquery('<tr>').appendTo($tHead);
-  for (colInd = 0; colInd < childItems.length; colInd++) {
+  for (let colInd = 0; colInd < childItems.length; colInd++) {
     const $th = jquery('<th>').appendTo($tHeadRow);
     jquery($th).addClass(`rdformsColumnHeader${colInd}`);
     const childItem = childItems[colInd];
-    const label = context.view instanceof Editor ?
-      childItem.getEditLabel() || childItem.getLabel() : childItem.getLabel();
+    const labelMap = context.view instanceof Editor ?
+      childItem.getEditLabelMap() || childItem.getLabelMap() : childItem.getLabelMap();
+    const label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value
     renderingContext.attachItemInfo(item,
       jquery('<span>').text(label).appendTo($th)[0], context);
   }

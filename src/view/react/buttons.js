@@ -8,6 +8,8 @@ import IconButton from '@mui/material/IconButton';
 import renderingContext from '../renderingContext';
 import * as engine from '../../model/engine';
 import { useNamedGraphId } from './hooks';
+import utils from '../../utils';
+
 
 renderingContext.addExpandButton = (rowDiv, labelDiv, item, context) => {
   console.log('Expand button not yet supported');
@@ -107,7 +109,8 @@ renderingContext.addCreateChildButton = (rowDiv, labelDiv, binding, context) => 
       context.view.addRow(rowDiv, nBinding); // not the first binding...
     }
   };
-  let label = item.getEditLabel() || item.getLabel();
+  let labelMap = item.getEditLabelMap() || item.getLabelMap();
+  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {

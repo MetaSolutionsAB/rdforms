@@ -7,7 +7,6 @@ import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import moment from 'moment';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import { useNamedGraphId } from './hooks';
@@ -21,7 +20,7 @@ const LanguageControl = (props) => {
   });
   useEffect(() => {
     if (!props.binding.isValid()) {
-      const defLang = moment.locale();
+      const defLang = props.context.view.getLocale();
       if (typeof defLang === 'string' && defLang !== '') {
         setLang(defLang);
         props.binding.setLanguage(defLang, true);

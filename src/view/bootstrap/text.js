@@ -1,4 +1,3 @@
-import moment from 'moment';
 import durationEditor from './durationEditor';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
@@ -184,7 +183,7 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
     if (binding.isValid()) {
       $lselect.val(binding.getLanguage());
     } else {
-      const defLang = moment.locale();
+      const defLang = context.view.getLocale();
       if (typeof defLang === 'string' && defLang !== '') {
         $lselect.val(defLang);
         binding.setLanguage(defLang);

@@ -1,9 +1,11 @@
 import jquery from 'jquery';
 import renderingContext from '../renderingContext';
 import Editor from '../Editor';
+import utils from '../../utils';
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelRow) => {
-  let label = context.view instanceof Editor ? item.getEditLabel() || item.getLabel() : item.getLabel();
+  let labelMap = context.view instanceof Editor ? item.getEditLabelMap() || item.getLabelMap() : item.getLabelMap();
+  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
@@ -31,7 +33,8 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelR
       (view.compact && !item.hasStyle('nonCompact') && (
         (view.topLevel && item.getType() !== 'group') ||
         (view.parentView && view.parentView.topLevel && view.binding.getItem().hasStyle('heading'))));
-    const desc = item.getDescription();
+    const desc = utils.getLocalizedValue(item.getDescriptionMap(), context.view.getLocale()).value
+
     if (!compactField && desc) {
       jquery('<div class="rdformsDescription" tabindex="0">').text(desc).appendTo(rowNode);
     }
@@ -40,10 +43,10 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelR
   renderingContext.attachItemInfo(item, $labelDiv[0], context);
 };
 
-renderingContext.attachItemInfo = function (item, aroundNode/* , context */) {
-  if (item == null || item.getDescription() == null) {
+renderingContext.attachItemInfo = function (item, aroundNode, context) {
+  if (item == null || item.getDescriptionMap() == null) {
     return;
   }
-  const desc = item.getDescription();
+  const desc = utils.getLocalizedValue(item.getDescriptionMap(), context.view.getLocale()).value
   aroundNode.setAttribute('title', desc);
 };

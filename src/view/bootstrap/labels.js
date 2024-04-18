@@ -1,13 +1,16 @@
 import jquery from 'jquery';
 import renderingContext from '../renderingContext';
 import Editor from '../Editor';
+import utils from '../../utils';
+
 
 renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
   if (item.hasStyle('nonEditable') || item.hasStyle('heading')) {
     return renderingContext.renderPresenterLabel(rowNode, binding, item, context, true);
   }
 
-  let label = item.getEditLabel() || item.getLabel();
+  const labelMap = item.getEditLabelMap() || item.getLabelMap();
+  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
@@ -59,8 +62,10 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
       (view.compact && !item.hasStyle('nonCompact') && (
         (view.topLevel && item.getType() !== 'group') ||
         (view.parentView && view.parentView.topLevel && view.binding.getItem().hasStyle('heading'))));
-    const desc = context.view instanceof Editor ? item.getEditDescription() || item.getDescription() :
-      item.getDescription();
+    const descMap = context.view instanceof Editor ? item.getEditDescriptionMap() || item.getDescriptionMap() :
+      item.getDescriptionMap();
+    let desc = utils.getLocalizedValue(descMap, context.view.getLocale()).value
+
     if (!compactField && desc) {
       jquery('<div class="rdformsDescription" tabindex="0">').text(desc).appendTo(rowNode);
     }
@@ -71,21 +76,25 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
 };
 
 renderingContext.attachItemInfo = function (item, aroundNode, context) {
-  if (item == null || (item.getProperty() == null && item.getDescription() == null
-    && item.getEditDescription() == null)) {
+  if (item == null || (item.getProperty() == null && item.getDescriptionMap() == null
+    && item.getEditDescriptionMap() == null)) {
     jquery(aroundNode).addClass('noPointer');
     return;
   }
 
-  const description = (context.view instanceof Editor ?
-    item.getEditDescription() || item.getDescription() : item.getDescription()) || '';
+  const descriptionMap = (context.view instanceof Editor ?
+    item.getEditDescriptionMap() || item.getDescriptionMap() : item.getDescriptionMap()) || {};
+  const description = utils.getLocalizedValue(descriptionMap, context.view.getLocale()).value || '';
+
   let propinfo = '';
   if (item.getProperty()) {
     propinfo = `<div class="property"><a target="_blank" href="${item.getProperty()}">${
       item.getProperty()}</a></div>`;
   }
 
-  let label = context.view instanceof Editor ? item.getEditLabel() || item.getLabel() : item.getLabel();
+  const labelMap = context.view instanceof Editor ? item.getEditLabelMap() || item.getLabelMap() : item.getLabelMap();
+  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value
+
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {

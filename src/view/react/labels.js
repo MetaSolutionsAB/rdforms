@@ -4,6 +4,7 @@ import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import renderingContext from '../renderingContext';
+import utils from '../../utils';
 import { Editor } from './Wrappers';
 import CODES from '../../model/CODES';
 
@@ -38,9 +39,10 @@ const ItemTooltip = (props) => {
   if (property) {
     propinfo = <div className="rdformsProperty"><a target="_blank" href={property}>{property}</a></div>;
   }
-  const description = props.context.view instanceof Editor ?
-    props.item.getEditDescription() || props.item.getDescription() : props.item.getDescription()
+  const descriptionMap = props.context.view instanceof Editor ?
+    props.item.getEditDescriptionMap() || props.item.getDescriptionMap() : props.item.getDescriptionMap()
     || (property ? '' : props.context.view.messages.info_missing || '');
+  const description = utils.getLocalizedValue(descriptionMap, props.context.view.getLocale()).value
 
   return (
     <ClickAwayListener onClickAway={handleTooltipClose}>
@@ -67,8 +69,9 @@ const ItemTooltip = (props) => {
 };
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
-  let label = context.view instanceof Editor ?
-    item.getEditLabel() || item.getLabel() : item.getLabel();
+  let labelMap = context.view instanceof Editor ?
+    item.getEditLabelMap() || item.getLabelMap() : item.getLabelMap();
+  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
@@ -85,8 +88,9 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
       (view.compact && !item.hasStyle('nonCompact') && (
         (view.topLevel && item.getType() !== 'group') ||
         (view.parentView && view.parentView.topLevel && view.binding.getItem().hasStyle('heading'))));
-    const desc = view instanceof Editor ? item.getEditDescription() || item.getDescription() :
-      item.getDescription();
+    const descMap = view instanceof Editor ? item.getEditDescriptionMap() || item.getDescriptionMap() :
+      item.getDescriptionMap();
+    const desc = utils.getLocalizedValue(descMap, context.view.getLocale()).value;
     if (!compactField && desc) {
       description = <div className="rdformsDescription" tabIndex="0">{desc}</div>;
     }
@@ -104,7 +108,8 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
   if (item.hasStyle('nonEditable') || item.hasStyle('heading')) {
     renderingContext.renderPresenterLabel(rowNode, binding, item, context, true);
   } else {
-    let label = item.getEditLabel() || item.getLabel();
+    let labelMap = item.getEditLabelMap() || item.getLabelMap();
+    let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value
     if (label != null && label !== '') {
       label = label.charAt(0).toUpperCase() + label.slice(1);
     } else {
@@ -147,8 +152,10 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
         (view.compact && !item.hasStyle('nonCompact') && (
           (view.topLevel && item.getType() !== 'group') ||
           (view.parentView && view.parentView.topLevel && view.binding.getItem().hasStyle('heading'))));
-      const desc = view instanceof Editor ? item.getEditDescription() || item.getDescription() :
-        item.getDescription();
+      const descMap = view instanceof Editor ? item.getEditDescriptionMap() || item.getDescriptionMap() :
+        item.getDescriptionMap();
+      const desc = utils.getLocalizedValue(descMap, context.view.getLocale()).value
+
       if (!compactField && desc) {
         description = <div className="rdformsDescription" tabIndex="0">{desc}</div>;
       }

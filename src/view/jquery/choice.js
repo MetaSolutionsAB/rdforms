@@ -5,16 +5,16 @@ import utils from '../../utils';
 // -------------- Presenters ----------------
 const presenters = renderingContext.presenterRegistry;
 
-const choicify = func => (fieldDiv, binding) => {
+const choicify = func => (fieldDiv, binding, context) => {
   const choice = binding.getChoice();
   let desc;
   if (!choice) {
     return;
   }
   if (choice.description) {
-    desc = utils.getLocalizedValue(choice.description).value;
+    desc = utils.getLocalizedValue(choice.description, context.view.getLocale()).value;
   }
-  func(fieldDiv, binding, choice, desc);
+  func(fieldDiv, binding, choice, desc, context.view.getLocale());
 };
 
 // Presenter for image.
@@ -36,15 +36,15 @@ presenters.itemtype('choice').style('stars').register(choicify(
 
 // Presenter for choices.
 presenters.itemtype('choice').register(choicify(
-  (fieldDiv, binding, choice, desc) => {
+  (fieldDiv, binding, choice, desc, locale) => {
     const item = binding.getItem();
-    const locValue = utils.getLocalizedValue(choice.label);
+    const locValue = utils.getLocalizedValue(choice.label, locale);
     let $el;
 
     if (item.hasStaticChoices() && !item.hasStyle('externalLink') || item.hasStyle('noLink')) {
       $el = jquery('<div>')
         .attr('title', desc || choice.seeAlso || choice.value)
-        .text(utils.getLocalizedValue(choice.label).value)
+        .text(utils.getLocalizedValue(choice.label, locale).value)
         .appendTo(fieldDiv);
     } else {
       $el = jquery('<a class="rdformsUrl">')
@@ -60,7 +60,7 @@ presenters.itemtype('choice').register(choicify(
     }
     if (choice.load != null) {
       choice.load(() => {
-        const locValue2 = utils.getLocalizedValue(choice.label);
+        const locValue2 = utils.getLocalizedValue(choice.label, locale);
         $el.text(locValue2.value);
         if (locValue2.lang) {
           $el.attr('lang', locValue2.lang);

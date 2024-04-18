@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useMemo } from 'react';
-import moment from 'moment';
 import system from '../../model/system';
 import renderingContext from '../renderingContext';
 import { fromDuration } from '../viewUtils';
@@ -41,12 +40,12 @@ presenters.itemtype('group').nodetype('URI').style('linkWithLabel').register((fi
   delete attrs.component;
   const labelItem = binding.getItem().getChildren().find(i => i.hasStyle('label'));
   const labelBindings = labelItem ?
-    renderingContext.filterTranslations(binding.getChildBindingsFor(labelItem), moment.locale(),
+    renderingContext.filterTranslations(binding.getChildBindingsFor(labelItem), context.view.getLocale(),
       context.view.defaultLanguage) : [];
 
   const tooltipItem = binding.getItem().getChildren().find(i => i.hasStyle('tooltip'));
   const tooltipBindings = tooltipItem ?
-    renderingContext.filterTranslations(binding.getChildBindingsFor(tooltipItem), moment.locale(),
+    renderingContext.filterTranslations(binding.getChildBindingsFor(tooltipItem), context.view.getLocale(),
       context.view.defaultLanguage) : [];
   const tooltip = tooltipBindings.length > 0 ? tooltipBindings[0].getValue() : val;
 

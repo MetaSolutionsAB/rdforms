@@ -63,7 +63,7 @@ presenters.itemtype('choice').register(choicify(
         }, []);
         const langAttr = locValue.lang ? {lang: locValue.lang} : {};
         return <div key={binding.getHash()} {...langAttr} title={title}>{locValue.value}</div>
-      }));
+      }, {key: binding.getHash()}));
     } else {
       let attrs;
       if (item.hasStyle('externalLink')) {

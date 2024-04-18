@@ -12,6 +12,7 @@ export default class View {
     this._viewId = viewCounter;
     viewCounter += 1;
     this.locale = params.locale;
+    this.defaultTextLanguage = params.defaultTextLanguage;
     this.messages = params.messages;
     this.parentView = params.parentView;
     this.srcNodeRef = srcNodeRef;
@@ -463,5 +464,9 @@ export default class View {
 
   getLocale() {
     return this.locale || (this.parentView ? this.parentView.getLocale() : moment.locale());
+  }
+
+  getDefaultTextLanguage() {
+    return this.defaultTextLanguage || (this.parentView ? this.parentView.getDefaultTextLanguage() : this.getLocale());
   }
 }

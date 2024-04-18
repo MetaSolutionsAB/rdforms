@@ -20,7 +20,7 @@ const LanguageControl = (props) => {
   });
   useEffect(() => {
     if (!props.binding.isValid()) {
-      const defLang = props.context.view.getLocale();
+      const defLang = props.context.view.getDefaultTextLanguage();
       if (typeof defLang === 'string' && defLang !== '') {
         setLang(defLang);
         props.binding.setLanguage(defLang, true);

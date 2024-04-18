@@ -183,7 +183,7 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
     if (binding.isValid()) {
       $lselect.val(binding.getLanguage());
     } else {
-      const defLang = context.view.getLocale();
+      const defLang = context.view.getDefaultTextLanguage();
       if (typeof defLang === 'string' && defLang !== '') {
         $lselect.val(defLang);
         binding.setLanguage(defLang);

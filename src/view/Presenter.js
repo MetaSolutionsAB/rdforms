@@ -1,5 +1,4 @@
 /* eslint-disable class-methods-use-this */
-import moment from 'moment';
 import renderingContext from './renderingContext';
 import View from './View';
 
@@ -77,7 +76,7 @@ export default class Presenter extends View {
       return bindings;
     }
 
-    return renderingContext.filterTranslations(bindings, moment.locale(), this.defaultLanguage);
+    return renderingContext.filterTranslations(bindings, this.getLocale(), this.defaultLanguage);
   }
 
   addLabel(rowDiv, binding, item) {

@@ -41,7 +41,7 @@ renderingContext.renderSelect = function (fieldDiv, binding, context) {
       context.chooser.search(binding, query).then((choices) => {
         callback(choices.map(c => ({
           id: c.value,
-          text: utils.getLocalizedValue(c.label).value || '',
+          text: utils.getLocalizedValue(c.editlabel || c.label, context.view.getLocale()).value || '',
           choice: c,
         })));
       });
@@ -58,7 +58,7 @@ renderingContext.renderSelect = function (fieldDiv, binding, context) {
   };
   context.setValue = (choice) => {
     $select.toggleClass('mismatch', choice.mismatch === true);
-    const label = utils.getLocalizedValue(choice.label).value || '';
+    const label = utils.getLocalizedValue(choice.editlabel || choice.label, context.view.getLocale()).value || '';
     const op = sel.options[choice.value];
     if (!op) {
       sel.addOption({ id: choice.value, text: label, choice });

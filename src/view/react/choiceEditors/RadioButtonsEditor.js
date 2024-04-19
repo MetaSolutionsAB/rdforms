@@ -5,6 +5,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import { useLocalizedSortedChoices, useName, useNamedGraphId } from '../hooks';
+import utils from '../../../utils';
 
 const ChoiceOption = props => <FormControlLabel
   disabled={props.disabled}
@@ -48,13 +49,15 @@ export default function RadioButtonsEditor(props) {
   }, []);
 
   const ngId = useNamedGraphId(binding, props.context);
+  let labelMap = item.getEditLabelMap() || item.getLabelMap();
+  let label = utils.getLocalizedValue(labelMap, props.context.view.getLocale()).value
   return (
     <>
       <FormControl component="fieldset">
         <RadioGroup
           {...row}
           key="radio"
-          aria-label={item.getEditLabel() || item.getLabel()}
+          aria-label={label}
           name={name}
           value={value}
           onChange={handleChange}

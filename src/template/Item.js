@@ -203,6 +203,37 @@ export default class Item {
     this.refreshExtends();
   }
 
+  getEnhanced(attribute) {
+    const s = this.getSource(true);
+    if (typeof s.enhanced === 'boolean') {
+      return s.enhanced;
+    }
+    return (s.enhanced && s.enhanced[attribute]) || false;
+  }
+
+  setEnhanced(attribute, enhanced) {
+    const s = this.getSource(true);
+    if (typeof attribute === 'boolean') {
+      if (attribute === true) {
+        s.enhanced = true;
+      } else {
+        delete s.enhanced;
+      }
+    } else {
+      s.enhanced = typeof s.enhanced === 'boolean' ? {} : s.enhanced || {};
+      if (enhanced) {
+        s.enhanced[attribute] = true;
+      } else {
+        delete s.enhanced[attribute];
+        if (Object.keys(s).length === 0) {
+          delete s.enhanced;
+        }
+      }
+    }
+    // Simple way to refresh this._source which is a cache including potential enhancements
+    this.setExtends(this.getExtends());
+  }
+
   /**
    * @return {String|null} as a URI, may be null for Groups, never null for Text or choice
    * item types.
@@ -487,7 +518,7 @@ export default class Item {
     return source.styles.some(s => s.toLowerCase() === sty.toLowerCase());
   }
 
-  getSource(original) {
+  getSource(original, attribute) {
     if (original === true) {  // Get the original source
       return this._source._extendedSource || this._source;
     } else if (original === false) {  // Get the extended source

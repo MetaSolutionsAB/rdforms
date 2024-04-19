@@ -16,14 +16,20 @@ const choicify = func => (fieldDiv, binding, context) => {
     return;
   }
 
+  const locale = context.view.getLocale();
+
   if (isEditor && choice.editdescription) {
-    desc = utils.getLocalizedValue(choice.editdescription).value;
+    desc = utils.getLocalizedValue(choice.editdescription, locale).value;
   } else if (choice.description) {
-    desc = utils.getLocalizedValue(choice.description).value;
+    desc = utils.getLocalizedValue(choice.description, locale).value;
   }
 
-  func(fieldDiv, binding, choice, desc, isEditor);
+  func(fieldDiv, binding, choice, desc, isEditor, locale);
 };
+
+const getLocalizedLabel = (choice, isEditor, locale) =>
+  utils.getLocalizedValue(isEditor ? choice.editlabel || choice.label : choice.label, locale);
+
 
 // Presenter for image.
 presenters.itemtype('choice').style('image').register(choicify(
@@ -40,27 +46,24 @@ presenters.itemtype('choice').style('stars').register(choicify(
     }
   }));
 
-const getLocalizedLabel = (choice, isEditor) =>
-  utils.getLocalizedValue(isEditor ? choice.editlabel || choice.label : choice.label);
-
 // Presenter for choices.
 presenters.itemtype('choice').register(choicify(
-  (fieldDiv, binding, choice, desc, isEditor) => {
+  (fieldDiv, binding, choice, desc, isEditor, locale) => {
     const item = binding.getItem();
     const title = desc || choice.seeAlso || choice.value;
     if ((item.hasStaticChoices() && !item.hasStyle('externalLink')) || item.hasStyle('noLink')) {
       fieldDiv.appendChild(React.createElement(() => {
-        const [locValue, setLocValue] = useState(getLocalizedLabel(choice, isEditor));
+        const [locValue, setLocValue] = useState(getLocalizedLabel(choice, isEditor, locale));
         useEffect(() => {
           if (choice.load != null) {
             choice.load(() => {
-              setLocValue(getLocalizedLabel(choice, isEditor));
+              setLocValue(getLocalizedLabel(choice, isEditor, locale));
             });
           }
         }, []);
         const langAttr = locValue.lang ? {lang: locValue.lang} : {};
         return <div key={binding.getHash()} {...langAttr} title={title}>{locValue.value}</div>
-      }));
+      }, {key: binding.getHash()}));
     } else {
       let attrs;
       if (item.hasStyle('externalLink')) {
@@ -72,11 +75,11 @@ presenters.itemtype('choice').register(choicify(
       delete attrs.component;
 
       fieldDiv.appendChild(React.createElement(() => {
-        const [locValue, setLocValue] = useState(getLocalizedLabel(choice, isEditor));
+        const [locValue, setLocValue] = useState(getLocalizedLabel(choice, isEditor, locale));
         useEffect(() => {
           if (choice.load != null) {
             choice.load(() => {
-              setLocValue(getLocalizedLabel(choice, isEditor));
+              setLocValue(getLocalizedLabel(choice, isEditor, locale));
             });
           }
         }, []);

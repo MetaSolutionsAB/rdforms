@@ -2,21 +2,21 @@ import moment from 'moment';
 import { cloneDeep } from 'lodash-es';
 import system from './model/system';
 
-const getLocalizedValue = (hash) => {
-  const locale = moment.locale();
+const getLocalizedValue = (hash, locale) => {
+  const _locale = locale || moment.locale();
   if (hash == null) {
     return { precision: 'none' };
   } else if (typeof hash === 'string') {
     return { value: hash, precision: 'nolang', lang: '' };
-  } else if (hash.hasOwnProperty(locale)) {
-    return { value: hash[locale], precision: 'exact', lang: locale };
+  } else if (hash.hasOwnProperty(_locale)) {
+    return { value: hash[_locale], precision: 'exact', lang: _locale };
   }
-  const pos = locale.indexOf('_');
-  if (pos > -1 && hash.hasOwnProperty(locale.substr(0, 2))) {
+  const pos = _locale.indexOf('_');
+  if (pos > -1 && hash.hasOwnProperty(_locale.substr(0, 2))) {
     return {
-      value: hash[locale.substr(0, 2)],
+      value: hash[_locale.substr(0, 2)],
       precision: 'coarsen',
-      lang: locale.substr(0, 2),
+      lang: _locale.substr(0, 2),
     };
   } else if (hash.hasOwnProperty('en')) {
     return { value: hash.en, precision: 'default', lang: 'en' };

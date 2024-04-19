@@ -22,7 +22,7 @@ editors.itemtype('choice').choices().register((fieldDiv, binding, context) => {
   const item = binding.getItem();
   const choices = item.getChoices().map(c => ({
     id: c.value,
-    text: item._getLocalizedValue(c.editlabel || c.label).value,
+    text: item._getLocalizedValue(c.editlabel || c.label, context.view.getLocale()).value,
     choice: c,
   }));
   if (!item.hasStyle('preserveOrderOfChoices')) {

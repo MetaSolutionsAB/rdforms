@@ -7,6 +7,26 @@ import OntologyStore from './OntologyStore';
 import Bundle from './Bundle';
 import { constructTemplate } from '../model/engine';
 
+const deepMerge = (source1, source2) => {
+  if (!source1 || !source2) {
+    return source2 === undefined ? source1 : source2;
+  }
+
+  if (Array.isArray(source1) && Array.isArray(source2)) {
+    return [].concat(origSource[key], extSource[key]);
+  }
+
+  if (typeof source1 === 'object' && typeof source2 === 'object') {
+    const obj = {};
+    Object.keys(source1).concat(Object.keys(source2)).forEach(key => {
+      obj[key] = deepMerge(source1[key], source2[key]);
+    });
+    return obj;
+  }
+
+  return source2;
+}
+
 export default class ItemStore {
   /**
    * Keeps a registry of templates and reusable items.
@@ -49,7 +69,11 @@ export default class ItemStore {
     }
     const ext = this.getItem(origSource.extends);
     if (ext) {
-      return ext.getChildren().concat(group.getChildren(true));
+      const children = group.getChildren(true);
+      if (group.getEnhanced('items') || children.length === 0) {
+        return ext.getChildren().concat(children);
+      }
+      return children;
     }
     return group.getChildren(true);
   }
@@ -166,7 +190,18 @@ export default class ItemStore {
 
   // eslint-disable-next-line class-methods-use-this
   createExtendedSource(origSource, extSource) {
-    const newSource = Object.assign(Object.assign({}, origSource), extSource);
+    const newSource = Object.assign({}, origSource, extSource);
+    if (extSource.enhanced) {
+      let keys;
+      if (extSource.enhanced === true) {
+        keys = Object.keys(origSource).concat(Object.keys(extSource));
+      } else {
+        keys = Object.keys(extSource.enhanced);
+      }
+      keys.forEach(key => {
+        newSource[key] = deepMerge(origSource[key], extSource[key]);
+      });
+    }
     newSource._extendedSource = extSource;
     newSource.extends = null; // Avoid infinite recursion when creating the fleshed out item.
     delete newSource.children;

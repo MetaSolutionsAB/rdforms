@@ -4,12 +4,16 @@ import renderingContext from './renderingContext';
 import GroupBinding from '../model/GroupBinding';
 import * as engine from '../model/engine';
 import { bindingReport } from '../model/validate';
+import moment from 'moment';
 
 let viewCounter = 0;
 export default class View {
   constructor(params, srcNodeRef) {
     this._viewId = viewCounter;
     viewCounter += 1;
+    this.locale = params.locale;
+    this.defaultTextLanguage = params.defaultTextLanguage;
+    this.messages = params.messages;
     this.parentView = params.parentView;
     this.srcNodeRef = srcNodeRef;
     this.binding = params.binding || null;
@@ -166,8 +170,9 @@ export default class View {
       return;
     }
 
-    const messages = renderingContext.getMessages();
-    this.messages = messages;
+    if (!this.messages) {
+      this.messages = renderingContext.getMessages();
+    }
     if (this.binding == null) {
       // Just in case loading messages takes time
       // and someone does a reset of the view meanwhile.
@@ -455,5 +460,13 @@ export default class View {
 
   truncateAt(item, bindings) {
     return -1;
+  }
+
+  getLocale() {
+    return this.locale || (this.parentView ? this.parentView.getLocale() : moment.locale());
+  }
+
+  getDefaultTextLanguage() {
+    return this.defaultTextLanguage || (this.parentView ? this.parentView.getDefaultTextLanguage() : this.getLocale());
   }
 }

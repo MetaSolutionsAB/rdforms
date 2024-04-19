@@ -54,7 +54,7 @@ export default class DateTimeMD extends DateTimeBase {
       date: true,
       triggerEvent: 'none',
       switchOnClick: true,
-      lang: moment.locale(),
+      lang: this.context.view.getLocale(),
     });
 
     // time
@@ -64,17 +64,17 @@ export default class DateTimeMD extends DateTimeBase {
       date: false,
       triggerEvent: 'none',
       switchOnClick: true,
-      lang: moment.locale(),
+      lang: this.context.view.getLocale(),
     });
 
     jquery(this.dateButton).click(() => {
       this.$datepicker.bootstrapMaterialDatePicker('_fireCalendar');
     });
     this.$datepicker.on('change', (evt, mInstance) => {
-      const m = mInstance || moment(evt.target.value);
+      const m = mInstance || moment(evt.target.value, undefined, this.context.view.getLocale());
 
       if (this.tpdate) {
-        const tpd = moment(this.tpdate);
+        const tpd = moment(this.tpdate, undefined, this.context.view.getLocale());
         m.minute(tpd.minute());
         m.hour(tpd.hour());
       }
@@ -91,10 +91,10 @@ export default class DateTimeMD extends DateTimeBase {
     });
 
     this.$timepicker.on('change', (evt, mInstance) => {
-      const m = mInstance || moment(evt.target.value);
+      const m = mInstance || moment(evt.target.value, undefined, this.context.view.getLocale());
 
       if (this.dpdate != null) {
-        const dpd = moment(this.dpdate);
+        const dpd = moment(this.dpdate, undefined, this.context.view.getLocale());
         dpd.minute(m.minute());
         dpd.hour(m.hour());
         this.tpdate = dpd.toDate();

@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { escape } from 'lodash-es';
 import { getDatePresentation, fromDuration } from '../viewUtils';
 import renderingContext from '../renderingContext';
@@ -35,12 +34,12 @@ presenters.itemtype('group').nodetype('URI').style('linkWithLabel').register((fi
   const val = binding.getValue();
   const labelItem = binding.getItem().getChildren().find(i => i.hasStyle('label'));
   const labelBindings = labelItem ?
-    renderingContext.filterTranslations(binding.getChildBindingsFor(labelItem), moment.locale(),
+    renderingContext.filterTranslations(binding.getChildBindingsFor(labelItem), context.view.getLocale(),
       context.view.defaultLanguage) : [];
 
   const tooltipItem = binding.getItem().getChildren().find(i => i.hasStyle('tooltip'));
   const tooltipBindings = tooltipItem ?
-    renderingContext.filterTranslations(binding.getChildBindingsFor(tooltipItem), moment.locale(),
+    renderingContext.filterTranslations(binding.getChildBindingsFor(tooltipItem), context.view.getLocale(),
       context.view.defaultLanguage) : [];
   const tooltip = tooltipBindings.length > 0 ? tooltipBindings[0].getValue() : val;
 
@@ -128,9 +127,9 @@ presenters.itemtype('text').datatype('xsd:duration').register((fieldDiv, binding
   });
 });
 
-const datePresenter = (fieldDiv, binding) => {
+const datePresenter = (fieldDiv, binding, context) => {
   try {
-    const pres = getDatePresentation(binding);
+    const pres = getDatePresentation(binding, context.view.getLocale());
     jquery('<div>').html(pres).appendTo(fieldDiv);
   } catch (e) {
     console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 

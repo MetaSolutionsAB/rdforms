@@ -4,7 +4,6 @@ import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import Select2QueryAdapter from './Select2QueryAdapter';
 import { getNamedGraphId } from '../viewUtils';
-// import 'select2/src/js/jquery.select2';
 
 
 renderingContext.renderSelect = (fieldDiv, binding, context) => {
@@ -32,7 +31,7 @@ renderingContext.renderSelect = (fieldDiv, binding, context) => {
   };
   context.setValue = (choice) => {
     $select.toggleClass('mismatch', choice.mismatch === true);
-    const label = utils.getLocalizedValue(choice.label).value || '';
+    const label = utils.getLocalizedValue(choice.editlabel || choice.label, context.view.getLocale()).value || '';
     if ($select.find(`option[value='${choice.value}']`).length === 0) {
       $select.append(new Option(label, choice.value, true, true)).trigger('change');
       $select.trigger({
@@ -52,7 +51,8 @@ renderingContext.renderSelect = (fieldDiv, binding, context) => {
     $select.toggleClass('mismatch', choice.mismatch);
     const $node = $select.next().find('.select2-selection__rendered');
     if (choice.description) {
-      $node.attr('title', utils.getLocalizedValue(choice.description).value);
+      $node.attr('title',
+        utils.getLocalizedValue(choice.editdescription || choice.description, context.view.getLocale()).value);
     }
   });
 };

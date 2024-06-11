@@ -661,7 +661,7 @@ const matchPathBelowBinding = (bindingTree, path) => {
           return res;
         }
       }
-      if (pred === '*' || pred === b.getPredicate()) {
+      if (pred === '*' || pred === b.getPredicate() || pred === item.getId()) {
         if (item.getType() === 'group') {
           res = matchPathBelowBinding(b, _path.slice(1));
           if (res) {

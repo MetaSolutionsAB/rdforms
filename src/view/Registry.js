@@ -4,6 +4,16 @@ const matchRdfType = (item, type) => {
   const constr = item.getConstraints();
   return constr != null && constr[rdfType] === type;
 };
+
+const arrayCompare = (arr1, arr2) => {
+  const _arr1 = Array.isArray(arr1) ? arr1 : (arr1 != null ? [arr1] : []);
+  const _arr2 = Array.isArray(arr2) ? arr2 : (arr2 != null ? [arr2] : []);
+  if (_arr1.length !== _arr2.length) {
+    return false;
+  }
+  return _arr1.every(v => _arr2.includes(v));
+};
+
 const matchConstraint = (item, constraints) => {
   if (constraints == null) {
     return true;
@@ -15,11 +25,11 @@ const matchConstraint = (item, constraints) => {
   }
   Object.keys(constr).find((key) => {
     const c = constraints[key];
-    if (c !== '' && c !== '*' && c !== constr[key]) {
-      match = false;
-      return true;
+    if (c === '' || c === '*' || arrayCompare(c, constr[key])) {
+      return false;
     }
-    return false;
+    match = false;
+    return true;
   });
   return match;
 };

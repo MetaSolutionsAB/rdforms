@@ -264,7 +264,7 @@ export default class ItemStore {
             item.priority = this.priorities[source.property];
           }
         }
-        if (id != null && this._registry[id] == null) {
+        if (id != null) {
           this._registry[id] = item;
           if (bundle != null) {
             bundle.addItem(item);

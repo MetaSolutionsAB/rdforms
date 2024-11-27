@@ -67,7 +67,7 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     let desc = utils.getLocalizedValue(descMap, context.view.getLocale()).value
 
     if (!compactField && desc) {
-      jquery('<div class="rdformsDescription" tabindex="0">').text(desc).appendTo(rowNode);
+      jquery('<div class="rdformsDescription">').text(desc).appendTo(rowNode);
     }
   }
   renderingContext.attachItemInfo(item, $label[0], context);
@@ -76,6 +76,11 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
 };
 
 renderingContext.attachItemInfo = function (item, aroundNode, context) {
+  if (context.view.popupOnLabel === false) {
+    renderingContext.domClassToggle(aroundNode, 'rdformsNoPopup', true);
+    return;
+  }
+  renderingContext.domSetAttr(aroundNode, 'role', 'button');
   if (item == null || (item.getProperty() == null && item.getDescriptionMap() == null
     && item.getEditDescriptionMap() == null)) {
     jquery(aroundNode).addClass('noPointer');
@@ -102,7 +107,7 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
   }
   const popoverOptions = {
     html: true,
-    container: renderingContext.getPopoverContainer(),
+    container: aroundNode, // renderingContext.getPopoverContainer(),
     placement: 'auto',
     trigger: 'focus',
     title: label,

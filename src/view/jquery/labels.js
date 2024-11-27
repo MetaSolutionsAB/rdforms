@@ -36,7 +36,7 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelR
     const desc = utils.getLocalizedValue(item.getDescriptionMap(), context.view.getLocale()).value
 
     if (!compactField && desc) {
-      jquery('<div class="rdformsDescription" tabindex="0">').text(desc).appendTo(rowNode);
+      jquery('<div class="rdformsDescription">').text(desc).appendTo(rowNode);
     }
   }
 

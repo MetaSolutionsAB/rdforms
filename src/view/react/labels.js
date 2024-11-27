@@ -2,7 +2,7 @@
 import React, { Fragment, useState, useEffect, forwardRef } from 'react';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
+import { ClickAwayListener } from '@mui/base/ClickAwayListener';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import { Editor } from './Wrappers';
@@ -26,6 +26,39 @@ const StyledTooltip = styled(
   },
 }));
 
+const ItemTooltipTitle = ({description, propinfo, setOpen, tooltipId}) => {
+  useEffect(() => {
+    console.log("Inited useEffect");
+    const focusListener = (event) => {
+      console.log("Focuslistener called");
+      let el = event.target;
+      let external = true;
+      while (el) {
+        if (el.id === tooltipId) {
+          external = false;
+          break;
+        }
+        el = el.parentElement;
+      }
+      if (external) {
+        setOpen(false);
+      }
+    };
+    window.addEventListener('focusin', focusListener);
+    return () => {
+      console.log("Focuslistener removed");
+      window.removeEventListener('focusin', focusListener);
+    };
+  }, []);
+
+  return (<>
+    <p className="rdformsLinebreaks rdformsDescription">
+      {description}
+    </p>
+    {propinfo}
+  </>);
+};
+
 const ItemTooltip = (props) => {
   const [open, setOpen] = useState(false);
   const handleTooltipClose = () => {
@@ -42,28 +75,31 @@ const ItemTooltip = (props) => {
   const descriptionMap = props.context.view instanceof Editor ?
     props.item.getEditDescriptionMap() || props.item.getDescriptionMap() : props.item.getDescriptionMap()
     || (property ? '' : props.context.view.messages.info_missing || '');
-  const description = utils.getLocalizedValue(descriptionMap, props.context.view.getLocale()).value
+  const description = utils.getLocalizedValue(descriptionMap, props.context.view.getLocale()).value;
+  const tooltipId = `tt_${props.binding.getHash()}`;
 
   return (
     <ClickAwayListener onClickAway={handleTooltipClose}>
-      <StyledTooltip
-        title={
-          <>
-            <p className="rdformsLinebreaks rdformsDescription">
-              {description}
-            </p>
-            {propinfo}
-          </>
-        }
-        placement="bottom-start"
-        disableHoverListener
-        disableTouchListener
-        onClose={handleTooltipClose}
-        onOpen={handleTooltipOpen}
-        open={open}
-      >
-        <span onClick={handleTooltipOpen}>{props.children}</span>
-      </StyledTooltip>
+      <div id={tooltipId}>
+        <StyledTooltip
+          title={<ItemTooltipTitle description={description} propinfo={propinfo} setOpen={setOpen} tooltipId={tooltipId}></ItemTooltipTitle>}
+          placement="bottom-start"
+          disableHoverListener
+          disableTouchListener
+          disableFocusListener
+          onFocus={handleTooltipOpen}
+          onOpen={handleTooltipOpen}
+          onClose={handleTooltipClose}
+          open={open}
+          slotProps={{
+            popper: {
+              disablePortal: true
+            },
+          }}
+        >
+          <span onClick={handleTooltipOpen}>{props.children}</span>
+        </StyledTooltip>
+      </div>
     </ClickAwayListener>
   );
 };
@@ -92,16 +128,22 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
       item.getDescriptionMap();
     const desc = utils.getLocalizedValue(descMap, context.view.getLocale()).value;
     if (!compactField && desc) {
-      description = <div className="rdformsDescription" tabIndex="0">{desc}</div>;
+      description = <div className="rdformsDescription">{desc}</div>;
     }
   }
 
   const labelId = binding ? context.view.createLabelIndex(binding) : undefined;
+  const rdformsLabel = context.view.popupOnLabel ? 'rdformsLabel' : 'rdformsLabel rdformsNoPopup';
+  const role = context.view.popupOnLabel ? 'button' : null;
   label = item.hasStyle('heading') ?
-    <h2 tabIndex="0" id={labelId} className="rdformsLabelRow"><span className="rdformsLabel">{label}</span></h2> :
-    <span tabIndex="0" id={labelId} className="rdformsLabelRow"><span className="rdformsLabel">{label}</span></span>;
-  rowNode.appendChild(<Fragment key={`${binding ? binding.getHash() : item._internalId}_label` }><ItemTooltip
-                                   context={context} item={item}>{label}</ItemTooltip>{description}</Fragment>);
+    <h2 tabIndex="0" id={labelId} className="rdformsLabelRow"><span className={rdformsLabel} role={role}>{label}</span></h2> :
+    <span tabIndex="0" id={labelId} className="rdformsLabelRow"><span className={rdformsLabel} role={role}>{label}</span></span>;
+  if (context.view.popupOnLabel) {
+    rowNode.appendChild(<Fragment key={`${binding ? binding.getHash() : item._internalId}_label` }><ItemTooltip
+      context={context} item={item} binding={binding}>{label}</ItemTooltip>{description}</Fragment>);
+  } else {
+    rowNode.appendChild(<Fragment key={`${binding ? binding.getHash() : item._internalId}_label` }>{label}{description}</Fragment>);
+  }
 };
 
 renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
@@ -115,9 +157,13 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     } else {
       label = '';
     }
-    label = item.hasStyle('heading') ? <h2 tabIndex="0" className="rdformsLabel">{label}</h2> :
-      <span tabIndex="0" className="rdformsLabel">{label}</span>;
-    label = <ItemTooltip item={item} context={context}>{label}</ItemTooltip>;
+    const rdformsLabel = context.view.popupOnLabel ? 'rdformsLabel' : 'rdformsLabel rdformsNoPopup';
+    const role = context.view.popupOnLabel ? 'button' : null;
+    label = item.hasStyle('heading') ? <h2 tabIndex="0" className={rdformsLabel} role={role}>{label}</h2> :
+      <span tabIndex="0" className={rdformsLabel} role={role}>{label}</span>;
+    if (context.view.popupOnLabel) {
+      label = <ItemTooltip item={item} context={context} binding={binding}>{label}</ItemTooltip>;
+    }
 
     const card = item.getCardinality();
     const b = context.view.messages;

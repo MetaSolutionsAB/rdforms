@@ -1148,10 +1148,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.3.1.tgz#d0fce5d07b0620caa282b5131c297bb60f9d87e6"
   integrity sha512-EsBwpc7hBUJWAsNPBmJy4hxWx12v6bshQsldrVmjxJoc3isbxhOrF2IcCpaXxfvq03NwkI7sbsOLXbYuqF/8Ww==
 
-"@entryscape/rdfjson@2.7.6":
-  version "2.7.6"
-  resolved "https://registry.yarnpkg.com/@entryscape/rdfjson/-/rdfjson-2.7.6.tgz#e1bcf80da6c580585ce1350503d0eb434958b65d"
-  integrity sha512-al+5VebV6yyYK3RMs+RIZnPz8GM1ePrJvs4bstdPQeGxY7CMaNEvh/iS0bko6IrbggIUK3Glsol3Ec/A1heCeQ==
+"@entryscape/rdfjson@2.7.7":
+  version "2.7.7"
+  resolved "https://registry.yarnpkg.com/@entryscape/rdfjson/-/rdfjson-2.7.7.tgz#837c1601d747a58265df4d32d07f8ede06841fde"
+  integrity sha512-WZMKd2Knj1UsUstQYo7aNkMPkOVjEfv8vzGZpcvR59e2/lv1ymkRItVp7Ls8DlWE8L6lYJY6tE1IHWQ6RGHnpg==
   dependencies:
     "@rdfjs/data-model" "^2.0.1"
     core-js "^3.31.1"

@@ -204,6 +204,15 @@ a.rdformsUrl:hover {
 	cursor: pointer;
 }
 
+.rdformsLabel.rdformsNoPopup:hover {
+    text-decoration: initial;
+    cursor: initial;
+}
+
+.rdformsLabel .popover:hover {
+    cursor: initial;
+}
+
 .rdformsLabel.noPointer:hover {
     text-decoration: none;
     cursor: default;

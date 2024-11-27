@@ -23,6 +23,7 @@ export default class View {
     this.topLevel = params.topLevel !== false;
     this.compact = params.compact !== false;
     this.showDescription = params.showDescription === true;
+    this.popupOnLabel = params.popupOnLabel !== false;
     this.styleCls = params.styleCls || '';
     this.truncateLimit = params.truncateLimit !== undefined ? params.truncateLimit : 10;
     this.truncate = params.truncate !== undefined ? params.truncate : false;

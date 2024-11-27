@@ -336,6 +336,7 @@ const groupPresenter = (fieldDiv, binding, context) => {
     showDescription: context.view.showDescription,
     defaultLanguage: context.view.defaultLanguage,
     filterTranslations: context.view.filterTranslations,
+    popupOnLabel: context.view.popupOnLabel,
     truncate: context.view.truncate,
     truncateLimit: context.view.truncateLimit,
     includeLevel: context.view.includeLevel, // Copied from groupEditor, was this.includeLevel but that 'this' does not make sense here
@@ -354,6 +355,7 @@ const groupEditor = (fieldDiv, binding, context) => {
     binding,
     topLevel: false,
     compact: context.view.compact,
+    popupOnLabel: context.view.popupOnLabel,
     showDescription: context.view.showDescription,
     truncate: context.view.truncate,
     truncateLimit: context.view.truncateLimit,

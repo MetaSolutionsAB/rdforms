@@ -11,6 +11,7 @@ export default class View {
   constructor(params, srcNodeRef) {
     this._viewId = viewCounter;
     viewCounter += 1;
+    this.renderingParams = params.renderingParams || {};
     this.locale = params.locale;
     this.defaultTextLanguage = params.defaultTextLanguage;
     this.messages = params.messages;

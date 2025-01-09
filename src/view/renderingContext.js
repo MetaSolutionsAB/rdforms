@@ -328,6 +328,7 @@ const groupPresenter = (fieldDiv, binding, context) => {
   // eslint-disable-next-line no-new
   new Cls({
     parentView: context.view,
+    renderingParams: context.view.renderingParams,
     messages: context.view.messages,
     binding,
     topLevel: false,
@@ -350,6 +351,7 @@ const groupEditor = (fieldDiv, binding, context) => {
   const Cls = context.view.constructor;
   const subView = new Cls({
     parentView: context.view,
+    renderingParams: context.view.renderingParams,
     messages: context.view.messages,
     languages: context.view.languages,
     binding,

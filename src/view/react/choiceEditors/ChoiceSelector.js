@@ -66,6 +66,7 @@ export default (props) => {
         filterSelectedOptions
         renderInput={renderInput}
         disablePortal
+        {...props.context.view.renderingParams.ChoiceSelector}
       />
       {error && (
         <div key="warning" className="rdformsWarning">

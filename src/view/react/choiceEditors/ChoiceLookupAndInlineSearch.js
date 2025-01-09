@@ -122,6 +122,7 @@ export default (props) => {
         getOptionDisabled={option => option.mismatch === true}
         renderInput={renderInput}
         disablePortal
+        {...props.context.view.renderingParams.ChoiceLookupAndInlineSearch}
       />
       <ShowButton {...props} onClick={showHandler} disabled={!!ngId}/>
       {value && value.original.upgrade && (

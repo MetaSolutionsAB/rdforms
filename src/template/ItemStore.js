@@ -265,6 +265,10 @@ export default class ItemStore {
           }
         }
         if (id != null) {
+          if (this._registry[id]) {
+            console.log(`RDForms conflict with item id ${id}, overwriting item from bundle "${
+              this._registry[id].getBundle()?.path}" with item from bundle "${item.getBundle()?.path}".`);
+          }
           this._registry[id] = item;
           if (bundle != null) {
             bundle.addItem(item);

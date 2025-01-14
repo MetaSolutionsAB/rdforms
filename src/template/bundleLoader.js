@@ -18,7 +18,7 @@ const stopFetchingOrJustLog = (iteration, length, templateId) => {
 };
 
 /**
- * Return the first sucessfully fetched bundle from a list of urls or throw en error if none could be fetched
+ * Return the first successfully fetched bundle from a list of urls or throw en error if none could be fetched
  *
  * @param {Array<String>} urls
  * @returns {Promise<Response | never | void>}
@@ -27,14 +27,16 @@ const fetchBundle = async (urls) => {
   const totalUrls = urls.length;
   let response;
   let bundle;
+  let path;
 
 
   for (let i = 0; i < totalUrls; i++) {
     // try to fetch the bundle, fails only if there's some network error. A 404 is not an error
+    path = urls[i];
     try {
-      response = await fetch(urls[i]);
+      response = await fetch(path);
     } catch (e) {
-      throw Error(`A network error ocurred while trying to fetch bundle ${urls[i]}`);
+      throw Error(`A network error ocurred while trying to fetch bundle ${path}`);
     }
 
     // check if we got a 2xx
@@ -48,18 +50,18 @@ const fetchBundle = async (urls) => {
           bundle = await response.json();
           break;
         } else {
-          throw new Error(`Failed fetching template ${urls[i]}. Expected a JSON file and got ${contentType}`);
+          throw new Error(`Failed fetching template ${path}. Expected a JSON file and got ${contentType}`);
         }
       } catch (e) {
-        stopFetchingOrJustLog(i, totalUrls, urls[i]);
+        stopFetchingOrJustLog(i, totalUrls, path);
       }
       // got back something that's not a 2xx
     } else {
-      stopFetchingOrJustLog(i, totalUrls, urls[i]);
+      stopFetchingOrJustLog(i, totalUrls, path);
     }
   }
 
-  return bundle;
+  return {path, source: bundle};
 };
 
 /**
@@ -76,7 +78,7 @@ const promisifyBundles = bundles => bundles.map(bundle =>
  * @param {ItemStore} itemStore
  * @param {array} bundles
  */
-const registerBundles = (itemStore, bundles = []) => bundles.map(source => itemStore.registerBundle({ source }));
+const registerBundles = (itemStore, bundles = []) => bundles.map(bundle => itemStore.registerBundle(bundle));
 
 /**
  *

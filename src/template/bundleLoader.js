@@ -70,7 +70,7 @@ const fetchBundle = async (urls) => {
  * @returns {Promise<*>}
  */
 const promisifyBundles = bundles => bundles.map(bundle =>
-  (bundle instanceof Array ? fetchBundle(bundle) : Promise.resolve(bundle)));
+  (bundle instanceof Array ? fetchBundle(bundle) : Promise.resolve({source: bundle})));
 
 /**
  * Register bundle templates

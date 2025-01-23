@@ -28,9 +28,7 @@ const StyledTooltip = styled(
 
 const ItemTooltipTitle = ({description, propinfo, setOpen, tooltipId}) => {
   useEffect(() => {
-    console.log("Inited useEffect");
     const focusListener = (event) => {
-      console.log("Focuslistener called");
       let el = event.target;
       let external = true;
       while (el) {
@@ -46,7 +44,6 @@ const ItemTooltipTitle = ({description, propinfo, setOpen, tooltipId}) => {
     };
     window.addEventListener('focusin', focusListener);
     return () => {
-      console.log("Focuslistener removed");
       window.removeEventListener('focusin', focusListener);
     };
   }, []);

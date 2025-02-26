@@ -6,58 +6,61 @@
   },
   "templates": [
     {
+      "label": {"en": "Documentation"},
+      "description": {"en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."},
+      "nodetype": "RESOURCE",
+      "id": "docheader",
+      "type": "group",
+      "styles": [
+        "heading",
+        "showDescriptionInPresent"
+      ],
+      "cls": ["cardgroup"],
+      "items": [
+        {
+          "type": "text",
+          "nodetype": "LITERAL",
+          "property": "dcterms:identifier",
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          },
+          "label": {
+            "en": "Identifier",
+            "sv": "Identifierare"
+          },
+          "styles": [
+            "autoUUID",
+            "nonEditable"
+          ]
+        },
+        {
+          "type": "text",
+          "nodetype": "LANGUAGE_LITERAL",
+          "property": "dcterms:title",
+          "cardinality": {
+            "min": 2,
+            "pref": "4",
+            "max": 5
+          },
+          "label": {
+            "en": "Title",
+            "sv": "Titel"
+          },
+          "description": {
+            "en": "A short title of the resource",
+            "sv": "En kort titel fÃ¶r resursen"
+          },
+          "styles": ["deprecated"]
+        }
+      ]
+    },
+    {
       "id": "test",
       "type": "group",
       "items": [
         {
-          "label": {"en": "Documentation"},
-          "description": {"en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."},
-          "nodetype": "RESOURCE",
-          "id": "docheader",
-          "type": "group",
-          "styles": [
-            "heading",
-            "showDescriptionInPresent"
-          ],
-          "cls": ["cardgroup"],
-          "items": [
-            {
-              "type": "text",
-              "nodetype": "LITERAL",
-              "property": "dcterms:identifier",
-              "cardinality": {
-                "min": 1,
-                "max": 1
-              },
-              "label": {
-                "en": "Identifier",
-                "sv": "Identifierare"
-              },
-              "styles": [
-                "autoUUID",
-                "nonEditable"
-              ]
-            },
-            {
-              "type": "text",
-              "nodetype": "LANGUAGE_LITERAL",
-              "property": "dcterms:title",
-              "cardinality": {
-                "min": 2,
-                "pref": "4",
-                "max": 5
-              },
-              "label": {
-                "en": "Title",
-                "sv": "Titel"
-              },
-              "description": {
-                "en": "A short title of the resource",
-                "sv": "En kort titel fÃ¶r resursen"
-              },
-              "styles": ["deprecated"]
-            }
-          ]
+          "extends": "docheader"
         },
         {
           "type": "text",

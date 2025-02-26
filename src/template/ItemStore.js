@@ -191,6 +191,12 @@ export default class ItemStore {
   // eslint-disable-next-line class-methods-use-this
   createExtendedSource(origSource, extSource) {
     const newSource = Object.assign({}, origSource, extSource);
+    if (extSource.id === undefined) {
+      // If no new id is provided in the original source,
+      // don't inherit the id of the extention as then
+      // it will be overwrite it in the ItemStore
+      delete newSource.id;
+    }
     if (extSource.enhanced) {
       let keys;
       if (extSource.enhanced === true) {

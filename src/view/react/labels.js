@@ -73,7 +73,7 @@ const ItemTooltip = (props) => {
     props.item.getEditDescriptionMap() || props.item.getDescriptionMap() : props.item.getDescriptionMap()
     || (property ? '' : props.context.view.messages.info_missing || '');
   const description = utils.getLocalizedValue(descriptionMap, props.context.view.getLocale()).value;
-  const tooltipId = `tt_${props.binding.getHash()}`;
+  const tooltipId = `tt_${props.binding ? props.binding.getHash() : props.item.getHash()}`;
 
   return (
     <ClickAwayListener onClickAway={handleTooltipClose}>
@@ -136,10 +136,10 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
     <h2 tabIndex="0" id={labelId} className="rdformsLabelRow"><span className={rdformsLabel} role={role}>{label}</span></h2> :
     <span tabIndex="0" id={labelId} className="rdformsLabelRow"><span className={rdformsLabel} role={role}>{label}</span></span>;
   if (context.view.popupOnLabel) {
-    rowNode.appendChild(<Fragment key={`${binding ? binding.getHash() : item._internalId}_label` }><ItemTooltip
+    rowNode.appendChild(<Fragment key={`${binding ? binding.getHash() : item.getHash()}_label` }><ItemTooltip
       context={context} item={item} binding={binding}>{label}</ItemTooltip>{description}</Fragment>);
   } else {
-    rowNode.appendChild(<Fragment key={`${binding ? binding.getHash() : item._internalId}_label` }>{label}{description}</Fragment>);
+    rowNode.appendChild(<Fragment key={`${binding ? binding.getHash() : item.getHash()}_label` }>{label}{description}</Fragment>);
   }
 };
 

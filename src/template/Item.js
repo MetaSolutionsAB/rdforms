@@ -554,6 +554,10 @@ export default class Item {
     return `'${this.getLabel()}' (${detailsArr.join(', ')})`;
   }
 
+  getHash() {
+    return `i_${this._internalId}`;
+  }
+
   //= ==================================================
   // Inherited methods
   //= ==================================================

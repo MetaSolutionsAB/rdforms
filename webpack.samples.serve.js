@@ -1,10 +1,13 @@
+var path = require('path');
+
 module.exports = {
   devServer: {
-    contentBase: 'samples',
+    static: {
+      directory: path.join(__dirname, 'samples'),
+    },
     hot: true,
     open: true,
-    lazy: true,
-    filename: 'none.js', // Ugly hack to allow lazy which allows no compilation.
+    liveReload: false,
+    // filename: 'none.js', // Ugly hack to allow lazy which allows no compilation.
   },
 };
-

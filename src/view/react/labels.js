@@ -2,7 +2,7 @@
 import React, { Fragment, useState, useEffect, forwardRef } from 'react';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
-import { ClickAwayListener } from '@mui/base/ClickAwayListener';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import { Editor } from './Wrappers';

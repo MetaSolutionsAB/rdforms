@@ -14,7 +14,10 @@ module.exports = merge(common, {
   ],
   optimization: {
     minimizer: [
-      new TerserPlugin(),
+      // only minimize browser bundle files
+      new TerserPlugin({
+        test: /rdforms\.(?!node\.).+\.js(\?.*)?$/i,
+      }),
       new OptimizeCSSAssetsPlugin({}),
     ],
   },

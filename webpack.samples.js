@@ -6,7 +6,6 @@ const { execSync } = require('child_process');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const createVariants = require('parallel-webpack').createVariants;
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const rdfjsonVersion = execSync(
   'yarn info @entryscape/rdfjson version --silent'
@@ -112,13 +111,10 @@ function createConfig(options) {
     output: {
       path: path.join(__dirname, 'samples', options.type),
       filename: 'rdforms.js',
+      clean: true,
     },
     mode: 'production',
-    plugins: [
-      ...getHTMLPlugins(),
-      getCopyPlugins(options.type),
-      new CleanWebpackPlugin(),
-    ],
+    plugins: [...getHTMLPlugins(), getCopyPlugins(options.type)],
     resolve: {
       fallback: {
         fs: false,

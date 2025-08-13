@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -30,52 +29,66 @@ module.exports = {
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment/,
     }),
-    new CleanWebpackPlugin(),
   ],
   module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /node_modules\/(?!(@entryscape)\/).*/,
-      use: [{
-        loader: 'babel-loader',
-        options: {
-          presets: [['@babel/preset-env', {
-            useBuiltIns: 'usage',
-            corejs: 3,
-            shippedProposals: true,
-            targets: { ie: 11 },
-          }]],
-          plugins: [
-            'lodash',
-            '@babel/plugin-proposal-object-rest-spread',
-            '@babel/plugin-transform-class-properties',
-            '@babel/plugin-syntax-dynamic-import',
-            ['@babel/plugin-transform-react-jsx', {}],
-          ],
-        },
-      }, {
-        loader: 'ifdef-loader',
-        options: {
-          BLOCKS: false,
-        },
-      }],
-    }, {
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader'],
-    }, {
-      test: /\.html$/,
-      use: ['raw-loader'],
-    }, {
-      test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-      type: 'asset/resource',
-      use: [{
-        options: {
-          name: '[name].[ext]',
-          outputPath: 'fonts/',
-          publicPath: '../dist/fonts', // relative to HTML page (samples)
-        },
-      }],
-    }],
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules\/(?!(@entryscape)\/).*/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    useBuiltIns: 'usage',
+                    corejs: 3,
+                    shippedProposals: true,
+                    targets: { ie: 11 },
+                  },
+                ],
+              ],
+              plugins: [
+                'lodash',
+                '@babel/plugin-proposal-object-rest-spread',
+                '@babel/plugin-transform-class-properties',
+                '@babel/plugin-syntax-dynamic-import',
+                ['@babel/plugin-transform-react-jsx', {}],
+              ],
+            },
+          },
+          {
+            loader: 'ifdef-loader',
+            options: {
+              BLOCKS: false,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.html$/,
+        use: ['raw-loader'],
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        type: 'asset/resource',
+        use: [
+          {
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/',
+              publicPath: '../dist/fonts', // relative to HTML page (samples)
+            },
+          },
+        ],
+      },
+    ],
   },
   node: {
     global: true,

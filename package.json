@@ -8,7 +8,7 @@
     "application profile",
     "linked data"
   ],
-  "version": "10.15.0",
+  "version": "10.16.0-dev",
   "main": "dist/rdforms.node.js",
   "browser": "dist/rdforms.react.js",
   "module": "main.js",

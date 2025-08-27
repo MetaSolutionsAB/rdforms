@@ -1,4 +1,4 @@
-image: metasolutions/node-yarn:latest
+image: metasolutions/node-corepack:latest
 
 options:
   max-time: 10
@@ -9,13 +9,12 @@ stepdefinitions:
       script:
         - node --version
         - npm --version
-        - yarn --version
-        - yarn cache dir
+        - pnpm --version
         - export VERSION=`jq -r .version package.json` && echo $VERSION
         # We allow semantic versioning plus x.y-z (e.g. 4.10-SNAPSHOT which does not exactly conform to semver)
         - echo $VERSION | grep -P -q '^(0|[1-9]\d*)\.(0|[1-9]\d*)(\.*)(0*|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
-        - yarn
-        - yarn build:all
+        - pnpm install
+        - pnpm build:all
         - ls -al dist/
         - if [ `wc -c < dist/rdforms.bmd.js` -gt 2000000 ]; then exit 1 ; fi
         - if [ `wc -c < dist/rdforms.bootstrap.js` -gt 2000000 ]; then exit 1 ; fi

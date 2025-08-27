@@ -7,9 +7,7 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const createVariants = require('parallel-webpack').createVariants;
 
-const rdfjsonVersion = execSync(
-  'yarn info @entryscape/rdfjson version --silent'
-)
+const rdfjsonVersion = execSync('pnpm view @entryscape/rdfjson version')
   .toString()
   .trim();
 const examples = [1, 2, 3, 4, 5, 6, 7];

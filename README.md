@@ -4,18 +4,20 @@ RDForms (aka RDF Forms) is a JavaScript library that uses templates to describe 
 
 RDForms is designed to be adaptable to different UI libraries. Currently, integrations are provided for the following three UI libraries:
 
-* Bootstrap 4
-* Bootstrap Material Design
-* React and Material UI
+- Bootstrap 4
+- Bootstrap Material Design
+- React and Material UI
 
 Deeper documentation for RDForms can be found at [rdforms.org](https://rdforms.org).
 
 # Templates
+
 The templates that drives RDForms are expressed as JSON structures. Templates can be divided into profile-level and field-level templates. A typical scenario is that a template author combines a set of field-level templates into a bigger profile-level template to meet a specific need. Such a profile-level template could correspond to well known application profiles (for example a dataset according the W3C Recommendation DCAT2) or correspond to a specific class in an ontology defined for a specific purpose in a project. Field-level templates are often reused across profiles but may require tweaking in various ways, for instance changing a label, restricting cardinality, refining a constraint etc. For this purpose there is an extension mechanism that allows tweaks to be made without forcing the template author to fork the template by making a full copy.
 
 Read more about the templates in the [reference guide at the documentation site](https://rdforms.org/#!templateReference.md).
 
 # How to use RDForms
+
 In addition to the RDForms library you need to load the RDF library rdfjson and then initialize an Editor, Presenter or Validator on a DOM node. Below is a high-level example, for more detailed information on how to prepare the parameters look at the examples.
 
     <script type="text/javascript" src="https://unpkg.com/@entryscape/rdfjson@2.3.0/dist/rdfjson.js"></script>
@@ -28,23 +30,24 @@ In addition to the RDForms library you need to load the RDF library rdfjson and 
 The exact versions above (2.3.0 and 10.0.0) may vary, please check for yourself the latest versions in package.json. Naturally you can also use the built version in the dist folder, see the next section.
 
 # Installing and building
-Before you can install dependencies and build RDForms you need to make sure you have [nodejs](http://nodejs.org/), [npm](https://www.npmjs.org/) and [yarn](https://yarnpkg.com/) installed in your system. To install dependencies for RDForms:
 
-    yarn
+Before you can install dependencies and build RDForms you need to make sure you have [nodejs](http://nodejs.org/), [npm](https://www.npmjs.org/) and [pnpm](https://pnpm.io/) installed in your system. To install dependencies for RDForms:
+
+    pnpm install
 
 To build RDForms:
 
-    yarn build:all
+    pnpm build:all
 
 # Samples
 
 A good way to see the capabilities of RDForms is to take a look at the samples (generated from the examples, see section below). To generate the samples just run:
 
-    yarn build:samples
+    pnpm build:samples
 
-This will build the samples in the ```samples``` directory. You'd need a web server to serve the samples. We provide a simple one for your convenience:
+This will build the samples in the `samples` directory. You'd need a web server to serve the samples. We provide a simple one for your convenience:
 
-    yarn serve:samples
+    pnpm serve:samples
 
 Your browser should open automatically, otherwise access the samples at [http://localhost:8080/](http://localhost:8080/).
 
@@ -53,22 +56,27 @@ Your browser should open automatically, otherwise access the samples at [http://
 You can develop the different UI libraries as well as the part of the generic code base by running the examples in the webpack-dev-server:
 
 ```$js
-yarn dev:react
-```
-or 
-```$js
-yarn dev:bmd
-```
-or
-```$js
-yarn dev:bootstrap
+pnpm dev:react
 ```
 
-# Examples 
+or
+
+```$js
+pnpm dev:bmd
+```
+
+or
+
+```$js
+pnpm dev:bootstrap
+```
+
+# Examples
+
 The examples serve two purposes:
 
 1. Showcase the capabilites of RDForms.
-2. Provide good ground for development and testing.  
+2. Provide good ground for development and testing.
 
 The examples are outlined below:
 
@@ -88,13 +96,13 @@ Check [example2/init.js](http://localhost:8080/samples/react/example2/init.js) f
 
 ## [example3](http://localhost:8080/samples/react/example3) - Presenter
 
-Same template and data as in example2, but now the presenter is used instead. 
+Same template and data as in example2, but now the presenter is used instead.
 Check [example3/init.js](http://localhost:8080/samples/react/example3/init.js) for more.
 
 ## [example4](http://localhost:8080/samples/react/example4) - Validation presenter
 
-This examples shows how RDForms can be used as a form validator rather than just an editor or presenter. 
-Take a look at the validation report  inside the form presenter.
+This examples shows how RDForms can be used as a form validator rather than just an editor or presenter.
+Take a look at the validation report inside the form presenter.
 
 Check [example4/init.js](http://localhost:8080/samples/react/example4/init.js) for more.
 
@@ -113,7 +121,7 @@ Check [example6/init.js](http://localhost:8080/samples/react/example6/init.js) f
 
 ## [example7](http://localhost:8080/samples/react/example7) - RDForm editor with a registered chooser
 
-This is a more advanced example providing some guidance on how to create your own choosers and register them to show on 
+This is a more advanced example providing some guidance on how to create your own choosers and register them to show on
 select fields in your forms. You can even have your data be fetched across the network.
 
 Check [example7/init.js](http://localhost:8080/samples/rect/example7/init.js) for more.

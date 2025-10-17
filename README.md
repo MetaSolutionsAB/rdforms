@@ -80,48 +80,48 @@ The examples serve two purposes:
 
 The examples are outlined below:
 
-## [example1](http://localhost:8080/samples/react/example1) - Editor for one field
+## [example1](http://localhost:8080/react/example1) - Editor for one field
 
 1. Loads the library and its CSS.
 2. Creates a minimal RDF graph manually.
 3. Creates a minimal RDForms template manually.
 4. Creates the editor UI from the RDF graph, a given resource, a template and an HTML node.
 
-Check [example1/init.js](http://localhost:8080/samples/react/example1/init.js) for more.
+Check [example1/init.js](http://localhost:8080/react/example1/init.js) for more.
 
-## [example2](http://localhost:8080/samples/react/example2) - Editor for large template loaded from file
+## [example2](http://localhost:8080/react/example2) - Editor for large template loaded from file
 
 Different from example1 in the sense that it loads the graph and template from separate files.
-Check [example2/init.js](http://localhost:8080/samples/react/example2/init.js) for more.
+Check [example2/init.js](http://localhost:8080/react/example2/init.js) for more.
 
-## [example3](http://localhost:8080/samples/react/example3) - Presenter
+## [example3](http://localhost:8080/react/example3) - Presenter
 
 Same template and data as in example2, but now the presenter is used instead.
-Check [example3/init.js](http://localhost:8080/samples/react/example3/init.js) for more.
+Check [example3/init.js](http://localhost:8080/react/example3/init.js) for more.
 
-## [example4](http://localhost:8080/samples/react/example4) - Validation presenter
+## [example4](http://localhost:8080/react/example4) - Validation presenter
 
 This examples shows how RDForms can be used as a form validator rather than just an editor or presenter.
 Take a look at the validation report inside the form presenter.
 
-Check [example4/init.js](http://localhost:8080/samples/react/example4/init.js) for more.
+Check [example4/init.js](http://localhost:8080/react/example4/init.js) for more.
 
-## [example5](http://localhost:8080/samples/react/example5) - Building on default templates
+## [example5](http://localhost:8080/react/example5) - Building on default templates
 
 This examples utilizes pre-made templates to render forms. It can serve as a very good start for extending them and creating your
 own custom forms.
 
-Check [example5/init.js](http://localhost:8080/samples/react/example5/init.js) for more.
+Check [example5/init.js](http://localhost:8080/react/example5/init.js) for more.
 
-## [example6](http://localhost:8080/samples/react/example6) - RDF output from editor (Template is for Dataset according to DCAT-AP)
+## [example6](http://localhost:8080/react/example6) - RDF output from editor (Template is for Dataset according to DCAT-AP)
 
 This example provides a ready output to check your form RDF output live.
 
-Check [example6/init.js](http://localhost:8080/samples/react/example6/init.js) for more.
+Check [example6/init.js](http://localhost:8080/react/example6/init.js) for more.
 
-## [example7](http://localhost:8080/samples/react/example7) - RDForm editor with a registered chooser
+## [example7](http://localhost:8080/react/example7) - RDForm editor with a registered chooser
 
 This is a more advanced example providing some guidance on how to create your own choosers and register them to show on
 select fields in your forms. You can even have your data be fetched across the network.
 
-Check [example7/init.js](http://localhost:8080/samples/rect/example7/init.js) for more.
+Check [example7/init.js](http://localhost:8080/rect/example7/init.js) for more.

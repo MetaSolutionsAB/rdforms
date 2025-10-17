@@ -5,7 +5,6 @@ const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const { execSync } = require('child_process');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const createVariants = require('parallel-webpack').createVariants;
 
 const rdfjsonVersion = execSync('pnpm view @entryscape/rdfjson version')
   .toString()
@@ -134,4 +133,6 @@ function createConfig(options) {
   })(common, devConfig);
 }
 
-module.exports = createVariants({}, variants, createConfig);
+module.exports = variants.type.map((variantType) =>
+  createConfig({ type: variantType })
+);

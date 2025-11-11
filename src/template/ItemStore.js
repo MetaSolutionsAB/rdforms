@@ -18,14 +18,16 @@ const deepMerge = (source1, source2) => {
 
   if (typeof source1 === 'object' && typeof source2 === 'object') {
     const obj = {};
-    Object.keys(source1).concat(Object.keys(source2)).forEach(key => {
-      obj[key] = deepMerge(source1[key], source2[key]);
-    });
+    Object.keys(source1)
+      .concat(Object.keys(source2))
+      .forEach((key) => {
+        obj[key] = deepMerge(source1[key], source2[key]);
+      });
     return obj;
   }
 
   return source2;
-}
+};
 
 export default class ItemStore {
   /**
@@ -65,7 +67,11 @@ export default class ItemStore {
     const origSource = group.getSource(true);
     const origSourceContent = origSource.content || origSource.items || [];
     if (original) {
-      return this._createItems(origSourceContent, group._forceChildrenClones, group.getBundle());
+      return this._createItems(
+        origSourceContent,
+        group._forceChildrenClones,
+        group.getBundle()
+      );
     }
     const ext = this.getItem(origSource.extends);
     if (ext) {
@@ -86,12 +92,14 @@ export default class ItemStore {
   }
 
   getItems() {
-    return Object.keys(this._registry).map(key => this._registry[key]);
+    return Object.keys(this._registry).map((key) => this._registry[key]);
   }
 
   renameItem(from, to) {
     if (this._registry[to]) {
-      this._handleError(`Cannot rename to ${to} since an item with that id already exists.`);
+      this._handleError(
+        `Cannot rename to ${to} since an item with that id already exists.`
+      );
       return;
     }
     if (to === '' || to === null) {
@@ -180,7 +188,9 @@ export default class ItemStore {
   }
 
   createTemplateFromChildren(children) {
-    const childrenObj = (children || []).map(child => (typeof child === 'string' ? this.getItem(child) : child));
+    const childrenObj = (children || []).map((child) =>
+      typeof child === 'string' ? this.getItem(child) : child
+    );
     return new Group({ source: {}, children: childrenObj, itemStore: this });
   }
 
@@ -204,7 +214,7 @@ export default class ItemStore {
       } else {
         keys = Object.keys(extSource.enhanced);
       }
-      keys.forEach(key => {
+      keys.forEach((key) => {
         newSource[key] = deepMerge(origSource[key], extSource[key]);
       });
     }
@@ -228,10 +238,15 @@ export default class ItemStore {
       // Explicit extends given
       const extItem = this._registry[source.extends];
       if (extItem == null) {
-        this._handleError(`Cannot find item to extend with id: ${source.extends}`);
+        this._handleError(
+          `Cannot find item to extend with id: ${source.extends}`
+        );
       }
       if (extItem) {
-        const newSource = this.createExtendedSource(extItem.getSource(), source);
+        const newSource = this.createExtendedSource(
+          extItem.getSource(),
+          source
+        );
         return this.createItem(newSource, false, false, bundle);
       }
     }
@@ -272,9 +287,11 @@ export default class ItemStore {
         }
         if (id != null) {
           if (this._registry[id]) {
-            console.log(`RDForms conflict with item id ${id}, overwriting item from bundle "${
-              this._registry[id].getBundle()?.getPath() || ''}" with item from bundle "${
-              item.getBundle()?.getPath() || ''}".`);
+            console.log(
+              `RDForms conflict with item id ${id}, overwriting item from bundle "${
+                this._registry[id].getBundle()?.getPath() || ''
+              }" with item from bundle "${item.getBundle()?.getPath() || ''}".`
+            );
           }
           this._registry[id] = item;
           if (bundle != null) {
@@ -286,17 +303,27 @@ export default class ItemStore {
     }
     // No type means it is a reference, check that the referred item (via id) exists
     if (id == null) {
-      this._handleError('Cannot create subitem, `type` for creating new or `id` for referencing external are required.');
+      this._handleError(
+        'Cannot create subitem, `type` for creating new or `id` for referencing external are required.'
+      );
       return;
     }
     if (this._registry[id] == null) {
-      this._handleError(`Cannot find referenced subitem using identifier: ${id}`);
+      this._handleError(
+        `Cannot find referenced subitem using identifier: ${id}`
+      );
       return;
     }
 
     // Clone if forceClone set to true or if the source contains non-id properties.
-    if (forceClone === true || Object.keys(source).find(key => (key !== 'id' && key !== '@id'))) {
-      const newSource = Object.assign(Object.assign({}, this._registry[id]._source), source);
+    if (
+      forceClone === true ||
+      Object.keys(source).find((key) => key !== 'id' && key !== '@id')
+    ) {
+      const newSource = Object.assign(
+        Object.assign({}, this._registry[id]._source),
+        source
+      );
       return this.createItem(newSource, false, true);
     }
     return this._registry[id];
@@ -316,7 +343,6 @@ export default class ItemStore {
     }
     if (removereferences) {
       // TODO
-
     }
   }
 
@@ -324,11 +350,16 @@ export default class ItemStore {
   // Private methods
   //= ==================================================
   _createItems(sourceArray, forceClone, bundle) {
-    return sourceArray.map((child, index) => {
-      // If child is not a object but a direct string reference,
-      const childToUse = typeof child === 'string' ? sourceArray[index] = { id: child } : child;
-      return this.createItem(childToUse, forceClone, false, bundle);
-    }).filter(item => item);
+    return sourceArray
+      .map((child, index) => {
+        // If child is not a object but a direct string reference,
+        const childToUse =
+          typeof child === 'string'
+            ? (sourceArray[index] = { id: child })
+            : child;
+        return this.createItem(childToUse, forceClone, false, bundle);
+      })
+      .filter((item) => item);
   }
 
   _handleError(message) {

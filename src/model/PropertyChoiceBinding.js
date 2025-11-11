@@ -15,8 +15,7 @@ export default class PropertyChoiceBinding extends ChoiceBinding {
    * Remove shold not be doubled, hence it is handled by the objectBinding
    * delegated from the parent PropertyGroupBinding.
    */
-  remove() {
-  }
+  remove() {}
 
   /**
    * The object binding handles the RDF statement, hence go through it to set
@@ -46,6 +45,5 @@ export default class PropertyChoiceBinding extends ChoiceBinding {
   /**
    * Does nothing, similar reason as for isValid.
    */
-  updateAssertions() {
-  }
+  updateAssertions() {}
 }

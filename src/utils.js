@@ -46,7 +46,8 @@ const getLocalizedMap = (graphOrBinding, subject, propArr) => {
   let graph;
   let _subject = subject;
   let _propArr = propArr;
-  if (graphOrBinding.getItem) { // graphOrBinding is a Binding
+  if (graphOrBinding.getItem) {
+    // graphOrBinding is a Binding
     graph = graphOrBinding.getGraph();
     _subject = graphOrBinding.getValue();
     _propArr = graphOrBinding.getItem().getURIValueLabelProperties();
@@ -109,7 +110,9 @@ const extractGist = (str, template) => {
     if (_template.indexOf('$1') === -1) {
       _template += '$1';
     }
-    const r = (`${_template}`).replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1').replace('\\$1', '(.*)');
+    const r = `${_template}`
+      .replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1')
+      .replace('\\$1', '(.*)');
     const e = new RegExp(r).exec(str);
     if (e != null) {
       return e[1];
@@ -119,7 +122,10 @@ const extractGist = (str, template) => {
 };
 
 const findFirstValue = (engine, graph, uri, template) => {
-  const fvb = engine.findFirstValueBinding(engine.match(graph, uri, template), false);
+  const fvb = engine.findFirstValueBinding(
+    engine.match(graph, uri, template),
+    false
+  );
   if (!fvb) {
     return undefined;
   }
@@ -129,9 +135,13 @@ const findFirstValue = (engine, graph, uri, template) => {
   return fvb.getGist();
 };
 
-const generateUUID = () => { // Public Domain/MIT
+const generateUUID = () => {
+  // Public Domain/MIT
   let d = new Date().getTime();
-  if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+  if (
+    typeof performance !== 'undefined' &&
+    typeof performance.now === 'function'
+  ) {
     d += performance.now(); // use high-precision timer if available
   }
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
@@ -139,7 +149,7 @@ const generateUUID = () => { // Public Domain/MIT
     const r = (d + Math.random() * 16) % 16 | 0;
     d = Math.floor(d / 16);
     // eslint-disable-next-line no-bitwise,no-mixed-operators
-    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
   });
 };
 

@@ -13,11 +13,13 @@ Utils.Extend(AjaxAdapter, ArrayAdapter);
 AjaxAdapter.prototype.query = function (params, callback) {
   const request = () => {
     this.chooser.search(this.binding, params.term).then((choices) => {
-      callback({ results: choices.map(c => ({
-        id: c.value,
-        text: utils.getLocalizedValue(c.label).value || '',
-        choice: c,
-      })) });
+      callback({
+        results: choices.map((c) => ({
+          id: c.value,
+          text: utils.getLocalizedValue(c.label).value || '',
+          choice: c,
+        })),
+      });
     });
   };
 

@@ -2,7 +2,6 @@ import { namespaces } from '@entryscape/rdfjson';
 import Binding from './Binding';
 import utils from '../utils';
 
-
 export default class ValueBinding extends Binding {
   /**
    * Corresponds to a binding for a Text item type, captures literals, literals with
@@ -20,7 +19,10 @@ export default class ValueBinding extends Binding {
     this._validPredicate = true;
     this._excludeFromTreeValidityCheck = false;
     if (this._statement) {
-      this._validPredicate = this._isValidPredicateValue(this._statement.getPredicate(), true);
+      this._validPredicate = this._isValidPredicateValue(
+        this._statement.getPredicate(),
+        true
+      );
       this._validObject = this._isValidObjectValue(this._statement.getValue());
     }
   }
@@ -45,7 +47,11 @@ export default class ValueBinding extends Binding {
     if (this._isValidObjectValue(_value)) {
       this._statement.setValue(_value, silent);
       this._validObject = true;
-      if (oValidObject !== true && this._validPredicate === true && !this._excludeFromTreeValidityCheck) {
+      if (
+        oValidObject !== true &&
+        this._validPredicate === true &&
+        !this._excludeFromTreeValidityCheck
+      ) {
         this._parent.oneChildValidityChanged(true);
       }
     } else {
@@ -137,12 +143,17 @@ export default class ValueBinding extends Binding {
   }
 
   updateAssertions() {
-    const assert = this._ancestorValid && this._validObject && this._validPredicate;
+    const assert =
+      this._ancestorValid && this._validObject && this._validPredicate;
     this._statement.setAsserted(assert, true);
     this.bindingChange(this);
   }
 
   isValid() {
-    return this._validObject && this._validPredicate && !this._excludeFromTreeValidityCheck;
+    return (
+      this._validObject &&
+      this._validPredicate &&
+      !this._excludeFromTreeValidityCheck
+    );
   }
 }

@@ -33,9 +33,9 @@ const getDatatypeFromBinding = (binding, alternatives) => {
 const datePresenter = (fieldDiv, binding, context) => {
   try {
     const pres = getDatePresentation(binding, context.view.getLocale());
-    fieldDiv.appendChild(<div key={binding.getHash()} >{pres}</div>);
+    fieldDiv.appendChild(<div key={binding.getHash()}>{pres}</div>);
   } catch (e) {
-    console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 
+    console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01
       (potentially with time given after a 'T' character as well) but found '${binding.getValue()}' instead.`);
   }
 };
@@ -92,16 +92,24 @@ const datePickerConfig = {
   },
 };
 
-
 const dateEditor = (fieldDiv, binding, context) => {
   const bundle = context.view.messages;
   const DateComp = () => {
     const value = binding.getGist();
-    const alternatives = useMemo(() => getAllowedDateAlternatives(binding.getItem()), []);
-    const [selectedDate, setSelectedDate] = useState(value === '' ? null : getDate(value));
-    const [selectedDatatype, setDatatype] = useState(getDatatypeFromBinding(binding, alternatives));
+    const alternatives = useMemo(
+      () => getAllowedDateAlternatives(binding.getItem()),
+      []
+    );
+    const [selectedDate, setSelectedDate] = useState(
+      value === '' ? null : getDate(value)
+    );
+    const [selectedDatatype, setDatatype] = useState(
+      getDatatypeFromBinding(binding, alternatives)
+    );
     const onlyOneAlternative = Object.keys(alternatives).length === 1;
-    const [error, setError] = useState(binding.getMatchingCode() === CODES.WRONG_DATATYPE);
+    const [error, setError] = useState(
+      binding.getMatchingCode() === CODES.WRONG_DATATYPE
+    );
 
     useEffect(() => {
       fieldDiv.toggleClass('mismatchReport', error);
@@ -136,101 +144,175 @@ const dateEditor = (fieldDiv, binding, context) => {
       variant: renderingContext.materialVariant,
     };
     const ngId = useNamedGraphId(binding, context);
-    const visibleDatePicker = alternatives.Date || alternatives.DateTime || alternatives.Year
-      || alternatives.YearMonth || alternatives.MonthDay;
-    const enabledDatePicker = !ngId && (selectedDatatype === 'DateTime' || selectedDatatype === 'Date'
-      || selectedDatatype === 'Year' || selectedDatatype === 'YearMonth' || selectedDatatype === 'MonthDay');
+    const visibleDatePicker =
+      alternatives.Date ||
+      alternatives.DateTime ||
+      alternatives.Year ||
+      alternatives.YearMonth ||
+      alternatives.MonthDay;
+    const enabledDatePicker =
+      !ngId &&
+      (selectedDatatype === 'DateTime' ||
+        selectedDatatype === 'Date' ||
+        selectedDatatype === 'Year' ||
+        selectedDatatype === 'YearMonth' ||
+        selectedDatatype === 'MonthDay');
     return (
       <>
-      <LocalizationProvider dateAdapter={AdapterMoment}>
-        <span className="rdformsDatePicker">
-          {visibleDatePicker && (
-            <DatePicker
-              renderInput={props => <TextField {...props} {...inputProps} />}
-              leftArrowButtonProps={{ 'aria-label': bundle.date_previousMonth }}
-              rightArrowButtonProps={{ 'aria-label': bundle.date_nextMonth }}
-              KeyboardButtonProps={{ 'aria-label': bundle[datePickerConfig.ariaLabelKey[selectedDatatype]] }}
-              label={bundle[datePickerConfig.labelKey[selectedDatatype]]}
-              {...(enabledDatePicker ? {} : { disabled: true })}
-              value={enabledDatePicker ? selectedDate : null}
-              minDate={moment(new Date('0000-01-01'))}
-              inputFormat={datePickerConfig.format[selectedDatatype]}
-              views={datePickerConfig.views[selectedDatatype]}
-              onChange={onDateChange}
-              autoOk={true}
-              mask={datePickerConfig.mask[selectedDatatype]}
-            />
-          )}
-          {(alternatives.DateTime || alternatives.Time) && (
-            <TimePicker
-              renderInput={props => <TextField {...props} {...inputProps} />}
-              label={bundle.date_time}
-              {...(!ngId && (selectedDatatype === 'DateTime' || selectedDatatype === 'Time') ? {} : { disabled: true })}
-              KeyboardButtonProps={{
-                'aria-label': bundle.date_openTimePicker,
-              }}
-              value={selectedDatatype === 'DateTime' || selectedDatatype === 'Time' ? selectedDate : null}
-              onChange={onDateChange}
-              ampm={false}
-              autoOk={true}
-            />
-          )}
-          {!onlyOneAlternative && (
-            <FormControl variant={renderingContext.materialVariant}>
-              <Select
-                value={selectedDatatype}
-                inputProps={inputProps}
-                error={alternatives[selectedDatatype] === 'error'}
-                onChange={onDatatypeChange}
-                disabled={!!ngId}
-              >
-                {alternatives.Year && (
-                  <MenuItem disabled={alternatives.Year === 'error'} className="rdformsDatatypeOption"
-                            value="Year">{bundle.date_year}</MenuItem>
+        <LocalizationProvider dateAdapter={AdapterMoment}>
+          <span className="rdformsDatePicker">
+            {visibleDatePicker && (
+              <DatePicker
+                renderInput={(props) => (
+                  <TextField {...props} {...inputProps} />
                 )}
-                {alternatives.Date && (
-                  <MenuItem disabled={alternatives.Date === 'error'} className="rdformsDatatypeOption"
-                            value="Date">{bundle.date_date}</MenuItem>
+                leftArrowButtonProps={{
+                  'aria-label': bundle.date_previousMonth,
+                }}
+                rightArrowButtonProps={{ 'aria-label': bundle.date_nextMonth }}
+                KeyboardButtonProps={{
+                  'aria-label':
+                    bundle[datePickerConfig.ariaLabelKey[selectedDatatype]],
+                }}
+                label={bundle[datePickerConfig.labelKey[selectedDatatype]]}
+                {...(enabledDatePicker ? {} : { disabled: true })}
+                value={enabledDatePicker ? selectedDate : null}
+                minDate={moment(new Date('0000-01-01'))}
+                inputFormat={datePickerConfig.format[selectedDatatype]}
+                views={datePickerConfig.views[selectedDatatype]}
+                onChange={onDateChange}
+                autoOk={true}
+                mask={datePickerConfig.mask[selectedDatatype]}
+              />
+            )}
+            {(alternatives.DateTime || alternatives.Time) && (
+              <TimePicker
+                renderInput={(props) => (
+                  <TextField {...props} {...inputProps} />
                 )}
-                {alternatives.DateTime && (
-                  <MenuItem disabled={alternatives.DateTime === 'error'} className="rdformsDatatypeOption"
-                            value="DateTime">
-                    {bundle.date_date_and_time}
-                  </MenuItem>
-                )}
-                {alternatives.YearMonth && (
-                  <MenuItem disabled={alternatives.YearMonth === 'error'} className="rdformsDatatypeOption"
-                            value="YearMonth">{bundle.date_year_and_month}</MenuItem>
-                )}
-                {alternatives.MonthDay && (
-                  <MenuItem disabled={alternatives.MonthDay === 'error'} className="rdformsDatatypeOption"
-                            value="MonthDay">{bundle.date_month_and_day}</MenuItem>
-                )}
-                {alternatives.Time && (
-                  <MenuItem disabled={alternatives.Time === 'error'} className="rdformsDatatypeOption"
-                            value="Time">{bundle.date_time}</MenuItem>
-                )}
-              </Select>
-            </FormControl>
-          )}
-        </span>
-      </LocalizationProvider>
+                label={bundle.date_time}
+                {...(!ngId &&
+                (selectedDatatype === 'DateTime' || selectedDatatype === 'Time')
+                  ? {}
+                  : { disabled: true })}
+                KeyboardButtonProps={{
+                  'aria-label': bundle.date_openTimePicker,
+                }}
+                value={
+                  selectedDatatype === 'DateTime' || selectedDatatype === 'Time'
+                    ? selectedDate
+                    : null
+                }
+                onChange={onDateChange}
+                ampm={false}
+                autoOk={true}
+              />
+            )}
+            {!onlyOneAlternative && (
+              <FormControl variant={renderingContext.materialVariant}>
+                <Select
+                  value={selectedDatatype}
+                  inputProps={inputProps}
+                  error={alternatives[selectedDatatype] === 'error'}
+                  onChange={onDatatypeChange}
+                  disabled={!!ngId}
+                >
+                  {alternatives.Year && (
+                    <MenuItem
+                      disabled={alternatives.Year === 'error'}
+                      className="rdformsDatatypeOption"
+                      value="Year"
+                    >
+                      {bundle.date_year}
+                    </MenuItem>
+                  )}
+                  {alternatives.Date && (
+                    <MenuItem
+                      disabled={alternatives.Date === 'error'}
+                      className="rdformsDatatypeOption"
+                      value="Date"
+                    >
+                      {bundle.date_date}
+                    </MenuItem>
+                  )}
+                  {alternatives.DateTime && (
+                    <MenuItem
+                      disabled={alternatives.DateTime === 'error'}
+                      className="rdformsDatatypeOption"
+                      value="DateTime"
+                    >
+                      {bundle.date_date_and_time}
+                    </MenuItem>
+                  )}
+                  {alternatives.YearMonth && (
+                    <MenuItem
+                      disabled={alternatives.YearMonth === 'error'}
+                      className="rdformsDatatypeOption"
+                      value="YearMonth"
+                    >
+                      {bundle.date_year_and_month}
+                    </MenuItem>
+                  )}
+                  {alternatives.MonthDay && (
+                    <MenuItem
+                      disabled={alternatives.MonthDay === 'error'}
+                      className="rdformsDatatypeOption"
+                      value="MonthDay"
+                    >
+                      {bundle.date_month_and_day}
+                    </MenuItem>
+                  )}
+                  {alternatives.Time && (
+                    <MenuItem
+                      disabled={alternatives.Time === 'error'}
+                      className="rdformsDatatypeOption"
+                      value="Time"
+                    >
+                      {bundle.date_time}
+                    </MenuItem>
+                  )}
+                </Select>
+              </FormControl>
+            )}
+          </span>
+        </LocalizationProvider>
         {error && (
           <div key="warning" className="rdformsWarning">
             {context.view.messages.wrongDatatypeField}
           </div>
         )}
-        </>
+      </>
     );
   };
   fieldDiv.appendChild(<DateComp key={binding.getHash()}></DateComp>);
 };
 
 const editors = renderingContext.editorRegistry;
-editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#date').register(dateEditor);
-editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#dateTime').register(dateEditor);
-editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#gYear').register(dateEditor);
-editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#gMonthDay').register(dateEditor);
-editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#gYearMonth').register(dateEditor);
-editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#time').register(dateEditor);
-editors.itemtype('text').datatype('http://purl.org/dc/terms/W3CDTF').register(dateEditor);
+editors
+  .itemtype('text')
+  .datatype('http://www.w3.org/2001/XMLSchema#date')
+  .register(dateEditor);
+editors
+  .itemtype('text')
+  .datatype('http://www.w3.org/2001/XMLSchema#dateTime')
+  .register(dateEditor);
+editors
+  .itemtype('text')
+  .datatype('http://www.w3.org/2001/XMLSchema#gYear')
+  .register(dateEditor);
+editors
+  .itemtype('text')
+  .datatype('http://www.w3.org/2001/XMLSchema#gMonthDay')
+  .register(dateEditor);
+editors
+  .itemtype('text')
+  .datatype('http://www.w3.org/2001/XMLSchema#gYearMonth')
+  .register(dateEditor);
+editors
+  .itemtype('text')
+  .datatype('http://www.w3.org/2001/XMLSchema#time')
+  .register(dateEditor);
+editors
+  .itemtype('text')
+  .datatype('http://purl.org/dc/terms/W3CDTF')
+  .register(dateEditor);

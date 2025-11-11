@@ -38,8 +38,7 @@ export default class GroupURIBinding extends ValueBinding {
     return this._parent.setGist(value, silent);
   }
 
-  setSubject(uri) {
-  }
+  setSubject(uri) {}
 
   /**
    * @return {String} corresponding to a uri.
@@ -53,8 +52,7 @@ export default class GroupURIBinding extends ValueBinding {
     super.remove(arguments);
   }
 
-  updateAssertions() {
-  }
+  updateAssertions() {}
 
   isValid() {
     return true;

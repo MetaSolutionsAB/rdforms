@@ -1,11 +1,17 @@
 import { namespaces as ns } from '@entryscape/rdfjson';
-import { fuzzyMatch, findBindingRelativeToParentBinding, matchPathBelowBinding } from './engine';
+import {
+  fuzzyMatch,
+  findBindingRelativeToParentBinding,
+  matchPathBelowBinding,
+} from './engine';
 import CODES from './CODES';
 
 const _clearMatchingCodes = (binding) => {
   binding.setMatchingCode(CODES.OK);
   if (binding.getItem().getType() === 'group') {
-    binding.getChildBindings().forEach(childBinding => _clearMatchingCodes(childBinding));
+    binding
+      .getChildBindings()
+      .forEach((childBinding) => _clearMatchingCodes(childBinding));
   }
 };
 
@@ -36,7 +42,7 @@ const bindingReport = (groupbinding, reportObj) => {
     _reportObj.warnings = _reportObj.warnings || [];
     _reportObj.deprecated = _reportObj.deprecated || [];
   }
-//  _clearMatchingCodes(groupbinding);
+  //  _clearMatchingCodes(groupbinding);
   // eslint-disable-next-line no-use-before-define
   return _createReport(groupbinding, _reportObj, true);
 };
@@ -67,7 +73,10 @@ const doNotProceedFurther = (groupBinding, childItem) => {
   // Don't check further if the binding is hidden due to missing dependencies
   const childPath = childItem.getDeps();
   if (childPath) {
-    const fromBinding = findBindingRelativeToParentBinding(groupBinding, childPath);
+    const fromBinding = findBindingRelativeToParentBinding(
+      groupBinding,
+      childPath
+    );
     if (!matchPathBelowBinding(fromBinding, childPath)) {
       return true;
     }
@@ -83,7 +92,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
 
   // Abort check if the groupbinding is hidden due to a missing dependency.
   // Check disabled since it is done for each child before recursive call
- /* const path = groupitem.getDeps();
+  /* const path = groupitem.getDeps();
   if (path && groupbinding.getParent() != null) {
     const fromBinding = findBindingRelativeToParentBinding(groupbinding.getParent(), path);
     if (!matchPathBelowBinding(fromBinding, path)) {
@@ -91,17 +100,29 @@ const _createReport = (groupbinding, report, firstLevel) => {
     }
   } */
 
-  if (firstLevel === true || groupbinding.isValid() || groupitem.getProperty() == null
-  || groupitem.hasStyle('atLeastOneChild') || groupitem.hasStyle('exactlyOneChild')) {
+  if (
+    firstLevel === true ||
+    groupbinding.isValid() ||
+    groupitem.getProperty() == null ||
+    groupitem.hasStyle('atLeastOneChild') ||
+    groupitem.hasStyle('exactlyOneChild')
+  ) {
     const childrenItems = groupitem.getChildren();
 
     // disjoint is deprecated in favour of atMostOneChild
-    if (groupitem.hasStyle('disjoint') || groupitem.hasStyle('atMostOneChild')
-      || groupitem.hasStyle('atLeastOneChild') || groupitem.hasStyle('exactlyOneChild')) {
+    if (
+      groupitem.hasStyle('disjoint') ||
+      groupitem.hasStyle('atMostOneChild') ||
+      groupitem.hasStyle('atLeastOneChild') ||
+      groupitem.hasStyle('exactlyOneChild')
+    ) {
       const bindings = groupbinding.getChildBindings();
       const nrOfValid = _countValidBindings(bindings);
       let code;
-      if (nrOfValid > 1 && (groupitem.hasStyle('disjoint') || groupitem.hasStyle('atMostOneChild'))) {
+      if (
+        nrOfValid > 1 &&
+        (groupitem.hasStyle('disjoint') || groupitem.hasStyle('atMostOneChild'))
+      ) {
         code = CODES.AT_MOST_ONE_CHILD;
       } else if (nrOfValid !== 1 && groupitem.hasStyle('exactlyOneChild')) {
         code = CODES.EXACTLY_ONE_CHILD;
@@ -110,10 +131,14 @@ const _createReport = (groupbinding, report, firstLevel) => {
       }
       if (code) {
         updateViaCardinalityTracker([groupbinding], code);
-//        groupbinding.setMatchingCode(code);
+        //        groupbinding.setMatchingCode(code);
         // Correct to set only on first child?
         if (childrenItems.length > 0) {
-          report.errors.push({ parentBinding: groupbinding, item: childrenItems[0], code });
+          report.errors.push({
+            parentBinding: groupbinding,
+            item: childrenItems[0],
+            code,
+          });
         }
       }
     } else {
@@ -133,7 +158,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
               code: CODES.TOO_FEW_VALUES_MIN,
             });
             updateViaCardinalityTracker(bindings, CODES.TOO_FEW_VALUES_MIN);
-/*            let counter = 0;
+            /*            let counter = 0;
             bindings.forEach((binding) => {
               if (!binding.isValid()) {
                 if (counter < card.min) {
@@ -148,7 +173,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
               item: childItem,
               code: CODES.TOO_FEW_VALUES_PREF,
             });
-//            updateViaCardinalityTracker(bindings, CODES.TOO_FEW_VALUES_PREF);
+            //            updateViaCardinalityTracker(bindings, CODES.TOO_FEW_VALUES_PREF);
           }
           if (card.max != null && card.max < nrOfValid) {
             report.errors.push({
@@ -157,7 +182,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
               code: CODES.TOO_MANY_VALUES,
             });
             updateViaCardinalityTracker(bindings, CODES.TOO_MANY_VALUES);
-/*            let counter = 0;
+            /*            let counter = 0;
             bindings.forEach((binding) => {
               if (binding.isValid()) {
                 counter += 1;
@@ -277,13 +302,15 @@ const graphReport = (graph, type2template, mandatoryTypes = []) => {
   return report;
 };
 
-const _findResources = (graph, cls) => graph.find(null, 'rdf:type', cls)
-  .map(stmt => stmt.getSubject());
+const _findResources = (graph, cls) =>
+  graph.find(null, 'rdf:type', cls).map((stmt) => stmt.getSubject());
 
 const _includeIssue = (binding, resource, otherResources) => {
   let pb = binding;
   while (true) {
-    const uri = pb.getChildrenRootUri ? pb.getChildrenRootUri() : pb.getParent().getChildrenRootUri();
+    const uri = pb.getChildrenRootUri
+      ? pb.getChildrenRootUri()
+      : pb.getParent().getChildrenRootUri();
     if (uri === resource) {
       return true;
     } else if (otherResources[uri]) {
@@ -316,18 +343,31 @@ const _createPath = (binding, item) => {
 
 const _filterReport = (report, resource, otherResources) => {
   const { errors, warnings, deprecated } = report;
-  report.errors = errors.filter(err => _includeIssue(err.parentBinding, resource, otherResources));
-  report.warnings = warnings.filter(warn => _includeIssue(warn.parentBinding, resource, otherResources));
-  report.deprecated = deprecated.filter(depr => _includeIssue(depr, resource, otherResources));
+  report.errors = errors.filter((err) =>
+    _includeIssue(err.parentBinding, resource, otherResources)
+  );
+  report.warnings = warnings.filter((warn) =>
+    _includeIssue(warn.parentBinding, resource, otherResources)
+  );
+  report.deprecated = deprecated.filter((depr) =>
+    _includeIssue(depr, resource, otherResources)
+  );
 };
 
-const _createDepPath = dep => `${_createPath(dep.getParent(), dep.getItem())} > ${dep.getValue()}`;
+const _createDepPath = (dep) =>
+  `${_createPath(dep.getParent(), dep.getItem())} > ${dep.getValue()}`;
 
 const _simplifyReport = (report) => {
   const { errors, warnings, deprecated } = report;
-  report.errors = errors.map(err => ({ path: _createPath(err.parentBinding, err.item), code: err.code }));
-  report.warnings = warnings.map(warn => ({ path: _createPath(warn.parentBinding, warn.item), code: warn.code }));
-  report.deprecated = deprecated.map(dep => _createDepPath(dep));
+  report.errors = errors.map((err) => ({
+    path: _createPath(err.parentBinding, err.item),
+    code: err.code,
+  }));
+  report.warnings = warnings.map((warn) => ({
+    path: _createPath(warn.parentBinding, warn.item),
+    code: warn.code,
+  }));
+  report.deprecated = deprecated.map((dep) => _createDepPath(dep));
 };
 
 const _resourceReport = (resource, graph, template, ignoreResources) => {
@@ -338,12 +378,10 @@ const _resourceReport = (resource, graph, template, ignoreResources) => {
   return report;
 };
 
-export {
-  graphReport,
-  bindingReport,
-};
+export { graphReport, bindingReport };
 
-export default { // TODO @valentino don't export default. Used in EntryScape
+export default {
+  // TODO @valentino don't export default. Used in EntryScape
   graphReport,
   bindingReport,
 };

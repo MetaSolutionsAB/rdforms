@@ -3,7 +3,6 @@ import renderingContext from '../renderingContext';
 import jquery from 'jquery';
 
 export default class LevelEditor {
-
   constructor(params, srcNodeRef) {
     if (srcNodeRef instanceof Node) {
       this.domNode = srcNodeRef;
@@ -17,9 +16,12 @@ export default class LevelEditor {
     this.graph = params.graph;
     this.compact = params.compact === undefined ? true : params.compact;
     this.includeLevel = params.includeLevel || 'mandatory';
-    this.includeLevelControllsVisible = params.includeLevelControllsVisible === undefined ?
-      true : params.includeLevelControllsVisible;
-    this.externalEditor = params.externalEditor === undefined ? false : params.externalEditor;
+    this.includeLevelControllsVisible =
+      params.includeLevelControllsVisible === undefined
+        ? true
+        : params.includeLevelControllsVisible;
+    this.externalEditor =
+      params.externalEditor === undefined ? false : params.externalEditor;
     this.messages = params.messages;
     this.render();
   }
@@ -35,19 +37,28 @@ export default class LevelEditor {
      </div>
      <div class="rdformsLevelNode"></div>`;
     this._cardinalityNode = jquery(this.domNode).find('.cardinality')[0];
-    this._mandatoryButton = jquery(this.domNode).find('.mandatory').click(this._mandatoryClick.bind(this))[0];
-    this._recommendedButton = jquery(this.domNode).find('.recommended').click(this._recommendedClick.bind(this))[0];
-    this._optionalButton = jquery(this.domNode).find('.optional').click(this._optionalClick.bind(this))[0];
+    this._mandatoryButton = jquery(this.domNode)
+      .find('.mandatory')
+      .click(this._mandatoryClick.bind(this))[0];
+    this._recommendedButton = jquery(this.domNode)
+      .find('.recommended')
+      .click(this._recommendedClick.bind(this))[0];
+    this._optionalButton = jquery(this.domNode)
+      .find('.optional')
+      .click(this._optionalClick.bind(this))[0];
     this._rdformsNode = jquery(this.domNode).find('.rdformsLevelNode')[0];
     if (this.includeLevelControllsVisible) {
       this._cardinalityNode.style.display = '';
     }
     this.setIncludeLevel(this.includeLevel);
     if (!this.externalEditor) {
-      this._editor = new Editor({
-        includeLevel: this.includeLevel,
-        compact: this.compact
-      }, this._rdformsNode);
+      this._editor = new Editor(
+        {
+          includeLevel: this.includeLevel,
+          compact: this.compact,
+        },
+        this._rdformsNode
+      );
       this.show();
     }
   }
@@ -68,11 +79,14 @@ export default class LevelEditor {
   }
 
   setIncludeLevel(includeLevel) {
-    if (this._editor != null && this._editor.getIncludeLevel() === includeLevel) {
+    if (
+      this._editor != null &&
+      this._editor.getIncludeLevel() === includeLevel
+    ) {
       return;
     }
     this.includeLevel = includeLevel;
-// eslint-disable-next-line default-case
+    // eslint-disable-next-line default-case
     switch (includeLevel) {
       case 'mandatory':
         this._mandatoryClick();
@@ -101,7 +115,10 @@ export default class LevelEditor {
   localize() {
     const messages = renderingContext.getMessages();
     renderingContext.domText(this._mandatoryButton, messages.mandatoryLabel);
-    renderingContext.domText(this._recommendedButton, messages.recommendedLabel);
+    renderingContext.domText(
+      this._recommendedButton,
+      messages.recommendedLabel
+    );
     renderingContext.domText(this._optionalButton, messages.optionalLabel);
   }
 

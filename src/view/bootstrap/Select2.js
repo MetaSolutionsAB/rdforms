@@ -5,11 +5,12 @@ import utils from '../../utils';
 import Select2QueryAdapter from './Select2QueryAdapter';
 import { getNamedGraphId } from '../viewUtils';
 
-
 renderingContext.renderSelect = (fieldDiv, binding, context) => {
   const choices = context.choices;
   const disabledAttr = getNamedGraphId(binding, context) ? 'disabled' : '';
-  const $select = jquery(`<select ${disabledAttr}>`).appendTo(fieldDiv).append('<option></option>');
+  const $select = jquery(`<select ${disabledAttr}>`)
+    .appendTo(fieldDiv)
+    .append('<option></option>');
 
   const options = {
     placeholder: binding.getItem().getPlaceholder() || '',
@@ -22,7 +23,10 @@ renderingContext.renderSelect = (fieldDiv, binding, context) => {
     options.dataAdapter = ArrayAdapter;
   } else {
     options.dataAdapter = Select2QueryAdapter;
-    $select.prop('disabled', !context.chooser || typeof context.chooser.search !== 'function');
+    $select.prop(
+      'disabled',
+      !context.chooser || typeof context.chooser.search !== 'function'
+    );
   }
   $select.select2(options);
 
@@ -31,9 +35,15 @@ renderingContext.renderSelect = (fieldDiv, binding, context) => {
   };
   context.setValue = (choice) => {
     $select.toggleClass('mismatch', choice.mismatch === true);
-    const label = utils.getLocalizedValue(choice.editlabel || choice.label, context.view.getLocale()).value || '';
+    const label =
+      utils.getLocalizedValue(
+        choice.editlabel || choice.label,
+        context.view.getLocale()
+      ).value || '';
     if ($select.find(`option[value='${choice.value}']`).length === 0) {
-      $select.append(new Option(label, choice.value, true, true)).trigger('change');
+      $select
+        .append(new Option(label, choice.value, true, true))
+        .trigger('change');
       $select.trigger({
         type: 'select2:select',
         params: {
@@ -51,8 +61,13 @@ renderingContext.renderSelect = (fieldDiv, binding, context) => {
     $select.toggleClass('mismatch', choice.mismatch);
     const $node = $select.next().find('.select2-selection__rendered');
     if (choice.description) {
-      $node.attr('title',
-        utils.getLocalizedValue(choice.editdescription || choice.description, context.view.getLocale()).value);
+      $node.attr(
+        'title',
+        utils.getLocalizedValue(
+          choice.editdescription || choice.description,
+          context.view.getLocale()
+        ).value
+      );
     }
   });
 };

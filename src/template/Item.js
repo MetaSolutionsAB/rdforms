@@ -4,7 +4,12 @@ import utils from '../utils';
 let itemCount = 0;
 
 const setObjAttr = (obj, attr, value) => {
-  if (value === null || typeof value === 'undefined' || value === '' || (Array.isArray(value) && value.length === 0)) {
+  if (
+    value === null ||
+    typeof value === 'undefined' ||
+    value === '' ||
+    (Array.isArray(value) && value.length === 0)
+  ) {
     delete obj[attr];
   } else {
     obj[attr] = value;
@@ -73,7 +78,7 @@ export default class Item {
       'noTruncate',
       'card',
       'cardInPresent',
-      'cardInEdit'
+      'cardInEdit',
     ];
     this._getLocalizedValue = utils.getLocalizedValue;
   }
@@ -133,7 +138,9 @@ export default class Item {
 
   _getText(attr, returnDetails, original) {
     const s = this.getSource(original);
-    return returnDetails ? utils.getLocalizedValue(s[attr]) : utils.getLocalizedValue(s[attr]).value;
+    return returnDetails
+      ? utils.getLocalizedValue(s[attr])
+      : utils.getLocalizedValue(s[attr]).value;
   }
   _setText(attr, value, lang) {
     const s = this.getSource(true);
@@ -145,60 +152,126 @@ export default class Item {
     this.refreshExtends();
   }
 
-  getLabel(returnDetails, original) { return this._getText('label', returnDetails, original); }
-  setLabel(value, lang) { this._setText('label', value, lang); }
-  getLabelMap(original) { return this.getSource(original).label; }
-  setLabelMap(map) { this._setTextMap('label', map); }
+  getLabel(returnDetails, original) {
+    return this._getText('label', returnDetails, original);
+  }
+  setLabel(value, lang) {
+    this._setText('label', value, lang);
+  }
+  getLabelMap(original) {
+    return this.getSource(original).label;
+  }
+  setLabelMap(map) {
+    this._setTextMap('label', map);
+  }
 
-  getEditLabel(returnDetails, original) { return this._getText('editlabel', returnDetails, original); }
-  setEditLabel(value, lang) { this._setText('editlabel', value, lang); }
-  getEditLabelMap(original) { return this.getSource(original).editlabel; }
-  setEditLabelMap(map) { this._setTextMap('editlabel', map); }
+  getEditLabel(returnDetails, original) {
+    return this._getText('editlabel', returnDetails, original);
+  }
+  setEditLabel(value, lang) {
+    this._setText('editlabel', value, lang);
+  }
+  getEditLabelMap(original) {
+    return this.getSource(original).editlabel;
+  }
+  setEditLabelMap(map) {
+    this._setTextMap('editlabel', map);
+  }
 
-  getDescription(returnDetails, original) { return this._getText('description', returnDetails, original); }
-  setDescription(value, lang) { this._setText('description', value, lang); }
-  getDescriptionMap(original) { return this.getSource(original).description; }
-  setDescriptionMap(map) { this._setTextMap('description', map); }
+  getDescription(returnDetails, original) {
+    return this._getText('description', returnDetails, original);
+  }
+  setDescription(value, lang) {
+    this._setText('description', value, lang);
+  }
+  getDescriptionMap(original) {
+    return this.getSource(original).description;
+  }
+  setDescriptionMap(map) {
+    this._setTextMap('description', map);
+  }
 
-  getEditDescription(returnDetails, original) { return this._getText('editdescription', returnDetails, original); }
-  setEditDescription(value, lang) { this._setText('editdescription', value, lang); }
-  getEditDescriptionMap(original) { return this.getSource(original).editdescription; }
-  setEditDescriptionMap(map) { this._setTextMap('editdescription', map); }
+  getEditDescription(returnDetails, original) {
+    return this._getText('editdescription', returnDetails, original);
+  }
+  setEditDescription(value, lang) {
+    this._setText('editdescription', value, lang);
+  }
+  getEditDescriptionMap(original) {
+    return this.getSource(original).editdescription;
+  }
+  setEditDescriptionMap(map) {
+    this._setTextMap('editdescription', map);
+  }
 
-  getHelp(returnDetails, original) { return this._getText('help', returnDetails, original); }
-  setHelp(value, lang) { this._setText('help', value, lang); }
-  getHelpMap(original) { return this.getSource(original).help; }
-  setHelpMap(map) { this._setTextMap('help', map); }
+  getHelp(returnDetails, original) {
+    return this._getText('help', returnDetails, original);
+  }
+  setHelp(value, lang) {
+    this._setText('help', value, lang);
+  }
+  getHelpMap(original) {
+    return this.getSource(original).help;
+  }
+  setHelpMap(map) {
+    this._setTextMap('help', map);
+  }
 
-  getPlaceholder(returnDetails, original) { return this._getText('placeholder', returnDetails, original); }
-  setPlaceholder(value, lang) { this._setText('placeholder', value, lang); }
-  getPlaceholderMap(original) { return this.getSource(original).placeholder; }
-  setPlaceholderMap(map) { this._setTextMap('placeholder', map); }
+  getPlaceholder(returnDetails, original) {
+    return this._getText('placeholder', returnDetails, original);
+  }
+  setPlaceholder(value, lang) {
+    this._setText('placeholder', value, lang);
+  }
+  getPlaceholderMap(original) {
+    return this.getSource(original).placeholder;
+  }
+  setPlaceholderMap(map) {
+    this._setTextMap('placeholder', map);
+  }
 
-  getPurpose(returnDetails, original) { return this._getText('purpose', returnDetails, original); }
-  setPurpose(value, lang) { this._setText('purpose', value, lang); }
-  getPurposeMap(original) { return this.getSource(original).purpose; }
-  setPurposeMap(map) { this._setTextMap('purpose', map); }
+  getPurpose(returnDetails, original) {
+    return this._getText('purpose', returnDetails, original);
+  }
+  setPurpose(value, lang) {
+    this._setText('purpose', value, lang);
+  }
+  getPurposeMap(original) {
+    return this.getSource(original).purpose;
+  }
+  setPurposeMap(map) {
+    this._setTextMap('purpose', map);
+  }
 
-  getSpecification(returnDetails, original) { return this._getText('specification', returnDetails, original); }
-  setSpecification(value, lang) { this._setText('specification', value, lang); }
-  getSpecificationMap(original) { return this.getSource(original).specification; }
-  setSpecificationMap(map) { this._setTextMap('specification', map); }
+  getSpecification(returnDetails, original) {
+    return this._getText('specification', returnDetails, original);
+  }
+  setSpecification(value, lang) {
+    this._setText('specification', value, lang);
+  }
+  getSpecificationMap(original) {
+    return this.getSource(original).specification;
+  }
+  setSpecificationMap(map) {
+    this._setTextMap('specification', map);
+  }
 
   getText(attr, returnDetails, original) {
     const s = this.getSource(original);
     const t = s.text || {};
-    return returnDetails ? utils.getLocalizedValue(t[attr]) : utils.getLocalizedValue(t[attr]).value;
+    return returnDetails
+      ? utils.getLocalizedValue(t[attr])
+      : utils.getLocalizedValue(t[attr]).value;
   }
   setText(attr, value, lang) {
     const s = this.getSource(true);
-    const t = s.text = s.text || {};
+    const t = (s.text = s.text || {});
     t[attr] = this._setLangHash(t[attr], value, lang);
     this.refreshExtends();
   }
   setTextMap(attr, map) {
     const s = this.getSource(true);
-    const t = s.text = s.text || {};
+    const t = (s.text = s.text || {});
     setObjAttr(t, attr, map);
     this.refreshExtends();
   }
@@ -272,7 +345,7 @@ export default class Item {
   getURIValueLabelProperties(original) {
     const arr = this.getSource(original).uriValueLabelProperties;
     if (arr != null) {
-      return arr.map(uri => ns.expand(uri));
+      return arr.map((uri) => ns.expand(uri));
     }
     return arr;
   }
@@ -293,7 +366,7 @@ export default class Item {
       Object.keys(constr).forEach((key) => {
         const val = constr[key];
         if (Array.isArray(val)) {
-          nc[ns.expand(key)] = val.map(v => ns.expand(v));
+          nc[ns.expand(key)] = val.map((v) => ns.expand(v));
         } else {
           nc[ns.expand(key)] = ns.expand(val);
         }
@@ -343,7 +416,7 @@ export default class Item {
   getDatatype(original) {
     const dt = this.getSource(original).datatype;
     if (dt != null && dt !== '') {
-      return Array.isArray(dt) ? dt.map(d => ns.expand(d)) : ns.expand(dt);
+      return Array.isArray(dt) ? dt.map((d) => ns.expand(d)) : ns.expand(dt);
     }
     return dt;
   }
@@ -425,7 +498,7 @@ export default class Item {
     }
 
     const source = this.getSource(original);
-    if (source && ('cardinality' in source)) {
+    if (source && 'cardinality' in source) {
       return source.cardinality;
     }
 
@@ -486,7 +559,7 @@ export default class Item {
     if (s.cls == null) {
       return false;
     }
-    return s.cls.some(c => c.toLowerCase() === cls.toLowerCase());
+    return s.cls.some((c) => c.toLowerCase() === cls.toLowerCase());
   }
 
   /**
@@ -515,19 +588,21 @@ export default class Item {
     if (!source || !('styles' in source)) {
       return false;
     }
-    return source.styles.some(s => s.toLowerCase() === sty.toLowerCase());
+    return source.styles.some((s) => s.toLowerCase() === sty.toLowerCase());
   }
 
   getSource(original, attribute) {
-    if (original === true) {  // Get the original source
+    if (original === true) {
+      // Get the original source
       return this._source._extendedSource || this._source;
-    } else if (original === false) {  // Get the extended source
+    } else if (original === false) {
+      // Get the extended source
       const entryItem = this._itemStore.getItem(this.getExtends());
       if (entryItem == null) {
         return this._source;
       }
       return entryItem.getSource();
-    }   // Get the merged source.
+    } // Get the merged source.
     return this._source;
   }
 

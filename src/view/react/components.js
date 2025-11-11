@@ -33,9 +33,11 @@ const DOMElementWrapper = ({ element }) => {
  */
 const getReactComponent = (child, index) => {
   // In case child is a dom element
-  if (child instanceof Node) return <DOMElementWrapper key={index} element={child} />;
+  if (child instanceof Node)
+    return <DOMElementWrapper key={index} element={child} />;
   // In case child is a struct
-  if (child.component) return React.createElement(child.component, { key: child.id });
+  if (child.component)
+    return React.createElement(child.component, { key: child.id });
   return child; // Assumes child a react component
 };
 
@@ -62,7 +64,9 @@ const toggleClass = (clsSet, clsStr, addOrNot) => {
 const selectorInClasses = (selector, clsSet) => clsSet.has(selector.substr(1));
 // Utility to find struct in children based on selector
 const findStruct = (selector, children) =>
-  children.find(comp => comp.component && comp.domQuery(selector) !== undefined);
+  children.find(
+    (comp) => comp.component && comp.domQuery(selector) !== undefined
+  );
 
 // Trivial utility to update an object and return it
 const updateObjAttr = (obj, attr, value) => {
@@ -94,8 +98,12 @@ const newStruct = (Tag, parent, nodeId) => {
     id: `struct_${structId}`,
     parent,
     // -- START: Initial methods used before react kicks in.
-    toggleClass: (clsStr, addOrNot) => toggleClass(firstClsSet, clsStr, addOrNot),
-    domQuery: selector => (selectorInClasses(selector, firstClsSet) ? ext : findStruct(selector, firstChildArr)),
+    toggleClass: (clsStr, addOrNot) =>
+      toggleClass(firstClsSet, clsStr, addOrNot),
+    domQuery: (selector) =>
+      selectorInClasses(selector, firstClsSet)
+        ? ext
+        : findStruct(selector, firstChildArr),
     appendChild: (struct) => {
       firstChildArr.push(struct);
     },
@@ -109,7 +117,9 @@ const newStruct = (Tag, parent, nodeId) => {
     // -- END
     // Utility method, always works
     destroy: () => !(ext.parent instanceof Node) && ext.parent.removeChild(ext),
-    clear: () => { firstChildArr = []; },
+    clear: () => {
+      firstChildArr = [];
+    },
     component: () => {
       const [clsSet, setCls] = useState(firstClsSet);
       const [childArr, setChildArr] = useState(firstChildArr);
@@ -118,7 +128,10 @@ const newStruct = (Tag, parent, nodeId) => {
       const [attrs, setAttrs] = useState(firstAttrs);
 
       // -- START: Override with react hook friendly methods that utilizes the current state and set methods.
-      ext.domQuery = selector => (selectorInClasses(selector, clsSet) ? ext : findStruct(selector, childArr));
+      ext.domQuery = (selector) =>
+        selectorInClasses(selector, clsSet)
+          ? ext
+          : findStruct(selector, childArr);
       ext.toggleClass = (clsStr, addOrNot) => {
         setCls((oldClsSet) => {
           const newClsSet = new Set(oldClsSet);
@@ -129,16 +142,20 @@ const newStruct = (Tag, parent, nodeId) => {
         });
       };
       ext.appendChild = (struct) => {
-        setChildArr(oldChildArr => oldChildArr.concat([struct]));
+        setChildArr((oldChildArr) => oldChildArr.concat([struct]));
       };
       ext.appendAfter = (struct, sibling) => {
         setChildArr((oldChildArr) => {
           const newChildArr = oldChildArr.slice(0);
-          newChildArr.splice(sibling ? newChildArr.indexOf(sibling) + 1 || 0 : 0, 0, struct);
+          newChildArr.splice(
+            sibling ? newChildArr.indexOf(sibling) + 1 || 0 : 0,
+            0,
+            struct
+          );
           return newChildArr;
         });
       };
-      ext.text = str => setText(str);
+      ext.text = (str) => setText(str);
       ext.removeChild = (struct) => {
         setChildArr((oldChildArr) => {
           const newChildArr = oldChildArr.slice(0);
@@ -150,7 +167,9 @@ const newStruct = (Tag, parent, nodeId) => {
         setChildArr([]);
       };
       ext.attr = (attr, value) => {
-        setAttrs(oldAttrs => updateObjAttr(Object.assign({}, oldAttrs), attr, value));
+        setAttrs((oldAttrs) =>
+          updateObjAttr(Object.assign({}, oldAttrs), attr, value)
+        );
       };
       // -- END
       return (
@@ -186,7 +205,8 @@ renderingContext.domSetAttr = (struct, attr, value) => struct.attr(attr, value);
 
 renderingContext.domText = (struct, text) => struct.text(text);
 
-renderingContext.domClassToggle = (struct, classStr, addOrRemove = true) => struct.toggleClass(classStr, addOrRemove);
+renderingContext.domClassToggle = (struct, classStr, addOrRemove = true) =>
+  struct.toggleClass(classStr, addOrRemove);
 
 /**
  * Create a struct rather than a domNode.
@@ -221,13 +241,22 @@ renderingContext.prePresenterViewRenderer = () => {};
 renderingContext.materialVariant = 'filled';
 
 renderingContext.preEditorRenderer = (fieldDiv, binding, context) => {
-  if (binding.getItem().getType() !== 'group' && context.noCardinalityButtons !== true) {
+  if (
+    binding.getItem().getType() !== 'group' &&
+    context.noCardinalityButtons !== true
+  ) {
     context.controlDiv = newStruct('div', fieldDiv);
     renderingContext.domClassToggle(context.controlDiv, 'rdformsFieldControl');
 
     // eslint-disable-next-line no-unused-vars
-    const RemoveButton = renderingContext.addRemoveButton(fieldDiv, binding, context);
-    context.controlDiv.appendChild(<RemoveButton key={`${binding.getHash()}_removeButton`}></RemoveButton>);
+    const RemoveButton = renderingContext.addRemoveButton(
+      fieldDiv,
+      binding,
+      context
+    );
+    context.controlDiv.appendChild(
+      <RemoveButton key={`${binding.getHash()}_removeButton`}></RemoveButton>
+    );
   }
 };
 
@@ -247,12 +276,18 @@ let validationCounter = 0;
 renderingContext.renderValidationMessage = (fieldDiv, type, message) => {
   const ValidationIcon = type2icon[type];
   validationCounter += 1;
-  fieldDiv.appendChild(<div className="rdformsValidationMessageWrapper" key={ `rdforms_valcount_${validationCounter}`}
-  ><ValidationIcon/><span className="rdformsValidationMessage">{message}</span></div>);
+  fieldDiv.appendChild(
+    <div
+      className="rdformsValidationMessageWrapper"
+      key={`rdforms_valcount_${validationCounter}`}
+    >
+      <ValidationIcon />
+      <span className="rdformsValidationMessage">{message}</span>
+    </div>
+  );
 };
 
 renderingContext.multiValueSupport = true;
-
 
 renderingContext.addTruncateControl = (fieldsDiv, context) => {
   const Component = () => {
@@ -268,11 +303,19 @@ renderingContext.addTruncateControl = (fieldsDiv, context) => {
       setTruncated(false);
     };
 
-    return <>
-      {truncated ?
-        (<Button className="rdformsShowMore" size="small" onClick={showMore}>{bundle.showMore}</Button>) :
-        (<Button className="rdformsShowLess" size="small" onClick={showLess}>{bundle.showLess}</Button>)}
-    </>;
+    return (
+      <>
+        {truncated ? (
+          <Button className="rdformsShowMore" size="small" onClick={showMore}>
+            {bundle.showMore}
+          </Button>
+        ) : (
+          <Button className="rdformsShowLess" size="small" onClick={showLess}>
+            {bundle.showLess}
+          </Button>
+        )}
+      </>
+    );
   };
   fieldsDiv.appendChild(<Component></Component>);
 };

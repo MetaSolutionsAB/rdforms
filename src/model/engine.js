@@ -23,14 +23,22 @@ let _createStatementsForConstraints;
 let _fuzzy = false;
 
 const match = (graph, uri, template) => {
-  const rootBinding = new GroupBinding({ item: template, childrenRootUri: uri, graph });
+  const rootBinding = new GroupBinding({
+    item: template,
+    childrenRootUri: uri,
+    graph,
+  });
   _matchGroupItemChildren(rootBinding);
   _clearDibbs(rootBinding);
   return rootBinding;
 };
 
 const fuzzyMatch = (graph, uri, template) => {
-  const rootBinding = new GroupBinding({ item: template, childrenRootUri: uri, graph });
+  const rootBinding = new GroupBinding({
+    item: template,
+    childrenRootUri: uri,
+    graph,
+  });
   _matchGroupItemChildren(rootBinding);
   _fuzzy = true;
   _matchGroupItemChildren(rootBinding);
@@ -70,8 +78,11 @@ const constructTemplate = (graph, uri, itemStore, requiredItems) => {
         if (item) {
           addItem(item);
         } else {
-          console.warn(`Warning, when autodetecting a template: Required item '${id
-            }' is neither an id for a loaded item or a property for a loaded item, ignoring.`);
+          console.warn(
+            `Warning, when autodetecting a template: Required item '${
+              id
+            }' is neither an id for a loaded item or a property for a loaded item, ignoring.`
+          );
         }
       }
     });
@@ -92,11 +103,18 @@ const constructTemplate = (graph, uri, itemStore, requiredItems) => {
 //= ==============================================
 // Core creation engine
 //= ==============================================
-const getFirstDataType = item => (Array.isArray(item.getDatatype()) ? item.getDatatype()[0] : item.getDatatype());
+const getFirstDataType = (item) =>
+  Array.isArray(item.getDatatype())
+    ? item.getDatatype()[0]
+    : item.getDatatype();
 
 const _createTextItem = (parentBinding, item) => {
   if (!item.getProperty()) {
-    const groupURIBinding = new GroupURIBinding({ item, statement: null, matchingCode: CODES.OK });
+    const groupURIBinding = new GroupURIBinding({
+      item,
+      statement: null,
+      matchingCode: CODES.OK,
+    });
     parentBinding.addChildBinding(groupURIBinding);
     return groupURIBinding;
   }
@@ -110,7 +128,10 @@ const _createTextItem = (parentBinding, item) => {
     obj.datatype = getFirstDataType(item);
   }
   const defaultValue = item.getValue();
-  if (defaultValue != null && parentBinding.getChildBindingsFor(item).length === 0) {
+  if (
+    defaultValue != null &&
+    parentBinding.getChildBindingsFor(item).length === 0
+  ) {
     obj.value = defaultValue;
     const la = item.getLanguage();
     if (la != null) {
@@ -118,7 +139,12 @@ const _createTextItem = (parentBinding, item) => {
     }
   }
 
-  const stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), obj, false);
+  const stmt = graph.create(
+    parentBinding.getChildrenRootUri(),
+    item.getProperty(),
+    obj,
+    false
+  );
   const nbinding = new ValueBinding({ item, statement: stmt });
   parentBinding.addChildBinding(nbinding);
   return nbinding;
@@ -133,7 +159,12 @@ const _createChoiceItem = (parentBinding, item) => {
   } else if (nt === 'RESOURCE' || nt === 'URI') {
     obj.type = 'uri';
   }
-  const stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), obj, false);
+  const stmt = graph.create(
+    parentBinding.getChildrenRootUri(),
+    item.getProperty(),
+    obj,
+    false
+  );
   const nbinding = new ChoiceBinding({ item, statement: stmt });
   parentBinding.addChildBinding(nbinding);
   const defaultValue = item.getValue();
@@ -155,14 +186,28 @@ const _createGroupItem = (parentBinding, item, parentItems) => {
         value: system.createURI(item, parentBinding),
       }, false);*/
       // Create as a blank, will not be asserted until changed into a uri.
-      stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), null, false);
+      stmt = graph.create(
+        parentBinding.getChildrenRootUri(),
+        item.getProperty(),
+        null,
+        false
+      );
     } else {
-      stmt = graph.create(parentBinding.getChildrenRootUri(), item.getProperty(), null, false);
+      stmt = graph.create(
+        parentBinding.getChildrenRootUri(),
+        item.getProperty(),
+        null,
+        false
+      );
     }
     constr = _createStatementsForConstraints(graph, stmt.getValue(), item);
   }
 
-  const nBinding = new GroupBinding({ item, statement: stmt, constraints: constr });
+  const nBinding = new GroupBinding({
+    item,
+    statement: stmt,
+    constraints: constr,
+  });
   parentBinding.addChildBinding(nBinding);
 
   // Only do loop detection for items that are stored in the itemStore and hence are
@@ -193,15 +238,29 @@ const _createPropertyGroupItem = (parentBinding, item) => {
     stmt = graph.create(parentBinding.getChildrenRootUri(), '', null, false);
     constr = _createStatementsForConstraints(graph, stmt.getSubject(), oItem);
   } else if (oItem instanceof Choice) {
-    stmt = graph.create(parentBinding.getChildrenRootUri(), '', { type: 'uri', value: '' }, false);
+    stmt = graph.create(
+      parentBinding.getChildrenRootUri(),
+      '',
+      { type: 'uri', value: '' },
+      false
+    );
   } else {
-    stmt = graph.create(parentBinding.getChildrenRootUri(), '', {
-      type: 'literal',
-      value: '',
-    }, false);
+    stmt = graph.create(
+      parentBinding.getChildrenRootUri(),
+      '',
+      {
+        type: 'literal',
+        value: '',
+      },
+      false
+    );
   }
 
-  const nBinding = new PropertyGroupBinding({ item, statement: stmt, constraints: constr });
+  const nBinding = new PropertyGroupBinding({
+    item,
+    statement: stmt,
+    constraints: constr,
+  });
   parentBinding.addChildBinding(nBinding);
   if (oItem instanceof Group) {
     oItem.getChildren().forEach((childItem) => {
@@ -242,15 +301,17 @@ _matchGroupItemChildren = (pb) => {
       }
     });
   }
-  pb.getItem().getChildren().forEach((item) => {
-    if (_fuzzy) {
-      if (item.getProperty() !== undefined) {
+  pb.getItem()
+    .getChildren()
+    .forEach((item) => {
+      if (_fuzzy) {
+        if (item.getProperty() !== undefined) {
+          _matchItem(pb, item);
+        }
+      } else {
         _matchItem(pb, item);
       }
-    } else {
-      _matchItem(pb, item);
-    }
-  });
+    });
 };
 
 const _matchGroupItem = (pb, item) => {
@@ -269,7 +330,11 @@ const _matchGroupItem = (pb, item) => {
           const pMatch = _isPatternMatch(item, stmt);
           const ntMatch = _isNodeTypeMatch(item, stmt);
           if ((pMatch && ntMatch) || _fuzzy) {
-            constStmts = _findStatementsForConstraints(graph, stmt.getValue(), item);
+            constStmts = _findStatementsForConstraints(
+              graph,
+              stmt.getValue(),
+              item
+            );
             if (constStmts !== undefined || _fuzzy) {
               let matchingCode = !ntMatch ? CODES.WRONG_NODETYPE : CODES.OK;
               if (!pMatch) {
@@ -278,7 +343,12 @@ const _matchGroupItem = (pb, item) => {
                 matchingCode = CODES.MISSING_CONSTRAINTS;
               }
               _dibbs(stmt);
-              groupBinding = new GroupBinding({ item, statement: stmt, constraints: constStmts, matchingCode });
+              groupBinding = new GroupBinding({
+                item,
+                statement: stmt,
+                constraints: constStmts,
+                matchingCode,
+              });
               bindings.push(groupBinding);
               if (matchingCode === CODES.OK) {
                 _matchGroupItemChildren(groupBinding); // Recursive call
@@ -307,12 +377,20 @@ const _matchPropertyGroupItem = (pb, item) => {
   let oChoice;
   const bindings = [];
   graph.find(pb.getChildrenRootUri()).forEach((stmt) => {
-    if (_noDibbs(stmt) && _isNodeTypeMatch(oItem, stmt) && _isPatternMatch(oItem, stmt)) {
+    if (
+      _noDibbs(stmt) &&
+      _isNodeTypeMatch(oItem, stmt) &&
+      _isPatternMatch(oItem, stmt)
+    ) {
       pChoice = _findChoice(pItem, stmt.getPredicate(), stmt.getGraph());
       if (pChoice !== undefined) {
         binding = null;
         if (oItem instanceof Group) {
-          constStmts = _findStatementsForConstraints(graph, stmt.getValue(), oItem);
+          constStmts = _findStatementsForConstraints(
+            graph,
+            stmt.getValue(),
+            oItem
+          );
           if (constStmts !== undefined) {
             _dibbs(stmt);
             binding = new PropertyGroupBinding({
@@ -349,22 +427,31 @@ const _matchPropertyGroupItem = (pb, item) => {
 const _matchTextItem = (pb, item) => {
   const bindings = [];
   if (item.getProperty() == null) {
-    bindings.push(new GroupURIBinding({ item, statement: null, matchingCode: CODES.OK }));
+    bindings.push(
+      new GroupURIBinding({ item, statement: null, matchingCode: CODES.OK })
+    );
   } else {
-    pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
-      if (_noDibbs(stmt) && _isPatternMatch(item, stmt)) {
-        const ntMatch = _isNodeTypeMatch(item, stmt);
-        const dtMatch = _isDataTypeMatch(item, stmt);
-        if ((ntMatch && (dtMatch || item.hasStyle('relaxedDatatypeMatch'))) || _fuzzy) {
-          _dibbs(stmt);
-          let matchingCode = ntMatch ? CODES.OK : CODES.WRONG_NODETYPE;
-          if (!dtMatch) {
-            matchingCode = CODES.WRONG_DATATYPE;
+    pb.getGraph()
+      .find(pb.getChildrenRootUri(), item.getProperty())
+      .forEach((stmt) => {
+        if (_noDibbs(stmt) && _isPatternMatch(item, stmt)) {
+          const ntMatch = _isNodeTypeMatch(item, stmt);
+          const dtMatch = _isDataTypeMatch(item, stmt);
+          if (
+            (ntMatch && (dtMatch || item.hasStyle('relaxedDatatypeMatch'))) ||
+            _fuzzy
+          ) {
+            _dibbs(stmt);
+            let matchingCode = ntMatch ? CODES.OK : CODES.WRONG_NODETYPE;
+            if (!dtMatch) {
+              matchingCode = CODES.WRONG_DATATYPE;
+            }
+            bindings.push(
+              new ValueBinding({ item, statement: stmt, matchingCode })
+            );
           }
-          bindings.push(new ValueBinding({ item, statement: stmt, matchingCode }));
         }
-      }
-    });
+      });
   }
   if (bindings.length > 0) {
     pb.addChildBindings(bindings);
@@ -376,28 +463,32 @@ const _matchChoiceItem = (pb, item) => {
     return;
   }
   const bindings = [];
-  pb.getGraph().find(pb.getChildrenRootUri(), item.getProperty()).forEach((stmt) => {
-    if (_noDibbs(stmt)) {
-      const ntMatch = _isNodeTypeMatch(item, stmt);
-      const dtMatch = _isDataTypeMatch(item, stmt);
-      const pMatch = _isPatternMatch(item, stmt);
-      if ((ntMatch && dtMatch && pMatch) || _fuzzy) {
-        const choice = _findChoice(item, stmt.getValue(), stmt.getGraph());
-        if (choice !== undefined) {
-          _dibbs(stmt);
-          let matchingCode = !ntMatch ? CODES.WRONG_NODETYPE : CODES.OK;
-          if (!dtMatch) {
-            matchingCode = CODES.WRONG_DATATYPE;
-          } else if (!pMatch) {
-            matchingCode = CODES.WRONG_PATTERN;
-          } else if (choice.mismatch) {
-            matchingCode = CODES.WRONG_VALUE;
+  pb.getGraph()
+    .find(pb.getChildrenRootUri(), item.getProperty())
+    .forEach((stmt) => {
+      if (_noDibbs(stmt)) {
+        const ntMatch = _isNodeTypeMatch(item, stmt);
+        const dtMatch = _isDataTypeMatch(item, stmt);
+        const pMatch = _isPatternMatch(item, stmt);
+        if ((ntMatch && dtMatch && pMatch) || _fuzzy) {
+          const choice = _findChoice(item, stmt.getValue(), stmt.getGraph());
+          if (choice !== undefined) {
+            _dibbs(stmt);
+            let matchingCode = !ntMatch ? CODES.WRONG_NODETYPE : CODES.OK;
+            if (!dtMatch) {
+              matchingCode = CODES.WRONG_DATATYPE;
+            } else if (!pMatch) {
+              matchingCode = CODES.WRONG_PATTERN;
+            } else if (choice.mismatch) {
+              matchingCode = CODES.WRONG_VALUE;
+            }
+            bindings.push(
+              new ChoiceBinding({ item, statement: stmt, choice, matchingCode })
+            );
           }
-          bindings.push(new ChoiceBinding({ item, statement: stmt, choice, matchingCode }));
         }
       }
-    }
-  });
+    });
   if (bindings.length > 0) {
     pb.addChildBindings(bindings);
   }
@@ -426,14 +517,14 @@ _matchItem = (pb, item) => {
  */
 _isNodeTypeMatch = (item, stmt) => {
   const objectType = stmt.getType();
-// eslint-disable-next-line default-case
+  // eslint-disable-next-line default-case
   switch (item.getNodetype()) {
-    case 'LITERAL':      // Any form of literal
-    case 'ONLY_LITERAL':  // No language, no datatype
-    case 'PLAIN_LITERAL':  // No datatype, perhaps a language
-    case 'LANGUAGE_LITERAL':  // Definitely a language
+    case 'LITERAL': // Any form of literal
+    case 'ONLY_LITERAL': // No language, no datatype
+    case 'PLAIN_LITERAL': // No datatype, perhaps a language
+    case 'LANGUAGE_LITERAL': // Definitely a language
       return objectType === 'literal';
-    case 'DATATYPE_LITERAL':     // Definitiely a datatype
+    case 'DATATYPE_LITERAL': // Definitiely a datatype
       return objectType === 'literal';
     case 'RESOURCE':
       return objectType === 'uri' || objectType === 'bnode';
@@ -446,9 +537,14 @@ _isNodeTypeMatch = (item, stmt) => {
 };
 
 _isDataTypeMatch = (item, stmt) => {
-  const dt = item.getNodetype() === 'DATATYPE_LITERAL' ? item.getDatatype() || null : null;
+  const dt =
+    item.getNodetype() === 'DATATYPE_LITERAL'
+      ? item.getDatatype() || null
+      : null;
   if (dt != null) {
-    return Array.isArray(dt) ? dt.indexOf(stmt.getDatatype()) !== -1 : stmt.getDatatype() === dt;
+    return Array.isArray(dt)
+      ? dt.indexOf(stmt.getDatatype()) !== -1
+      : stmt.getDatatype() === dt;
   }
   return true;
 };
@@ -458,7 +554,7 @@ _isPatternMatch = (item, stmt) => {
   const value = utils.extractGist(stmt.getValue(), item.getValueTemplate());
   if (typeof pattern !== 'undefined') {
     try {
-      return (new RegExp(`^${pattern}$`)).test(value);
+      return new RegExp(`^${pattern}$`).test(value);
     } catch (e) {
       return true;
     }
@@ -487,7 +583,7 @@ _findStatementsForConstraints = (graph, uri, item) => {
     }
     return false;
   };
-  if ((typeof constr === 'object') && (constr !== null)) {
+  if (typeof constr === 'object' && constr !== null) {
     const keys = Object.keys(constr);
     for (let idx = 0; idx < keys.length; idx++) {
       const key = keys[idx];
@@ -514,13 +610,17 @@ _findStatementsForConstraints = (graph, uri, item) => {
 _createStatementsForConstraints = (graph, uri, item) => {
   const results = [];
   const constr = item.getConstraints();
-  if ((typeof constr === 'object') && (constr !== null)) {
+  if (typeof constr === 'object' && constr !== null) {
     Object.keys(constr).forEach((key) => {
       const obj = constr[key];
       if (Array.isArray(obj)) {
-        results.push(graph.create(uri, key, { type: 'uri', value: obj[0] }, false));
+        results.push(
+          graph.create(uri, key, { type: 'uri', value: obj[0] }, false)
+        );
       } else {
-        results.push(graph.create(uri, key, { type: 'uri', value: obj }, false));
+        results.push(
+          graph.create(uri, key, { type: 'uri', value: obj }, false)
+        );
       }
     });
   }
@@ -563,7 +663,7 @@ _dibbs = (stmt) => {
   stmt._dibbs = true;
 };
 
-_noDibbs = stmt => stmt._dibbs !== true;
+_noDibbs = (stmt) => stmt._dibbs !== true;
 
 _clearDibbs = (groupBinding) => {
   let i;
@@ -577,7 +677,10 @@ _clearDibbs = (groupBinding) => {
       if (binding._statement) {
         delete binding._statement._dibbs;
       }
-      if (binding instanceof GroupBinding || binding instanceof PropertyGroupBinding) {
+      if (
+        binding instanceof GroupBinding ||
+        binding instanceof PropertyGroupBinding
+      ) {
         _clearDibbs(binding);
       }
     }
@@ -612,11 +715,13 @@ const findFirstValueBinding = (binding, createIfMissing) => {
             result.anyLanguageValue = vbs[i];
           }
         }
-        return result.perfectLocaleLanguageValue ||
+        return (
+          result.perfectLocaleLanguageValue ||
           result.localeLanguageValue ||
           result.defaultLanguageValue ||
           result.anyLanguageValue ||
-          result.firstValue;
+          result.firstValue
+        );
       }
       return vbs[0];
     } else if (createIfMissing) {
@@ -642,14 +747,17 @@ const matchPathBelowBinding = (bindingTree, path) => {
       let b = bindings[j];
       let item = b.getItem();
       // Empty property choices.
-      if (item instanceof Choice
-        && typeof item.getProperty() === 'undefined'
-        && pred === item.getId()
-        && (_path.length === 2 && _path[1] === b.getValue())) {
+      if (
+        item instanceof Choice &&
+        typeof item.getProperty() === 'undefined' &&
+        pred === item.getId() &&
+        _path.length === 2 &&
+        _path[1] === b.getValue()
+      ) {
         return b;
       }
       if (!b.isValid()) {
-// eslint-disable-next-line no-continue
+        // eslint-disable-next-line no-continue
         continue;
       }
       if (item.getType() === 'propertygroup') {
@@ -667,8 +775,11 @@ const matchPathBelowBinding = (bindingTree, path) => {
           if (res) {
             return res;
           }
-        } else if (_path.length === 1 || _path[1] === '*'
-          || _path[1] === b.getValue()) {
+        } else if (
+          _path.length === 1 ||
+          _path[1] === '*' ||
+          _path[1] === b.getValue()
+        ) {
           return b;
         }
       }
@@ -747,14 +858,19 @@ const _levelProfile = (profile, item, ignoreTopLevelGroup) => {
     }
   }
   if (item.getType() === 'group') {
-    item.getChildren().forEach(i => _levelProfile(profile, i));
+    item.getChildren().forEach((i) => _levelProfile(profile, i));
   }
   return profile;
 };
 
 const levelProfile = (item) => {
-  const profile = _levelProfile({ mandatory: 0, recommended: 0, optional: 0 }, item, true);
-  profile.itemCount = profile.mandatory + profile.recommended + profile.optional;
+  const profile = _levelProfile(
+    { mandatory: 0, recommended: 0, optional: 0 },
+    item,
+    true
+  );
+  profile.itemCount =
+    profile.mandatory + profile.recommended + profile.optional;
   return profile;
 };
 
@@ -772,7 +888,11 @@ const detectLevel = (profile) => {
       return 'recommended';
     }
     return 'mixed_recommended_optional';
-  } else if (profile.recommended === 0 && profile.recommended > 0 && profile.optional === 0) {
+  } else if (
+    profile.recommended === 0 &&
+    profile.recommended > 0 &&
+    profile.optional === 0
+  ) {
     return 'optional';
   }
   return 'mixed_all';
@@ -874,7 +994,8 @@ export { detectLevel };
 
 export { CODES };
 
-export default { // TODO @valentino anti-pattern. This is done because engine is used in EntryScape. It shouldn't really...
+export default {
+  // TODO @valentino anti-pattern. This is done because engine is used in EntryScape. It shouldn't really...
   detectLevel,
   levelProfile,
   findFirstValueBinding,

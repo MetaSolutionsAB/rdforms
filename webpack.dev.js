@@ -16,43 +16,54 @@ const getHTMLPlugins = () => {
       inject: true,
     }),
     // create all examples' html
-    ...examples.map((exampleNumber) => new HtmlWebpackPlugin({
-      filename: `example${exampleNumber}/index.html`,
-      template: __dirname + `/html/example${exampleNumber}/index.html`,
-      inject: true,
-    })),
+    ...examples.map(
+      (exampleNumber) =>
+        new HtmlWebpackPlugin({
+          filename: `example${exampleNumber}/index.html`,
+          template: __dirname + `/html/example${exampleNumber}/index.html`,
+          inject: true,
+        })
+    ),
     //  append assets for all examples
     new HtmlWebpackTagsPlugin({
-      tags: [{
-        path: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700',
-        type: 'css',
-        publicPath: false,
-      }, {
-//        path: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css',
-        path: '/fontawesome-free/css/all.min.css',
-        type: 'css',
-        publicPath: false,
-      }, {
-//        path: 'https://unpkg.com/@entryscape/rdfjson/dist/rdfjson.js',
-        path: '/rdfjson/dist/rdfjson.js',
-        type: 'js',
-        publicPath: false,
-      },
-        '../styles.css'
+      tags: [
+        {
+          path: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700',
+          type: 'css',
+          publicPath: false,
+        },
+        {
+          //        path: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css',
+          path: '/fontawesome-free/css/all.min.css',
+          type: 'css',
+          publicPath: false,
+        },
+        {
+          //        path: 'https://unpkg.com/@entryscape/rdfjson/dist/rdfjson.js',
+          path: '/rdfjson/dist/rdfjson.js',
+          type: 'js',
+          publicPath: false,
+        },
+        '../styles.css',
       ],
-      append: true
+      append: true,
     }), // append styles.css to all examples
     // append examples' respective js for all html
-    ...examples.map((number) => new HtmlWebpackTagsPlugin({
-      files: [`example${number}/**/*.html`],
-      tags: [{
-        path: `./example${number}/init.js`,
-        attributes: {
-          type: 'module',
-        }
-      }],
-      append: true
-    })),
+    ...examples.map(
+      (number) =>
+        new HtmlWebpackTagsPlugin({
+          files: [`example${number}/**/*.html`],
+          tags: [
+            {
+              path: `./example${number}/init.js`,
+              attributes: {
+                type: 'module',
+              },
+            },
+          ],
+          append: true,
+        })
+    ),
   ];
 };
 
@@ -64,35 +75,39 @@ module.exports = (env) => {
     output: {
       filename: 'rdforms.[name].js',
       library: 'rdforms',
-      libraryTarget: "umd",
-      publicPath: '/',      
+      libraryTarget: 'umd',
+      publicPath: '/',
     },
     mode: 'development',
     devtool: 'inline-source-map',
     plugins: [
       ...getHTMLPlugins(),
-       //new CircularDependencyPlugin({
-       //  // exclude detection of files based on a RegExp
-       //  exclude: /a\.js|node_modules/,
-       //  // add errors to webpack instead of warnings
-       //  failOnError: false,
-       //  // allow import cycles that include an asyncronous import,
-       //  // e.g. via import(/* webpackMode: "weak" */ './file.js')
-       //  allowAsyncCycles: false,
-       //  // set the current working directory for displaying module paths
-       //  cwd: process.cwd(),
-       //}),
+      //new CircularDependencyPlugin({
+      //  // exclude detection of files based on a RegExp
+      //  exclude: /a\.js|node_modules/,
+      //  // add errors to webpack instead of warnings
+      //  failOnError: false,
+      //  // allow import cycles that include an asyncronous import,
+      //  // e.g. via import(/* webpackMode: "weak" */ './file.js')
+      //  allowAsyncCycles: false,
+      //  // set the current working directory for displaying module paths
+      //  cwd: process.cwd(),
+      //}),
     ],
     devServer: {
       hot: true,
       open: true,
-      static: [{
-        directory: path.join(__dirname, '/html'),
-      }, {
-        directory: path.join(__dirname, 'node_modules', '@entryscape'),
-      }, {
-        directory: path.join(__dirname, 'node_modules', '@fortawesome'),
-      }],      
+      static: [
+        {
+          directory: path.join(__dirname, '/html'),
+        },
+        {
+          directory: path.join(__dirname, 'node_modules', '@entryscape'),
+        },
+        {
+          directory: path.join(__dirname, 'node_modules', '@fortawesome'),
+        },
+      ],
     },
   };
 
@@ -110,4 +125,3 @@ module.exports = (env) => {
   // })(common, devConfig);
   return merge(common, devConfig);
 };
-

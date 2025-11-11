@@ -4,8 +4,7 @@ import utils from '../../utils';
 import jquery from 'jquery';
 import Editor from '../Editor';
 
-
-const createChildBindingsForFirstFixedColumn = (bindings/* , context*/) => {
+const createChildBindingsForFirstFixedColumn = (bindings /* , context*/) => {
   // Find choice column
   // flesh out bindings from choices
   // mark each fleshed out binding via .setExcludeFromTreeValidityCheck(true);
@@ -24,7 +23,6 @@ const createChildBindingsForFirstFixedColumn = (bindings/* , context*/) => {
     }
     return 0;
   });
-
 
   // index the existing bindings
   const ebi = {};
@@ -67,15 +65,22 @@ const addTableRow = (table, binding, context) => {
   });
   groupedBindings.forEach((bindings) => {
     if (bindings.length > 0) {
-      renderingContext.renderEditor(jquery('<td>').appendTo($trEl)[0], bindings[0],
-        { view: context.view, noCardinalityButtons: true });
+      renderingContext.renderEditor(
+        jquery('<td>').appendTo($trEl)[0],
+        bindings[0],
+        { view: context.view, noCardinalityButtons: true }
+      );
     }
   });
 
   if (!binding.getItem().hasStyle('firstcolumnfixedtable')) {
-    const $lastTd = jquery('<td>').addClass('rdformsTableControl').appendTo($trEl);
-    const $remove = jquery('<span>').addClass('action editDelete')
-      .attr('title', context.view.messages.edit_remove).appendTo($lastTd);
+    const $lastTd = jquery('<td>')
+      .addClass('rdformsTableControl')
+      .appendTo($trEl);
+    const $remove = jquery('<span>')
+      .addClass('action editDelete')
+      .attr('title', context.view.messages.edit_remove)
+      .appendTo($lastTd);
     const cardTr = binding.getCardinalityTracker();
     const cardConnect1 = cardTr.addListener(() => {
       $remove.toggleClass('disabled', cardTr.isMin());
@@ -110,17 +115,28 @@ renderingContext.addEditorTable = (newRow, firstBinding, context) => {
     const $th = jquery('<th>').appendTo($tHeadRow);
     jquery($th).addClass(`rdformsColumnHeader${colInd}`);
     const childItem = childItems[colInd];
-    const labelMap = context.view instanceof Editor ?
-      childItem.getEditLabelMap() || childItem.getLabelMap() : childItem.getLabelMap();
-    const label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value
-    renderingContext.attachItemInfo(item,
-      jquery('<span>').text(label).appendTo($th)[0], context);
+    const labelMap =
+      context.view instanceof Editor
+        ? childItem.getEditLabelMap() || childItem.getLabelMap()
+        : childItem.getLabelMap();
+    const label = utils.getLocalizedValue(
+      labelMap,
+      context.view.getLocale()
+    ).value;
+    renderingContext.attachItemInfo(
+      item,
+      jquery('<span>').text(label).appendTo($th)[0],
+      context
+    );
   }
   if (!firstBinding.getItem().hasStyle('firstcolumnfixedtable')) {
-    const $addTh = jquery('<th>').addClass('rdformsTableControl').appendTo($tHeadRow);
+    const $addTh = jquery('<th>')
+      .addClass('rdformsTableControl')
+      .appendTo($tHeadRow);
     const parentBinding = firstBinding.getParent();
     const cardTr = firstBinding.getCardinalityTracker();
-    const $add = jquery('<span>').addClass('action editAdd')
+    const $add = jquery('<span>')
+      .addClass('action editAdd')
       .attr('title', context.view.messages.edit_add)
       .appendTo($addTh)
       .click(() => {

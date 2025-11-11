@@ -2,11 +2,12 @@
 import renderingContext from './renderingContext';
 import View from './View';
 
-
 const showNow = (editor, item, bindings) => {
-  if (bindings.length === 0 ||
-//    item.hasStyle('deprecated') ||
-    item.hasStyle('invisible')) {
+  if (
+    bindings.length === 0 ||
+    //    item.hasStyle('deprecated') ||
+    item.hasStyle('invisible')
+  ) {
     return false;
   }
   const prop = item.getProperty();
@@ -14,14 +15,19 @@ const showNow = (editor, item, bindings) => {
     return !editor.filterItem(item);
   }
 
-    // Take care of layout grouping by checking recursively.
+  // Take care of layout grouping by checking recursively.
   if (item.getType() === 'group') {
     const groupedItemsArr = item.getChildren();
     if (groupedItemsArr.length === 0) {
       return true; // Corresponds to an extention or pure heading, since no children.
     }
-    if (bindings[0].getItemGroupedChildBindings().find((childBindings, idx) =>
-      showNow(editor, groupedItemsArr[idx], childBindings))) {
+    if (
+      bindings[0]
+        .getItemGroupedChildBindings()
+        .find((childBindings, idx) =>
+          showNow(editor, groupedItemsArr[idx], childBindings)
+        )
+    ) {
       return true;
     }
     return false;
@@ -45,7 +51,7 @@ export default class Presenter extends View {
    */
   showNow(item, bindings) {
     return showNow(this, item, bindings);
-/*    if (item.hasStyle('deprecated') && bindings.length === 0) {
+    /*    if (item.hasStyle('deprecated') && bindings.length === 0) {
       return false;
     }
     return bindings.length > 0 && !item.hasStyle('invisible');*/
@@ -71,24 +77,39 @@ export default class Presenter extends View {
    * otherwise same as input bindings.
    */
   prepareBindings(item, bindings) {
-    if (!item.hasStyle('filterTranslations') &&
-      (!this.filterTranslations || item.getNodetype() !== 'LANGUAGE_LITERAL' || item.hasStyle('viewAllTranslations'))) {
+    if (
+      !item.hasStyle('filterTranslations') &&
+      (!this.filterTranslations ||
+        item.getNodetype() !== 'LANGUAGE_LITERAL' ||
+        item.hasStyle('viewAllTranslations'))
+    ) {
       return bindings;
     }
 
-    return renderingContext.filterTranslations(bindings, this.getLocale(), this.defaultLanguage);
+    return renderingContext.filterTranslations(
+      bindings,
+      this.getLocale(),
+      this.defaultLanguage
+    );
   }
 
   addLabel(rowDiv, binding, item) {
     if (item.hasStyle('noLabelInPresent')) {
       renderingContext.domClassToggle(rowDiv, 'rdformsInvisibleGroup', true);
     } else {
-      renderingContext.renderPresenterLabel(rowDiv, binding, item, this.context);
+      renderingContext.renderPresenterLabel(
+        rowDiv,
+        binding,
+        item,
+        this.context
+      );
     }
   }
 
   addTable(newRow, firstBinding) {
-    return renderingContext.addPresenterTable(newRow, firstBinding, { view: this });
+    return renderingContext.addPresenterTable(newRow, firstBinding, {
+      view: this,
+    });
   }
 
   fillTable(table, bindings) {
@@ -96,7 +117,10 @@ export default class Presenter extends View {
   }
 
   preRenderView() {
-    renderingContext.prePresenterViewRenderer(this.domNode, this.binding, { view: this, topLevel: this.topLevel });
+    renderingContext.prePresenterViewRenderer(this.domNode, this.binding, {
+      view: this,
+      topLevel: this.topLevel,
+    });
   }
 
   addComponent(fieldDiv, binding) {
@@ -115,8 +139,11 @@ export default class Presenter extends View {
    */
   truncateAt(item, bindings) {
     return item.getType() !== 'group' &&
-      bindings && bindings.length > this.truncateLimit &&
+      bindings &&
+      bindings.length > this.truncateLimit &&
       (this.truncate || item.hasStyle('truncate')) &&
-      !item.hasStyle('noTruncate') ? this.truncateLimit : -1;
+      !item.hasStyle('noTruncate')
+      ? this.truncateLimit
+      : -1;
   }
 }

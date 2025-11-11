@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export const fromDuration = (value) => {
-  const f = val => (val && val.length > 1 ? parseInt(val[0], 10) : 0);
+  const f = (val) => (val && val.length > 1 ? parseInt(val[0], 10) : 0);
   const years = f(value.match(/([0-9])*Y/));
   const days = f(value.match(/([0-9])*D/));
   const hours = f(value.match(/([0-9])*H/));
@@ -19,8 +19,8 @@ export const fromDuration = (value) => {
 
 export const toDuration = (data) => {
   if (data.years || data.months || data.days || data.hours || data.minutes) {
-    let str = `P${data.years ? `${data.years}Y` : ''
-    }${data.months ? `${data.months}M` : ''
+    let str = `P${data.years ? `${data.years}Y` : ''}${
+      data.months ? `${data.months}M` : ''
     }${data.days ? `${data.days}D` : ''}`;
     if (data.hours || data.minutes) {
       str = `${str}T${
@@ -31,7 +31,6 @@ export const toDuration = (data) => {
   }
   return null;
 };
-
 
 export const getDate = (value) => {
   try {
@@ -202,7 +201,9 @@ export const getDatePresentation = (binding, locale) => {
 };
 
 export const getNamedGraphId = (binding, context) => {
-  const ng = (binding.getStatement() || binding.getParent().getStatement())?.getNamedGraph();
+  const ng = (
+    binding.getStatement() || binding.getParent().getStatement()
+  )?.getNamedGraph();
   if (ng) {
     let view = context.view;
     while (view.getParentView()) view = view.getParentView();

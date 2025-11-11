@@ -15,7 +15,10 @@ const defaultLanguages = [
   { value: 'es', label: { en: 'Spanish', es: 'Español' } },
   { value: 'cs', label: { en: 'Czech', cs: 'čeština' } },
   { value: 'da', label: { en: 'Danish', da: 'Dansk' } },
-  { value: 'no', label: { en: 'Norwegian', no: 'Norsk', nb: 'Norsk', nn: 'Norsk nynorsk' } },
+  {
+    value: 'no',
+    label: { en: 'Norwegian', no: 'Norsk', nb: 'Norsk', nn: 'Norsk nynorsk' },
+  },
   {
     value: 'nb',
     label: {
@@ -57,18 +60,12 @@ const defaultLanguages = [
 ];
 
 const renderingContext = {
-  domQuery(/* selector, node */) {
-  },
-  domCreate(/* domStr, node, id */) {
-  },
-  domCreateAfter(/* domStr, node, id */) {
-  },
-  domClassToggle(/* node, classStr, addOrRemove */) {
-  },
-  domSetAttr(/* node, attr, value */) {
-  },
-  domText(/* node, text */) {
-  },
+  domQuery(/* selector, node */) {},
+  domCreate(/* domStr, node, id */) {},
+  domCreateAfter(/* domStr, node, id */) {},
+  domClassToggle(/* node, classStr, addOrRemove */) {},
+  domSetAttr(/* node, attr, value */) {},
+  domText(/* node, text */) {},
   createDomNode(srcNodeRef /* , view */) {
     if (srcNodeRef instanceof Node) {
       return srcNodeRef;
@@ -77,8 +74,7 @@ const renderingContext = {
     }
     return document.createElement('div');
   },
-  destroyDomNode(/* domNode, view */) {
-  },
+  destroyDomNode(/* domNode, view */) {},
   presenterRegistry: new Registry(),
   editorRegistry: new Registry(),
   /**
@@ -97,7 +93,9 @@ const renderingContext = {
    */
   chooserRegistry: new Registry(),
   renderPresenter(node, binding, context) {
-    const renderer = renderingContext.presenterRegistry.getComponent(binding.getItem());
+    const renderer = renderingContext.presenterRegistry.getComponent(
+      binding.getItem()
+    );
     if (renderer) {
       renderingContext.prePresenterRenderer(node, binding, context);
       renderer(node, binding, context);
@@ -105,32 +103,40 @@ const renderingContext = {
     }
   },
   renderEditor(node, binding, context) {
-    const renderer = renderingContext.editorRegistry.getComponent(binding.getItem());
+    const renderer = renderingContext.editorRegistry.getComponent(
+      binding.getItem()
+    );
     if (renderer) {
       renderingContext.preEditorRenderer(node, binding, context);
       renderer(node, binding, context);
       renderingContext.postEditorRenderer(node, binding, context);
     }
   },
-  renderValidationMessage(node, type, message) {
-  },
-  renderSelect(/* fieldDiv, binding, context */) {
-  },
+  renderValidationMessage(node, type, message) {},
+  renderSelect(/* fieldDiv, binding, context */) {},
   getChoice(item, value) {
     const chooser = renderingContext.chooserRegistry.getComponent(item);
     if (chooser == null) {
-      throw new Error(`Error, no chooser available to retrieve a choice for item: ${item.getId()}`);
+      throw new Error(
+        `Error, no chooser available to retrieve a choice for item: ${item.getId()}`
+      );
     }
     return chooser.getChoice(item, value);
   },
   hasOpenChoiceSelector(binding) {
-    return renderingContext.chooserRegistry.getComponent(binding.getItem()) != null;
+    return (
+      renderingContext.chooserRegistry.getComponent(binding.getItem()) != null
+    );
   },
   openChoiceSelector(binding, callback, field) {
-    const chooser = renderingContext.chooserRegistry.getComponent(binding.getItem());
+    const chooser = renderingContext.chooserRegistry.getComponent(
+      binding.getItem()
+    );
     if (chooser == null || !(chooser && chooser.getChoice)) {
       const item = binding.getItem();
-      alert(`Error, no chooser available to open a choice selector for: ${item}`);
+      alert(
+        `Error, no chooser available to open a choice selector for: ${item}`
+      );
       return;
     }
     chooser.show(binding, callback, field);
@@ -154,7 +160,8 @@ const renderingContext = {
    *
    * @return {Array} of languages.
    */
-  getLanguageList() { // TODO: Take this list from some kind of configuration
+  getLanguageList() {
+    // TODO: Take this list from some kind of configuration
     return languages || defaultLanguages;
   },
 
@@ -245,7 +252,10 @@ const renderingContext = {
         alts.noLanguage = true;
       } else if (lang === currentLanguage) {
         alts.best = true;
-      } else if (lang.indexOf(currentLanguage) !== -1 || currentLanguage.indexOf(lang) !== -1) {
+      } else if (
+        lang.indexOf(currentLanguage) !== -1 ||
+        currentLanguage.indexOf(lang) !== -1
+      ) {
         alts.close = true;
       } else if (lang.indexOf(defaultLanguage) === 0) {
         alts.defaultLanguage = true;
@@ -253,11 +263,15 @@ const renderingContext = {
     }
     // Filter to bindings that are best, close and defaultLanguage in that order
     if (alts.best) {
-      return bindings.filter(b => b.getLanguage() === currentLanguage);
+      return bindings.filter((b) => b.getLanguage() === currentLanguage);
     } else if (alts.close) {
       return bindings.filter((b) => {
         const lang = b.getLanguage();
-        return lang && (lang.indexOf(currentLanguage) !== -1 || currentLanguage.indexOf(lang) !== -1);
+        return (
+          lang &&
+          (lang.indexOf(currentLanguage) !== -1 ||
+            currentLanguage.indexOf(lang) !== -1)
+        );
       });
     } else if (alts.defaultLanguage) {
       return bindings.filter((b) => {
@@ -280,45 +294,26 @@ const renderingContext = {
 
   // Override the following methods
   // eslint-disable-next-line no-unused-vars
-  preEditorViewRenderer(viewNode, binding) {
-  },
+  preEditorViewRenderer(viewNode, binding) {},
   // eslint-disable-next-line no-unused-vars
-  prePresenterViewRenderer(viewNode, binding) {
-  },
-  preEditorRenderer() {
-  },
-  postEditorRenderer() {
-  },
-  prePresenterRenderer() {
-  },
-  postPresenterRenderer() {
-  },
-  renderEditorLabel(/* rowNode, binding, item, context */) {
-  },
-  renderEditorLabelScopeEnd(/* rowNode, binding, item, context */) {
-  },
-  renderPresenterLabel(/* rowNode, binding, item, context */) {
-  },
-  attachItemInfo(/* item, aroundNode, context */) {
-  },
-  addCreateChildButton(/* rowDiv, labelDiv, binding, context */) {
-  },
-  addGroupButtons(/* rowDiv, labelDiv, binding, context */) {
-  },
-  addExpandButton(/* rowDiv, labelDiv, item, context */) {
-  },
-  addRemoveButton(/* fieldDiv, binding, context, onReset */) {
-  },
-  addPresenterTable(/* lastRow, firstBinding, context */) {
-  },
-  fillPresenterTable(/* table, bindings, context */) {
-  },
-  addEditorTable(/* lastRow, firstBinding, context */) {
-  },
-  fillEditorTable(/* table, bindings, context */) {
-  },
-  addTruncateControl(/* fieldsDiv */) {
-  }
+  prePresenterViewRenderer(viewNode, binding) {},
+  preEditorRenderer() {},
+  postEditorRenderer() {},
+  prePresenterRenderer() {},
+  postPresenterRenderer() {},
+  renderEditorLabel(/* rowNode, binding, item, context */) {},
+  renderEditorLabelScopeEnd(/* rowNode, binding, item, context */) {},
+  renderPresenterLabel(/* rowNode, binding, item, context */) {},
+  attachItemInfo(/* item, aroundNode, context */) {},
+  addCreateChildButton(/* rowDiv, labelDiv, binding, context */) {},
+  addGroupButtons(/* rowDiv, labelDiv, binding, context */) {},
+  addExpandButton(/* rowDiv, labelDiv, item, context */) {},
+  addRemoveButton(/* fieldDiv, binding, context, onReset */) {},
+  addPresenterTable(/* lastRow, firstBinding, context */) {},
+  fillPresenterTable(/* table, bindings, context */) {},
+  addEditorTable(/* lastRow, firstBinding, context */) {},
+  fillEditorTable(/* table, bindings, context */) {},
+  addTruncateControl(/* fieldsDiv */) {},
 };
 
 system.getChoice = renderingContext.getChoice;
@@ -326,43 +321,51 @@ system.getChoice = renderingContext.getChoice;
 const groupPresenter = (fieldDiv, binding, context) => {
   const Cls = context.view.constructor;
   // eslint-disable-next-line no-new
-  new Cls({
-    parentView: context.view,
-    renderingParams: context.view.renderingParams,
-    messages: context.view.messages,
-    binding,
-    topLevel: false,
-    compact: context.view.compact,
-    showLanguage: context.view.showLanguage,
-    showDescription: context.view.showDescription,
-    defaultLanguage: context.view.defaultLanguage,
-    filterTranslations: context.view.filterTranslations,
-    popupOnLabel: context.view.popupOnLabel,
-    truncate: context.view.truncate,
-    truncateLimit: context.view.truncateLimit,
-    includeLevel: context.view.includeLevel, // Copied from groupEditor, was this.includeLevel but that 'this' does not make sense here
-  }, fieldDiv);
+  new Cls(
+    {
+      parentView: context.view,
+      renderingParams: context.view.renderingParams,
+      messages: context.view.messages,
+      binding,
+      topLevel: false,
+      compact: context.view.compact,
+      showLanguage: context.view.showLanguage,
+      showDescription: context.view.showDescription,
+      defaultLanguage: context.view.defaultLanguage,
+      filterTranslations: context.view.filterTranslations,
+      popupOnLabel: context.view.popupOnLabel,
+      truncate: context.view.truncate,
+      truncateLimit: context.view.truncateLimit,
+      includeLevel: context.view.includeLevel, // Copied from groupEditor, was this.includeLevel but that 'this' does not make sense here
+    },
+    fieldDiv
+  );
 };
 
 renderingContext.presenterRegistry.itemtype('group').register(groupPresenter);
-renderingContext.presenterRegistry.itemtype('propertygroup').register(groupPresenter);
+renderingContext.presenterRegistry
+  .itemtype('propertygroup')
+  .register(groupPresenter);
 
 const groupEditor = (fieldDiv, binding, context) => {
   const Cls = context.view.constructor;
-  const subView = new Cls({
-    parentView: context.view,
-    renderingParams: context.view.renderingParams,
-    messages: context.view.messages,
-    languages: context.view.languages,
-    binding,
-    topLevel: false,
-    compact: context.view.compact,
-    popupOnLabel: context.view.popupOnLabel,
-    showDescription: context.view.showDescription,
-    truncate: context.view.truncate,
-    truncateLimit: context.view.truncateLimit,
-    includeLevel: context.view.includeLevel,
-  }, fieldDiv);
+  const subView = new Cls(
+    {
+      parentView: context.view,
+      renderingParams: context.view.renderingParams,
+      messages: context.view.messages,
+      languages: context.view.languages,
+      binding,
+      topLevel: false,
+      compact: context.view.compact,
+      popupOnLabel: context.view.popupOnLabel,
+      showDescription: context.view.showDescription,
+      truncate: context.view.truncate,
+      truncateLimit: context.view.truncateLimit,
+      includeLevel: context.view.includeLevel,
+    },
+    fieldDiv
+  );
   context.view._subEditors.push(subView);
 };
 renderingContext.editorRegistry.itemtype('group').register(groupEditor);

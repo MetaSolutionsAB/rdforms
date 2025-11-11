@@ -34,22 +34,50 @@ const autoDateFactory = (reg) => {
         binding.setValue(new Date().toISOString(), true);
       }
     }
-    reg.getComponentBefore(binding.getItem(), autoDate)(fieldDiv, binding, context);
+    reg.getComponentBefore(binding.getItem(), autoDate)(
+      fieldDiv,
+      binding,
+      context
+    );
   };
   return autoDate;
 };
 
 // Add autoUpdateDate and autoInitDate componenets as a layer above the default component
 const autoDateP = autoDateFactory(pr);
-pr.itemtype('text').datatype('xsd:date').style('autoUpdateDate').register(autoDateP);
-pr.itemtype('text').datatype('xsd:date').style('autoInitDate').register(autoDateP);
-pr.itemtype('text').datatype('dcterms:W3CDTF').style('autoUpdateDate').register(autoDateP);
-pr.itemtype('text').datatype('dcterms:W3CDTF').style('autoInitDate').register(autoDateP);
+pr.itemtype('text')
+  .datatype('xsd:date')
+  .style('autoUpdateDate')
+  .register(autoDateP);
+pr.itemtype('text')
+  .datatype('xsd:date')
+  .style('autoInitDate')
+  .register(autoDateP);
+pr.itemtype('text')
+  .datatype('dcterms:W3CDTF')
+  .style('autoUpdateDate')
+  .register(autoDateP);
+pr.itemtype('text')
+  .datatype('dcterms:W3CDTF')
+  .style('autoInitDate')
+  .register(autoDateP);
 const autoDateE = autoDateFactory(er);
-er.itemtype('text').datatype('xsd:date').style('autoUpdateDate').register(autoDateE);
-er.itemtype('text').datatype('xsd:date').style('autoInitDate').register(autoDateE);
-er.itemtype('text').datatype('dcterms:W3CDTF').style('autoUpdateDate').register(autoDateE);
-er.itemtype('text').datatype('dcterms:W3CDTF').style('autoInitDate').register(autoDateE);
+er.itemtype('text')
+  .datatype('xsd:date')
+  .style('autoUpdateDate')
+  .register(autoDateE);
+er.itemtype('text')
+  .datatype('xsd:date')
+  .style('autoInitDate')
+  .register(autoDateE);
+er.itemtype('text')
+  .datatype('dcterms:W3CDTF')
+  .style('autoUpdateDate')
+  .register(autoDateE);
+er.itemtype('text')
+  .datatype('dcterms:W3CDTF')
+  .style('autoInitDate')
+  .register(autoDateE);
 
 const autoValueFactory = (reg) => {
   const autof = (fieldDiv, binding, context) => {
@@ -57,7 +85,10 @@ const autoValueFactory = (reg) => {
       const data = binding.getValue();
       const path = binding.getItem().getDeps();
       if ((data == null || data === '') && path) {
-        const fromBinding = engine.findBindingRelativeToParentBinding(binding.getParent(), path);
+        const fromBinding = engine.findBindingRelativeToParentBinding(
+          binding.getParent(),
+          path
+        );
         const update = (silent) => {
           const depBinding = engine.matchPathBelowBinding(fromBinding, path);
           const prevValue = binding.getGist();
@@ -72,10 +103,13 @@ const autoValueFactory = (reg) => {
             update();
           }
         });
-
       }
     }
-    reg.getComponentBefore(binding.getItem(), autof)(fieldDiv, binding, context);
+    reg.getComponentBefore(binding.getItem(), autof)(
+      fieldDiv,
+      binding,
+      context
+    );
   };
   return autof;
 };

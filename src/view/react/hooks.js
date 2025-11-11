@@ -11,16 +11,23 @@ import { getNamedGraphId } from '../viewUtils';
  */
 export const localizedChoice = (choice, isEditor) => ({
   value: choice.value,
-  label: utils.getLocalizedValue(isEditor ? choice.editlabel || choice.label : choice.label).value,
-  description: choice.description || choice.editdescription ?
-    (utils.getLocalizedValue(isEditor ? choice.editdescription || choice.description : choice.description).value)
-    : undefined,
+  label: utils.getLocalizedValue(
+    isEditor ? choice.editlabel || choice.label : choice.label
+  ).value,
+  description:
+    choice.description || choice.editdescription
+      ? utils.getLocalizedValue(
+          isEditor
+            ? choice.editdescription || choice.description
+            : choice.description
+        ).value
+      : undefined,
   seeAlso: choice.seeAlso,
   mismatch: choice.mismatch,
   original: choice,
 });
 
-export const editLocalizedChoice = choice => localizedChoice(choice, true);
+export const editLocalizedChoice = (choice) => localizedChoice(choice, true);
 
 /**
  * Use choices from a binding with localized labels and sorted.
@@ -31,33 +38,37 @@ export const editLocalizedChoice = choice => localizedChoice(choice, true);
  * @param {Binding} binding
  * @return {Array}
  */
-export const useLocalizedSortedChoices = (binding, isEditor) => useMemo(() => {
-  const item = binding.getItem();
-  const choices = item.getChoices().map(isEditor ? editLocalizedChoice : localizedChoice);
-  if (!item.hasStyle('preserveOrderOfChoices')) {
-    choices.sort((c1, c2) => (c1.label < c2.label ? -1 : 1));
-  }
-  const currentChoice = binding.getChoice();
-  if (currentChoice != null && currentChoice.mismatch) {
-    choices.unshift({
-      value: currentChoice.value,
-      label: currentChoice.value,
-      mismatch: true,
-      original: currentChoice,
-    });
-  }
-  return choices;
-}, []);
+export const useLocalizedSortedChoices = (binding, isEditor) =>
+  useMemo(() => {
+    const item = binding.getItem();
+    const choices = item
+      .getChoices()
+      .map(isEditor ? editLocalizedChoice : localizedChoice);
+    if (!item.hasStyle('preserveOrderOfChoices')) {
+      choices.sort((c1, c2) => (c1.label < c2.label ? -1 : 1));
+    }
+    const currentChoice = binding.getChoice();
+    if (currentChoice != null && currentChoice.mismatch) {
+      choices.unshift({
+        value: currentChoice.value,
+        label: currentChoice.value,
+        mismatch: true,
+        original: currentChoice,
+      });
+    }
+    return choices;
+  }, []);
 
 /**
  * Returns a localized choice from the array of localized choices based on the current selected choice in the binding.
  * @param {Binding} binding
  * @param {Array} choices an array of choices returned from the useLocalizedSortedChoices hook.
  */
-export const useLocalizedChoice = (binding, choices) => useState(() => {
-  const choice = binding.getChoice() || null;
-  return choice === null ? null : choices.find(c => c.original === choice);
-});
+export const useLocalizedChoice = (binding, choices) =>
+  useState(() => {
+    const choice = binding.getChoice() || null;
+    return choice === null ? null : choices.find((c) => c.original === choice);
+  });
 
 /**
  * Returns a localized choice, may trigger a load step to get a more fleshed out version of the choice,
@@ -73,24 +84,28 @@ export const loadLocalizedChoice = (binding, isEditor) => {
   });
   useEffect(() => {
     if (choice && choice.original.load) {
-      choice.original.load(() => {
-        setChoice(localize(choice.original));
-      }, () => {
-        setChoice(localize(choice.original));
-      });
+      choice.original.load(
+        () => {
+          setChoice(localize(choice.original));
+        },
+        () => {
+          setChoice(localize(choice.original));
+        }
+      );
     }
   }, []);
   return [choice, setChoice];
 };
 
-
 let nameCounter = 0;
 /**
  * Gives a unique name to be used in forms.
  */
-export const useName = () => useMemo(() => {
-  nameCounter += 1;
-  return `_rdforms_${nameCounter}`;
-}, []);
+export const useName = () =>
+  useMemo(() => {
+    nameCounter += 1;
+    return `_rdforms_${nameCounter}`;
+  }, []);
 
-export const useNamedGraphId = (binding, context) => useMemo(() => getNamedGraphId(binding, context));
+export const useNamedGraphId = (binding, context) =>
+  useMemo(() => getNamedGraphId(binding, context));

@@ -19,13 +19,18 @@ export default class GroupBinding extends Binding {
     this._constraints = constraints;
     // Generates an array of arrays, one array for each child item.
 
-    this._childBindings = this._item.getChildren().map(() => ([]));
+    this._childBindings = this._item.getChildren().map(() => []);
     this._rootUri = childrenRootUri;
     this._validPredicate = true;
     this._validObject = true;
     if (this._statement) {
-      this._validPredicate = this._isValidPredicateValue(this._statement.getPredicate());
-      this._validObject = this._isValidObjectValue(this._statement.getValue(), this._statement.getType());
+      this._validPredicate = this._isValidPredicateValue(
+        this._statement.getPredicate()
+      );
+      this._validObject = this._isValidObjectValue(
+        this._statement.getValue(),
+        this._statement.getType()
+      );
     }
     this._cachedChildBindings = null;
   }
@@ -57,7 +62,9 @@ export default class GroupBinding extends Binding {
     // If there is no parent or it's valid state did not change,
     // then the groups assertions has not been changed and the children
     // have not been notified of this group change in validity.
-    this._notifyValidityChange(valid && this._validPredicate && this._validObject);
+    this._notifyValidityChange(
+      valid && this._validPredicate && this._validObject
+    );
     return this._validPredicate && this._validObject; // Validity of group changed only if valid predicate and object.
   }
 
@@ -65,12 +72,13 @@ export default class GroupBinding extends Binding {
     if (this._statement) {
       this._statement.setSubject(uri);
     } else {
-      this.getChildBindings().forEach(cb => cb.setSubject(uri));
+      this.getChildBindings().forEach((cb) => cb.setSubject(uri));
     }
   }
 
   getChildrenRootUri() {
-    if (this._statement) { // Either the object of the statement.
+    if (this._statement) {
+      // Either the object of the statement.
       return this._statement.getValue();
     } else if (this._rootUri != null) {
       return this._rootUri;
@@ -93,9 +101,10 @@ export default class GroupBinding extends Binding {
     const children = this._item.getChildren();
     for (let i = children.length; i >= 0; i--) {
       if (item === children[i]) {
-        const cardTracker = this._childBindings[i].length > 0 ?
-          this._childBindings[i][0].getCardinalityTracker() :
-          new CardinalityTracker(item);
+        const cardTracker =
+          this._childBindings[i].length > 0
+            ? this._childBindings[i][0].getCardinalityTracker()
+            : new CardinalityTracker(item);
         this._childBindings[i] = this._childBindings[i].concat(bindings);
         bindings.forEach((binding) => {
           binding.setParent(this);
@@ -112,7 +121,10 @@ export default class GroupBinding extends Binding {
     const children = this._item.getChildren();
     for (let i = children.length; i >= 0; i--) {
       if (binding.getItem() === children[i]) {
-        this._childBindings[i].splice(this._childBindings[i].indexOf(binding), 1);
+        this._childBindings[i].splice(
+          this._childBindings[i].indexOf(binding),
+          1
+        );
         delete binding._parent;
         binding.getCardinalityTracker().decrement();
         break;
@@ -152,15 +164,21 @@ export default class GroupBinding extends Binding {
     if (this._isValidPredicateValue(predicate)) {
       this._statement.setPredicate(predicate);
       this._validPredicate = true;
-      if (oValidPredicate !== true && this._validObject &&
-        (this.getItem().getNodetype() === 'URI' ? true : this._oneValidChild)) {
+      if (
+        oValidPredicate !== true &&
+        this._validObject &&
+        (this.getItem().getNodetype() === 'URI' ? true : this._oneValidChild)
+      ) {
         this._notifyValidityChange(true);
       }
     } else {
       // Note that we actually do not set the invalid value, just unassert the statement.
       this._validPredicate = false;
-      if (oValidPredicate !== false && this._validObject &&
-        (this.getItem().getNodetype() === 'URI' ? true : this._oneValidChild)) {
+      if (
+        oValidPredicate !== false &&
+        this._validObject &&
+        (this.getItem().getNodetype() === 'URI' ? true : this._oneValidChild)
+      ) {
         this._notifyValidityChange(false);
       }
     }
@@ -178,8 +196,10 @@ export default class GroupBinding extends Binding {
 
   setValue(value) {
     if (this.getItem().getNodetype() !== 'URI' || !this._statement) {
-      throw new Error('Cannot change the value of a group unless its nodetype is URI and' +
-        ' also that it corresponds to a statement');
+      throw new Error(
+        'Cannot change the value of a group unless its nodetype is URI and' +
+          ' also that it corresponds to a statement'
+      );
     }
     const oldIsValidObject = this._validObject;
     const isValidObject = this._isValidObjectValue(value, 'uri');
@@ -187,8 +207,8 @@ export default class GroupBinding extends Binding {
       this._validObject = true;
       this._statement._o.type = 'uri';
       this._statement.setValue(value);
-      this._constraints.forEach(stmt => stmt.setSubject(value));
-      this.getChildBindings().forEach(cb => cb.setSubject(value));
+      this._constraints.forEach((stmt) => stmt.setSubject(value));
+      this.getChildBindings().forEach((cb) => cb.setSubject(value));
       if (!oldIsValidObject && this._validPredicate) {
         this._notifyValidityChange(true);
       }
@@ -233,10 +253,13 @@ export default class GroupBinding extends Binding {
     this._ancestorValid = valid;
     this.updateAssertions();
     this._childBindings.forEach(
-      bindingArr => bindingArr.forEach(
-        binding => binding.setAncestorValid(valid && this._isValid()),
-        this),
-      this);
+      (bindingArr) =>
+        bindingArr.forEach(
+          (binding) => binding.setAncestorValid(valid && this._isValid()),
+          this
+        ),
+      this
+    );
   }
 
   updateAssertions() {
@@ -247,22 +270,28 @@ export default class GroupBinding extends Binding {
     if (this._statement != null) {
       this._statement.setAsserted(assert);
     }
-    this._constraints.forEach(constraintStmt => constraintStmt.setAsserted(assert));
-    this.getChildBindings().forEach(binding => binding.updateAssertions());
+    this._constraints.forEach((constraintStmt) =>
+      constraintStmt.setAsserted(assert)
+    );
+    this.getChildBindings().forEach((binding) => binding.updateAssertions());
   }
 
   // ===================================================
   // Private methods
   // ===================================================
   _forceOneValidChildCheck() {
-    return this._childBindings.some(arr => arr.some(binding => binding.isValid()));
+    return this._childBindings.some((arr) =>
+      arr.some((binding) => binding.isValid())
+    );
   }
 
   _notifyValidityChange(newValidity) {
     if (!this._parent || !this._parent.oneChildValidityChanged(newValidity)) {
       // We can reuse the setAncestorValid method by setting the current value.
       this.updateAssertions();
-      this._childBindings.forEach(bindingArr => bindingArr.forEach(binding => binding.setAncestorValid(newValidity)));
+      this._childBindings.forEach((bindingArr) =>
+        bindingArr.forEach((binding) => binding.setAncestorValid(newValidity))
+      );
     }
   }
 

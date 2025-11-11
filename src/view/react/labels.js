@@ -26,7 +26,7 @@ const StyledTooltip = styled(
   },
 }));
 
-const ItemTooltipTitle = ({description, propinfo, setOpen, tooltipId}) => {
+const ItemTooltipTitle = ({ description, propinfo, setOpen, tooltipId }) => {
   useEffect(() => {
     const focusListener = (event) => {
       let el = event.target;
@@ -48,12 +48,12 @@ const ItemTooltipTitle = ({description, propinfo, setOpen, tooltipId}) => {
     };
   }, []);
 
-  return (<>
-    <p className="rdformsLinebreaks rdformsDescription">
-      {description}
-    </p>
-    {propinfo}
-  </>);
+  return (
+    <>
+      <p className="rdformsLinebreaks rdformsDescription">{description}</p>
+      {propinfo}
+    </>
+  );
 };
 
 const ItemTooltip = (props) => {
@@ -67,19 +67,37 @@ const ItemTooltip = (props) => {
   let propinfo = '';
   const property = props.item.getProperty();
   if (property) {
-    propinfo = <div className="rdformsProperty"><a target="_blank" href={property}>{property}</a></div>;
+    propinfo = (
+      <div className="rdformsProperty">
+        <a target="_blank" href={property}>
+          {property}
+        </a>
+      </div>
+    );
   }
-  const descriptionMap = props.context.view instanceof Editor ?
-    props.item.getEditDescriptionMap() || props.item.getDescriptionMap() : props.item.getDescriptionMap()
-    || (property ? '' : props.context.view.messages.info_missing || '');
-  const description = utils.getLocalizedValue(descriptionMap, props.context.view.getLocale()).value;
+  const descriptionMap =
+    props.context.view instanceof Editor
+      ? props.item.getEditDescriptionMap() || props.item.getDescriptionMap()
+      : props.item.getDescriptionMap() ||
+        (property ? '' : props.context.view.messages.info_missing || '');
+  const description = utils.getLocalizedValue(
+    descriptionMap,
+    props.context.view.getLocale()
+  ).value;
   const tooltipId = `tt_${props.binding ? props.binding.getHash() : props.item.getHash()}`;
 
   return (
     <ClickAwayListener onClickAway={handleTooltipClose}>
       <div id={tooltipId}>
         <StyledTooltip
-          title={<ItemTooltipTitle description={description} propinfo={propinfo} setOpen={setOpen} tooltipId={tooltipId}></ItemTooltipTitle>}
+          title={
+            <ItemTooltipTitle
+              description={description}
+              propinfo={propinfo}
+              setOpen={setOpen}
+              tooltipId={tooltipId}
+            ></ItemTooltipTitle>
+          }
           placement="bottom-start"
           disableHoverListener
           disableTouchListener
@@ -90,7 +108,7 @@ const ItemTooltip = (props) => {
           open={open}
           slotProps={{
             popper: {
-              disablePortal: true
+              disablePortal: true,
             },
           }}
         >
@@ -102,9 +120,11 @@ const ItemTooltip = (props) => {
 };
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
-  let labelMap = context.view instanceof Editor ?
-    item.getEditLabelMap() || item.getLabelMap() : item.getLabelMap();
-  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value
+  let labelMap =
+    context.view instanceof Editor
+      ? item.getEditLabelMap() || item.getLabelMap()
+      : item.getLabelMap();
+  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value;
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
@@ -117,49 +137,103 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
     // An item is compact if it is exclicitly set as compact or
     // the view is set as compact and the item is not explicitly set as not compact AND
     // we are at the top
-    const compactField = item.hasStyle('compact') ||
-      (view.compact && !item.hasStyle('nonCompact') && (
-        (view.topLevel && item.getType() !== 'group') ||
-        (view.parentView && view.parentView.topLevel && view.binding.getItem().hasStyle('heading'))));
-    const descMap = view instanceof Editor ? item.getEditDescriptionMap() || item.getDescriptionMap() :
-      item.getDescriptionMap();
-    const desc = utils.getLocalizedValue(descMap, context.view.getLocale()).value;
+    const compactField =
+      item.hasStyle('compact') ||
+      (view.compact &&
+        !item.hasStyle('nonCompact') &&
+        ((view.topLevel && item.getType() !== 'group') ||
+          (view.parentView &&
+            view.parentView.topLevel &&
+            view.binding.getItem().hasStyle('heading'))));
+    const descMap =
+      view instanceof Editor
+        ? item.getEditDescriptionMap() || item.getDescriptionMap()
+        : item.getDescriptionMap();
+    const desc = utils.getLocalizedValue(
+      descMap,
+      context.view.getLocale()
+    ).value;
     if (!compactField && desc) {
       description = <div className="rdformsDescription">{desc}</div>;
     }
   }
 
   const labelId = binding ? context.view.createLabelIndex(binding) : undefined;
-  const rdformsLabel = context.view.popupOnLabel ? 'rdformsLabel' : 'rdformsLabel rdformsNoPopup';
+  const rdformsLabel = context.view.popupOnLabel
+    ? 'rdformsLabel'
+    : 'rdformsLabel rdformsNoPopup';
   const role = context.view.popupOnLabel ? 'button' : null;
-  label = item.hasStyle('heading') ?
-    <h2 tabIndex="0" id={labelId} className="rdformsLabelRow"><span className={rdformsLabel} role={role}>{label}</span></h2> :
-    <span tabIndex="0" id={labelId} className="rdformsLabelRow"><span className={rdformsLabel} role={role}>{label}</span></span>;
+  label = item.hasStyle('heading') ? (
+    <h2 tabIndex="0" id={labelId} className="rdformsLabelRow">
+      <span className={rdformsLabel} role={role}>
+        {label}
+      </span>
+    </h2>
+  ) : (
+    <span tabIndex="0" id={labelId} className="rdformsLabelRow">
+      <span className={rdformsLabel} role={role}>
+        {label}
+      </span>
+    </span>
+  );
   if (context.view.popupOnLabel) {
-    rowNode.appendChild(<Fragment key={`${binding ? binding.getHash() : item.getHash()}_label` }><ItemTooltip
-      context={context} item={item} binding={binding}>{label}</ItemTooltip>{description}</Fragment>);
+    rowNode.appendChild(
+      <Fragment key={`${binding ? binding.getHash() : item.getHash()}_label`}>
+        <ItemTooltip context={context} item={item} binding={binding}>
+          {label}
+        </ItemTooltip>
+        {description}
+      </Fragment>
+    );
   } else {
-    rowNode.appendChild(<Fragment key={`${binding ? binding.getHash() : item.getHash()}_label` }>{label}{description}</Fragment>);
+    rowNode.appendChild(
+      <Fragment key={`${binding ? binding.getHash() : item.getHash()}_label`}>
+        {label}
+        {description}
+      </Fragment>
+    );
   }
 };
 
 renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
   if (item.hasStyle('nonEditable') || item.hasStyle('heading')) {
-    renderingContext.renderPresenterLabel(rowNode, binding, item, context, true);
+    renderingContext.renderPresenterLabel(
+      rowNode,
+      binding,
+      item,
+      context,
+      true
+    );
   } else {
     let labelMap = item.getEditLabelMap() || item.getLabelMap();
-    let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value
+    let label = utils.getLocalizedValue(
+      labelMap,
+      context.view.getLocale()
+    ).value;
     if (label != null && label !== '') {
       label = label.charAt(0).toUpperCase() + label.slice(1);
     } else {
       label = '';
     }
-    const rdformsLabel = context.view.popupOnLabel ? 'rdformsLabel' : 'rdformsLabel rdformsNoPopup';
+    const rdformsLabel = context.view.popupOnLabel
+      ? 'rdformsLabel'
+      : 'rdformsLabel rdformsNoPopup';
     const role = context.view.popupOnLabel ? 'button' : null;
-    label = item.hasStyle('heading') ? <h2 tabIndex="0" className={rdformsLabel} role={role}>{label}</h2> :
-      <span tabIndex="0" className={rdformsLabel} role={role}>{label}</span>;
+    label = item.hasStyle('heading') ? (
+      <h2 tabIndex="0" className={rdformsLabel} role={role}>
+        {label}
+      </h2>
+    ) : (
+      <span tabIndex="0" className={rdformsLabel} role={role}>
+        {label}
+      </span>
+    );
     if (context.view.popupOnLabel) {
-      label = <ItemTooltip item={item} context={context} binding={binding}>{label}</ItemTooltip>;
+      label = (
+        <ItemTooltip item={item} context={context} binding={binding}>
+          {label}
+        </ItemTooltip>
+      );
     }
 
     const card = item.getCardinality();
@@ -169,11 +243,23 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     // Only show mark if there is a property that allows the item to have an expression on its own
     if (item.getProperty()) {
       if (card.min > 0) {
-        mark = <span className="rdformsMark rdformsMandatoryMark">{b.mandatoryMark}</span>;
+        mark = (
+          <span className="rdformsMark rdformsMandatoryMark">
+            {b.mandatoryMark}
+          </span>
+        );
       } else if (card.pref > 0) {
-        mark = <span className="rdformsMark rdformsRecommendedMark">{b.recommendedMark}</span>;
+        mark = (
+          <span className="rdformsMark rdformsRecommendedMark">
+            {b.recommendedMark}
+          </span>
+        );
       } else {
-        mark = <span className="rdformsMark rdformsOptionalMark">{b.optionalMark}</span>;
+        mark = (
+          <span className="rdformsMark rdformsOptionalMark">
+            {b.optionalMark}
+          </span>
+        );
       }
     }
     let Button;
@@ -191,22 +277,43 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
       // An item is compact if it is exclicitly set as compact or
       // the view is set as compact and the item is not explicitly set as not compact AND
       // we are at the top
-      const compactField = item.hasStyle('compact') ||
-        (view.compact && !item.hasStyle('nonCompact') && (
-          (view.topLevel && item.getType() !== 'group') ||
-          (view.parentView && view.parentView.topLevel && view.binding.getItem().hasStyle('heading'))));
-      const descMap = view instanceof Editor ? item.getEditDescriptionMap() || item.getDescriptionMap() :
-        item.getDescriptionMap();
-      const desc = utils.getLocalizedValue(descMap, context.view.getLocale()).value
+      const compactField =
+        item.hasStyle('compact') ||
+        (view.compact &&
+          !item.hasStyle('nonCompact') &&
+          ((view.topLevel && item.getType() !== 'group') ||
+            (view.parentView &&
+              view.parentView.topLevel &&
+              view.binding.getItem().hasStyle('heading'))));
+      const descMap =
+        view instanceof Editor
+          ? item.getEditDescriptionMap() || item.getDescriptionMap()
+          : item.getDescriptionMap();
+      const desc = utils.getLocalizedValue(
+        descMap,
+        context.view.getLocale()
+      ).value;
 
       if (!compactField && desc) {
-        description = <div className="rdformsDescription" tabIndex="0">{desc}</div>;
+        description = (
+          <div className="rdformsDescription" tabIndex="0">
+            {desc}
+          </div>
+        );
       }
     }
 
     const labelId = context.view.createLabelIndex(binding);
-    rowNode.appendChild(<Fragment key={`${binding.getHash()}_label`}><div id={labelId} className="rdformsLabelRow">{
-      label}{mark}{Button && <Button></Button>}</div>{description}</Fragment>);
+    rowNode.appendChild(
+      <Fragment key={`${binding.getHash()}_label`}>
+        <div id={labelId} className="rdformsLabelRow">
+          {label}
+          {mark}
+          {Button && <Button></Button>}
+        </div>
+        {description}
+      </Fragment>
+    );
   }
 };
 
@@ -217,10 +324,14 @@ const ERR = (props) => {
     const cardTr = binding.getCardinalityTracker();
     const checkAndSetCode = () => {
       const newCode = cardTr.getCode();
-      renderingContext.domClassToggle(rowNode, 'rdformsError', newCode !== CODES.UNKNOWN);
+      renderingContext.domClassToggle(
+        rowNode,
+        'rdformsError',
+        newCode !== CODES.UNKNOWN
+      );
       setCode(newCode);
     };
-    checkAndSetCode();  // We call it here to be sure, not depending on a potential callback from cardTr
+    checkAndSetCode(); // We call it here to be sure, not depending on a potential callback from cardTr
     const listener = cardTr.addListener(checkAndSetCode);
     return () => cardTr.removeListener(listener);
   }, []);
@@ -246,19 +357,35 @@ const ERR = (props) => {
   return <div className="rdformsWarning">{message}</div>;
 };
 
-renderingContext.renderEditorLabelScopeEnd = (rowNode, binding, item, context) => {
+renderingContext.renderEditorLabelScopeEnd = (
+  rowNode,
+  binding,
+  item,
+  context
+) => {
   if (!item.hasStyle('nonEditable') && !item.hasStyle('heading')) {
     if (!context.view.isMultiValued(item)) {
       let Button;
       const card = item.getCardinality();
       if (binding == null) {
         Button = renderingContext.addExpandButton(rowNode, null, item, context);
-      } else if (binding.getPredicate() && !context.view.showAsTable(item) && card.max !== 1 &&
-        (card.max == null || card.max !== card.min)) {
-        Button = renderingContext.addCreateChildButton(rowNode, null, binding, context);
+      } else if (
+        binding.getPredicate() &&
+        !context.view.showAsTable(item) &&
+        card.max !== 1 &&
+        (card.max == null || card.max !== card.min)
+      ) {
+        Button = renderingContext.addCreateChildButton(
+          rowNode,
+          null,
+          binding,
+          context
+        );
       }
       if (Button) {
-        rowNode.appendChild(<Button key={`${binding.getHash()}_labelEnd`}></Button>);
+        rowNode.appendChild(
+          <Button key={`${binding.getHash()}_labelEnd`}></Button>
+        );
       }
     }
     // If the item is deprecated and there are at least one matching value (binding),
@@ -272,16 +399,33 @@ renderingContext.renderEditorLabelScopeEnd = (rowNode, binding, item, context) =
           rowNode.destroy();
         }
       });
-      rowNode.appendChild(<div key="deprecatedWarning"
-                               className="rdformsWarning">{context.view.messages.deprecatedField}</div>);
+      rowNode.appendChild(
+        <div key="deprecatedWarning" className="rdformsWarning">
+          {context.view.messages.deprecatedField}
+        </div>
+      );
     }
 
     // If there are dependencies that are not fulfilled, notify.
     if (item.getDeps()) {
-      rowNode.appendChild(<div key="dependencyWarning" className="rdformsWarning rdformsDependency">
-        {context.view.messages.dependencyField}</div>);
+      rowNode.appendChild(
+        <div
+          key="dependencyWarning"
+          className="rdformsWarning rdformsDependency"
+        >
+          {context.view.messages.dependencyField}
+        </div>
+      );
     }
 
-    rowNode.appendChild(<ERR key="errMessage" rowNode={rowNode} binding={binding} item={item} context={context}></ERR>);
+    rowNode.appendChild(
+      <ERR
+        key="errMessage"
+        rowNode={rowNode}
+        binding={binding}
+        item={item}
+        context={context}
+      ></ERR>
+    );
   }
 };

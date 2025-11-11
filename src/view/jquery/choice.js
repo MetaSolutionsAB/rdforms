@@ -5,43 +5,57 @@ import utils from '../../utils';
 // -------------- Presenters ----------------
 const presenters = renderingContext.presenterRegistry;
 
-const choicify = func => (fieldDiv, binding, context) => {
+const choicify = (func) => (fieldDiv, binding, context) => {
   const choice = binding.getChoice();
   let desc;
   if (!choice) {
     return;
   }
   if (choice.description) {
-    desc = utils.getLocalizedValue(choice.description, context.view.getLocale()).value;
+    desc = utils.getLocalizedValue(
+      choice.description,
+      context.view.getLocale()
+    ).value;
   }
   func(fieldDiv, binding, choice, desc, context.view.getLocale());
 };
 
 // Presenter for image.
-presenters.itemtype('choice').style('image').register(choicify(
-  (fieldDiv, binding, choice, desc) => {
-    jquery('<img class="rdformsImage">')
-      .attr('src', choice.value)
-      .attr('title', desc || choice.value)
-      .appendTo(fieldDiv);
-  }));
+presenters
+  .itemtype('choice')
+  .style('image')
+  .register(
+    choicify((fieldDiv, binding, choice, desc) => {
+      jquery('<img class="rdformsImage">')
+        .attr('src', choice.value)
+        .attr('title', desc || choice.value)
+        .appendTo(fieldDiv);
+    })
+  );
 
 // Presenter for stars
-presenters.itemtype('choice').style('stars').register(choicify(
-  (fieldDiv, binding, choice) => {
-    if (!isNaN(parseInt(choice.value, 10))) {
-      jquery('<span class="rdformsStar">').appendTo(fieldDiv);
-    }
-  }));
+presenters
+  .itemtype('choice')
+  .style('stars')
+  .register(
+    choicify((fieldDiv, binding, choice) => {
+      if (!isNaN(parseInt(choice.value, 10))) {
+        jquery('<span class="rdformsStar">').appendTo(fieldDiv);
+      }
+    })
+  );
 
 // Presenter for choices.
-presenters.itemtype('choice').register(choicify(
-  (fieldDiv, binding, choice, desc, locale) => {
+presenters.itemtype('choice').register(
+  choicify((fieldDiv, binding, choice, desc, locale) => {
     const item = binding.getItem();
     const locValue = utils.getLocalizedValue(choice.label, locale);
     let $el;
 
-    if (item.hasStaticChoices() && !item.hasStyle('externalLink') || item.hasStyle('noLink')) {
+    if (
+      (item.hasStaticChoices() && !item.hasStyle('externalLink')) ||
+      item.hasStyle('noLink')
+    ) {
       $el = jquery('<div>')
         .attr('title', desc || choice.seeAlso || choice.value)
         .text(utils.getLocalizedValue(choice.label, locale).value)
@@ -72,4 +86,5 @@ presenters.itemtype('choice').register(choicify(
     if (locValue.lang) {
       $el.attr('lang', locValue.lang);
     }
-  }));
+  })
+);

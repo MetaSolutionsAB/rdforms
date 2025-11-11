@@ -10,7 +10,7 @@
 const stopFetchingOrJustLog = (iteration, length, templateId) => {
   const message = `Fetching template bundle ${templateId} failed.`;
 
-  if (iteration === (length - 1)) {
+  if (iteration === length - 1) {
     throw Error(`${message} Cannot recover from this, please fix.`);
   } else {
     console.log(`${message} Will try to fetch from a fallback option.`);
@@ -29,14 +29,15 @@ const fetchBundle = async (urls) => {
   let bundle;
   let path;
 
-
   for (let i = 0; i < totalUrls; i++) {
     // try to fetch the bundle, fails only if there's some network error. A 404 is not an error
     path = urls[i];
     try {
       response = await fetch(path);
     } catch (e) {
-      throw Error(`A network error ocurred while trying to fetch bundle ${path}`);
+      throw Error(
+        `A network error ocurred while trying to fetch bundle ${path}`
+      );
     }
 
     // check if we got a 2xx
@@ -45,12 +46,16 @@ const fetchBundle = async (urls) => {
       // if all good, then you're done
       // if it cannot parse, then fail soft or hard depending on if there's a fallback left to check
       try {
-        const contentType = response.headers.has('content-type') && response.headers.get('content-type');
+        const contentType =
+          response.headers.has('content-type') &&
+          response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
           bundle = await response.json();
           break;
         } else {
-          throw new Error(`Failed fetching template ${path}. Expected a JSON file and got ${contentType}`);
+          throw new Error(
+            `Failed fetching template ${path}. Expected a JSON file and got ${contentType}`
+          );
         }
       } catch (e) {
         stopFetchingOrJustLog(i, totalUrls, path);
@@ -61,7 +66,7 @@ const fetchBundle = async (urls) => {
     }
   }
 
-  return {path, source: bundle};
+  return { path, source: bundle };
 };
 
 /**
@@ -69,8 +74,12 @@ const fetchBundle = async (urls) => {
  * @param bundles
  * @returns {Promise<*>}
  */
-const promisifyBundles = bundles => bundles.map(bundle =>
-  (bundle instanceof Array ? fetchBundle(bundle) : Promise.resolve({source: bundle})));
+const promisifyBundles = (bundles) =>
+  bundles.map((bundle) =>
+    bundle instanceof Array
+      ? fetchBundle(bundle)
+      : Promise.resolve({ source: bundle })
+  );
 
 /**
  * Register bundle templates
@@ -78,7 +87,8 @@ const promisifyBundles = bundles => bundles.map(bundle =>
  * @param {ItemStore} itemStore
  * @param {array} bundles
  */
-const registerBundles = (itemStore, bundles = []) => bundles.map(bundle => itemStore.registerBundle(bundle));
+const registerBundles = (itemStore, bundles = []) =>
+  bundles.map((bundle) => itemStore.registerBundle(bundle));
 
 /**
  *
@@ -87,7 +97,8 @@ const registerBundles = (itemStore, bundles = []) => bundles.map(bundle => itemS
  * @param callback
  */
 export default async (itemStore, bundlePaths = [], callback = () => {}) => {
-  if (bundlePaths.length === 0 && callback) { // nothing to load
+  if (bundlePaths.length === 0 && callback) {
+    // nothing to load
     callback([]);
   }
 

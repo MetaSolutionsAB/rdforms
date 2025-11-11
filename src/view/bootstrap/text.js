@@ -3,7 +3,6 @@ import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import { getNamedGraphId } from '../viewUtils';
 
-
 /**
  * Try to guess the number of rows needed for a textarea element by looking at the value of the element
  * @param text
@@ -12,7 +11,7 @@ import { getNamedGraphId } from '../viewUtils';
  */
 const countLines = (text, charsInLine = 70) => {
   let rows = text.split('\n').length; // for each explicit new line character add a row
-  rows += Number.parseInt((text.length / charsInLine), 10);
+  rows += Number.parseInt(text.length / charsInLine, 10);
   return rows;
 };
 
@@ -67,13 +66,14 @@ const addChangeListener = (inp, binding, regex, extLink, help) => {
 
 const registerPattern = (pattern, datatype) => {
   const regex = new RegExp(pattern);
-  editors.itemtype('text').datatype(datatype)
+  editors
+    .itemtype('text')
+    .datatype(datatype)
     .register((fieldDiv, binding, context) => {
-      const $input = jquery(`<input type="text" class="form-control rdformsFieldInput"
+      const $input =
+        jquery(`<input type="text" class="form-control rdformsFieldInput"
          placeholder="${binding.getItem().getPlaceholder() || ''}">`);
-      $input.val(binding.getGist())
-        .attr('pattern', pattern)
-        .appendTo(fieldDiv);
+      $input.val(binding.getGist()).attr('pattern', pattern).appendTo(fieldDiv);
 
       const help = binding.getItem().getHelp();
       let $help;
@@ -83,7 +83,9 @@ const registerPattern = (pattern, datatype) => {
       }
 
       if (binding.getItem().hasStyle('externalLink')) {
-        const $extLink = jquery(`<a class="fas fa-external-link-alt rdformsExtLink ${renderingContext.getExtLinkClass()}" target="_blank">`);
+        const $extLink = jquery(
+          `<a class="fas fa-external-link-alt rdformsExtLink ${renderingContext.getExtLinkClass()}" target="_blank">`
+        );
         $extLink.appendTo(context.controlDiv);
         jquery(fieldDiv).addClass('rdformsExtLinkControl');
         addChangeListener($input, binding, regex, $extLink, $help);
@@ -91,7 +93,6 @@ const registerPattern = (pattern, datatype) => {
       } else {
         addChangeListener($input, binding, regex, undefined, $help);
       }
-
 
       if (!binding.getItem().isEnabled()) {
         $input.prop('disabled', true);
@@ -113,7 +114,9 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
   const disabledAttr = getNamedGraphId(binding, context) ? 'disabled' : '';
   if (item.hasStyle('multiline')) {
     const originalNrOfLines = countLines(binding.getGist());
-    $input = jquery(`<textarea ${disabledAttr} class="form-control rdformsFieldInput autoExpand" placeholder="${item.getPlaceholder() || ''}" rows="${originalNrOfLines}">`);
+    $input = jquery(
+      `<textarea ${disabledAttr} class="form-control rdformsFieldInput autoExpand" placeholder="${item.getPlaceholder() || ''}" rows="${originalNrOfLines}">`
+    );
     $input.on('input focus', function () {
       if (this.baseScrollHeight === undefined) {
         const originalHeight = $input.height();
@@ -121,16 +124,23 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
         this.baseLineHeight = originalHeight / originalNrOfLines;
       }
       this.rows = 1;
-      const rows = 1 + Math.ceil((this.scrollHeight - this.baseScrollHeight) / this.baseLineHeight);
+      const rows =
+        1 +
+        Math.ceil(
+          (this.scrollHeight - this.baseScrollHeight) / this.baseLineHeight
+        );
       this.rows = rows;
     });
   } else if (item.hasStyle('email')) {
-    $input = jquery(`<input ${disabledAttr} type="email" class="form-control rdformsFieldInput" placeholder="${item.getPlaceholder() || ''}">`);
+    $input = jquery(
+      `<input ${disabledAttr} type="email" class="form-control rdformsFieldInput" placeholder="${item.getPlaceholder() || ''}">`
+    );
   } else {
-    $input = jquery(`<input ${disabledAttr} type="text" class="form-control rdformsFieldInput" placeholder="${item.getPlaceholder() || ''}">`);
+    $input = jquery(
+      `<input ${disabledAttr} type="text" class="form-control rdformsFieldInput" placeholder="${item.getPlaceholder() || ''}">`
+    );
   }
-  $input.val(binding.getGist())
-    .appendTo(fieldDiv);
+  $input.val(binding.getGist()).appendTo(fieldDiv);
 
   const help = item.getHelp();
   let $help;
@@ -146,7 +156,9 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
     regex = new RegExp(pattern);
   }
   if (item.hasStyle('externalLink')) {
-    const $extLink = jquery(`<a class="fas fa-external-link-alt rdformsExtLink ${renderingContext.getExtLinkClass()}" target="_blank">`);
+    const $extLink = jquery(
+      `<a class="fas fa-external-link-alt rdformsExtLink ${renderingContext.getExtLinkClass()}" target="_blank">`
+    );
     $extLink.appendTo(context.controlDiv);
     jquery(fieldDiv).addClass('rdformsExtLinkControl');
     addChangeListener($input, binding, regex, $extLink, $help);
@@ -160,8 +172,9 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
   if (nodeType === 'LANGUAGE_LITERAL' || nodeType === 'PLAIN_LITERAL') {
     jquery(fieldDiv).addClass('rdformsLangcontrolledfield');
     jquery(context.controlDiv).addClass('rdformsLangFieldControl');
-    const $lselect = jquery(`<select ${disabledAttr} class="form-control rdformsLanguage">`)
-      .appendTo(context.controlDiv);
+    const $lselect = jquery(
+      `<select ${disabledAttr} class="form-control rdformsLanguage">`
+    ).appendTo(context.controlDiv);
     let primaryLangs = renderingContext.getPrimaryLanguageList();
     let langList = renderingContext.getNonPrimaryLanguageList();
     langList = utils.cloneArrayWithLabels(langList);
@@ -174,7 +187,10 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
       primaryLangs.forEach((lang) => {
         jquery('<option>').html(lang.label).val(lang.value).appendTo($lselect);
       });
-      jquery('<option>').html('─────').attr('disabled', 'disabled').appendTo($lselect);
+      jquery('<option>')
+        .html('─────')
+        .attr('disabled', 'disabled')
+        .appendTo($lselect);
 
       langList.forEach((lang) => {
         jquery('<option>').html(lang.label).val(lang.value).appendTo($lselect);

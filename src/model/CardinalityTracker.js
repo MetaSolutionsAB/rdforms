@@ -28,7 +28,7 @@ export default class CardinalityTracker {
   }
 
   cardinalityChanged() {
-    this._listeners.forEach(listener => listener());
+    this._listeners.forEach((listener) => listener());
   }
 
   // ===================================================

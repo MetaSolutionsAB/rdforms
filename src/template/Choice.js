@@ -36,7 +36,9 @@ export default class Choice extends Item {
    * @return {Array} of choices.
    */
   getChoices(original) {
-    return this.getStaticChoices(original) || this.getDynamicChoices(original) || [];
+    return (
+      this.getStaticChoices(original) || this.getDynamicChoices(original) || []
+    );
   }
 
   /**
@@ -139,10 +141,12 @@ export default class Choice extends Item {
     this.refreshExtends();
   }
 
-
   getLabelProperties(original) {
-    return this.getSource(original).labelProperties ||
-      ['http://www.w3.org/2000/01/rdf-schema#label'];
+    return (
+      this.getSource(original).labelProperties || [
+        'http://www.w3.org/2000/01/rdf-schema#label',
+      ]
+    );
   }
 
   getParentProperty(original) {

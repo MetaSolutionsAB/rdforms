@@ -10,7 +10,6 @@ import * as engine from '../../model/engine';
 import { useNamedGraphId } from './hooks';
 import utils from '../../utils';
 
-
 renderingContext.addExpandButton = (rowDiv, labelDiv, item, context) => {
   console.log('Expand button not yet supported');
 };
@@ -23,8 +22,11 @@ const isClearButton = (binding, context) => {
   }
   const cardTr = binding.getCardinalityTracker();
   const showOne = context.view.showNow(binding.getItem(), []);
-  return notDeprecated &&
-    (cardTr.isMin() || (cardTr.getCardinality() === 1 && showOne && cardTr.isDepsOk()));
+  return (
+    notDeprecated &&
+    (cardTr.isMin() ||
+      (cardTr.getCardinality() === 1 && showOne && cardTr.isDepsOk()))
+  );
 };
 renderingContext.addRemoveButton = (rowDiv, binding, context) => () => {
   const item = binding.getItem();
@@ -39,7 +41,10 @@ renderingContext.addRemoveButton = (rowDiv, binding, context) => () => {
   }, []);
 
   const onClick = useMemo(() => () => {
-    if (isClearButton(binding, context) || (!cardTr.isDepsOk() && cardTr.getCardinality() === 1)) {
+    if (
+      isClearButton(binding, context) ||
+      (!cardTr.isDepsOk() && cardTr.getCardinality() === 1)
+    ) {
       if (context.clear) {
         context.clear();
       }
@@ -71,9 +76,13 @@ renderingContext.addRemoveButton = (rowDiv, binding, context) => () => {
     } else if (context.view.isMultiValued(item)) {
       // This case corresponds to multivalued and deprecated.
       // Slice so we have a copy of the array... since it will change behind the scenes otherwise
-      binding.getParent().getChildBindingsFor(item).slice(0).forEach((b) => {
-        b.remove();
-      });
+      binding
+        .getParent()
+        .getChildBindingsFor(item)
+        .slice(0)
+        .forEach((b) => {
+          b.remove();
+        });
       rowDiv.parent.destroy();
     } else {
       binding.remove();
@@ -82,49 +91,69 @@ renderingContext.addRemoveButton = (rowDiv, binding, context) => () => {
   });
 
   const ngId = useNamedGraphId(binding, context);
-  const title = clear ? context.view.messages.edit_clear : context.view.messages.edit_remove;
-  return <IconButton
-    size="small"
-    aria-label={title}
-    disabled={!!ngId}
-    title={title}
-    onClick={onClick}
-  >{clear ? (<CancelIcon fontSize="small"/>) : (<RemoveCircleIcon fontSize="small"/>)}</IconButton>;
+  const title = clear
+    ? context.view.messages.edit_clear
+    : context.view.messages.edit_remove;
+  return (
+    <IconButton
+      size="small"
+      aria-label={title}
+      disabled={!!ngId}
+      title={title}
+      onClick={onClick}
+    >
+      {clear ? (
+        <CancelIcon fontSize="small" />
+      ) : (
+        <RemoveCircleIcon fontSize="small" />
+      )}
+    </IconButton>
+  );
 };
 
-renderingContext.addCreateChildButton = (rowDiv, labelDiv, binding, context) => () => {
-  const item = binding.getItem();
-  const cardTr = binding.getCardinalityTracker();
-  const [disabled, setDisabled] = useState(cardTr.isMax() || !cardTr.isDepsOk() || item.hasStyle('deprecated'));
-  useEffect(() => {
-    context.rememberParent = binding.getParent(); // If the current binding is removed and the label is not redrawn
-    const listener = cardTr.addListener(() => {
-      setDisabled(cardTr.isMax() || !cardTr.isDepsOk());
-    });
-    return () => cardTr.removeListener(listener);
-  }, []);
-  const onClick = () => {
-    if (!cardTr.isMax()) {
-      const nBinding = engine.create(context.rememberParent, item);
-      context.view.addRow(rowDiv, nBinding); // not the first binding...
+renderingContext.addCreateChildButton =
+  (rowDiv, labelDiv, binding, context) => () => {
+    const item = binding.getItem();
+    const cardTr = binding.getCardinalityTracker();
+    const [disabled, setDisabled] = useState(
+      cardTr.isMax() || !cardTr.isDepsOk() || item.hasStyle('deprecated')
+    );
+    useEffect(() => {
+      context.rememberParent = binding.getParent(); // If the current binding is removed and the label is not redrawn
+      const listener = cardTr.addListener(() => {
+        setDisabled(cardTr.isMax() || !cardTr.isDepsOk());
+      });
+      return () => cardTr.removeListener(listener);
+    }, []);
+    const onClick = () => {
+      if (!cardTr.isMax()) {
+        const nBinding = engine.create(context.rememberParent, item);
+        context.view.addRow(rowDiv, nBinding); // not the first binding...
+      }
+    };
+    let labelMap = item.getEditLabelMap() || item.getLabelMap();
+    let label = utils.getLocalizedValue(
+      labelMap,
+      context.view.getLocale()
+    ).value;
+    if (label != null && label !== '') {
+      label = label.charAt(0).toUpperCase() + label.slice(1);
+    } else {
+      label = '';
     }
+    const title = context.view.messages.edit_add;
+    return (
+      <Button
+        className="rdformsAddChild"
+        onClick={onClick}
+        aria-label={title}
+        title={title}
+        disabled={disabled}
+        variant="text"
+        color="primary"
+        startIcon={<AddIcon />}
+      >
+        {label}
+      </Button>
+    );
   };
-  let labelMap = item.getEditLabelMap() || item.getLabelMap();
-  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value
-  if (label != null && label !== '') {
-    label = label.charAt(0).toUpperCase() + label.slice(1);
-  } else {
-    label = '';
-  }
-  const title = context.view.messages.edit_add;
-  return <Button
-    className="rdformsAddChild"
-    onClick={onClick}
-    aria-label={title}
-    title={title}
-    disabled={disabled}
-    variant="text"
-    color="primary"
-    startIcon={<AddIcon/>}
-  >{label}</Button>;
-};

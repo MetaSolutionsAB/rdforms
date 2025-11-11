@@ -36,11 +36,15 @@ export default class OntologyStore {
     if (ontologyChoiceArr != null) {
       for (let ind = 0; ind < ontologyChoiceArr.length; ind++) {
         const obj = ontologyChoiceArr[ind];
-        if (isEqual(obj.constraints, item.getConstraints()) &&
+        if (
+          isEqual(obj.constraints, item.getConstraints()) &&
           item.getParentProperty() === obj.parentProperty &&
           item.getHierarchyProperty() === obj.hierarchyProperty &&
-          item.isParentPropertyInverted() === (obj.isParentPropertyInverted || false) &&
-          item.isHierarchyPropertyInverted() === (obj.isHierarchyPropertyInverted || false)) {
+          item.isParentPropertyInverted() ===
+            (obj.isParentPropertyInverted || false) &&
+          item.isHierarchyPropertyInverted() ===
+            (obj.isHierarchyPropertyInverted || false)
+        ) {
           return obj.choices;
         }
       }
@@ -51,13 +55,17 @@ export default class OntologyStore {
   // eslint-disable-next-line class-methods-use-this
   _constructLoadUrl(choiceItem) {
     const params = [];
-    params.push(`constr=${encodeURIComponent(JSON.stringify(choiceItem.getConstraints()))}`);
+    params.push(
+      `constr=${encodeURIComponent(JSON.stringify(choiceItem.getConstraints()))}`
+    );
     if (choiceItem.getParentProperty() != null) {
-      const pp = choiceItem.isParentPropertyInverted() === true ? 'ipp=' : 'pp=';
+      const pp =
+        choiceItem.isParentPropertyInverted() === true ? 'ipp=' : 'pp=';
       params.push(pp + encodeURIComponent(choiceItem.getParentProperty()));
     }
     if (choiceItem.getHierarchyProperty() != null) {
-      const hp = choiceItem.isHierarchyPropertyInverted() === true ? 'ihp=' : 'hp=';
+      const hp =
+        choiceItem.isHierarchyPropertyInverted() === true ? 'ihp=' : 'hp=';
       params.push(hp + encodeURIComponent(choiceItem.getHierarchyProperty()));
     }
     return `${choiceItem.getOntologyUrl()}?${params.join('&')}`;

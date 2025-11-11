@@ -12,7 +12,6 @@ const localize = (bundle, key, val) => {
 };
 
 export default class ValidationPresenter extends Presenter {
-
   _handleParams(params) {
     params.showLanguage = params.showLanguage !== false;
     params.filterTranslations = false;
@@ -92,14 +91,22 @@ export default class ValidationPresenter extends Presenter {
       target = 0;
     }
     const code = this.binding.getMatchingCode();
-    const groupChildRequirementHinder = !(this.binding.getItem().hasStyle('atleastOneChild')
-      || this.binding.getItem().hasStyle('atMostOneChild')
-      || this.binding.getItem().hasStyle('disjoint')
-      || this.binding.getItem().hasStyle('exactlyOneChild')) ||
+    const groupChildRequirementHinder =
+      !(
+        this.binding.getItem().hasStyle('atleastOneChild') ||
+        this.binding.getItem().hasStyle('atMostOneChild') ||
+        this.binding.getItem().hasStyle('disjoint') ||
+        this.binding.getItem().hasStyle('exactlyOneChild')
+      ) ||
       code === CODES.TOO_FEW_VALUES_MIN ||
       code === CODES.TOO_FEW_VALUES_PREF;
-    const groupError = code === CODES.MISSING_CONSTRAINTS || code === CODES.WRONG_NODETYPE;
-    if (target > _bindings.length && groupChildRequirementHinder && !groupError) {
+    const groupError =
+      code === CODES.MISSING_CONSTRAINTS || code === CODES.WRONG_NODETYPE;
+    if (
+      target > _bindings.length &&
+      groupChildRequirementHinder &&
+      !groupError
+    ) {
       _bindings = _bindings.concat([]);
       while (target > _bindings.length) {
         const binding = create(this.binding, item);
@@ -126,8 +133,14 @@ export default class ValidationPresenter extends Presenter {
     const card = item.getCardinality();
     const min = card.min != null ? card.min : 0;
     const pref = card.pref != null ? card.pref : 0;
-    const cardCode = item.getType() === 'group' ? binding.getCardinalityTracker()?.getCode() : undefined;
-    const code = cardCode && cardCode !== CODES.OK && cardCode !== CODES.UNKNOWN ? cardCode : binding.getMatchingCode();
+    const cardCode =
+      item.getType() === 'group'
+        ? binding.getCardinalityTracker()?.getCode()
+        : undefined;
+    const code =
+      cardCode && cardCode !== CODES.OK && cardCode !== CODES.UNKNOWN
+        ? cardCode
+        : binding.getMatchingCode();
     const error = code !== CODES.TOO_FEW_VALUES_PREF && code !== CODES.OK;
     const warning = code === CODES.TOO_FEW_VALUES_PREF;
     if (error) {
@@ -166,7 +179,11 @@ export default class ValidationPresenter extends Presenter {
       return true;
     } else if (item.hasStyle('deprecated')) {
       renderingContext.domClassToggle(fieldDiv, 'deprecated', true);
-      renderingContext.renderValidationMessage(fieldDiv, 'deprecated', this.messages.validation_deprecated);
+      renderingContext.renderValidationMessage(
+        fieldDiv,
+        'deprecated',
+        this.messages.validation_deprecated
+      );
       return true;
     }
     return false;

@@ -23,9 +23,12 @@ renderingContext.preEditorViewRenderer = (viewNode, binding, context) => {
   if (!context.hideAddress) {
     let $element;
     if (item.hasStyle('showURI')) {
-      $element = jquery('<div class="rdformsField rdformsGroupURI">').text(binding.getValue());
+      $element = jquery('<div class="rdformsField rdformsGroupURI">').text(
+        binding.getValue()
+      );
     } else if (item.hasStyle('showLink')) {
-      $element = jquery('<a class="rdformsField rdformsGroupURI rdformsUrl">').text(binding.getValue())
+      $element = jquery('<a class="rdformsField rdformsGroupURI rdformsUrl">')
+        .text(binding.getValue())
         .attr('href', binding.getValue());
       system.attachExternalLinkBehaviour($element[0], binding);
     }
@@ -35,7 +38,9 @@ renderingContext.preEditorViewRenderer = (viewNode, binding, context) => {
       if (context.topLevel) {
         $row.addClass('rdformsTopLevel');
       }
-      jquery('<div class="rdformsLabel">').text(context.view.messages.address_label).appendTo($row);
+      jquery('<div class="rdformsLabel">')
+        .text(context.view.messages.address_label)
+        .appendTo($row);
       $element.appendTo(jquery('<div class="rdformsFields">').appendTo($row));
     }
   }

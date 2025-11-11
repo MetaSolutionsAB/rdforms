@@ -57,7 +57,7 @@ const getHTMLPlugins = () => {
 };
 
 module.exports = (env) => {
-  const type = env.type ? env.type : 'bmd';
+  const type = env.type ? env.type : 'react';
 
   const devConfig = {
     entry: `./renderers/${type}.js`,

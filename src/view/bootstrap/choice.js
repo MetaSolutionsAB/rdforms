@@ -60,7 +60,7 @@ editors.itemtype('choice').choices('none').register((fieldDiv, binding, context)
     // reference to the wrong setValue function later on.
     const setValue = context.setValue;
 
-    const $search = jquery(`<button ${disabledAttr} class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm browseChoices" type="button">`)
+    const $search = jquery(`<button ${disabledAttr} class="btn btn-primary browseChoices" type="button">`)
       .attr('title', context.view.messages.edit_browse)
       .appendTo(fieldDiv);
     if (context.chooser && context.chooser.supportsInlineCreate &&
@@ -111,7 +111,7 @@ editors.itemtype('choice').choices('none').register((fieldDiv, binding, context)
       c.load(() => {
         // If the value can be upgraded into its own entity.
         if (c.upgrade) {
-          const $button = jquery(`<button ${disabledAttr} class="btn btn-default bmd-btn-fab bmd-btn-fab-sm` +
+          const $button = jquery(`<button ${disabledAttr} class="btn btn-default` +
             ' browseChoices" type="button">')
             .attr('title', context.view.messages.edit_upgrade)
             .click(() => {

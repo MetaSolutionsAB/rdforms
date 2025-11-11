@@ -4,7 +4,6 @@ const path = require('path');
 module.exports = {
   entry: {
     bootstrap: './renderers/bootstrap.js',
-    bmd: './renderers/bmd.js',
     react: './renderers/react.js',
     jquery: './renderers/jquery.js',
   },

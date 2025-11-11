@@ -62,12 +62,6 @@ pnpm dev:react
 or
 
 ```$js
-pnpm dev:bmd
-```
-
-or
-
-```$js
 pnpm dev:bootstrap
 ```
 

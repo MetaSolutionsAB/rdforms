@@ -111,7 +111,7 @@ export default class ItemStore {
           const child = children[j];
           if (child.id === from || child['@id'] === from) {
             child.id = to;
-            delete child['@id']; // Clean up backward compatability.
+            delete child['@id']; // Clean up backward compatibility.
           }
           if (child.content) {
             renameInGroup(child);

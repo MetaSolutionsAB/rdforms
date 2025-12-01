@@ -12,8 +12,9 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context, labelR
     label = '';
   }
 
+  const headingElement = `h${context.view.headingLevel}`;
   const $labelDiv = item.hasStyle('heading') ?
-    jquery('<h2 class="rdformsLabel" tabindex="0">').text(label).appendTo(rowNode) :
+    jquery(`<${headingElement} class="rdformsLabel" tabindex="0">`).text(label).appendTo(rowNode) :
     jquery('<div class="rdformsLabel" tabindex="0">').text(label).appendTo(rowNode);
   if (binding) {
     $labelDiv.attr('id', context.view.createLabelIndex(binding));

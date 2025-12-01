@@ -340,6 +340,7 @@ const groupPresenter = (fieldDiv, binding, context) => {
     popupOnLabel: context.view.popupOnLabel,
     truncate: context.view.truncate,
     truncateLimit: context.view.truncateLimit,
+    headingLevel: context.view.headingLevel,
     includeLevel: context.view.includeLevel, // Copied from groupEditor, was this.includeLevel but that 'this' does not make sense here
   }, fieldDiv);
 };
@@ -361,6 +362,7 @@ const groupEditor = (fieldDiv, binding, context) => {
     showDescription: context.view.showDescription,
     truncate: context.view.truncate,
     truncateLimit: context.view.truncateLimit,
+    headingLevel: context.view.headingLevel,
     includeLevel: context.view.includeLevel,
   }, fieldDiv);
   context.view._subEditors.push(subView);

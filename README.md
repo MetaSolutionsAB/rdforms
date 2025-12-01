@@ -20,12 +20,14 @@ Read more about the templates in the [reference guide at the documentation site]
 
 In addition to the RDForms library you need to load the RDF library rdfjson and then initialize an Editor, Presenter or Validator on a DOM node. Below is a high-level example, for more detailed information on how to prepare the parameters look at the examples.
 
-    <script type="text/javascript" src="https://unpkg.com/@entryscape/rdfjson@2.3.0/dist/rdfjson.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/@entryscape/rdforms@10.0.0/dist/rdforms.react.js"></script>
-    <script type="module">
-       // Make sure to provide the parameters graph, resource and template
-       new Editor({ graph, resource, template }, 'node_id');
-    <script>
+```html
+<script type="text/javascript" src="https://unpkg.com/@entryscape/rdfjson@2.3.0/dist/rdfjson.js"></script>
+<script type="text/javascript" src="https://unpkg.com/@entryscape/rdforms@10.0.0/dist/rdforms.react.js"></script>
+<script type="module">
+    // Make sure to provide the parameters graph, resource and template
+    new Editor({ graph, resource, template }, 'node_id');
+<script>
+```
 
 The exact versions above (2.3.0 and 10.0.0) may vary, please check for yourself the latest versions in package.json. Naturally you can also use the built version in the dist folder, see the next section.
 
@@ -33,21 +35,29 @@ The exact versions above (2.3.0 and 10.0.0) may vary, please check for yourself 
 
 Before you can install dependencies and build RDForms you need to make sure you have [nodejs](http://nodejs.org/), [npm](https://www.npmjs.org/) and [pnpm](https://pnpm.io/) installed in your system. To install dependencies for RDForms:
 
-    pnpm install
+```console
+pnpm install
+```
 
 To build RDForms:
 
-    pnpm build:all
+```console
+pnpm build:all
+```
 
 ## Samples
 
 A good way to see the capabilities of RDForms is to take a look at the samples (generated from the examples, see section below). To generate the samples just run:
 
-    pnpm build:samples
+```console
+pnpm build:samples
+```
 
 This will build the samples in the `samples` directory. You'd need a web server to serve the samples. We provide a simple one for your convenience:
 
-    pnpm serve:samples
+```console
+pnpm serve:samples
+```
 
 Your browser should open automatically, otherwise access the samples at [http://localhost:8080/](http://localhost:8080/).
 
@@ -55,13 +65,13 @@ Your browser should open automatically, otherwise access the samples at [http://
 
 You can develop the different UI libraries as well as the part of the generic code base by running the examples in the webpack-dev-server:
 
-```$js
+```js
 pnpm dev:react
 ```
 
 or
 
-```$js
+```js
 pnpm dev:bootstrap
 ```
 

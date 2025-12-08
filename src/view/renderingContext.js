@@ -234,7 +234,7 @@ const renderingContext = {
     const alts = {};
 
     // Detect the various available languages
-    // noLanguage - a binding exists with no lanugage set
+    // noLanguage - a binding exists with no language set
     // best - a binding exists with the current locale
     // close - a binding exists with a language close to the current locale,
     //        e.g. en_US when the locale is en or the opposite

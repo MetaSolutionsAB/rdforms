@@ -132,8 +132,9 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
   const labelId = binding ? context.view.createLabelIndex(binding) : undefined;
   const rdformsLabel = context.view.popupOnLabel ? 'rdformsLabel' : 'rdformsLabel rdformsNoPopup';
   const role = context.view.popupOnLabel ? 'button' : null;
+  const HeadingElement = `h${context.view.headingLevel}`;
   label = item.hasStyle('heading') ?
-    <h2 tabIndex="0" id={labelId} className="rdformsLabelRow"><span className={rdformsLabel} role={role}>{label}</span></h2> :
+    <HeadingElement tabIndex="0" id={labelId} className="rdformsLabelRow"><span className={rdformsLabel} role={role}>{label}</span></HeadingElement> :
     <span tabIndex="0" id={labelId} className="rdformsLabelRow"><span className={rdformsLabel} role={role}>{label}</span></span>;
   if (context.view.popupOnLabel) {
     rowNode.appendChild(<Fragment key={`${binding ? binding.getHash() : item.getHash()}_label` }><ItemTooltip
@@ -156,7 +157,8 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     }
     const rdformsLabel = context.view.popupOnLabel ? 'rdformsLabel' : 'rdformsLabel rdformsNoPopup';
     const role = context.view.popupOnLabel ? 'button' : null;
-    label = item.hasStyle('heading') ? <h2 tabIndex="0" className={rdformsLabel} role={role}>{label}</h2> :
+    const HeadingElement = `h${context.view.headingLevel}`;
+    label = item.hasStyle('heading') ? <HeadingElement tabIndex="0" className={rdformsLabel} role={role}>{label}</HeadingElement> :
       <span tabIndex="0" className={rdformsLabel} role={role}>{label}</span>;
     if (context.view.popupOnLabel) {
       label = <ItemTooltip item={item} context={context} binding={binding}>{label}</ItemTooltip>;

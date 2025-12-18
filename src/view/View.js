@@ -28,6 +28,7 @@ export default class View {
     this.styleCls = params.styleCls || '';
     this.truncateLimit = params.truncateLimit !== undefined ? params.truncateLimit : 10;
     this.truncate = params.truncate !== undefined ? params.truncate : false;
+    this.headingLevel = params.headingLevel || 2;
     if (Array.isArray(params.filterPredicates)) {
       this.filterPredicates =
         params.filterPredicates.reduce((prev, current) => { prev[current] = true; return prev; }, {});

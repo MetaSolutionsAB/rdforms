@@ -1,4 +1,4 @@
-import { escape } from 'lodash';
+import { escape } from 'lodash-es';
 import { getDatePresentation, fromDuration } from '../viewUtils';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';

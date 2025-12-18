@@ -8,7 +8,7 @@
     "application profile",
     "linked data"
   ],
-  "version": "10.15.1",
+  "version": "10.16.0",
   "main": "dist/rdforms.node.js",
   "browser": "dist/rdforms.react.js",
   "module": "main.js",
@@ -26,7 +26,6 @@
     "@mui/icons-material": "^7.3.4",
     "@mui/material": "^7.3.4",
     "@mui/x-date-pickers": "^5.0.20",
-    "@selectize/selectize": "^0.13.6",
     "arrive": "^2.5.2",
     "bootstrap": "^4.6.2",
     "bootstrap-datepicker": "^1.10.1",
@@ -37,7 +36,7 @@
     "ifdef-loader": "^2.3.2",
     "jquery": "^3.7.1",
     "jquery-mousewheel": "^3.2.2",
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "moment": "^2.30.1",
     "nls-loader": "bitbucket:metasolutions/nls-loader#master",
     "node-fetch": "^2.7.0",
@@ -47,7 +46,6 @@
     "react-hooks-lib": "^0.1.5",
     "regenerator-runtime": "^0.13.11",
     "select2": "4.0.8",
-    "selectize-bootstrap4-theme": "^2.0.2",
     "sizzle": "^2.3.10",
     "terser-webpack-plugin": "^5.3.14",
     "whatwg-fetch": "^3.6.20"
@@ -63,7 +61,6 @@
     "@babel/preset-env": "^7.28.3",
     "@babel/preset-react": "^7.27.1",
     "babel-loader": "^8.4.1",
-    "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "copy-webpack-plugin": "^9.1.0",
     "css-loader": "^6.11.0",
@@ -94,17 +91,11 @@
     "main*",
     "renderers"
   ],
-  "pnpm": {
-    "overrides": {
-      "minimist": "0.2.4"
-    }
-  },
   "scripts": {
     "build:all": "webpack --mode=production --config webpack.all.js",
     "build:node": "webpack --config webpack.node.js",
     "build:node:dev": "webpack --mode=development --config webpack.node.js",
     "build:samples": "webpack --config webpack.samples.js",
-    "dev:bmd": "webpack serve --config webpack.dev.js",
     "dev:bootstrap": "webpack serve --config webpack.dev.js --env type=bootstrap",
     "dev:jquery": "webpack serve --config webpack.dev.js --env type=jquery",
     "dev:react": "webpack serve --config webpack.dev.js --env type=react",
@@ -122,5 +113,5 @@
       "url": "http://valentinohudhra.com/"
     }
   ],
-  "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b"
+  "packageManager": "pnpm@10.21.0+sha512.da3337267e400fdd3d479a6c68079ac6db01d8ca4f67572083e722775a796788a7a9956613749e000fac20d424b594f7a791a5f4e2e13581c5ef947f26968a40"
 }

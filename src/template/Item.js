@@ -284,7 +284,7 @@ export default class Item {
 
   /**
    * @return {Object} never available for Text item type.
-   * The property value pairs corresponds to predicate and objects in required tripples.
+   * The property value pairs corresponds to predicate and objects in required triples.
    */
   getConstraints(original) {
     const constr = this.getSource(original).constraints;

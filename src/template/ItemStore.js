@@ -13,7 +13,7 @@ const deepMerge = (source1, source2) => {
   }
 
   if (Array.isArray(source1) && Array.isArray(source2)) {
-    return [].concat(origSource[key], extSource[key]);
+    return [].concat(source1, source2);
   }
 
   if (typeof source1 === 'object' && typeof source2 === 'object') {
@@ -111,7 +111,7 @@ export default class ItemStore {
           const child = children[j];
           if (child.id === from || child['@id'] === from) {
             child.id = to;
-            delete child['@id']; // Clean up backward compatability.
+            delete child['@id']; // Clean up backward compatibility.
           }
           if (child.content) {
             renameInGroup(child);

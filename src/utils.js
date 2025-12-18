@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash-es';
 import system from './model/system';
 
 const getLocalizedValue = (hash, locale) => {

@@ -10,4 +10,3 @@ yarn-error.log
 *.temp
 samples/bootstrap
 samples/react
-samples/bmd

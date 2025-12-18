@@ -99,7 +99,7 @@ const getCopyPlugins = (type) =>
   });
 
 const variants = {
-  type: ['bmd', 'bootstrap', 'react'],
+  type: ['bootstrap', 'react'],
 };
 
 function createConfig(options) {

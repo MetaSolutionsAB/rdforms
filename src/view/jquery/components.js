@@ -1,6 +1,7 @@
 import renderingContext from '../renderingContext';
 import './labels';
 import './text';
+import './boolean';
 import './choice';
 import './table';
 

@@ -12,6 +12,7 @@ import './choiceEditors/index';
 import './buttons';
 import './date';
 import './duration';
+import './boolean';
 import '../bootstrap/auto';
 
 /**

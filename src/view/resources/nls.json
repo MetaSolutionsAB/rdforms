@@ -43,6 +43,8 @@
   "duration_days": "Days",
   "duration_hours": "Hours",
   "duration_minutes": "Minutes",
+  "boolean_true": "Yes",
+  "boolean_false": "No",
   "mandatoryLabel": "Mandatory",
   "recommendedLabel": "Recommended",
   "optionalLabel": "Optional",

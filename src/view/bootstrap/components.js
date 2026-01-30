@@ -7,6 +7,7 @@ import './labels';
 import './text';
 import './choice';
 import './buttons';
+import './boolean';
 import './table';
 
 renderingContext.preEditorRenderer = (fieldDiv, binding, context) => {

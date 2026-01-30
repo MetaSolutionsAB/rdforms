@@ -281,6 +281,23 @@
           }
         },
         {
+          "type": "text",
+          "nodetype": "DATATYPE_LITERAL",
+          "property": "ex:isActive",
+          "datatype": "xsd:boolean",
+          "cardinality": {
+            "max": 1
+          },
+          "label": {
+            "en": "Active",
+            "sv": "Aktiv"
+          },
+          "description": {
+            "en": "Whether this resource is currently active.",
+            "sv": "Om denna resurs är aktiv just nu."
+          }
+        },
+        {
           "type": "group",
           "nodetype": "RESOURCE",
           "label": {

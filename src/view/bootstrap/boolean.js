@@ -23,23 +23,20 @@ const booleanPresenter = (fieldDiv, binding) => {
 };
 
 /**
- * Boolean editor for Bootstrap - checkbox with indeterminate state support.
+ * Boolean editor for Bootstrap - radio buttons for true/false selection.
  *
  * Three-state model:
- * - null (indeterminate): No value - no triple in RDF graph
- * - true: Checked - 'true'^^xsd:boolean triple exists
- * - false: Unchecked - 'false'^^xsd:boolean triple exists
- *
- * Click behavior:
- * - Indeterminate -> true
- * - true -> false
- * - false -> true
+ * - null: No value (neither radio selected) - no triple in RDF graph
+ * - true: True radio selected - 'true'^^xsd:boolean triple exists
+ * - false: False radio selected - 'false'^^xsd:boolean triple exists
  */
 const booleanEditor = (fieldDiv, binding, context) => {
+  const bundle = context.view.messages;
   const item = binding.getItem();
   const isNonEditable = item.hasStyle('nonEditable');
   const ngId = getNamedGraphId(binding, context);
   const isDisabled = !!ngId || isNonEditable;
+  const disabledAttr = isDisabled ? 'disabled' : '';
 
   let boolState = parseBoolean(binding.getValue());
 
@@ -48,59 +45,57 @@ const booleanEditor = (fieldDiv, binding, context) => {
   const hasError = binding.getMatchingCode() === CODES.WRONG_DATATYPE ||
     (value !== '' && value !== null && !isValidBoolean(value));
 
+  // Generate unique name for radio group
+  const radioName = `rdformsBooleanRadio_${binding.getHash()}`;
+
   const wrapper = jquery('<div>').addClass('rdformsBooleanEditor rdformsFieldInput').appendTo(fieldDiv);
 
-  const checkbox = jquery('<input type="checkbox" class="form-check-input rdformsBooleanCheckbox">')
-    .prop('disabled', isDisabled)
-    .appendTo(wrapper);
+  // Create radio buttons
+  const radioGroup = jquery('<div>').addClass('form-check form-check-inline').appendTo(wrapper);
 
-  // Update checkbox state (checked and indeterminate)
-  const updateCheckbox = () => {
-    if (boolState === null) {
-      checkbox.prop('checked', false);
-      checkbox.prop('indeterminate', true);
-    } else {
-      checkbox.prop('indeterminate', false);
-      checkbox.prop('checked', boolState);
-    }
+  const trueLabel = jquery('<label>').addClass('form-check-label').appendTo(radioGroup);
+  const trueRadio = jquery(`<input type="radio" name="${radioName}" value="true" class="form-check-input" ${disabledAttr}>`)
+    .prependTo(trueLabel);
+  trueLabel.append(bundle.boolean_true || 'Yes');
+
+  const falseLabel = jquery('<label>').addClass('form-check-label ml-3').appendTo(radioGroup);
+  const falseRadio = jquery(`<input type="radio" name="${radioName}" value="false" class="form-check-input" ${disabledAttr}>`)
+    .prependTo(falseLabel);
+  falseLabel.append(bundle.boolean_false || 'No');
+
+  // Update radio state
+  const updateRadios = () => {
+    trueRadio.prop('checked', boolState === true);
+    falseRadio.prop('checked', boolState === false);
   };
 
   // Set initial state
-  updateCheckbox();
+  updateRadios();
 
-  // Handle click
-  checkbox.on('click', function () {
+  // Handle change
+  const handleChange = function () {
     if (isDisabled) return;
 
-    let newState;
-    if (boolState === null) {
-      // Indeterminate -> true
-      newState = true;
-    } else if (boolState === true) {
-      // true -> false (explicit false triple)
-      newState = false;
-    } else {
-      // false -> true
-      newState = true;
-    }
-
+    const newState = jquery(this).val() === 'true';
     boolState = newState;
-    updateCheckbox();
     binding.setValue(formatBoolean(newState));
     wrapper.removeClass('mismatchReport');
     wrapper.find('.rdformsWarning').remove();
-  });
+  };
+
+  trueRadio.on('change', handleChange);
+  falseRadio.on('change', handleChange);
 
   // Error display
   if (hasError) {
     wrapper.addClass('mismatchReport');
-    jquery(`<div class="rdformsWarning">${context.view.messages.wrongDatatypeField}</div>`).appendTo(wrapper);
+    jquery(`<div class="rdformsWarning">${bundle.wrongDatatypeField}</div>`).appendTo(wrapper);
   }
 
   // Provide clear function for remove button
   context.clear = () => {
     boolState = null;
-    updateCheckbox();
+    updateRadios();
     wrapper.removeClass('mismatchReport');
     wrapper.find('.rdformsWarning').remove();
   };

@@ -1,6 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import Checkbox from '@mui/material/Checkbox';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import CODES from '../../model/CODES';
 import renderingContext from '../renderingContext';
 import { parseBoolean, formatBoolean, isValidBoolean } from '../booleanUtils';
@@ -34,20 +37,16 @@ const booleanPresenter = (fieldDiv, binding, context) => {
 };
 
 /**
- * Boolean editor - checkbox with indeterminate state support.
+ * Boolean editor - radio buttons for true/false selection.
  *
  * Three-state model:
- * - null (indeterminate): No value - no triple in RDF graph
- * - true: Checked - 'true'^^xsd:boolean triple exists
- * - false: Unchecked - 'false'^^xsd:boolean triple exists
- *
- * Click behavior:
- * - Indeterminate -> true
- * - true -> false
- * - false -> true
+ * - null: No value (neither radio selected) - no triple in RDF graph
+ * - true: True radio selected - 'true'^^xsd:boolean triple exists
+ * - false: False radio selected - 'false'^^xsd:boolean triple exists
  */
 const booleanEditor = (fieldDiv, binding, context) => {
   const BooleanEditor = () => {
+    const bundle = context.view.messages;
     const initialValue = binding.getValue();
     const [boolState, setBoolState] = useState(() => parseBoolean(initialValue));
     const [error, setError] = useState(() => {
@@ -74,38 +73,37 @@ const booleanEditor = (fieldDiv, binding, context) => {
       };
     }, []);
 
-    const handleChange = () => {
+    const handleChange = (event) => {
       if (isDisabled) return;
 
-      let newState;
-      if (boolState === null) {
-        // Indeterminate -> true
-        newState = true;
-      } else if (boolState === true) {
-        // true -> false (explicit false triple)
-        newState = false;
-      } else {
-        // false -> true
-        newState = true;
-      }
-
+      const newState = event.target.value === 'true';
       setBoolState(newState);
       binding.setValue(formatBoolean(newState));
       setError(false);
     };
 
+    // Convert boolState to string value for RadioGroup ('' for null/unselected)
+    const radioValue = boolState === null ? '' : String(boolState);
+
     return (
       <>
-        <Checkbox
-          checked={boolState === true}
-          indeterminate={boolState === null}
+        <RadioGroup
+          row
+          value={radioValue}
           onChange={handleChange}
-          disabled={isDisabled}
-          inputProps={{
-            'aria-labelledby': context.view.getLabelIndex(binding),
-          }}
-          size="small"
-        />
+          aria-labelledby={context.view.getLabelIndex(binding)}
+        >
+          <FormControlLabel
+            value="true"
+            control={<Radio size="small" disabled={isDisabled} />}
+            label={bundle.boolean_true || 'Yes'}
+          />
+          <FormControlLabel
+            value="false"
+            control={<Radio size="small" disabled={isDisabled} />}
+            label={bundle.boolean_false || 'No'}
+          />
+        </RadioGroup>
         {error && (
           <div key="warning" className="rdformsWarning">
             {context.view.messages.wrongDatatypeField}

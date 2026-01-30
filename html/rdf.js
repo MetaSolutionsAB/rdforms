@@ -41,7 +41,6 @@ export default {
       'type': 'uri',
     }],
     'http://purl.org/dc/terms/extent': [{ 'value': 'P5Y2M10DT15H', 'type': 'literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#duration' }],
-    'http://example.com/isActive': [{ 'value': 'true', 'type': 'literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#boolean' }],
   },
   '_:person': {
     'http://www.w3.org/1999/02/22-rdf-syntax-ns#type': [{

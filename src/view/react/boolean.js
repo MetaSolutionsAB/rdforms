@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import CODES from '../../model/CODES';
 import renderingContext from '../renderingContext';
@@ -56,18 +56,10 @@ const booleanEditor = (fieldDiv, binding, context) => {
       return binding.getMatchingCode() === CODES.WRONG_DATATYPE ||
         (value !== '' && value !== null && !isValidBoolean(value));
     });
-    const checkboxRef = useRef(null);
     const ngId = useNamedGraphId(binding, context);
     const item = binding.getItem();
     const isNonEditable = item.hasStyle('nonEditable');
     const isDisabled = !!ngId || isNonEditable;
-
-    // Update indeterminate state via ref (can't be set via props)
-    useEffect(() => {
-      if (checkboxRef.current) {
-        checkboxRef.current.indeterminate = boolState === null;
-      }
-    }, [boolState]);
 
     // Toggle error class on field
     useEffect(() => {
@@ -105,8 +97,8 @@ const booleanEditor = (fieldDiv, binding, context) => {
     return (
       <>
         <Checkbox
-          inputRef={checkboxRef}
           checked={boolState === true}
+          indeterminate={boolState === null}
           onChange={handleChange}
           disabled={isDisabled}
           inputProps={{

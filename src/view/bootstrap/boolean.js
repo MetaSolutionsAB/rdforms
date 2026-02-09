@@ -4,6 +4,8 @@ import { getNamedGraphId } from '../viewUtils';
 import renderingContext from '../renderingContext';
 import CODES from '../../model/CODES';
 
+let booleanRadioGroupNr = 0;
+
 /**
  * Boolean presenter for Bootstrap - displays a disabled checkbox showing the current state.
  * Does not render anything for empty/no value (consistent with other items).
@@ -42,7 +44,7 @@ const booleanEditor = (fieldDiv, binding, context) => {
     (value !== '' && value !== null && !isValidBoolean(value));
 
   // Generate unique name for radio group
-  const radioName = `rdformsBooleanRadio_${binding.getHash()}`;
+  const radioName = `rdformsBooleanRadio_${booleanRadioGroupNr}`;
 
   const wrapper = jquery('<div>').addClass('rdformsBooleanEditor rdformsFieldInput').appendTo(fieldDiv);
 
@@ -58,6 +60,8 @@ const booleanEditor = (fieldDiv, binding, context) => {
   const falseRadio = jquery(`<input type="radio" name="${radioName}" value="false" class="form-check-input" ${disabledAttr}>`)
     .prependTo(falseLabel);
   falseLabel.append(bundle.boolean_false || 'No');
+
+  booleanRadioGroupNr += 1;
 
   // Update radio state
   const updateRadios = () => {

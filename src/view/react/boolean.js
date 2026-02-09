@@ -4,10 +4,12 @@ import Checkbox from '@mui/material/Checkbox';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
 import CODES from '../../model/CODES';
 import renderingContext from '../renderingContext';
+import utils from '../../utils';
 import { parseBoolean, formatBoolean, isValidBoolean } from '../booleanUtils';
-import { useNamedGraphId } from './hooks';
+import { useName, useNamedGraphId } from './hooks';
 
 /**
  * Boolean presenter - displays a disabled checkbox showing the current state.
@@ -47,6 +49,10 @@ const booleanPresenter = (fieldDiv, binding, context) => {
 const booleanEditor = (fieldDiv, binding, context) => {
   const BooleanEditor = () => {
     const bundle = context.view.messages;
+    const name = useName();
+    const item = binding.getItem();
+    const labelMap = item.getEditLabelMap() || item.getLabelMap();
+    const label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value;
     const initialValue = binding.getValue();
     const [boolState, setBoolState] = useState(() => parseBoolean(initialValue));
     const [error, setError] = useState(() => {
@@ -82,23 +88,26 @@ const booleanEditor = (fieldDiv, binding, context) => {
 
     return (
       <>
-        <RadioGroup
-          row
-          value={radioValue}
-          onChange={handleChange}
-          aria-labelledby={context.view.getLabelIndex(binding)}
-        >
-          <FormControlLabel
-            value="true"
-            control={<Radio size="small" disabled={isDisabled} />}
-            label={bundle.boolean_true || 'Yes'}
-          />
-          <FormControlLabel
-            value="false"
-            control={<Radio size="small" disabled={isDisabled} />}
-            label={bundle.boolean_false || 'No'}
-          />
-        </RadioGroup>
+        <FormControl component="fieldset">
+          <RadioGroup
+            row
+            value={radioValue}
+            onChange={handleChange}
+            aria-label={label}
+            name={name}
+          >
+            <FormControlLabel
+              value="true"
+              control={<Radio disabled={isDisabled} />}
+              label={bundle.boolean_true || 'Yes'}
+            />
+            <FormControlLabel
+              value="false"
+              control={<Radio disabled={isDisabled} />}
+              label={bundle.boolean_false || 'No'}
+            />
+          </RadioGroup>
+        </FormControl>
         {error && (
           <div key="warning" className="rdformsWarning">
             {context.view.messages.wrongDatatypeField}

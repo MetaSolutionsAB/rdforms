@@ -32,11 +32,7 @@ const booleanPresenter = (fieldDiv, binding) => {
  */
 const booleanEditor = (fieldDiv, binding, context) => {
   const bundle = context.view.messages;
-  const item = binding.getItem();
-  const isNonEditable = item.hasStyle('nonEditable');
-  const ngId = getNamedGraphId(binding, context);
-  const isDisabled = !!ngId || isNonEditable;
-  const disabledAttr = isDisabled ? 'disabled' : '';
+  const disabledAttr = getNamedGraphId(binding, context) ? 'disabled' : '';
 
   let boolState = parseBoolean(binding.getValue());
 
@@ -74,8 +70,6 @@ const booleanEditor = (fieldDiv, binding, context) => {
 
   // Handle change
   const handleChange = function () {
-    if (isDisabled) return;
-
     const newState = jquery(this).val() === 'true';
     boolState = newState;
     binding.setValue(formatBoolean(newState));

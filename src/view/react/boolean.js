@@ -55,10 +55,7 @@ const booleanEditor = (fieldDiv, binding, context) => {
       return binding.getMatchingCode() === CODES.WRONG_DATATYPE ||
         (value !== '' && value !== null && !isValidBoolean(value));
     });
-    const ngId = useNamedGraphId(binding, context);
-    const item = binding.getItem();
-    const isNonEditable = item.hasStyle('nonEditable');
-    const isDisabled = !!ngId || isNonEditable;
+    const isDisabled = !!useNamedGraphId(binding, context);
 
     // Toggle error class on field
     useEffect(() => {
@@ -74,8 +71,6 @@ const booleanEditor = (fieldDiv, binding, context) => {
     }, []);
 
     const handleChange = (event) => {
-      if (isDisabled) return;
-
       const newState = event.target.value === 'true';
       setBoolState(newState);
       binding.setValue(formatBoolean(newState));

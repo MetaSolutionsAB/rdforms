@@ -6,7 +6,8 @@ import View from './View';
 const showNow = (editor, item, bindings) => {
   if (bindings.length === 0 ||
 //    item.hasStyle('deprecated') ||
-    item.hasStyle('invisible')) {
+    item.hasStyle('invisible') ||
+    item.hasStyle('invisibleInPresent')) {
     return false;
   }
   const prop = item.getProperty();

@@ -25,7 +25,7 @@ export default class ValidationPresenter extends Presenter {
   }
 
   showNow(item, bindings) {
-    if (item.hasStyle('invisible')) {
+    if (item.hasStyle('invisible') || item.hasStyle('invisibleInPresent')) {
       return false;
     }
     if (bindings.length > 0) {

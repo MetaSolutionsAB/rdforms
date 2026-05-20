@@ -117,7 +117,8 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     } else {
       label = '';
     }
-    label = item.hasStyle('heading') ? <h2 tabIndex="0" className="rdformsLabel">{label}</h2> :
+    const HeadingElement = `h${context.view.headingLevel}`;
+    label = item.hasStyle('heading') ? <HeadingElement tabIndex="0" className="rdformsLabel">{label}</HeadingElement> :
       <span tabIndex="0" className="rdformsLabel">{label}</span>;
 
     const card = item.getCardinality();

@@ -198,6 +198,25 @@ a.rdformsUrl:hover {
     max-height: 300px;
 }
 
+.rdformsLabel:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.rdformsLabel.rdformsNoPopup:hover {
+    text-decoration: initial;
+    cursor: initial;
+}
+
+.rdformsLabel .popover:hover {
+    cursor: initial;
+}
+
+.rdformsLabel.noPointer:hover {
+    text-decoration: none;
+    cursor: default;
+}
+
 .rdformsDescriptionIcon {
     font-size: 16px !important;
     margin-left: 4px;
@@ -206,9 +225,10 @@ a.rdformsUrl:hover {
 }
 
 .rdformsPresenter th span:hover,
-.rdformsEditor th span:hover {
-    text-decoration: underline;
-    cursor: pointer;
+.rdformsEditor th span:hover,
+.rdformsLabel.hasInfo:hover {
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .rdformsLabelRow:hover .rdformsDescriptionIcon {

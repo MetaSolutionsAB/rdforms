@@ -116,4 +116,9 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
       }</div>${propinfo}`,
   };
   jquery(aroundNode).popover(popoverOptions).attr('data-toggle', 'popover');
+  jquery(aroundNode).on('keydown', (e) => {
+    if (e.key === 'Escape') {
+      jquery(aroundNode).popover('hide');
+    }
+  });
 };

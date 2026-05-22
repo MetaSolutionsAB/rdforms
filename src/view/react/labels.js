@@ -62,7 +62,9 @@ const DescriptionIcon = ({ item, context }) => {
   
   const handleClick = () => setPinned(!pinned);
   const handleKeyDown = (e) => {
-    if (e.key === 'Escape') setPinned(false);
+    if (e.key !== 'Escape' || !pinned) return;
+    setPinned(false);
+    e.stopPropagation();
   };
 
   return (

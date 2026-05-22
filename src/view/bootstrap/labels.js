@@ -117,8 +117,9 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
   };
   jquery(aroundNode).popover(popoverOptions).attr('data-toggle', 'popover');
   jquery(aroundNode).on('keydown', (e) => {
-    if (e.key === 'Escape') {
+    if (e.key === 'Escape' && aroundNode.getAttribute('aria-describedby')) {
       jquery(aroundNode).popover('hide');
+      e.stopPropagation();
     }
   });
 };

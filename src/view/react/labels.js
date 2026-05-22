@@ -59,6 +59,14 @@ const DescriptionIcon = ({ item, context }) => {
     </>
   );
 
+  
+  const handleClick = () => setPinned(!pinned);
+  const handleKeyDown = (e) => {
+    if (e.key !== 'Escape' || !pinned) return;
+    setPinned(false);
+    e.stopPropagation();
+  };
+
   return (
     <ClickAwayListener onClickAway={() => setPinned(false)}>
       <span>
@@ -73,7 +81,8 @@ const DescriptionIcon = ({ item, context }) => {
             className="rdformsDescriptionIcon"
             size="small"
             aria-label={view.messages.info_description}
-            onClick={() => setPinned(!pinned)}
+            onClick={handleClick}
+            onKeyDown={handleKeyDown}
             sx={{ marginLeft: '0px !important' }}
           >
             <HelpOutlineIcon fontSize="inherit" />

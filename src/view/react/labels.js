@@ -2,6 +2,7 @@
 import React, { Fragment, useState, useEffect, forwardRef } from 'react';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
+import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import renderingContext from '../renderingContext';
@@ -68,10 +69,15 @@ const DescriptionIcon = ({ item, context }) => {
           onOpen={() => setHovered(true)}
           onClose={() => setHovered(false)}
         >
-          <HelpOutlineIcon
+          <IconButton
             className="rdformsDescriptionIcon"
+            size="small"
+            aria-label={view.messages.info_description}
             onClick={() => setPinned(!pinned)}
-          />
+            sx={{ marginLeft: '0px !important' }}
+          >
+            <HelpOutlineIcon fontSize="inherit" />
+          </IconButton>
         </StyledTooltip>
       </span>
     </ClickAwayListener>

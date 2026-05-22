@@ -40,14 +40,23 @@ const DescriptionIcon = ({ item, context }) => {
   const [pinned, setPinned] = useState(false);
   const [hovered, setHovered] = useState(false);
 
-  if (!description) return null;
-
   const property = item.getProperty();
+  const fallbackDescription = !description && !property
+    ? view.messages.info_missing || ''
+    : '';
+  const shownDescription = description || fallbackDescription;
+  if (!shownDescription && !property) return null;
+
   const propinfo = property
     ? <div className="rdformsProperty"><a target="_blank" href={property}>{property}</a></div>
     : null;
 
-  const tooltipContent = <><p className="rdformsLinebreaks rdformsDescription">{description}</p>{propinfo}</>;
+  const tooltipContent = (
+    <>
+      {shownDescription ? <p className="rdformsLinebreaks rdformsDescription">{shownDescription}</p> : null}
+      {propinfo}
+    </>
+  );
 
   return (
     <ClickAwayListener onClickAway={() => setPinned(false)}>

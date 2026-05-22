@@ -108,7 +108,7 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
 
   const labelId = binding ? context.view.createLabelIndex(binding) : undefined;
   const HeadingElement = `h${context.view.headingLevel}`;
-  const descriptionIcon = <DescriptionIcon item={item} context={context} />;
+  const descriptionIcon = context.view.popupOnLabel ? <DescriptionIcon item={item} context={context} /> : null;
   label = item.hasStyle('heading') ?
     <HeadingElement tabIndex="0" id={labelId} className="rdformsLabelRow"><span className="rdformsLabel">{label}</span>{descriptionIcon}</HeadingElement> :
     <span tabIndex="0" id={labelId} className="rdformsLabelRow"><span className="rdformsLabel">{label}</span>{descriptionIcon}</span>;
@@ -173,7 +173,7 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     }
 
     const labelId = context.view.createLabelIndex(binding);
-    const descriptionIcon = <DescriptionIcon item={item} context={context} />;
+    const descriptionIcon = context.view.popupOnLabel ? <DescriptionIcon item={item} context={context} /> : null;
     rowNode.appendChild(<Fragment key={`${binding.getHash()}_label`}><div id={labelId} className="rdformsLabelRow">{
       label}{mark}{descriptionIcon}{Button && <Button></Button>}</div>{description}</Fragment>);
   }

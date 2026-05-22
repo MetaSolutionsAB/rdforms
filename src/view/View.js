@@ -332,8 +332,7 @@ export default class View {
     this.addComponent(fieldDiv, binding);
     const isEditor = this._subEditors !== undefined;
     if (item.hasStyle('invisible') ||
-      (item.hasStyle('invisibleInEdit') && isEditor) ||
-      (item.hasStyle('invisibleInPresent') && !isEditor)
+      (item.hasStyle('invisibleInEdit') && isEditor)
     ) {
       renderingContext.domClassToggle(newRow || lastRow, 'rdformsInvisible', true);
     }

@@ -7,7 +7,7 @@ import { bindingReport } from '../model/validate';
 const showNow = (editor, item, bindings, includeLevel) => {
   // Invisible should be created as components and hidden using display: none
   // Otherwise certain extentions such as autoUUID does not work.
-  /* if (item.hasStyle('invisible')) {
+  /* if (item.hasStyle('invisible') || item.hasStyle('invisibleInEdit')) {
     return false;
   } */
   if (item.hasStyle('presenterOnly')) {

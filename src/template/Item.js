@@ -24,6 +24,8 @@ export default class Item {
     this._styles = [
       'heading',
       'invisible',
+      'invisibleInPresent',
+      'invisibleInEdit',
       'invisibleGroup',
       'stars',
       'commentOn',

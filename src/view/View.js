@@ -330,7 +330,10 @@ export default class View {
 
     this._binding2node[binding.getHash()] = fieldDiv;
     this.addComponent(fieldDiv, binding);
-    if (item.hasStyle('invisible')) {
+    const isEditor = this._subEditors !== undefined;
+    if (item.hasStyle('invisible') ||
+      (item.hasStyle('invisibleInEdit') && isEditor)
+    ) {
       renderingContext.domClassToggle(newRow || lastRow, 'rdformsInvisible', true);
     }
     return newRow || lastRow;

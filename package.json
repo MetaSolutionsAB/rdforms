@@ -98,7 +98,9 @@
     "dev:bootstrap": "webpack serve --config webpack.dev.js --env type=bootstrap",
     "dev:jquery": "webpack serve --config webpack.dev.js --env type=jquery",
     "dev:react": "webpack serve --config webpack.dev.js --env type=react",
-    "serve:samples": "webpack serve --config webpack.samples.serve.js"
+    "serve:samples": "webpack serve --config webpack.samples.serve.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "prettier": "@entryscape/linting-config/prettier",
   "author": {

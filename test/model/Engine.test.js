@@ -46,9 +46,10 @@ describe('Engine matching test', () => {
   test('Checking matched grouped values', () => {
     const { graph, template } = createMatchingContext();
     const binding = match(graph, 'http://example.org/about', template);
-    expect(binding.getItemGroupedChildBindings()[0][0].getItemGroupedChildBindings()[0][0].getValue()).toBe('Anna');
-    expect(binding.getItemGroupedChildBindings()[0][0].getItemGroupedChildBindings()[0][1].getValue()).toBe('Annie');
-    expect(binding.getItemGroupedChildBindings()[0][0].getItemGroupedChildBindings()[1][0].getValue()).toBe('Wilder');
+    const authorGroupBinding = binding.getItemGroupedChildBindings()[0][0];
+    expect(authorGroupBinding.getItemGroupedChildBindings()[0][0].getValue()).toBe('Anna');
+    expect(authorGroupBinding.getItemGroupedChildBindings()[0][1].getValue()).toBe('Annie');
+    expect(authorGroupBinding.getItemGroupedChildBindings()[1][0].getValue()).toBe('Wilder');
     expect(binding.getItemGroupedChildBindings()[4]).toHaveLength(1); // One contributor
   });
 

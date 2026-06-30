@@ -40,9 +40,17 @@ describe('Create-ItemStore', () => {
   test('checkCachedChoices', async () => {
     const choice = buildTemplate1().getChildren()[3];
     expect(choice).toBeInstanceOf(Choice);
-    const choices = await new Promise((resolve) => {
-      choice.getDynamicChoices(resolve);
+    const choices = await new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(
+        () => reject(new Error('getDynamicChoices never invoked its callback — ontology lookup miss')),
+        1000,
+      );
+      choice.getDynamicChoices((result) => {
+        clearTimeout(timeoutId);
+        resolve(result);
+      });
     });
+    expect(Array.isArray(choices)).toBe(true);
     expect(choices).toHaveLength(3);
   });
 });

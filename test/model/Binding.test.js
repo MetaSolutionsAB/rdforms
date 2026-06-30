@@ -31,19 +31,19 @@ const createSingleValueBindings = () => {
   const graph = new Graph({});
   const makerStatement = graph.create(uris[0], predicates[1], { type: 'literal', value: 'Hepp' });
   const rootGroupBinding = new GroupBinding({ item: root });
-  const titleBinding = new ValueBinding({ item: root.getChildren()[1], statement: makerStatement });
+  const makerBinding = new ValueBinding({ item: root.getChildren()[1], statement: makerStatement });
   return {
-    graph, makerStatement, itemStore, root, rootGroupBinding, titleBinding,
+    graph, makerStatement, itemStore, root, rootGroupBinding, makerBinding,
   };
 };
 
 describe('Binding-hierarchy', () => {
   test('Adding childrenbindings', () => {
-    const { rootGroupBinding, titleBinding } = createSingleValueBindings();
+    const { rootGroupBinding, makerBinding } = createSingleValueBindings();
     expect(rootGroupBinding.getChildBindings()).toHaveLength(0);
-    rootGroupBinding.addChildBinding(titleBinding);
+    rootGroupBinding.addChildBinding(makerBinding);
     expect(rootGroupBinding.getChildBindings()).toHaveLength(1);
-    rootGroupBinding.removeChildBinding(titleBinding);
+    rootGroupBinding.removeChildBinding(makerBinding);
     expect(rootGroupBinding.getChildBindings()).toHaveLength(0);
   });
 });
@@ -96,15 +96,15 @@ const createPropertyGroupHierarchy = () => {
 
 describe('Binding-assertions', () => {
   test('Changing values', () => {
-    const { makerStatement, rootGroupBinding, titleBinding } = createSingleValueBindings();
-    rootGroupBinding.addChildBinding(titleBinding);
+    const { makerStatement, rootGroupBinding, makerBinding } = createSingleValueBindings();
+    rootGroupBinding.addChildBinding(makerBinding);
     expect(makerStatement.isAsserted()).toBe(true);
-    titleBinding.setValue('');
+    makerBinding.setValue('');
     expect(makerStatement.isAsserted()).toBe(false);
-    titleBinding.setValue('hopp');
+    makerBinding.setValue('hopp');
     expect(makerStatement.isAsserted()).toBe(true);
     // setValue requires a string or null (Binding._isValidObjectValue throws otherwise); null is the clear value.
-    titleBinding.setValue(null);
+    makerBinding.setValue(null);
     expect(makerStatement.isAsserted()).toBe(false);
   });
 

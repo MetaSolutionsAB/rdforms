@@ -21,7 +21,7 @@ const template1Source = {
 				"label":{"en":"Title"},
 				"nodetype":"LANGUAGE_LITERAL",
 				"property":"http://purl.org/dc/terms/title",
-				"cardinality": {"min": 2, "pref": "4", "max": 5}
+				"cardinality": {"min": 2, "pref": 4, "max": 5}
 			},
 			{"@id":"publisheddate"},
 			{"@id":"subjectVocab"},
@@ -95,23 +95,23 @@ const template1Source = {
 	"ontologies":["http://example.ru/library.rdf"],
 	"cachedChoices": {
 		"http://example.com/bookOntology": [{
-			constraints: {"http://www.w3.org/2004/02/skos/core#inScheme":"http://example.com/bookSubjects"},
-			parentProperty: "http://something.se/doh",
-			hierarchyProperty: "http://something.se/doh",
-			isParentPropertyInverted: false,
-			isHierarchyPropertyInverted: false,
-			choices: [
-				{"top":true, "value": "http://example.com/instanceTop", "selectable": false, 
-				 "label": {"sv": "Toppen", "en":"Ze top!"}, children:[
+			"constraints": {"http://www.w3.org/2004/02/skos/core#inScheme":"http://example.com/bookSubjects"},
+			"parentProperty": "http://something.se/doh",
+			"hierarchyProperty": "http://something.se/doh",
+			"isParentPropertyInverted": false,
+			"isHierarchyPropertyInverted": false,
+			"choices": [
+				{"top":true, "value": "http://example.com/instanceTop", "selectable": false,
+				 "label": {"sv": "Toppen", "en":"Ze top!"}, "children":[
 				    {"_reference": "http://example.com/instance1"},
 					{"_reference": "http://example.com/instance2"}]},
-				{"value": "http://example.com/instance1", "label": {"sv": "Matematik", "en":"Mathematics"}, 
+				{"value": "http://example.com/instance1", "label": {"sv": "Matematik", "en":"Mathematics"},
 				 "description": {"sv": "Matematik är ett coolt ämne", "en":"Mathematics is a cool subject"}},
 				{"value": "http://example.com/instance2", "label": {"sv": "Kemi", "en":"Chemistry"}}
-			]}], 
+			]}],
 		"http://example.com/DCOntology": [{
-			constraints: {"http://www.w3.org/2004/02/skos/core#inScheme":"http://example.com/authorPredicates"},
-			choices: [
+			"constraints": {"http://www.w3.org/2004/02/skos/core#inScheme":"http://example.com/authorPredicates"},
+			"choices": [
 				{"value": "http://purl.org/dc/terms/creator", "label": {"sv": "Skapare", "en":"Creator"}},
 			 	{"value": "http://purl.org/dc/terms/contributor", "label": {"sv": "Bidragare", "en":"Contributor"}}
 			]

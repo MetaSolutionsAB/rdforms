@@ -5,6 +5,8 @@ export default class PropertyChoiceBinding extends ChoiceBinding {
   /**
    * Are only used as the first child of a PropertyGroupBinding to capture
    * a variable predicate.
+   *
+   * @param params
    */
   constructor(params) {
     super(params);
@@ -15,14 +17,14 @@ export default class PropertyChoiceBinding extends ChoiceBinding {
    * Remove shold not be doubled, hence it is handled by the objectBinding
    * delegated from the parent PropertyGroupBinding.
    */
-  remove() {
-  }
+  remove() {}
 
   /**
    * The object binding handles the RDF statement, hence go through it to set
    * the predicate, note not the setValue function because that sets the object
    * rather than the predicate.
-   * @param {Object} value
+   *
+   * @param {object} value
    */
   setValue(value) {
     this._objectBinding.setPredicate(value);
@@ -46,6 +48,5 @@ export default class PropertyChoiceBinding extends ChoiceBinding {
   /**
    * Does nothing, similar reason as for isValid.
    */
-  updateAssertions() {
-  }
+  updateAssertions() {}
 }

@@ -8,7 +8,11 @@ const sortItems = (items) => {
     if (o1._source.priority != null) {
       if (o2._source.priority != null) {
         // eslint-disable-next-line no-nested-ternary
-        return o1._source.priority > o2._source.priority ? -1 : (o1._source.priority < o2._source.priority ? 1 : 0);
+        return o1._source.priority > o2._source.priority
+          ? -1
+          : o1._source.priority < o2._source.priority
+            ? 1
+            : 0;
       }
       return o1._source.priority > 0 ? -1 : 1;
     } else if (o2._source.priority != null) {
@@ -22,10 +26,11 @@ const sortItems = (items) => {
   });
 };
 
-
 export default class Group extends Item {
   /**
    * Group extends an Item by having children.
+   *
+   * @param params
    */
   constructor(params) {
     super(params);
@@ -47,7 +52,10 @@ export default class Group extends Item {
 
     if (children == null) {
       children = this._itemStore.getChildren(this, _original);
-      if (this.getSource().automatic === true && this._itemStore.automaticSortAllowed) {
+      if (
+        this.getSource().automatic === true &&
+        this._itemStore.automaticSortAllowed
+      ) {
         sortItems(children);
       }
       this[`_${_original ? 'o' : ''}children`] = children;

@@ -2,7 +2,6 @@
 import moment from 'moment';
 import renderingContext from '../renderingContext';
 
-
 const getDatatype = (datatype) => {
   switch (datatype) {
     case 'http://www.w3.org/2001/XMLSchema#dateTime':
@@ -30,7 +29,6 @@ const getAllowedDateAlternatives = (item) => {
   return dateAllowedDataAlternatives;
 };
 
-
 export default class DateTimeBase {
   constructor(params, node) {
     this.binding = params.binding;
@@ -55,33 +53,35 @@ export default class DateTimeBase {
     return this.allowedOptions.Year;
   }
 
-  buildUI() {
-  }
+  buildUI() {}
 
-  initDatePicker() {
-  }
+  initDatePicker() {}
 
   initialize() {
     // Time input, assumes a this.timeInput input node
     const timePattern = '^([0-1][0-9]|2[0-3]):[0-5][0-9]$';
-    this.$timeInput = jquery(this.timeInput).attr('pattern', '^([0-1][0-9]|2[0-3]):[0-5][0-9]$')
+    this.$timeInput = jquery(this.timeInput)
+      .attr('pattern', '^([0-1][0-9]|2[0-3]):[0-5][0-9]$')
       .change(() => {
         const val = this.$timeInput.val();
         if (typeof this.$timeInput[0].checkValidity === 'function') {
           if (!this.$timeInput[0].checkValidity()) {
             return;
           }
-        } else if ((new RegExp(timePattern)).test(val)) {
+        } else if (new RegExp(timePattern).test(val)) {
           return;
         }
 
-        this._date.setHours(parseInt(val.substr(0, 2), 10),
-          parseInt(val.substr(3, 2), 10));
+        this._date.setHours(
+          parseInt(val.substr(0, 2), 10),
+          parseInt(val.substr(3, 2), 10)
+        );
         this.binding.setValue(this._date.toISOString());
       });
 
     // Year input, assumes a this.yearInput input node
-    this.$yearInput = jquery(this.yearInput).attr('pattern', '^-?[0-9][0-9][0-9][0-9]$')
+    this.$yearInput = jquery(this.yearInput)
+      .attr('pattern', '^-?[0-9][0-9][0-9][0-9]$')
       .change(() => {
         const val = this.$yearInput.val();
         this._date.setYear(parseInt(val, 10));
@@ -97,8 +97,7 @@ export default class DateTimeBase {
     this._binding2Gui();
   }
 
-  setDateInPicker(/* dateinstance */) {
-  }
+  setDateInPicker(/* dateinstance */) {}
 
   setDateInBinding(d) {
     this._valid = true;
@@ -216,18 +215,33 @@ export default class DateTimeBase {
 DateTimeBase.register = (DTCls) => {
   // Editor for dates and dates with time.
   const dateEditor = (fieldDiv, binding, context) => {
-    const dt = new DTCls({
-      messages: context.view.messages,
-      binding,
-      context,
-    }, jquery('<div>').appendTo(fieldDiv)[0]);
+    const dt = new DTCls(
+      {
+        messages: context.view.messages,
+        binding,
+        context,
+      },
+      jquery('<div>').appendTo(fieldDiv)[0]
+    );
     context.clear = () => {
       dt.clear();
     };
   };
   const editors = renderingContext.editorRegistry;
-  editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#date').register(dateEditor);
-  editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#dateTime').register(dateEditor);
-  editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#gYear').register(dateEditor);
-  editors.itemtype('text').datatype('http://purl.org/dc/terms/W3CDTF').register(dateEditor);
+  editors
+    .itemtype('text')
+    .datatype('http://www.w3.org/2001/XMLSchema#date')
+    .register(dateEditor);
+  editors
+    .itemtype('text')
+    .datatype('http://www.w3.org/2001/XMLSchema#dateTime')
+    .register(dateEditor);
+  editors
+    .itemtype('text')
+    .datatype('http://www.w3.org/2001/XMLSchema#gYear')
+    .register(dateEditor);
+  editors
+    .itemtype('text')
+    .datatype('http://purl.org/dc/terms/W3CDTF')
+    .register(dateEditor);
 };

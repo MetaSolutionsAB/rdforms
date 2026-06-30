@@ -3,12 +3,13 @@ import utils from '../utils';
 
 const generateUIDNotMoreThan1million = () =>
   // eslint-disable-next-line no-restricted-properties,no-bitwise
-  (`0000${(Math.random() * Math.pow(36, 4) << 0).toString(36)}`).slice(-4);
+  `0000${((Math.random() * Math.pow(36, 4)) << 0).toString(36)}`.slice(-4);
 
 const createURI = (item, parentBinding) => {
   const parentURI = parentBinding.getChildrenRootUri();
   const hash = parentURI.lastIndexOf('#');
-  const newURIBase = hash === -1 ? `${parentURI}#` : parentURI.substring(0, hash + 1);
+  const newURIBase =
+    hash === -1 ? `${parentURI}#` : parentURI.substring(0, hash + 1);
   const graph = parentBinding.getGraph()._graph;
   while (true) {
     const newURI = newURIBase + generateUIDNotMoreThan1million();
@@ -20,12 +21,20 @@ const createURI = (item, parentBinding) => {
 
 const getFallbackChoice = (item, value, seeAlso, graph) => {
   if (item.getNodetype() === 'URI' || item.getNodetype() === 'RESOURCE') {
-    let lmap = utils.getLocalizedMap(graph, value, item.getURIValueLabelProperties());
+    let lmap = utils.getLocalizedMap(
+      graph,
+      value,
+      item.getURIValueLabelProperties()
+    );
     if (!lmap) {
       const lastHash = value.lastIndexOf('#');
       const lastSlash = value.lastIndexOf('/');
       if (lastHash > 0 || lastSlash > 0) {
-        lmap = { '': decodeURIComponent(value.substring(1 + (lastHash > lastSlash ? lastHash : lastSlash))) };
+        lmap = {
+          '': decodeURIComponent(
+            value.substring(1 + (lastHash > lastSlash ? lastHash : lastSlash))
+          ),
+        };
       } else {
         lmap = { '': value };
       }
@@ -47,11 +56,12 @@ const getFallbackChoice = (item, value, seeAlso, graph) => {
  * @param value the value to match
  * @param seeAlso if provided the value is a URI and a rdfs:seeAlso property has been found in the graph
  * @param graph the RDF graph where the value was matched
- * @returns {Object} an object containing a value, a label (object with language codes as attributes),
+ * @returns {object} an object containing a value, a label (object with language codes as attributes),
  * an optional load callback method and an optional mismatch flag.
  * @see openChoiceSelector
  */
-const getChoice = (item, value, seeAlso, graph) => getFallbackChoice(item, value, seeAlso, graph);
+const getChoice = (item, value, seeAlso, graph) =>
+  getFallbackChoice(item, value, seeAlso, graph);
 const labelProperties = [
   'http://www.w3.org/2000/01/rdf-schema#label',
   'http://purl.org/dc/terms/title',
@@ -71,28 +81,35 @@ const labelProperties = [
  * @param {Function} callback a method to call with a choice object when the user has selected an appropriate choice.
  */
 const openChoiceSelector = (binding, callback) => {
-  alert('This alert is a placeholder for a search dialog that should be provided as part of the integration of ' +
-    'RDForms into a wider system.\nSimply override the methods "getChoices" and "openChoiceSelector" in the ' +
-    'system module.');
+  alert(
+    'This alert is a placeholder for a search dialog that should be provided as part of the integration of ' +
+      'RDForms into a wider system.\nSimply override the methods "getChoices" and "openChoiceSelector" in the ' +
+      'system module.'
+  );
   callback({
     value: 'http://example.com/choice1',
     label: { en: 'First choice', sv: 'Första valet' },
   });
 };
 
-/** The implementor is expected to provide an application specific override
+/**
+ * The implementor is expected to provide an application specific override
  * For example:
  * system.attachExternalLinkBehaviour = (node, binding) => node.setAttribute("target", "_blank");
  */
 const attachExternalLinkBehaviour = () => false;
 
-/** The implementor is expected to provide an application specific override
+/**
+ * The implementor is expected to provide an application specific override
  * For example:
  * system.attachLinkBehaviour = (node, binding) => node.setAttribute("target", "_blank");
+ *
+ * @param node
+ * @param binding
  */
 const attachLinkBehaviour = (node, binding) => false;
 
-const hasDnDSupport = binding => false;
+const hasDnDSupport = (binding) => false;
 const addDnD = (binding, node, onDrop) => ({});
 
 export default {

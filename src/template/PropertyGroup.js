@@ -7,6 +7,8 @@ export default class PropertyGroup extends Group {
    * first child is a Choice item corresponding to the predicate and the second being
    * an item corresponding to the object in the triple. The second item can be either a
    * Text, Choice or Group item depending on the kind of object envisioned in the triple.
+   *
+   * @param original
    */
   getChildren(original) {
     if (this._delegatedChildren == null) {

@@ -1,10 +1,10 @@
 const { mergeWithCustomize } = require('webpack-merge');
-const common = require('./webpack.common.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const { execSync } = require('child_process');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const common = require('./webpack.common.js');
 
 const rdfjsonVersion = execSync('pnpm view @entryscape/rdfjson version')
   .toString()
@@ -102,6 +102,10 @@ const variants = {
   type: ['bootstrap', 'react'],
 };
 
+/**
+ *
+ * @param options
+ */
 function createConfig(options) {
   const devConfig = {
     entry: `./renderers/${options.type}.js`,

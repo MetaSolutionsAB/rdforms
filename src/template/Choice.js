@@ -18,6 +18,8 @@ export default class Choice extends Item {
    *
    * TODO:
    * The choices can also be organized into a hierarchy using the parent and hierarchy properties.
+   *
+   * @param params
    */
   constructor(params) {
     super(params);
@@ -33,14 +35,18 @@ export default class Choice extends Item {
    *  "label": {"en": "First choice", "sv": "FÃ¶rsta valet"}
    * }
    *
-   * @return {Array} of choices.
+   * @param original
+   * @returns {Array} of choices.
    */
   getChoices(original) {
-    return this.getStaticChoices(original) || this.getDynamicChoices(original) || [];
+    return (
+      this.getStaticChoices(original) || this.getDynamicChoices(original) || []
+    );
   }
 
   /**
-   * @return {Boolean} true if there is an ontology or static choices.
+   * @param original
+   * @returns {boolean} true if there is an ontology or static choices.
    */
   hasChoices(original) {
     const s = this.getSource(original);
@@ -53,7 +59,8 @@ export default class Choice extends Item {
   }
 
   /**
-   * @return {Array} of choices defined manually in the Template.
+   * @param original
+   * @returns {Array} of choices defined manually in the Template.
    */
   getStaticChoices(original) {
     const s = this.getSource(original);
@@ -95,8 +102,8 @@ export default class Choice extends Item {
   /**
    * Fetches choices from an external ontology.
    *
-   * @param {Object} callback will be called asynchronously, if undefined the call is made synchronously.
-   * @return {Array} of choice objects, only provided if method called without callback.
+   * @param {object} callback will be called asynchronously, if undefined the call is made synchronously.
+   * @returns {Array} of choice objects, only provided if method called without callback.
    */
   getDynamicChoices(callback) {
     if (this._dynamicChoices == null) {
@@ -139,10 +146,12 @@ export default class Choice extends Item {
     this.refreshExtends();
   }
 
-
   getLabelProperties(original) {
-    return this.getSource(original).labelProperties ||
-      ['http://www.w3.org/2000/01/rdf-schema#label'];
+    return (
+      this.getSource(original).labelProperties || [
+        'http://www.w3.org/2000/01/rdf-schema#label',
+      ]
+    );
   }
 
   getParentProperty(original) {

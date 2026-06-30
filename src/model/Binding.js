@@ -12,6 +12,11 @@ let counter = 0;
  */
 export default class Binding {
   /**
+   * @param root0
+   * @param root0.item
+   * @param root0.statement
+   * @param root0.graph
+   * @param root0.matchingCode
    * @exports {Binding}
    * @class
    */
@@ -53,20 +58,19 @@ export default class Binding {
     return this._readOnly;
   }
 
-  remove() {
-  }
+  remove() {}
 
-  setSubject(uri) {
-  }
+  setSubject(uri) {}
 
-  getValue() {
-  }
+  getValue() {}
 
-  setValue(value, silent) {
-  }
+  setValue(value, silent) {}
 
   getGist() {
-    return utils.extractGist(this.getValue(), this.getItem().getValueTemplate());
+    return utils.extractGist(
+      this.getValue(),
+      this.getItem().getValueTemplate()
+    );
   }
 
   setGist(value, silent) {
@@ -111,8 +115,7 @@ export default class Binding {
    * <li>if it is a group and at least one of its children is valid, or</li>
    * <li>if it is a predicategroup and both the predicate and the object binding are valid.</ol>
    */
-  isValid() {
-  }
+  isValid() {}
 
   getMatchingCode() {
     return this._matchingCode;
@@ -124,6 +127,8 @@ export default class Binding {
 
   /**
    * stores the validity of ancestors.
+   *
+   * @param valid
    */
   setAncestorValid(valid) {
     this._ancestorValid = valid;
@@ -133,8 +138,7 @@ export default class Binding {
   /**
    *
    */
-  updateAssertions() {
-  }
+  updateAssertions() {}
 
   getHash() {
     return this._hash;
@@ -181,8 +185,12 @@ export default class Binding {
     const pattern = this._item.getPattern();
     if (pattern) {
       _value = utils.extractGist(_value, this.getItem().getValueTemplate());
-      return _value !== undefined && _value !== null && _value !== '' &&
-        (new RegExp(`^${pattern}$`)).test(_value);
+      return (
+        _value !== undefined &&
+        _value !== null &&
+        _value !== '' &&
+        new RegExp(`^${pattern}$`).test(_value)
+      );
     }
     return _value !== undefined && _value !== null && _value !== '';
   }

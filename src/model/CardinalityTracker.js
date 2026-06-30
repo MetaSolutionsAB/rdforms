@@ -8,6 +8,8 @@ export default class CardinalityTracker {
    * corresponding hook is called, that is, maxReached, minReached,
    * and justFine when the counter moved within the acceptable
    * cardinality restrictions.
+   *
+   * @param item
    */
   constructor(item) {
     this._listener = [];
@@ -28,7 +30,7 @@ export default class CardinalityTracker {
   }
 
   cardinalityChanged() {
-    this._listeners.forEach(listener => listener());
+    this._listeners.forEach((listener) => listener());
   }
 
   // ===================================================

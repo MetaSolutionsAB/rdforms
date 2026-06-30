@@ -1,6 +1,6 @@
-import utils from '../../utils';
 import ArrayAdapter from 'select2/src/js/select2/data/array';
 import Utils from 'select2/src/js/select2/utils';
+import utils from '../../utils';
 
 const AjaxAdapter = function ($element, options) {
   ArrayAdapter.__super__.constructor.call(this, $element, options);
@@ -13,11 +13,13 @@ Utils.Extend(AjaxAdapter, ArrayAdapter);
 AjaxAdapter.prototype.query = function (params, callback) {
   const request = () => {
     this.chooser.search(this.binding, params.term).then((choices) => {
-      callback({ results: choices.map(c => ({
-        id: c.value,
-        text: utils.getLocalizedValue(c.label).value || '',
-        choice: c,
-      })) });
+      callback({
+        results: choices.map((c) => ({
+          id: c.value,
+          text: utils.getLocalizedValue(c.label).value || '',
+          choice: c,
+        })),
+      });
     });
   };
 

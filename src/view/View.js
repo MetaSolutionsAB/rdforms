@@ -1,10 +1,10 @@
 /* eslint-disable class-methods-use-this,no-unused-vars */
 import { namespaces } from '@entryscape/rdfjson';
+import moment from 'moment';
 import renderingContext from './renderingContext';
 import GroupBinding from '../model/GroupBinding';
 import * as engine from '../model/engine';
 import { bindingReport } from '../model/validate';
-import moment from 'moment';
 
 let viewCounter = 0;
 export default class View {
@@ -26,17 +26,27 @@ export default class View {
     this.showDescription = params.showDescription === true;
     this.popupOnLabel = params.popupOnLabel !== false;
     this.styleCls = params.styleCls || '';
-    this.truncateLimit = params.truncateLimit !== undefined ? params.truncateLimit : 10;
+    this.truncateLimit =
+      params.truncateLimit !== undefined ? params.truncateLimit : 10;
     this.truncate = params.truncate !== undefined ? params.truncate : false;
     this.headingLevel = params.headingLevel || 2;
     if (Array.isArray(params.filterPredicates)) {
-      this.filterPredicates =
-        params.filterPredicates.reduce((prev, current) => { prev[current] = true; return prev; }, {});
+      this.filterPredicates = params.filterPredicates.reduce(
+        (prev, current) => {
+          prev[current] = true;
+          return prev;
+        },
+        {}
+      );
     } else if (typeof params.filterPredicates === 'object') {
       this.filterPredicates = params.filterPredicates;
     } else if (typeof params.filterPredicates === 'string') {
-      this.filterPredicates = params.filterPredicates.split(',')
-        .reduce((prev, current) => { prev[current] = true; return prev; }, {});
+      this.filterPredicates = params.filterPredicates
+        .split(',')
+        .reduce((prev, current) => {
+          prev[current] = true;
+          return prev;
+        }, {});
     } else {
       this.filterPredicates = null;
     }
@@ -75,7 +85,11 @@ export default class View {
   }
 
   getNamedGraphFromId(id) {
-    return this.namedGraphs ? Object.keys(this.namedGraphs).find(key => this.namedGraphs[key] === id) : undefined;
+    return this.namedGraphs
+      ? Object.keys(this.namedGraphs).find(
+          (key) => this.namedGraphs[key] === id
+        )
+      : undefined;
   }
 
   destroy() {
@@ -93,11 +107,19 @@ export default class View {
       this.template = params.template || this.template;
       this.graph = params.graph || this.graph;
       this.resource = params.resource || this.resource;
-      if (this.graph == null || this.resource == null || this.template == null) {
+      if (
+        this.graph == null ||
+        this.resource == null ||
+        this.template == null
+      ) {
         return;
       }
       if (this.fuzzy) {
-        this.binding = engine.fuzzyMatch(this.graph, this.resource, this.template);
+        this.binding = engine.fuzzyMatch(
+          this.graph,
+          this.resource,
+          this.template
+        );
         bindingReport(this.binding); // Just to make all extra errors and warnings to be materialized, don't care about the report
       } else {
         this.binding = engine.match(this.graph, this.resource, this.template);
@@ -107,9 +129,10 @@ export default class View {
 
   /**
    * Tells wether something should be shown for the provided bindings and belonging item.
-   * @param {Object} item
-   * @param {Object} bindings
-   * @return {Boolean} true if something should be shown.
+   *
+   * @param {object} item
+   * @param {object} bindings
+   * @returns {boolean} true if something should be shown.
    */
   showNow(/* item,  bindings */) {
     return true;
@@ -124,38 +147,37 @@ export default class View {
    * the best language or complement the existing bindings
    * until the min cardinality is reached.
    *
-   * @param {Object} item
+   * @param {object} item
    * @param {Array} bindings
-   * @return {Array} of bindings
+   * @returns {Array} of bindings
    */
-  prepareBindings(/* item, bindings */) {
-  }
+  prepareBindings(/* item, bindings */) {}
 
   /**
    * Adds a table with headers for the given firstBinding.
+   *
    * @param {Node} lastRow if provided it is the last row as a DOM element.
-   * @param {Object} firstBinding the first binding to show in this table.
+   * @param {object} firstBinding the first binding to show in this table.
    */
-  addTable(/* lastRow, firstBinding */) {
-  }
+  addTable(/* lastRow, firstBinding */) {}
 
   /**
    * Fills the table with one row for each binding in bindings.
    *
-   * @param {Object} table a table DOM element
+   * @param {object} table a table DOM element
    * @param {Array} bindings an array of bindings
    */
-  fillTable(/* table, bindings */) {
-  }
+  fillTable(/* table, bindings */) {}
 
-  addLabel(/* rowDiv, labelDiv, binding */) {
-  }
+  addLabel(/* rowDiv, labelDiv, binding */) {}
 
-  addComponent(/* fieldDiv, binding, noCardinalityButtons */) {
-  }
+  addComponent(/* fieldDiv, binding, noCardinalityButtons */) {}
 
   showAsTable(item) {
-    return item.getType() === 'group' && (item.hasStyle('table') || item.hasClass('rdformsTable'));
+    return (
+      item.getType() === 'group' &&
+      (item.hasStyle('table') || item.hasClass('rdformsTable'))
+    );
   }
 
   show(params) {
@@ -190,8 +212,10 @@ export default class View {
     let item;
     this._binding2node = {};
 
-    if ((this.compact || this.binding.getItem().hasStyle('compact')) &&
-      !this.binding.getItem().hasStyle('nonCompact')) {
+    if (
+      (this.compact || this.binding.getItem().hasStyle('compact')) &&
+      !this.binding.getItem().hasStyle('nonCompact')
+    ) {
       renderingContext.domClassToggle(this.domNode, 'compact', true);
     } else {
       renderingContext.domClassToggle(this.domNode, 'compact', false);
@@ -204,7 +228,7 @@ export default class View {
       item = groupedItemsArr[groupIndex];
 
       if (this.restrictToItem && this.restrictToItem !== item) {
-// eslint-disable-next-line no-continue
+        // eslint-disable-next-line no-continue
         continue;
       }
 
@@ -213,7 +237,7 @@ export default class View {
         /* if (item.hasStyle('invisible')) { // In this case, create some bindings anyway
           this.prepareBindings(item, bindings);
         } */
-// eslint-disable-next-line no-continue
+        // eslint-disable-next-line no-continue
         continue;
       }
       bindings = this.prepareBindings(item, bindings);
@@ -237,12 +261,21 @@ export default class View {
           for (let i = 0; i < bindings.length; i++) {
             // Add row with label if first row of same item or the binding is a group.
             this.context = { view: this };
-            lastRow = this.addRow(lastRow, bindings[i], i === 0 ||
-              bindings[i] instanceof GroupBinding, i, truncateLimit);
+            lastRow = this.addRow(
+              lastRow,
+              bindings[i],
+              i === 0 || bindings[i] instanceof GroupBinding,
+              i,
+              truncateLimit
+            );
           }
           if (truncateLimit !== -1) {
-            const rdformsFields = renderingContext.domQuery('.rdformsFields', lastRow);
-            if (rdformsFields) renderingContext.addTruncateControl(rdformsFields, this.context);
+            const rdformsFields = renderingContext.domQuery(
+              '.rdformsFields',
+              lastRow
+            );
+            if (rdformsFields)
+              renderingContext.addTruncateControl(rdformsFields, this.context);
           }
         }
       } else {
@@ -260,10 +293,13 @@ export default class View {
   /**
    * Adds a single row corresponding to a binding.
    *
-   * @param {Object} lastRow last row that was added
-   * @param {Object} binding the binding to add a row for
-   * @param {Boolean} includeLabel, tells if a label should be added, if undefined a label is
+   * @param {object} lastRow last row that was added
+   * @param {object} binding the binding to add a row for
+   * @param {boolean} includeLabel, tells if a label should be added, if undefined a label is
    * added only when the binding is a GroupBinding.
+   * @param includeLabel
+   * @param index
+   * @param truncateLimit
    */
   addRow(lastRow, binding, includeLabel, index, truncateLimit) {
     let _includeLabel = includeLabel;
@@ -294,14 +330,22 @@ export default class View {
       this.createEndOfRowNode(newRow, binding, item);
     } else {
       // No new rowDiv since we have a repeated value under the same label.
-      const rdformsFields = renderingContext.domQuery('.rdformsFields', lastRow);
+      const rdformsFields = renderingContext.domQuery(
+        '.rdformsFields',
+        lastRow
+      );
       if (rdformsFields != null) {
         fieldDiv = renderingContext.domCreate('div', rdformsFields);
         renderingContext.domClassToggle(fieldDiv, 'rdformsRepeatedValue', true);
         if (truncateLimit !== -1 && index >= truncateLimit) {
-          renderingContext.domClassToggle(fieldDiv, 'rdformsMaybeTruncated', true);
+          renderingContext.domClassToggle(
+            fieldDiv,
+            'rdformsMaybeTruncated',
+            true
+          );
         }
-      } else { // Unless we have an non-expanded row.
+      } else {
+        // Unless we have an non-expanded row.
         const n = renderingContext.domCreate('div', lastRow);
         renderingContext.domClassToggle(n, 'rdformsFields', true);
         if (item.hasStyle('inline')) {
@@ -315,10 +359,18 @@ export default class View {
       const ngId = this.getNamedGraphId(binding);
       if (ngId) {
         renderingContext.domClassToggle(fieldDiv, 'rdformsOrigin', true);
-        renderingContext.domClassToggle(fieldDiv, `rdformsOrigin_${ngId}`, true);
+        renderingContext.domClassToggle(
+          fieldDiv,
+          `rdformsOrigin_${ngId}`,
+          true
+        );
       } else {
         renderingContext.domClassToggle(fieldDiv, 'rdformsOrigin', true);
-        renderingContext.domClassToggle(fieldDiv, 'rdformsOrigin_default', true);
+        renderingContext.domClassToggle(
+          fieldDiv,
+          'rdformsOrigin_default',
+          true
+        );
       }
     }
 
@@ -331,10 +383,15 @@ export default class View {
     this._binding2node[binding.getHash()] = fieldDiv;
     this.addComponent(fieldDiv, binding);
     const isEditor = this._subEditors !== undefined;
-    if (item.hasStyle('invisible') ||
+    if (
+      item.hasStyle('invisible') ||
       (item.hasStyle('invisibleInEdit') && isEditor)
     ) {
-      renderingContext.domClassToggle(newRow || lastRow, 'rdformsInvisible', true);
+      renderingContext.domClassToggle(
+        newRow || lastRow,
+        'rdformsInvisible',
+        true
+      );
     }
     return newRow || lastRow;
   }
@@ -344,9 +401,17 @@ export default class View {
 
     // New rowDiv since we have a label
     if (lastRowNode == null) {
-      rowNode = renderingContext.domCreate('div', this.domNode, binding ? this.getRowIndex(binding) : undefined);
+      rowNode = renderingContext.domCreate(
+        'div',
+        this.domNode,
+        binding ? this.getRowIndex(binding) : undefined
+      );
     } else {
-      rowNode = renderingContext.domCreateAfter('div', lastRowNode, binding ? this.getRowIndex(binding) : undefined);
+      rowNode = renderingContext.domCreateAfter(
+        'div',
+        lastRowNode,
+        binding ? this.getRowIndex(binding) : undefined
+      );
     }
 
     item.getClasses().forEach((cls) => {
@@ -354,10 +419,26 @@ export default class View {
     });
     renderingContext.domClassToggle(rowNode, 'rdformsRow', true);
     renderingContext.domClassToggle(rowNode, 'rdformsTopLevel', this.topLevel);
-    renderingContext.domClassToggle(rowNode, 'rdformsInvisibleGroup', item.hasStyle('invisibleGroup'));
-    renderingContext.domClassToggle(rowNode, 'rdformsHeading', item.hasStyle('heading'));
-    renderingContext.domClassToggle(rowNode, 'notCompact', item.getType() === 'group' || item.hasStyle('nonCompact'));
-    renderingContext.domClassToggle(rowNode, 'rdformsCompactItem', item.hasStyle('compact'));
+    renderingContext.domClassToggle(
+      rowNode,
+      'rdformsInvisibleGroup',
+      item.hasStyle('invisibleGroup')
+    );
+    renderingContext.domClassToggle(
+      rowNode,
+      'rdformsHeading',
+      item.hasStyle('heading')
+    );
+    renderingContext.domClassToggle(
+      rowNode,
+      'notCompact',
+      item.getType() === 'group' || item.hasStyle('nonCompact')
+    );
+    renderingContext.domClassToggle(
+      rowNode,
+      'rdformsCompactItem',
+      item.hasStyle('compact')
+    );
 
     this.addLabel(rowNode, binding, item);
     if (binding && this.filterBinding(binding)) {
@@ -365,7 +446,8 @@ export default class View {
     }
 
     const isEditor = this._subEditors !== undefined;
-    if (item.hasStyle('card') ||
+    if (
+      item.hasStyle('card') ||
       (item.hasStyle('cardInEdit') && isEditor) ||
       (item.hasStyle('cardInPresent') && !isEditor)
     ) {
@@ -374,11 +456,12 @@ export default class View {
     return rowNode;
   }
 
-  createEndOfRowNode(newRow, binding, item) {
-  }
+  createEndOfRowNode(newRow, binding, item) {}
 
   _getFilterPredicates() {
-    return this.parentView ? this.parentView._getFilterPredicates() : this.filterPredicates;
+    return this.parentView
+      ? this.parentView._getFilterPredicates()
+      : this.filterPredicates;
   }
 
   filterBinding(binding) {
@@ -409,8 +492,12 @@ export default class View {
         }
         const shortedProp = namespaces.shortenKnown(prop);
         if (rootLike) {
-          return fp[prop] === true || fp[shortedProp] === true ||
-            fp[`*${prop}`] === true || fp[`${shortedProp}`] === true;
+          return (
+            fp[prop] === true ||
+            fp[shortedProp] === true ||
+            fp[`*${prop}`] === true ||
+            fp[`${shortedProp}`] === true
+          );
         } else {
           return fp[`*${prop}`] === true || fp[`*${shortedProp}`] === true;
         }
@@ -437,10 +524,14 @@ export default class View {
 
   getLabelIndex(binding) {
     let idx;
-    binding.getParent().getChildBindingsFor(binding.getItem()).reverse().find((b) => {
-      idx = this._labelIndex[b.getHash()];
-      return idx !== undefined;
-    });
+    binding
+      .getParent()
+      .getChildBindingsFor(binding.getItem())
+      .reverse()
+      .find((b) => {
+        idx = this._labelIndex[b.getHash()];
+        return idx !== undefined;
+      });
     if (idx !== undefined) {
       return idx;
     }
@@ -469,10 +560,18 @@ export default class View {
   }
 
   getLocale() {
-    return this.locale || (this.parentView ? this.parentView.getLocale() : moment.locale());
+    return (
+      this.locale ||
+      (this.parentView ? this.parentView.getLocale() : moment.locale())
+    );
   }
 
   getDefaultTextLanguage() {
-    return this.defaultTextLanguage || (this.parentView ? this.parentView.getDefaultTextLanguage() : this.getLocale());
+    return (
+      this.defaultTextLanguage ||
+      (this.parentView
+        ? this.parentView.getDefaultTextLanguage()
+        : this.getLocale())
+    );
   }
 }

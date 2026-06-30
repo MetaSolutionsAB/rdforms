@@ -610,7 +610,7 @@ export default class Item {
     return source.styles.some((s) => s.toLowerCase() === sty.toLowerCase());
   }
 
-  getSource(original, attribute) {
+  getSource(original) {
     if (original === true) {
       // Get the original source
       return this._source._extendedSource || this._source;

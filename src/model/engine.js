@@ -13,6 +13,15 @@ import GroupURIBinding from './GroupURIBinding';
 import utils from '../utils';
 import CODES from './CODES';
 
+/**
+ * Type aliases for JSDoc references to types not imported as values in this file.
+ *
+ * @typedef {import('../template/Item').default} Item
+ * @typedef {import('./Binding').default} Binding
+ * @typedef {import('@entryscape/rdfjson').Graph} Graph
+ * @typedef {import('@entryscape/rdfjson').Statement} Statement
+ */
+
 // See public API at the bottom of this file.
 
 let _matchGroupItemChildren;
@@ -513,8 +522,8 @@ _matchItem = (pb, item) => {
 /**
  * Compares the the type specified in the item and the type of the statements object.
  *
- * @param {rdforms/template/Item} item
- * @param {jsonrdf/Statement} stmt
+ * @param {Item} item
+ * @param {Statement} stmt
  */
 _isNodeTypeMatch = (item, stmt) => {
   const objectType = stmt.getType();
@@ -566,9 +575,9 @@ _isPatternMatch = (item, stmt) => {
 /**
  * Matches constraints in the item to statements in the graph with the given uri as subject.
  *
- * @param {rdfjson/Graph} graph containing all available statements to match against.
+ * @param {Graph} graph containing all available statements to match against.
  * @param {string} uri the subject to start matching from
- * @param {rdforms/template/Item} item containing the constraints.
+ * @param {Item} item containing the constraints.
  * @returns an array of statements on success, undefined on failure.
  *  If there are no constraints to match in the item an empty array is returned.
  */
@@ -910,10 +919,10 @@ const detectLevel = (profile) => {
  * are matched into the tree.
  * The tree is represented as a binding tree.
  *
- * @param {rdfjson/Graph} graph
+ * @param {Graph} graph
  * @param {string} uri
- * @param {rdforms/template/Item} template
- * @returns {rdforms/model/GroupBinding} which is the root of binding tree.
+ * @param {Item} template
+ * @returns {GroupBinding} which is the root of binding tree.
  */
 export { match };
 
@@ -926,8 +935,8 @@ export { findBindingRelativeToParentBinding };
  * Finds the choice in a choice item that are the most popular, i.e. the choice that most
  * valid bindings hava a dependency to.
  *
- * @param {rdforms/template/Choice} choiceItem
- * @param {rdforms/model/GroupBinding} rootBinding
+ * @param {Choice} choiceItem
+ * @param {GroupBinding} rootBinding
  */
 export { findPopularChoice };
 
@@ -940,7 +949,7 @@ export { findPopularChoice };
  * @param {object} itemStore
  * @param {Array} requiredItems an array of required items specified by id or property that
  * will be enforced independent of corresponding property exists in the graph or not.
- * @returns {rdforms/template/Item} the constructed template.
+ * @returns {Item} the constructed template.
  */
 export { constructTemplate };
 
@@ -950,8 +959,8 @@ export { constructTemplate };
  * empty predicate or object. The item must be a direct child of the item
  * of the parentBinding.
  *
- * @param {rdforms/model/Binding} parentBinding
- * @param {rdforms/template/Item} item
+ * @param {Binding} parentBinding
+ * @param {Item} item
  * @param {object} parentItems is a hash of parent Items to use for loop detection.
  */
 export { create };
@@ -967,7 +976,7 @@ export { create };
  * 4) any literal with a language set found
  * 5) the first literal found
  *
- * @returns {rdforms/model/ValueBinding}
+ * @returns {ValueBinding}
  */
 export { findFirstValueBinding };
 
@@ -975,7 +984,7 @@ export { findFirstValueBinding };
  * Calculates the level profile, i.e. the amount of items on mandatory, recommended
  * and optional level in a given template.
  *
- * @param {rdforms/template/Item} item
+ * @param {Item} item
  * @returns {object} with keys mandatory, recommended and optional, each pointing to an integer.
  */
 export { levelProfile };

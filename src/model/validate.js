@@ -253,7 +253,7 @@ const _createReport = (groupbinding, report, firstLevel) => {
  *    ]
  * }
  *
- * @param {rdfjson/Graph} graph an rdf graph against which all validation is done
+ * @param {import('@entryscape/rdfjson').Graph} graph an rdf graph against which all validation is done
  * @param {object} type2template a map between each type to check for and the template to use for validation
  * (the type may be given with namespace abbreviations)
  * @param {Array} mandatoryTypes an array of types to check that there are instances for

@@ -17,7 +17,7 @@ export default class Binding {
    * @param root0.statement
    * @param root0.graph
    * @param root0.matchingCode
-   * @exports {Binding}
+   * @exports Binding
    * @class
    */
   constructor({ item, statement, graph, matchingCode }) {
@@ -60,11 +60,11 @@ export default class Binding {
 
   remove() {}
 
-  setSubject(uri) {}
+  setSubject() {}
 
   getValue() {}
 
-  setValue(value, silent) {}
+  setValue() {}
 
   getGist() {
     return utils.extractGist(

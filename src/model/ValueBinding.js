@@ -1,6 +1,5 @@
 import { namespaces } from '@entryscape/rdfjson';
 import Binding from './Binding';
-import utils from '../utils';
 
 export default class ValueBinding extends Binding {
   /**
@@ -10,7 +9,7 @@ export default class ValueBinding extends Binding {
    * The statement is asserted when the parents are valid and this ValueBinding is valid.
    *
    * @param params
-   * @exports {rdforms/model/ValueBinding}
+   * @exports ValueBinding
    * @class
    * @see rforms/template/Text
    */

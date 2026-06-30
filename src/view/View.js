@@ -295,7 +295,7 @@ export default class View {
    *
    * @param {object} lastRow last row that was added
    * @param {object} binding the binding to add a row for
-   * @param {boolean} includeLabel, tells if a label should be added, if undefined a label is
+   * @param {boolean} includeLabel tells if a label should be added, if undefined a label is
    * added only when the binding is a GroupBinding.
    * @param includeLabel
    * @param index

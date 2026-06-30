@@ -4,7 +4,7 @@ const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const { execSync } = require('child_process');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const common = require('./webpack.common.js');
+const common = require('./webpack.common');
 
 const rdfjsonVersion = execSync('pnpm view @entryscape/rdfjson version')
   .toString()

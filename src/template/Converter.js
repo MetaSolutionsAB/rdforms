@@ -138,7 +138,7 @@ export default class Converter {
     //Index ranges and domains
     exhibit.items.forEach((item) => {
       switch (item.type) {
-        case 'Property':
+        case 'Property': {
           //Domains
           if (item.domain) {
             let props = exhibit.domainProperties[item.domain] || {};
@@ -157,6 +157,7 @@ export default class Converter {
             spo = exhibit.propertyIndex[spo.subPropertyOf];
           } while (spo);
           break;
+        }
       }
     });
   }

@@ -329,7 +329,11 @@ export default class Editor extends Presenter {
         item.hasStyle('verticalCheckBoxes'))
     );
   }
-  truncateAt(item, bindings) {
+  /**
+   * @returns {number} the index to truncate at, or -1 for no truncation.
+   * Override in subclasses to enable truncation.
+   */
+  truncateAt() {
     return -1;
   }
 }

@@ -76,11 +76,9 @@ export default class Converter {
         } else {
           let props = this._getPropertiesForClasses(data, item.ranges);
           let propArr = [];
-          for (let p in props) {
-            if (props.hasOwnProperty(p)) {
-              propArr.push({ id: p });
-            }
-          }
+          Object.keys(props).forEach((propertyId) => {
+            propArr.push({ id: propertyId });
+          });
           //					if (propArr.length > 0) {
           source['type'] = 'group';
           source.automatic = true;
@@ -98,11 +96,9 @@ export default class Converter {
         t[item.id] = true;
         let props = this._getPropertiesForClasses(data, t);
         let propArr = [];
-        for (let p in props) {
-          if (props.hasOwnProperty(p)) {
-            propArr.push({ id: p });
-          }
-        }
+        Object.keys(props).forEach((propertyId) => {
+          propArr.push({ id: propertyId });
+        });
         if (propArr.length > 0) {
           source['type'] = 'group';
           source.content = propArr;
@@ -164,18 +160,16 @@ export default class Converter {
 
   _getPropertiesForClasses(exhibit, clss) {
     let props = {};
-    for (let cls in clss) {
-      if (clss.hasOwnProperty(cls)) {
-        if (exhibit.classIndex[cls]) {
-          this._getPropertiesForClassesRecursive(
-            exhibit,
-            exhibit.classIndex[cls],
-            props,
-            {}
-          );
-        }
+    Object.keys(clss).forEach((classId) => {
+      if (exhibit.classIndex[classId]) {
+        this._getPropertiesForClassesRecursive(
+          exhibit,
+          exhibit.classIndex[classId],
+          props,
+          {}
+        );
       }
-    }
+    });
     return props;
   }
 
@@ -185,9 +179,9 @@ export default class Converter {
     }
     parentClasses[cls.id] = true;
     let props2 = exhibit.domainProperties[cls.id];
-    for (let prop in props2) {
-      props[prop] = true;
-    }
+    Object.keys(props2).forEach((property) => {
+      props[property] = true;
+    });
     if (cls.subClassOf == null) {
       return;
     } else if (Array.isArray(cls.subClassOf)) {

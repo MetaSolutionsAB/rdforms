@@ -1,7 +1,6 @@
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
-const CircularDependencyPlugin = require('circular-dependency-plugin');
 
 const path = require('path');
 const common = require('./webpack.common');
@@ -80,20 +79,7 @@ module.exports = (env) => {
     },
     mode: 'development',
     devtool: 'inline-source-map',
-    plugins: [
-      ...getHTMLPlugins(),
-      //new CircularDependencyPlugin({
-      //  // exclude detection of files based on a RegExp
-      //  exclude: /a\.js|node_modules/,
-      //  // add errors to webpack instead of warnings
-      //  failOnError: false,
-      //  // allow import cycles that include an asyncronous import,
-      //  // e.g. via import(/* webpackMode: "weak" */ './file.js')
-      //  allowAsyncCycles: false,
-      //  // set the current working directory for displaying module paths
-      //  cwd: process.cwd(),
-      //}),
-    ],
+    plugins: [...getHTMLPlugins()],
     devServer: {
       hot: true,
       open: true,

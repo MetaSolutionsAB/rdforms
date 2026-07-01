@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { cloneDeep } from 'lodash-es';
-import system from './model/system';
+import labelProperties from './model/labelProperties';
 
 const getLocalizedValue = (hash, locale) => {
   const _locale = locale || moment.locale();
@@ -55,7 +55,7 @@ const getLocalizedMap = (graphOrBinding, subject, propArr) => {
     graph = graphOrBinding;
   }
   if (_propArr == null || _propArr.length === 0) {
-    _propArr = system.labelProperties;
+    _propArr = labelProperties;
   }
   for (let i = 0; i < _propArr.length; i++) {
     const props = _propArr[i];

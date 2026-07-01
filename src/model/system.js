@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import utils from '../utils';
+import labelProperties from './labelProperties';
 
 const generateUIDNotMoreThan1million = () =>
   // eslint-disable-next-line no-restricted-properties,no-bitwise
@@ -62,15 +63,6 @@ const getFallbackChoice = (item, value, seeAlso, graph) => {
  */
 const getChoice = (item, value, seeAlso, graph) =>
   getFallbackChoice(item, value, seeAlso, graph);
-const labelProperties = [
-  'http://www.w3.org/2000/01/rdf-schema#label',
-  'http://purl.org/dc/terms/title',
-  'http://purl.org/dc/elements/1.1/title',
-  'http://www.w3.org/2004/02/skos/core#prefLabel',
-  'http://xmlns.com/foaf/0.1/name',
-  'http://xmlns.com/foaf/name',
-];
-
 /**
  * This method is a fake implementation for launching a dialog for choosing system choices.
  * The method MUST be overridden if the template you use depends on system choices.

@@ -86,7 +86,7 @@ export default class LevelEditor {
       return;
     }
     this.includeLevel = includeLevel;
-    // eslint-disable-next-line default-case
+
     switch (includeLevel) {
       case 'mandatory':
         this._mandatoryClick();

@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import utils from '../utils';
 
 let counter = 0;

@@ -12,7 +12,6 @@ import labelProperties from './labelProperties';
  */
 
 const generateUIDNotMoreThan1million = () =>
-  // eslint-disable-next-line no-restricted-properties,no-bitwise
   `0000${((Math.random() * Math.pow(36, 4)) << 0).toString(36)}`.slice(-4);
 
 const createURI = (item, parentBinding) => {

@@ -661,7 +661,6 @@ export default class Item {
   // Private methods
   //= ==================================================
 
-  // eslint-disable-next-line class-methods-use-this
   _setLangHash(hash, value, lang) {
     const _hash = hash || {};
     if (typeof value === 'string') {

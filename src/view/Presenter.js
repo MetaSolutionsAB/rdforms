@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import renderingContext from './renderingContext';
 import View from './View';
 

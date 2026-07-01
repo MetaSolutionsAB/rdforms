@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import moment from 'moment';
 import renderingContext from '../renderingContext';
 

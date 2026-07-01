@@ -73,7 +73,7 @@ presenters
       lbl = labelBindings[0].getValue();
     } else {
       const vmap = utils.getLocalizedMap(binding);
-      // eslint-disable-next-line no-nested-ternary
+
       lbl = binding.getItem().hasStyle('showValue')
         ? val
         : vmap

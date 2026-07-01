@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 /**
  * @typedef {import('./ItemStore').default} ItemStore
  * @typedef {import('./Bundle').default} Bundle

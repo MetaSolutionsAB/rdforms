@@ -22,7 +22,6 @@ editors
   .choices()
   .check(radioCheck)
   .register((fieldDiv, binding, context) => {
-    // eslint-disable-next-line no-new
     new RadioButtonsEditor({ binding, context }, fieldDiv);
   });
 
@@ -40,7 +39,6 @@ editors
       choice: c,
     }));
     if (!item.hasStyle('preserveOrderOfChoices')) {
-      // eslint-disable-next-line arrow-body-style
       choices.sort((c1, c2) => {
         return c1.text < c2.text ? -1 : 1;
       });

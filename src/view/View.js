@@ -1,4 +1,4 @@
-/* eslint-disable class-methods-use-this,no-unused-vars */
+/* eslint-disable no-unused-vars */
 import { namespaces } from '@entryscape/rdfjson';
 import moment from 'moment';
 import renderingContext from './renderingContext';
@@ -216,7 +216,6 @@ export default class View {
       item = groupedItemsArr[groupIndex];
 
       if (this.restrictToItem && this.restrictToItem !== item) {
-        // eslint-disable-next-line no-continue
         continue;
       }
 
@@ -225,7 +224,7 @@ export default class View {
         /* if (item.hasStyle('invisible')) { // In this case, create some bindings anyway
           this.prepareBindings(item, bindings);
         } */
-        // eslint-disable-next-line no-continue
+
         continue;
       }
       bindings = this.prepareBindings(item, bindings);

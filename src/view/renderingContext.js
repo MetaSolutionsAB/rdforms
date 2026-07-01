@@ -293,9 +293,9 @@ const renderingContext = {
   },
 
   // Override the following methods
-  // eslint-disable-next-line no-unused-vars
+
   preEditorViewRenderer(viewNode, binding) {},
-  // eslint-disable-next-line no-unused-vars
+
   prePresenterViewRenderer(viewNode, binding) {},
   preEditorRenderer() {},
   postEditorRenderer() {},
@@ -320,7 +320,7 @@ system.getChoice = renderingContext.getChoice;
 
 const groupPresenter = (fieldDiv, binding, context) => {
   const Cls = context.view.constructor;
-  // eslint-disable-next-line no-new
+
   new Cls(
     {
       parentView: context.view,

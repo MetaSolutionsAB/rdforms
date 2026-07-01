@@ -61,7 +61,6 @@ export default class ValidationPresenter extends Presenter {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   showAsTable() {
     return false;
   }
@@ -130,7 +129,6 @@ export default class ValidationPresenter extends Presenter {
     return _bindings;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   skipBinding() {
     return false;
   }

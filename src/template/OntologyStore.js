@@ -52,7 +52,6 @@ export default class OntologyStore {
     return undefined;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   _constructLoadUrl(choiceItem) {
     const params = [];
     params.push(

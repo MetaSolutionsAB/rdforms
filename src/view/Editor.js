@@ -172,7 +172,6 @@ export default class Editor extends Presenter {
     return showNow(this, item, bindings, this.includeLevel);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   skipBinding(/* binding */) {
     return false;
   }
@@ -330,7 +329,6 @@ export default class Editor extends Presenter {
     return newNode;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   isMultiValued(item) {
     return (
       renderingContext.multiValueSupport &&

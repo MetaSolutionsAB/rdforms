@@ -7,7 +7,6 @@ const sortItems = (items) => {
   items.sort((o1, o2) => {
     if (o1._source.priority != null) {
       if (o2._source.priority != null) {
-        // eslint-disable-next-line no-nested-ternary
         return o1._source.priority > o2._source.priority
           ? -1
           : o1._source.priority < o2._source.priority

@@ -207,7 +207,6 @@ export default class ItemStore {
     this.priorities = priorities;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   createExtendedSource(origSource, extSource) {
     const newSource = Object.assign({}, origSource, extSource);
     if (extSource.id === undefined) {
@@ -265,7 +264,7 @@ export default class ItemStore {
 
     if (type != null) {
       // If there is a type in the source then it means that the object is a new item.
-      // eslint-disable-next-line default-case
+
       switch (type) {
         case 'text':
           item = new Text({ source, itemStore: this, bundle });

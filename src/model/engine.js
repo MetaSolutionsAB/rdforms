@@ -528,7 +528,7 @@ _matchItem = (pb, item) => {
  */
 _isNodeTypeMatch = (item, stmt) => {
   const objectType = stmt.getType();
-  // eslint-disable-next-line default-case
+
   switch (item.getNodetype()) {
     case 'LITERAL': // Any form of literal
     case 'ONLY_LITERAL': // No language, no datatype
@@ -768,7 +768,6 @@ const matchPathBelowBinding = (bindingTree, path) => {
         return b;
       }
       if (!b.isValid()) {
-        // eslint-disable-next-line no-continue
         continue;
       }
       if (item.getType() === 'propertygroup') {

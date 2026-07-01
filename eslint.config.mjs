@@ -5,25 +5,15 @@
 // export — the default `base` does not parse JSX and silently leaves the whole
 // src/view/react tree unlinted.
 import { react } from '@entryscape/linting-config';
-
-// Node/CommonJS globals for the build tooling and the node entry point — these
-// files aren't covered by the shared config's browser default.
-const nodeGlobals = {
-  require: 'readonly',
-  module: 'writable',
-  exports: 'writable',
-  process: 'readonly',
-  __dirname: 'readonly',
-  __filename: 'readonly',
-  global: 'readonly',
-  console: 'readonly',
-};
+import globals from 'globals';
 
 export default [
   ...react,
   {
+    // Node/CommonJS globals for the build tooling and the node entry point —
+    // these files aren't covered by the shared config's browser default.
     files: ['webpack.*.js', 'main.node.js', '**/*.cjs'],
-    languageOptions: { globals: nodeGlobals },
+    languageOptions: { globals: { ...globals.node } },
   },
   {
     // rdforms is a template-driven library without a PropTypes convention;

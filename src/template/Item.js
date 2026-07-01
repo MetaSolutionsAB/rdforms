@@ -20,10 +20,10 @@ export default class Item {
   /**
    * Base functionality of Text, Group and Choice item classes.
    *
-   * @param root0
-   * @param root0.source
-   * @param root0.bundle
-   * @param root0.itemStore
+   * @param {object} config the configuration object.
+   * @param {object} config.source the raw item source definition.
+   * @param {import('./Bundle').default} config.bundle the bundle this item belongs to.
+   * @param {import('./ItemStore').default} config.itemStore the store used to resolve extended items.
    */
   constructor({ source = {}, bundle, itemStore }) {
     this._itemStore = itemStore;
@@ -315,7 +315,7 @@ export default class Item {
   }
 
   /**
-   * @param original
+   * @param {boolean} original if true the original (non-extended) source is used.
    * @returns {string | null} as a URI, may be null for Groups, never null for Text or choice
    * item types.
    */
@@ -347,7 +347,7 @@ export default class Item {
    * were each should be tried in turn. In editing mode the first property should be used,
    * alternatively a dropdown can be used to select among the properties.
    *
-   * @param original
+   * @param {boolean} original if true the original (non-extended) source is used.
    * @returns {Array} array of properties
    * The property value pairs corresponds to predicate and objects in required tripples.
    */
@@ -365,7 +365,7 @@ export default class Item {
   }
 
   /**
-   * @param original
+   * @param {boolean} original if true the original (non-extended) source is used.
    * @returns {object} never available for Text item type.
    * The property value pairs corresponds to predicate and objects in required triples.
    */
@@ -399,7 +399,7 @@ export default class Item {
    * If dependency path should start higher up it can be indicated by providing one or more
    * initial strings with value "..".
    *
-   * @param original
+   * @param {boolean} original if true the original (non-extended) source is used.
    * @returns {object} dependency path that must exist for this item to be visible.
    */
   getDeps(original) {
@@ -421,7 +421,7 @@ export default class Item {
   }
 
   /**
-   * @param original
+   * @param {boolean} original if true the original (non-extended) source is used.
    * @returns {string} a URI indicating the datatype, for example: "http://www.w3.org/2001/XMLSchema.xsd#date".
    */
   getDatatype(original) {
@@ -447,7 +447,7 @@ export default class Item {
   }
 
   /**
-   * @param original
+   * @param {boolean} original if true the original (non-extended) source is used.
    * @returns {string} a two character language code, only relevant if the item type is Text and the nodetype is
    * a LANGUAGE_LITERAL, indicating that all matching bindings should be set with this language.
    */
@@ -473,7 +473,8 @@ export default class Item {
    * Allowed values are:
    * LITERAL, RESOURCE, URI, BLANK, PLAIN_LITERAL, ONLY_LITERAL, LANGUAGE_LITERAL, DATATYPE_LITERAL
    *
-   * @param original
+   * @param {boolean} original if true the original (non-extended) source is used.
+   * @returns {string} the nodetype of this item.
    */
   getNodetype(original) {
     const s = this.getSource(original);
@@ -504,7 +505,7 @@ export default class Item {
   }
 
   /**
-   * @param original
+   * @param {boolean} original if true the original (non-extended) source is used.
    * @returns {object} containing max, min, and preferred properties.
    */
   getCardinality(original) {
@@ -547,7 +548,7 @@ export default class Item {
   /**
    * Classes are exposed in CSS, allows external stylesheets to act on the form.
    *
-   * @param original
+   * @param {boolean} original if true the original (non-extended) source is used.
    * @returns {Array}
    */
   getClasses(original) {
@@ -565,8 +566,8 @@ export default class Item {
 
   /**
    * @deprecated only provided for backward compatability, use styles, classes
-   * @param cls
-   * @param original
+   * @param {string} cls the class name to check for.
+   * @param {boolean} original if true the original (non-extended) source is used.
    * @returns {boolean}
    */
   hasClass(cls, original) {
@@ -590,7 +591,7 @@ export default class Item {
   }
 
   /**
-   * @param original
+   * @param {boolean} original if true the original (non-extended) source is used.
    * @returns {Array} that contains strings with the style, if no style is defined an empty array is returned
    */
   getStyles(original) {

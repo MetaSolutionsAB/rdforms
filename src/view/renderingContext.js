@@ -224,9 +224,8 @@ const renderingContext = {
    * Set a subset of languages that are going to be treated as primary languages,
    * typically displayed at the top of dropdowns.
    *
-   * @param {string[]} primaryLangs is an array of language codes,
+   * @param {string[]} primaryLangCodes is an array of language codes,
    * any languages not being a subset of the full language list is discardeed.
-   * @param primaryLangCodes
    */
   setPrimaryLanguageCodes(primaryLangCodes) {
     nonPrimaryLanguages = null;

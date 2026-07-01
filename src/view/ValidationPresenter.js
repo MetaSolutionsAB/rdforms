@@ -4,6 +4,13 @@ import CODES from '../model/CODES';
 import { create } from '../model/engine';
 import { bindingReport } from '../model/validate';
 
+/**
+ * Type aliases for JSDoc references to types not imported as values in this file.
+ *
+ * @typedef {import('../template/Item').default} Item
+ * @typedef {import('../model/Binding').default} Binding
+ */
+
 const localize = (bundle, key, val) => {
   if (val === 1) {
     return bundle[`${key}_one`];
@@ -64,10 +71,10 @@ export default class ValidationPresenter extends Presenter {
    * filterTranslations is set to false. Otherwise a single binding is returned with the best
    * language match according to the locale.
    *
-   * @param {object} item
-   * @param {object} bindings
-   * @param {Array} with a single value if the filtering has taken place, otherwise same as
-   * input bindings.
+   * @param {Item} item the template item to prepare bindings for
+   * @param {Binding[]} bindings the existing bindings for the item
+   * @returns {Binding[]} an array with a single value if the filtering has taken place,
+   * otherwise same as input bindings.
    */
   prepareBindings(item, bindings) {
     let _bindings = bindings;

@@ -7,6 +7,12 @@ import OntologyStore from './OntologyStore';
 import Bundle from './Bundle';
 import { constructTemplate } from '../model/engine';
 
+/**
+ * @typedef {import('./OntologyStore').default} OntologyStore
+ * @typedef {import('./Item').default} Item
+ * @typedef {import('./Bundle').default} Bundle
+ */
+
 const deepMerge = (source1, source2) => {
   if (!source1 || !source2) {
     return source2 === undefined ? source1 : source2;
@@ -36,7 +42,7 @@ export default class ItemStore {
    * json structure, if the structure contains reusable items they are
    * created and stored separately as well.
    *
-   * @param ontologyStore
+   * @param {OntologyStore} [ontologyStore]
    */
   constructor(ontologyStore) {
     this.automaticSortAllowed = true;
@@ -157,8 +163,7 @@ export default class ItemStore {
    * path - can be a relative or absolute path to where the templates are/will be loaded from, optional.
    * source - a RDForms template object, mandatory.
    *
-   * @param {object} bundleSrc
-   * @param bundle
+   * @param {object} bundle
    * @returns {Bundle} the created bundle.
    */
   registerBundle(bundle) {
@@ -231,11 +236,11 @@ export default class ItemStore {
   /**
    * At a minimum the source must contain a type, the rest can be changed later.
    *
-   * @param source
-   * @param forceClone
-   * @param skipRegistration
-   * @param bundle
-   * @returns {*}
+   * @param {object} source
+   * @param {boolean} [forceClone]
+   * @param {boolean} [skipRegistration]
+   * @param {Bundle} [bundle]
+   * @returns {Item} the created item.
    */
   createItem(source, forceClone, skipRegistration, bundle) {
     let item;

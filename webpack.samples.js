@@ -103,8 +103,10 @@ const variants = {
 };
 
 /**
+ * Build a webpack configuration for one sample variant.
  *
- * @param options
+ * @param {{ type: string }} options - Variant options; `type` is the renderer variant (e.g. 'bootstrap' or 'react').
+ * @returns {object} The merged webpack configuration.
  */
 function createConfig(options) {
   const devConfig = {

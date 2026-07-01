@@ -2,6 +2,15 @@
 import utils from '../utils';
 import labelProperties from './labelProperties';
 
+/**
+ * Type aliases for JSDoc references to types not imported as values in this file.
+ *
+ * @typedef {import('../template/Item').default} Item
+ * @typedef {import('./Binding').default} Binding
+ * @typedef {import('@entryscape/rdfjson').Graph} Graph
+ * @typedef {import('@entryscape/rdfjson').Statement} Statement
+ */
+
 const generateUIDNotMoreThan1million = () =>
   // eslint-disable-next-line no-restricted-properties,no-bitwise
   `0000${((Math.random() * Math.pow(36, 4)) << 0).toString(36)}`.slice(-4);
@@ -53,10 +62,10 @@ const getFallbackChoice = (item, value, seeAlso, graph) => {
  * To indicate that a matched value is not acceptable anymore,
  * set the flag mismatch to true in the returned choice object.
  *
- * @param item the RDForms template item matched against.
- * @param value the value to match
- * @param seeAlso if provided the value is a URI and a rdfs:seeAlso property has been found in the graph
- * @param graph the RDF graph where the value was matched
+ * @param {Item} item the RDForms template item matched against.
+ * @param {string} value the value to match
+ * @param {Statement} seeAlso if provided the value is a URI and a rdfs:seeAlso property has been found in the graph
+ * @param {Graph} graph the RDF graph where the value was matched
  * @returns {object} an object containing a value, a label (object with language codes as attributes),
  * an optional load callback method and an optional mismatch flag.
  * @see openChoiceSelector
@@ -69,8 +78,8 @@ const getChoice = (item, value, seeAlso, graph) =>
  * (System choices in a RDForm template choice items means that there are neither inline choices
  * or an ontology URL given in combination with provided cached choices for the given ontology URL).
  *
- * @param {rdforms.model.Binding} binding the binding where the choice will be given
- * @param {Function} callback a method to call with a choice object when the user has selected an appropriate choice.
+ * @param {Binding} binding the binding where the choice will be given
+ * @param {(choice: object) => void} callback a method to call with a choice object when the user has selected an appropriate choice.
  */
 const openChoiceSelector = (binding, callback) => {
   alert(
@@ -88,6 +97,8 @@ const openChoiceSelector = (binding, callback) => {
  * The implementor is expected to provide an application specific override
  * For example:
  * system.attachExternalLinkBehaviour = (node, binding) => node.setAttribute("target", "_blank");
+ *
+ * @returns {boolean} false in the default no-op implementation.
  */
 const attachExternalLinkBehaviour = () => false;
 
@@ -96,8 +107,9 @@ const attachExternalLinkBehaviour = () => false;
  * For example:
  * system.attachLinkBehaviour = (node, binding) => node.setAttribute("target", "_blank");
  *
- * @param node
- * @param binding
+ * @param {Node} node the DOM node representing the link.
+ * @param {Binding} binding the binding the link was rendered from.
+ * @returns {boolean} false in the default no-op implementation.
  */
 const attachLinkBehaviour = (node, binding) => false;
 

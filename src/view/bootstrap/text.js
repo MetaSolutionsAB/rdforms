@@ -6,9 +6,9 @@ import { getNamedGraphId } from '../viewUtils';
 /**
  * Try to guess the number of rows needed for a textarea element by looking at the value of the element
  *
- * @param text
- * @param charsInLine
- * @returns {number}
+ * @param {string} text the current value of the element
+ * @param {number} charsInLine approximate number of characters that fit on one line
+ * @returns {number} the estimated number of rows needed
  */
 const countLines = (text, charsInLine = 70) => {
   let rows = text.split('\n').length; // for each explicit new line character add a row

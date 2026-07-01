@@ -9,7 +9,7 @@ export default class CardinalityTracker {
    * and justFine when the counter moved within the acceptable
    * cardinality restrictions.
    *
-   * @param item
+   * @param {import('../template/Item').default} item the template item whose cardinality restrictions are tracked.
    */
   constructor(item) {
     this._listener = [];

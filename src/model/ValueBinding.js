@@ -8,7 +8,7 @@ export default class ValueBinding extends Binding {
    * Validity is determined by a valid predicate and object.
    * The statement is asserted when the parents are valid and this ValueBinding is valid.
    *
-   * @param params
+   * @param {object} params the item and RDF context forwarded to the Binding constructor.
    * @exports ValueBinding
    * @class
    * @see rforms/template/Text
@@ -109,8 +109,8 @@ export default class ValueBinding extends Binding {
   }
 
   /**
-   * @param {object} lang a two or three character language code.
-   * @param silent
+   * @param {string} lang a two or three character language code.
+   * @param {boolean} silent if true the graph will not be marked as changed.
    */
   setLanguage(lang, silent) {
     this._statement.setLanguage(lang, silent);

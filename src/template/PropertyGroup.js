@@ -8,7 +8,8 @@ export default class PropertyGroup extends Group {
    * an item corresponding to the object in the triple. The second item can be either a
    * Text, Choice or Group item depending on the kind of object envisioned in the triple.
    *
-   * @param original
+   * @param {boolean} original
+   * @returns {Array} the delegated children with fixed cardinality.
    */
   getChildren(original) {
     if (this._delegatedChildren == null) {

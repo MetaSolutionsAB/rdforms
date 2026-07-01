@@ -4,6 +4,13 @@ import CODES from '../model/CODES';
 import * as engine from '../model/engine';
 import { bindingReport } from '../model/validate';
 
+/**
+ * Type aliases for JSDoc references to types not imported as values in this file.
+ *
+ * @typedef {import('../template/Item').default} Item
+ * @typedef {import('../model/Binding').default} Binding
+ */
+
 const showNow = (editor, item, bindings, includeLevel) => {
   // Invisible should be created as components and hidden using display: none
   // Otherwise certain extentions such as autoUUID does not work.
@@ -157,8 +164,9 @@ export default class Editor extends Presenter {
    * includeLevel indicates to show it anyhow (for example min cardinality > 0 or includeLevel
    * is optional or recommended at the same time the preferred cardinality is bigger than zero.
    *
-   * @param {object} item
-   * @param {object} bindings
+   * @param {Item} item the template item to potentially show
+   * @param {Binding[]} bindings the bindings for the item
+   * @returns {boolean} true if the item should be shown
    */
   showNow(item, bindings) {
     return showNow(this, item, bindings, this.includeLevel);
@@ -172,8 +180,9 @@ export default class Editor extends Presenter {
   /**
    * Will add bindings until the min cardinality is reached.
    *
-   * @param {object} item
-   * @param {object} bindings
+   * @param {Item} item the template item to prepare bindings for
+   * @param {Binding[]} bindings the existing bindings for the item
+   * @returns {Binding[]} the bindings extended up to the min cardinality
    */
   prepareBindings(item, bindings) {
     let _bindings = bindings;

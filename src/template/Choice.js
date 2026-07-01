@@ -19,7 +19,7 @@ export default class Choice extends Item {
    * TODO:
    * The choices can also be organized into a hierarchy using the parent and hierarchy properties.
    *
-   * @param params
+   * @param {object} params
    */
   constructor(params) {
     super(params);
@@ -35,7 +35,7 @@ export default class Choice extends Item {
    *  "label": {"en": "First choice", "sv": "FÃ¶rsta valet"}
    * }
    *
-   * @param original
+   * @param {boolean} original
    * @returns {Array} of choices.
    */
   getChoices(original) {
@@ -45,7 +45,7 @@ export default class Choice extends Item {
   }
 
   /**
-   * @param original
+   * @param {boolean} original
    * @returns {boolean} true if there is an ontology or static choices.
    */
   hasChoices(original) {
@@ -59,7 +59,7 @@ export default class Choice extends Item {
   }
 
   /**
-   * @param original
+   * @param {boolean} original
    * @returns {Array} of choices defined manually in the Template.
    */
   getStaticChoices(original) {
@@ -102,7 +102,7 @@ export default class Choice extends Item {
   /**
    * Fetches choices from an external ontology.
    *
-   * @param {object} callback will be called asynchronously, if undefined the call is made synchronously.
+   * @param {(choices: Array) => void} callback will be called asynchronously, if undefined the call is made synchronously.
    * @returns {Array} of choice objects, only provided if method called without callback.
    */
   getDynamicChoices(callback) {

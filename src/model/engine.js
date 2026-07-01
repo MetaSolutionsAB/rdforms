@@ -524,6 +524,7 @@ _matchItem = (pb, item) => {
  *
  * @param {Item} item
  * @param {Statement} stmt
+ * @returns {boolean} true when the item nodetype matches the statement object type.
  */
 _isNodeTypeMatch = (item, stmt) => {
   const objectType = stmt.getType();
@@ -578,7 +579,7 @@ _isPatternMatch = (item, stmt) => {
  * @param {Graph} graph containing all available statements to match against.
  * @param {string} uri the subject to start matching from
  * @param {Item} item containing the constraints.
- * @returns an array of statements on success, undefined on failure.
+ * @returns {Statement[]|undefined} an array of statements on success, undefined on failure.
  *  If there are no constraints to match in the item an empty array is returned.
  */
 _findStatementsForConstraints = (graph, uri, item) => {

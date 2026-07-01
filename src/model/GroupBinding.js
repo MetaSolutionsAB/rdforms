@@ -10,7 +10,7 @@ export default class GroupBinding extends Binding {
    * the parent group can be checked and possibly updated.
    * Potential statement and constraints are asserted when both parents are valid and this GroupBinding is valid.
    *
-   * @param params
+   * @param {object} params the item, statement, constraints and childrenRootUri for this group.
    * @see template/Group
    */
   constructor(params) {

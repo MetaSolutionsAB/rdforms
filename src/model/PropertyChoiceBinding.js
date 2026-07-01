@@ -6,7 +6,7 @@ export default class PropertyChoiceBinding extends ChoiceBinding {
    * Are only used as the first child of a PropertyGroupBinding to capture
    * a variable predicate.
    *
-   * @param params
+   * @param {object} params the item and RDF context forwarded to the ChoiceBinding constructor.
    */
   constructor(params) {
     super(params);
@@ -40,6 +40,8 @@ export default class PropertyChoiceBinding extends ChoiceBinding {
    * enough to enable validity. Hence, this PropertyChoiceBinding can
    * be false all the time since it has no children and does not affect
    * the above hierarchy (and does not control assertment of statements).
+   *
+   * @returns {boolean} always false; see the description above.
    */
   isValid() {
     return false;

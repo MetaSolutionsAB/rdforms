@@ -130,8 +130,6 @@ export default class View {
   /**
    * Tells wether something should be shown for the provided bindings and belonging item.
    *
-   * @param {object} item
-   * @param {object} bindings
    * @returns {boolean} true if something should be shown.
    */
   showNow(/* item,  bindings */) {
@@ -146,26 +144,16 @@ export default class View {
    * This function may change the array of bindings, for instance remove all but
    * the best language or complement the existing bindings
    * until the min cardinality is reached.
-   *
-   * @param {object} item
-   * @param {Array} bindings
-   * @returns {Array} of bindings
    */
   prepareBindings(/* item, bindings */) {}
 
   /**
    * Adds a table with headers for the given firstBinding.
-   *
-   * @param {Node} lastRow if provided it is the last row as a DOM element.
-   * @param {object} firstBinding the first binding to show in this table.
    */
   addTable(/* lastRow, firstBinding */) {}
 
   /**
    * Fills the table with one row for each binding in bindings.
-   *
-   * @param {object} table a table DOM element
-   * @param {Array} bindings an array of bindings
    */
   fillTable(/* table, bindings */) {}
 
@@ -293,13 +281,13 @@ export default class View {
   /**
    * Adds a single row corresponding to a binding.
    *
-   * @param {object} lastRow last row that was added
-   * @param {object} binding the binding to add a row for
+   * @param {Node} lastRow last row that was added
+   * @param {import('../model/Binding').default} binding the binding to add a row for
    * @param {boolean} includeLabel tells if a label should be added, if undefined a label is
    * added only when the binding is a GroupBinding.
-   * @param includeLabel
-   * @param index
-   * @param truncateLimit
+   * @param {number} index the index of the binding among its siblings
+   * @param {number} truncateLimit the limit at which rows are truncated, or -1 for no truncation
+   * @returns {Node} the row node that the binding was added to
    */
   addRow(lastRow, binding, includeLabel, index, truncateLimit) {
     let _includeLabel = includeLabel;

@@ -2,6 +2,13 @@
 import renderingContext from './renderingContext';
 import View from './View';
 
+/**
+ * Type aliases for JSDoc references to types not imported as values in this file.
+ *
+ * @typedef {import('../template/Item').default} Item
+ * @typedef {import('../model/Binding').default} Binding
+ */
+
 const showNow = (editor, item, bindings) => {
   if (
     bindings.length === 0 ||
@@ -48,8 +55,9 @@ export default class Presenter extends View {
   /**
    * Show only if any bindings exists for the given item.
    *
-   * @param {object} item
-   * @param {object} bindings
+   * @param {Item} item the template item to potentially show
+   * @param {Binding[]} bindings the bindings for the item
+   * @returns {boolean} true if the item should be shown
    */
   showNow(item, bindings) {
     return showNow(this, item, bindings);
@@ -73,9 +81,9 @@ export default class Presenter extends View {
    * or if filterTranslations is set to false. Otherwise a single binding is
    * returned with the best language match according to the locale.
    *
-   * @param {object} item
-   * @param {object} bindings
-   * @param {Array} with a single value if the filtering has taken place,
+   * @param {Item} item the template item to prepare bindings for
+   * @param {Binding[]} bindings the existing bindings for the item
+   * @returns {Binding[]} an array with a single value if the filtering has taken place,
    * otherwise same as input bindings.
    */
   prepareBindings(item, bindings) {
@@ -135,9 +143,9 @@ export default class Presenter extends View {
    * - if truncate setting is enabled on the presenter or the individual item ('truncate' and not 'noTruncate' is set)
    * - if the truncate limit is exceeded
    *
-   * @param item
-   * @param bindings
-   * @returns {number}
+   * @param {Item} item the template item being presented
+   * @param {Binding[]} bindings the bindings for the item
+   * @returns {number} the truncate limit, or -1 for no truncation
    */
   truncateAt(item, bindings) {
     return item.getType() !== 'group' &&

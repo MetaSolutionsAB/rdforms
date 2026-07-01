@@ -8,7 +8,7 @@ export default class Converter {
    * json structure, if the structure contains reusable items they are
    * created and stored separately as well.
    *
-   * @param itemStore
+   * @param {import('./ItemStore').default} itemStore
    */
   constructor(itemStore) {
     this._itemStore = itemStore;
@@ -25,7 +25,7 @@ export default class Converter {
    * }
    *
    * @param {string} url from where the exhibit will be loaded
-   * @param {Function} callback will be called with the converted exhibit.
+   * @param {(exhibit: {properties: Array, classes: Array}) => void} callback will be called with the converted exhibit.
    */
   convertExhibit(url, callback) {
     this._load(

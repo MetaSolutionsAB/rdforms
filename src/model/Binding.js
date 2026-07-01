@@ -12,11 +12,11 @@ let counter = 0;
  */
 export default class Binding {
   /**
-   * @param root0
-   * @param root0.item
-   * @param root0.statement
-   * @param root0.graph
-   * @param root0.matchingCode
+   * @param {object} params the item and RDF context for this binding.
+   * @param {import('../template/Item').default} params.item the template item this binding pairs with.
+   * @param {import('@entryscape/rdfjson').Statement} params.statement the RDF statement captured by this binding.
+   * @param {import('@entryscape/rdfjson').Graph} params.graph the RDF graph the statement belongs to.
+   * @param {string} params.matchingCode the matching outcome code, defaults to 'correct'.
    * @exports Binding
    * @class
    */
@@ -128,7 +128,7 @@ export default class Binding {
   /**
    * stores the validity of ancestors.
    *
-   * @param valid
+   * @param {boolean} valid whether the ancestor bindings are valid.
    */
   setAncestorValid(valid) {
     this._ancestorValid = valid;

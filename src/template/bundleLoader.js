@@ -1,11 +1,16 @@
 /* eslint-disable no-await-in-loop */
 /**
+ * @typedef {import('./ItemStore').default} ItemStore
+ * @typedef {import('./Bundle').default} Bundle
+ */
+
+/**
  * Check if there's any iterations left in a hypothetical array with 'length' given.
  *
  * @param {number} iteration
  * @param {number} length
  * @param {string} templateId
- * @throws
+ * @throws {Error} when no fallback option remains.
  */
 const stopFetchingOrJustLog = (iteration, length, templateId) => {
   const message = `Fetching template bundle ${templateId} failed.`;
@@ -72,8 +77,8 @@ const fetchBundle = async (urls) => {
 /**
  * Fetch or if loaded just wrap it in Promise.resolve
  *
- * @param bundles
- * @returns {Promise<*>}
+ * @param {Array<Array<string> | object>} bundles
+ * @returns {Array<Promise<{path?: string, source: object}>>}
  */
 const promisifyBundles = (bundles) =>
   bundles.map((bundle) =>
@@ -87,15 +92,18 @@ const promisifyBundles = (bundles) =>
  *
  * @param {ItemStore} itemStore
  * @param {Array} bundles
+ * @returns {Array<Bundle>} the registered bundles.
  */
 const registerBundles = (itemStore, bundles = []) =>
   bundles.map((bundle) => itemStore.registerBundle(bundle));
 
 /**
+ * Load and register a list of bundles into the item store.
  *
  * @param {ItemStore} itemStore
- * @param bundlePaths {Array<Object|String>} an array of object (bundles) or paths
- * @param callback
+ * @param {Array<object | string>} bundlePaths an array of object (bundles) or paths
+ * @param {(bundles: Array<Bundle>) => void} callback
+ * @returns {Promise<Array<Bundle>>} the registered bundles.
  */
 export default async (itemStore, bundlePaths = [], callback = () => {}) => {
   if (bundlePaths.length === 0 && callback) {

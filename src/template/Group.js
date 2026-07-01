@@ -30,7 +30,7 @@ export default class Group extends Item {
   /**
    * Group extends an Item by having children.
    *
-   * @param params
+   * @param {object} params
    */
   constructor(params) {
     super(params);

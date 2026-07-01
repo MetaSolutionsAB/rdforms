@@ -24,33 +24,52 @@ export default (props) => {
   let title = '';
   let label = '';
   if (choice) {
-    title = choice.description ? utils.getLocalizedValue(choice.description).value : choice.seeAlso || choice.value;
-    label = choice.label ? utils.getLocalizedValue(choice.label).value : choice.value;
+    title = choice.description
+      ? utils.getLocalizedValue(choice.description).value
+      : choice.seeAlso || choice.value;
+    label = choice.label
+      ? utils.getLocalizedValue(choice.label).value
+      : choice.value;
   }
 
   const labelledBy = props.context.view.getLabelIndex(props.binding);
 
   const choiceSelectorHandler = () => {
-    renderingContext.openChoiceSelector(props.binding, (newChoice) => {
-      props.binding.setChoice(newChoice);
-      setChoice(newChoice);
-      setError(newChoice.mismatch === true);
-    }, props.field);
+    renderingContext.openChoiceSelector(
+      props.binding,
+      (newChoice) => {
+        props.binding.setChoice(newChoice);
+        setChoice(newChoice);
+        setError(newChoice.mismatch === true);
+      },
+      props.field
+    );
   };
 
   const ngId = useNamedGraphId(binding, props.context);
-  return <><TextField
-    inputProps={{ 'aria-labelledby': labelledBy }}
-    className="rdformsSearch"
-    disabled {...(!!ngId || (choice && choice.mismatch) ? { mismatch: true } : {})}
-    title={title}
-    value={label}
-    placeholder={binding.getItem().getPlaceholder()}
-    error={error}
-    variant={renderingContext.materialVariant}
-  /><ShowButton
-    {... props}
-    disabled={!!ngId}
-    onClick={choiceSelectorHandler}/>{ error && (<div key="warning" className="rdformsWarning">{
-    props.context.view.messages.wrongValueField}</div>)}</>;
+  return (
+    <>
+      <TextField
+        inputProps={{ 'aria-labelledby': labelledBy }}
+        className="rdformsSearch"
+        disabled
+        {...(!!ngId || (choice && choice.mismatch) ? { mismatch: true } : {})}
+        title={title}
+        value={label}
+        placeholder={binding.getItem().getPlaceholder()}
+        error={error}
+        variant={renderingContext.materialVariant}
+      />
+      <ShowButton
+        {...props}
+        disabled={!!ngId}
+        onClick={choiceSelectorHandler}
+      />
+      {error && (
+        <div key="warning" className="rdformsWarning">
+          {props.context.view.messages.wrongValueField}
+        </div>
+      )}
+    </>
+  );
 };

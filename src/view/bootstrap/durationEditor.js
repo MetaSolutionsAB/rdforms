@@ -5,7 +5,9 @@ export default (fieldDiv, binding, context) => {
   const bundle = context.view.messages;
   let data = fromDuration(binding.getValue());
 
-  const wrapper = jquery('<div>').addClass('rdformsDuration rdformsFieldInput').appendTo(fieldDiv);
+  const wrapper = jquery('<div>')
+    .addClass('rdformsDuration rdformsFieldInput')
+    .appendTo(fieldDiv);
   const disabledAttr = getNamedGraphId(binding, context) ? 'disabled' : '';
   const render = () => {
     wrapper.empty();
@@ -14,11 +16,13 @@ export default (fieldDiv, binding, context) => {
       const group = jquery('<div>').addClass('input-group').appendTo(div);
       const id = `duration_${counter}`;
       counter += 1;
-      jquery('<span>').addClass('input-group-addon')
+      jquery('<span>')
+        .addClass('input-group-addon')
         .attr('id', id)
         .text(bundle[`duration_${key}`])
         .appendTo(group);
-      const inp = jquery(`<input ${disabledAttr}>`).addClass('form-control')
+      const inp = jquery(`<input ${disabledAttr}>`)
+        .addClass('form-control')
         .attr('type', 'number')
         .attr('aria-describedby', id)
         .appendTo(group);

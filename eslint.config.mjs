@@ -16,6 +16,15 @@ export default [
     languageOptions: { globals: { ...globals.node } },
   },
   {
+    // jQuery ($, jQuery, jquery) is injected build-wide by webpack's
+    // ProvidePlugin (see webpack.common.js), so the view code uses it as a
+    // runtime global rather than importing it — mirror that here.
+    files: ['**/*.js', '**/*.jsx'],
+    languageOptions: {
+      globals: { $: 'readonly', jQuery: 'readonly', jquery: 'readonly' },
+    },
+  },
+  {
     // rdforms is a template-driven library without a PropTypes convention;
     // enforcing prop-types would mean adding declarations across every
     // component for little value. Disable it to match the codebase's approach.

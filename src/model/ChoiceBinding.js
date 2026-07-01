@@ -6,6 +6,7 @@ const seeAlso = 'http://www.w3.org/2000/01/rdf-schema#seeAlso';
 
 /**
  * A ValueBinding that only accepts uris from a controlled vocabulary encoded as choices.
+ *
  * @see rforms.template.Choice#getChoices
  */
 export default class ChoiceBinding extends ValueBinding {
@@ -16,7 +17,9 @@ export default class ChoiceBinding extends ValueBinding {
   }
 
   // Static property on class ChoiceBinding via static getter,
-  static get seeAlso() { return seeAlso; }
+  static get seeAlso() {
+    return seeAlso;
+  }
 
   setChoice(choice, silent) {
     this._choice = choice;
@@ -27,7 +30,10 @@ export default class ChoiceBinding extends ValueBinding {
     }
     if (choice && choice.mismatch) {
       this.setMatchingCode(CODES.WRONG_VALUE);
-    } else if ((!choice || !choice.mismatch) && this.getMatchingCode() === CODES.WRONG_VALUE) {
+    } else if (
+      (!choice || !choice.mismatch) &&
+      this.getMatchingCode() === CODES.WRONG_VALUE
+    ) {
       this.setMatchingCode(CODES.OK);
     }
   }
@@ -50,8 +56,15 @@ export default class ChoiceBinding extends ValueBinding {
 
       if (choice.inlineLabel === true) {
         const labelMap = choice.label || {};
-        Object.keys(labelMap).forEach(lang => graph.create(value, label,
-            { value: labelMap[lang], lang, type: 'literal' }, true, silent));
+        Object.keys(labelMap).forEach((lang) =>
+          graph.create(
+            value,
+            label,
+            { value: labelMap[lang], lang, type: 'literal' },
+            true,
+            silent
+          )
+        );
       }
     }
   }

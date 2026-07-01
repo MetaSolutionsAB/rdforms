@@ -13,6 +13,7 @@ export default class PropertyGroupBinding extends GroupBinding {
    * being a binding for the object. The object binding can be a ValueBinding, ChoiceBinding or
    * a GroupBinding. It is not allowed to be another PropertyGroupBinding though.
    *
+   * @param {object} params the item, statement and constraints for this grouping.
    * @see rforms.template.PropertyGroup
    */
   constructor(params) {
@@ -34,7 +35,10 @@ export default class PropertyGroupBinding extends GroupBinding {
     } else {
       oBinding = new ValueBinding({ item, statement });
     }
-    const pBinding = new PropertyChoiceBinding({ item: children[0], objectBinding: oBinding });
+    const pBinding = new PropertyChoiceBinding({
+      item: children[0],
+      objectBinding: oBinding,
+    });
 
     this.addChildBinding(pBinding);
     this.addChildBinding(oBinding);

@@ -8,7 +8,7 @@ import { Editor } from './Wrappers';
 // -------------- Presenters ----------------
 const presenters = renderingContext.presenterRegistry;
 
-const choicify = func => (fieldDiv, binding, context) => {
+const choicify = (func) => (fieldDiv, binding, context) => {
   const choice = binding.getChoice();
   const isEditor = context.view instanceof Editor;
   let desc;
@@ -28,42 +28,74 @@ const choicify = func => (fieldDiv, binding, context) => {
 };
 
 const getLocalizedLabel = (choice, isEditor, locale) =>
-  utils.getLocalizedValue(isEditor ? choice.editlabel || choice.label : choice.label, locale);
-
+  utils.getLocalizedValue(
+    isEditor ? choice.editlabel || choice.label : choice.label,
+    locale
+  );
 
 // Presenter for image.
-presenters.itemtype('choice').style('image').register(choicify(
-  (fieldDiv, binding, choice, desc) => {
-    fieldDiv.appendChild(<img key={binding.getHash()} className="rdformsImage" title={
-      desc || choice.value} src={choice.value}/>);
-  }));
+presenters
+  .itemtype('choice')
+  .style('image')
+  .register(
+    choicify((fieldDiv, binding, choice, desc) => {
+      fieldDiv.appendChild(
+        <img
+          key={binding.getHash()}
+          className="rdformsImage"
+          title={desc || choice.value}
+          src={choice.value}
+        />
+      );
+    })
+  );
 
 // Presenter for stars
-presenters.itemtype('choice').style('stars').register(choicify(
-  (fieldDiv, binding, choice) => {
-    if (!isNaN(parseInt(choice.value, 10))) {
-      fieldDiv.appendChild(<span key={binding.getHash()} className="rdformsStar"></span>);
-    }
-  }));
+presenters
+  .itemtype('choice')
+  .style('stars')
+  .register(
+    choicify((fieldDiv, binding, choice) => {
+      if (!isNaN(parseInt(choice.value, 10))) {
+        fieldDiv.appendChild(
+          <span key={binding.getHash()} className="rdformsStar"></span>
+        );
+      }
+    })
+  );
 
 // Presenter for choices.
-presenters.itemtype('choice').register(choicify(
-  (fieldDiv, binding, choice, desc, isEditor, locale) => {
+presenters.itemtype('choice').register(
+  choicify((fieldDiv, binding, choice, desc, isEditor, locale) => {
     const item = binding.getItem();
     const title = desc || choice.seeAlso || choice.value;
-    if ((item.hasStaticChoices() && !item.hasStyle('externalLink')) || item.hasStyle('noLink')) {
-      fieldDiv.appendChild(React.createElement(() => {
-        const [locValue, setLocValue] = useState(getLocalizedLabel(choice, isEditor, locale));
-        useEffect(() => {
-          if (choice.load != null) {
-            choice.load(() => {
-              setLocValue(getLocalizedLabel(choice, isEditor, locale));
-            });
-          }
-        }, []);
-        const langAttr = locValue.lang ? {lang: locValue.lang} : {};
-        return <div key={binding.getHash()} {...langAttr} title={title}>{locValue.value}</div>
-      }, {key: binding.getHash()}));
+    if (
+      (item.hasStaticChoices() && !item.hasStyle('externalLink')) ||
+      item.hasStyle('noLink')
+    ) {
+      fieldDiv.appendChild(
+        React.createElement(
+          () => {
+            const [locValue, setLocValue] = useState(
+              getLocalizedLabel(choice, isEditor, locale)
+            );
+            useEffect(() => {
+              if (choice.load != null) {
+                choice.load(() => {
+                  setLocValue(getLocalizedLabel(choice, isEditor, locale));
+                });
+              }
+            }, []);
+            const langAttr = locValue.lang ? { lang: locValue.lang } : {};
+            return (
+              <div key={binding.getHash()} {...langAttr} title={title}>
+                {locValue.value}
+              </div>
+            );
+          },
+          { key: binding.getHash() }
+        )
+      );
     } else {
       let attrs;
       if (item.hasStyle('externalLink')) {
@@ -74,20 +106,32 @@ presenters.itemtype('choice').register(choicify(
       const component = attrs.component || null;
       delete attrs.component;
 
-      fieldDiv.appendChild(React.createElement(() => {
-        const [locValue, setLocValue] = useState(getLocalizedLabel(choice, isEditor, locale));
-        useEffect(() => {
-          if (choice.load != null) {
-            choice.load(() => {
-              setLocValue(getLocalizedLabel(choice, isEditor, locale));
-            });
-          }
-        }, []);
-        if (locValue.lang) {
-          attrs.lang = locValue.lang;
-        }
-        return <a {...attrs} title={title} href={choice.seeAlso
-        || choice.value}><span>{locValue.value}</span>{component}</a>;
-      }, { key: binding.getHash() }));
+      fieldDiv.appendChild(
+        React.createElement(
+          () => {
+            const [locValue, setLocValue] = useState(
+              getLocalizedLabel(choice, isEditor, locale)
+            );
+            useEffect(() => {
+              if (choice.load != null) {
+                choice.load(() => {
+                  setLocValue(getLocalizedLabel(choice, isEditor, locale));
+                });
+              }
+            }, []);
+            if (locValue.lang) {
+              attrs.lang = locValue.lang;
+            }
+            return (
+              <a {...attrs} title={title} href={choice.seeAlso || choice.value}>
+                <span>{locValue.value}</span>
+                {component}
+              </a>
+            );
+          },
+          { key: binding.getHash() }
+        )
+      );
     }
-  }));
+  })
+);

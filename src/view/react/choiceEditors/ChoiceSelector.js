@@ -3,7 +3,11 @@ import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import renderingContext from '../../renderingContext';
-import { useLocalizedSortedChoices, useLocalizedChoice, useNamedGraphId } from '../hooks';
+import {
+  useLocalizedSortedChoices,
+  useLocalizedChoice,
+  useNamedGraphId,
+} from '../hooks';
 
 /**
  * Autocomplete with fixed choices.
@@ -11,7 +15,7 @@ import { useLocalizedSortedChoices, useLocalizedChoice, useNamedGraphId } from '
  * @param props Component props
  * @param {Binding} props.binding the binding for which to render an autocomplete
  * @example (<ChoiceSelector binding={binding}>)
- * @return {React.FunctionComponentElement}
+ * @returns {React.FunctionComponentElement}
  */
 export default (props) => {
   const binding = props.binding;
@@ -61,8 +65,8 @@ export default (props) => {
         onChange={handleChange}
         disabled={!!ngId}
         isOptionEqualToValue={(option, choice) => option.value === choice.value}
-        getOptionLabel={choice => (choice === null ? '' : choice.label)}
-        getOptionDisabled={option => option.mismatch === true}
+        getOptionLabel={(choice) => (choice === null ? '' : choice.label)}
+        getOptionDisabled={(option) => option.mismatch === true}
         filterSelectedOptions
         renderInput={renderInput}
         disablePortal

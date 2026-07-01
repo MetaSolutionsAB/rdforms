@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import utils from '../utils';
 
 let counter = 0;
@@ -12,7 +11,12 @@ let counter = 0;
  */
 export default class Binding {
   /**
-   * @exports {Binding}
+   * @param {object} params the item and RDF context for this binding.
+   * @param {import('../template/Item').default} params.item the template item this binding pairs with.
+   * @param {import('@entryscape/rdfjson').Statement} params.statement the RDF statement captured by this binding.
+   * @param {import('@entryscape/rdfjson').Graph} params.graph the RDF graph the statement belongs to.
+   * @param {string} params.matchingCode the matching outcome code, defaults to 'correct'.
+   * @exports Binding
    * @class
    */
   constructor({ item, statement, graph, matchingCode }) {
@@ -53,20 +57,19 @@ export default class Binding {
     return this._readOnly;
   }
 
-  remove() {
-  }
+  remove() {}
 
-  setSubject(uri) {
-  }
+  setSubject() {}
 
-  getValue() {
-  }
+  getValue() {}
 
-  setValue(value, silent) {
-  }
+  setValue() {}
 
   getGist() {
-    return utils.extractGist(this.getValue(), this.getItem().getValueTemplate());
+    return utils.extractGist(
+      this.getValue(),
+      this.getItem().getValueTemplate()
+    );
   }
 
   setGist(value, silent) {
@@ -111,8 +114,7 @@ export default class Binding {
    * <li>if it is a group and at least one of its children is valid, or</li>
    * <li>if it is a predicategroup and both the predicate and the object binding are valid.</ol>
    */
-  isValid() {
-  }
+  isValid() {}
 
   getMatchingCode() {
     return this._matchingCode;
@@ -124,6 +126,8 @@ export default class Binding {
 
   /**
    * stores the validity of ancestors.
+   *
+   * @param {boolean} valid whether the ancestor bindings are valid.
    */
   setAncestorValid(valid) {
     this._ancestorValid = valid;
@@ -133,8 +137,7 @@ export default class Binding {
   /**
    *
    */
-  updateAssertions() {
-  }
+  updateAssertions() {}
 
   getHash() {
     return this._hash;
@@ -181,8 +184,12 @@ export default class Binding {
     const pattern = this._item.getPattern();
     if (pattern) {
       _value = utils.extractGist(_value, this.getItem().getValueTemplate());
-      return _value !== undefined && _value !== null && _value !== '' &&
-        (new RegExp(`^${pattern}$`)).test(_value);
+      return (
+        _value !== undefined &&
+        _value !== null &&
+        _value !== '' &&
+        new RegExp(`^${pattern}$`).test(_value)
+      );
     }
     return _value !== undefined && _value !== null && _value !== '';
   }

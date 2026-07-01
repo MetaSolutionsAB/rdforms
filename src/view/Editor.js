@@ -4,6 +4,13 @@ import CODES from '../model/CODES';
 import * as engine from '../model/engine';
 import { bindingReport } from '../model/validate';
 
+/**
+ * Type aliases for JSDoc references to types not imported as values in this file.
+ *
+ * @typedef {import('../template/Item').default} Item
+ * @typedef {import('../model/Binding').default} Binding
+ */
+
 const showNow = (editor, item, bindings, includeLevel) => {
   // Invisible should be created as components and hidden using display: none
   // Otherwise certain extentions such as autoUUID does not work.
@@ -28,11 +35,19 @@ const showNow = (editor, item, bindings, includeLevel) => {
       if (groupedItemsArr.length === 0) {
         return true; // Corresponds to an extention or pure heading, since no children.
       }
-      if (item.hasStyle('atLeastOneChild') || item.hasStyle('exactlyOneChild')) {
+      if (
+        item.hasStyle('atLeastOneChild') ||
+        item.hasStyle('exactlyOneChild')
+      ) {
         return true;
       }
-      if (bindings[0].getItemGroupedChildBindings().find((childBindings, idx) =>
-        showNow(editor, groupedItemsArr[idx], childBindings, includeLevel))) {
+      if (
+        bindings[0]
+          .getItemGroupedChildBindings()
+          .find((childBindings, idx) =>
+            showNow(editor, groupedItemsArr[idx], childBindings, includeLevel)
+          )
+      ) {
         return true;
       }
       if (!prop) {
@@ -55,25 +70,31 @@ const showNow = (editor, item, bindings, includeLevel) => {
 };
 
 export default class Editor extends Presenter {
-
   _handleParams(params) {
     this._subEditors = this._subEditors || [];
     this.includeLevel = params.includeLevel || 'recommended';
     this.hideAddress = params.hideAddress !== false; // For instance when you expose address in surrounding application
     params.styleCls = params.styleCls || 'rdformsEditor';
-    params.filterTranslations = params.filterTranslations !== undefined ? params.filterTranslations : false;
+    params.filterTranslations =
+      params.filterTranslations !== undefined
+        ? params.filterTranslations
+        : false;
     super._handleParams(params);
   }
 
   getSubEditorForBinding(binding) {
-    return this._subEditors.find(editor => editor.getBinding() === binding);
+    return this._subEditors.find((editor) => editor.getBinding() === binding);
   }
 
   report(report) {
     const _report = report || bindingReport(this.binding);
 
     Object.keys(this._binding2node).forEach((key) => {
-      renderingContext.domClassToggle(this._binding2node[key], 'errorReport', false);
+      renderingContext.domClassToggle(
+        this._binding2node[key],
+        'errorReport',
+        false
+      );
     });
     for (let j = 0; j < _report.errors.length; j++) {
       const err = _report.errors[j];
@@ -85,16 +106,22 @@ export default class Editor extends Presenter {
           this.binding.getChildBindingsFor(item).find((binding) => {
             counter -= 1;
             if (!binding.isValid()) {
-              renderingContext.domClassToggle(this._binding2node[binding.getHash()],
-                'errorReport', true);
+              renderingContext.domClassToggle(
+                this._binding2node[binding.getHash()],
+                'errorReport',
+                true
+              );
             }
             return counter === 0;
           });
         } else if (err.code === CODES.AT_MOST_ONE_CHILD) {
           this.binding.getChildBindings().forEach((binding) => {
             if (binding.getMatchingCode() !== CODES.OK) {
-              renderingContext.domClassToggle(this._binding2node[binding.getHash()],
-                'errorReport', true);
+              renderingContext.domClassToggle(
+                this._binding2node[binding.getHash()],
+                'errorReport',
+                true
+              );
             }
           });
         }
@@ -136,22 +163,25 @@ export default class Editor extends Presenter {
    * Will only show something for the given item if there is anything to show, or if the
    * includeLevel indicates to show it anyhow (for example min cardinality > 0 or includeLevel
    * is optional or recommended at the same time the preferred cardinality is bigger than zero.
-   * @param {Object} item
-   * @param {Object} bindings
+   *
+   * @param {Item} item the template item to potentially show
+   * @param {Binding[]} bindings the bindings for the item
+   * @returns {boolean} true if the item should be shown
    */
   showNow(item, bindings) {
     return showNow(this, item, bindings, this.includeLevel);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   skipBinding(/* binding */) {
     return false;
   }
 
   /**
    * Will add bindings until the min cardinality is reached.
-   * @param {Object} item
-   * @param {Object} bindings
+   *
+   * @param {Item} item the template item to prepare bindings for
+   * @param {Binding[]} bindings the existing bindings for the item
+   * @returns {Binding[]} the bindings extended up to the min cardinality
    */
   prepareBindings(item, bindings) {
     let _bindings = bindings;
@@ -174,7 +204,14 @@ export default class Editor extends Presenter {
     } else {
       target = 1;
     }
-    if (item.hasStyle('nonEditable') && !item.hasStyle('autoInitDate') && !item.hasStyle('autoUpdateDate') && !item.hasStyle('autoUUID') && !item.hasStyle('autoValue') && !item.getValue()) {
+    if (
+      item.hasStyle('nonEditable') &&
+      !item.hasStyle('autoInitDate') &&
+      !item.hasStyle('autoUpdateDate') &&
+      !item.hasStyle('autoUUID') &&
+      !item.hasStyle('autoValue') &&
+      !item.getValue()
+    ) {
       return _bindings;
     }
     if (target > _bindings.length) {
@@ -190,14 +227,21 @@ export default class Editor extends Presenter {
     renderingContext.renderEditorLabel(rowDiv, binding, item, this.context);
   }
   createEndOfRowNode(rowNode, binding, item) {
-    renderingContext.renderEditorLabelScopeEnd(rowNode, binding, item, this.context);
+    renderingContext.renderEditorLabelScopeEnd(
+      rowNode,
+      binding,
+      item,
+      this.context
+    );
   }
 
   addTable(newRow, firstBinding) {
     if (firstBinding.getItem().hasStyle('nonEditable')) {
       return this.addComponent(newRow, firstBinding);
     }
-    return renderingContext.addEditorTable(newRow, firstBinding, { view: this });
+    return renderingContext.addEditorTable(newRow, firstBinding, {
+      view: this,
+    });
   }
 
   fillTable(table, bindings) {
@@ -206,7 +250,10 @@ export default class Editor extends Presenter {
 
   preRenderView() {
     renderingContext.preEditorViewRenderer(this.domNode, this.binding, {
-      view: this, inEditor: true, topLevel: this.topLevel, hideAddress: this.hideAddress,
+      view: this,
+      inEditor: true,
+      topLevel: this.topLevel,
+      hideAddress: this.hideAddress,
     });
   }
 
@@ -224,7 +271,10 @@ export default class Editor extends Presenter {
       return undefined;
     }
     const newNode = super.createRowNode(lastRowNode, binding, item);
-    if (item.getType() === 'choice' && typeof item.getProperty() === 'undefined') {
+    if (
+      item.getType() === 'choice' &&
+      typeof item.getProperty() === 'undefined'
+    ) {
       const popular = engine.findPopularChoice(item, binding.getParent());
       if (popular) {
         binding.setChoice(popular);
@@ -235,22 +285,34 @@ export default class Editor extends Presenter {
       const f = (match) => {
         if (!match) {
           if (binding.isValid()) {
-            renderingContext.domClassToggle(newNode, 'missingDepsWithValue', true);
+            renderingContext.domClassToggle(
+              newNode,
+              'missingDepsWithValue',
+              true
+            );
           } else {
             renderingContext.domClassToggle(newNode, 'missingDeps', true);
           }
         } else {
-          renderingContext.domClassToggle(newNode, 'missingDepsWithValue', false);
+          renderingContext.domClassToggle(
+            newNode,
+            'missingDepsWithValue',
+            false
+          );
           renderingContext.domClassToggle(newNode, 'missingDeps', false);
         }
         binding.getCardinalityTracker().setDepsOk(match);
       };
-      const fromBinding = engine.findBindingRelativeToParentBinding(binding.getParent(), path);
+      const fromBinding = engine.findBindingRelativeToParentBinding(
+        binding.getParent(),
+        path
+      );
       if (!engine.matchPathBelowBinding(fromBinding, path)) {
         f(false);
       }
       const listener = (/* changedBinding */) => {
-        if (!binding.getParent()) { // Current binding has been removed, remove the listener
+        if (!binding.getParent()) {
+          // Current binding has been removed, remove the listener
           fromBinding.removeListener(listener);
         } else {
           f(engine.matchPathBelowBinding(fromBinding, path));
@@ -267,12 +329,18 @@ export default class Editor extends Presenter {
     return newNode;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   isMultiValued(item) {
-    return renderingContext.multiValueSupport &&
-    (item.hasStyle('horizontalCheckBoxes') || item.hasStyle('verticalCheckBoxes'));
+    return (
+      renderingContext.multiValueSupport &&
+      (item.hasStyle('horizontalCheckBoxes') ||
+        item.hasStyle('verticalCheckBoxes'))
+    );
   }
-  truncateAt(item, bindings) {
+  /**
+   * @returns {number} the index to truncate at, or -1 for no truncation.
+   * Override in subclasses to enable truncation.
+   */
+  truncateAt() {
     return -1;
   }
 }

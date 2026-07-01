@@ -7,6 +7,8 @@ export default class Converter {
    * Use the createTemplate method to create templates from a source
    * json structure, if the structure contains reusable items they are
    * created and stored separately as well.
+   *
+   * @param {import('./ItemStore').default} itemStore
    */
   constructor(itemStore) {
     this._itemStore = itemStore;
@@ -22,11 +24,16 @@ export default class Converter {
    *     classes: [item3, item4]
    * }
    *
-   * @param {String} url from where the exhibit will be loaded
-   * @param {Function} callback will be called with the converted exhibit.
+   * @param {string} url from where the exhibit will be loaded
+   * @param {(exhibit: {properties: Array, classes: Array}) => void} callback will be called with the converted exhibit.
    */
   convertExhibit(url, callback) {
-    this._load(url, function (data) { callback(this._convertExhibit(data))}.bind(this));
+    this._load(
+      url,
+      function (data) {
+        callback(this._convertExhibit(data));
+      }.bind(this)
+    );
   }
 
   //===================================================
@@ -39,11 +46,11 @@ export default class Converter {
   _load(url, callback) {
     let xhrArgs = {
       sync: true,
-      handleAs: "json-comment-optional"
+      handleAs: 'json-comment-optional',
     };
     let req = xhr(url, xhrArgs);
     req.addCallback(callback);
-//		req.addErrback(onError);
+    //		req.addErrback(onError);
   }
 
   _convertExhibit(data) {
@@ -52,50 +59,48 @@ export default class Converter {
 
     this._prepareExhibit(data);
     data.items.forEach((item) => {
-      if (item.type === "Property") {
+      if (item.type === 'Property') {
         let source = {
-          "id": item.id,
-          "property": item.id,
-          label: {"en": item.label},
-          description: {"en": item.description || item.comment}
+          id: item.id,
+          property: item.id,
+          label: { en: item.label },
+          description: { en: item.description || item.comment },
         };
-        if (!item.ranges || item.ranges["http://www.w3.org/2000/01/rdf-schema#Literal"]) {
-          source["type"] = "text";
-          source["nodetype"] = "LANGUAGE_LITERAL"
+        if (
+          !item.ranges ||
+          item.ranges['http://www.w3.org/2000/01/rdf-schema#Literal']
+        ) {
+          source['type'] = 'text';
+          source['nodetype'] = 'LANGUAGE_LITERAL';
           auxP.push(source);
         } else {
           let props = this._getPropertiesForClasses(data, item.ranges);
           let propArr = [];
-          for (let p in props) {
-            if (props.hasOwnProperty(p)) {
-              propArr.push({"id": p});
-            }
-          }
-//					if (propArr.length > 0) {
-          source["type"] = "group";
+          Object.keys(props).forEach((propertyId) => {
+            propArr.push({ id: propertyId });
+          });
+          //					if (propArr.length > 0) {
+          source['type'] = 'group';
           source.automatic = true;
           source.content = propArr;
           auxP.push(source);
-//					}
-
+          //					}
         }
-      } else if (item.type === "Class") {
+      } else if (item.type === 'Class') {
         let source = {
-          "id": item.id,
-          label: {"en": item.label},
-          description: {"en": item.description || item.comment}
+          id: item.id,
+          label: { en: item.label },
+          description: { en: item.description || item.comment },
         };
         let t = {};
         t[item.id] = true;
         let props = this._getPropertiesForClasses(data, t);
         let propArr = [];
-        for (let p in props) {
-          if (props.hasOwnProperty(p)) {
-            propArr.push({"id": p});
-          }
-        }
+        Object.keys(props).forEach((propertyId) => {
+          propArr.push({ id: propertyId });
+        });
         if (propArr.length > 0) {
-          source["type"] = "group";
+          source['type'] = 'group';
           source.content = propArr;
           source.automatic = true;
           auxC.push(source);
@@ -105,8 +110,8 @@ export default class Converter {
     this._itemStore._createItems(auxP);
     this._itemStore._createItems(auxC);
     return {
-      properties: auxP.map(item => item["id"]),
-      classes: auxC.map(item => item["id"]),
+      properties: auxP.map((item) => item['id']),
+      classes: auxC.map((item) => item['id']),
     };
   }
 
@@ -118,10 +123,10 @@ export default class Converter {
 
     exhibit.items.forEach((item) => {
       switch (item.type) {
-        case "Property":
+        case 'Property':
           exhibit.propertyIndex[item.id] = item;
           break;
-        case "Class":
+        case 'Class':
           exhibit.classIndex[item.id] = item;
           break;
       }
@@ -129,7 +134,7 @@ export default class Converter {
     //Index ranges and domains
     exhibit.items.forEach((item) => {
       switch (item.type) {
-        case "Property":
+        case 'Property': {
           //Domains
           if (item.domain) {
             let props = exhibit.domainProperties[item.domain] || {};
@@ -148,20 +153,23 @@ export default class Converter {
             spo = exhibit.propertyIndex[spo.subPropertyOf];
           } while (spo);
           break;
-
+        }
       }
     });
   }
 
   _getPropertiesForClasses(exhibit, clss) {
     let props = {};
-    for (let cls in clss) {
-      if (clss.hasOwnProperty(cls)) {
-        if (exhibit.classIndex[cls]) {
-          this._getPropertiesForClassesRecursive(exhibit, exhibit.classIndex[cls], props, {});
-        }
+    Object.keys(clss).forEach((classId) => {
+      if (exhibit.classIndex[classId]) {
+        this._getPropertiesForClassesRecursive(
+          exhibit,
+          exhibit.classIndex[classId],
+          props,
+          {}
+        );
       }
-    }
+    });
     return props;
   }
 
@@ -171,19 +179,29 @@ export default class Converter {
     }
     parentClasses[cls.id] = true;
     let props2 = exhibit.domainProperties[cls.id];
-    for (let prop in props2) {
-      props[prop] = true;
-    }
+    Object.keys(props2).forEach((property) => {
+      props[property] = true;
+    });
     if (cls.subClassOf == null) {
       return;
     } else if (Array.isArray(cls.subClassOf)) {
       cls.subClassOf.forEach((superCls) => {
         if (exhibit.classIndex[superCls]) {
-          this._getPropertiesForClassesRecursive(exhibit, exhibit.classIndex[superCls], props, parentClasses);
+          this._getPropertiesForClassesRecursive(
+            exhibit,
+            exhibit.classIndex[superCls],
+            props,
+            parentClasses
+          );
         }
       }, this);
     } else if (exhibit.classIndex[cls.subClassOf]) {
-      this._getPropertiesForClassesRecursive(exhibit, exhibit.classIndex[cls.subClassOf], props, parentClasses);
+      this._getPropertiesForClassesRecursive(
+        exhibit,
+        exhibit.classIndex[cls.subClassOf],
+        props,
+        parentClasses
+      );
     }
   }
-};
+}

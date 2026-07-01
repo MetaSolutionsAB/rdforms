@@ -2,6 +2,12 @@ let counter = 0;
 export default class Bundle {
   /**
    * A Bundle corresponds to a set of items typically managed in a single file.
+   *
+   * @param {object} root0
+   * @param {import('./ItemStore').default} root0.itemStore
+   * @param {object} root0.source
+   * @param {string} root0.path
+   * @param {boolean} root0.readOnly
    */
   constructor({ itemStore, source, path, readOnly = false }) {
     this._itemStore = itemStore;

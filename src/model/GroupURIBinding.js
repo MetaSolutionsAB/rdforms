@@ -14,13 +14,13 @@ import ValueBinding from './ValueBinding';
  *     - TextItem without property           (GroupURIBinding)
  *     - TextItem with property rdfs:label   (ValueBinding)
  *
- * @exports {rdforms/model/GroupURIBinding}
+ * @exports GroupURIBinding
  * @class
  * @see rdforms/template/Text
  */
 export default class GroupURIBinding extends ValueBinding {
   /**
-   * @return {String} corresponding to the value, even if the nodetype is URI
+   * @returns {string} corresponding to the value, even if the nodetype is URI
    * or datatype says for example date.
    */
   getValue() {
@@ -38,11 +38,11 @@ export default class GroupURIBinding extends ValueBinding {
     return this._parent.setGist(value, silent);
   }
 
-  setSubject(uri) {
-  }
+  // No-op: this binding edits the URI itself (its value), so there is no separate subject to set.
+  setSubject() {}
 
   /**
-   * @return {String} corresponding to a uri.
+   * @returns {string} corresponding to a uri.
    */
   getPredicate() {
     return this._parent.getPredicate();
@@ -53,8 +53,7 @@ export default class GroupURIBinding extends ValueBinding {
     super.remove(arguments);
   }
 
-  updateAssertions() {
-  }
+  updateAssertions() {}
 
   isValid() {
     return true;

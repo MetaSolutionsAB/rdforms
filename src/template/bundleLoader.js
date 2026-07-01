@@ -34,7 +34,7 @@ const fetchBundle = async (urls) => {
     path = urls[i];
     try {
       response = await fetch(path);
-    } catch (e) {
+    } catch {
       throw Error(
         `A network error ocurred while trying to fetch bundle ${path}`
       );
@@ -57,7 +57,7 @@ const fetchBundle = async (urls) => {
             `Failed fetching template ${path}. Expected a JSON file and got ${contentType}`
           );
         }
-      } catch (e) {
+      } catch {
         stopFetchingOrJustLog(i, totalUrls, path);
       }
       // got back something that's not a 2xx

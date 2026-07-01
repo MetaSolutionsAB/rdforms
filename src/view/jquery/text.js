@@ -169,7 +169,7 @@ const datePresenter = (fieldDiv, binding, context) => {
   try {
     const pres = getDatePresentation(binding, context.view.getLocale());
     jquery('<div>').html(pres).appendTo(fieldDiv);
-  } catch (e) {
+  } catch {
     console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 
     (potentially with time given after a 'T' character as well) but found '${binding.getValue()}' instead.`);
   }

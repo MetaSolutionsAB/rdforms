@@ -565,7 +565,7 @@ _isPatternMatch = (item, stmt) => {
   if (typeof pattern !== 'undefined') {
     try {
       return new RegExp(`^${pattern}$`).test(value);
-    } catch (e) {
+    } catch {
       return true;
     }
   }

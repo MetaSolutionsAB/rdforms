@@ -43,7 +43,7 @@ export const getDate = (value) => {
     }
     // all other cases
     return new Date(value);
-  } catch (e) {
+  } catch {
     return null;
   }
 };

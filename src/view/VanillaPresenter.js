@@ -19,6 +19,11 @@ export default class VanillaPresenter extends Presenter {
     // Keep the flavor inside the rdforms-* namespace (the base defaults to the
     // legacy camelCase 'rdformsPresenter').
     this.styleCls = 'rdforms-presenter';
+    // Deepen the heading level for nested groups so the document outline
+    // reflects nesting (h2 → h3 → …, capped at h6).
+    if (this.parentView && typeof this.headingLevel === 'number') {
+      this.headingLevel = Math.min(this.headingLevel + 1, 6);
+    }
   }
 
   preRenderView() {
@@ -48,6 +53,34 @@ export default class VanillaPresenter extends Presenter {
     return list;
   }
 
+  // A heading-styled group renders as a <section> with an <h{level}> title
+  // (headings are not valid inside a <dt>), followed by its nested content.
+  _addHeadingSection(binding, item) {
+    const section = renderingContext.domCreate('section', this.domNode);
+    renderingContext.domClassToggle(section, 'rdforms-section', true);
+    const heading = renderingContext.domCreate(
+      `h${this.headingLevel || 2}`,
+      section
+    );
+    renderingContext.domClassToggle(heading, 'rdforms-heading', true);
+    this.addLabel(heading, binding, item);
+    const body = renderingContext.domCreate('div', section);
+    renderingContext.domClassToggle(body, 'rdforms-section-body', true);
+    this._binding2node[binding.getHash()] = body;
+    this.addComponent(body, binding);
+    // Subsequent items start a fresh list after the section.
+    this._definitionList = null;
+    return this.domNode;
+  }
+
+  addTable(lastRow, firstBinding) {
+    const description = renderingContext.domCreate('dd', this._list());
+    renderingContext.domClassToggle(description, 'rdforms-group-value', true);
+    return renderingContext.addPresenterTable(description, firstBinding, {
+      view: this,
+    });
+  }
+
   addRow(lastRow, binding, includeLabel) {
     const item = binding.getItem();
     if (this.skipBinding(binding)) {
@@ -55,6 +88,9 @@ export default class VanillaPresenter extends Presenter {
     }
     const withLabel =
       includeLabel == null ? binding instanceof GroupBinding : includeLabel;
+    if (withLabel === true && item.hasStyle('heading')) {
+      return this._addHeadingSection(binding, item);
+    }
     const list = this._list();
     if (withLabel === true) {
       this.createRowNode(lastRow, binding, item);

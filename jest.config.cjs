@@ -17,6 +17,8 @@ const shared = {
     ],
   },
   transformIgnorePatterns: ['node_modules/(?!(\\.pnpm|lodash-es|@entryscape)/)'],
+  // Flavor entries import their stylesheet; stub CSS out for tests.
+  moduleNameMapper: { '\\.(css|scss)$': '<rootDir>/test/styleMock.cjs' },
 };
 
 module.exports = {

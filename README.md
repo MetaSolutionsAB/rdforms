@@ -75,6 +75,29 @@ or
 pnpm dev:bootstrap
 ```
 
+or
+
+```js
+pnpm dev:vanilla
+```
+
+## Vanilla presentation flavor
+
+`dist/rdforms.vanilla.js` is a **presentation-only** flavor that renders semantic HTML with **no JavaScript library (React/jQuery) and no CSS framework (Bootstrap)** — for better accessibility and easier integration into host platforms. It coexists with the other flavors (load exactly one per page).
+
+- Groups → `<dl class="rdforms-group">`, labels → `<dt>`, values → `<dd>` (repeated values → repeated `<dd>`), nested groups → nested `<dl>`.
+- Heading-styled groups → `<section>` + `<h2>`/`<h3>` (level tracks nesting depth); table-styled groups → a real `<table>` with `<caption>`, `<thead>`/`<th scope="col">` and `<tbody>`; language literals carry `lang`, dates render as `<time datetime>`, and URIs/choices as `<a href>`.
+- All classes use the hyphenated **`rdforms-*`** namespace — a stable public integration surface, deliberately distinct from the other flavors' `rdforms*` camelCase classes so there is no overlap with Bootstrap.
+
+```html
+<script type="text/javascript" src="https://unpkg.com/@entryscape/rdforms/dist/rdforms.vanilla.js"></script>
+<script type="module">
+    new rdforms.VanillaPresenter({ graph, resource, template }, 'node_id');
+</script>
+```
+
+Editors are out of scope for this flavor (presentation only).
+
 ## Examples
 
 The examples serve two purposes:

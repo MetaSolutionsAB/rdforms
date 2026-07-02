@@ -1,6 +1,4 @@
-/**
- * @jest-environment jsdom
- */
+// Runs under the `jsdom` jest project (jest.config.cjs → src/view/**/*.test.js).
 import { Graph } from '@entryscape/rdfjson';
 import ItemStore from '../../template/ItemStore';
 import { match } from '../../model/engine';
@@ -15,6 +13,38 @@ const renderTemplate1 = () => {
   const binding = match(graph, 'http://example.org/about', templateRoot);
   const node = document.createElement('div');
   // Constructing the view renders it into `node`.
+  new VanillaPresenter({ binding, locale: 'en' }, node);
+  return node;
+};
+
+const renderHeadingTemplate = () => {
+  const templateRoot = new ItemStore().createTemplate({
+    root: 'root',
+    auxilliary: [
+      { '@id': 'root', '@type': 'group', content: ['personGroup'] },
+      {
+        '@id': 'personGroup',
+        '@type': 'group',
+        styles: ['heading'],
+        label: { en: 'Person' },
+        content: ['nameText'],
+      },
+      {
+        '@id': 'nameText',
+        '@type': 'text',
+        nodetype: 'LITERAL',
+        property: 'http://xmlns.com/foaf/0.1/name',
+        label: { en: 'Name' },
+      },
+    ],
+  });
+  const graph = new Graph({
+    'http://example.org/p': {
+      'http://xmlns.com/foaf/0.1/name': [{ value: 'Ada', type: 'literal' }],
+    },
+  });
+  const binding = match(graph, 'http://example.org/p', templateRoot);
+  const node = document.createElement('div');
   new VanillaPresenter({ binding, locale: 'en' }, node);
   return node;
 };
@@ -52,5 +82,46 @@ describe('VanillaPresenter — dl/dt/dd structural seam', () => {
     expect(
       node.querySelectorAll('dl.rdforms-group dl.rdforms-group').length
     ).toBeGreaterThan(0);
+  });
+
+  test('a table-styled group renders a semantic <table>', () => {
+    const node = renderTemplate1();
+    const table = node.querySelector('table.rdforms-table');
+    expect(table).not.toBeNull();
+    expect(table.querySelector('caption')).not.toBeNull();
+    const headers = table.querySelectorAll('thead th[scope="col"]');
+    expect(headers.length).toBe(2); // First name, Surname
+    const bodyRow = table.querySelector('tbody tr');
+    expect(bodyRow).not.toBeNull();
+    expect(bodyRow.textContent).toContain('Anna');
+    expect(bodyRow.textContent).toContain('Wilder');
+  });
+
+  test('a choice value renders as a labelled link', () => {
+    const node = renderTemplate1();
+    const link = node.querySelector('dd.rdforms-value a.rdforms-link');
+    expect(link).not.toBeNull();
+    expect(link.textContent).toBe('Mathematics');
+    expect(link.getAttribute('href')).toBe('http://example.com/instance1');
+  });
+
+  test('a language literal is tagged with lang', () => {
+    const node = renderTemplate1();
+    const titleValue = Array.from(
+      node.querySelectorAll('dd.rdforms-value')
+    ).find((dd) => dd.getAttribute('lang') === 'en');
+    expect(titleValue).not.toBeNull();
+    expect(titleValue.textContent).toContain("Anna's Homepage");
+  });
+
+  test('a heading-styled group renders a <section> with an <h2>', () => {
+    const node = renderHeadingTemplate();
+    const section = node.querySelector('section.rdforms-section');
+    expect(section).not.toBeNull();
+    const heading = section.querySelector('h2.rdforms-heading');
+    expect(heading).not.toBeNull();
+    expect(heading.textContent).toBe('Person');
+    // its content (the name) still renders below the heading
+    expect(section.textContent).toContain('Ada');
   });
 });

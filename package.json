@@ -103,6 +103,7 @@
     "dev:bootstrap": "webpack serve --config webpack.dev.js --env type=bootstrap",
     "dev:jquery": "webpack serve --config webpack.dev.js --env type=jquery",
     "dev:react": "webpack serve --config webpack.dev.js --env type=react",
+    "dev:vanilla": "webpack serve --config webpack.dev.js --env type=vanilla",
     "serve:samples": "webpack serve --config webpack.samples.serve.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

@@ -6,6 +6,7 @@ module.exports = {
     bootstrap: './renderers/bootstrap.js',
     react: './renderers/react.js',
     jquery: './renderers/jquery.js',
+    vanilla: './renderers/vanilla.js',
   },
   output: {
     path: path.join(__dirname, 'dist'),

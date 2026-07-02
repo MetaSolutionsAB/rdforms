@@ -1,0 +1,43 @@
+/* Minimal, namespaced styling for the vanilla presentation flavor. No CSS
+   framework, no hardcoded pixel sizes — consumers are expected to restyle. */
+
+.rdforms-group {
+  margin: 0;
+}
+
+.rdforms-label {
+  font-weight: 600;
+}
+
+.rdforms-value,
+.rdforms-group-value {
+  margin: 0 0 0.5em 1em;
+}
+
+.rdforms-section {
+  margin: 0 0 1em;
+}
+
+.rdforms-heading {
+  margin: 0 0 0.25em;
+}
+
+.rdforms-table {
+  border-collapse: collapse;
+}
+
+.rdforms-table caption {
+  text-align: left;
+  font-weight: 600;
+}
+
+.rdforms-table th,
+.rdforms-table td {
+  text-align: left;
+  padding: 0.25em 0.5em;
+  vertical-align: top;
+}
+
+.rdforms-image {
+  max-width: 100%;
+}

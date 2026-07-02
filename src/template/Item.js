@@ -99,7 +99,8 @@ export default class Item {
   }
 
   setId(id) {
-    setObjAttr(this.getSource(true), 'id', id);
+    const s = this.getSource(true);
+    setObjAttr(s, 'id', id);
     delete s['@id'];
   }
 
@@ -109,7 +110,8 @@ export default class Item {
   }
 
   setType(typeStr) {
-    setObjAttr(this.getSource(true), 'type', typeStr);
+    const s = this.getSource(true);
+    setObjAttr(s, 'type', typeStr);
     delete s['@type'];
     this.refreshExtends();
   }

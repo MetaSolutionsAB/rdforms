@@ -1,5 +1,5 @@
 import { Graph } from '@entryscape/rdfjson';
-import { match, create } from './engine';
+import { match, create, detectLevel } from './engine';
 import GroupBinding from './GroupBinding';
 import ItemStore from '../template/ItemStore';
 import { graph2 } from '../../test/fixtures/rdfjson';
@@ -163,5 +163,40 @@ describe('Engine create test', () => {
     expect(propertyGroupBinding.isValid()).toBe(true);
     expect(valueBinding.isValid()).toBe(true);
     expect(graph.find()).toHaveLength(3);
+  });
+});
+
+describe('detectLevel', () => {
+  const makeProfile = (mandatory, recommended, optional) => ({
+    mandatory,
+    recommended,
+    optional,
+  });
+
+  test('only mandatory items', () => {
+    expect(detectLevel(makeProfile(2, 0, 0))).toBe('mandatory');
+  });
+  test('only recommended items', () => {
+    expect(detectLevel(makeProfile(0, 2, 0))).toBe('recommended');
+  });
+  test('only optional items', () => {
+    // Regression: this branch was previously unreachable and fell through to 'mixed_all'.
+    expect(detectLevel(makeProfile(0, 0, 2))).toBe('optional');
+  });
+  test('mandatory and recommended items', () => {
+    expect(detectLevel(makeProfile(1, 1, 0))).toBe(
+      'mixed_mandatory_recommended'
+    );
+  });
+  test('mandatory and optional items', () => {
+    expect(detectLevel(makeProfile(1, 0, 1))).toBe('mixed_mandatory_optional');
+  });
+  test('recommended and optional items', () => {
+    expect(detectLevel(makeProfile(0, 1, 1))).toBe(
+      'mixed_recommended_optional'
+    );
+  });
+  test('a mix of all item levels', () => {
+    expect(detectLevel(makeProfile(1, 1, 1))).toBe('mixed_all');
   });
 });

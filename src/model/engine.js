@@ -898,11 +898,7 @@ const detectLevel = (profile) => {
       return 'recommended';
     }
     return 'mixed_recommended_optional';
-  } else if (
-    profile.recommended === 0 &&
-    profile.recommended > 0 &&
-    profile.optional === 0
-  ) {
+  } else if (profile.optional > 0) {
     return 'optional';
   }
   return 'mixed_all';

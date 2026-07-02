@@ -16,6 +16,11 @@ const createMatchingContext = () => ({
   graph: new Graph(graph2),
 });
 
+const matchAboutBinding = () => {
+  const { graph, template } = createMatchingContext();
+  return match(graph, 'http://example.org/about', template);
+};
+
 const createEmptyGraphContext = () => {
   const base = createStoreAndTemplate();
   const graph = new Graph({});
@@ -29,8 +34,7 @@ const createEmptyGraphContext = () => {
 
 describe('Engine matching test', () => {
   test('Matching a graph with a template', () => {
-    const { graph, template } = createMatchingContext();
-    const binding = match(graph, 'http://example.org/about', template);
+    const binding = matchAboutBinding();
     expect(binding).toBeInstanceOf(GroupBinding);
     expect(binding.getChildBindings()).toHaveLength(5); // A publisher, two titles, a subject and a creator.
     expect(binding.getItemGroupedChildBindings()[0]).toHaveLength(1); // One publisher
@@ -41,8 +45,7 @@ describe('Engine matching test', () => {
   });
 
   test('Checking matched direct values', () => {
-    const { graph, template } = createMatchingContext();
-    const binding = match(graph, 'http://example.org/about', template);
+    const binding = matchAboutBinding();
     expect(binding.getItemGroupedChildBindings()[1][0].getValue()).toBe(
       "Anna's Homepage"
     );
@@ -61,8 +64,7 @@ describe('Engine matching test', () => {
   });
 
   test('Checking matched grouped values', () => {
-    const { graph, template } = createMatchingContext();
-    const binding = match(graph, 'http://example.org/about', template);
+    const binding = matchAboutBinding();
     const authorGroupBinding = binding.getItemGroupedChildBindings()[0][0];
     expect(
       authorGroupBinding.getItemGroupedChildBindings()[0][0].getValue()
@@ -77,8 +79,7 @@ describe('Engine matching test', () => {
   });
 
   test('Checking matched PredicateGroup values', () => {
-    const { graph, template } = createMatchingContext();
-    const binding = match(graph, 'http://example.org/about', template);
+    const binding = matchAboutBinding();
     expect(
       binding
         .getItemGroupedChildBindings()[4][0]

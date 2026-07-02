@@ -29,32 +29,32 @@ describe('Binding-creation', () => {
 const createSingleValueBindings = () => {
   const { itemStore, root } = createTemplateRoot();
   const graph = new Graph({});
-  const makerStatement = graph.create(uris[0], predicates[1], {
+  const titleSlotStatement = graph.create(uris[0], predicates[0], {
     type: 'literal',
     value: 'Hepp',
   });
   const rootGroupBinding = new GroupBinding({ item: root });
-  const makerBinding = new ValueBinding({
+  const titleSlotBinding = new ValueBinding({
     item: root.getChildren()[1],
-    statement: makerStatement,
+    statement: titleSlotStatement,
   });
   return {
     graph,
-    makerStatement,
+    titleSlotStatement,
     itemStore,
     root,
     rootGroupBinding,
-    makerBinding,
+    titleSlotBinding,
   };
 };
 
 describe('Binding-hierarchy', () => {
   test('Adding childrenbindings', () => {
-    const { rootGroupBinding, makerBinding } = createSingleValueBindings();
+    const { rootGroupBinding, titleSlotBinding } = createSingleValueBindings();
     expect(rootGroupBinding.getChildBindings()).toHaveLength(0);
-    rootGroupBinding.addChildBinding(makerBinding);
+    rootGroupBinding.addChildBinding(titleSlotBinding);
     expect(rootGroupBinding.getChildBindings()).toHaveLength(1);
-    rootGroupBinding.removeChildBinding(makerBinding);
+    rootGroupBinding.removeChildBinding(titleSlotBinding);
     expect(rootGroupBinding.getChildBindings()).toHaveLength(0);
   });
 });
@@ -93,16 +93,22 @@ const createPersonHierarchyContext = () => {
   };
 };
 
+const createRootAndTitleBindings = (context) => {
+  const { root, titleStatement } = context;
+  const rootGroupBinding = new GroupBinding({ item: root });
+  const titleBinding = new ValueBinding({
+    item: root.getChildren()[1],
+    statement: titleStatement,
+  });
+  return { rootGroupBinding, titleBinding };
+};
+
 const createGroupHierarchy = () => {
   const context = createPersonHierarchyContext();
-  const {
-    root,
-    creatorStatement,
-    personTypeStatement,
-    firstnameStatement,
-    titleStatement,
-  } = context;
-  const rootGroupBinding = new GroupBinding({ item: root });
+  const { root, creatorStatement, personTypeStatement, firstnameStatement } =
+    context;
+  const { rootGroupBinding, titleBinding } =
+    createRootAndTitleBindings(context);
   const authorGroupBinding = new GroupBinding({
     item: root.getChildren()[0],
     statement: creatorStatement,
@@ -111,10 +117,6 @@ const createGroupHierarchy = () => {
   const firstnameBinding = new ValueBinding({
     item: root.getChildren()[0].getChildren()[0],
     statement: firstnameStatement,
-  });
-  const titleBinding = new ValueBinding({
-    item: root.getChildren()[1],
-    statement: titleStatement,
   });
   rootGroupBinding.addChildBinding(authorGroupBinding);
   authorGroupBinding.addChildBinding(firstnameBinding);
@@ -130,14 +132,10 @@ const createGroupHierarchy = () => {
 
 const createPropertyGroupHierarchy = () => {
   const context = createPersonHierarchyContext();
-  const {
-    root,
-    creatorStatement,
-    personTypeStatement,
-    firstnameStatement,
-    titleStatement,
-  } = context;
-  const rootGroupBinding = new GroupBinding({ item: root });
+  const { root, creatorStatement, personTypeStatement, firstnameStatement } =
+    context;
+  const { rootGroupBinding, titleBinding } =
+    createRootAndTitleBindings(context);
   const contributionBinding = new PropertyGroupBinding({
     item: root.getChildren()[4],
     statement: creatorStatement,
@@ -146,10 +144,6 @@ const createPropertyGroupHierarchy = () => {
   const firstnameBinding = new ValueBinding({
     item: root.getChildren()[4].getChildren()[1].getChildren()[0],
     statement: firstnameStatement,
-  });
-  const titleBinding = new ValueBinding({
-    item: root.getChildren()[1],
-    statement: titleStatement,
   });
   rootGroupBinding.addChildBinding(contributionBinding);
   contributionBinding.getObjectBinding().addChildBinding(firstnameBinding);
@@ -165,17 +159,18 @@ const createPropertyGroupHierarchy = () => {
 
 describe('Binding-assertions', () => {
   test('Changing values', () => {
-    const { makerStatement, rootGroupBinding, makerBinding } =
+    const { titleSlotStatement, rootGroupBinding, titleSlotBinding } =
       createSingleValueBindings();
-    rootGroupBinding.addChildBinding(makerBinding);
-    expect(makerStatement.isAsserted()).toBe(true);
-    makerBinding.setValue('');
-    expect(makerStatement.isAsserted()).toBe(false);
-    makerBinding.setValue('hopp');
-    expect(makerStatement.isAsserted()).toBe(true);
+    rootGroupBinding.addChildBinding(titleSlotBinding);
+    expect(titleSlotStatement.isAsserted()).toBe(true);
+    titleSlotBinding.setValue('');
+    expect(titleSlotStatement.isAsserted()).toBe(false);
+    titleSlotBinding.setValue('hopp');
+    expect(titleSlotStatement.isAsserted()).toBe(true);
+    expect(titleSlotStatement.getValue()).toBe('hopp');
     // setValue requires a string or null (Binding._isValidObjectValue throws otherwise); null is the clear value.
-    makerBinding.setValue(null);
-    expect(makerStatement.isAsserted()).toBe(false);
+    titleSlotBinding.setValue(null);
+    expect(titleSlotStatement.isAsserted()).toBe(false);
   });
 
   test('Changing values in hierarchy', () => {
@@ -213,7 +208,7 @@ describe('Binding-assertions', () => {
     } = createGroupHierarchy();
     const surnameStatement = graph.create(
       '_:person',
-      'http://xmlns.com/foaf/0.1/surame',
+      'http://xmlns.com/foaf/0.1/surname',
       { type: 'literal', value: 'Wilder' }
     );
     const surnameBinding = new ValueBinding({

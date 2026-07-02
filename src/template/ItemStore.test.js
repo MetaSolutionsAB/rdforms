@@ -21,6 +21,8 @@ describe('Create-ItemStore', () => {
       auxilliary: [{ '@id': 'emptyRoot', '@type': 'group', content: [] }],
     });
     expect(template).toBeInstanceOf(Group);
+    expect(template.getChildren()).toHaveLength(0);
+    expect(template.getId()).toBe('emptyRoot');
   });
 
   test('createTemplateFromSource', () => {

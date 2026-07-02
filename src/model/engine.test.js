@@ -199,4 +199,8 @@ describe('detectLevel', () => {
   test('a mix of all item levels', () => {
     expect(detectLevel(makeProfile(1, 1, 1))).toBe('mixed_all');
   });
+  test('an empty profile (no items) falls through to mixed_all', () => {
+    // The `optional > 0` guard routes (0,0,0) past 'optional' into 'mixed_all'.
+    expect(detectLevel(makeProfile(0, 0, 0))).toBe('mixed_all');
+  });
 });

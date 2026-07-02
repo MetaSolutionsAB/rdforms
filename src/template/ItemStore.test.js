@@ -1,8 +1,8 @@
-import ItemStore from '../../src/template/ItemStore';
-import Group from '../../src/template/Group';
-import PropertyGroup from '../../src/template/PropertyGroup';
-import Choice from '../../src/template/Choice';
-import template1 from '../fixtures/template1';
+import ItemStore from './ItemStore';
+import Group from './Group';
+import PropertyGroup from './PropertyGroup';
+import Choice from './Choice';
+import template1 from '../../test/fixtures/template1';
 
 const buildTemplate1 = () => new ItemStore().createTemplate(template1);
 

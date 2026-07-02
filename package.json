@@ -91,7 +91,8 @@
     "dist",
     "src",
     "main*",
-    "renderers"
+    "renderers",
+    "!src/**/*.test.js"
   ],
   "scripts": {
     "build:all": "webpack --mode=production --config webpack.all.js",

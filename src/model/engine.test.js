@@ -1,9 +1,9 @@
 import { Graph } from '@entryscape/rdfjson';
-import { match, create } from '../../src/model/engine';
-import GroupBinding from '../../src/model/GroupBinding';
-import ItemStore from '../../src/template/ItemStore';
-import { graph2 } from '../fixtures/rdfjson';
-import template1 from '../fixtures/template1';
+import { match, create } from './engine';
+import GroupBinding from './GroupBinding';
+import ItemStore from '../template/ItemStore';
+import { graph2 } from '../../test/fixtures/rdfjson';
+import template1 from '../../test/fixtures/template1';
 
 const createStoreAndTemplate = () => {
   const itemStore = new ItemStore();

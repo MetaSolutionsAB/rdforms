@@ -1,10 +1,10 @@
 import { Graph } from '@entryscape/rdfjson';
-import GroupBinding from '../../src/model/GroupBinding';
-import PropertyGroupBinding from '../../src/model/PropertyGroupBinding';
-import ValueBinding from '../../src/model/ValueBinding';
-import ItemStore from '../../src/template/ItemStore';
-import { uris, predicates } from '../fixtures/rdfjson';
-import template1 from '../fixtures/template1';
+import GroupBinding from './GroupBinding';
+import PropertyGroupBinding from './PropertyGroupBinding';
+import ValueBinding from './ValueBinding';
+import ItemStore from '../template/ItemStore';
+import { uris, predicates } from '../../test/fixtures/rdfjson';
+import template1 from '../../test/fixtures/template1';
 
 const createTemplateRoot = () => {
   const itemStore = new ItemStore();

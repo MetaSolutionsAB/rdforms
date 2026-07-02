@@ -42,8 +42,13 @@ describe('Create-ItemStore', () => {
     expect(choice).toBeInstanceOf(Choice);
     const choices = await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(
-        () => reject(new Error('getDynamicChoices never invoked its callback — ontology lookup miss')),
-        1000,
+        () =>
+          reject(
+            new Error(
+              'getDynamicChoices never invoked its callback — ontology lookup miss'
+            )
+          ),
+        1000
       );
       choice.getDynamicChoices((result) => {
         clearTimeout(timeoutId);

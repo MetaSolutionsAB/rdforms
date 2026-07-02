@@ -11,12 +11,19 @@ const createStoreAndTemplate = () => {
   return { itemStore, template };
 };
 
-const createMatchingContext = () => ({ ...createStoreAndTemplate(), graph: new Graph(graph2) });
+const createMatchingContext = () => ({
+  ...createStoreAndTemplate(),
+  graph: new Graph(graph2),
+});
 
 const createEmptyGraphContext = () => {
   const base = createStoreAndTemplate();
   const graph = new Graph({});
-  const rootBinding = new GroupBinding({ item: base.template, childrenRootUri: 'http://example.org/about', graph });
+  const rootBinding = new GroupBinding({
+    item: base.template,
+    childrenRootUri: 'http://example.org/about',
+    graph,
+  });
   return { ...base, graph, rootBinding };
 };
 
@@ -36,29 +43,62 @@ describe('Engine matching test', () => {
   test('Checking matched direct values', () => {
     const { graph, template } = createMatchingContext();
     const binding = match(graph, 'http://example.org/about', template);
-    expect(binding.getItemGroupedChildBindings()[1][0].getValue()).toBe("Anna's Homepage");
-    expect(binding.getItemGroupedChildBindings()[1][0].getLanguage()).toBe('en');
-    expect(binding.getItemGroupedChildBindings()[1][1].getValue()).toBe('Anna hemsida');
-    expect(binding.getItemGroupedChildBindings()[1][1].getLanguage()).toBe('sv');
-    expect(binding.getItemGroupedChildBindings()[3][0].getValue()).toBe('http://example.com/instance1');
+    expect(binding.getItemGroupedChildBindings()[1][0].getValue()).toBe(
+      "Anna's Homepage"
+    );
+    expect(binding.getItemGroupedChildBindings()[1][0].getLanguage()).toBe(
+      'en'
+    );
+    expect(binding.getItemGroupedChildBindings()[1][1].getValue()).toBe(
+      'Anna hemsida'
+    );
+    expect(binding.getItemGroupedChildBindings()[1][1].getLanguage()).toBe(
+      'sv'
+    );
+    expect(binding.getItemGroupedChildBindings()[3][0].getValue()).toBe(
+      'http://example.com/instance1'
+    );
   });
 
   test('Checking matched grouped values', () => {
     const { graph, template } = createMatchingContext();
     const binding = match(graph, 'http://example.org/about', template);
     const authorGroupBinding = binding.getItemGroupedChildBindings()[0][0];
-    expect(authorGroupBinding.getItemGroupedChildBindings()[0][0].getValue()).toBe('Anna');
-    expect(authorGroupBinding.getItemGroupedChildBindings()[0][1].getValue()).toBe('Annie');
-    expect(authorGroupBinding.getItemGroupedChildBindings()[1][0].getValue()).toBe('Wilder');
+    expect(
+      authorGroupBinding.getItemGroupedChildBindings()[0][0].getValue()
+    ).toBe('Anna');
+    expect(
+      authorGroupBinding.getItemGroupedChildBindings()[0][1].getValue()
+    ).toBe('Annie');
+    expect(
+      authorGroupBinding.getItemGroupedChildBindings()[1][0].getValue()
+    ).toBe('Wilder');
     expect(binding.getItemGroupedChildBindings()[4]).toHaveLength(1); // One contributor
   });
 
   test('Checking matched PredicateGroup values', () => {
     const { graph, template } = createMatchingContext();
     const binding = match(graph, 'http://example.org/about', template);
-    expect(binding.getItemGroupedChildBindings()[4][0].getPredicateBinding().getValue()).toBe('http://purl.org/dc/terms/creator');
-    expect(binding.getItemGroupedChildBindings()[4][0].getObjectBinding().getItemGroupedChildBindings()[0][0].getValue()).toBe('Steve');
-    expect(binding.getItemGroupedChildBindings()[4][0].getObjectBinding().getItemGroupedChildBindings()[1][0].getValue()).toBe('Jobs');
+    expect(
+      binding
+        .getItemGroupedChildBindings()[4][0]
+        .getPredicateBinding()
+        .getValue()
+    ).toBe('http://purl.org/dc/terms/creator');
+    expect(
+      binding
+        .getItemGroupedChildBindings()[4][0]
+        .getObjectBinding()
+        .getItemGroupedChildBindings()[0][0]
+        .getValue()
+    ).toBe('Steve');
+    expect(
+      binding
+        .getItemGroupedChildBindings()[4][0]
+        .getObjectBinding()
+        .getItemGroupedChildBindings()[1][0]
+        .getValue()
+    ).toBe('Jobs');
   });
 });
 
@@ -82,7 +122,10 @@ describe('Engine create test', () => {
     expect(groupBinding.getParent()).toBe(rootBinding);
     expect(groupBinding.isValid()).toBe(false);
     expect(graph.find()).toHaveLength(0);
-    const valueBinding = create(groupBinding, template.getChildren()[0].getChildren()[0]);
+    const valueBinding = create(
+      groupBinding,
+      template.getChildren()[0].getChildren()[0]
+    );
     expect(groupBinding.isValid()).toBe(false);
     expect(valueBinding.isValid()).toBe(false);
     expect(graph.find()).toHaveLength(0);
@@ -99,7 +142,10 @@ describe('Engine create test', () => {
     expect(propertyGroupBinding.isValid()).toBe(false);
     expect(graph.find()).toHaveLength(0);
     const groupBinding = propertyGroupBinding.getObjectBinding();
-    const valueBinding = create(groupBinding, groupBinding.getItem().getChildren()[0]);
+    const valueBinding = create(
+      groupBinding,
+      groupBinding.getItem().getChildren()[0]
+    );
     expect(groupBinding.isValid()).toBe(false);
     expect(propertyGroupBinding.isValid()).toBe(false);
     expect(valueBinding.isValid()).toBe(false);
@@ -109,7 +155,9 @@ describe('Engine create test', () => {
     expect(propertyGroupBinding.isValid()).toBe(false);
     expect(valueBinding.isValid()).toBe(true);
     expect(graph.find()).toHaveLength(0);
-    propertyGroupBinding.getPredicateBinding().setValue('http://purl.org/dc/terms/creator');
+    propertyGroupBinding
+      .getPredicateBinding()
+      .setValue('http://purl.org/dc/terms/creator');
     expect(groupBinding.isValid()).toBe(true);
     expect(propertyGroupBinding.isValid()).toBe(true);
     expect(valueBinding.isValid()).toBe(true);

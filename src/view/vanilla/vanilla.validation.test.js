@@ -57,7 +57,9 @@ describe('VanillaValidationPresenter', () => {
     expect(node.querySelector('dt.rdforms-label')).not.toBeNull();
     expect(node.querySelector('dd.rdforms-value')).not.toBeNull();
     // No legacy div structure leaks through.
-    expect(node.querySelector('.rdformsRow, .rdformsField, .rdformsFields')).toBeNull();
+    expect(
+      node.querySelector('.rdformsRow,   .rdformsField, .rdformsFields')
+    ).toBeNull();
   });
 
   test('a missing mandatory value gets an error class and an alert message', () => {

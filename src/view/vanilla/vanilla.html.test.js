@@ -8,11 +8,11 @@ import { VanillaPresenter } from './all';
 
 const RESOURCE = 'http://example.org/r';
 
-const render = (source, graphData) => {
+const render = (source, graphData, viewParams = {}) => {
   const root = new ItemStore().createTemplate(source);
   const binding = match(new Graph(graphData), RESOURCE, root);
   const node = document.createElement('div');
-  new VanillaPresenter({ binding, locale: 'en' }, node);
+  new VanillaPresenter({ binding, locale: 'en', ...viewParams }, node);
   return node.innerHTML;
 };
 
@@ -36,6 +36,7 @@ const TITLE = 'http://purl.org/dc/terms/title';
 const MAKER = 'http://xmlns.com/foaf/0.1/maker';
 const FIRST = 'http://xmlns.com/foaf/0.1/firstName';
 const LAST = 'http://xmlns.com/foaf/0.1/lastName';
+const GIVEN = 'http://xmlns.com/foaf/0.1/givenName';
 
 const CASES = {
   single: [
@@ -87,6 +88,42 @@ const CASES = {
       ],
     },
     { [RESOURCE]: { [NAME]: [{ value: 'Ada', type: 'literal' }] } },
+  ],
+  deepHeading: [
+    {
+      root: 'root',
+      auxilliary: [
+        { '@id': 'root', '@type': 'group', content: [{ '@id': 'levelA' }] },
+        {
+          '@id': 'levelA',
+          '@type': 'group',
+          styles: ['heading'],
+          label: { en: 'Level A' },
+          content: [text(NAME, 'A name'), { '@id': 'levelB' }],
+        },
+        {
+          '@id': 'levelB',
+          '@type': 'group',
+          styles: ['heading'],
+          label: { en: 'Level B' },
+          content: [text(NICK, 'B name'), { '@id': 'levelC' }],
+        },
+        {
+          '@id': 'levelC',
+          '@type': 'group',
+          styles: ['heading'],
+          label: { en: 'Level C' },
+          content: [text(GIVEN, 'C name')],
+        },
+      ],
+    },
+    {
+      [RESOURCE]: {
+        [NAME]: [{ value: 'Top', type: 'literal' }],
+        [NICK]: [{ value: 'Middle', type: 'literal' }],
+        [GIVEN]: [{ value: 'Deep', type: 'literal' }],
+      },
+    },
   ],
   table: [
     template({
@@ -161,6 +198,70 @@ describe('vanilla flavor — generated HTML for given data', () => {
              <dt class="rdforms-label">Name</dt>
              <dd class="rdforms-value">Ada</dd>
            </dl>
+         </div>
+       </section>`)
+    );
+  });
+
+  test('deeply nested heading groups → h2/h3/h4 outline', () => {
+    expect(goldenHtml('deepHeading')).toBe(
+      normalize(`<section class="rdforms-section">
+         <h2 class="rdforms-heading">Level A</h2>
+         <div class="rdforms-section-body rdforms rdforms-presenter compact">
+           <dl class="rdforms-group">
+             <dt class="rdforms-label">A name</dt>
+             <dd class="rdforms-value">Top</dd>
+           </dl>
+           <section class="rdforms-section">
+             <h3 class="rdforms-heading">Level B</h3>
+             <div class="rdforms-section-body rdforms rdforms-presenter compact">
+               <dl class="rdforms-group">
+                 <dt class="rdforms-label">B name</dt>
+                 <dd class="rdforms-value">Middle</dd>
+               </dl>
+               <section class="rdforms-section">
+                 <h4 class="rdforms-heading">Level C</h4>
+                 <div class="rdforms-section-body rdforms rdforms-presenter compact">
+                   <dl class="rdforms-group">
+                     <dt class="rdforms-label">C name</dt>
+                     <dd class="rdforms-value">Deep</dd>
+                   </dl>
+                 </div>
+               </section>
+             </div>
+           </section>
+         </div>
+       </section>`)
+    );
+  });
+
+  test('headingLevel param sets the start level (h4→h5→h6, capped at h6)', () => {
+    expect(normalize(render(...CASES.deepHeading, { headingLevel: 4 }))).toBe(
+      normalize(`<section class="rdforms-section">
+         <h4 class="rdforms-heading">Level A</h4>
+         <div class="rdforms-section-body rdforms rdforms-presenter compact">
+           <dl class="rdforms-group">
+             <dt class="rdforms-label">A name</dt>
+             <dd class="rdforms-value">Top</dd>
+           </dl>
+           <section class="rdforms-section">
+             <h5 class="rdforms-heading">Level B</h5>
+             <div class="rdforms-section-body rdforms rdforms-presenter compact">
+               <dl class="rdforms-group">
+                 <dt class="rdforms-label">B name</dt>
+                 <dd class="rdforms-value">Middle</dd>
+               </dl>
+               <section class="rdforms-section">
+                 <h6 class="rdforms-heading">Level C</h6>
+                 <div class="rdforms-section-body rdforms rdforms-presenter compact">
+                   <dl class="rdforms-group">
+                     <dt class="rdforms-label">C name</dt>
+                     <dd class="rdforms-value">Deep</dd>
+                   </dl>
+                 </div>
+               </section>
+             </div>
+           </section>
          </div>
        </section>`)
     );

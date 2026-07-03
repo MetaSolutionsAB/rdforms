@@ -64,6 +64,13 @@ const pagePlugins = flavors.flatMap((flavor) =>
         ...(flavor === 'vanilla'
           ? [{ path: `/${flavor}/vanillaCssToggle.js`, type: 'js', publicPath: false }]
           : []),
+        // Example nav chrome (dev only): "← Examples" back link + the flavor
+        // being viewed appended to the <h1>.
+        {
+          path: `/${flavor}/exampleNav.js?flavor=${flavor}`,
+          type: 'js',
+          publicPath: false,
+        },
       ],
     }),
   ])

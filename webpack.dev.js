@@ -72,6 +72,13 @@ const getHTMLPlugins = (type) => {
                   },
                 ]
               : []),
+            // Example nav chrome (dev only): "← Examples" back link + the flavor
+            // being viewed appended to the <h1>.
+            {
+              path: `/exampleNav.js?flavor=${type}`,
+              type: 'js',
+              publicPath: false,
+            },
           ],
           append: true,
         })

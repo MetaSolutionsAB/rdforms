@@ -119,6 +119,8 @@ pnpm dev:vanilla
 </script>
 ```
 
+The flavor also ships a `ValidationPresenter` (`new rdforms.ValidationPresenter({ graph, resource, template }, 'node_id')`) that renders the same semantic HTML with validation markers — an `error`/`warning`/`deprecated` class on the affected value and a `<p class="rdforms-validation …" role="alert">` message.
+
 Editors are out of scope for this flavor (presentation only).
 
 ## Examples

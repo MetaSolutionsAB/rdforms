@@ -41,3 +41,38 @@
 .rdforms-image {
   max-width: 100%;
 }
+
+/* Validation report. The error/warning/deprecated state classes are toggled on
+   the field node by the shared validation logic (same names across all flavors);
+   the message paragraph is namespaced. Colors only — no framework. */
+.rdforms-value.error,
+.rdforms-label.error {
+  color: #b00020;
+}
+
+.rdforms-value.warning,
+.rdforms-label.warning {
+  color: #8a6d00;
+}
+
+.rdforms-value.deprecated,
+.rdforms-label.deprecated {
+  color: #666;
+}
+
+.rdforms-validation {
+  margin: 0.125em 0 0;
+  font-size: 0.875em;
+}
+
+.rdforms-validation-error {
+  color: #b00020;
+}
+
+.rdforms-validation-warning {
+  color: #8a6d00;
+}
+
+.rdforms-validation-deprecated {
+  color: #666;
+}

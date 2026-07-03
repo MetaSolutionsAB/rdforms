@@ -51,3 +51,21 @@ renderingContext.domClassToggle = (node, classStr, addOrRemove) => {
       node.classList[addOrRemove ? 'add' : 'remove'](cls);
     });
 };
+
+// Validation report output for the vanilla flavor: a plain <p> in the
+// rdforms-* namespace, no icon font or CSS framework. Errors are announced
+// assertively (role="alert"); warnings and deprecations use role="status".
+renderingContext.renderValidationMessage = (fieldNode, type, message) => {
+  const paragraph = renderingContext.domCreate('p', fieldNode);
+  renderingContext.domClassToggle(
+    paragraph,
+    `rdforms-validation rdforms-validation-${type}`,
+    true
+  );
+  renderingContext.domSetAttr(
+    paragraph,
+    'role',
+    type === 'error' ? 'alert' : 'status'
+  );
+  renderingContext.domText(paragraph, message);
+};

@@ -1,8 +1,8 @@
 import showEditorFallbackNotice from '../editorFallbackNotice.js';
 
 const { Graph } = rdfjson;
-// Presentation-only flavors (vanilla) export no Editor; fall back to the
-// presenter so the example renders read-only instead of throwing.
+// Presentation-only flavors (jQuery and Vanilla) export no Editor; fall back
+// to the presenter so the example renders read-only instead of throwing.
 const { ItemStore, Editor, Presenter } = rdforms;
 const graph = new Graph({
   'http://example.org/about': {

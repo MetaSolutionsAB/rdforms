@@ -13,6 +13,8 @@
       flavor =
         new URL(scriptTag.src, location.href).searchParams.get('flavor') || '';
     } catch (error) {
+      // A relative or malformed src can't be parsed as a URL; that's expected —
+      // fall through to URL-path detection below rather than failing.
       flavor = '';
     }
   }

@@ -16,8 +16,8 @@ const bundles = [
 ];
 
 const { Graph } = rdfjson;
-// Presentation-only flavors (vanilla) export no Editor; fall back to the
-// presenter so the example renders read-only instead of throwing.
+// Presentation-only flavors (jQuery and Vanilla) export no Editor; fall back
+// to the presenter so the example renders read-only instead of throwing.
 const { ItemStore, bundleLoader, Editor, Presenter } = rdforms;
 
 bundleLoader(new ItemStore(), bundles, (loadedBundles) => {

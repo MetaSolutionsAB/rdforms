@@ -142,7 +142,7 @@ The vanilla example pages (under both `dev:vanilla` and `dev:all`) include a **"
 </script>
 ```
 
-The flavor also ships a `ValidationPresenter` (`new rdforms.ValidationPresenter({ graph, resource, template }, 'node_id')`) that renders the same semantic HTML with validation markers — an `error`/`warning`/`deprecated` class on the affected value and a `<p class="rdforms-validation …" role="alert">` message.
+The flavor also ships a `ValidationPresenter` (`new rdforms.ValidationPresenter({ graph, resource, template }, 'node_id')`) that renders the same semantic HTML with validation markers — an `error`/`warning`/`deprecated` class on the affected value and a `<p class="rdforms-validation …">` message (`role="alert"` for errors, `role="status"` for warnings and deprecations).
 
 ### Styling is opt-in
 
@@ -170,7 +170,7 @@ The example sources live in the `html/` directory — one folder per example (`e
 - **Dev server (live reload)** — `pnpm dev:<flavor>` (`react`, `bootstrap`, `jquery` or `vanilla`) starts webpack-dev-server, opens your browser, and serves each example at `http://localhost:8080/example<n>/`. The flavor you launch decides which bundle the examples load, so it's the quickest way to try a template against a specific flavor.
 - **Built samples** — `pnpm build:samples` then `pnpm serve:samples` writes static copies under `samples/<flavor>/` and serves them at `http://localhost:8080/<flavor>/example<n>/` (the links below use this layout).
 
-Note: the editor examples (e.g. example1) need an editor-capable flavor (`react`/`bootstrap`/`jquery`); the `vanilla` flavor is presentation-only.
+Note: the editor examples (e.g. example1) need an editor-capable flavor (`react` or `bootstrap`); the `jquery` and `vanilla` flavors are presentation-only, so editor examples fall back to a read-only presenter under them.
 
 The examples are outlined below:
 

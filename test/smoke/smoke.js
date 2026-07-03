@@ -23,10 +23,14 @@ async function checkPage(browser, flavor, example) {
       return;
     }
     const text = message.text();
-    // Failed subresource loads (e.g. the Roboto web font from a CDN) log as
-    // console errors but are cosmetic; genuinely load-critical failures
-    // (templates, rdfjson, the bundle) instead surface as a render timeout below.
-    if (/Failed to load resource/i.test(text)) {
+    // Failed subresource loads log as console errors; ignore ONLY the cosmetic
+    // CDN assets (Roboto web font, FontAwesome). Load-critical failures
+    // (templates, rdfjson, the flavor bundle) must still fail the run — do not
+    // filter them (they usually also surface as the render timeout below).
+    if (
+      /Failed to load resource/i.test(text) &&
+      /fonts\.googleapis\.com|fontawesome|roboto/i.test(text)
+    ) {
       return;
     }
     errors.push(text);

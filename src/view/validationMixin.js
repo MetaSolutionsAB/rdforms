@@ -54,9 +54,6 @@ export default (Base) =>
       if (item.hasStyle('atLeastOneChild') || item.hasStyle('exactlyOneChild')) {
         return true;
       }
-      if (item.hasStyle('atLeastOneChild') || item.hasStyle('exactlyOneChild')) {
-        return true;
-      }
       const code = this.binding.getMatchingCode();
       if (code === CODES.MISSING_CONSTRAINTS || code === CODES.WRONG_NODETYPE) {
         return false;
@@ -87,7 +84,7 @@ export default (Base) =>
      * otherwise same as input bindings.
      */
     prepareBindings(item, bindings) {
-      let _bindings = bindings;
+      let paddedBindings = bindings;
       const card = item.getCardinality();
       let target;
       const min = card.min != null ? card.min : 0;
@@ -120,24 +117,24 @@ export default (Base) =>
       const groupError =
         code === CODES.MISSING_CONSTRAINTS || code === CODES.WRONG_NODETYPE;
       if (
-        target > _bindings.length &&
+        target > paddedBindings.length &&
         groupChildRequirementHinder &&
         !groupError
       ) {
-        _bindings = _bindings.concat([]);
-        while (target > _bindings.length) {
+        paddedBindings = paddedBindings.concat([]);
+        while (target > paddedBindings.length) {
           const binding = create(this.binding, item);
-          if (_bindings.length < min) {
+          if (paddedBindings.length < min) {
             binding.setMatchingCode(CODES.TOO_FEW_VALUES_MIN);
             // binding.error = CODES.TOO_FEW_VALUES;
-          } else if (_bindings.length < pref) {
+          } else if (paddedBindings.length < pref) {
             binding.setMatchingCode(CODES.TOO_FEW_VALUES_PREF);
             // binding.warning = CODES.TOO_FEW_VALUES;
           }
-          _bindings.push(binding);
+          paddedBindings.push(binding);
         }
       }
-      return _bindings;
+      return paddedBindings;
     }
 
     skipBinding() {
@@ -161,37 +158,37 @@ export default (Base) =>
       const warning = code === CODES.TOO_FEW_VALUES_PREF;
       if (error) {
         renderingContext.domClassToggle(fieldDiv, 'error', true);
-        let tmpl;
+        let message;
         if (code === CODES.TOO_FEW_VALUES_MIN) {
-          tmpl = localize(this.messages, 'validation_min_required', min);
+          message = localize(this.messages, 'validation_min_required', min);
         } else if (code === CODES.TOO_MANY_VALUES) {
-          tmpl = localize(this.messages, 'validation_max', card.max || 1);
+          message = localize(this.messages, 'validation_max', card.max || 1);
         } else if (code === CODES.AT_MOST_ONE_CHILD) {
-          tmpl = this.messages.validation_at_most_one_child;
+          message = this.messages.validation_at_most_one_child;
         } else if (code === CODES.AT_LEAST_ONE_CHILD) {
-          tmpl = this.messages.validation_at_least_one_child;
+          message = this.messages.validation_at_least_one_child;
         } else if (code === CODES.EXACTLY_ONE_CHILD) {
-          tmpl = this.messages.validation_exactly_one_child;
+          message = this.messages.validation_exactly_one_child;
         } else if (code === CODES.WRONG_NODETYPE) {
-          tmpl = this.messages.validation_nodetype;
+          message = this.messages.validation_nodetype;
         } else if (code === CODES.WRONG_VALUE) {
-          tmpl = this.messages.validation_value;
+          message = this.messages.validation_value;
         } else if (code === CODES.WRONG_DATATYPE) {
-          tmpl = this.messages.validation_datatype;
+          message = this.messages.validation_datatype;
         } else if (code === CODES.MISSING_CONSTRAINTS) {
-          tmpl = this.messages.validation_constraints;
+          message = this.messages.validation_constraints;
         } else if (code === CODES.WRONG_PATTERN) {
-          tmpl = this.messages.validation_pattern;
+          message = this.messages.validation_pattern;
         } else if (code === CODES.MISSING_LANGUAGE) {
-          tmpl = this.messages.validation_language;
+          message = this.messages.validation_language;
         }
 
-        renderingContext.renderValidationMessage(fieldDiv, 'error', tmpl);
+        renderingContext.renderValidationMessage(fieldDiv, 'error', message);
         return true;
       } else if (warning) {
         renderingContext.domClassToggle(fieldDiv, 'warning', true);
-        const tmpl = localize(this.messages, 'validation_min_recommended', pref);
-        renderingContext.renderValidationMessage(fieldDiv, 'warning', tmpl);
+        const message = localize(this.messages, 'validation_min_recommended', pref);
+        renderingContext.renderValidationMessage(fieldDiv, 'warning', message);
         return true;
       } else if (item.hasStyle('deprecated')) {
         renderingContext.domClassToggle(fieldDiv, 'deprecated', true);

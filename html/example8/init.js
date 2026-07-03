@@ -14,8 +14,9 @@ const bundles = [['../templates/dcterms.json'],
   ['../templates/dcat_props.json'],
   ['../templates/dcat.json']];
 
-// Presentation-only flavors (vanilla) export no LevelEditor; fall back to the
-// presenter so the example renders read-only instead of throwing.
+// Only the bootstrap flavor ships a LevelEditor; every other flavor (React,
+// jQuery, Vanilla) falls back to the presenter so the example renders read-only
+// instead of throwing.
 const { ItemStore, bundleLoader, LevelEditor, Presenter } = rdforms;
 const itemStore = new ItemStore();
 const { Graph } = rdfjson;

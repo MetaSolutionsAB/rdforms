@@ -59,6 +59,11 @@ const pagePlugins = flavors.flatMap((flavor) =>
           attributes: { type: 'module' },
           publicPath: false,
         },
+        // Vanilla styling is opt-in (the bundle injects no CSS); add the dev
+        // checkbox that links + toggles the standalone sheet, vanilla pages only.
+        ...(flavor === 'vanilla'
+          ? [{ path: `/${flavor}/vanillaCssToggle.js`, type: 'js', publicPath: false }]
+          : []),
       ],
     }),
   ])
@@ -151,6 +156,11 @@ module.exports = merge(common, {
     open: true,
     static: [
       ...flavorStaticMounts,
+      // Serve the opt-in vanilla stylesheet from source so the toggle can link it.
+      {
+        directory: path.join(__dirname, 'src', 'view', 'vanilla'),
+        publicPath: '/vanilla-css',
+      },
       { directory: path.join(__dirname, 'node_modules', '@entryscape') },
       { directory: path.join(__dirname, 'node_modules', '@fortawesome') },
     ],

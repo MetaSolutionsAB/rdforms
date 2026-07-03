@@ -6,7 +6,7 @@ const path = require('path');
 const common = require('./webpack.common');
 const examples = [1, 2, 3, 4, 5, 6, 7, 8];
 
-const getHTMLPlugins = () => {
+const getHTMLPlugins = (type) => {
   return [
     // create all examples' html
     new HtmlWebpackPlugin({
@@ -59,6 +59,19 @@ const getHTMLPlugins = () => {
                 type: 'module',
               },
             },
+            // Vanilla styling is opt-in (the bundle injects no CSS); add the dev
+            // CSS on/off checkbox on the vanilla example pages. Kept in the same
+            // tags list as init.js so html-webpack-tags-plugin assigns the
+            // type=module attribute to the right script.
+            ...(type === 'vanilla'
+              ? [
+                  {
+                    path: '/vanillaCssToggle.js',
+                    type: 'js',
+                    publicPath: false,
+                  },
+                ]
+              : []),
           ],
           append: true,
         })
@@ -79,13 +92,18 @@ module.exports = (env) => {
     },
     mode: 'development',
     devtool: 'inline-source-map',
-    plugins: [...getHTMLPlugins()],
+    plugins: [...getHTMLPlugins(type)],
     devServer: {
       hot: true,
       open: true,
       static: [
         {
           directory: path.join(__dirname, '/html'),
+        },
+        {
+          // Serve the opt-in vanilla stylesheet from source (used by the toggle).
+          directory: path.join(__dirname, 'src', 'view', 'vanilla'),
+          publicPath: '/vanilla-css',
         },
         {
           directory: path.join(__dirname, 'node_modules', '@entryscape'),

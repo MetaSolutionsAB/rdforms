@@ -42,6 +42,14 @@
   max-width: 100%;
 }
 
+/* Surface the language of a language-tagged value — demonstrates how the
+   semantic `lang` attribute the flavor emits can be exposed via CSS alone. */
+.rdforms-value[lang]::after {
+  content: ' (' attr(lang) ')';
+  color: #888;
+  font-size: 0.85em;
+}
+
 /* Validation report. The error/warning/deprecated state classes are toggled on
    the field node by the shared validation logic (same names across all flavors);
    the message paragraph is namespaced. Colors only — no framework. */

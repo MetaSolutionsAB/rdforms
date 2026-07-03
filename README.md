@@ -125,6 +125,8 @@ pnpm dev:all
 
 Because the flavors share a global rendering context (one flavor per page), each cell in the matrix loads exactly one flavor bundle under `/<flavor>/example<n>/`.
 
+The vanilla example pages (under both `dev:vanilla` and `dev:all`) include a **"Basic vanilla CSS"** checkbox that links and toggles the opt-in stylesheet, so you can flip between the minimal styled output and the raw semantic HTML on browser default styles (e.g. to see the `lang` suffix on language-tagged values appear/disappear).
+
 ## Vanilla presentation flavor
 
 `dist/rdforms.vanilla.js` is a **presentation-only** flavor that renders semantic HTML with **no JavaScript library (React/jQuery) and no CSS framework (Bootstrap)** — for better accessibility and easier integration into host platforms. It coexists with the other flavors (load exactly one per page).
@@ -141,6 +143,16 @@ Because the flavors share a global rendering context (one flavor per page), each
 ```
 
 The flavor also ships a `ValidationPresenter` (`new rdforms.ValidationPresenter({ graph, resource, template }, 'node_id')`) that renders the same semantic HTML with validation markers — an `error`/`warning`/`deprecated` class on the affected value and a `<p class="rdforms-validation …" role="alert">` message.
+
+### Styling is opt-in
+
+Unlike the other flavors (which inject their CSS/framework automatically), the vanilla bundle ships **no styles** — loading `rdforms.vanilla.js` emits plain semantic HTML that renders acceptably on the browser's default styles. For a minimal starting look, `<link>` the separately-shipped stylesheet, then override or replace it as needed:
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/@entryscape/rdforms/dist/rdforms.vanilla.css" />
+```
+
+It is minimal and layout-only (namespaced under `rdforms-*`, so it can't leak into or clash with host styles) plus a small demonstration rule that surfaces the `lang` of language-tagged values. During development you can flip it on and off with the "Basic vanilla CSS" checkbox on the vanilla example pages (see below).
 
 Editors are out of scope for this flavor (presentation only).
 

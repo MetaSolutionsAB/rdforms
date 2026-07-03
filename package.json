@@ -76,6 +76,7 @@
     "jest-environment-jsdom": "^30.4.1",
     "mini-css-extract-plugin": "^0.4.5",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "playwright": "^1.61.1",
     "prettier": "^3.6.2",
     "q": "^1.5.1",
     "raw-loader": "^4.0.2",
@@ -109,7 +110,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:smoke": "node test/smoke/smoke.js"
   },
   "prettier": "@entryscape/linting-config/prettier",
   "author": {

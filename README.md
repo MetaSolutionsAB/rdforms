@@ -78,6 +78,19 @@ pnpm test:watch
 
 Jest is configured as two projects: a `node` project for the model/template logic and a `jsdom` project for the view layer (`src/view/**`), so the generated presentation HTML can be asserted against real DOM.
 
+### Smoke test (all flavors × examples)
+
+`pnpm test:smoke` is a headless end-to-end check that guards against a flavor breaking one of the examples. It starts the all-flavors dev server in-process and, using Playwright, loads every flavor × example page and asserts that each renders into `#node` with no uncaught exceptions and no application console errors. It exits non-zero if any cell fails.
+
+It needs the Playwright Chromium browser once:
+
+```console
+pnpm exec playwright install chromium
+pnpm test:smoke
+```
+
+The smoke test is local-only (not part of CI).
+
 ## Development
 
 You can develop the different UI libraries as well as the part of the generic code base by running the examples in the webpack-dev-server:

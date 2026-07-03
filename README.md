@@ -104,6 +104,14 @@ or
 pnpm dev:vanilla
 ```
 
+To run **all** flavors from a single server — each example rendered by every flavor, with a top-level index at [http://localhost:8080/](http://localhost:8080/) linking the whole flavor × example matrix — use:
+
+```js
+pnpm dev:all
+```
+
+Because the flavors share a global rendering context (one flavor per page), each cell in the matrix loads exactly one flavor bundle under `/<flavor>/example<n>/`.
+
 ## Vanilla presentation flavor
 
 `dist/rdforms.vanilla.js` is a **presentation-only** flavor that renders semantic HTML with **no JavaScript library (React/jQuery) and no CSS framework (Bootstrap)** — for better accessibility and easier integration into host platforms. It coexists with the other flavors (load exactly one per page).

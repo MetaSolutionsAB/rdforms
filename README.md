@@ -2,11 +2,12 @@
 
 RDForms (aka RDF Forms) is a JavaScript library that uses templates to describe how to edit, present and validate RDF. The library is intended to be used in web applications to ease the burden of developers to deal natively with RDF.
 
-RDForms is designed to be adaptable to different UI libraries. Currently, integrations are provided for the following three UI libraries:
+RDForms is designed to be adaptable to different UI libraries. Integrations ("flavors") are provided for:
 
+- React (with Material UI)
 - Bootstrap 4
-- Bootstrap Material Design
-- React and Material UI
+- jQuery
+- Vanilla — semantic HTML with no JavaScript library and no CSS framework (presentation only; see the "Vanilla presentation flavor" section below)
 
 Deeper documentation for RDForms can be found at [rdforms.org](https://rdforms.org).
 
@@ -61,6 +62,22 @@ pnpm serve:samples
 
 Your browser should open automatically, otherwise access the samples at [http://localhost:8080/](http://localhost:8080/).
 
+## Tests
+
+Unit tests run on [Jest](https://jestjs.io/) and live next to the source as `*.test.js` files (model/template logic under `src/model` and `src/template`, the view flavors under `src/view`). Run them with:
+
+```console
+pnpm test
+```
+
+or in watch mode:
+
+```console
+pnpm test:watch
+```
+
+Jest is configured as two projects: a `node` project for the model/template logic and a `jsdom` project for the view layer (`src/view/**`), so the generated presentation HTML can be asserted against real DOM.
+
 ## Development
 
 You can develop the different UI libraries as well as the part of the generic code base by running the examples in the webpack-dev-server:
@@ -73,6 +90,12 @@ or
 
 ```js
 pnpm dev:bootstrap
+```
+
+or
+
+```js
+pnpm dev:jquery
 ```
 
 or
@@ -104,6 +127,15 @@ The examples serve two purposes:
 
 1. Showcase the capabilites of RDForms.
 2. Provide good ground for development and testing.
+
+### Running the examples
+
+The example sources live in the `html/` directory — one folder per example (`example1` … `example8`), each with an `index.html` and an `init.js` that builds the graph, template and view. There are two ways to run them:
+
+- **Dev server (live reload)** — `pnpm dev:<flavor>` (`react`, `bootstrap`, `jquery` or `vanilla`) starts webpack-dev-server, opens your browser, and serves each example at `http://localhost:8080/example<n>/`. The flavor you launch decides which bundle the examples load, so it's the quickest way to try a template against a specific flavor.
+- **Built samples** — `pnpm build:samples` then `pnpm serve:samples` writes static copies under `samples/<flavor>/` and serves them at `http://localhost:8080/<flavor>/example<n>/` (the links below use this layout).
+
+Note: the editor examples (e.g. example1) need an editor-capable flavor (`react`/`bootstrap`/`jquery`); the `vanilla` flavor is presentation-only.
 
 The examples are outlined below:
 
@@ -151,4 +183,4 @@ Check [example6/init.js](http://localhost:8080/react/example6/init.js) for more.
 This is a more advanced example providing some guidance on how to create your own choosers and register them to show on
 select fields in your forms. You can even have your data be fetched across the network.
 
-Check [example7/init.js](http://localhost:8080/rect/example7/init.js) for more.
+Check [example7/init.js](http://localhost:8080/react/example7/init.js) for more.

@@ -1,13 +1,16 @@
 import registeryDummyChooser from '../chooser/dummy.js';
 import rdfGraph from '../rdf.js';
+import showEditorFallbackNotice from '../editorFallbackNotice.js';
 
 registeryDummyChooser();
 
 const { Graph } = rdfjson;
-const { ItemStore, bundleLoader, Editor } = rdforms;
+// Presentation-only flavors (vanilla) export no Editor; fall back to the
+// presenter so the example renders read-only instead of throwing.
+const { ItemStore, bundleLoader, Editor, Presenter } = rdforms;
 const graph = new Graph(rdfGraph);
 bundleLoader(new ItemStore(), [['../templates/templateBundle.json']], (bundles) => {
-  var editor = new Editor({
+  var editor = new (Editor || Presenter)({
     graph,
     resource: 'http://example.org/about',
     template: bundles[0].getRoot(),
@@ -15,6 +18,9 @@ bundleLoader(new ItemStore(), [['../templates/templateBundle.json']], (bundles) 
     showDescription: true,
     includeLevel: 'recommended',
   }, 'node');
+  if (!Editor) {
+    showEditorFallbackNotice('node');
+  }
   document.getElementById('buttonMissing').onclick = function() {
     editor.report();
   };

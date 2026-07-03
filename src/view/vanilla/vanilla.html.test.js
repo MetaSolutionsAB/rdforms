@@ -274,8 +274,18 @@ describe('vanilla flavor — generated HTML for given data', () => {
          <dd class="rdforms-group-value">
            <table class="rdforms-table">
              <caption>Makers</caption>
-             <thead><tr><th scope="col">First name</th><th scope="col">Last name</th></tr></thead>
-             <tbody><tr><td>Ada</td><td>Lovelace</td></tr></tbody>
+             <thead>
+               <tr>
+                 <th scope="col">First name</th>
+                 <th scope="col">Last name</th>
+               </tr>
+             </thead>
+             <tbody>
+               <tr>
+                 <td>Ada</td>
+                 <td>Lovelace</td>
+               </tr>
+             </tbody>
            </table>
          </dd>
        </dl>`)

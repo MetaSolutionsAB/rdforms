@@ -6,7 +6,6 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import { TextField } from '@mui/material';
 import Select from '@mui/material/Select';
 import moment from 'moment';
 import CODES from '../../model/CODES';
@@ -57,14 +56,6 @@ const datePickerConfig = {
     YearMonth: 'YYYY-MM',
     MonthDay: 'MM-DD',
     Time: 'YYYY-MM-DD', // Since datepicker is sometimes visible but disabled
-  },
-  mask: {
-    Year: '____',
-    DateTime: '____-__-__',
-    Date: '____-__-__',
-    YearMonth: '____-__',
-    MonthDay: '__-__',
-    Time: '____-__-__', // Since datepicker is sometimes visible but disabled
   },
   views: {
     Year: ['year'],
@@ -163,49 +154,52 @@ const dateEditor = (fieldDiv, binding, context) => {
           <span className="rdformsDatePicker">
             {visibleDatePicker && (
               <DatePicker
-                renderInput={(props) => (
-                  <TextField {...props} {...inputProps} />
-                )}
-                leftArrowButtonProps={{
-                  'aria-label': bundle.date_previousMonth,
-                }}
-                rightArrowButtonProps={{ 'aria-label': bundle.date_nextMonth }}
-                KeyboardButtonProps={{
-                  'aria-label':
-                    bundle[datePickerConfig.ariaLabelKey[selectedDatatype]],
-                }}
                 label={bundle[datePickerConfig.labelKey[selectedDatatype]]}
                 {...(enabledDatePicker ? {} : { disabled: true })}
-                value={enabledDatePicker ? selectedDate : null}
+                value={
+                  enabledDatePicker && selectedDate
+                    ? moment(selectedDate)
+                    : null
+                }
                 minDate={moment(new Date('0000-01-01'))}
-                inputFormat={datePickerConfig.format[selectedDatatype]}
+                format={datePickerConfig.format[selectedDatatype]}
                 views={datePickerConfig.views[selectedDatatype]}
                 onChange={onDateChange}
-                autoOk={true}
-                mask={datePickerConfig.mask[selectedDatatype]}
+                slotProps={{
+                  textField: inputProps,
+                  openPickerButton: {
+                    'aria-label':
+                      bundle[datePickerConfig.ariaLabelKey[selectedDatatype]],
+                  },
+                  previousIconButton: {
+                    'aria-label': bundle.date_previousMonth,
+                  },
+                  nextIconButton: { 'aria-label': bundle.date_nextMonth },
+                }}
               />
             )}
             {(alternatives.DateTime || alternatives.Time) && (
               <TimePicker
-                renderInput={(props) => (
-                  <TextField {...props} {...inputProps} />
-                )}
                 label={bundle.date_time}
                 {...(!ngId &&
                 (selectedDatatype === 'DateTime' || selectedDatatype === 'Time')
                   ? {}
                   : { disabled: true })}
-                KeyboardButtonProps={{
-                  'aria-label': bundle.date_openTimePicker,
-                }}
                 value={
-                  selectedDatatype === 'DateTime' || selectedDatatype === 'Time'
-                    ? selectedDate
+                  (selectedDatatype === 'DateTime' ||
+                    selectedDatatype === 'Time') &&
+                  selectedDate
+                    ? moment(selectedDate)
                     : null
                 }
                 onChange={onDateChange}
                 ampm={false}
-                autoOk={true}
+                slotProps={{
+                  textField: inputProps,
+                  openPickerButton: {
+                    'aria-label': bundle.date_openTimePicker,
+                  },
+                }}
               />
             )}
             {!onlyOneAlternative && (

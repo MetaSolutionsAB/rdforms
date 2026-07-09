@@ -100,9 +100,10 @@ const getCopyPlugins = (type) =>
     ],
   });
 
-const variants = {
-  type: ['bootstrap', 'react'],
-};
+// Samples are built only for the editor-capable flavors. jQuery and vanilla are
+// presentation-only (no Editor), so they're exercised via `dev:all` and the
+// smoke test rather than the built samples.
+const editorCapableFlavors = ['bootstrap', 'react'];
 
 /**
  * Build a webpack configuration for one sample variant.
@@ -141,6 +142,6 @@ function createConfig(options) {
   })(common, devConfig);
 }
 
-module.exports = variants.type.map((variantType) =>
+module.exports = editorCapableFlavors.map((variantType) =>
   createConfig({ type: variantType })
 );

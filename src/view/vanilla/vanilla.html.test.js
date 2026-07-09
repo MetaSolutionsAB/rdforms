@@ -62,6 +62,14 @@ const CASES = {
       },
     },
   ],
+  image: [
+    template(text(HOMEPAGE, 'Photo', { nodetype: 'URI', styles: ['image'] })),
+    {
+      [RESOURCE]: {
+        [HOMEPAGE]: [{ value: 'http://example.org/p.jpg', type: 'uri' }],
+      },
+    },
+  ],
   language: [
     template(text(TITLE, 'Title', { nodetype: 'LANGUAGE_LITERAL' })),
     {
@@ -177,6 +185,15 @@ describe('vanilla flavor — generated HTML for given data', () => {
       normalize(`<dl class="rdforms-group">
          <dt class="rdforms-label">Homepage</dt>
          <dd class="rdforms-value"><a class="rdforms-link" href="http://example.org/">http://example.org/</a></dd>
+       </dl>`)
+    );
+  });
+
+  test('an image-styled URI → img with src and alt from the field label', () => {
+    expect(goldenHtml('image')).toBe(
+      normalize(`<dl class="rdforms-group">
+         <dt class="rdforms-label">Photo</dt>
+         <dd class="rdforms-value"><img class="rdforms-image" src="http://example.org/p.jpg" alt="Photo"></dd>
        </dl>`)
     );
   });

@@ -1,5 +1,6 @@
 import renderingContext from '../renderingContext';
 import { getDatePresentation, fromDuration } from '../viewUtils';
+import utils from '../../utils';
 
 const presenters = renderingContext.presenterRegistry;
 
@@ -35,15 +36,23 @@ presenters
     renderingContext.domText(anchor, binding.getGist() || binding.getValue());
   });
 
-// URI value with the `image` style → an <img>.
+// URI value with the `image` style → an <img>. alt falls back to the field
+// label (the only human-readable descriptor available for a text image), then
+// the value — never left unset, which would leave the image unlabelled to
+// assistive tech.
 presenters
   .itemtype('text')
   .nodetype('URI')
   .style('image')
-  .register((valueNode, binding) => {
+  .register((valueNode, binding, context) => {
     const image = renderingContext.domCreate('img', valueNode);
     renderingContext.domClassToggle(image, 'rdforms-image', true);
     renderingContext.domSetAttr(image, 'src', binding.getGist());
+    const labelMap = binding.getItem().getLabelMap();
+    const label =
+      labelMap &&
+      utils.getLocalizedValue(labelMap, context.view.getLocale()).value;
+    renderingContext.domSetAttr(image, 'alt', label || binding.getValue());
   });
 
 // Date/time datatypes → <time datetime="{raw}">{formatted}</time>.

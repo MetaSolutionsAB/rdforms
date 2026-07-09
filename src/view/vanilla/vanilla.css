@@ -42,12 +42,14 @@
   max-width: 100%;
 }
 
-/* Surface the language of a language-tagged value — demonstrates how the
-   semantic `lang` attribute the flavor emits can be exposed via CSS alone. */
-.rdforms-value[lang]::after {
-  content: ' (' attr(lang) ')';
-  color: #888;
-  font-size: 0.85em;
+/* The language code the flavor emits as a real <span> (when `showLanguage` is
+   on). Parenthesize it so it reads as an aside about the value; color, size and
+   emphasis are deliberately left to the consumer to style. */
+.rdforms-language::before {
+  content: '(';
+}
+.rdforms-language::after {
+  content: ')';
 }
 
 /* Validation report. The error/warning/deprecated state classes are toggled on

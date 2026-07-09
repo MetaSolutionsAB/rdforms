@@ -149,7 +149,8 @@ const CASES = {
 const normalize = (html) => html.replace(/>\s+</g, '><').trim();
 
 // Each case renders CASES[name] and asserts the exact produced HTML.
-const goldenHtml = (name) => normalize(render(...CASES[name]));
+const goldenHtml = (name, viewParams) =>
+  normalize(render(...CASES[name], viewParams));
 
 describe('vanilla flavor — generated HTML for given data', () => {
   test('a single text property → dt label + dd value', () => {
@@ -180,8 +181,17 @@ describe('vanilla flavor — generated HTML for given data', () => {
     );
   });
 
-  test('a language literal → dd tagged with lang (locale-filtered to en)', () => {
+  test('a language literal → dd tagged with lang + visible language span (locale-filtered to en)', () => {
     expect(goldenHtml('language')).toBe(
+      normalize(`<dl class="rdforms-group">
+         <dt class="rdforms-label">Title</dt>
+         <dd class="rdforms-value" lang="en">Hi <span class="rdforms-language">en</span></dd>
+       </dl>`)
+    );
+  });
+
+  test('showLanguage:false keeps the lang attribute but drops the visible span', () => {
+    expect(goldenHtml('language', { showLanguage: false })).toBe(
       normalize(`<dl class="rdforms-group">
          <dt class="rdforms-label">Title</dt>
          <dd class="rdforms-value" lang="en">Hi</dd>

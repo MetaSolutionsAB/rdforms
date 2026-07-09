@@ -4,13 +4,24 @@ import { getDatePresentation, fromDuration } from '../viewUtils';
 const presenters = renderingContext.presenterRegistry;
 
 // Plain text value → text content of the <dd>, tagged with `lang` when the
-// value carries a language.
-presenters.itemtype('text').register((valueNode, binding) => {
+// value carries a language. When `showLanguage` is on (the Presenter default),
+// the language code is also surfaced as a real <span> — matching the other
+// flavors (jquery/react), which render a visible `rdformsLanguage` element
+// gated on the same option rather than relying on CSS.
+presenters.itemtype('text').register((valueNode, binding, context) => {
   const language = binding.getLanguage && binding.getLanguage();
   if (language) {
     renderingContext.domSetAttr(valueNode, 'lang', language);
   }
   renderingContext.domText(valueNode, binding.getGist());
+  if (context.view.showLanguage && language) {
+    // A real space detaches the code from the value text so it stays readable
+    // without the opt-in stylesheet (which adds no margin).
+    valueNode.append(' ');
+    const languageTag = renderingContext.domCreate('span', valueNode);
+    renderingContext.domClassToggle(languageTag, 'rdforms-language', true);
+    renderingContext.domText(languageTag, language);
+  }
 });
 
 // URI value → an anchor inside the <dd>.

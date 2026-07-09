@@ -62,6 +62,13 @@ describe('VanillaValidationPresenter', () => {
     ).toBeNull();
   });
 
+  test('the validator marker class survives on the root node', () => {
+    // The mixin injects 'rdformsValidator' via params.styleCls; VanillaPresenter
+    // must not clobber it when applying its own default class.
+    const node = render(source, graphData);
+    expect(node.classList.contains('rdformsValidator')).toBe(true);
+  });
+
   test('a missing mandatory value gets an error class and an alert message', () => {
     const node = render(source, graphData);
     const errorField = node.querySelector('dd.rdforms-value.error');

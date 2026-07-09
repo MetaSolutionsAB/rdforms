@@ -17,8 +17,10 @@ export default class VanillaPresenter extends Presenter {
   _handleParams(params) {
     super._handleParams(params);
     // Keep the flavor inside the rdforms-* namespace (the base defaults to the
-    // legacy camelCase 'rdformsPresenter').
-    this.styleCls = 'rdforms-presenter';
+    // legacy camelCase 'rdformsPresenter'), but honor a consumer-supplied
+    // styleCls and the 'rdformsValidator' marker the validation mixin injects
+    // into params.styleCls — overwriting unconditionally would drop both.
+    this.styleCls = params.styleCls || 'rdforms-presenter';
     // Deepen the heading level for nested groups so the document outline
     // reflects nesting (h2 → h3 → …, capped at h6).
     if (this.parentView && typeof this.headingLevel === 'number') {

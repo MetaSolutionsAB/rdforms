@@ -124,4 +124,25 @@ describe('VanillaPresenter — dl/dt/dd structural seam', () => {
     // its content (the name) still renders below the heading
     expect(section.textContent).toContain('Ada');
   });
+
+  test('the root node uses the rdforms-presenter class by default', () => {
+    const node = renderTemplate1();
+    expect(node.classList.contains('rdforms-presenter')).toBe(true);
+  });
+
+  test('a consumer-supplied styleCls is honored on the root node', () => {
+    const templateRoot = new ItemStore().createTemplate(template1);
+    const binding = match(
+      new Graph(graph2),
+      'http://example.org/about',
+      templateRoot
+    );
+    const node = document.createElement('div');
+    new VanillaPresenter(
+      { binding, locale: 'en', styleCls: 'my-presenter' },
+      node
+    );
+    expect(node.classList.contains('my-presenter')).toBe(true);
+    expect(node.classList.contains('rdforms-presenter')).toBe(false);
+  });
 });

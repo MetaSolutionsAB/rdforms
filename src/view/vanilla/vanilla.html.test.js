@@ -245,7 +245,7 @@ describe('vanilla flavor — generated HTML for given data', () => {
     );
   });
 
-  test('headingLevel param sets the start level (h4→h5→h6, capped at h6)', () => {
+  test('headingLevel param sets the start level and deepens per nesting (h4→h5→h6)', () => {
     expect(normalize(render(...CASES.deepHeading, { headingLevel: 4 }))).toBe(
       normalize(`<section class="rdforms-section">
          <h4 class="rdforms-heading">Level A</h4>
@@ -256,6 +256,38 @@ describe('vanilla flavor — generated HTML for given data', () => {
            </dl>
            <section class="rdforms-section">
              <h5 class="rdforms-heading">Level B</h5>
+             <div class="rdforms-section-body rdforms rdforms-presenter compact">
+               <dl class="rdforms-group">
+                 <dt class="rdforms-label">B name</dt>
+                 <dd class="rdforms-value">Middle</dd>
+               </dl>
+               <section class="rdforms-section">
+                 <h6 class="rdforms-heading">Level C</h6>
+                 <div class="rdforms-section-body rdforms rdforms-presenter compact">
+                   <dl class="rdforms-group">
+                     <dt class="rdforms-label">C name</dt>
+                     <dd class="rdforms-value">Deep</dd>
+                   </dl>
+                 </div>
+               </section>
+             </div>
+           </section>
+         </div>
+       </section>`)
+    );
+  });
+
+  test('nesting past h6 is capped at h6 (start at 5 → h5/h6/h6, not h5/h6/h7)', () => {
+    expect(normalize(render(...CASES.deepHeading, { headingLevel: 5 }))).toBe(
+      normalize(`<section class="rdforms-section">
+         <h5 class="rdforms-heading">Level A</h5>
+         <div class="rdforms-section-body rdforms rdforms-presenter compact">
+           <dl class="rdforms-group">
+             <dt class="rdforms-label">A name</dt>
+             <dd class="rdforms-value">Top</dd>
+           </dl>
+           <section class="rdforms-section">
+             <h6 class="rdforms-heading">Level B</h6>
              <div class="rdforms-section-body rdforms rdforms-presenter compact">
                <dl class="rdforms-group">
                  <dt class="rdforms-label">B name</dt>

@@ -76,16 +76,27 @@ const datePresenter = (valueNode, binding, context) => {
 
 // Duration → a <time> carrying the raw ISO 8601 duration (P…) in its datetime
 // attribute (the <time> element accepts durations, not just dates — parity with
-// the date presenter), with one <span> per non-zero component for the readable
-// text, labelled from the message bundle.
+// the date presenter). The readable text is produced by Intl.DurationFormat,
+// which is locale-aware and driven by the view locale (so it follows the same
+// locale as dates/labels). Intl.DurationFormat is Baseline 2025, so where it's
+// unavailable we fall back to one <span> per non-zero component labelled from
+// the message bundle (space-separated so it reads without a stylesheet).
 presenters
   .itemtype('text')
   .datatype('xsd:duration')
   .register((valueNode, binding, context) => {
     const parts = fromDuration(binding.getValue());
-    const bundle = context.view.messages || {};
     const time = renderingContext.domCreate('time', valueNode);
     renderingContext.domSetAttr(time, 'datetime', binding.getValue());
+    if (typeof Intl.DurationFormat === 'function') {
+      // Intl.DurationFormat drops zero-valued units on its own.
+      const durationFormat = new Intl.DurationFormat(context.view.getLocale(), {
+        style: 'long',
+      });
+      renderingContext.domText(time, durationFormat.format(parts));
+      return;
+    }
+    const bundle = context.view.messages || {};
     ['years', 'months', 'days', 'hours', 'minutes'].forEach((unit) => {
       if (parts[unit]) {
         // A real space separates the parts so they read correctly without any

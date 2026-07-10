@@ -236,39 +236,55 @@ describe('vanilla flavor — generated HTML for given data', () => {
     );
   });
 
-  test('a duration → a <time datetime> wrapping one span per non-zero part', () => {
+  test('a duration → <time datetime> with an Intl.DurationFormat locale string', () => {
+    // Expected text is computed the same way the presenter does, so the test is
+    // robust to ICU-version wording differences across Node/browser versions.
+    const durationText = new Intl.DurationFormat('en', {
+      style: 'long',
+    }).format({ years: 5, months: 2, days: 10, hours: 15 });
     expect(goldenHtml('duration')).toBe(
       normalize(`<dl class="rdforms-group">
          <dt class="rdforms-label">Duration</dt>
-         <dd class="rdforms-value">
-           <time datetime="P5Y2M10DT15H">
-             <span class="rdforms-duration-part">Years: 5</span>
-             <span class="rdforms-duration-part">Months: 2</span>
-             <span class="rdforms-duration-part">Days: 10</span>
-             <span class="rdforms-duration-part">Hours: 15</span>
-           </time>
-         </dd>
+         <dd class="rdforms-value"><time datetime="P5Y2M10DT15H">${durationText}</time></dd>
        </dl>`)
     );
-    // The parts are separated by a real space in the DOM, so they read
-    // correctly with no stylesheet. normalize() above collapses inter-tag
-    // whitespace, so assert the raw output keeps the separator.
-    expect(render(...CASES.duration)).toContain('</span> <span');
   });
 
-  test('a single-part duration → one span with no separator space', () => {
+  test('a single-part duration → <time datetime> with the single unit', () => {
+    const durationText = new Intl.DurationFormat('en', {
+      style: 'long',
+    }).format({ years: 5 });
     expect(goldenHtml('durationSingle')).toBe(
       normalize(`<dl class="rdforms-group">
          <dt class="rdforms-label">Duration</dt>
-         <dd class="rdforms-value">
-           <time datetime="P5Y">
-             <span class="rdforms-duration-part">Years: 5</span>
-           </time>
-         </dd>
+         <dd class="rdforms-value"><time datetime="P5Y">${durationText}</time></dd>
        </dl>`)
     );
-    // Only one part, so no separator space is added.
-    expect(render(...CASES.durationSingle)).not.toContain('</span> <span');
+  });
+
+  test('duration falls back to message-bundle spans when Intl.DurationFormat is unavailable', () => {
+    const originalDurationFormat = Intl.DurationFormat;
+    delete Intl.DurationFormat;
+    try {
+      expect(goldenHtml('duration')).toBe(
+        normalize(`<dl class="rdforms-group">
+           <dt class="rdforms-label">Duration</dt>
+           <dd class="rdforms-value">
+             <time datetime="P5Y2M10DT15H">
+               <span class="rdforms-duration-part">Years: 5</span>
+               <span class="rdforms-duration-part">Months: 2</span>
+               <span class="rdforms-duration-part">Days: 10</span>
+               <span class="rdforms-duration-part">Hours: 15</span>
+             </time>
+           </dd>
+         </dl>`)
+      );
+      // Fallback separates the parts with a real space (normalize() collapses
+      // inter-tag whitespace above, so assert the raw output keeps it).
+      expect(render(...CASES.duration)).toContain('</span> <span');
+    } finally {
+      Intl.DurationFormat = originalDurationFormat;
+    }
   });
 
   test('a language literal → dd tagged with lang + visible language span (locale-filtered to en)', () => {

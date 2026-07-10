@@ -83,6 +83,12 @@ export default class VanillaPresenter extends Presenter {
     });
   }
 
+  // View.addRow also passes `index` and `truncateLimit`, but this flavor
+  // deliberately does not truncate: the shared truncation control is a JS
+  // "Show more" button that hides overflow values, which is at odds with the
+  // no-JS-library, accessibility-first premise — so every value is rendered.
+  // See the README ("Vanilla presentation flavor") and RDFORMS-185 for a
+  // possible native <details>/<summary> approach.
   addRow(lastRow, binding, includeLabel) {
     const item = binding.getItem();
     if (this.skipBinding(binding)) {

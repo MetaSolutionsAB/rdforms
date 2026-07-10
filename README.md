@@ -156,6 +156,8 @@ It is minimal and layout-only (namespaced under `rdforms-*`, so it can't leak in
 
 Editors are out of scope for this flavor (presentation only).
 
+Value **truncation** (the `truncate` / `truncateLimit` options) is also out of scope: the other flavors truncate long value lists behind a JavaScript "Show more/less" button that hides the overflow with `display:none`, which runs counter to this flavor's no-JS-library, accessibility-first premise. The vanilla flavor renders **all** values into the DOM instead, so nothing is gated behind interactive JavaScript. (A future, native `<details>/<summary>`-based truncation would fit the flavor and is tracked separately — see RDFORMS-185.)
+
 ## Examples
 
 The examples serve two purposes:

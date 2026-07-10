@@ -43,6 +43,10 @@ const CASES = {
     template(text(NAME, 'Name')),
     { [RESOURCE]: { [NAME]: [{ value: 'Ada', type: 'literal' }] } },
   ],
+  described: [
+    template(text(NAME, 'Name', { description: { en: "A person's name" } })),
+    { [RESOURCE]: { [NAME]: [{ value: 'Ada', type: 'literal' }] } },
+  ],
   repeated: [
     template(text(NICK, 'Alias', { cardinality: { min: 0, pref: 1, max: 3 } })),
     {
@@ -203,6 +207,28 @@ describe('vanilla flavor — generated HTML for given data', () => {
     expect(goldenHtml('single')).toBe(
       normalize(`<dl class="rdforms-group">
          <dt class="rdforms-label">Name</dt>
+         <dd class="rdforms-value">Ada</dd>
+       </dl>`)
+    );
+  });
+
+  test('showDescription renders the description inline (non-compact)', () => {
+    expect(
+      goldenHtml('described', { showDescription: true, compact: false })
+    ).toBe(
+      normalize(`<dl class="rdforms-group">
+         <dt class="rdforms-label" title="A person's name">Name<div class="rdforms-description">A person's name</div></dt>
+         <dd class="rdforms-value">Ada</dd>
+       </dl>`)
+    );
+  });
+
+  test('showDescription is suppressed for a compact field (title only)', () => {
+    // compact defaults to true; the inline description is suppressed like the
+    // other flavors, leaving only the title tooltip.
+    expect(goldenHtml('described', { showDescription: true })).toBe(
+      normalize(`<dl class="rdforms-group">
+         <dt class="rdforms-label" title="A person's name">Name</dt>
          <dd class="rdforms-value">Ada</dd>
        </dl>`)
     );

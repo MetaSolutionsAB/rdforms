@@ -9,6 +9,12 @@
   font-weight: 600;
 }
 
+/* The item description (rendered when showDescription is on) sits inside the
+   bold <dt>; reset the weight so it reads as description text, not label. */
+.rdforms-description {
+  font-weight: normal;
+}
+
 .rdforms-value,
 .rdforms-group-value {
   margin: 0 0 0.5em 1em;

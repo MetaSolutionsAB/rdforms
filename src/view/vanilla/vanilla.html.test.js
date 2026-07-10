@@ -70,6 +70,44 @@ const CASES = {
       },
     },
   ],
+  duration: [
+    template(
+      text(TITLE, 'Duration', {
+        nodetype: 'DATATYPE_LITERAL',
+        datatype: 'xsd:duration',
+      })
+    ),
+    {
+      [RESOURCE]: {
+        [TITLE]: [
+          {
+            value: 'P5Y2M10DT15H',
+            type: 'literal',
+            datatype: 'http://www.w3.org/2001/XMLSchema#duration',
+          },
+        ],
+      },
+    },
+  ],
+  durationSingle: [
+    template(
+      text(TITLE, 'Duration', {
+        nodetype: 'DATATYPE_LITERAL',
+        datatype: 'xsd:duration',
+      })
+    ),
+    {
+      [RESOURCE]: {
+        [TITLE]: [
+          {
+            value: 'P5Y',
+            type: 'literal',
+            datatype: 'http://www.w3.org/2001/XMLSchema#duration',
+          },
+        ],
+      },
+    },
+  ],
   language: [
     template(text(TITLE, 'Title', { nodetype: 'LANGUAGE_LITERAL' })),
     {
@@ -196,6 +234,41 @@ describe('vanilla flavor — generated HTML for given data', () => {
          <dd class="rdforms-value"><img class="rdforms-image" src="http://example.org/p.jpg" alt="Photo"></dd>
        </dl>`)
     );
+  });
+
+  test('a duration → a <time datetime> wrapping one span per non-zero part', () => {
+    expect(goldenHtml('duration')).toBe(
+      normalize(`<dl class="rdforms-group">
+         <dt class="rdforms-label">Duration</dt>
+         <dd class="rdforms-value">
+           <time datetime="P5Y2M10DT15H">
+             <span class="rdforms-duration-part">Years: 5</span>
+             <span class="rdforms-duration-part">Months: 2</span>
+             <span class="rdforms-duration-part">Days: 10</span>
+             <span class="rdforms-duration-part">Hours: 15</span>
+           </time>
+         </dd>
+       </dl>`)
+    );
+    // The parts are separated by a real space in the DOM, so they read
+    // correctly with no stylesheet. normalize() above collapses inter-tag
+    // whitespace, so assert the raw output keeps the separator.
+    expect(render(...CASES.duration)).toContain('</span> <span');
+  });
+
+  test('a single-part duration → one span with no separator space', () => {
+    expect(goldenHtml('durationSingle')).toBe(
+      normalize(`<dl class="rdforms-group">
+         <dt class="rdforms-label">Duration</dt>
+         <dd class="rdforms-value">
+           <time datetime="P5Y">
+             <span class="rdforms-duration-part">Years: 5</span>
+           </time>
+         </dd>
+       </dl>`)
+    );
+    // Only one part, so no separator space is added.
+    expect(render(...CASES.durationSingle)).not.toContain('</span> <span');
   });
 
   test('a language literal → dd tagged with lang + visible language span (locale-filtered to en)', () => {

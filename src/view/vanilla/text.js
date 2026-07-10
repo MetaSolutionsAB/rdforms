@@ -74,16 +74,26 @@ const datePresenter = (valueNode, binding, context) => {
   presenters.itemtype('text').datatype(datatype).register(datePresenter);
 });
 
-// Duration → one <span> per non-zero component, labelled from the message bundle.
+// Duration → a <time> carrying the raw ISO 8601 duration (P…) in its datetime
+// attribute (the <time> element accepts durations, not just dates — parity with
+// the date presenter), with one <span> per non-zero component for the readable
+// text, labelled from the message bundle.
 presenters
   .itemtype('text')
   .datatype('xsd:duration')
   .register((valueNode, binding, context) => {
     const parts = fromDuration(binding.getValue());
     const bundle = context.view.messages || {};
+    const time = renderingContext.domCreate('time', valueNode);
+    renderingContext.domSetAttr(time, 'datetime', binding.getValue());
     ['years', 'months', 'days', 'hours', 'minutes'].forEach((unit) => {
       if (parts[unit]) {
-        const span = renderingContext.domCreate('span', valueNode);
+        // A real space separates the parts so they read correctly without any
+        // stylesheet (there is no CSS gap on .rdforms-duration-part).
+        if (time.hasChildNodes()) {
+          time.append(' ');
+        }
+        const span = renderingContext.domCreate('span', time);
         renderingContext.domClassToggle(span, 'rdforms-duration-part', true);
         const label = bundle[`duration_${unit}`] || unit;
         renderingContext.domText(span, `${label}: ${parts[unit]}`);

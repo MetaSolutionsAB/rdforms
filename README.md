@@ -125,15 +125,15 @@ pnpm dev:all
 
 Because the flavors share a global rendering context (one flavor per page), each cell in the matrix loads exactly one flavor bundle under `/<flavor>/example<n>/`.
 
-The vanilla example pages (under both `dev:vanilla` and `dev:all`) include a **"Basic vanilla CSS"** checkbox that links and toggles the opt-in stylesheet, so you can flip between the minimal styled output and the raw semantic HTML on browser default styles (e.g. to see the `lang` suffix on language-tagged values appear/disappear).
+The vanilla example pages (under both `dev:vanilla` and `dev:all`) include a **"Basic vanilla CSS"** checkbox that links and toggles the opt-in stylesheet, so you can flip between the minimal styled output and the raw semantic HTML on browser default styles (e.g. to see the parentheses around a language-tagged value's language code, or the validation-state colors, appear and disappear).
 
 ## Vanilla presentation flavor
 
 `dist/rdforms.vanilla.js` is a **presentation-only** flavor that renders semantic HTML with **no JavaScript library (React/jQuery) and no CSS framework (Bootstrap)** — for better accessibility and easier integration into host platforms. It coexists with the other flavors (load exactly one per page).
 
 - Groups → `<dl class="rdforms-group">`, labels → `<dt>`, values → `<dd>` (repeated values → repeated `<dd>`), nested groups → nested `<dl>`.
-- Heading-styled groups → `<section>` + `<h2>`/`<h3>` (level tracks nesting depth); table-styled groups → a real `<table>` with `<caption>`, `<thead>`/`<th scope="col">` and `<tbody>`; language literals carry `lang`, dates render as `<time datetime>`, and URIs/choices as `<a href>`.
-- All classes use the hyphenated **`rdforms-*`** namespace — a stable public integration surface, deliberately distinct from the other flavors' `rdforms*` camelCase classes so there is no overlap with Bootstrap.
+- Heading-styled groups → `<section>` + `<h2>`/`<h3>` (level tracks nesting depth, capped at `<h6>`); table-styled groups → a real `<table>` with `<caption>`, `<thead>`/`<th scope="col">` and `<tbody>`; language literals carry `lang` (with the code also shown when `showLanguage` is on), dates and durations render as `<time datetime>`, and URIs/choices as `<a href>`.
+- The flavor's own structural classes use the hyphenated **`rdforms-*`** namespace — a stable public integration surface, deliberately distinct from the other flavors' `rdforms*` camelCase classes so there is no overlap with Bootstrap. A few classes in the output are shared with the rest of the library rather than vanilla-specific: the validation-state markers (`error`/`warning`/`deprecated`), the base `rdforms` / `compact` utility classes, `rdformsInvisibleGroup` for `noLabelInPresent` groups, and — on the `ValidationPresenter` root — the `rdformsPresenter rdformsValidator` marker injected by the shared validation logic.
 
 ```html
 <script type="text/javascript" src="https://unpkg.com/@entryscape/rdforms/dist/rdforms.vanilla.js"></script>
@@ -152,7 +152,7 @@ Unlike the other flavors (which inject their CSS/framework automatically), the v
 <link rel="stylesheet" href="https://unpkg.com/@entryscape/rdforms/dist/rdforms.vanilla.css" />
 ```
 
-It is minimal and layout-only (namespaced under `rdforms-*`, so it can't leak into or clash with host styles) plus a small demonstration rule that surfaces the `lang` of language-tagged values. During development you can flip it on and off with the "Basic vanilla CSS" checkbox on the vanilla example pages (see below).
+It is intentionally minimal — mostly layout (margins, table borders) plus the validation-state colors (e.g. `.rdforms-value.error { color: #b00020 }`) and a rule that parenthesizes the language code of language-tagged values. It stays within the `rdforms-*` namespace where it can, so it won't leak into or clash with host styles (the validation-state selectors piggyback on the shared, unnamespaced `error`/`warning`/`deprecated` classes). During development you can flip it on and off with the "Basic vanilla CSS" checkbox on the vanilla example pages (see below).
 
 Editors are out of scope for this flavor (presentation only).
 
@@ -170,7 +170,7 @@ The examples serve two purposes:
 The example sources live in the `html/` directory — one folder per example (`example1` … `example8`), each with an `index.html` and an `init.js` that builds the graph, template and view. There are two ways to run them:
 
 - **Dev server (live reload)** — `pnpm dev:<flavor>` (`react`, `bootstrap`, `jquery` or `vanilla`) starts webpack-dev-server, opens your browser, and serves each example at `http://localhost:8080/example<n>/`. The flavor you launch decides which bundle the examples load, so it's the quickest way to try a template against a specific flavor.
-- **Built samples** — `pnpm build:samples` then `pnpm serve:samples` writes static copies under `samples/<flavor>/` and serves them at `http://localhost:8080/<flavor>/example<n>/` (the links below use this layout).
+- **Built samples** — `pnpm build:samples` then `pnpm serve:samples` writes static copies under `samples/<flavor>/` (the editor-capable flavors only — `bootstrap` and `react`) and serves them at `http://localhost:8080/<flavor>/example<n>/` (the links below use this layout).
 
 Note: the editor examples (e.g. example1) need an editor-capable flavor (`react` or `bootstrap`); the `jquery` and `vanilla` flavors are presentation-only, so editor examples fall back to a read-only presenter under them.
 

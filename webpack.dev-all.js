@@ -150,8 +150,9 @@ const indexPlugin = new HtmlWebpackPlugin({
   inject: false,
 });
 
-// Mount html/ at the root and under each /<flavor>/ prefix so page-relative
-// asset/template paths resolve regardless of the /<flavor>/example<n>/ depth.
+// Mount html/ under each /<flavor>/ prefix so page-relative asset/template
+// paths resolve regardless of the /<flavor>/example<n>/ depth. (There is no
+// root mount — every page lives under a /<flavor>/ prefix.)
 const flavorStaticMounts = flavors.map((flavor) => ({
   directory: path.join(__dirname, 'html'),
   publicPath: `/${flavor}`,

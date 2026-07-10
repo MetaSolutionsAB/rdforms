@@ -5,7 +5,7 @@
 // live under /<flavor>/example<n>/ and html/ is mounted under each /<flavor>/
 // prefix so the examples' page-relative template fetches (../templates/…) and
 // module imports (../rdf.js, ../chooser/*, ../editorFallbackNotice.js) resolve.
-const { merge } = require('webpack-merge');
+const { mergeWithCustomize } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const path = require('path');
@@ -62,12 +62,26 @@ const pagePlugins = flavors.flatMap((flavor) =>
         // Vanilla styling is opt-in (the bundle injects no CSS); add the dev
         // checkbox that links + toggles the standalone sheet, vanilla pages only.
         ...(flavor === 'vanilla'
-          ? [{ path: `/${flavor}/vanillaCssToggle.js`, type: 'js', publicPath: false }]
+          ? [
+              {
+                path: `/${flavor}/vanillaCssToggle.js`,
+                type: 'js',
+                publicPath: false,
+              },
+            ]
           : []),
         // Example nav chrome (dev only): "← Examples" back link + the flavor
         // being viewed appended to the <h1>.
         {
           path: `/${flavor}/exampleNav.js?flavor=${flavor}`,
+          type: 'js',
+          publicPath: false,
+        },
+        // Language switcher (dev only): flips the ?lang locale to show the
+        // locale-dependent rendering (dates, localized labels, language
+        // filtering). localeBoot.js in the bundle applies the locale.
+        {
+          path: `/${flavor}/languageSwitcher.js`,
           type: 'js',
           publicPath: false,
         },
@@ -90,8 +104,7 @@ const buildIndexHtml = () => {
     .map(({ number, title }) => {
       const cells = flavors
         .map(
-          (flavor) =>
-            `<td><a href="/${flavor}/example${number}/">open</a></td>`
+          (flavor) => `<td><a href="/${flavor}/example${number}/">open</a></td>`
         )
         .join('');
       return `<tr><th scope="row">example${number}<br /><small>${title}</small></th>${cells}</tr>`;
@@ -152,8 +165,21 @@ const flavorStaticMounts = flavors.map((flavor) => ({
   publicPath: `/${flavor}`,
 }));
 
-module.exports = merge(common, {
-  // Inherit common's 4-flavor entry (bootstrap/react/jquery/vanilla).
+module.exports = mergeWithCustomize({
+  // Fully replace common's `entry` rather than concatenating into it.
+  customizeObject(a, b, key) {
+    return key === 'entry' ? b : undefined;
+  },
+})(common, {
+  // Re-declare common's 4-flavor entry, prepending the dev-only localeBoot.js
+  // (per flavor) so it sets moment's locale from ?lang before init.js renders;
+  // see html/localeBoot.js.
+  entry: Object.fromEntries(
+    flavors.map((flavor) => [
+      flavor,
+      ['./html/localeBoot.js', `./renderers/${flavor}.js`],
+    ])
+  ),
   output: { publicPath: '/' },
   mode: 'development',
   devtool: 'inline-source-map',

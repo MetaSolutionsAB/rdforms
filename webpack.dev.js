@@ -79,6 +79,14 @@ const getHTMLPlugins = (type) => {
               type: 'js',
               publicPath: false,
             },
+            // Language switcher (dev only): flips the ?lang locale to show the
+            // locale-dependent rendering (dates, localized labels, language
+            // filtering). localeBoot.js in the bundle applies the locale.
+            {
+              path: '/languageSwitcher.js',
+              type: 'js',
+              publicPath: false,
+            },
           ],
           append: true,
         })
@@ -90,7 +98,9 @@ module.exports = (env) => {
   const type = env.type ? env.type : 'react';
 
   const devConfig = {
-    entry: `./renderers/${type}.js`,
+    // localeBoot.js (dev only) is bundled first so it sets moment's locale from
+    // ?lang before the example init.js runs; see html/localeBoot.js.
+    entry: ['./html/localeBoot.js', `./renderers/${type}.js`],
     output: {
       filename: 'rdforms.[name].js',
       library: 'rdforms',

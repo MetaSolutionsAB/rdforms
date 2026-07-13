@@ -192,6 +192,26 @@ const CASES = {
       },
     },
   ],
+  // Three property rows; the second (Alias) is multi-valued. Used with
+  // { truncate: true, truncateLimit: 2 } to exercise row-level truncation:
+  // Name + Alias shown (Alias keeps both values), Homepage held as overflow.
+  manyRows: [
+    template(
+      text(NAME, 'Name'),
+      text(NICK, 'Alias', { cardinality: { min: 0, pref: 1, max: 3 } }),
+      text(HOMEPAGE, 'Homepage', { nodetype: 'URI' })
+    ),
+    {
+      [RESOURCE]: {
+        [NAME]: [{ value: 'Ada', type: 'literal' }],
+        [NICK]: [
+          { value: 'Ada', type: 'literal' },
+          { value: 'Ida', type: 'literal' },
+        ],
+        [HOMEPAGE]: [{ value: 'http://example.org/', type: 'uri' }],
+      },
+    },
+  ],
 };
 
 // Collapse whitespace between tags so the expected HTML can be written
@@ -448,5 +468,83 @@ describe('vanilla flavor — generated HTML for given data', () => {
          </dd>
        </dl>`)
     );
+  });
+
+  test('truncation: more rows than the limit → first N property rows shown, overflow held, Show more button after the dl', () => {
+    // truncateLimit counts <dt> rows: Name + Alias shown (Alias keeps BOTH its
+    // values), Homepage is the overflow row and is absent from the initial DOM.
+    expect(goldenHtml('manyRows', { truncate: true, truncateLimit: 2 })).toBe(
+      normalize(`<dl class="rdforms-group">
+         <dt class="rdforms-label">Name</dt>
+         <dd class="rdforms-value">Ada</dd>
+         <dt class="rdforms-label">Alias</dt>
+         <dd class="rdforms-value">Ada</dd>
+         <dd class="rdforms-value">Ida</dd>
+       </dl>
+       <button type="button" class="rdforms-show-more" aria-expanded="false">Show more</button>`)
+    );
+  });
+
+  test('truncation: rows within the limit → every row rendered, no button', () => {
+    expect(goldenHtml('manyRows', { truncate: true, truncateLimit: 5 })).toBe(
+      normalize(`<dl class="rdforms-group">
+         <dt class="rdforms-label">Name</dt>
+         <dd class="rdforms-value">Ada</dd>
+         <dt class="rdforms-label">Alias</dt>
+         <dd class="rdforms-value">Ada</dd>
+         <dd class="rdforms-value">Ida</dd>
+         <dt class="rdforms-label">Homepage</dt>
+         <dd class="rdforms-value"><a class="rdforms-link" href="http://example.org/">http://example.org/</a></dd>
+       </dl>`)
+    );
+  });
+
+  test('truncation: a noTruncate group style overrides truncate → no truncation, no button', () => {
+    const source = {
+      root: 'root',
+      auxilliary: [
+        {
+          '@id': 'root',
+          '@type': 'group',
+          styles: ['noTruncate'],
+          content: [
+            text(NAME, 'Name'),
+            text(NICK, 'Alias', { cardinality: { min: 0, pref: 1, max: 3 } }),
+            text(HOMEPAGE, 'Homepage', { nodetype: 'URI' }),
+          ],
+        },
+      ],
+    };
+    const html = normalize(
+      render(source, CASES.manyRows[1], { truncate: true, truncateLimit: 2 })
+    );
+    expect(html).not.toContain('rdforms-show-more');
+    expect(html).toContain('<dt class="rdforms-label">Homepage</dt>');
+  });
+
+  test('truncation: an item-level `truncate` group style enables truncation without the view-level flag', () => {
+    const source = {
+      root: 'root',
+      auxilliary: [
+        {
+          '@id': 'root',
+          '@type': 'group',
+          styles: ['truncate'],
+          content: [
+            text(NAME, 'Name'),
+            text(NICK, 'Alias', { cardinality: { min: 0, pref: 1, max: 3 } }),
+            text(HOMEPAGE, 'Homepage', { nodetype: 'URI' }),
+          ],
+        },
+      ],
+    };
+    // truncateLimit only — no view-level `truncate`; the group style enables it.
+    const html = normalize(
+      render(source, CASES.manyRows[1], { truncateLimit: 2 })
+    );
+    expect(html).toContain('rdforms-show-more');
+    expect(html).toContain('<dt class="rdforms-label">Name</dt>');
+    expect(html).toContain('<dt class="rdforms-label">Alias</dt>');
+    expect(html).not.toContain('<dt class="rdforms-label">Homepage</dt>');
   });
 });

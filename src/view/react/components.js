@@ -333,5 +333,8 @@ renderingContext.addTruncateControl = (fieldsDiv, context) => {
       </>
     );
   };
-  fieldsDiv.appendChild(<Component></Component>);
+  // The control is one child among the field's mapped children, so it needs a
+  // key like the others (DOM values / validation messages already carry one) —
+  // otherwise React warns about a missing list key.
+  fieldsDiv.appendChild(<Component key="rdformsTruncateControl"></Component>);
 };

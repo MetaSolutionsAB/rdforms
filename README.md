@@ -156,7 +156,7 @@ It is intentionally minimal — mostly layout (margins, table borders) plus the 
 
 Editors are out of scope for this flavor (presentation only).
 
-Value **truncation** (the `truncate` / `truncateLimit` options) is also out of scope: the other flavors truncate long value lists behind a JavaScript "Show more/less" button that hides the overflow with `display:none`, which runs counter to this flavor's no-JS-library, accessibility-first premise. The vanilla flavor renders **all** values into the DOM instead, so nothing is gated behind interactive JavaScript. (A future, native `<details>/<summary>`-based truncation would fit the flavor and is tracked separately — see RDFORMS-185.)
+Value **truncation** (the `truncate` / `truncateLimit` options) works differently here than in the other flavors. Where jquery/react/bootstrap truncate a single property's repeated values and hide the overflow with `display:none`, the vanilla flavor truncates **by property row**: `truncateLimit` counts `<dt>` rows, so a shown property keeps **all** of its `<dd>` values, and overflow rows are the trailing whole properties. Nothing is hidden with `display:none` and no JavaScript library is used — the overflow `<dt>/<dd>` nodes are simply held out of the DOM and re-inserted by a plain `<button class="rdforms-show-more">` placed **after** the `<dl>` (never inside it). The button carries `aria-expanded` (announced on both expand and collapse), and on expand focus moves to the first revealed row so the newly shown content — which sits before the button in reading order — is where the user lands. Truncation is opt-in via the view-level `truncate` option or an item's `truncate` style, and suppressed by a `noTruncate` style, exactly as elsewhere.
 
 ## Examples
 

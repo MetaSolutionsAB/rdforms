@@ -22,6 +22,7 @@ const examples = [
   { number: 6, title: 'RDF output from editor' },
   { number: 7, title: 'Editor with registered chooser' },
   { number: 8, title: 'Editor with field-level controls' },
+  { number: 9, title: 'Value truncation' },
 ];
 
 // One generated HTML page + its asset tags per (flavor, example) cell.

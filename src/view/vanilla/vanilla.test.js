@@ -146,3 +146,242 @@ describe('VanillaPresenter — dl/dt/dd structural seam', () => {
     expect(node.classList.contains('rdforms-presenter')).toBe(false);
   });
 });
+
+const NAME = 'http://xmlns.com/foaf/0.1/name';
+const NICK = 'http://xmlns.com/foaf/0.1/nick';
+const HOMEPAGE = 'http://xmlns.com/foaf/0.1/homepage';
+
+// Three property rows, limit 2 → Name + Alias shown, Homepage held as overflow.
+// The node is attached to document.body so jsdom focus()/activeElement work.
+const renderTruncated = () => {
+  const templateRoot = new ItemStore().createTemplate({
+    root: 'root',
+    auxilliary: [
+      { '@id': 'root', '@type': 'group', content: ['n', 'a', 'h'] },
+      {
+        '@id': 'n',
+        '@type': 'text',
+        nodetype: 'LITERAL',
+        property: NAME,
+        label: { en: 'Name' },
+      },
+      {
+        '@id': 'a',
+        '@type': 'text',
+        nodetype: 'LITERAL',
+        property: NICK,
+        label: { en: 'Alias' },
+        cardinality: { min: 0, pref: 1, max: 3 },
+      },
+      {
+        '@id': 'h',
+        '@type': 'text',
+        nodetype: 'URI',
+        property: HOMEPAGE,
+        label: { en: 'Homepage' },
+      },
+    ],
+  });
+  const graph = new Graph({
+    'http://example.org/p': {
+      [NAME]: [{ value: 'Ada', type: 'literal' }],
+      [NICK]: [
+        { value: 'Ada', type: 'literal' },
+        { value: 'Ida', type: 'literal' },
+      ],
+      [HOMEPAGE]: [{ value: 'http://example.org/', type: 'uri' }],
+    },
+  });
+  const binding = match(graph, 'http://example.org/p', templateRoot);
+  const node = document.createElement('div');
+  document.body.appendChild(node);
+  new VanillaPresenter(
+    { binding, locale: 'en', truncate: true, truncateLimit: 2 },
+    node
+  );
+  return node;
+};
+
+const labelsIn = (node) =>
+  Array.from(node.querySelectorAll('dt.rdforms-label')).map(
+    (dt) => dt.textContent
+  );
+
+describe('VanillaPresenter — row-level truncation toggle', () => {
+  afterEach(() => {
+    document.body.innerHTML = '';
+  });
+
+  test('initial render shows only the rows within the limit + a collapsed Show more button after the dl', () => {
+    const node = renderTruncated();
+    expect(labelsIn(node)).toEqual(['Name', 'Alias']);
+    // Overflow row (Homepage) is held out of the DOM entirely.
+    expect(node.textContent).not.toContain('http://example.org/');
+    const button = node.querySelector('button.rdforms-show-more');
+    expect(button).not.toBeNull();
+    expect(button.getAttribute('aria-expanded')).toBe('false');
+    expect(button.textContent).toBe('Show more');
+    // The button is a sibling after the dl, never a child of it.
+    expect(node.querySelector('dl button')).toBeNull();
+    expect(node.querySelector('dl').nextElementSibling).toBe(button);
+  });
+
+  test('clicking Show more reveals the overflow rows, flips aria-expanded, relabels, and moves focus to the first revealed row', () => {
+    const node = renderTruncated();
+    const button = node.querySelector('button.rdforms-show-more');
+    button.click();
+    expect(labelsIn(node)).toEqual(['Name', 'Alias', 'Homepage']);
+    expect(node.textContent).toContain('http://example.org/');
+    expect(button.getAttribute('aria-expanded')).toBe('true');
+    expect(button.textContent).toBe('Show less');
+    const revealed = labelsIn(node)
+      .map((_, index) => node.querySelectorAll('dt.rdforms-label')[index])
+      .find((dt) => dt.textContent === 'Homepage');
+    expect(revealed.getAttribute('tabindex')).toBe('-1');
+    expect(document.activeElement).toBe(revealed);
+  });
+
+  test('clicking again collapses the overflow rows, restores aria-expanded/label, and returns focus to the button', () => {
+    const node = renderTruncated();
+    const button = node.querySelector('button.rdforms-show-more');
+    button.click();
+    button.click();
+    expect(labelsIn(node)).toEqual(['Name', 'Alias']);
+    expect(node.textContent).not.toContain('http://example.org/');
+    expect(button.getAttribute('aria-expanded')).toBe('false');
+    expect(button.textContent).toBe('Show more');
+    expect(document.activeElement).toBe(button);
+  });
+});
+
+const property = (name) => `http://example.org/p/${name}`;
+const textDef = (id, prop, label, extra) => ({
+  '@id': id,
+  '@type': 'text',
+  nodetype: 'LITERAL',
+  property: prop,
+  label: { en: label },
+  ...extra,
+});
+
+// Root group with a heading-styled child in the middle, so rendering produces
+// two independent <dl> segments (before/after the section). With truncateLimit
+// 2, each segment truncates on its own: A,B shown / C held, then the section,
+// then D,E shown / F held.
+const renderMultiSegment = () => {
+  const templateRoot = new ItemStore().createTemplate({
+    root: 'root',
+    auxilliary: [
+      {
+        '@id': 'root',
+        '@type': 'group',
+        content: ['ia', 'ib', 'ic', 'sec', 'id', 'ie', 'if'],
+      },
+      textDef('ia', property('a'), 'A'),
+      textDef('ib', property('b'), 'B'),
+      textDef('ic', property('c'), 'C'),
+      {
+        '@id': 'sec',
+        '@type': 'group',
+        styles: ['heading'],
+        label: { en: 'Section' },
+        content: ['ig'],
+      },
+      textDef('ig', property('g'), 'G'),
+      textDef('id', property('d'), 'D'),
+      textDef('ie', property('e'), 'E'),
+      textDef('if', property('f'), 'F'),
+    ],
+  });
+  const graph = new Graph({
+    'http://example.org/p': Object.fromEntries(
+      ['a', 'b', 'c', 'g', 'd', 'e', 'f'].map((name) => [
+        property(name),
+        [{ value: name, type: 'literal' }],
+      ])
+    ),
+  });
+  const binding = match(graph, 'http://example.org/p', templateRoot);
+  const node = document.createElement('div');
+  document.body.appendChild(node);
+  new VanillaPresenter(
+    { binding, locale: 'en', truncate: true, truncateLimit: 2 },
+    node
+  );
+  return node;
+};
+
+// Overflow row (Alias) is multi-valued, so expanding it must reveal its <dt>
+// plus all its <dd>s together, in order.
+const renderMultiValueOverflow = () => {
+  const templateRoot = new ItemStore().createTemplate({
+    root: 'root',
+    auxilliary: [
+      { '@id': 'root', '@type': 'group', content: ['in', 'ih', 'ial'] },
+      textDef('in', NAME, 'Name'),
+      { ...textDef('ih', HOMEPAGE, 'Homepage'), nodetype: 'URI' },
+      textDef('ial', NICK, 'Alias', {
+        cardinality: { min: 0, pref: 1, max: 3 },
+      }),
+    ],
+  });
+  const graph = new Graph({
+    'http://example.org/p': {
+      [NAME]: [{ value: 'Ada', type: 'literal' }],
+      [HOMEPAGE]: [{ value: 'http://example.org/', type: 'uri' }],
+      [NICK]: [
+        { value: 'Zed', type: 'literal' },
+        { value: 'Ida', type: 'literal' },
+      ],
+    },
+  });
+  const binding = match(graph, 'http://example.org/p', templateRoot);
+  const node = document.createElement('div');
+  document.body.appendChild(node);
+  new VanillaPresenter(
+    { binding, locale: 'en', truncate: true, truncateLimit: 2 },
+    node
+  );
+  return node;
+};
+
+describe('VanillaPresenter — truncation across multiple <dl> segments', () => {
+  afterEach(() => {
+    document.body.innerHTML = '';
+  });
+
+  test('a heading splits the group into independently-truncated segments, each with its own button; expanding one does not affect the other', () => {
+    const node = renderMultiSegment();
+    const buttons = node.querySelectorAll('button.rdforms-show-more');
+    expect(buttons.length).toBe(2);
+    const labels = () =>
+      Array.from(node.querySelectorAll('dt.rdforms-label')).map(
+        (dt) => dt.textContent
+      );
+    // C (segment 1) and F (segment 2) start held; G is the section's content.
+    expect(labels()).toEqual(['A', 'B', 'G', 'D', 'E']);
+    // Expanding segment 1 reveals only C — F stays held (no cross-segment leak).
+    buttons[0].click();
+    expect(labels()).toEqual(['A', 'B', 'C', 'G', 'D', 'E']);
+    // Expanding segment 2 reveals F.
+    buttons[1].click();
+    expect(labels()).toEqual(['A', 'B', 'C', 'G', 'D', 'E', 'F']);
+  });
+
+  test('expanding a multi-value overflow row reveals its <dt> and every <dd> in order', () => {
+    const node = renderMultiValueOverflow();
+    expect(node.textContent).not.toContain('Alias');
+    node.querySelector('button.rdforms-show-more').click();
+    const aliasTerm = Array.from(
+      node.querySelectorAll('dt.rdforms-label')
+    ).find((dt) => dt.textContent === 'Alias');
+    expect(aliasTerm).toBeTruthy();
+    const firstValue = aliasTerm.nextElementSibling;
+    const secondValue = firstValue.nextElementSibling;
+    expect([firstValue.tagName, firstValue.textContent]).toEqual(['DD', 'Zed']);
+    expect([secondValue.tagName, secondValue.textContent]).toEqual([
+      'DD',
+      'Ida',
+    ]);
+  });
+});

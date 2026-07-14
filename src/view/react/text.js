@@ -48,7 +48,12 @@ presenters
         ? utils.getLocalizedValue(vmap).value || val
         : binding.getGist();
     fieldDiv.appendChild(
-      <a {...attrs} key={binding.getHash()} title={val} href={val}>
+      <a
+        {...attrs}
+        key={binding.getHash()}
+        title={val}
+        href={utils.sanitizeUrl(val)}
+      >
         <span>{lbl}</span>
         {component}
       </a>
@@ -105,7 +110,12 @@ presenters
           : binding.getGist();
     }
     fieldDiv.appendChild(
-      <a {...attrs} key={binding.getHash()} title={tooltip} href={val}>
+      <a
+        {...attrs}
+        key={binding.getHash()}
+        title={tooltip}
+        href={utils.sanitizeUrl(val)}
+      >
         <span>{lbl}</span>
         {component}
       </a>
@@ -130,7 +140,12 @@ presenters
         ? utils.getLocalizedValue(vmap).value || val
         : binding.getGist();
     fieldDiv.appendChild(
-      <a {...attrs} key={binding.getHash()} title={val} href={val}>
+      <a
+        {...attrs}
+        key={binding.getHash()}
+        title={val}
+        href={utils.sanitizeUrl(val)}
+      >
         <span>{lbl}</span>
         {component}
       </a>
@@ -146,7 +161,7 @@ presenters
       <img
         key={binding.getHash()}
         className="rdformsImage"
-        src={binding.getGixt()}
+        src={utils.sanitizeUrl(binding.getGixt())}
       />
     );
   });
@@ -215,7 +230,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
         {...attrs}
         key={binding.getHash()}
         className="rdformsUrl"
-        href={parentBinding.getStatement().getValue()}
+        href={utils.sanitizeUrl(parentBinding.getStatement().getValue())}
       >
         <span>{vmap ? utils.getLocalizedValue(vmap).value || val : val}</span>
         {component}

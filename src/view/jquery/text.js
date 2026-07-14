@@ -14,7 +14,7 @@ presenters
     const vmap = utils.getLocalizedMap(binding);
     const $a = jquery('<a class="rdformsUrl">')
       .attr('title', binding.getValue())
-      .attr('href', binding.getValue())
+      .attr('href', utils.sanitizeUrl(binding.getValue()))
       .appendTo(fieldDiv);
     if (binding.getItem().hasStyle('showValue')) {
       $a.text(binding.getValue());
@@ -65,7 +65,7 @@ presenters
 
     const $a = jquery('<a class="rdformsUrl">')
       .attr('title', tooltip)
-      .attr('href', val)
+      .attr('href', utils.sanitizeUrl(val))
       .appendTo(fieldDiv);
 
     let lbl;
@@ -96,7 +96,7 @@ presenters
   .style('image')
   .register((fieldDiv, binding /* , context */) => {
     jquery('<img class="rdformsImage">')
-      .attr('src', binding.getGist())
+      .attr('src', utils.sanitizeUrl(binding.getGist()))
       .appendTo(fieldDiv);
   });
 
@@ -127,7 +127,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
     parentBinding.getStatement().getType() === 'uri'
   ) {
     const $a = jquery('<a class="rdformsUrl">')
-      .attr('href', parentBinding.getStatement().getValue())
+      .attr('href', utils.sanitizeUrl(parentBinding.getStatement().getValue()))
       .html(text)
       .appendTo(fieldDiv);
     if (language) {

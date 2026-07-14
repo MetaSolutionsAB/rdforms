@@ -131,7 +131,7 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
             aria-label={bundle.openLinkExternally}
             disabled={!valid}
             target="_blank"
-            href={value}
+            href={utils.sanitizeUrl(value)}
             title={value}
           >
             <OpenInNewIcon />

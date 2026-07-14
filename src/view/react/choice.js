@@ -44,7 +44,7 @@ presenters
           key={binding.getHash()}
           className="rdformsImage"
           title={desc || choice.value}
-          src={choice.value}
+          src={utils.sanitizeUrl(choice.value)}
         />
       );
     })
@@ -123,7 +123,11 @@ presenters.itemtype('choice').register(
               attrs.lang = locValue.lang;
             }
             return (
-              <a {...attrs} title={title} href={choice.seeAlso || choice.value}>
+              <a
+                {...attrs}
+                title={title}
+                href={utils.sanitizeUrl(choice.seeAlso || choice.value)}
+              >
                 <span>{locValue.value}</span>
                 {component}
               </a>

@@ -22,13 +22,14 @@ renderingContext.renderPresenterLabel = (
   }
 
   const headingElement = `h${context.view.headingLevel}`;
+  // No tabindex: this flavor's attachItemInfo only attaches a hover `title`
+  // (no focus-triggered popover), so a focusable label would be a keyboard tab
+  // stop with no associated action.
   const $labelDiv = item.hasStyle('heading')
-    ? jquery(`<${headingElement} class="rdformsLabel" tabindex="0">`)
+    ? jquery(`<${headingElement} class="rdformsLabel">`)
         .text(label)
         .appendTo(rowNode)
-    : jquery('<div class="rdformsLabel" tabindex="0">')
-        .text(label)
-        .appendTo(rowNode);
+    : jquery('<div class="rdformsLabel">').text(label).appendTo(rowNode);
   if (binding) {
     $labelDiv.attr('id', context.view.createLabelIndex(binding));
   }

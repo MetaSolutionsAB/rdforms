@@ -144,13 +144,17 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
   const descriptionIcon = context.view.popupOnLabel ? (
     <DescriptionIcon item={item} context={context} />
   ) : null;
+  // No tabIndex on the label wrapper: it has no action of its own — the
+  // focusable, keyboard-operable affordance is the DescriptionIcon button
+  // (rendered only when there's a description/property). A bare tabIndex here
+  // would be a tab stop that does nothing.
   label = item.hasStyle('heading') ? (
-    <HeadingElement tabIndex="0" id={labelId} className="rdformsLabelRow">
+    <HeadingElement id={labelId} className="rdformsLabelRow">
       <span className="rdformsLabel">{label}</span>
       {descriptionIcon}
     </HeadingElement>
   ) : (
-    <span tabIndex="0" id={labelId} className="rdformsLabelRow">
+    <span id={labelId} className="rdformsLabelRow">
       <span className="rdformsLabel">{label}</span>
       {descriptionIcon}
     </span>
@@ -184,14 +188,12 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
       label = '';
     }
     const HeadingElement = `h${context.view.headingLevel}`;
+    // No tabIndex: the label itself has no action; the DescriptionIcon button
+    // (added below) is the focusable info affordance.
     label = item.hasStyle('heading') ? (
-      <HeadingElement tabIndex="0" className="rdformsLabel">
-        {label}
-      </HeadingElement>
+      <HeadingElement className="rdformsLabel">{label}</HeadingElement>
     ) : (
-      <span tabIndex="0" className="rdformsLabel">
-        {label}
-      </span>
+      <span className="rdformsLabel">{label}</span>
     );
 
     const card = item.getCardinality();
@@ -253,11 +255,8 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
       ).value;
 
       if (!compactField && desc) {
-        description = (
-          <div className="rdformsDescription" tabIndex="0">
-            {desc}
-          </div>
-        );
+        // Plain description text — not interactive, so not a tab stop.
+        description = <div className="rdformsDescription">{desc}</div>;
       }
     }
 

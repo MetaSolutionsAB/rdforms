@@ -111,19 +111,11 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     renderingContext.domClassToggle(aroundNode, 'rdformsNoPopup', true);
     return;
   }
-  if (
-    item == null ||
-    (item.getProperty() == null &&
-      item.getDescriptionMap() == null &&
-      item.getEditDescriptionMap() == null)
-  ) {
+  if (item == null) {
     // Nothing to reveal — leave the label non-interactive (no role, no tab stop).
     jquery(aroundNode).addClass('noPointer');
     return;
   }
-  // The label opens an info popover on focus, so it is a real keyboard control.
-  renderingContext.domSetAttr(aroundNode, 'role', 'button');
-  renderingContext.domSetAttr(aroundNode, 'tabindex', '0');
 
   const descriptionMap =
     (context.view instanceof Editor
@@ -132,6 +124,21 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
   const description =
     utils.getLocalizedValue(descriptionMap, context.view.getLocale()).value ||
     '';
+
+  // Nothing to reveal — leave the label non-interactive (no role, no tab stop,
+  // no empty popover). "Nothing" is gated on the description that actually
+  // resolves for the active locale, not on the map merely existing: a map key
+  // may be present but empty or whitespace-only for the active locale (e.g.
+  // filled for 'en', empty for the active 'sv'), which previously left the
+  // label focusable with an empty popover (RDFORMS-187). A property is always
+  // content worth revealing.
+  if (item.getProperty() == null && description.trim() === '') {
+    jquery(aroundNode).addClass('noPointer');
+    return;
+  }
+  // The label opens an info popover on focus, so it is a real keyboard control.
+  renderingContext.domSetAttr(aroundNode, 'role', 'button');
+  renderingContext.domSetAttr(aroundNode, 'tabindex', '0');
 
   let propinfo = '';
   if (item.getProperty()) {

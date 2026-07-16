@@ -6,6 +6,7 @@ import { FormGroup } from '@mui/material';
 import { useLocalizedSortedChoices, useNamedGraphId } from '../hooks';
 import { getNamedGraphId } from '../../viewUtils';
 import * as engine from '../../../model/engine';
+import utils from '../../../utils';
 
 const CheckOption = (props) => {
   const { choice, binding, onChoiceChange } = props;
@@ -21,7 +22,13 @@ const CheckOption = (props) => {
   return (
     <FormControlLabel
       disabled={props.disabled}
-      label={choice.label}
+      // Tag the choice label with its resolved language when it differs from the
+      // page locale (WCAG 3.1.2); undefined → React omits the attribute.
+      label={
+        <span lang={utils.foreignLang(choice.labelLang, props.pageLocale)}>
+          {choice.label}
+        </span>
+      }
       control={<Checkbox checked={checked} onChange={handleChange} />}
       {...(choice.mismatch ? { className: 'mismatch' } : {})}
       title={choice.description || choice.seeAlso || choice.value}
@@ -101,6 +108,7 @@ export default function CheckBoxesEditor(props) {
             binding={pair[1]}
             disabled={!!pair[2] || !!ngId}
             onChoiceChange={onChoiceChange}
+            pageLocale={props.context.view.getLocale()}
           />
         ))}
       </FormGroup>

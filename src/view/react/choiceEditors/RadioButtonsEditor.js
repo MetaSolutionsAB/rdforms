@@ -10,7 +10,13 @@ import utils from '../../../utils';
 const ChoiceOption = (props) => (
   <FormControlLabel
     disabled={props.disabled}
-    label={props.choice.label}
+    // Tag the choice label with its resolved language when it differs from the
+    // page locale (WCAG 3.1.2); undefined → React omits the attribute.
+    label={
+      <span lang={utils.foreignLang(props.choice.labelLang, props.pageLocale)}>
+        {props.choice.label}
+      </span>
+    }
     value={props.choice.value}
     control={<Radio />}
     {...(props.choice.mismatch ? { className: 'mismatch' } : {})}
@@ -81,6 +87,7 @@ export default function RadioButtonsEditor(props) {
               key={choice.value}
               disabled={!!ngId}
               choice={choice}
+              pageLocale={props.context.view.getLocale()}
             />
           ))}
         </RadioGroup>

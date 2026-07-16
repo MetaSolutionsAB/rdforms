@@ -1,4 +1,5 @@
 import { getNamedGraphId } from '../viewUtils';
+import utils from '../../utils';
 
 let uniqueRadioButtonGroupNr = 0;
 
@@ -70,12 +71,22 @@ export default class RadioButtonsEditor {
         .attr('checked', c.value === currentValue)
         .attr('name', `rdformsRadio_${uniqueRadioButtonGroupNr}`)
         .appendTo($label);
-      $label.append(
-        this.item._getLocalizedValue(
-          c.editlabel || c.label,
-          this.context.view.getLocale()
-        ).value
+      const pageLocale = this.context.view.getLocale();
+      const labelResolved = this.item._getLocalizedValue(
+        c.editlabel || c.label,
+        pageLocale
       );
+      // Tag the choice label with its resolved language when it differs from
+      // the page locale (WCAG 3.1.2); no attribute when it matches.
+      const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
+      if (labelLang) {
+        jquery('<span>')
+          .attr('lang', labelLang)
+          .text(labelResolved.value)
+          .appendTo($label);
+      } else {
+        $label.append(labelResolved.value);
+      }
 
       if (c.mismatch) {
         $label.addClass('mismatch disabled');

@@ -30,6 +30,16 @@ const getLocalizedValue = (hash, locale) => {
   return { precision: 'none' };
 };
 
+// Given the language a value resolved to (getLocalizedValue(...).lang) and the
+// active page locale, returns the language to tag on the rendered node — or
+// undefined when there is nothing to tag: the value resolved in the page locale,
+// or it is language-less (nolang / precision 'none' → falsy lang). Tagging only
+// the fallback case keeps the DOM free of redundant lang attributes while
+// letting screen readers pronounce foreign-language fallbacks correctly
+// (WCAG 2.1 SC 3.1.2 Language of Parts).
+const foreignLang = (language, pageLocale) =>
+  language && language !== pageLocale ? language : undefined;
+
 const f = (graph, subject, prop) => {
   const stmts = graph.find(subject, prop);
   if (stmts.length > 0) {
@@ -154,6 +164,7 @@ const generateUUID = () => {
 
 export default {
   getLocalizedValue,
+  foreignLang,
   getLocalizedMap,
   cloneArrayWithLabels,
   extractGist,

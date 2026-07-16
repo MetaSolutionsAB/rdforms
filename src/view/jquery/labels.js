@@ -14,7 +14,9 @@ renderingContext.renderPresenterLabel = (
     context.view instanceof Editor
       ? item.getEditLabelMap() || item.getLabelMap()
       : item.getLabelMap();
-  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value;
+  const pageLocale = context.view.getLocale();
+  const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
+  let label = labelResolved.value;
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
@@ -38,6 +40,12 @@ renderingContext.renderPresenterLabel = (
   if (context) {
     context.labelNode = $labelDiv[0];
   }
+  // Tag the label with its resolved language when it fell back to something
+  // other than the page locale (WCAG 3.1.2); no attribute when it matches.
+  const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
+  if (labelLang) {
+    $labelDiv.attr('lang', labelLang);
+  }
   const view = context.view;
   if (item.hasStyle('showDescriptionInPresent') || view.showDescription) {
     // An item is compact if it is exclicitly set as compact or
@@ -51,13 +59,19 @@ renderingContext.renderPresenterLabel = (
           (view.parentView &&
             view.parentView.topLevel &&
             view.binding.getItem().hasStyle('heading'))));
-    const desc = utils.getLocalizedValue(
+    const descResolved = utils.getLocalizedValue(
       item.getDescriptionMap(),
-      context.view.getLocale()
-    ).value;
+      pageLocale
+    );
+    const desc = descResolved.value;
 
     if (!compactField && desc) {
-      jquery('<div class="rdformsDescription">').text(desc).appendTo(rowNode);
+      const $desc = jquery('<div class="rdformsDescription">').text(desc);
+      const descLang = utils.foreignLang(descResolved.lang, pageLocale);
+      if (descLang) {
+        $desc.attr('lang', descLang);
+      }
+      $desc.appendTo(rowNode);
     }
   }
 

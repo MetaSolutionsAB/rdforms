@@ -10,15 +10,19 @@ renderingContext.addPresenterTable = (newRow, firstBinding, context) => {
   const $tHeadRow = jquery('<tr>').appendTo($table);
   for (let colInd = 0; colInd < childItems.length; colInd++) {
     const $th = jquery('<th>').appendTo($tHeadRow);
-    let label = utils.getLocalizedValue(
+    const pageLocale = context.view.getLocale();
+    const labelResolved = utils.getLocalizedValue(
       childItems[colInd].getLabel(),
-      context.view.getLocale()
-    ).value;
-    renderingContext.attachItemInfo(
-      item,
-      jquery('<span>').text(label).appendTo($th),
-      context
+      pageLocale
     );
+    const $thLabel = jquery('<span>').text(labelResolved.value).appendTo($th);
+    // Tag the header language when it fell back to something other than the
+    // page locale (WCAG 3.1.2).
+    const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
+    if (labelLang) {
+      $thLabel.attr('lang', labelLang);
+    }
+    renderingContext.attachItemInfo(item, $thLabel, context);
   }
   return $table[0];
 };

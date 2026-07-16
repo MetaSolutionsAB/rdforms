@@ -131,16 +131,18 @@ renderingContext.addCreateChildButton =
         context.view.addRow(rowDiv, nBinding); // not the first binding...
       }
     };
-    let labelMap = item.getEditLabelMap() || item.getLabelMap();
-    let label = utils.getLocalizedValue(
-      labelMap,
-      context.view.getLocale()
-    ).value;
+    const pageLocale = context.view.getLocale();
+    const labelMap = item.getEditLabelMap() || item.getLabelMap();
+    const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
+    let label = labelResolved.value;
     if (label != null && label !== '') {
       label = label.charAt(0).toUpperCase() + label.slice(1);
     } else {
       label = '';
     }
+    // Tag the resolved language when the label fell back to something other
+    // than the page locale (WCAG 3.1.2); undefined → React omits the attribute.
+    const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
     const title = context.view.messages.edit_add;
     return (
       <Button
@@ -153,7 +155,7 @@ renderingContext.addCreateChildButton =
         color="primary"
         startIcon={<AddIcon />}
       >
-        {label}
+        <span lang={labelLang}>{label}</span>
       </Button>
     );
   };

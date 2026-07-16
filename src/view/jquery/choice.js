@@ -76,15 +76,19 @@ presenters.itemtype('choice').register(
       choice.load(() => {
         const locValue2 = utils.getLocalizedValue(choice.label, locale);
         $el.text(locValue2.value);
-        if (locValue2.lang) {
-          $el.attr('lang', locValue2.lang);
+        // Tag lang only when the label resolved to a language other than the
+        // page locale (WCAG 3.1.2); clear it otherwise.
+        const reloadedLang = utils.foreignLang(locValue2.lang, locale);
+        if (reloadedLang) {
+          $el.attr('lang', reloadedLang);
         } else {
-          $el.attr('lang', undefined);
+          $el.removeAttr('lang');
         }
       });
     }
-    if (locValue.lang) {
-      $el.attr('lang', locValue.lang);
+    const lang = utils.foreignLang(locValue.lang, locale);
+    if (lang) {
+      $el.attr('lang', lang);
     }
   })
 );

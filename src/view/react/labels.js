@@ -67,11 +67,7 @@ const DescriptionIcon = ({ item, context }) => {
           className="rdformsLinebreaks rdformsDescription"
           // Tag the resolved language when it fell back to something other than
           // the page locale, so screen readers pronounce it right (WCAG 3.1.2).
-          lang={
-            descriptionLang && descriptionLang !== view.getLocale()
-              ? descriptionLang
-              : undefined
-          }
+          lang={utils.foreignLang(descriptionLang, view.getLocale())}
         >
           {shownDescription}
         </p>
@@ -118,12 +114,17 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
     context.view instanceof Editor
       ? item.getEditLabelMap() || item.getLabelMap()
       : item.getLabelMap();
-  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value;
+  const pageLocale = context.view.getLocale();
+  const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
+  let label = labelResolved.value;
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
     label = '';
   }
+  // Tag the resolved language when it fell back to something other than the
+  // page locale (WCAG 3.1.2); undefined → React omits the attribute.
+  const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
 
   const view = context.view;
   let description;
@@ -143,12 +144,17 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
       view instanceof Editor
         ? item.getEditDescriptionMap() || item.getDescriptionMap()
         : item.getDescriptionMap();
-    const desc = utils.getLocalizedValue(
-      descMap,
-      context.view.getLocale()
-    ).value;
+    const descResolved = utils.getLocalizedValue(descMap, pageLocale);
+    const desc = descResolved.value;
     if (!compactField && desc) {
-      description = <div className="rdformsDescription">{desc}</div>;
+      description = (
+        <div
+          className="rdformsDescription"
+          lang={utils.foreignLang(descResolved.lang, pageLocale)}
+        >
+          {desc}
+        </div>
+      );
     }
   }
 
@@ -159,12 +165,16 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
   ) : null;
   label = item.hasStyle('heading') ? (
     <HeadingElement tabIndex="0" id={labelId} className="rdformsLabelRow">
-      <span className="rdformsLabel">{label}</span>
+      <span className="rdformsLabel" lang={labelLang}>
+        {label}
+      </span>
       {descriptionIcon}
     </HeadingElement>
   ) : (
     <span tabIndex="0" id={labelId} className="rdformsLabelRow">
-      <span className="rdformsLabel">{label}</span>
+      <span className="rdformsLabel" lang={labelLang}>
+        {label}
+      </span>
       {descriptionIcon}
     </span>
   );
@@ -186,23 +196,25 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
       true
     );
   } else {
+    const pageLocale = context.view.getLocale();
     let labelMap = item.getEditLabelMap() || item.getLabelMap();
-    let label = utils.getLocalizedValue(
-      labelMap,
-      context.view.getLocale()
-    ).value;
+    const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
+    let label = labelResolved.value;
     if (label != null && label !== '') {
       label = label.charAt(0).toUpperCase() + label.slice(1);
     } else {
       label = '';
     }
+    // Tag the resolved language when it fell back to something other than the
+    // page locale (WCAG 3.1.2); undefined → React omits the attribute.
+    const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
     const HeadingElement = `h${context.view.headingLevel}`;
     label = item.hasStyle('heading') ? (
-      <HeadingElement tabIndex="0" className="rdformsLabel">
+      <HeadingElement tabIndex="0" className="rdformsLabel" lang={labelLang}>
         {label}
       </HeadingElement>
     ) : (
-      <span tabIndex="0" className="rdformsLabel">
+      <span tabIndex="0" className="rdformsLabel" lang={labelLang}>
         {label}
       </span>
     );
@@ -260,14 +272,16 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
         view instanceof Editor
           ? item.getEditDescriptionMap() || item.getDescriptionMap()
           : item.getDescriptionMap();
-      const desc = utils.getLocalizedValue(
-        descMap,
-        context.view.getLocale()
-      ).value;
+      const descResolved = utils.getLocalizedValue(descMap, pageLocale);
+      const desc = descResolved.value;
 
       if (!compactField && desc) {
         description = (
-          <div className="rdformsDescription" tabIndex="0">
+          <div
+            className="rdformsDescription"
+            tabIndex="0"
+            lang={utils.foreignLang(descResolved.lang, pageLocale)}
+          >
             {desc}
           </div>
         );

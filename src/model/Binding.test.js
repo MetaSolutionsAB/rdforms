@@ -299,6 +299,19 @@ describe('Binding value validation', () => {
     expect(binding._isValidObjectValue('')).toBe(false);
   });
 
+  test('_isValidObjectValue strips the value template before applying the pattern', () => {
+    // The pattern is tested against the gist, not the full value: the value
+    // template is stripped first (Binding._isValidObjectValue via extractGist).
+    const binding = new Binding({
+      item: buildTextItem({
+        pattern: '[0-9]+',
+        valueTemplate: 'http://example.com/$1',
+      }),
+    });
+    expect(binding._isValidObjectValue('http://example.com/123')).toBe(true);
+    expect(binding._isValidObjectValue('http://example.com/abc')).toBe(false);
+  });
+
   test('_isValidPredicateValue accepts non-empty strings', () => {
     const binding = new Binding({ item: buildTextItem() });
     expect(binding._isValidPredicateValue('http://example.com/p')).toBe(true);
@@ -407,6 +420,19 @@ describe('Binding.isReadOnly', () => {
   test('a binding without a named-graph statement is not read-only', () => {
     const binding = new Binding({ item: buildTextItem() });
     expect(binding.isReadOnly()).toBe(false);
+  });
+
+  test('a binding whose statement is in a named graph is read-only', () => {
+    // The base class only calls statement.getNamedGraph(); a minimal stub
+    // exercises the named-graph branch without rdfjson named-graph plumbing.
+    const namedGraphStatement = {
+      getNamedGraph: () => 'http://example.com/named-graph',
+    };
+    const binding = new Binding({
+      item: buildTextItem(),
+      statement: namedGraphStatement,
+    });
+    expect(binding.isReadOnly()).toBe(true);
   });
 
   test('a child of a read-only parent returns undefined instead of true', () => {

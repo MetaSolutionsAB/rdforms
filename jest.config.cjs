@@ -14,6 +14,9 @@ module.exports = {
     }],
   },
   transformIgnorePatterns: ['node_modules/(?!(\\.pnpm|lodash-es|@entryscape)/)'],
+  // Restore spies/mocks after every test, even when an assertion throws, so a
+  // console spy can never leak its stub into a later suite.
+  restoreMocks: true,
   // Scoped to the core model/template classes that have unit-test suites
   // (see RDFORMS-179); no coverage thresholds are enforced.
   collectCoverageFrom: [

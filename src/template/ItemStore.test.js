@@ -7,6 +7,14 @@ import template1 from '../../test/fixtures/template1';
 
 const buildTemplate1 = () => new ItemStore().createTemplate(template1);
 
+// A store with template1 registered. Safe to share the fixture in non-mutating
+// tests; tests that rename/setId must deep-clone template1 instead.
+const buildStore = () => {
+  const itemStore = new ItemStore();
+  itemStore.createTemplate(template1);
+  return itemStore;
+};
+
 describe('Create-ItemStore', () => {
   test('createTemplateStore', () => {
     const itemStore = new ItemStore();
@@ -127,9 +135,8 @@ describe('ItemStore registration and lookup', () => {
     expect(itemStore.getItem('subjectVocab')).toBeInstanceOf(Choice);
   });
 
-  test('id resolution helpers', () => {
-    const itemStore = new ItemStore();
-    itemStore.createTemplate(template1);
+  test('getItem/getTemplate/getItemByProperty resolve a registered item; getItem(null) is undefined', () => {
+    const itemStore = buildStore();
     expect(itemStore.getItem('subjectVocab')).toBeInstanceOf(Choice);
     expect(itemStore.getTemplate('subjectVocab')).toBe(
       itemStore.getItem('subjectVocab')
@@ -143,16 +150,15 @@ describe('ItemStore registration and lookup', () => {
   });
 
   test('getChildren returns the group children and tolerates null', () => {
-    const itemStore = new ItemStore();
-    const root = itemStore.createTemplate(template1);
+    const itemStore = buildStore();
+    const root = itemStore.getTemplate('http://example.ch/books/book');
     expect(itemStore.getChildren(root)).toHaveLength(5);
     expect(itemStore.getChildren(root, true)).toHaveLength(5);
     expect(itemStore.getChildren(null)).toEqual([]);
   });
 
   test('removeItem clears the id and property registrations', () => {
-    const itemStore = new ItemStore();
-    itemStore.createTemplate(template1);
+    const itemStore = buildStore();
     const item = itemStore.getItem('subjectVocab');
     itemStore.removeItem(item);
     expect(itemStore.getItem('subjectVocab')).toBeUndefined();
@@ -192,12 +198,6 @@ describe('ItemStore.renameItem', () => {
 });
 
 describe('ItemStore.createItem', () => {
-  const buildStore = () => {
-    const itemStore = new ItemStore();
-    itemStore.createTemplate(template1);
-    return itemStore;
-  };
-
   test('throws when extending an unknown item', () => {
     expect(() =>
       buildStore().createItem({ '@type': 'text', extends: 'no-such-item' })
@@ -206,15 +206,14 @@ describe('ItemStore.createItem', () => {
 
   test('extends a known item and returns the fleshed-out item', () => {
     // The extended source inherits the base's @id, so creating it logs an
-    // id-conflict; silence that expected noise.
-    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    // id-conflict; silence that expected noise (restored by restoreMocks).
+    jest.spyOn(console, 'log').mockImplementation(() => {});
     const item = buildStore().createItem({
       '@type': 'text',
       extends: 'publisheddate',
       property: 'http://example.com/extended',
     });
     expect(item).toBeInstanceOf(Text);
-    logSpy.mockRestore();
   });
 
   test('throws when neither type nor id is provided', () => {
@@ -238,7 +237,6 @@ describe('ItemStore.createItem', () => {
     const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
     buildStore().createItem({ '@id': 'subjectVocab', '@type': 'choice' });
     expect(logSpy).toHaveBeenCalled();
-    logSpy.mockRestore();
   });
 
   test('routes errors through handleErrorAs instead of throwing', () => {
@@ -247,6 +245,5 @@ describe('ItemStore.createItem', () => {
     const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
     expect(() => itemStore.createItem({})).not.toThrow();
     expect(warnSpy).toHaveBeenCalled();
-    warnSpy.mockRestore();
   });
 });

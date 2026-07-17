@@ -233,22 +233,53 @@ describe('levelProfile', () => {
 });
 
 describe('fuzzyMatch', () => {
-  test('returns a GroupBinding that is a superset of the strict match', () => {
-    const { template } = createStoreAndTemplate();
-    const graph = new Graph(graph2);
-    const strict = match(graph, 'http://example.org/about', template);
+  test('captures a wrong-nodetype value that the strict match rejects', () => {
+    // ONLY_LITERAL rejects a uri-typed object under strict matching, but the
+    // relaxed second pass in fuzzyMatch captures it (engine.js _matchTextItem).
+    const itemStore = new ItemStore();
+    const template = itemStore.createTemplate({
+      root: 'fuzzyRoot',
+      auxilliary: [
+        {
+          '@id': 'fuzzyRoot',
+          '@type': 'group',
+          nodetype: 'RESOURCE',
+          constraints: {
+            'http://www.w3.org/TR/rdf-schema/type': 'http://example.com/Doc',
+          },
+          content: [
+            {
+              '@type': 'text',
+              property: 'http://example.com/name',
+              nodetype: 'ONLY_LITERAL',
+            },
+          ],
+        },
+      ],
+    });
+    const graphSource = {
+      'http://example.com/res': {
+        'http://www.w3.org/TR/rdf-schema/type': [
+          { value: 'http://example.com/Doc', type: 'uri' },
+        ],
+        'http://example.com/name': [
+          { value: 'http://example.com/not-a-literal', type: 'uri' },
+        ],
+      },
+    };
+    const strict = match(
+      new Graph(graphSource),
+      'http://example.com/res',
+      template
+    );
     const fuzzy = fuzzyMatch(
-      new Graph(graph2),
-      'http://example.org/about',
+      new Graph(graphSource),
+      'http://example.com/res',
       template
     );
     expect(fuzzy).toBeInstanceOf(GroupBinding);
-    expect(fuzzy.getItem()).toBe(template);
-    // The fuzzy pass runs the strict matcher first, then a relaxed second pass,
-    // so it never captures fewer bindings than the strict match.
-    expect(fuzzy.getChildBindings().length).toBeGreaterThanOrEqual(
-      strict.getChildBindings().length
-    );
+    expect(strict.getItemGroupedChildBindings()[0]).toHaveLength(0);
+    expect(fuzzy.getItemGroupedChildBindings()[0]).toHaveLength(1);
   });
 });
 
@@ -294,7 +325,6 @@ describe('constructTemplate', () => {
       'not-a-real-item',
     ]);
     expect(warnSpy).toHaveBeenCalled();
-    warnSpy.mockRestore();
   });
 });
 

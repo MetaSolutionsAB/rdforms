@@ -14,4 +14,12 @@ module.exports = {
     }],
   },
   transformIgnorePatterns: ['node_modules/(?!(\\.pnpm|lodash-es|@entryscape)/)'],
+  // Scoped to the core model/template classes that have unit-test suites
+  // (see RDFORMS-179); no coverage thresholds are enforced.
+  collectCoverageFrom: [
+    'src/model/Binding.js',
+    'src/model/engine.js',
+    'src/template/Item.js',
+    'src/template/ItemStore.js',
+  ],
 };

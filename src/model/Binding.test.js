@@ -1,4 +1,5 @@
 import { Graph } from '@entryscape/rdfjson';
+import Binding from './Binding';
 import GroupBinding from './GroupBinding';
 import PropertyGroupBinding from './PropertyGroupBinding';
 import ValueBinding from './ValueBinding';
@@ -11,6 +12,14 @@ const createTemplateRoot = () => {
   const root = itemStore.createTemplate(template1);
   return { itemStore, root };
 };
+
+// An isolated text item with the given source, so pattern/valueTemplate tweaks
+// don't mutate the shared template1 fixture.
+const buildTextItem = (source = {}) =>
+  new ItemStore().createTemplate({
+    root: 'textRoot',
+    auxilliary: [{ '@id': 'textRoot', '@type': 'text', ...source }],
+  });
 
 describe('Binding-creation', () => {
   test('GroupBinding creation', () => {
@@ -271,5 +280,146 @@ describe('Binding-assertions', () => {
     expect(personTypeStatement.isAsserted()).toBe(true);
     expect(firstnameStatement.isAsserted()).toBe(true);
     expect(titleStatement.isAsserted()).toBe(true);
+  });
+});
+
+describe('Binding value validation', () => {
+  test('_isValidObjectValue without a pattern accepts non-empty strings', () => {
+    const binding = new Binding({ item: buildTextItem() });
+    expect(binding._isValidObjectValue('hello')).toBe(true);
+    expect(binding._isValidObjectValue('')).toBe(false);
+    expect(binding._isValidObjectValue(null)).toBe(false);
+    expect(() => binding._isValidObjectValue(42)).toThrow();
+  });
+
+  test('_isValidObjectValue with a pattern enforces the pattern', () => {
+    const binding = new Binding({ item: buildTextItem({ pattern: '[0-9]+' }) });
+    expect(binding._isValidObjectValue('123')).toBe(true);
+    expect(binding._isValidObjectValue('abc')).toBe(false);
+    expect(binding._isValidObjectValue('')).toBe(false);
+  });
+
+  test('_isValidPredicateValue accepts non-empty strings', () => {
+    const binding = new Binding({ item: buildTextItem() });
+    expect(binding._isValidPredicateValue('http://example.com/p')).toBe(true);
+    expect(binding._isValidPredicateValue('')).toBe(false);
+    expect(binding._isValidPredicateValue(null)).toBe(false);
+    expect(() => binding._isValidPredicateValue(42)).toThrow();
+  });
+});
+
+describe('Binding gist and value template', () => {
+  const buildValueBinding = () => {
+    const root = new ItemStore().createTemplate({
+      root: 'gistRoot',
+      auxilliary: [
+        {
+          '@id': 'gistRoot',
+          '@type': 'group',
+          nodetype: 'RESOURCE',
+          content: [
+            {
+              '@type': 'text',
+              property: 'http://purl.org/dc/terms/identifier',
+              nodetype: 'LITERAL',
+              valueTemplate: 'http://example.com/$1',
+            },
+          ],
+        },
+      ],
+    });
+    const graph = new Graph({});
+    const statement = graph.create(
+      'subject',
+      'http://purl.org/dc/terms/identifier',
+      { type: 'literal', value: '' }
+    );
+    const rootGroupBinding = new GroupBinding({ item: root });
+    const valueBinding = new ValueBinding({
+      item: root.getChildren()[0],
+      statement,
+    });
+    rootGroupBinding.addChildBinding(valueBinding);
+    return valueBinding;
+  };
+
+  test('setGist expands the value template and getGist extracts it back', () => {
+    const valueBinding = buildValueBinding();
+    valueBinding.setGist('123');
+    expect(valueBinding.getValue()).toBe('http://example.com/123');
+    expect(valueBinding.getGist()).toBe('123');
+  });
+});
+
+describe('Binding listeners and change propagation', () => {
+  test('addListener/removeListener control change notifications', () => {
+    const binding = new Binding({ item: buildTextItem() });
+    let notifications = 0;
+    const listener = () => {
+      notifications += 1;
+    };
+    binding.addListener(listener);
+    binding.bindingChange(binding);
+    expect(notifications).toBe(1);
+    binding.removeListener(listener);
+    binding.bindingChange(binding);
+    expect(notifications).toBe(1);
+  });
+
+  test('bindingChange propagates to the parent and cardinality tracker', () => {
+    const item = buildTextItem();
+    const parent = new Binding({ item });
+    let parentNotifications = 0;
+    parent.addListener(() => {
+      parentNotifications += 1;
+    });
+    const child = new Binding({ item });
+    child.setParent(parent);
+    let touchCount = 0;
+    child.setCardinalityTracker({
+      touch: () => {
+        touchCount += 1;
+      },
+    });
+    child.bindingChange(child);
+    expect(parentNotifications).toBe(1);
+    expect(touchCount).toBe(1);
+  });
+});
+
+describe('Binding.getGraph', () => {
+  test('returns undefined without any graph, statement, or parent', () => {
+    const binding = new Binding({ item: buildTextItem() });
+    expect(binding.getGraph()).toBeUndefined();
+  });
+
+  test('falls back to the parent graph', () => {
+    const item = buildTextItem();
+    const graph = new Graph({});
+    const parent = new Binding({ item, graph });
+    const child = new Binding({ item });
+    child.setParent(parent);
+    expect(child.getGraph()).toBe(graph);
+  });
+});
+
+describe('Binding.isReadOnly', () => {
+  test('a binding without a named-graph statement is not read-only', () => {
+    const binding = new Binding({ item: buildTextItem() });
+    expect(binding.isReadOnly()).toBe(false);
+  });
+
+  test('a child of a read-only parent returns undefined instead of true', () => {
+    // Characterization of a confirmed bug (RDFORMS-192): the parent-is-read-only
+    // branch assigns to the misspelled `this._readyOnly` instead of `_readOnly`,
+    // so isReadOnly() returns undefined and read-only inheritance is broken.
+    // Flip these assertions once RDFORMS-192 is fixed.
+    const item = buildTextItem();
+    const parent = new Binding({ item });
+    parent._readOnly = true;
+    const child = new Binding({ item });
+    child.setParent(parent);
+    expect(child.isReadOnly()).toBeUndefined();
+    expect(child._readyOnly).toBe(true);
   });
 });

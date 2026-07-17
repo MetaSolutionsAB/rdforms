@@ -15,9 +15,12 @@ export default {
     }
     const quotedFiles = filesToLint.map((file) => `"${file}"`).join(' ');
     // --fix auto-applies fixable issues (incl. prettier formatting) and
-    // lint-staged re-stages them; genuine errors still block the commit.
+    // lint-staged re-stages them. --max-warnings 0 makes the commit fail on
+    // warnings too, not just errors — the shared config rates several real
+    // problems (e.g. no-undef, no-use-before-define) as warnings, and a
+    // guardrail that ignored those would let undefined-variable references land.
     // --no-warn-ignored silences the "File ignored" notice for any
     // config-ignored file (samples/html/config/tests) that happens to be staged.
-    return [`eslint --fix --no-warn-ignored ${quotedFiles}`];
+    return [`eslint --fix --max-warnings 0 --no-warn-ignored ${quotedFiles}`];
   },
 };

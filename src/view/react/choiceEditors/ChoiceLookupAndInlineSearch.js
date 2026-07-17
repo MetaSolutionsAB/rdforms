@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars,quotes */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -14,7 +14,7 @@ import ShowButton from './ShowButton';
 
 let globalChoiceQueryThrottle;
 
-export default (props) => {
+const ChoiceLookupAndInlineSearch = (props) => {
   const binding = props.binding;
   const [options, setOptions] = useState([]);
   const [value, setValue] = loadLocalizedChoice(binding, true);
@@ -160,3 +160,5 @@ export default (props) => {
     </>
   );
 };
+
+export default ChoiceLookupAndInlineSearch;

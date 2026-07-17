@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useMemo } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -30,8 +29,8 @@ const CheckOption = (props) => {
 };
 
 /**
- *
- * @param props
+ * @param {object} props
+ * @returns {React.ReactElement}
  */
 export default function CheckBoxesEditor(props) {
   const [resetCount, setResetCount] = React.useState(0);
@@ -41,7 +40,7 @@ export default function CheckBoxesEditor(props) {
   const choiceBindingPairs = useMemo(() => {
     const parentBinding = binding.getParent();
     const val2binding = {};
-    // eslint-disable-next-line no-return-assign
+
     parentBinding
       .getChildBindingsFor(item)
       .forEach((b) => (val2binding[b.getValue()] = b));

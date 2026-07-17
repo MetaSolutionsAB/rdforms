@@ -10,8 +10,7 @@ import ChoiceLookupAndInlineSearch from './ChoiceLookupAndInlineSearch';
 /**
  * Checks if the current item can be rendered as radiobuttons.
  *
- * @param {rdforms/item}
- * @param item
+ * @param {import('../../../template/Choice').default} item
  * @returns {boolean}
  */
 const radioCheck = (item) => {
@@ -33,7 +32,6 @@ editors
   .choices()
   .check(radioCheck)
   .register((fieldDiv, binding, context) => {
-    // eslint-disable-next-line no-new
     fieldDiv.appendChild(
       <RadioButtonsEditor
         key={binding.getHash()}
@@ -45,7 +43,6 @@ editors
   });
 
 const checkBoxComponent = (fieldDiv, binding, context) => {
-  // eslint-disable-next-line no-new
   fieldDiv.appendChild(
     <CheckBoxesEditor
       key={binding.getHash()}

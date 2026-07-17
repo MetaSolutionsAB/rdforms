@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars,quotes */
 import React, { useState, useEffect } from 'react';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -21,8 +20,8 @@ const ChoiceOption = (props) => (
 );
 
 /**
- *
- * @param props
+ * @param {object} props
+ * @returns {React.ReactElement}
  */
 export default function RadioButtonsEditor(props) {
   const binding = props.binding;

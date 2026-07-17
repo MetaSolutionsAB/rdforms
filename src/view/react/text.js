@@ -41,7 +41,7 @@ presenters
       : system.attachLinkBehaviour(fieldDiv, binding) || {};
     const component = attrs.component || null;
     delete attrs.component;
-    // eslint-disable-next-line no-nested-ternary
+
     const lbl = binding.getItem().hasStyle('showValue')
       ? val
       : vmap
@@ -97,7 +97,7 @@ presenters
       lbl = labelBindings[0].getValue();
     } else {
       const vmap = utils.getLocalizedMap(binding);
-      // eslint-disable-next-line no-nested-ternary
+
       lbl = binding.getItem().hasStyle('showValue')
         ? val
         : vmap
@@ -123,7 +123,7 @@ presenters
     attrs.target = attrs.target || '_blank';
     const component = attrs.component || null;
     delete attrs.component;
-    // eslint-disable-next-line no-nested-ternary
+
     const lbl = binding.getItem().hasStyle('showValue')
       ? val
       : vmap
@@ -146,6 +146,7 @@ presenters
       <img
         key={binding.getHash()}
         className="rdformsImage"
+        alt=""
         src={binding.getGixt()}
       />
     );

@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
 import renderingContext from '../renderingContext';
 import system from '../../model/system';
@@ -44,6 +43,7 @@ presenters
           key={binding.getHash()}
           className="rdformsImage"
           title={desc || choice.value}
+          alt={desc || choice.value}
           src={choice.value}
         />
       );

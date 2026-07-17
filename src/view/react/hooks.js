@@ -3,11 +3,14 @@ import utils from '../../utils';
 import { getNamedGraphId } from '../viewUtils';
 
 /**
+ * @typedef {import('../../model/Binding').default} Binding
+ */
+
+/**
  * Wraps a choice in an object where the current label, and description is localized.
  *
  * @param {object} choice an original choice object with label and descriptions being maps with language strings
- * @param {isEditor} true means we are in edit mode and editLabel or editDescription have preference if they exist.
- * @param isEditor
+ * @param {boolean} isEditor true means we are in edit mode and editLabel or editDescription have preference if they exist.
  * @returns {object}
  */
 export const localizedChoice = (choice, isEditor) => ({
@@ -37,7 +40,7 @@ export const editLocalizedChoice = (choice) => localizedChoice(choice, true);
  * If the current choice is a mismatch, it is added to the list of choices.
  *
  * @param {Binding} binding
- * @param isEditor
+ * @param {boolean} isEditor
  * @returns {Array}
  */
 export const useLocalizedSortedChoices = (binding, isEditor) =>
@@ -66,6 +69,7 @@ export const useLocalizedSortedChoices = (binding, isEditor) =>
  *
  * @param {Binding} binding
  * @param {Array} choices an array of choices returned from the useLocalizedSortedChoices hook.
+ * @returns {Array}
  */
 export const useLocalizedChoice = (binding, choices) =>
   useState(() => {
@@ -79,6 +83,7 @@ export const useLocalizedChoice = (binding, choices) =>
  *
  * @param {Binding} binding
  * @param {boolean} isEditor if true any editlabel or editdescription takes precedence
+ * @returns {Array}
  */
 export const loadLocalizedChoice = (binding, isEditor) => {
   const localize = isEditor ? editLocalizedChoice : localizedChoice;
@@ -104,6 +109,8 @@ export const loadLocalizedChoice = (binding, isEditor) => {
 let nameCounter = 0;
 /**
  * Gives a unique name to be used in forms.
+ *
+ * @returns {string}
  */
 export const useName = () =>
   useMemo(() => {

@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars,max-len */
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import SvgIcon from '@mui/material/SvgIcon';

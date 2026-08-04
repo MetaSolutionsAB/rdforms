@@ -74,12 +74,6 @@ importers:
       popper.js:
         specifier: ^1.16.1
         version: 1.16.1
-      react:
-        specifier: ^19.2.7
-        version: 19.2.7
-      react-dom:
-        specifier: ^19.2.7
-        version: 19.2.7(react@19.2.7)
       regenerator-runtime:
         specifier: ^0.13.11
         version: 0.13.11
@@ -177,6 +171,12 @@ importers:
       raw-loader:
         specifier: ^4.0.2
         version: 4.0.2(webpack@5.107.1)
+      react:
+        specifier: ^19.2.7
+        version: 19.2.7
+      react-dom:
+        specifier: ^19.2.7
+        version: 19.2.7(react@19.2.7)
       style-loader:
         specifier: ^3.3.4
         version: 3.3.4(webpack@5.107.1)

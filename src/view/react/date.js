@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
@@ -100,6 +100,11 @@ const dateEditor = (fieldDiv, binding, context) => {
     const [error, setError] = useState(
       binding.getMatchingCode() === CODES.WRONG_DATATYPE
     );
+    // Pickers report every keystroke, and a partial value can already parse as
+    // valid — the single-section 'YYYY' format pads '2' to '0002'. The pending
+    // value is therefore only written to the binding once input settles, on
+    // blur or accept. `undefined` means there is nothing to commit.
+    const pendingDate = useRef(undefined);
 
     useEffect(() => {
       fieldDiv.toggleClass('mismatchReport', error);
@@ -107,6 +112,7 @@ const dateEditor = (fieldDiv, binding, context) => {
 
     useEffect(() => {
       context.clear = () => {
+        pendingDate.current = undefined;
         setSelectedDate(null);
         setDatatype(getDatatypeFromItem(binding.getItem()));
         setError(false);
@@ -115,14 +121,25 @@ const dateEditor = (fieldDiv, binding, context) => {
 
     const onDateChange = (date) => {
       if (date == null) {
-        binding.setValue('');
+        pendingDate.current = null;
         setSelectedDate(null);
       } else if (date.isValid()) {
-        binding.setValue(getDateValue(date.toDate(), selectedDatatype));
+        pendingDate.current = date.toDate();
         setSelectedDate(date.toDate());
+      } else {
+        pendingDate.current = undefined;
       }
     };
 
+    const commitDate = () => {
+      if (pendingDate.current !== undefined) {
+        binding.setValue(getDateValue(pendingDate.current, selectedDatatype));
+        pendingDate.current = undefined;
+      }
+    };
+
+    // Unlike typed date input, a datatype selection has no intermediate
+    // states — the click is already settled input, so it commits directly.
     const onDatatypeChange = (event) => {
       binding.setDatatype(getDatatypeURI(event.target.value));
       binding.setValue(getDateValue(selectedDate, event.target.value));
@@ -164,8 +181,9 @@ const dateEditor = (fieldDiv, binding, context) => {
                 format={datePickerConfig.format[selectedDatatype]}
                 views={datePickerConfig.views[selectedDatatype]}
                 onChange={onDateChange}
+                onAccept={commitDate}
                 slotProps={{
-                  textField: inputProps,
+                  textField: { ...inputProps, onBlur: commitDate },
                   openPickerButton: {
                     'aria-label':
                       bundle[datePickerConfig.ariaLabelKey[selectedDatatype]],
@@ -192,9 +210,10 @@ const dateEditor = (fieldDiv, binding, context) => {
                     : null
                 }
                 onChange={onDateChange}
+                onAccept={commitDate}
                 ampm={false}
                 slotProps={{
-                  textField: inputProps,
+                  textField: { ...inputProps, onBlur: commitDate },
                   openPickerButton: {
                     'aria-label': bundle.date_openTimePicker,
                   },

@@ -33,7 +33,7 @@ const datePresenter = (fieldDiv, binding, context) => {
     const pres = getDatePresentation(binding, context.view.getLocale());
     fieldDiv.appendChild(<div key={binding.getHash()}>{pres}</div>);
   } catch {
-    console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 
+    console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01
       (potentially with time given after a 'T' character as well) but found '${binding.getValue()}' instead.`);
   }
 };
@@ -138,6 +138,20 @@ const dateEditor = (fieldDiv, binding, context) => {
       }
     };
 
+    // Fires when the picker's own validation result changes, e.g. a partially
+    // typed date — the pending value stays disarmed, so the warning is the
+    // only signal that the shown text differs from the stored value.
+    const onValidationError = (reason) => setError(Boolean(reason));
+
+    // The controlled value must keep the same instance between renders: the
+    // picker detects external value changes by reference, and a fresh moment
+    // during a mid-edit re-render (e.g. from setError) would reset the field
+    // and wipe the user's in-progress input.
+    const selectedMoment = useMemo(
+      () => (selectedDate ? moment(selectedDate) : null),
+      [selectedDate]
+    );
+
     // Unlike typed date input, a datatype selection has no intermediate
     // states — the click is already settled input, so it commits directly.
     const onDatatypeChange = (event) => {
@@ -172,16 +186,13 @@ const dateEditor = (fieldDiv, binding, context) => {
               <DatePicker
                 label={bundle[datePickerConfig.labelKey[selectedDatatype]]}
                 {...(enabledDatePicker ? {} : { disabled: true })}
-                value={
-                  enabledDatePicker && selectedDate
-                    ? moment(selectedDate)
-                    : null
-                }
+                value={enabledDatePicker ? selectedMoment : null}
                 minDate={moment(new Date('0000-01-01'))}
                 format={datePickerConfig.format[selectedDatatype]}
                 views={datePickerConfig.views[selectedDatatype]}
                 onChange={onDateChange}
                 onAccept={commitDate}
+                onError={onValidationError}
                 slotProps={{
                   textField: { ...inputProps, onBlur: commitDate },
                   openPickerButton: {
@@ -203,14 +214,13 @@ const dateEditor = (fieldDiv, binding, context) => {
                   ? {}
                   : { disabled: true })}
                 value={
-                  (selectedDatatype === 'DateTime' ||
-                    selectedDatatype === 'Time') &&
-                  selectedDate
-                    ? moment(selectedDate)
+                  selectedDatatype === 'DateTime' || selectedDatatype === 'Time'
+                    ? selectedMoment
                     : null
                 }
                 onChange={onDateChange}
                 onAccept={commitDate}
+                onError={onValidationError}
                 ampm={false}
                 slotProps={{
                   textField: { ...inputProps, onBlur: commitDate },

@@ -9,10 +9,14 @@ import {
 } from '../hooks';
 
 /**
+ * @typedef {import('../../../model/Binding').default} Binding
+ */
+
+/**
  * Autocomplete with fixed choices.
  *
  * @param {object} props Component props
- * @param {import('../../../model/Binding').default} props.binding the binding for which to render an autocomplete
+ * @param {Binding} props.binding the binding for which to render an autocomplete
  * @example (<ChoiceSelector binding={binding}>)
  * @returns {React.FunctionComponentElement}
  */

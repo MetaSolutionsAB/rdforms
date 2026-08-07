@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { createElement, useState, useEffect, useRef } from 'react';
 import WarningIcon from '@mui/icons-material/Warning';
 import ErrorIcon from '@mui/icons-material/Error';
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
@@ -42,8 +42,7 @@ const getReactComponent = (child, index) => {
   if (child instanceof Node)
     return <DOMElementWrapper key={index} element={child} />;
   // In case child is a struct
-  if (child.component)
-    return React.createElement(child.component, { key: child.id });
+  if (child.component) return createElement(child.component, { key: child.id });
   return child; // Assumes child a react component
 };
 
@@ -264,7 +263,6 @@ renderingContext.preEditorRenderer = (fieldDiv, binding, context) => {
     context.controlDiv = newStruct('div', fieldDiv);
     renderingContext.domClassToggle(context.controlDiv, 'rdformsFieldControl');
 
-    // eslint-disable-next-line no-unused-vars
     const RemoveButton = renderingContext.addRemoveButton(
       fieldDiv,
       binding,

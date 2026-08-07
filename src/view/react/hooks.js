@@ -65,11 +65,12 @@ export const useLocalizedSortedChoices = (binding, isEditor) =>
   }, []);
 
 /**
- * Returns a localized choice from the array of localized choices based on the current selected choice in the binding.
+ * Hook returning [choice, setChoice] state for the binding's currently selected choice,
+ * looked up in the array of localized choices.
  *
  * @param {Binding} binding
  * @param {Array} choices an array of choices returned from the useLocalizedSortedChoices hook.
- * @returns {Array}
+ * @returns {Array} a [choice, setChoice] state tuple where choice is the localized choice, or null/undefined when there is no selected choice or no match
  */
 export const useLocalizedChoice = (binding, choices) =>
   useState(() => {
@@ -78,12 +79,12 @@ export const useLocalizedChoice = (binding, choices) =>
   });
 
 /**
- * Returns a localized choice, may trigger a load step to get a more fleshed out version of the choice,
- * i.e. with label, description and seeAlso.
+ * Hook returning [choice, setChoice] state for the binding's selected choice; may trigger a load
+ * step to get a more fleshed out version of the choice, i.e. with label, description and seeAlso.
  *
  * @param {Binding} binding
  * @param {boolean} isEditor if true any editlabel or editdescription takes precedence
- * @returns {Array}
+ * @returns {Array} a [choice, setChoice] state tuple where choice is the localized choice, or null
  */
 export const loadLocalizedChoice = (binding, isEditor) => {
   const localize = isEditor ? editLocalizedChoice : localizedChoice;

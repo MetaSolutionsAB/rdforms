@@ -71,6 +71,7 @@
     "html-loader": "^3.1.2",
     "html-webpack-plugin": "^5.6.7",
     "html-webpack-tags-plugin": "^3.0.2",
+    "husky": "^9.1.7",
     "imports-loader": "^0.8.0",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
@@ -109,9 +110,11 @@
     "serve:samples": "webpack serve --config webpack.samples.serve.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "lint:staged": "scripts/eslint/pre-commit.sh",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:smoke": "node test/smoke/smoke.js"
+    "test:smoke": "node test/smoke/smoke.js",
+    "prepare": "husky || true"
   },
   "prettier": "@entryscape/linting-config/prettier",
   "author": {

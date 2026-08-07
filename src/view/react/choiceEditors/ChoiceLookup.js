@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import renderingContext from '../../renderingContext';
 import { loadLocalizedChoice, useNamedGraphId } from '../hooks';

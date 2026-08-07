@@ -1,11 +1,11 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import SvgIcon from '@mui/material/SvgIcon';
 
 /**
  * @param {object} props
- * @returns {React.ReactElement}
+ * @returns {import('react').ReactElement}
  */
 function SearchAndCreateIcon(props) {
   return (

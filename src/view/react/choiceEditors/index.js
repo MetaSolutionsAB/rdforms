@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-import React from 'react';
 import renderingContext from '../../renderingContext';
 import RadioButtonsEditor from './RadioButtonsEditor';
 import CheckBoxesEditor from './CheckBoxesEditor';

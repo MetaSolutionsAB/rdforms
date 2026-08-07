@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import renderingContext from '../../renderingContext';
@@ -18,7 +18,7 @@ import {
  * @param {object} props Component props
  * @param {Binding} props.binding the binding for which to render an autocomplete
  * @example (<ChoiceSelector binding={binding}>)
- * @returns {React.FunctionComponentElement}
+ * @returns {import('react').FunctionComponentElement}
  */
 const ChoiceSelector = (props) => {
   const binding = props.binding;

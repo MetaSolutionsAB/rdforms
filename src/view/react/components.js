@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { createElement, useState, useEffect, useRef } from 'react';
 import WarningIcon from '@mui/icons-material/Warning';
 import ErrorIcon from '@mui/icons-material/Error';
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
@@ -20,7 +20,7 @@ import '../bootstrap/auto';
  *
  * @param {object} root0
  * @param {Node} root0.element
- * @returns {React.ReactElement}
+ * @returns {import('react').ReactElement}
  */
 const DOMElementWrapper = ({ element }) => {
   const ref = useRef();
@@ -37,15 +37,14 @@ const DOMElementWrapper = ({ element }) => {
  *
  * @param {Node|object} child
  * @param {number} index
- * @returns {React.ReactElement}
+ * @returns {import('react').ReactElement}
  */
 const getReactComponent = (child, index) => {
   // In case child is a dom element
   if (child instanceof Node)
     return <DOMElementWrapper key={index} element={child} />;
   // In case child is a struct
-  if (child.component)
-    return React.createElement(child.component, { key: child.id });
+  if (child.component) return createElement(child.component, { key: child.id });
   return child; // Assumes child a react component
 };
 

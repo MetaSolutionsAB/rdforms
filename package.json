@@ -35,7 +35,7 @@
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@mui/icons-material": "^7.3.11",
     "@mui/material": "^7.3.11",
-    "@mui/x-date-pickers": "^7.0.0",
+    "@mui/x-date-pickers": "^7.29.4",
     "arrive": "^2.5.3",
     "bootstrap": "^4.6.2",
     "bootstrap-datepicker": "^1.10.1",

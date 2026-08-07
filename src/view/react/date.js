@@ -97,13 +97,19 @@ const dateEditor = (fieldDiv, binding, context) => {
       getDatatypeFromBinding(binding, alternatives)
     );
     const onlyOneAlternative = Object.keys(alternatives).length === 1;
-    const [error, setError] = useState(
+    const [datatypeError, setDatatypeError] = useState(
       binding.getMatchingCode() === CODES.WRONG_DATATYPE
     );
-    // Pickers report every keystroke, and a partial value can already parse as
-    // valid — the single-section 'YYYY' format pads '2' to '0002'. The pending
-    // value is therefore only written to the binding once input settles, on
-    // blur or accept. `undefined` means there is nothing to commit.
+    // Picker validation is tracked apart from the datatype verdict, and per
+    // picker, so neither a datatype change nor the other picker's valid
+    // transition can erase an active error.
+    const [datePickerError, setDatePickerError] = useState(null);
+    const [timePickerError, setTimePickerError] = useState(null);
+    const error =
+      datatypeError || Boolean(datePickerError) || Boolean(timePickerError);
+    // A partial value can already parse as valid — the single-section 'YYYY'
+    // format pads '2' to '0002' — so the binding is only written once input
+    // settles, on blur or accept. `undefined` means nothing to commit.
     const pendingDate = useRef(undefined);
 
     useEffect(() => {
@@ -115,7 +121,9 @@ const dateEditor = (fieldDiv, binding, context) => {
         pendingDate.current = undefined;
         setSelectedDate(null);
         setDatatype(getDatatypeFromItem(binding.getItem()));
-        setError(false);
+        setDatatypeError(false);
+        setDatePickerError(null);
+        setTimePickerError(null);
       };
     }, []);
 
@@ -138,27 +146,27 @@ const dateEditor = (fieldDiv, binding, context) => {
       }
     };
 
-    // Fires when the picker's own validation result changes, e.g. a partially
-    // typed date — the pending value stays disarmed, so the warning is the
-    // only signal that the shown text differs from the stored value.
-    const onValidationError = (reason) => setError(Boolean(reason));
+    // min/maxDate bound the picker's navigation, not data validity, so range
+    // reasons are not errors. maxDate stays at its default — the year view
+    // renders a button per year, and a 9999 ceiling makes it crawl.
+    const onDatePickerError = (reason) =>
+      setDatePickerError(
+        reason === 'minDate' || reason === 'maxDate' ? null : reason
+      );
 
-    // The controlled value must keep the same instance between renders: the
-    // picker detects external value changes by reference, and a fresh moment
-    // during a mid-edit re-render (e.g. from setError) would reset the field
-    // and wipe the user's in-progress input.
+    // Keep the controlled value's instance stable between renders: the picker
+    // detects external changes by reference, and a fresh moment mid-edit
+    // would reset the field and wipe in-progress input.
     const selectedMoment = useMemo(
       () => (selectedDate ? moment(selectedDate) : null),
       [selectedDate]
     );
 
-    // Unlike typed date input, a datatype selection has no intermediate
-    // states — the click is already settled input, so it commits directly.
     const onDatatypeChange = (event) => {
       binding.setDatatype(getDatatypeURI(event.target.value));
       binding.setValue(getDateValue(selectedDate, event.target.value));
       setDatatype(event.target.value);
-      setError(alternatives[event.target.value] === 'error');
+      setDatatypeError(alternatives[event.target.value] === 'error');
     };
     const inputProps = {
       'aria-labelledby': context.view.getLabelIndex(binding),
@@ -192,9 +200,16 @@ const dateEditor = (fieldDiv, binding, context) => {
                 views={datePickerConfig.views[selectedDatatype]}
                 onChange={onDateChange}
                 onAccept={commitDate}
-                onError={onValidationError}
+                onError={onDatePickerError}
                 slotProps={{
-                  textField: { ...inputProps, onBlur: commitDate },
+                  // Without an explicit error prop the field colors itself from
+                  // MUI's internal validation, which still counts the ignored
+                  // range reasons.
+                  textField: {
+                    ...inputProps,
+                    onBlur: commitDate,
+                    error: Boolean(datePickerError),
+                  },
                   openPickerButton: {
                     'aria-label':
                       bundle[datePickerConfig.ariaLabelKey[selectedDatatype]],
@@ -220,10 +235,14 @@ const dateEditor = (fieldDiv, binding, context) => {
                 }
                 onChange={onDateChange}
                 onAccept={commitDate}
-                onError={onValidationError}
+                onError={(reason) => setTimePickerError(reason)}
                 ampm={false}
                 slotProps={{
-                  textField: { ...inputProps, onBlur: commitDate },
+                  textField: {
+                    ...inputProps,
+                    onBlur: commitDate,
+                    error: Boolean(timePickerError),
+                  },
                   openPickerButton: {
                     'aria-label': bundle.date_openTimePicker,
                   },
@@ -300,7 +319,9 @@ const dateEditor = (fieldDiv, binding, context) => {
         </LocalizationProvider>
         {error && (
           <div key="warning" className="rdformsWarning">
-            {context.view.messages.wrongDatatypeField}
+            {datatypeError
+              ? context.view.messages.wrongDatatypeField
+              : context.view.messages.wrongValueField}
           </div>
         )}
       </>

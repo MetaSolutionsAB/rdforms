@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useMemo } from 'react';
+import { Fragment } from 'react';
 import system from '../../model/system';
 import renderingContext from '../renderingContext';
 import { fromDuration } from '../viewUtils';
@@ -18,12 +17,12 @@ presenters
         {keys.map(
           (key) =>
             data[key] !== 0 && (
-              <React.Fragment key={key}>
+              <Fragment key={key}>
                 <span className="durationLabel">
                   {context.view.messages[`duration_${key}`]}:
                 </span>
                 <span className="durationValue">{data[key]}</span>
-              </React.Fragment>
+              </Fragment>
             )
         )}
       </div>
@@ -41,7 +40,7 @@ presenters
       : system.attachLinkBehaviour(fieldDiv, binding) || {};
     const component = attrs.component || null;
     delete attrs.component;
-    // eslint-disable-next-line no-nested-ternary
+
     const lbl = binding.getItem().hasStyle('showValue')
       ? val
       : vmap
@@ -97,7 +96,7 @@ presenters
       lbl = labelBindings[0].getValue();
     } else {
       const vmap = utils.getLocalizedMap(binding);
-      // eslint-disable-next-line no-nested-ternary
+
       lbl = binding.getItem().hasStyle('showValue')
         ? val
         : vmap
@@ -123,7 +122,7 @@ presenters
     attrs.target = attrs.target || '_blank';
     const component = attrs.component || null;
     delete attrs.component;
-    // eslint-disable-next-line no-nested-ternary
+
     const lbl = binding.getItem().hasStyle('showValue')
       ? val
       : vmap

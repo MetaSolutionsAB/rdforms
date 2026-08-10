@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-import React from 'react';
 import renderingContext from '../../renderingContext';
 import RadioButtonsEditor from './RadioButtonsEditor';
 import CheckBoxesEditor from './CheckBoxesEditor';
@@ -33,7 +31,6 @@ editors
   .choices()
   .check(radioCheck)
   .register((fieldDiv, binding, context) => {
-    // eslint-disable-next-line no-new
     fieldDiv.appendChild(
       <RadioButtonsEditor
         key={binding.getHash()}
@@ -45,7 +42,6 @@ editors
   });
 
 const checkBoxComponent = (fieldDiv, binding, context) => {
-  // eslint-disable-next-line no-new
   fieldDiv.appendChild(
     <CheckBoxesEditor
       key={binding.getHash()}

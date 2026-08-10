@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { Fragment, useState, useEffect, forwardRef } from 'react';
+import { Fragment, useState, useEffect, forwardRef } from 'react';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import IconButton from '@mui/material/IconButton';
@@ -11,7 +10,7 @@ import { Editor } from './Wrappers';
 import CODES from '../../model/CODES';
 
 const StyledTooltip = styled(
-  forwardRef(({ className, ...props }, ref) => (
+  forwardRef(({ className, ...props }, _ref) => (
     <Tooltip {...props} classes={{ popper: className }} />
   ))
 )(({ theme }) => ({
@@ -280,7 +279,7 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
 };
 
 const ERR = (props) => {
-  const { rowNode, binding, item, context } = props;
+  const { rowNode, binding, context } = props;
   const [code, setCode] = useState(binding.getCardinalityTracker().getCode());
   useEffect(() => {
     const cardTr = binding.getCardinalityTracker();

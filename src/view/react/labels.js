@@ -67,8 +67,12 @@ const DescriptionIcon = ({ item, context }) => {
           className="rdformsLinebreaks rdformsDescription"
           // Tag the resolved language when it fell back to something other than
           // the page locale, so screen readers pronounce it right (WCAG 3.1.2).
+          // Only when the shown text IS the resolved description — never on the
+          // info_missing fallback, which is page-locale UI text, not the description.
           lang={
-            descriptionLang && descriptionLang !== view.getLocale()
+            description &&
+            descriptionLang &&
+            descriptionLang !== view.getLocale()
               ? descriptionLang
               : undefined
           }

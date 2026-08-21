@@ -161,7 +161,7 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     placement: 'auto',
     trigger: 'focus',
     title:
-      labelResolved.lang && labelResolved.lang !== pageLocale
+      label !== '' && labelResolved.lang && labelResolved.lang !== pageLocale
         ? `<span lang="${labelResolved.lang}">${label}</span>`
         : label,
     content: `<div class="description"${descriptionLangAttr}>${description.replace(

@@ -31,6 +31,17 @@ export default [
     files: ['**/*.js', '**/*.jsx'],
     rules: { 'react/prop-types': 'off' },
   },
+  {
+    // Local-only Playwright smoke harness — a CommonJS Node script, not a
+    // browser ES module. Node globals + CommonJS source type so require/process
+    // resolve, and drop import/extensions (require() paths keep the .js suffix).
+    files: ['test/smoke/**/*.js'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: { ...globals.node },
+    },
+    rules: { 'import/extensions': 'off' },
+  },
   // Example apps, demo HTML, bundled build output, and legacy test fixtures are
   // not lint targets. samples/**/rdforms.js are ~1MB webpack bundles and
   // src/**/tests/data.js is a ~350KB fixture of generated object literals;

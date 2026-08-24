@@ -144,17 +144,18 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
   const descriptionIcon = context.view.popupOnLabel ? (
     <DescriptionIcon item={item} context={context} />
   ) : null;
-  // No tabIndex on the label wrapper: it has no action of its own — the
-  // focusable, keyboard-operable affordance is the DescriptionIcon button
-  // (rendered only when there's a description/property). A bare tabIndex here
-  // would be a tab stop that does nothing.
+  // tabIndex={-1}, not 0: the label wrapper has no action of its own (the
+  // keyboard-operable affordance is the DescriptionIcon button), so it must not
+  // be a tab stop. But it stays programmatically focusable so entryscape's form
+  // outline can focus() this label (by its id) to jump to the field — removing
+  // the attribute entirely makes focus() a silent no-op.
   label = item.hasStyle('heading') ? (
-    <HeadingElement id={labelId} className="rdformsLabelRow">
+    <HeadingElement tabIndex={-1} id={labelId} className="rdformsLabelRow">
       <span className="rdformsLabel">{label}</span>
       {descriptionIcon}
     </HeadingElement>
   ) : (
-    <span id={labelId} className="rdformsLabelRow">
+    <span tabIndex={-1} id={labelId} className="rdformsLabelRow">
       <span className="rdformsLabel">{label}</span>
       {descriptionIcon}
     </span>
@@ -188,12 +189,17 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
       label = '';
     }
     const HeadingElement = `h${context.view.headingLevel}`;
-    // No tabIndex: the label itself has no action; the DescriptionIcon button
-    // (added below) is the focusable info affordance.
+    // tabIndex={-1}: the label has no action (the DescriptionIcon button added
+    // below is the info affordance), so it is not a tab stop — but stays
+    // programmatically focusable for parity with the presenter label above.
     label = item.hasStyle('heading') ? (
-      <HeadingElement className="rdformsLabel">{label}</HeadingElement>
+      <HeadingElement tabIndex={-1} className="rdformsLabel">
+        {label}
+      </HeadingElement>
     ) : (
-      <span className="rdformsLabel">{label}</span>
+      <span tabIndex={-1} className="rdformsLabel">
+        {label}
+      </span>
     );
 
     const card = item.getCardinality();
@@ -255,8 +261,13 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
       ).value;
 
       if (!compactField && desc) {
-        // Plain description text — not interactive, so not a tab stop.
-        description = <div className="rdformsDescription">{desc}</div>;
+        // Plain description text — not a tab stop, but tabIndex={-1} keeps it
+        // programmatically focusable for parity with develop's behavior.
+        description = (
+          <div tabIndex={-1} className="rdformsDescription">
+            {desc}
+          </div>
+        );
       }
     }
 

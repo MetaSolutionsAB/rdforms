@@ -14,9 +14,12 @@ renderingContext.addPresenterTable = (newRow, firstBinding, context) => {
       childItems[colInd].getLabel(),
       context.view.getLocale()
     ).value;
+    // Describe the column, not the parent group: pass the column child item so
+    // each header's info is about that column. (This addPresenterTable is shared
+    // by the jQuery and bootstrap flavors, whose attachItemInfo differ.)
     renderingContext.attachItemInfo(
-      item,
-      jquery('<span>').text(label).appendTo($th),
+      childItems[colInd],
+      jquery('<span>').text(label).appendTo($th)[0],
       context
     );
   }

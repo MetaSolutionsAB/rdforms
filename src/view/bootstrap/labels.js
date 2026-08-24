@@ -178,7 +178,10 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     container: aroundNode, // renderingContext.getPopoverContainer(),
     placement: 'auto',
     trigger: 'focus',
-    title: labelLang ? `<span lang="${labelLang}">${label}</span>` : label,
+    title:
+      label !== '' && labelLang
+        ? `<span lang="${labelLang}">${label}</span>`
+        : label,
     content: `<div class="description"${descriptionLangAttr}>${description.replace(
       /(\r\n|\r|\n)/g,
       '<br/>'

@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useMemo } from 'react';
+import { Fragment } from 'react';
 import system from '../../model/system';
 import renderingContext from '../renderingContext';
 import { fromDuration } from '../viewUtils';
@@ -18,12 +17,12 @@ presenters
         {keys.map(
           (key) =>
             data[key] !== 0 && (
-              <React.Fragment key={key}>
+              <Fragment key={key}>
                 <span className="durationLabel">
                   {context.view.messages[`duration_${key}`]}:
                 </span>
                 <span className="durationValue">{data[key]}</span>
-              </React.Fragment>
+              </Fragment>
             )
         )}
       </div>
@@ -169,7 +168,8 @@ presenters
       <img
         key={binding.getHash()}
         className="rdformsImage"
-        src={binding.getGixt()}
+        alt=""
+        src={binding.getGist()}
       />
     );
   });

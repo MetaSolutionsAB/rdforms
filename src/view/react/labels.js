@@ -10,9 +10,9 @@ import { Editor } from './Wrappers';
 import CODES from '../../model/CODES';
 
 const StyledTooltip = styled(
-  forwardRef(({ className, ...props }, _ref) => (
-    <Tooltip {...props} classes={{ popper: className }} />
-  ))
+  forwardRef(function StyledTooltipRender({ className, ...props }) {
+    return <Tooltip {...props} classes={{ popper: className }} />;
+  })
 )(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.background.default,

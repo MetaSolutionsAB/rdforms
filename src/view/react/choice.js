@@ -43,6 +43,7 @@ presenters
           key={binding.getHash()}
           className="rdformsImage"
           title={desc || choice.value}
+          alt={desc || choice.value}
           src={choice.value}
         />
       );

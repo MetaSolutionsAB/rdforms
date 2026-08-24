@@ -13,7 +13,7 @@ import ShowButton from './ShowButton';
 
 let globalChoiceQueryThrottle;
 
-export default (props) => {
+const ChoiceLookupAndInlineSearch = (props) => {
   const binding = props.binding;
   const [options, setOptions] = useState([]);
   const [value, setValue] = loadLocalizedChoice(binding, true);
@@ -159,3 +159,5 @@ export default (props) => {
     </>
   );
 };
+
+export default ChoiceLookupAndInlineSearch;

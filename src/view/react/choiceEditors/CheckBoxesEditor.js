@@ -27,8 +27,8 @@ const CheckOption = (props) => {
 };
 
 /**
- *
- * @param props
+ * @param {object} props
+ * @returns {import('react').ReactElement}
  */
 export default function CheckBoxesEditor(props) {
   const [resetCount, setResetCount] = useState(0);

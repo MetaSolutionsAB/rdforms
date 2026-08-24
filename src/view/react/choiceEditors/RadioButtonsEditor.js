@@ -20,8 +20,8 @@ const ChoiceOption = (props) => (
 );
 
 /**
- *
- * @param props
+ * @param {object} props
+ * @returns {import('react').ReactElement}
  */
 export default function RadioButtonsEditor(props) {
   const binding = props.binding;

@@ -5,7 +5,7 @@ import { loadLocalizedChoice, useNamedGraphId } from '../hooks';
 import utils from '../../../utils';
 import ShowButton from './ShowButton';
 
-export default (props) => {
+const ChoiceLookup = (props) => {
   const binding = props.binding;
   const [choice, setChoice] = loadLocalizedChoice(binding, true);
   const [error, setError] = useState(binding.getChoice()?.mismatch === true);
@@ -72,3 +72,5 @@ export default (props) => {
     </>
   );
 };
+
+export default ChoiceLookup;

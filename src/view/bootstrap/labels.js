@@ -123,9 +123,20 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     (context.view instanceof Editor
       ? item.getEditDescriptionMap() || item.getDescriptionMap()
       : item.getDescriptionMap()) || {};
-  const description =
-    utils.getLocalizedValue(descriptionMap, context.view.getLocale()).value ||
-    '';
+  const pageLocale = context.view.getLocale();
+  const descriptionResolved = utils.getLocalizedValue(
+    descriptionMap,
+    pageLocale
+  );
+  const description = descriptionResolved.value || '';
+  // When the description resolved to a language other than the page locale
+  // (a fallback because no translation exists for the active locale), tag it
+  // with that language so screen readers pronounce it correctly (WCAG 3.1.2).
+  // No attribute when it matches the locale or is language-less.
+  const descriptionLangAttr =
+    descriptionResolved.lang && descriptionResolved.lang !== pageLocale
+      ? ` lang="${descriptionResolved.lang}"`
+      : '';
 
   let propinfo = '';
   if (item.getProperty()) {
@@ -136,7 +147,8 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     context.view instanceof Editor
       ? item.getEditLabelMap() || item.getLabelMap()
       : item.getLabelMap();
-  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value;
+  const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
+  let label = labelResolved.value;
 
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
@@ -148,8 +160,11 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     container: aroundNode, // renderingContext.getPopoverContainer(),
     placement: 'auto',
     trigger: 'focus',
-    title: label,
-    content: `<div class="description">${description.replace(
+    title:
+      label !== '' && labelResolved.lang && labelResolved.lang !== pageLocale
+        ? `<span lang="${labelResolved.lang}">${label}</span>`
+        : label,
+    content: `<div class="description"${descriptionLangAttr}>${description.replace(
       /(\r\n|\r|\n)/g,
       '<br/>'
     )}</div>${propinfo}`,

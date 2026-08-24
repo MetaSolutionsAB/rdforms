@@ -146,7 +146,7 @@ presenters
         key={binding.getHash()}
         className="rdformsImage"
         alt=""
-        src={binding.getGixt()}
+        src={binding.getGist()}
       />
     );
   });

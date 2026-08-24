@@ -32,12 +32,16 @@ const getDescription = (item, view) => {
     view instanceof Editor
       ? item.getEditDescriptionMap() || item.getDescriptionMap()
       : item.getDescriptionMap();
-  return utils.getLocalizedValue(descMap, view.getLocale()).value;
+  const { value, lang } = utils.getLocalizedValue(descMap, view.getLocale());
+  return { value, lang };
 };
 
 const DescriptionIcon = ({ item, context }) => {
   const { view } = context;
-  const description = getDescription(item, view);
+  const { value: description, lang: descriptionLang } = getDescription(
+    item,
+    view
+  );
   const [pinned, setPinned] = useState(false);
   const [hovered, setHovered] = useState(false);
 
@@ -58,7 +62,20 @@ const DescriptionIcon = ({ item, context }) => {
   const tooltipContent = (
     <>
       {shownDescription ? (
-        <p className="rdformsLinebreaks rdformsDescription">
+        <p
+          className="rdformsLinebreaks rdformsDescription"
+          // Tag the resolved language when it fell back to something other than
+          // the page locale, so screen readers pronounce it right (WCAG 3.1.2).
+          // Only when the shown text IS the resolved description — never on the
+          // info_missing fallback, which is page-locale UI text, not the description.
+          lang={
+            description &&
+            descriptionLang &&
+            descriptionLang !== view.getLocale()
+              ? descriptionLang
+              : undefined
+          }
+        >
           {shownDescription}
         </p>
       ) : null}

@@ -24,7 +24,10 @@ renderingContext.addPresenterTable = (newRow, firstBinding, context) => {
     if (labelLang && labelResolved.value) {
       $thLabel.attr('lang', labelLang);
     }
-    renderingContext.attachItemInfo(item, $thLabel, context);
+    // Describe the column, not the parent group: pass the column child item so
+    // each header's info is about that column (also fixes RDFORMS-208 — pass the
+    // DOM node [0], not the jQuery object, which attachItemInfo requires).
+    renderingContext.attachItemInfo(childItems[colInd], $thLabel[0], context);
   }
   return $table[0];
 };

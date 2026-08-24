@@ -28,7 +28,10 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     $labelDiv.attr('id', context.view.createLabelIndex(binding));
   }
   context.labelNode = $labelDiv[0];
-  const $label = jquery('<span class="rdformsLabel" tabindex="0">')
+  // Focusability + role="button" are added by attachItemInfo only when the
+  // label actually has an info popover to reveal (see below) — a label with
+  // nothing to show must not be a keyboard tab stop.
+  const $label = jquery('<span class="rdformsLabel">')
     .text(label)
     .appendTo($labelDiv);
   // Tag the label with its resolved language when it fell back to something
@@ -123,16 +126,19 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     renderingContext.domClassToggle(aroundNode, 'rdformsNoPopup', true);
     return;
   }
-  renderingContext.domSetAttr(aroundNode, 'role', 'button');
   if (
     item == null ||
     (item.getProperty() == null &&
       item.getDescriptionMap() == null &&
       item.getEditDescriptionMap() == null)
   ) {
+    // Nothing to reveal — leave the label non-interactive (no role, no tab stop).
     jquery(aroundNode).addClass('noPointer');
     return;
   }
+  // The label opens an info popover on focus, so it is a real keyboard control.
+  renderingContext.domSetAttr(aroundNode, 'role', 'button');
+  renderingContext.domSetAttr(aroundNode, 'tabindex', '0');
 
   const descriptionMap =
     (context.view instanceof Editor

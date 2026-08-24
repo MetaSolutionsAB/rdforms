@@ -24,13 +24,16 @@ renderingContext.renderPresenterLabel = (
   }
 
   const headingElement = `h${context.view.headingLevel}`;
+  // No tabindex here: this renderPresenterLabel is shared by the jQuery and
+  // bootstrap flavors, so focusability/role are added — content-gated — by each
+  // flavor's own attachItemInfo (bootstrap: a focus-triggered popover; jQuery: a
+  // title announced on focus). A blanket tabindex here would make every label a
+  // tab stop even when it has nothing to reveal.
   const $labelDiv = item.hasStyle('heading')
-    ? jquery(`<${headingElement} class="rdformsLabel" tabindex="0">`)
+    ? jquery(`<${headingElement} class="rdformsLabel">`)
         .text(label)
         .appendTo(rowNode)
-    : jquery('<div class="rdformsLabel" tabindex="0">')
-        .text(label)
-        .appendTo(rowNode);
+    : jquery('<div class="rdformsLabel">').text(label).appendTo(rowNode);
   if (binding) {
     $labelDiv.attr('id', context.view.createLabelIndex(binding));
   }
@@ -87,5 +90,12 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     item.getDescriptionMap(),
     context.view.getLocale()
   ).value;
+  if (!desc) {
+    return;
+  }
   aroundNode.setAttribute('title', desc);
+  // Make the label focusable so screen readers announce the description (via the
+  // title) on Tab focus — in this flavor that is the only path to it (the title
+  // is otherwise mouse-hover only). Only when there is a description to reveal.
+  aroundNode.setAttribute('tabindex', '0');
 };

@@ -128,7 +128,10 @@ renderingContext.addEditorTable = (newRow, firstBinding, context) => {
     if (labelLang && labelResolved.value) {
       $thLabel.attr('lang', labelLang);
     }
-    renderingContext.attachItemInfo(item, $thLabel[0], context);
+    // Describe the column, not the parent group: pass the column child item so
+    // each header's popover is about that column and only columns that actually
+    // have a description/property become focusable (attachItemInfo gates on it).
+    renderingContext.attachItemInfo(childItem, $thLabel[0], context);
   }
   if (!firstBinding.getItem().hasStyle('firstcolumnfixedtable')) {
     const $addTh = jquery('<th>')

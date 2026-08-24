@@ -1,0 +1,94 @@
+/* Minimal, namespaced styling for the vanilla presentation flavor. No CSS
+   framework, no hardcoded pixel sizes — consumers are expected to restyle. */
+
+.rdforms-group {
+  margin: 0;
+}
+
+.rdforms-label {
+  font-weight: 600;
+}
+
+/* The item description (rendered when showDescription is on) sits inside the
+   bold <dt>; reset the weight so it reads as description text, not label. */
+.rdforms-description {
+  font-weight: normal;
+}
+
+.rdforms-value,
+.rdforms-group-value {
+  margin: 0 0 0.5em 1em;
+}
+
+.rdforms-section {
+  margin: 0 0 1em;
+}
+
+.rdforms-heading {
+  margin: 0 0 0.25em;
+}
+
+.rdforms-table {
+  border-collapse: collapse;
+}
+
+.rdforms-table caption {
+  text-align: left;
+  font-weight: 600;
+}
+
+.rdforms-table th,
+.rdforms-table td {
+  text-align: left;
+  padding: 0.25em 0.5em;
+  vertical-align: top;
+}
+
+.rdforms-image {
+  max-width: 100%;
+}
+
+/* The language code the flavor emits as a real <span> (when `showLanguage` is
+   on). Parenthesize it so it reads as an aside about the value; color, size and
+   emphasis are deliberately left to the consumer to style. */
+.rdforms-language::before {
+  content: '(';
+}
+.rdforms-language::after {
+  content: ')';
+}
+
+/* Validation report. The error/warning/deprecated state classes are toggled on
+   the field node by the shared validation logic (same names across all flavors);
+   the message paragraph is namespaced. Colors only — no framework. */
+.rdforms-value.error,
+.rdforms-label.error {
+  color: #b00020;
+}
+
+.rdforms-value.warning,
+.rdforms-label.warning {
+  color: #8a6d00;
+}
+
+.rdforms-value.deprecated,
+.rdforms-label.deprecated {
+  color: #666;
+}
+
+.rdforms-validation {
+  margin: 0.125em 0 0;
+  font-size: 0.875em;
+}
+
+.rdforms-validation-error {
+  color: #b00020;
+}
+
+.rdforms-validation-warning {
+  color: #8a6d00;
+}
+
+.rdforms-validation-deprecated {
+  color: #666;
+}

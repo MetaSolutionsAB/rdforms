@@ -14,6 +14,15 @@ const PORT = 8099;
 const flavors = ['bootstrap', 'react', 'jquery', 'vanilla'];
 const examples = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+/**
+ * Load one flavor × example page and report whether it rendered a real value
+ * with no uncaught exceptions and no application console errors.
+ *
+ * @param {import('playwright').Browser} browser the shared browser instance
+ * @param {string} flavor the flavor URL segment (bootstrap/react/jquery/vanilla)
+ * @param {number} example the example number
+ * @returns {Promise<{flavor: string, example: number, ok: boolean, errors: string[]}>} the per-cell result
+ */
 async function checkPage(browser, flavor, example) {
   const url = `http://localhost:${PORT}/${flavor}/example${example}/`;
   const page = await browser.newPage();
@@ -43,7 +52,22 @@ async function checkPage(browser, flavor, example) {
     await page.waitForFunction(
       () => {
         const node = document.getElementById('node');
-        return Boolean(node) && node.children.length > 0;
+        if (!node) {
+          return false;
+        }
+        // Assert a real *value* rendered — not just the group scaffolding.
+        // `node.children.length > 0` is satisfied by the <dl>/<dt> (vanilla) or
+        // row/label (other flavors) structure alone, so it passed even when no
+        // item presenter ran. Leaf value containers carry `rdforms-value`
+        // (vanilla) or `rdformsField` (base View — jquery/bootstrap/react);
+        // group containers are excluded on purpose, since their nested scaffold
+        // has children even when the leaf presenter is missing.
+        const values = node.querySelectorAll('.rdforms-value, .rdformsField');
+        return Array.from(values).some(
+          (element) =>
+            element.textContent.trim().length > 0 ||
+            element.querySelector('img') != null
+        );
       },
       { timeout: 15000 }
     );
@@ -58,6 +82,12 @@ async function checkPage(browser, flavor, example) {
   return { flavor, example, ok: rendered && errors.length === 0, errors };
 }
 
+/**
+ * Print the flavor × example result grid and list any failing cells.
+ *
+ * @param {Array<{flavor: string, example: number, ok: boolean, errors: string[]}>} results the per-cell results
+ * @returns {number} the number of failing cells
+ */
 function report(results) {
   const columnWidth = 12;
   const pad = (text) => String(text).padEnd(columnWidth);
@@ -88,13 +118,25 @@ function report(results) {
   return failed.length;
 }
 
+/**
+ * Start the all-flavors dev server in-process, check every flavor × example
+ * cell, and exit non-zero if any cell failed.
+ *
+ * @returns {Promise<void>}
+ */
 async function main() {
   const compiler = webpack(devAllConfig);
   const firstCompile = new Promise((resolve) => {
     compiler.hooks.done.tap('smoke-first-compile', () => resolve());
   });
   const server = new WebpackDevServer(
-    { ...(devAllConfig.devServer || {}), port: PORT, open: false, hot: false, liveReload: false },
+    {
+      ...(devAllConfig.devServer || {}),
+      port: PORT,
+      open: false,
+      hot: false,
+      liveReload: false,
+    },
     compiler
   );
 

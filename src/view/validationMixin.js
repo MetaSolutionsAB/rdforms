@@ -8,6 +8,8 @@ import { bindingReport } from '../model/validate';
  *
  * @typedef {import('../template/Item').default} Item
  * @typedef {import('../model/Binding').default} Binding
+ * @typedef {import('./Presenter').default} Presenter
+ * @typedef {import('./VanillaPresenter').default} VanillaPresenter
  */
 
 const localize = (bundle, key, val) => {
@@ -51,7 +53,10 @@ export default (Base) =>
       if (item.hasStyle('deprecated')) {
         return false;
       }
-      if (item.hasStyle('atLeastOneChild') || item.hasStyle('exactlyOneChild')) {
+      if (
+        item.hasStyle('atLeastOneChild') ||
+        item.hasStyle('exactlyOneChild')
+      ) {
         return true;
       }
       const code = this.binding.getMatchingCode();
@@ -187,7 +192,11 @@ export default (Base) =>
         return true;
       } else if (warning) {
         renderingContext.domClassToggle(fieldDiv, 'warning', true);
-        const message = localize(this.messages, 'validation_min_recommended', pref);
+        const message = localize(
+          this.messages,
+          'validation_min_recommended',
+          pref
+        );
         renderingContext.renderValidationMessage(fieldDiv, 'warning', message);
         return true;
       } else if (item.hasStyle('deprecated')) {

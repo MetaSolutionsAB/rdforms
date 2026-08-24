@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from 'react';
+import { createElement, useState, useEffect } from 'react';
 import renderingContext from '../renderingContext';
 import system from '../../model/system';
 import utils from '../../utils';
@@ -44,6 +43,7 @@ presenters
           key={binding.getHash()}
           className="rdformsImage"
           title={desc || choice.value}
+          alt={desc || choice.value}
           src={choice.value}
         />
       );
@@ -74,7 +74,7 @@ presenters.itemtype('choice').register(
       item.hasStyle('noLink')
     ) {
       fieldDiv.appendChild(
-        React.createElement(
+        createElement(
           () => {
             const [locValue, setLocValue] = useState(
               getLocalizedLabel(choice, isEditor, locale)
@@ -107,7 +107,7 @@ presenters.itemtype('choice').register(
       delete attrs.component;
 
       fieldDiv.appendChild(
-        React.createElement(
+        createElement(
           () => {
             const [locValue, setLocValue] = useState(
               getLocalizedLabel(choice, isEditor, locale)

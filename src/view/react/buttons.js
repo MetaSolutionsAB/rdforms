@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Button from '@mui/material/Button';
@@ -10,7 +9,7 @@ import * as engine from '../../model/engine';
 import { useNamedGraphId } from './hooks';
 import utils from '../../utils';
 
-renderingContext.addExpandButton = (rowDiv, labelDiv, item, context) => {
+renderingContext.addExpandButton = (/* rowDiv, labelDiv, item, context */) => {
   console.log('Expand button not yet supported');
 };
 

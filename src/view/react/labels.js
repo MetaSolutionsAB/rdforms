@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { Fragment, useState, useEffect, forwardRef } from 'react';
+import { Fragment, useState, useEffect, forwardRef } from 'react';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import IconButton from '@mui/material/IconButton';
@@ -11,9 +10,9 @@ import { Editor } from './Wrappers';
 import CODES from '../../model/CODES';
 
 const StyledTooltip = styled(
-  forwardRef(({ className, ...props }, ref) => (
-    <Tooltip {...props} classes={{ popper: className }} />
-  ))
+  forwardRef(function StyledTooltipRender({ className, ...props }) {
+    return <Tooltip {...props} classes={{ popper: className }} />;
+  })
 )(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.background.default,
@@ -33,12 +32,16 @@ const getDescription = (item, view) => {
     view instanceof Editor
       ? item.getEditDescriptionMap() || item.getDescriptionMap()
       : item.getDescriptionMap();
-  return utils.getLocalizedValue(descMap, view.getLocale()).value;
+  const { value, lang } = utils.getLocalizedValue(descMap, view.getLocale());
+  return { value, lang };
 };
 
 const DescriptionIcon = ({ item, context }) => {
   const { view } = context;
-  const description = getDescription(item, view);
+  const { value: description, lang: descriptionLang } = getDescription(
+    item,
+    view
+  );
   const [pinned, setPinned] = useState(false);
   const [hovered, setHovered] = useState(false);
 
@@ -59,7 +62,20 @@ const DescriptionIcon = ({ item, context }) => {
   const tooltipContent = (
     <>
       {shownDescription ? (
-        <p className="rdformsLinebreaks rdformsDescription">
+        <p
+          className="rdformsLinebreaks rdformsDescription"
+          // Tag the resolved language when it fell back to something other than
+          // the page locale, so screen readers pronounce it right (WCAG 3.1.2).
+          // Only when the shown text IS the resolved description — never on the
+          // info_missing fallback, which is page-locale UI text, not the description.
+          lang={
+            description &&
+            descriptionLang &&
+            descriptionLang !== view.getLocale()
+              ? descriptionLang
+              : undefined
+          }
+        >
           {shownDescription}
         </p>
       ) : null}
@@ -280,7 +296,7 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
 };
 
 const ERR = (props) => {
-  const { rowNode, binding, item, context } = props;
+  const { rowNode, binding, context } = props;
   const [code, setCode] = useState(binding.getCardinalityTracker().getCode());
   useEffect(() => {
     const cardTr = binding.getCardinalityTracker();

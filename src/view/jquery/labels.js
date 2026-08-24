@@ -41,9 +41,10 @@ renderingContext.renderPresenterLabel = (
     context.labelNode = $labelDiv[0];
   }
   // Tag the label with its resolved language when it fell back to something
-  // other than the page locale (WCAG 3.1.2); no attribute when it matches.
+  // other than the page locale (WCAG 3.1.2); no attribute when it matches or
+  // when the label is empty.
   const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
-  if (labelLang) {
+  if (labelLang && label) {
     $labelDiv.attr('lang', labelLang);
   }
   const view = context.view;

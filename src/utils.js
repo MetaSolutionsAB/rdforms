@@ -37,8 +37,11 @@ const getLocalizedValue = (hash, locale) => {
 // the fallback case keeps the DOM free of redundant lang attributes while
 // letting screen readers pronounce foreign-language fallbacks correctly
 // (WCAG 2.1 SC 3.1.2 Language of Parts).
+const baseLanguage = (tag) => (tag || '').toLowerCase().split(/[-_]/)[0];
 const foreignLang = (language, pageLocale) =>
-  language && language !== pageLocale ? language : undefined;
+  language && baseLanguage(language) !== baseLanguage(pageLocale)
+    ? language
+    : undefined;
 
 const f = (graph, subject, prop) => {
   const stmts = graph.find(subject, prop);

@@ -23,9 +23,10 @@ presenters
       const resolved = utils.getLocalizedValue(vmap, pageLocale);
       $a.text(resolved.value);
       // Tag the resolved language when the URI label fell back to a language
-      // other than the page locale (WCAG 3.1.2).
+      // other than the page locale (WCAG 3.1.2) — only when there is a resolved
+      // label shown to tag.
       const lang = utils.foreignLang(resolved.lang, pageLocale);
-      if (lang) {
+      if (lang && resolved.value) {
         $a.attr('lang', lang);
       }
     } else {
@@ -89,8 +90,11 @@ presenters
         const resolved = utils.getLocalizedValue(vmap, pageLocale);
         lbl = resolved.value || val;
         // Tag the resolved language when the label fell back to a language
-        // other than the page locale (WCAG 3.1.2).
-        labelLang = utils.foreignLang(resolved.lang, pageLocale);
+        // other than the page locale (WCAG 3.1.2) — only when the resolved
+        // label is what's shown; when empty the raw value (val) is shown.
+        labelLang = resolved.value
+          ? utils.foreignLang(resolved.lang, pageLocale)
+          : undefined;
       } else {
         lbl = binding.getGist();
       }

@@ -11,15 +11,17 @@ renderingContext.addPresenterTable = (newRow, firstBinding, context) => {
   for (let colInd = 0; colInd < childItems.length; colInd++) {
     const $th = jquery('<th>').appendTo($tHeadRow);
     const pageLocale = context.view.getLocale();
+    // Resolve from the label MAP (not getLabel(), which returns an
+    // already-resolved string that getLocalizedValue can't language-tag).
     const labelResolved = utils.getLocalizedValue(
-      childItems[colInd].getLabel(),
+      childItems[colInd].getLabelMap(),
       pageLocale
     );
     const $thLabel = jquery('<span>').text(labelResolved.value).appendTo($th);
     // Tag the header language when it fell back to something other than the
-    // page locale (WCAG 3.1.2).
+    // page locale (WCAG 3.1.2) — only when there is a label to tag.
     const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
-    if (labelLang) {
+    if (labelLang && labelResolved.value) {
       $thLabel.attr('lang', labelLang);
     }
     renderingContext.attachItemInfo(item, $thLabel, context);

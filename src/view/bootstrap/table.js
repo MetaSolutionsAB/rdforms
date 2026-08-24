@@ -123,9 +123,9 @@ renderingContext.addEditorTable = (newRow, firstBinding, context) => {
     const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
     const $thLabel = jquery('<span>').text(labelResolved.value).appendTo($th);
     // Tag the header language when it fell back to something other than the
-    // page locale (WCAG 3.1.2).
+    // page locale (WCAG 3.1.2) — only when there is a label to tag.
     const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
-    if (labelLang) {
+    if (labelLang && labelResolved.value) {
       $thLabel.attr('lang', labelLang);
     }
     renderingContext.attachItemInfo(item, $thLabel[0], context);

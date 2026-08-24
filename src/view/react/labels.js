@@ -128,8 +128,11 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
     label = '';
   }
   // Tag the resolved language when it fell back to something other than the
-  // page locale (WCAG 3.1.2); undefined → React omits the attribute.
-  const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
+  // page locale (WCAG 3.1.2); undefined → React omits the attribute. No tag on
+  // an empty label.
+  const labelLang = label
+    ? utils.foreignLang(labelResolved.lang, pageLocale)
+    : undefined;
 
   const view = context.view;
   let description;
@@ -211,8 +214,11 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
       label = '';
     }
     // Tag the resolved language when it fell back to something other than the
-    // page locale (WCAG 3.1.2); undefined → React omits the attribute.
-    const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
+    // page locale (WCAG 3.1.2); undefined → React omits the attribute. No tag
+    // on an empty label.
+    const labelLang = label
+      ? utils.foreignLang(labelResolved.lang, pageLocale)
+      : undefined;
     const HeadingElement = `h${context.view.headingLevel}`;
     label = item.hasStyle('heading') ? (
       <HeadingElement tabIndex="0" className="rdformsLabel" lang={labelLang}>

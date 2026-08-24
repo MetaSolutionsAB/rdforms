@@ -140,8 +140,10 @@ renderingContext.addCreateChildButton =
       label = '';
     }
     // Tag the resolved language when the label fell back to something other
-    // than the page locale (WCAG 3.1.2); undefined → React omits the attribute.
-    const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
+    // than the page locale (WCAG 3.1.2); no tag on an empty label.
+    const labelLang = label
+      ? utils.foreignLang(labelResolved.lang, pageLocale)
+      : undefined;
     const title = context.view.messages.edit_add;
     return (
       <Button
@@ -154,7 +156,7 @@ renderingContext.addCreateChildButton =
         color="primary"
         startIcon={<AddIcon />}
       >
-        <span lang={labelLang}>{label}</span>
+        {labelLang ? <span lang={labelLang}>{label}</span> : label}
       </Button>
     );
   };

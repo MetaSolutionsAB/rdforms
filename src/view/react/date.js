@@ -201,7 +201,15 @@ const dateEditor = (fieldDiv, binding, context) => {
                 onChange={onDateChange}
                 onAccept={commitDate}
                 onError={onDatePickerError}
+                localeText={{ todayButtonLabel: bundle.today }}
                 slotProps={{
+                  actionBar: {
+                    actions:
+                      selectedDatatype === 'Date' ||
+                      selectedDatatype === 'DateTime'
+                        ? ['today']
+                        : [],
+                  },
                   // Without an explicit error prop the field colors itself from
                   // MUI's internal validation, which still counts the ignored
                   // range reasons.
@@ -237,7 +245,9 @@ const dateEditor = (fieldDiv, binding, context) => {
                 onAccept={commitDate}
                 onError={(reason) => setTimePickerError(reason)}
                 ampm={false}
+                localeText={{ todayButtonLabel: bundle.now }}
                 slotProps={{
+                  actionBar: { actions: ['today'] },
                   textField: {
                     ...inputProps,
                     onBlur: commitDate,

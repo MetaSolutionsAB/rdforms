@@ -47,6 +47,7 @@
   "recommendedLabel": "Recommended",
   "optionalLabel": "Optional",
   "today": "Today",
+  "now": "Now",
   "mandatoryMark": "*",
   "recommendedMark": "(Recommended)",
   "optionalMark": "(Optional)",

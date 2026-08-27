@@ -1,12 +1,10 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import { TextField } from '@mui/material';
 import Select from '@mui/material/Select';
 import moment from 'moment';
 import CODES from '../../model/CODES';
@@ -34,8 +32,8 @@ const datePresenter = (fieldDiv, binding, context) => {
   try {
     const pres = getDatePresentation(binding, context.view.getLocale());
     fieldDiv.appendChild(<div key={binding.getHash()}>{pres}</div>);
-  } catch (e) {
-    console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 
+  } catch {
+    console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01
       (potentially with time given after a 'T' character as well) but found '${binding.getValue()}' instead.`);
   }
 };
@@ -57,14 +55,6 @@ const datePickerConfig = {
     YearMonth: 'YYYY-MM',
     MonthDay: 'MM-DD',
     Time: 'YYYY-MM-DD', // Since datepicker is sometimes visible but disabled
-  },
-  mask: {
-    Year: '____',
-    DateTime: '____-__-__',
-    Date: '____-__-__',
-    YearMonth: '____-__',
-    MonthDay: '__-__',
-    Time: '____-__-__', // Since datepicker is sometimes visible but disabled
   },
   views: {
     Year: ['year'],
@@ -107,9 +97,20 @@ const dateEditor = (fieldDiv, binding, context) => {
       getDatatypeFromBinding(binding, alternatives)
     );
     const onlyOneAlternative = Object.keys(alternatives).length === 1;
-    const [error, setError] = useState(
+    const [datatypeError, setDatatypeError] = useState(
       binding.getMatchingCode() === CODES.WRONG_DATATYPE
     );
+    // Picker validation is tracked apart from the datatype verdict, and per
+    // picker, so neither a datatype change nor the other picker's valid
+    // transition can erase an active error.
+    const [datePickerError, setDatePickerError] = useState(null);
+    const [timePickerError, setTimePickerError] = useState(null);
+    const error =
+      datatypeError || Boolean(datePickerError) || Boolean(timePickerError);
+    // A partial value can already parse as valid — the single-section 'YYYY'
+    // format pads '2' to '0002' — so the binding is only written once input
+    // settles, on blur or accept. `undefined` means nothing to commit.
+    const pendingDate = useRef(undefined);
 
     useEffect(() => {
       fieldDiv.toggleClass('mismatchReport', error);
@@ -117,27 +118,55 @@ const dateEditor = (fieldDiv, binding, context) => {
 
     useEffect(() => {
       context.clear = () => {
+        pendingDate.current = undefined;
         setSelectedDate(null);
         setDatatype(getDatatypeFromItem(binding.getItem()));
-        setError(false);
+        setDatatypeError(false);
+        setDatePickerError(null);
+        setTimePickerError(null);
       };
     }, []);
 
     const onDateChange = (date) => {
       if (date == null) {
-        binding.setValue('');
+        pendingDate.current = null;
         setSelectedDate(null);
       } else if (date.isValid()) {
-        binding.setValue(getDateValue(date.toDate(), selectedDatatype));
+        pendingDate.current = date.toDate();
         setSelectedDate(date.toDate());
+      } else {
+        pendingDate.current = undefined;
       }
     };
+
+    const commitDate = () => {
+      if (pendingDate.current !== undefined) {
+        binding.setValue(getDateValue(pendingDate.current, selectedDatatype));
+        pendingDate.current = undefined;
+      }
+    };
+
+    // min/maxDate bound the picker's navigation, not data validity, so range
+    // reasons are not errors. maxDate stays at its default — the year view
+    // renders a button per year, and a 9999 ceiling makes it crawl.
+    const onDatePickerError = (reason) =>
+      setDatePickerError(
+        reason === 'minDate' || reason === 'maxDate' ? null : reason
+      );
+
+    // Keep the controlled value's instance stable between renders: the picker
+    // detects external changes by reference, and a fresh moment mid-edit
+    // would reset the field and wipe in-progress input.
+    const selectedMoment = useMemo(
+      () => (selectedDate ? moment(selectedDate) : null),
+      [selectedDate]
+    );
 
     const onDatatypeChange = (event) => {
       binding.setDatatype(getDatatypeURI(event.target.value));
       binding.setValue(getDateValue(selectedDate, event.target.value));
       setDatatype(event.target.value);
-      setError(alternatives[event.target.value] === 'error');
+      setDatatypeError(alternatives[event.target.value] === 'error');
     };
     const inputProps = {
       'aria-labelledby': context.view.getLabelIndex(binding),
@@ -163,49 +192,71 @@ const dateEditor = (fieldDiv, binding, context) => {
           <span className="rdformsDatePicker">
             {visibleDatePicker && (
               <DatePicker
-                renderInput={(props) => (
-                  <TextField {...props} {...inputProps} />
-                )}
-                leftArrowButtonProps={{
-                  'aria-label': bundle.date_previousMonth,
-                }}
-                rightArrowButtonProps={{ 'aria-label': bundle.date_nextMonth }}
-                KeyboardButtonProps={{
-                  'aria-label':
-                    bundle[datePickerConfig.ariaLabelKey[selectedDatatype]],
-                }}
                 label={bundle[datePickerConfig.labelKey[selectedDatatype]]}
                 {...(enabledDatePicker ? {} : { disabled: true })}
-                value={enabledDatePicker ? selectedDate : null}
+                value={enabledDatePicker ? selectedMoment : null}
                 minDate={moment(new Date('0000-01-01'))}
-                inputFormat={datePickerConfig.format[selectedDatatype]}
+                format={datePickerConfig.format[selectedDatatype]}
                 views={datePickerConfig.views[selectedDatatype]}
                 onChange={onDateChange}
-                autoOk={true}
-                mask={datePickerConfig.mask[selectedDatatype]}
+                onAccept={commitDate}
+                onError={onDatePickerError}
+                localeText={{ todayButtonLabel: bundle.today }}
+                slotProps={{
+                  actionBar: {
+                    actions:
+                      selectedDatatype === 'Date' ||
+                      selectedDatatype === 'DateTime'
+                        ? ['today']
+                        : [],
+                  },
+                  // Without an explicit error prop the field colors itself from
+                  // MUI's internal validation, which still counts the ignored
+                  // range reasons.
+                  textField: {
+                    ...inputProps,
+                    onBlur: commitDate,
+                    error: Boolean(datePickerError),
+                  },
+                  openPickerButton: {
+                    'aria-label':
+                      bundle[datePickerConfig.ariaLabelKey[selectedDatatype]],
+                  },
+                  previousIconButton: {
+                    'aria-label': bundle.date_previousMonth,
+                  },
+                  nextIconButton: { 'aria-label': bundle.date_nextMonth },
+                }}
               />
             )}
             {(alternatives.DateTime || alternatives.Time) && (
               <TimePicker
-                renderInput={(props) => (
-                  <TextField {...props} {...inputProps} />
-                )}
                 label={bundle.date_time}
                 {...(!ngId &&
                 (selectedDatatype === 'DateTime' || selectedDatatype === 'Time')
                   ? {}
                   : { disabled: true })}
-                KeyboardButtonProps={{
-                  'aria-label': bundle.date_openTimePicker,
-                }}
                 value={
                   selectedDatatype === 'DateTime' || selectedDatatype === 'Time'
-                    ? selectedDate
+                    ? selectedMoment
                     : null
                 }
                 onChange={onDateChange}
+                onAccept={commitDate}
+                onError={(reason) => setTimePickerError(reason)}
                 ampm={false}
-                autoOk={true}
+                localeText={{ todayButtonLabel: bundle.now }}
+                slotProps={{
+                  actionBar: { actions: ['today'] },
+                  textField: {
+                    ...inputProps,
+                    onBlur: commitDate,
+                    error: Boolean(timePickerError),
+                  },
+                  openPickerButton: {
+                    'aria-label': bundle.date_openTimePicker,
+                  },
+                }}
               />
             )}
             {!onlyOneAlternative && (
@@ -278,7 +329,9 @@ const dateEditor = (fieldDiv, binding, context) => {
         </LocalizationProvider>
         {error && (
           <div key="warning" className="rdformsWarning">
-            {context.view.messages.wrongDatatypeField}
+            {datatypeError
+              ? context.view.messages.wrongDatatypeField
+              : context.view.messages.wrongValueField}
           </div>
         )}
       </>

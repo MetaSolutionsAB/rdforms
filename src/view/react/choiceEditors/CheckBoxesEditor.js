@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { FormGroup } from '@mui/material';
@@ -9,9 +8,7 @@ import * as engine from '../../../model/engine';
 
 const CheckOption = (props) => {
   const { choice, binding, onChoiceChange } = props;
-  const [checked, setChecked] = React.useState(
-    choice.value === binding.getValue()
-  );
+  const [checked, setChecked] = useState(choice.value === binding.getValue());
 
   const handleChange = (evt) => {
     binding.setChoice(evt.target.checked ? choice.original : null);
@@ -30,18 +27,18 @@ const CheckOption = (props) => {
 };
 
 /**
- *
- * @param props
+ * @param {object} props
+ * @returns {import('react').ReactElement}
  */
 export default function CheckBoxesEditor(props) {
-  const [resetCount, setResetCount] = React.useState(0);
+  const [resetCount, setResetCount] = useState(0);
   const binding = props.binding;
   const item = binding.getItem();
   const choices = useLocalizedSortedChoices(binding, true);
   const choiceBindingPairs = useMemo(() => {
     const parentBinding = binding.getParent();
     const val2binding = {};
-    // eslint-disable-next-line no-return-assign
+
     parentBinding
       .getChildBindingsFor(item)
       .forEach((b) => (val2binding[b.getValue()] = b));

@@ -123,8 +123,11 @@ renderingContext.addEditorTable = (newRow, firstBinding, context) => {
       labelMap,
       context.view.getLocale()
     ).value;
+    // Describe the column, not the parent group: pass the column child item so
+    // each header's popover is about that column and only columns that actually
+    // have a description/property become focusable (attachItemInfo gates on it).
     renderingContext.attachItemInfo(
-      item,
+      childItem,
       jquery('<span>').text(label).appendTo($th)[0],
       context
     );

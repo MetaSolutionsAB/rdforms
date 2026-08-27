@@ -49,7 +49,7 @@ const ChoiceLookup = (props) => {
   return (
     <>
       <TextField
-        inputProps={{ 'aria-labelledby': labelledBy }}
+        slotProps={{ htmlInput: { 'aria-labelledby': labelledBy } }}
         className="rdformsSearch"
         disabled
         {...(!!ngId || (choice && choice.mismatch) ? { mismatch: true } : {})}

@@ -143,7 +143,7 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
   // filled for 'en', empty for the active 'sv'), which previously left the
   // label focusable with an empty popover (RDFORMS-187). A property is always
   // content worth revealing.
-  if (item.getProperty() == null && description.trim() === '') {
+  if (!item.getProperty() && description.trim() === '') {
     jquery(aroundNode).addClass('noPointer');
     return;
   }

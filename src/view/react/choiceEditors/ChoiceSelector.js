@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars,quotes */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import renderingContext from '../../renderingContext';
@@ -10,14 +9,18 @@ import {
 } from '../hooks';
 
 /**
+ * @typedef {import('../../../model/Binding').default} Binding
+ */
+
+/**
  * Autocomplete with fixed choices.
  *
- * @param props Component props
+ * @param {object} props Component props
  * @param {Binding} props.binding the binding for which to render an autocomplete
  * @example (<ChoiceSelector binding={binding}>)
- * @returns {React.FunctionComponentElement}
+ * @returns {import('react').FunctionComponentElement}
  */
-export default (props) => {
+const ChoiceSelector = (props) => {
   const binding = props.binding;
   const choices = useLocalizedSortedChoices(binding, true);
   const [value, setValue] = useLocalizedChoice(binding, choices);
@@ -80,3 +83,5 @@ export default (props) => {
     </>
   );
 };
+
+export default ChoiceSelector;

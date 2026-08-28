@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Button from '@mui/material/Button';
@@ -10,7 +9,7 @@ import * as engine from '../../model/engine';
 import { useNamedGraphId } from './hooks';
 import utils from '../../utils';
 
-renderingContext.addExpandButton = (rowDiv, labelDiv, item, context) => {
+renderingContext.addExpandButton = (/* rowDiv, labelDiv, item, context */) => {
   console.log('Expand button not yet supported');
 };
 
@@ -141,8 +140,10 @@ renderingContext.addCreateChildButton =
       label = '';
     }
     // Tag the resolved language when the label fell back to something other
-    // than the page locale (WCAG 3.1.2); undefined → React omits the attribute.
-    const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
+    // than the page locale (WCAG 3.1.2); no tag on an empty label.
+    const labelLang = label
+      ? utils.foreignLang(labelResolved.lang, pageLocale)
+      : undefined;
     const title = context.view.messages.edit_add;
     return (
       <Button
@@ -155,7 +156,7 @@ renderingContext.addCreateChildButton =
         color="primary"
         startIcon={<AddIcon />}
       >
-        <span lang={labelLang}>{label}</span>
+        {labelLang ? <span lang={labelLang}>{label}</span> : label}
       </Button>
     );
   };

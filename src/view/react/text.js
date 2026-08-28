@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useMemo } from 'react';
+import { Fragment } from 'react';
 import system from '../../model/system';
 import renderingContext from '../renderingContext';
 import { fromDuration } from '../viewUtils';
@@ -18,12 +17,12 @@ presenters
         {keys.map(
           (key) =>
             data[key] !== 0 && (
-              <React.Fragment key={key}>
+              <Fragment key={key}>
                 <span className="durationLabel">
                   {context.view.messages[`duration_${key}`]}:
                 </span>
                 <span className="durationValue">{data[key]}</span>
-              </React.Fragment>
+              </Fragment>
             )
         )}
       </div>
@@ -50,8 +49,11 @@ presenters
       const resolved = utils.getLocalizedValue(vmap, pageLocale);
       lbl = resolved.value || val;
       // Tag the resolved language when the URI label fell back to a language
-      // other than the page locale (WCAG 3.1.2).
-      lblLang = utils.foreignLang(resolved.lang, pageLocale);
+      // other than the page locale (WCAG 3.1.2) — only when the resolved label
+      // is what's shown; when it's empty the raw URI (val) is shown untagged.
+      lblLang = resolved.value
+        ? utils.foreignLang(resolved.lang, pageLocale)
+        : undefined;
     } else {
       lbl = binding.getGist();
     }
@@ -113,8 +115,11 @@ presenters
         const resolved = utils.getLocalizedValue(vmap, pageLocale);
         lbl = resolved.value || val;
         // Tag the resolved language when the label fell back to a language
-        // other than the page locale (WCAG 3.1.2).
-        lblLang = utils.foreignLang(resolved.lang, pageLocale);
+        // other than the page locale (WCAG 3.1.2) — only when the resolved
+        // label is what's shown; when empty the raw value (val) is shown.
+        lblLang = resolved.value
+          ? utils.foreignLang(resolved.lang, pageLocale)
+          : undefined;
       } else {
         lbl = binding.getGist();
       }
@@ -147,8 +152,11 @@ presenters
       const resolved = utils.getLocalizedValue(vmap, pageLocale);
       lbl = resolved.value || val;
       // Tag the resolved language when the URI label fell back to a language
-      // other than the page locale (WCAG 3.1.2).
-      lblLang = utils.foreignLang(resolved.lang, pageLocale);
+      // other than the page locale (WCAG 3.1.2) — only when the resolved label
+      // is what's shown; when it's empty the raw URI (val) is shown untagged.
+      lblLang = resolved.value
+        ? utils.foreignLang(resolved.lang, pageLocale)
+        : undefined;
     } else {
       lbl = binding.getGist();
     }
@@ -169,7 +177,8 @@ presenters
       <img
         key={binding.getHash()}
         className="rdformsImage"
-        src={binding.getGixt()}
+        alt=""
+        src={binding.getGist()}
       />
     );
   });
@@ -240,7 +249,11 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
       const pageLocale = context.view.getLocale();
       const resolved = utils.getLocalizedValue(vmap, pageLocale);
       displayLabel = resolved.value || val;
-      displayLang = utils.foreignLang(resolved.lang, pageLocale);
+      // Only tag when the resolved label is what's shown; when empty the raw
+      // URI gist (val) is shown and must not carry the empty value's language.
+      displayLang = resolved.value
+        ? utils.foreignLang(resolved.lang, pageLocale)
+        : undefined;
     }
     fieldDiv.appendChild(
       <a

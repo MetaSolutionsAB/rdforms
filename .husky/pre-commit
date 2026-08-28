@@ -1,0 +1,1 @@
+pnpm --silent lint:staged

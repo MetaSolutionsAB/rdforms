@@ -21,10 +21,22 @@ describe('utils.foreignLang', () => {
     expect(foreignLang(resolved.lang, 'sv')).toBe('de');
   });
 
-  test('returns the base language on a coarsen fallback (differs from region locale)', () => {
+  test('returns undefined when the base language matches the region locale (coarsen)', () => {
     const resolved = getLocalizedValue({ sv: 'Hej' }, 'sv_FI');
     expect(resolved.precision).toBe('coarsen');
-    expect(foreignLang(resolved.lang, 'sv_FI')).toBe('sv');
+    // sv content under an sv_FI page is the same language — no lang tag needed.
+    expect(foreignLang(resolved.lang, 'sv_FI')).toBeUndefined();
+  });
+
+  test('compares base language subtags case-insensitively', () => {
+    expect(foreignLang('EN', 'en')).toBeUndefined();
+  });
+
+  test('ignores region subtags on either side (hyphen or underscore)', () => {
+    expect(foreignLang('de-DE', 'de')).toBeUndefined();
+    expect(foreignLang('de', 'de-DE')).toBeUndefined();
+    // genuinely different base languages still tag, keeping the original tag.
+    expect(foreignLang('en-GB', 'sv')).toBe('en-GB');
   });
 
   test('returns undefined for a language-less (nolang) resolution', () => {

@@ -123,12 +123,15 @@ renderingContext.addEditorTable = (newRow, firstBinding, context) => {
     const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
     const $thLabel = jquery('<span>').text(labelResolved.value).appendTo($th);
     // Tag the header language when it fell back to something other than the
-    // page locale (WCAG 3.1.2).
+    // page locale (WCAG 3.1.2) — only when there is a label to tag.
     const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
-    if (labelLang) {
+    if (labelLang && labelResolved.value) {
       $thLabel.attr('lang', labelLang);
     }
-    renderingContext.attachItemInfo(item, $thLabel[0], context);
+    // Describe the column, not the parent group: pass the column child item so
+    // each header's popover is about that column and only columns that actually
+    // have a description/property become focusable (attachItemInfo gates on it).
+    renderingContext.attachItemInfo(childItem, $thLabel[0], context);
   }
   if (!firstBinding.getItem().hasStyle('firstcolumnfixedtable')) {
     const $addTh = jquery('<th>')

@@ -28,13 +28,17 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     $labelDiv.attr('id', context.view.createLabelIndex(binding));
   }
   context.labelNode = $labelDiv[0];
-  const $label = jquery('<span class="rdformsLabel" tabindex="0">')
+  // Focusability + role="button" are added by attachItemInfo only when the
+  // label actually has an info popover to reveal (see below) — a label with
+  // nothing to show must not be a keyboard tab stop.
+  const $label = jquery('<span class="rdformsLabel">')
     .text(label)
     .appendTo($labelDiv);
   // Tag the label with its resolved language when it fell back to something
-  // other than the page locale (WCAG 3.1.2); no attribute when it matches.
+  // other than the page locale (WCAG 3.1.2); no attribute when it matches or
+  // when the label is empty.
   const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
-  if (labelLang) {
+  if (labelLang && label) {
     $label.attr('lang', labelLang);
   }
   const card = item.getCardinality();
@@ -122,13 +126,8 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     renderingContext.domClassToggle(aroundNode, 'rdformsNoPopup', true);
     return;
   }
-  renderingContext.domSetAttr(aroundNode, 'role', 'button');
-  if (
-    item == null ||
-    (item.getProperty() == null &&
-      item.getDescriptionMap() == null &&
-      item.getEditDescriptionMap() == null)
-  ) {
+  if (item == null) {
+    // Nothing to reveal — leave the label non-interactive (no role, no tab stop).
     jquery(aroundNode).addClass('noPointer');
     return;
   }
@@ -155,6 +154,21 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     ? ` lang="${descriptionLang}"`
     : '';
 
+  // Nothing to reveal — leave the label non-interactive (no role, no tab stop,
+  // no empty popover). "Nothing" is gated on the description that actually
+  // resolves for the active locale, not on the map merely existing: a map key
+  // may be present but empty or whitespace-only for the active locale (e.g.
+  // filled for 'en', empty for the active 'sv'), which previously left the
+  // label focusable with an empty popover (RDFORMS-187). A property is always
+  // content worth revealing.
+  if (!item.getProperty() && description.trim() === '') {
+    jquery(aroundNode).addClass('noPointer');
+    return;
+  }
+  // The label opens an info popover on focus, so it is a real keyboard control.
+  renderingContext.domSetAttr(aroundNode, 'role', 'button');
+  renderingContext.domSetAttr(aroundNode, 'tabindex', '0');
+
   let propinfo = '';
   if (item.getProperty()) {
     propinfo = `<div class="property"><a target="_blank" href="${item.getProperty()}">${item.getProperty()}</a></div>`;
@@ -178,7 +192,10 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     container: aroundNode, // renderingContext.getPopoverContainer(),
     placement: 'auto',
     trigger: 'focus',
-    title: labelLang ? `<span lang="${labelLang}">${label}</span>` : label,
+    title:
+      label !== '' && labelLang
+        ? `<span lang="${labelLang}">${label}</span>`
+        : label,
     content: `<div class="description"${descriptionLangAttr}>${description.replace(
       /(\r\n|\r|\n)/g,
       '<br/>'

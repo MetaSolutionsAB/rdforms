@@ -72,6 +72,13 @@ presenters.itemtype('choice').register(
         system.attachLinkBehaviour($el[0], binding);
       }
     }
+    // Set the pre-load language first so that a synchronous choice.load callback
+    // (a cached choice) can override or clear it from the post-load label below;
+    // otherwise the outer set would clobber the callback's result.
+    const lang = utils.foreignLang(locValue.lang, locale);
+    if (lang) {
+      $el.attr('lang', lang);
+    }
     if (choice.load != null) {
       choice.load(() => {
         const locValue2 = utils.getLocalizedValue(choice.label, locale);
@@ -85,10 +92,6 @@ presenters.itemtype('choice').register(
           $el.removeAttr('lang');
         }
       });
-    }
-    const lang = utils.foreignLang(locValue.lang, locale);
-    if (lang) {
-      $el.attr('lang', lang);
     }
   })
 );

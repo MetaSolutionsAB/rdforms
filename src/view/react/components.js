@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { createElement, useState, useEffect, useRef } from 'react';
 import WarningIcon from '@mui/icons-material/Warning';
 import ErrorIcon from '@mui/icons-material/Error';
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
@@ -18,8 +18,9 @@ import '../bootstrap/auto';
  * A wrapper for adding a dom element to
  * a react component.
  *
- * @param root0
- * @param root0.element
+ * @param {object} root0
+ * @param {Node} root0.element
+ * @returns {import('react').ReactElement}
  */
 const DOMElementWrapper = ({ element }) => {
   const ref = useRef();
@@ -34,25 +35,26 @@ const DOMElementWrapper = ({ element }) => {
 /**
  * If child is not a react component, it creates one.
  *
- * @param child
- * @param index
+ * @param {Node|object} child
+ * @param {number} index
+ * @returns {import('react').ReactElement}
  */
 const getReactComponent = (child, index) => {
   // In case child is a dom element
   if (child instanceof Node)
     return <DOMElementWrapper key={index} element={child} />;
   // In case child is a struct
-  if (child.component)
-    return React.createElement(child.component, { key: child.id });
+  if (child.component) return createElement(child.component, { key: child.id });
   return child; // Assumes child a react component
 };
 
 /**
  * Utility to toggle a set of classes potentially separated by spaces in a set.
  *
- * @param clsSet
- * @param clsStr
- * @param addOrNot
+ * @param {Set<string>} clsSet
+ * @param {string} clsStr
+ * @param {boolean} addOrNot
+ * @returns {boolean}
  */
 const toggleClass = (clsSet, clsStr, addOrNot) => {
   let change = false;
@@ -98,9 +100,10 @@ let structId = 0;
  * Note that all update of state variables are done by replacing the value (even for arrays and sets) to allow
  * correct diffing of react.
  *
- * @param Tag
- * @param parent
- * @param nodeId
+ * @param {string} Tag
+ * @param {Node|object} parent
+ * @param {string} nodeId
+ * @returns {object}
  */
 const newStruct = (Tag, parent, nodeId) => {
   const firstClsSet = new Set();
@@ -225,7 +228,8 @@ renderingContext.domClassToggle = (struct, classStr, addOrRemove = true) =>
 /**
  * Create a struct rather than a domNode.
  *
- * @param srcNodeRef - can be a struct, a string or a dom node.
+ * @param {object|string|Node} srcNodeRef - can be a struct, a string or a dom node.
+ * @returns {object}
  */
 renderingContext.createDomNode = (srcNodeRef /* , view */) => {
   let domNode;
@@ -244,7 +248,7 @@ renderingContext.createDomNode = (srcNodeRef /* , view */) => {
 /**
  * If we are in a toplevel struct, destroy it otherwise just call destroy on the struct.
  *
- * @param struct
+ * @param {object} struct
  */
 renderingContext.destroyDomNode = (struct /* , view */) => {
   if (struct.component) {
@@ -264,7 +268,6 @@ renderingContext.preEditorRenderer = (fieldDiv, binding, context) => {
     context.controlDiv = newStruct('div', fieldDiv);
     renderingContext.domClassToggle(context.controlDiv, 'rdformsFieldControl');
 
-    // eslint-disable-next-line no-unused-vars
     const RemoveButton = renderingContext.addRemoveButton(
       fieldDiv,
       binding,

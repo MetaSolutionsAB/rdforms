@@ -16,15 +16,17 @@ const CheckOption = (props) => {
     setChecked(evt.target.checked);
     onChoiceChange();
   };
+  // Tag the choice label with its resolved language when it differs from the
+  // page locale (WCAG 3.1.2), and only for a non-empty label so an
+  // empty-resolving label doesn't emit an empty lang-carrying node.
+  const labelLang = choice.label
+    ? utils.foreignLang(choice.labelLang, props.pageLocale)
+    : undefined;
   return (
     <FormControlLabel
       disabled={props.disabled}
-      // Tag the choice label with its resolved language when it differs from the
-      // page locale (WCAG 3.1.2); undefined → React omits the attribute.
       label={
-        <span lang={utils.foreignLang(choice.labelLang, props.pageLocale)}>
-          {choice.label}
-        </span>
+        labelLang ? <span lang={labelLang}>{choice.label}</span> : choice.label
       }
       control={<Checkbox checked={checked} onChange={handleChange} />}
       {...(choice.mismatch ? { className: 'mismatch' } : {})}

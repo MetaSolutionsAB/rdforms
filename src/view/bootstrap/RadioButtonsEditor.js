@@ -77,8 +77,11 @@ export default class RadioButtonsEditor {
         pageLocale
       );
       // Tag the choice label with its resolved language when it differs from
-      // the page locale (WCAG 3.1.2); no attribute when it matches.
-      const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
+      // the page locale (WCAG 3.1.2); no attribute when it matches, and no tag
+      // for an empty-resolving label so we never emit an empty lang-carrying node.
+      const labelLang = labelResolved.value
+        ? utils.foreignLang(labelResolved.lang, pageLocale)
+        : undefined;
       if (labelLang) {
         jquery('<span>')
           .attr('lang', labelLang)

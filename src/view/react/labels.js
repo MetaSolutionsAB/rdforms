@@ -69,10 +69,8 @@ const DescriptionIcon = ({ item, context }) => {
           // Only when the shown text IS the resolved description — never on the
           // info_missing fallback, which is page-locale UI text, not the description.
           lang={
-            description &&
-            descriptionLang &&
-            descriptionLang !== view.getLocale()
-              ? descriptionLang
+            description
+              ? utils.foreignLang(descriptionLang, view.getLocale())
               : undefined
           }
         >
@@ -121,12 +119,20 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
     context.view instanceof Editor
       ? item.getEditLabelMap() || item.getLabelMap()
       : item.getLabelMap();
-  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value;
+  const pageLocale = context.view.getLocale();
+  const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
+  let label = labelResolved.value;
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
     label = '';
   }
+  // Tag the resolved language when it fell back to something other than the
+  // page locale (WCAG 3.1.2); undefined → React omits the attribute. No tag on
+  // an empty label.
+  const labelLang = label
+    ? utils.foreignLang(labelResolved.lang, pageLocale)
+    : undefined;
 
   const view = context.view;
   let description;
@@ -146,12 +152,17 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
       view instanceof Editor
         ? item.getEditDescriptionMap() || item.getDescriptionMap()
         : item.getDescriptionMap();
-    const desc = utils.getLocalizedValue(
-      descMap,
-      context.view.getLocale()
-    ).value;
+    const descResolved = utils.getLocalizedValue(descMap, pageLocale);
+    const desc = descResolved.value;
     if (!compactField && desc) {
-      description = <div className="rdformsDescription">{desc}</div>;
+      description = (
+        <div
+          className="rdformsDescription"
+          lang={utils.foreignLang(descResolved.lang, pageLocale)}
+        >
+          {desc}
+        </div>
+      );
     }
   }
 
@@ -167,12 +178,16 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
   // the attribute entirely makes focus() a silent no-op.
   label = item.hasStyle('heading') ? (
     <HeadingElement tabIndex={-1} id={labelId} className="rdformsLabelRow">
-      <span className="rdformsLabel">{label}</span>
+      <span className="rdformsLabel" lang={labelLang}>
+        {label}
+      </span>
       {descriptionIcon}
     </HeadingElement>
   ) : (
     <span tabIndex={-1} id={labelId} className="rdformsLabelRow">
-      <span className="rdformsLabel">{label}</span>
+      <span className="rdformsLabel" lang={labelLang}>
+        {label}
+      </span>
       {descriptionIcon}
     </span>
   );
@@ -194,26 +209,31 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
       true
     );
   } else {
+    const pageLocale = context.view.getLocale();
     let labelMap = item.getEditLabelMap() || item.getLabelMap();
-    let label = utils.getLocalizedValue(
-      labelMap,
-      context.view.getLocale()
-    ).value;
+    const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
+    let label = labelResolved.value;
     if (label != null && label !== '') {
       label = label.charAt(0).toUpperCase() + label.slice(1);
     } else {
       label = '';
     }
+    // Tag the resolved language when it fell back to something other than the
+    // page locale (WCAG 3.1.2); undefined → React omits the attribute. No tag
+    // on an empty label.
+    const labelLang = label
+      ? utils.foreignLang(labelResolved.lang, pageLocale)
+      : undefined;
     const HeadingElement = `h${context.view.headingLevel}`;
     // tabIndex={-1}: the label has no action (the DescriptionIcon button added
     // below is the info affordance), so it is not a tab stop — but stays
     // programmatically focusable for parity with the presenter label above.
     label = item.hasStyle('heading') ? (
-      <HeadingElement tabIndex={-1} className="rdformsLabel">
+      <HeadingElement tabIndex={-1} className="rdformsLabel" lang={labelLang}>
         {label}
       </HeadingElement>
     ) : (
-      <span tabIndex={-1} className="rdformsLabel">
+      <span tabIndex={-1} className="rdformsLabel" lang={labelLang}>
         {label}
       </span>
     );
@@ -271,16 +291,18 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
         view instanceof Editor
           ? item.getEditDescriptionMap() || item.getDescriptionMap()
           : item.getDescriptionMap();
-      const desc = utils.getLocalizedValue(
-        descMap,
-        context.view.getLocale()
-      ).value;
+      const descResolved = utils.getLocalizedValue(descMap, pageLocale);
+      const desc = descResolved.value;
 
       if (!compactField && desc) {
         // Plain description text — not a tab stop, but tabIndex={-1} keeps it
         // programmatically focusable for parity with develop's behavior.
         description = (
-          <div tabIndex={-1} className="rdformsDescription">
+          <div
+            className="rdformsDescription"
+            tabIndex={-1}
+            lang={utils.foreignLang(descResolved.lang, pageLocale)}
+          >
             {desc}
           </div>
         );

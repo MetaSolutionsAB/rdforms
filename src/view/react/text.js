@@ -32,7 +32,7 @@ presenters
 presenters
   .itemtype('text')
   .nodetype('URI')
-  .register((fieldDiv, binding) => {
+  .register((fieldDiv, binding, context) => {
     const vmap = utils.getLocalizedMap(binding);
     const val = binding.getValue();
     const attrs = binding.getItem().hasStyle('externalLink')
@@ -40,15 +40,26 @@ presenters
       : system.attachLinkBehaviour(fieldDiv, binding) || {};
     const component = attrs.component || null;
     delete attrs.component;
-
-    const lbl = binding.getItem().hasStyle('showValue')
-      ? val
-      : vmap
-        ? utils.getLocalizedValue(vmap).value || val
-        : binding.getGist();
+    let lbl;
+    let lblLang;
+    if (binding.getItem().hasStyle('showValue')) {
+      lbl = val;
+    } else if (vmap) {
+      const pageLocale = context.view.getLocale();
+      const resolved = utils.getLocalizedValue(vmap, pageLocale);
+      lbl = resolved.value || val;
+      // Tag the resolved language when the URI label fell back to a language
+      // other than the page locale (WCAG 3.1.2) — only when the resolved label
+      // is what's shown; when it's empty the raw URI (val) is shown untagged.
+      lblLang = resolved.value
+        ? utils.foreignLang(resolved.lang, pageLocale)
+        : undefined;
+    } else {
+      lbl = binding.getGist();
+    }
     fieldDiv.appendChild(
       <a {...attrs} key={binding.getHash()} title={val} href={val}>
-        <span>{lbl}</span>
+        <span lang={lblLang}>{lbl}</span>
         {component}
       </a>
     );
@@ -92,20 +103,30 @@ presenters
       tooltipBindings.length > 0 ? tooltipBindings[0].getValue() : val;
 
     let lbl;
+    let lblLang;
     if (labelBindings.length > 0) {
       lbl = labelBindings[0].getValue();
+    } else if (binding.getItem().hasStyle('showValue')) {
+      lbl = val;
     } else {
       const vmap = utils.getLocalizedMap(binding);
-
-      lbl = binding.getItem().hasStyle('showValue')
-        ? val
-        : vmap
-          ? utils.getLocalizedValue(vmap).value || val
-          : binding.getGist();
+      if (vmap) {
+        const pageLocale = context.view.getLocale();
+        const resolved = utils.getLocalizedValue(vmap, pageLocale);
+        lbl = resolved.value || val;
+        // Tag the resolved language when the label fell back to a language
+        // other than the page locale (WCAG 3.1.2) — only when the resolved
+        // label is what's shown; when empty the raw value (val) is shown.
+        lblLang = resolved.value
+          ? utils.foreignLang(resolved.lang, pageLocale)
+          : undefined;
+      } else {
+        lbl = binding.getGist();
+      }
     }
     fieldDiv.appendChild(
       <a {...attrs} key={binding.getHash()} title={tooltip} href={val}>
-        <span>{lbl}</span>
+        <span lang={lblLang}>{lbl}</span>
         {component}
       </a>
     );
@@ -115,22 +136,33 @@ presenters
   .itemtype('text')
   .nodetype('URI')
   .style('externalLink')
-  .register((fieldDiv, binding) => {
+  .register((fieldDiv, binding, context) => {
     const vmap = utils.getLocalizedMap(binding);
     const val = binding.getValue();
     const attrs = system.attachExternalLinkBehaviour(fieldDiv, binding) || {};
     attrs.target = attrs.target || '_blank';
     const component = attrs.component || null;
     delete attrs.component;
-
-    const lbl = binding.getItem().hasStyle('showValue')
-      ? val
-      : vmap
-        ? utils.getLocalizedValue(vmap).value || val
-        : binding.getGist();
+    let lbl;
+    let lblLang;
+    if (binding.getItem().hasStyle('showValue')) {
+      lbl = val;
+    } else if (vmap) {
+      const pageLocale = context.view.getLocale();
+      const resolved = utils.getLocalizedValue(vmap, pageLocale);
+      lbl = resolved.value || val;
+      // Tag the resolved language when the URI label fell back to a language
+      // other than the page locale (WCAG 3.1.2) — only when the resolved label
+      // is what's shown; when it's empty the raw URI (val) is shown untagged.
+      lblLang = resolved.value
+        ? utils.foreignLang(resolved.lang, pageLocale)
+        : undefined;
+    } else {
+      lbl = binding.getGist();
+    }
     fieldDiv.appendChild(
       <a {...attrs} key={binding.getHash()} title={val} href={val}>
-        <span>{lbl}</span>
+        <span lang={lblLang}>{lbl}</span>
         {component}
       </a>
     );
@@ -205,11 +237,24 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
     const attrs = system.attachLinkBehaviour(fieldDiv, binding, parentBinding);
     const component = attrs.component || null;
     delete attrs.component;
-    if (language) {
-      attrs.lang = language;
-    }
     const vmap = utils.getLocalizedMap(binding);
     const val = parentBinding.getGist();
+    // The anchor shows the resolved URI label (vmap), not this binding's literal
+    // value, so tag the shown text with the language it actually resolved to
+    // when that differs from the page locale (WCAG 3.1.2) — not the literal's
+    // declared `binding.getLanguage()`, which would mislabel the shown text.
+    let displayLabel = val;
+    let displayLang;
+    if (vmap) {
+      const pageLocale = context.view.getLocale();
+      const resolved = utils.getLocalizedValue(vmap, pageLocale);
+      displayLabel = resolved.value || val;
+      // Only tag when the resolved label is what's shown; when empty the raw
+      // URI gist (val) is shown and must not carry the empty value's language.
+      displayLang = resolved.value
+        ? utils.foreignLang(resolved.lang, pageLocale)
+        : undefined;
+    }
     fieldDiv.appendChild(
       <a
         {...attrs}
@@ -217,7 +262,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
         className="rdformsUrl"
         href={parentBinding.getStatement().getValue()}
       >
-        <span>{vmap ? utils.getLocalizedValue(vmap).value || val : val}</span>
+        <span lang={displayLang}>{displayLabel}</span>
         {component}
       </a>
     );

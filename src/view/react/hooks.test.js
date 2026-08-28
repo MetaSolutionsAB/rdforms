@@ -1,12 +1,12 @@
 // Runs under the `jsdom` jest project (jest.config.cjs → src/view/**/*.test.js).
 //
-// Focused unit test for the RDFORMS-190 addition to `localizedChoice`: it now
-// exposes `labelLang` (the language the choice label resolved to) so the choice
-// editors can tag `lang` when it differs from the page locale (WCAG 3.1.2). The
-// wiring that matters is that `labelLang` carries the *resolved language* of the
-// shown label — not its value, and not a stale field — across both the presenter
-// and editor (editlabel-preferring) resolutions. `localizedChoice` is a pure
-// function, so this exercises it directly without rendering a component.
+// Focused unit test for `localizedChoice`'s `labelLang`: it exposes the language
+// the choice label resolved to, so the choice editors can tag `lang` when it
+// differs from the page locale (WCAG 3.1.2). The wiring that matters is that
+// `labelLang` carries the *resolved language* of the shown label — not its
+// value, and not a stale field — across both the presenter and editor
+// (editlabel-preferring) resolutions. `localizedChoice` is a pure function, so
+// this exercises it directly without rendering a component.
 import { localizedChoice, editLocalizedChoice } from './hooks';
 
 describe('localizedChoice labelLang', () => {

@@ -7,6 +7,7 @@ import {
   useLocalizedChoice,
   useNamedGraphId,
 } from '../hooks';
+import labelledInputParams from './labelledInputParams';
 
 /**
  * @typedef {import('../../../model/Binding').default} Binding
@@ -39,18 +40,14 @@ const ChoiceSelector = (props) => {
 
   const labelledBy = props.context.view.getLabelIndex(binding);
 
-  const renderInput = (params) => {
-    params.inputProps = params.inputProps || {};
-    params.inputProps['aria-labelledby'] = labelledBy;
-    return (
-      <TextField
-        placeholder={binding.getItem().getPlaceholder()}
-        {...params}
-        {...(value && value.mismatch ? { error: true } : {})}
-        variant={renderingContext.materialVariant}
-      />
-    );
-  };
+  const renderInput = (params) => (
+    <TextField
+      placeholder={binding.getItem().getPlaceholder()}
+      {...labelledInputParams(params, labelledBy)}
+      {...(value && value.mismatch ? { error: true } : {})}
+      variant={renderingContext.materialVariant}
+    />
+  );
   const handleChange = (event, newChoice) => {
     binding.setChoice(newChoice.original);
     setValue(newChoice);

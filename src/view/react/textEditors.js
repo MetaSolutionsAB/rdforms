@@ -122,7 +122,7 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
           disabled={!!ngId}
           helperText={!valid ? item.getHelp() || '' : ''}
           variant={renderingContext.materialVariant}
-          inputProps={iprops}
+          slotProps={{ htmlInput: iprops }}
         />
         {extLink && (value != null || value === '') && (
           <IconButton
@@ -182,7 +182,7 @@ const bindToPattern = (pattern) => (fieldDiv, binding, context) => {
         placeholder={item.getPlaceholder()}
         helperText={!valid ? item.getHelp() || '' : ''}
         variant={renderingContext.materialVariant}
-        inputProps={iprops}
+        slotProps={{ htmlInput: iprops }}
       />
     );
   };

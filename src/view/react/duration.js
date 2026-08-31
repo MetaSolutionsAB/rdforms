@@ -61,10 +61,12 @@ editors
               label={bundle[`duration_${key}`]}
               type="number"
               onChange={onChange[key]}
-              inputProps={{
-                min: 0,
-                'aria-label': bundle[`duration_${key}`],
-                'aria-describedby': descBy,
+              slotProps={{
+                htmlInput: {
+                  min: 0,
+                  'aria-label': bundle[`duration_${key}`],
+                  'aria-describedby': descBy,
+                },
               }}
               variant={renderingContext.materialVariant}
             />

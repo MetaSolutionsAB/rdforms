@@ -82,6 +82,8 @@ const datePickerConfig = {
   },
 };
 
+const settledInput = { cleared: false, partial: false };
+
 const dateEditor = (fieldDiv, binding, context) => {
   const bundle = context.view.messages;
   const DateComp = () => {
@@ -105,12 +107,30 @@ const dateEditor = (fieldDiv, binding, context) => {
     // transition can erase an active error.
     const [datePickerError, setDatePickerError] = useState(null);
     const [timePickerError, setTimePickerError] = useState(null);
+    // A field with some but not all sections filled reports `null`, just like
+    // an emptied one, and raises no validation error. So each picker tracks
+    // whether it has emitted `null` (`cleared`) — its controlled value then
+    // follows suit, which keeps the typed sections in place without touching
+    // the other picker — and whether that turned out to be unfinished input
+    // on commit (`partial`), shown as invalid rather than silently clearing
+    // the value.
+    const [dateInput, setDateInput] = useState(settledInput);
+    const [timeInput, setTimeInput] = useState(settledInput);
     const error =
-      datatypeError || Boolean(datePickerError) || Boolean(timePickerError);
+      datatypeError ||
+      Boolean(datePickerError) ||
+      Boolean(timePickerError) ||
+      dateInput.partial ||
+      timeInput.partial;
     // A partial value can already parse as valid — the single-section 'YYYY'
     // format pads '2' to '0002' — so the binding is only written once input
     // settles, on blur or accept. `undefined` means nothing to commit.
     const pendingDate = useRef(undefined);
+    const dateFieldRef = useRef(null);
+    const timeFieldRef = useRef(null);
+    // A field keeps its typed sections while its controlled value stays
+    // `null`, so a clear remounts the pickers to be sure they show empty.
+    const [resetKey, setResetKey] = useState(0);
 
     useEffect(() => {
       fieldDiv.toggleClass('mismatchReport', error);
@@ -124,27 +144,56 @@ const dateEditor = (fieldDiv, binding, context) => {
         setDatatypeError(false);
         setDatePickerError(null);
         setTimePickerError(null);
+        setDateInput(settledInput);
+        setTimeInput(settledInput);
+        setResetKey((key) => key + 1);
       };
     }, []);
 
-    const onDateChange = (date) => {
+    const changeFrom = (setInput) => (date) => {
       if (date == null) {
         pendingDate.current = null;
-        setSelectedDate(null);
+        setInput((input) => ({ ...input, cleared: true }));
       } else if (date.isValid()) {
         pendingDate.current = date.toDate();
         setSelectedDate(date.toDate());
+        setInput(settledInput);
       } else {
         pendingDate.current = undefined;
       }
     };
 
-    const commitDate = () => {
-      if (pendingDate.current !== undefined) {
-        binding.setValue(getDateValue(pendingDate.current, selectedDatatype));
-        pendingDate.current = undefined;
+    // Only once the field has re-rendered with the `null` it emitted do its
+    // sections tell unfinished input (some still filled) from a clear (none).
+    const isPartiallyFilled = (fieldRef) =>
+      (fieldRef.current?.getSections() || []).some(
+        (section) => section.value !== ''
+      );
+
+    const commitFrom = (fieldRef, input, setInput) => () => {
+      if (pendingDate.current === undefined) {
+        return;
       }
+      if (pendingDate.current === null) {
+        if (!input.cleared) {
+          // The other picker emitted this; it commits it on its own blur.
+          return;
+        }
+        if (isPartiallyFilled(fieldRef)) {
+          pendingDate.current = undefined;
+          setInput({ cleared: true, partial: true });
+          return;
+        }
+        setSelectedDate(null);
+        setInput(settledInput);
+      }
+      binding.setValue(getDateValue(pendingDate.current, selectedDatatype));
+      pendingDate.current = undefined;
     };
+    const onDateChange = changeFrom(setDateInput);
+    const onTimeChange = changeFrom(setTimeInput);
+    const commitDate = commitFrom(dateFieldRef, dateInput, setDateInput);
+    const commitTime = commitFrom(timeFieldRef, timeInput, setTimeInput);
 
     // min/maxDate bound the picker's navigation, not data validity, so range
     // reasons are not errors. maxDate stays at its default — the year view
@@ -163,6 +212,11 @@ const dateEditor = (fieldDiv, binding, context) => {
     );
 
     const onDatatypeChange = (event) => {
+      // Unfinished input is dropped in favour of the last complete value,
+      // which is what gets written in the new datatype.
+      pendingDate.current = undefined;
+      setDateInput(settledInput);
+      setTimeInput(settledInput);
       binding.setDatatype(getDatatypeURI(event.target.value));
       binding.setValue(getDateValue(selectedDate, event.target.value));
       setDatatype(event.target.value);
@@ -172,6 +226,9 @@ const dateEditor = (fieldDiv, binding, context) => {
       'aria-labelledby': context.view.getLabelIndex(binding),
       variant: renderingContext.materialVariant,
     };
+    // The picker field's sections container has a fixed intrinsic width; only
+    // a fullWidth field follows the column width set in CSS.
+    const pickerFieldProps = { ...inputProps, fullWidth: true };
     const ngId = useNamedGraphId(binding, context);
     const visibleDatePicker =
       alternatives.Date ||
@@ -187,14 +244,19 @@ const dateEditor = (fieldDiv, binding, context) => {
         selectedDatatype === 'YearMonth' ||
         selectedDatatype === 'MonthDay');
     return (
-      <>
+      <div className="rdformsDateEditor">
         <LocalizationProvider dateAdapter={AdapterMoment}>
           <span className="rdformsDatePicker">
             {visibleDatePicker && (
               <DatePicker
+                key={`date-${resetKey}`}
                 label={bundle[datePickerConfig.labelKey[selectedDatatype]]}
                 {...(enabledDatePicker ? {} : { disabled: true })}
-                value={enabledDatePicker ? selectedMoment : null}
+                value={
+                  enabledDatePicker && !dateInput.cleared
+                    ? selectedMoment
+                    : null
+                }
                 minDate={moment(new Date('0000-01-01'))}
                 format={datePickerConfig.format[selectedDatatype]}
                 views={datePickerConfig.views[selectedDatatype]}
@@ -203,6 +265,7 @@ const dateEditor = (fieldDiv, binding, context) => {
                 onError={onDatePickerError}
                 localeText={{ todayButtonLabel: bundle.today }}
                 slotProps={{
+                  field: { fieldRef: dateFieldRef },
                   actionBar: {
                     actions:
                       selectedDatatype === 'Date' ||
@@ -214,9 +277,9 @@ const dateEditor = (fieldDiv, binding, context) => {
                   // MUI's internal validation, which still counts the ignored
                   // range reasons.
                   textField: {
-                    ...inputProps,
+                    ...pickerFieldProps,
                     onBlur: commitDate,
-                    error: Boolean(datePickerError),
+                    error: Boolean(datePickerError) || dateInput.partial,
                   },
                   openPickerButton: {
                     'aria-label':
@@ -231,27 +294,31 @@ const dateEditor = (fieldDiv, binding, context) => {
             )}
             {(alternatives.DateTime || alternatives.Time) && (
               <TimePicker
+                key={`time-${resetKey}`}
                 label={bundle.date_time}
                 {...(!ngId &&
                 (selectedDatatype === 'DateTime' || selectedDatatype === 'Time')
                   ? {}
                   : { disabled: true })}
                 value={
-                  selectedDatatype === 'DateTime' || selectedDatatype === 'Time'
+                  (selectedDatatype === 'DateTime' ||
+                    selectedDatatype === 'Time') &&
+                  !timeInput.cleared
                     ? selectedMoment
                     : null
                 }
-                onChange={onDateChange}
-                onAccept={commitDate}
+                onChange={onTimeChange}
+                onAccept={commitTime}
                 onError={(reason) => setTimePickerError(reason)}
                 ampm={false}
                 localeText={{ todayButtonLabel: bundle.now }}
                 slotProps={{
+                  field: { fieldRef: timeFieldRef },
                   actionBar: { actions: ['today'] },
                   textField: {
-                    ...inputProps,
-                    onBlur: commitDate,
-                    error: Boolean(timePickerError),
+                    ...pickerFieldProps,
+                    onBlur: commitTime,
+                    error: Boolean(timePickerError) || timeInput.partial,
                   },
                   openPickerButton: {
                     'aria-label': bundle.date_openTimePicker,
@@ -334,7 +401,7 @@ const dateEditor = (fieldDiv, binding, context) => {
               : context.view.messages.wrongValueField}
           </div>
         )}
-      </>
+      </div>
     );
   };
   fieldDiv.appendChild(<DateComp key={binding.getHash()}></DateComp>);

@@ -10,6 +10,7 @@ import {
   useNamedGraphId,
 } from '../hooks';
 import ShowButton from './ShowButton';
+import labelledInputParams from './labelledInputParams';
 
 let globalChoiceQueryThrottle;
 
@@ -69,12 +70,10 @@ const ChoiceLookupAndInlineSearch = (props) => {
 
   const labelledBy = props.context.view.getLabelIndex(binding);
   const renderInput = (params) => {
-    params.inputProps = params.inputProps || {};
-    params.inputProps['aria-labelledby'] = labelledBy;
     return (
       <TextField
         aria-labelledby={labelledBy}
-        {...params}
+        {...labelledInputParams(params, labelledBy)}
         {...(value && value.mismatch ? { error: true } : {})}
         placeholder={binding.getItem().getPlaceholder()}
         onKeyDown={({ key, keyCode }) => {

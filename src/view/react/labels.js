@@ -3,7 +3,7 @@ import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutlineOutlined';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import { Editor } from './Wrappers';

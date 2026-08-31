@@ -241,6 +241,27 @@ describe('VanillaPresenter — row-level truncation toggle', () => {
     expect(document.activeElement).toBe(revealed);
   });
 
+  test('the revealed rows re-enter the same <dl>, with the button still a sibling after it', () => {
+    const node = renderTruncated();
+    const list = node.querySelector('dl');
+    const button = node.querySelector('button.rdforms-show-more');
+    button.click();
+    // Scoped to the <dl>: a regression appending revealed rows elsewhere in the
+    // node (invalid dt/dd markup) would leave this query empty.
+    const revealedTerm = Array.from(
+      list.querySelectorAll('dt.rdforms-label')
+    ).find((dt) => dt.textContent === 'Homepage');
+    expect(revealedTerm).not.toBeUndefined();
+    expect(revealedTerm.parentElement).toBe(list);
+    const revealedValue = revealedTerm.nextElementSibling;
+    expect(revealedValue.tagName).toBe('DD');
+    expect(revealedValue.parentElement).toBe(list);
+    expect(revealedValue.textContent).toContain('http://example.org/');
+    // The toggle button is never pulled inside the <dl>; it stays right after it.
+    expect(node.querySelector('dl button')).toBeNull();
+    expect(list.nextElementSibling).toBe(button);
+  });
+
   test('clicking again collapses the overflow rows, restores aria-expanded/label, and returns focus to the button', () => {
     const node = renderTruncated();
     const button = node.querySelector('button.rdforms-show-more');

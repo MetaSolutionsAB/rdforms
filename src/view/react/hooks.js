@@ -13,23 +13,29 @@ import { getNamedGraphId } from '../viewUtils';
  * @param {boolean} isEditor true means we are in edit mode and editLabel or editDescription have preference if they exist.
  * @returns {object}
  */
-export const localizedChoice = (choice, isEditor) => ({
-  value: choice.value,
-  label: utils.getLocalizedValue(
+export const localizedChoice = (choice, isEditor) => {
+  const resolvedLabel = utils.getLocalizedValue(
     isEditor ? choice.editlabel || choice.label : choice.label
-  ).value,
-  description:
-    choice.description || choice.editdescription
-      ? utils.getLocalizedValue(
-          isEditor
-            ? choice.editdescription || choice.description
-            : choice.description
-        ).value
-      : undefined,
-  seeAlso: choice.seeAlso,
-  mismatch: choice.mismatch,
-  original: choice,
-});
+  );
+  return {
+    value: choice.value,
+    label: resolvedLabel.value,
+    // The language the label resolved to, so consumers can tag `lang` when it
+    // differs from the page locale (WCAG 3.1.2) via utils.foreignLang.
+    labelLang: resolvedLabel.lang,
+    description:
+      choice.description || choice.editdescription
+        ? utils.getLocalizedValue(
+            isEditor
+              ? choice.editdescription || choice.description
+              : choice.description
+          ).value
+        : undefined,
+    seeAlso: choice.seeAlso,
+    mismatch: choice.mismatch,
+    original: choice,
+  };
+};
 
 export const editLocalizedChoice = (choice) => localizedChoice(choice, true);
 

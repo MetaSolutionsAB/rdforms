@@ -58,8 +58,8 @@ const datePickerConfig = {
   },
   views: {
     Year: ['year'],
-    DateTime: ['day'],
-    Date: ['day'],
+    DateTime: ['year', 'day'],
+    Date: ['year', 'day'],
     YearMonth: ['year', 'month'],
     MonthDay: ['month', 'day'],
     Time: ['day'], // Since datepicker is sometimes visible but disabled

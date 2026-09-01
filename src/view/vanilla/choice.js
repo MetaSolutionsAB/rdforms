@@ -25,7 +25,11 @@ presenters
     choicify((valueNode, binding, choice, description) => {
       const image = renderingContext.domCreate('img', valueNode);
       renderingContext.domClassToggle(image, 'rdforms-image', true);
-      renderingContext.domSetAttr(image, 'src', choice.value);
+      renderingContext.domSetAttr(
+        image,
+        'src',
+        utils.sanitizeUrl(choice.value)
+      );
       renderingContext.domSetAttr(image, 'alt', description || choice.value);
     })
   );
@@ -47,7 +51,11 @@ presenters.itemtype('choice').register(
     } else {
       node = renderingContext.domCreate('a', valueNode);
       renderingContext.domClassToggle(node, 'rdforms-link', true);
-      renderingContext.domSetAttr(node, 'href', choice.seeAlso || choice.value);
+      renderingContext.domSetAttr(
+        node,
+        'href',
+        utils.sanitizeUrl(choice.seeAlso || choice.value)
+      );
     }
     if (description || choice.seeAlso || choice.value) {
       renderingContext.domSetAttr(

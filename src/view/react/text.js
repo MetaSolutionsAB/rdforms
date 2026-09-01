@@ -58,7 +58,12 @@ presenters
       lbl = binding.getGist();
     }
     fieldDiv.appendChild(
-      <a {...attrs} key={binding.getHash()} title={val} href={val}>
+      <a
+        {...attrs}
+        key={binding.getHash()}
+        title={val}
+        href={utils.sanitizeUrl(val)}
+      >
         <span lang={lblLang}>{lbl}</span>
         {component}
       </a>
@@ -125,7 +130,12 @@ presenters
       }
     }
     fieldDiv.appendChild(
-      <a {...attrs} key={binding.getHash()} title={tooltip} href={val}>
+      <a
+        {...attrs}
+        key={binding.getHash()}
+        title={tooltip}
+        href={utils.sanitizeUrl(val)}
+      >
         <span lang={lblLang}>{lbl}</span>
         {component}
       </a>
@@ -161,7 +171,12 @@ presenters
       lbl = binding.getGist();
     }
     fieldDiv.appendChild(
-      <a {...attrs} key={binding.getHash()} title={val} href={val}>
+      <a
+        {...attrs}
+        key={binding.getHash()}
+        title={val}
+        href={utils.sanitizeUrl(val)}
+      >
         <span lang={lblLang}>{lbl}</span>
         {component}
       </a>
@@ -178,7 +193,7 @@ presenters
         key={binding.getHash()}
         className="rdformsImage"
         alt=""
-        src={binding.getGist()}
+        src={utils.sanitizeUrl(binding.getGist())}
       />
     );
   });
@@ -260,7 +275,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
         {...attrs}
         key={binding.getHash()}
         className="rdformsUrl"
-        href={parentBinding.getStatement().getValue()}
+        href={utils.sanitizeUrl(parentBinding.getStatement().getValue())}
       >
         <span lang={displayLang}>{displayLabel}</span>
         {component}

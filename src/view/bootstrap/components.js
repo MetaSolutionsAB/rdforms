@@ -1,6 +1,7 @@
 import jquery from 'jquery';
 import renderingContext from '../renderingContext';
 import system from '../../model/system';
+import utils from '../../utils';
 import '../jquery/components';
 import './auto';
 import './labels';
@@ -29,7 +30,7 @@ renderingContext.preEditorViewRenderer = (viewNode, binding, context) => {
     } else if (item.hasStyle('showLink')) {
       $element = jquery('<a class="rdformsField rdformsGroupURI rdformsUrl">')
         .text(binding.getValue())
-        .attr('href', binding.getValue());
+        .attr('href', utils.sanitizeUrl(binding.getValue()));
       system.attachExternalLinkBehaviour($element[0], binding);
     }
 

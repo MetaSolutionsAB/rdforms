@@ -32,7 +32,11 @@ presenters
   .register((valueNode, binding) => {
     const anchor = renderingContext.domCreate('a', valueNode);
     renderingContext.domClassToggle(anchor, 'rdforms-link', true);
-    renderingContext.domSetAttr(anchor, 'href', binding.getValue());
+    renderingContext.domSetAttr(
+      anchor,
+      'href',
+      utils.sanitizeUrl(binding.getValue())
+    );
     renderingContext.domText(anchor, binding.getGist() || binding.getValue());
   });
 
@@ -47,7 +51,11 @@ presenters
   .register((valueNode, binding, context) => {
     const image = renderingContext.domCreate('img', valueNode);
     renderingContext.domClassToggle(image, 'rdforms-image', true);
-    renderingContext.domSetAttr(image, 'src', binding.getGist());
+    renderingContext.domSetAttr(
+      image,
+      'src',
+      utils.sanitizeUrl(binding.getGist())
+    );
     const labelMap = binding.getItem().getLabelMap();
     const label =
       labelMap &&

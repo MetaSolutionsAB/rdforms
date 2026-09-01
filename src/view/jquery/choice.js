@@ -27,7 +27,7 @@ presenters
   .register(
     choicify((fieldDiv, binding, choice, desc) => {
       jquery('<img class="rdformsImage">')
-        .attr('src', choice.value)
+        .attr('src', utils.sanitizeUrl(choice.value))
         .attr('title', desc || choice.value)
         .appendTo(fieldDiv);
     })
@@ -62,7 +62,7 @@ presenters.itemtype('choice').register(
         .appendTo(fieldDiv);
     } else {
       $el = jquery('<a class="rdformsUrl">')
-        .attr('href', choice.seeAlso || choice.value)
+        .attr('href', utils.sanitizeUrl(choice.seeAlso || choice.value))
         .attr('title', desc || choice.seeAlso || choice.value)
         .text(locValue.value)
         .appendTo(fieldDiv);

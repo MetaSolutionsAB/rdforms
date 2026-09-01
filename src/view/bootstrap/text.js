@@ -42,7 +42,7 @@ const addChangeListener = (inp, binding, regex, extLink, help) => {
     if (val === '' || !regex || regex.test(val)) {
       binding.setGist(val);
       if (extLink && val) {
-        extLink.prop('href', binding.getValue());
+        extLink.prop('href', utils.sanitizeUrl(binding.getValue()));
         disableExtLink = false;
       }
       if (help) {

@@ -44,7 +44,7 @@ presenters
           className="rdformsImage"
           title={desc || choice.value}
           alt={desc || choice.value}
-          src={choice.value}
+          src={utils.sanitizeUrl(choice.value)}
         />
       );
     })
@@ -134,7 +134,7 @@ presenters.itemtype('choice').register(
                 {...attrs}
                 lang={labelLang}
                 title={title}
-                href={choice.seeAlso || choice.value}
+                href={utils.sanitizeUrl(choice.seeAlso || choice.value)}
               >
                 <span>{locValue.value}</span>
                 {component}

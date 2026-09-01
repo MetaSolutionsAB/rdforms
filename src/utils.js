@@ -165,6 +165,41 @@ const generateUUID = () => {
   });
 };
 
+const ALLOWED_URL_SCHEMES = ['http:', 'https:', 'mailto:', 'tel:', 'ftp:'];
+
+/**
+ * Neutralize an untrusted URL before it is written into an href/src attribute.
+ * RDF graph values reach these attribute sinks directly, so a value such as
+ * `javascript:alert(document.cookie)` would otherwise become a script-executing
+ * link. Schemeless values (relative, protocol-relative `//`, root `/`, fragment
+ * `#`) and the allow-listed schemes pass through unchanged; anything else
+ * (javascript:, data:, vbscript:, blob:, file:, …) is replaced with `#`.
+ *
+ * The scheme is detected on a copy with control characters/whitespace stripped,
+ * because browsers ignore those when resolving a scheme (so `java\tscript:` must
+ * not slip through).
+ *
+ * @param {string} url the untrusted URL value.
+ * @returns {string} the original url if safe, otherwise `#`.
+ */
+const sanitizeUrl = (url) => {
+  if (typeof url !== 'string' || url === '') {
+    return '#';
+  }
+  const scheme = url
+    // Control chars/whitespace are stripped for scheme detection because browsers
+    // ignore them when resolving a scheme; matching them requires this range.
+    // eslint-disable-next-line no-control-regex
+    .replace(/[\u0000-\u0020]+/g, '')
+    .match(/^([a-z][a-z0-9+.-]*):/i);
+  if (!scheme) {
+    return url;
+  }
+  return ALLOWED_URL_SCHEMES.includes(`${scheme[1].toLowerCase()}:`)
+    ? url
+    : '#';
+};
+
 export default {
   getLocalizedValue,
   foreignLang,
@@ -173,4 +208,5 @@ export default {
   extractGist,
   findFirstValue,
   generateUUID,
+  sanitizeUrl,
 };

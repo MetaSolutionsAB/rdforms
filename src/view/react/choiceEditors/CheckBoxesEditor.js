@@ -1,27 +1,33 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { FormGroup } from '@mui/material';
 import { useLocalizedSortedChoices, useNamedGraphId } from '../hooks';
 import { getNamedGraphId } from '../../viewUtils';
 import * as engine from '../../../model/engine';
+import utils from '../../../utils';
 
 const CheckOption = (props) => {
   const { choice, binding, onChoiceChange } = props;
-  const [checked, setChecked] = React.useState(
-    choice.value === binding.getValue()
-  );
+  const [checked, setChecked] = useState(choice.value === binding.getValue());
 
   const handleChange = (evt) => {
     binding.setChoice(evt.target.checked ? choice.original : null);
     setChecked(evt.target.checked);
     onChoiceChange();
   };
+  // Tag the choice label with its resolved language when it differs from the
+  // page locale (WCAG 3.1.2), and only for a non-empty label so an
+  // empty-resolving label doesn't emit an empty lang-carrying node.
+  const labelLang = choice.label
+    ? utils.foreignLang(choice.labelLang, props.pageLocale)
+    : undefined;
   return (
     <FormControlLabel
       disabled={props.disabled}
-      label={choice.label}
+      label={
+        labelLang ? <span lang={labelLang}>{choice.label}</span> : choice.label
+      }
       control={<Checkbox checked={checked} onChange={handleChange} />}
       {...(choice.mismatch ? { className: 'mismatch' } : {})}
       title={choice.description || choice.seeAlso || choice.value}
@@ -30,18 +36,18 @@ const CheckOption = (props) => {
 };
 
 /**
- *
- * @param props
+ * @param {object} props
+ * @returns {import('react').ReactElement}
  */
 export default function CheckBoxesEditor(props) {
-  const [resetCount, setResetCount] = React.useState(0);
+  const [resetCount, setResetCount] = useState(0);
   const binding = props.binding;
   const item = binding.getItem();
   const choices = useLocalizedSortedChoices(binding, true);
   const choiceBindingPairs = useMemo(() => {
     const parentBinding = binding.getParent();
     const val2binding = {};
-    // eslint-disable-next-line no-return-assign
+
     parentBinding
       .getChildBindingsFor(item)
       .forEach((b) => (val2binding[b.getValue()] = b));
@@ -101,6 +107,7 @@ export default function CheckBoxesEditor(props) {
             binding={pair[1]}
             disabled={!!pair[2] || !!ngId}
             onChoiceChange={onChoiceChange}
+            pageLocale={props.context.view.getLocale()}
           />
         ))}
       </FormGroup>

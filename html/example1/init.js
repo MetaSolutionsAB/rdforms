@@ -1,5 +1,9 @@
+import showEditorFallbackNotice from '../editorFallbackNotice.js';
+
 const { Graph } = rdfjson;
-const { ItemStore, Editor } = rdforms;
+// Presentation-only flavors (jQuery and Vanilla) export no Editor; fall back
+// to the presenter so the example renders read-only instead of throwing.
+const { ItemStore, Editor, Presenter } = rdforms;
 const graph = new Graph({
   'http://example.org/about': {
     'http://example.com/terms/colorOfHouse': [
@@ -24,8 +28,11 @@ itemStore.createItem({
   'cardinality': { 'min': 1, 'pref': 1, 'max': 1 }
 });
 
-new Editor({
+new (Editor || Presenter)({
   graph,
   resource: 'http://example.org/about',
   template: itemStore.createTemplateFromChildren(['ex:color']),
 }, 'node');
+if (!Editor) {
+  showEditorFallbackNotice('node');
+}

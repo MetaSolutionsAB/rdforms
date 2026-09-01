@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
-// eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import TextField from '@mui/material/TextField';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import IconButton from '@mui/material/IconButton';
@@ -124,7 +122,7 @@ editors.itemtype('text').register((fieldDiv, binding, context) => {
           disabled={!!ngId}
           helperText={!valid ? item.getHelp() || '' : ''}
           variant={renderingContext.materialVariant}
-          inputProps={iprops}
+          slotProps={{ htmlInput: iprops }}
         />
         {extLink && (value != null || value === '') && (
           <IconButton
@@ -184,7 +182,7 @@ const bindToPattern = (pattern) => (fieldDiv, binding, context) => {
         placeholder={item.getPlaceholder()}
         helperText={!valid ? item.getHelp() || '' : ''}
         variant={renderingContext.materialVariant}
-        inputProps={iprops}
+        slotProps={{ htmlInput: iprops }}
       />
     );
   };

@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars,quotes */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import BuildIcon from '@mui/icons-material/Build';
@@ -11,10 +10,11 @@ import {
   useNamedGraphId,
 } from '../hooks';
 import ShowButton from './ShowButton';
+import labelledInputParams from './labelledInputParams';
 
 let globalChoiceQueryThrottle;
 
-export default (props) => {
+const ChoiceLookupAndInlineSearch = (props) => {
   const binding = props.binding;
   const [options, setOptions] = useState([]);
   const [value, setValue] = loadLocalizedChoice(binding, true);
@@ -70,12 +70,10 @@ export default (props) => {
 
   const labelledBy = props.context.view.getLabelIndex(binding);
   const renderInput = (params) => {
-    params.inputProps = params.inputProps || {};
-    params.inputProps['aria-labelledby'] = labelledBy;
     return (
       <TextField
         aria-labelledby={labelledBy}
-        {...params}
+        {...labelledInputParams(params, labelledBy)}
         {...(value && value.mismatch ? { error: true } : {})}
         placeholder={binding.getItem().getPlaceholder()}
         onKeyDown={({ key, keyCode }) => {
@@ -160,3 +158,5 @@ export default (props) => {
     </>
   );
 };
+
+export default ChoiceLookupAndInlineSearch;

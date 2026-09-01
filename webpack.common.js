@@ -6,6 +6,7 @@ module.exports = {
     bootstrap: './renderers/bootstrap.js',
     react: './renderers/react.js',
     jquery: './renderers/jquery.js',
+    vanilla: './renderers/vanilla.js',
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -53,7 +54,7 @@ module.exports = {
                 '@babel/plugin-proposal-object-rest-spread',
                 '@babel/plugin-transform-class-properties',
                 '@babel/plugin-syntax-dynamic-import',
-                ['@babel/plugin-transform-react-jsx', {}],
+                ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
               ],
             },
           },

@@ -123,6 +123,14 @@
     width: 100%;
 }
 
+/* Holds the picker row and its warning as one field item, so the warning ends
+   up beneath the pickers whatever the field's layout. The picker fields declare
+   an intrinsic width; as a flex item this must shrink below their sum. */
+.rdformsEditor .rdformsDateEditor {
+    flex-grow: 1;
+    min-width: 0;
+}
+
 .rdformsEditor .rdformsDatePicker {
     display: flex;
     justify-content: start;

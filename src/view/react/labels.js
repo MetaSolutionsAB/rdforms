@@ -1,19 +1,18 @@
-/* eslint-disable no-unused-vars */
-import React, { Fragment, useState, useEffect, forwardRef } from 'react';
+import { Fragment, useState, useEffect, forwardRef } from 'react';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutlineOutlined';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import { Editor } from './Wrappers';
 import CODES from '../../model/CODES';
 
 const StyledTooltip = styled(
-  forwardRef(({ className, ...props }, ref) => (
-    <Tooltip {...props} classes={{ popper: className }} />
-  ))
+  forwardRef(function StyledTooltipRender({ className, ...props }) {
+    return <Tooltip {...props} classes={{ popper: className }} />;
+  })
 )(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.background.default,
@@ -33,12 +32,16 @@ const getDescription = (item, view) => {
     view instanceof Editor
       ? item.getEditDescriptionMap() || item.getDescriptionMap()
       : item.getDescriptionMap();
-  return utils.getLocalizedValue(descMap, view.getLocale()).value;
+  const { value, lang } = utils.getLocalizedValue(descMap, view.getLocale());
+  return { value, lang };
 };
 
 const DescriptionIcon = ({ item, context }) => {
   const { view } = context;
-  const description = getDescription(item, view);
+  const { value: description, lang: descriptionLang } = getDescription(
+    item,
+    view
+  );
   const [pinned, setPinned] = useState(false);
   const [hovered, setHovered] = useState(false);
 
@@ -59,7 +62,18 @@ const DescriptionIcon = ({ item, context }) => {
   const tooltipContent = (
     <>
       {shownDescription ? (
-        <p className="rdformsLinebreaks rdformsDescription">
+        <p
+          className="rdformsLinebreaks rdformsDescription"
+          // Tag the resolved language when it fell back to something other than
+          // the page locale, so screen readers pronounce it right (WCAG 3.1.2).
+          // Only when the shown text IS the resolved description — never on the
+          // info_missing fallback, which is page-locale UI text, not the description.
+          lang={
+            description
+              ? utils.foreignLang(descriptionLang, view.getLocale())
+              : undefined
+          }
+        >
           {shownDescription}
         </p>
       ) : null}
@@ -105,12 +119,20 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
     context.view instanceof Editor
       ? item.getEditLabelMap() || item.getLabelMap()
       : item.getLabelMap();
-  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value;
+  const pageLocale = context.view.getLocale();
+  const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
+  let label = labelResolved.value;
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
     label = '';
   }
+  // Tag the resolved language when it fell back to something other than the
+  // page locale (WCAG 3.1.2); undefined → React omits the attribute. No tag on
+  // an empty label.
+  const labelLang = label
+    ? utils.foreignLang(labelResolved.lang, pageLocale)
+    : undefined;
 
   const view = context.view;
   let description;
@@ -130,12 +152,17 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
       view instanceof Editor
         ? item.getEditDescriptionMap() || item.getDescriptionMap()
         : item.getDescriptionMap();
-    const desc = utils.getLocalizedValue(
-      descMap,
-      context.view.getLocale()
-    ).value;
+    const descResolved = utils.getLocalizedValue(descMap, pageLocale);
+    const desc = descResolved.value;
     if (!compactField && desc) {
-      description = <div className="rdformsDescription">{desc}</div>;
+      description = (
+        <div
+          className="rdformsDescription"
+          lang={utils.foreignLang(descResolved.lang, pageLocale)}
+        >
+          {desc}
+        </div>
+      );
     }
   }
 
@@ -144,14 +171,23 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
   const descriptionIcon = context.view.popupOnLabel ? (
     <DescriptionIcon item={item} context={context} />
   ) : null;
+  // tabIndex={-1}, not 0: the label wrapper has no action of its own (the
+  // keyboard-operable affordance is the DescriptionIcon button), so it must not
+  // be a tab stop. But it stays programmatically focusable so entryscape's form
+  // outline can focus() this label (by its id) to jump to the field — removing
+  // the attribute entirely makes focus() a silent no-op.
   label = item.hasStyle('heading') ? (
-    <HeadingElement tabIndex="0" id={labelId} className="rdformsLabelRow">
-      <span className="rdformsLabel">{label}</span>
+    <HeadingElement tabIndex={-1} id={labelId} className="rdformsLabelRow">
+      <span className="rdformsLabel" lang={labelLang}>
+        {label}
+      </span>
       {descriptionIcon}
     </HeadingElement>
   ) : (
-    <span tabIndex="0" id={labelId} className="rdformsLabelRow">
-      <span className="rdformsLabel">{label}</span>
+    <span tabIndex={-1} id={labelId} className="rdformsLabelRow">
+      <span className="rdformsLabel" lang={labelLang}>
+        {label}
+      </span>
       {descriptionIcon}
     </span>
   );
@@ -173,23 +209,31 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
       true
     );
   } else {
+    const pageLocale = context.view.getLocale();
     let labelMap = item.getEditLabelMap() || item.getLabelMap();
-    let label = utils.getLocalizedValue(
-      labelMap,
-      context.view.getLocale()
-    ).value;
+    const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
+    let label = labelResolved.value;
     if (label != null && label !== '') {
       label = label.charAt(0).toUpperCase() + label.slice(1);
     } else {
       label = '';
     }
+    // Tag the resolved language when it fell back to something other than the
+    // page locale (WCAG 3.1.2); undefined → React omits the attribute. No tag
+    // on an empty label.
+    const labelLang = label
+      ? utils.foreignLang(labelResolved.lang, pageLocale)
+      : undefined;
     const HeadingElement = `h${context.view.headingLevel}`;
+    // tabIndex={-1}: the label has no action (the DescriptionIcon button added
+    // below is the info affordance), so it is not a tab stop — but stays
+    // programmatically focusable for parity with the presenter label above.
     label = item.hasStyle('heading') ? (
-      <HeadingElement tabIndex="0" className="rdformsLabel">
+      <HeadingElement tabIndex={-1} className="rdformsLabel" lang={labelLang}>
         {label}
       </HeadingElement>
     ) : (
-      <span tabIndex="0" className="rdformsLabel">
+      <span tabIndex={-1} className="rdformsLabel" lang={labelLang}>
         {label}
       </span>
     );
@@ -247,14 +291,18 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
         view instanceof Editor
           ? item.getEditDescriptionMap() || item.getDescriptionMap()
           : item.getDescriptionMap();
-      const desc = utils.getLocalizedValue(
-        descMap,
-        context.view.getLocale()
-      ).value;
+      const descResolved = utils.getLocalizedValue(descMap, pageLocale);
+      const desc = descResolved.value;
 
       if (!compactField && desc) {
+        // Plain description text — not a tab stop, but tabIndex={-1} keeps it
+        // programmatically focusable for parity with develop's behavior.
         description = (
-          <div className="rdformsDescription" tabIndex="0">
+          <div
+            className="rdformsDescription"
+            tabIndex={-1}
+            lang={utils.foreignLang(descResolved.lang, pageLocale)}
+          >
             {desc}
           </div>
         );
@@ -280,7 +328,7 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
 };
 
 const ERR = (props) => {
-  const { rowNode, binding, item, context } = props;
+  const { rowNode, binding, context } = props;
   const [code, setCode] = useState(binding.getCardinalityTracker().getCode());
   useEffect(() => {
     const cardTr = binding.getCardinalityTracker();

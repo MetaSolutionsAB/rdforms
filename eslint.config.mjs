@@ -12,7 +12,7 @@ export default [
   {
     // Node/CommonJS globals for the build tooling and the node entry point —
     // these files aren't covered by the shared config's browser default.
-    files: ['webpack.*.js', 'main.node.js', '**/*.cjs'],
+    files: ['webpack.*.js', 'main.node.js', 'html.assets.js', '**/*.cjs'],
     languageOptions: { globals: { ...globals.node } },
   },
   {
@@ -30,6 +30,17 @@ export default [
     // component for little value. Disable it to match the codebase's approach.
     files: ['**/*.js', '**/*.jsx'],
     rules: { 'react/prop-types': 'off' },
+  },
+  {
+    // Local-only Playwright smoke harness — a CommonJS Node script, not a
+    // browser ES module. Node globals + CommonJS source type so require/process
+    // resolve, and drop import/extensions (require() paths keep the .js suffix).
+    files: ['test/smoke/**/*.js'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: { ...globals.node },
+    },
+    rules: { 'import/extensions': 'off' },
   },
   // Example apps, demo HTML, bundled build output, and legacy test fixtures are
   // not lint targets. samples/**/rdforms.js are ~1MB webpack bundles and

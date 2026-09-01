@@ -14,8 +14,10 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     );
   }
 
+  const pageLocale = context.view.getLocale();
   const labelMap = item.getEditLabelMap() || item.getLabelMap();
-  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value;
+  const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
+  let label = labelResolved.value;
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
@@ -26,9 +28,19 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     $labelDiv.attr('id', context.view.createLabelIndex(binding));
   }
   context.labelNode = $labelDiv[0];
-  const $label = jquery('<span class="rdformsLabel" tabindex="0">')
+  // Focusability + role="button" are added by attachItemInfo only when the
+  // label actually has an info popover to reveal (see below) — a label with
+  // nothing to show must not be a keyboard tab stop.
+  const $label = jquery('<span class="rdformsLabel">')
     .text(label)
     .appendTo($labelDiv);
+  // Tag the label with its resolved language when it fell back to something
+  // other than the page locale (WCAG 3.1.2); no attribute when it matches or
+  // when the label is empty.
+  const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
+  if (labelLang && label) {
+    $label.attr('lang', labelLang);
+  }
   const card = item.getCardinality();
   const b = context.view.messages;
   // Only show mark if there is a property that allows the item to have an expression on its own
@@ -92,10 +104,16 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
       context.view instanceof Editor
         ? item.getEditDescriptionMap() || item.getDescriptionMap()
         : item.getDescriptionMap();
-    let desc = utils.getLocalizedValue(descMap, context.view.getLocale()).value;
+    const descResolved = utils.getLocalizedValue(descMap, pageLocale);
+    const desc = descResolved.value;
 
     if (!compactField && desc) {
-      jquery('<div class="rdformsDescription">').text(desc).appendTo(rowNode);
+      const $desc = jquery('<div class="rdformsDescription">').text(desc);
+      const descLang = utils.foreignLang(descResolved.lang, pageLocale);
+      if (descLang) {
+        $desc.attr('lang', descLang);
+      }
+      $desc.appendTo(rowNode);
     }
   }
   renderingContext.attachItemInfo(item, $label[0], context);
@@ -108,13 +126,8 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     renderingContext.domClassToggle(aroundNode, 'rdformsNoPopup', true);
     return;
   }
-  renderingContext.domSetAttr(aroundNode, 'role', 'button');
-  if (
-    item == null ||
-    (item.getProperty() == null &&
-      item.getDescriptionMap() == null &&
-      item.getEditDescriptionMap() == null)
-  ) {
+  if (item == null) {
+    // Nothing to reveal — leave the label non-interactive (no role, no tab stop).
     jquery(aroundNode).addClass('noPointer');
     return;
   }
@@ -123,9 +136,38 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     (context.view instanceof Editor
       ? item.getEditDescriptionMap() || item.getDescriptionMap()
       : item.getDescriptionMap()) || {};
-  const description =
-    utils.getLocalizedValue(descriptionMap, context.view.getLocale()).value ||
-    '';
+  const pageLocale = context.view.getLocale();
+  const descriptionResolved = utils.getLocalizedValue(
+    descriptionMap,
+    pageLocale
+  );
+  const description = descriptionResolved.value || '';
+  // When the description resolved to a language other than the page locale
+  // (a fallback because no translation exists for the active locale), tag it
+  // with that language so screen readers pronounce it correctly (WCAG 3.1.2).
+  // No attribute when it matches the locale or is language-less.
+  const descriptionLang = utils.foreignLang(
+    descriptionResolved.lang,
+    pageLocale
+  );
+  const descriptionLangAttr = descriptionLang
+    ? ` lang="${descriptionLang}"`
+    : '';
+
+  // Nothing to reveal — leave the label non-interactive (no role, no tab stop,
+  // no empty popover). "Nothing" is gated on the description that actually
+  // resolves for the active locale, not on the map merely existing: a map key
+  // may be present but empty or whitespace-only for the active locale (e.g.
+  // filled for 'en', empty for the active 'sv'), which previously left the
+  // label focusable with an empty popover (RDFORMS-187). A property is always
+  // content worth revealing.
+  if (!item.getProperty() && description.trim() === '') {
+    jquery(aroundNode).addClass('noPointer');
+    return;
+  }
+  // The label opens an info popover on focus, so it is a real keyboard control.
+  renderingContext.domSetAttr(aroundNode, 'role', 'button');
+  renderingContext.domSetAttr(aroundNode, 'tabindex', '0');
 
   let propinfo = '';
   if (item.getProperty()) {
@@ -136,20 +178,25 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     context.view instanceof Editor
       ? item.getEditLabelMap() || item.getLabelMap()
       : item.getLabelMap();
-  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value;
+  const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
+  let label = labelResolved.value;
 
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
     label = '';
   }
+  const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
   const popoverOptions = {
     html: true,
     container: aroundNode, // renderingContext.getPopoverContainer(),
     placement: 'auto',
     trigger: 'focus',
-    title: label,
-    content: `<div class="description">${description.replace(
+    title:
+      label !== '' && labelLang
+        ? `<span lang="${labelLang}">${label}</span>`
+        : label,
+    content: `<div class="description"${descriptionLangAttr}>${description.replace(
       /(\r\n|\r|\n)/g,
       '<br/>'
     )}</div>${propinfo}`,

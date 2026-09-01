@@ -16,11 +16,31 @@
   "license": "LGPL-3.0-only",
   "homepage": "https://rdforms.org",
   "peerDependencies": {
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
     "@entryscape/rdfjson": "2.7.7",
+    "@mui/icons-material": "^9",
+    "@mui/material": "^9",
+    "@mui/x-date-pickers": "^9",
     "react": "^18 || ^19",
     "react-dom": "^18 || ^19"
   },
   "peerDependenciesMeta": {
+    "@emotion/react": {
+      "optional": true
+    },
+    "@emotion/styled": {
+      "optional": true
+    },
+    "@mui/icons-material": {
+      "optional": true
+    },
+    "@mui/material": {
+      "optional": true
+    },
+    "@mui/x-date-pickers": {
+      "optional": true
+    },
     "react": {
       "optional": true
     },
@@ -29,13 +49,8 @@
     }
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
     "@entryscape/rdfjson": "2.7.7",
     "@fortawesome/fontawesome-free": "^5.15.4",
-    "@mui/icons-material": "^7.3.11",
-    "@mui/material": "^7.3.11",
-    "@mui/x-date-pickers": "^7.29.4",
     "arrive": "^2.5.3",
     "bootstrap": "^4.6.2",
     "bootstrap-datepicker": "^1.10.1",
@@ -67,7 +82,12 @@
     "@babel/plugin-transform-react-jsx": "^7.28.6",
     "@babel/preset-env": "^7.29.5",
     "@babel/preset-react": "^7.28.5",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@entryscape/linting-config": "^1.1.2",
+    "@mui/icons-material": "^9.1.1",
+    "@mui/material": "^9.1.2",
+    "@mui/x-date-pickers": "^9.12.0",
     "babel-jest": "^30.4.1",
     "babel-loader": "^8.4.1",
     "babel-plugin-transform-react-jsx": "^6.24.1",
@@ -81,8 +101,10 @@
     "husky": "^9.1.7",
     "imports-loader": "^0.8.0",
     "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
     "mini-css-extract-plugin": "^0.4.5",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "playwright": "^1.61.1",
     "prettier": "^3.6.2",
     "q": "^1.5.1",
     "raw-loader": "^4.0.2",
@@ -112,6 +134,8 @@
     "dev:bootstrap": "webpack serve --config webpack.dev.js --env type=bootstrap",
     "dev:jquery": "webpack serve --config webpack.dev.js --env type=jquery",
     "dev:react": "webpack serve --config webpack.dev.js --env type=react",
+    "dev:vanilla": "webpack serve --config webpack.dev.js --env type=vanilla",
+    "dev:all": "webpack serve --config webpack.dev-all.js",
     "serve:samples": "webpack serve --config webpack.samples.serve.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -119,6 +143,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:smoke": "node test/smoke/smoke.js",
     "prepare": "husky || true"
   },
   "prettier": "@entryscape/linting-config/prettier",

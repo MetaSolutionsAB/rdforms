@@ -8,8 +8,7 @@ import ChoiceLookupAndInlineSearch from './ChoiceLookupAndInlineSearch';
 /**
  * Checks if the current item can be rendered as radiobuttons.
  *
- * @param {rdforms/item}
- * @param item
+ * @param {import('../../../template/Choice').default} item
  * @returns {boolean}
  */
 const radioCheck = (item) => {

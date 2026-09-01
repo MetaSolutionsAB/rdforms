@@ -6,22 +6,36 @@ import FormControl from '@mui/material/FormControl';
 import { useLocalizedSortedChoices, useName, useNamedGraphId } from '../hooks';
 import utils from '../../../utils';
 
-const ChoiceOption = (props) => (
-  <FormControlLabel
-    disabled={props.disabled}
-    label={props.choice.label}
-    value={props.choice.value}
-    control={<Radio />}
-    {...(props.choice.mismatch ? { className: 'mismatch' } : {})}
-    title={
-      props.choice.description || props.choice.seeAlso || props.choice.value
-    }
-  />
-);
+const ChoiceOption = (props) => {
+  // Tag the choice label with its resolved language when it differs from the
+  // page locale (WCAG 3.1.2), and only for a non-empty label so an
+  // empty-resolving label doesn't emit an empty lang-carrying node.
+  const labelLang = props.choice.label
+    ? utils.foreignLang(props.choice.labelLang, props.pageLocale)
+    : undefined;
+  return (
+    <FormControlLabel
+      disabled={props.disabled}
+      label={
+        labelLang ? (
+          <span lang={labelLang}>{props.choice.label}</span>
+        ) : (
+          props.choice.label
+        )
+      }
+      value={props.choice.value}
+      control={<Radio />}
+      {...(props.choice.mismatch ? { className: 'mismatch' } : {})}
+      title={
+        props.choice.description || props.choice.seeAlso || props.choice.value
+      }
+    />
+  );
+};
 
 /**
- *
- * @param props
+ * @param {object} props
+ * @returns {import('react').ReactElement}
  */
 export default function RadioButtonsEditor(props) {
   const binding = props.binding;
@@ -80,6 +94,7 @@ export default function RadioButtonsEditor(props) {
               key={choice.value}
               disabled={!!ngId}
               choice={choice}
+              pageLocale={props.context.view.getLocale()}
             />
           ))}
         </RadioGroup>

@@ -5,6 +5,7 @@ const { execSync } = require('child_process');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const common = require('./webpack.common');
+const { sharedRootScripts } = require('./html.assets');
 
 const rdfjsonVersion = execSync('pnpm view @entryscape/rdfjson version')
   .toString()
@@ -83,10 +84,11 @@ const getCopyPlugins = (type) =>
         from: path.resolve(path.join(__dirname, 'html', 'templates')),
         to: 'templates',
       },
-      {
-        from: path.resolve(path.join(__dirname, 'html', 'rdf.js')),
-        to: 'rdf.js',
-      },
+      // Shared root-level helpers imported by the example init.js modules
+      // (editorFallbackNotice.js) plus rdf.js, minus the dev-only chrome
+      // scripts. Globbed via html.assets.js so a future shared helper ships
+      // automatically instead of silently 404-ing (RDFORMS-163 regression).
+      { ...sharedRootScripts, to: path.join(__dirname, 'samples', type) },
       // {
       //   from: path.resolve(path.join(__dirname, 'html', 'examples.html')),
       //   to: 'index.html',
@@ -98,9 +100,10 @@ const getCopyPlugins = (type) =>
     ],
   });
 
-const variants = {
-  type: ['bootstrap', 'react'],
-};
+// Samples are built only for the editor-capable flavors. jQuery and vanilla are
+// presentation-only (no Editor), so they're exercised via `dev:all` and the
+// smoke test rather than the built samples.
+const editorCapableFlavors = ['bootstrap', 'react'];
 
 /**
  * Build a webpack configuration for one sample variant.
@@ -139,6 +142,6 @@ function createConfig(options) {
   })(common, devConfig);
 }
 
-module.exports = variants.type.map((variantType) =>
+module.exports = editorCapableFlavors.map((variantType) =>
   createConfig({ type: variantType })
 );

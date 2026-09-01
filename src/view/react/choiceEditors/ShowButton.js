@@ -4,8 +4,8 @@ import IconButton from '@mui/material/IconButton';
 import SvgIcon from '@mui/material/SvgIcon';
 
 /**
- *
- * @param props
+ * @param {object} props
+ * @returns {import('react').ReactElement}
  */
 function SearchAndCreateIcon(props) {
   return (
@@ -26,7 +26,7 @@ function SearchAndCreateIcon(props) {
 // Result from inkscape:
 // M 24,6 H 21 V 9 H 19 V 6 H 16 V 4 h 3 V 1 h 2 v 3 h 3 z
 
-export default (props) => {
+const ShowButton = (props) => {
   const inlineCreate = useMemo(
     () =>
       props.context.chooser &&
@@ -50,3 +50,5 @@ export default (props) => {
   }
   return '';
 };
+
+export default ShowButton;

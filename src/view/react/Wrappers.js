@@ -17,7 +17,7 @@ const fixIt = (Cls) => {
       this.initiatedAlready = true;
     }
   };
-  FixCls.Component = class extends Component {
+  FixCls.Component = class FixClsComponent extends Component {
     constructor(props) {
       super(props);
       this.fix = new FixCls(props);

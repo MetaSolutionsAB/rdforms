@@ -10,7 +10,7 @@ const presenters = renderingContext.presenterRegistry;
 presenters
   .itemtype('text')
   .nodetype('URI')
-  .register((fieldDiv, binding /* , context */) => {
+  .register((fieldDiv, binding, context) => {
     const vmap = utils.getLocalizedMap(binding);
     const $a = jquery('<a class="rdformsUrl">')
       .attr('title', binding.getValue())
@@ -19,7 +19,16 @@ presenters
     if (binding.getItem().hasStyle('showValue')) {
       $a.text(binding.getValue());
     } else if (vmap) {
-      $a.text(utils.getLocalizedValue(vmap).value);
+      const pageLocale = context.view.getLocale();
+      const resolved = utils.getLocalizedValue(vmap, pageLocale);
+      $a.text(resolved.value);
+      // Tag the resolved language when the URI label fell back to a language
+      // other than the page locale (WCAG 3.1.2) — only when there is a resolved
+      // label shown to tag.
+      const lang = utils.foreignLang(resolved.lang, pageLocale);
+      if (lang && resolved.value) {
+        $a.attr('lang', lang);
+      }
     } else {
       $a.text(binding.getGist());
     }
@@ -69,19 +78,32 @@ presenters
       .appendTo(fieldDiv);
 
     let lbl;
+    let labelLang;
     if (labelBindings.length > 0) {
       lbl = labelBindings[0].getValue();
+    } else if (binding.getItem().hasStyle('showValue')) {
+      lbl = val;
     } else {
       const vmap = utils.getLocalizedMap(binding);
-
-      lbl = binding.getItem().hasStyle('showValue')
-        ? val
-        : vmap
-          ? utils.getLocalizedValue(vmap).value || val
-          : binding.getGist();
+      if (vmap) {
+        const pageLocale = context.view.getLocale();
+        const resolved = utils.getLocalizedValue(vmap, pageLocale);
+        lbl = resolved.value || val;
+        // Tag the resolved language when the label fell back to a language
+        // other than the page locale (WCAG 3.1.2) — only when the resolved
+        // label is what's shown; when empty the raw value (val) is shown.
+        labelLang = resolved.value
+          ? utils.foreignLang(resolved.lang, pageLocale)
+          : undefined;
+      } else {
+        lbl = binding.getGist();
+      }
     }
 
     $a.text(lbl);
+    if (labelLang) {
+      $a.attr('lang', labelLang);
+    }
     if (binding.getItem().hasStyle('externalLink')) {
       system.attachExternalLinkBehaviour($a[0], binding);
     } else {

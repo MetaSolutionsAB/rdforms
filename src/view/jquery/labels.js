@@ -14,7 +14,9 @@ renderingContext.renderPresenterLabel = (
     context.view instanceof Editor
       ? item.getEditLabelMap() || item.getLabelMap()
       : item.getLabelMap();
-  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value;
+  const pageLocale = context.view.getLocale();
+  const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
+  let label = labelResolved.value;
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
@@ -22,13 +24,16 @@ renderingContext.renderPresenterLabel = (
   }
 
   const headingElement = `h${context.view.headingLevel}`;
+  // No tabindex here: this renderPresenterLabel is shared by the jQuery and
+  // bootstrap flavors, so focusability/role are added — content-gated — by each
+  // flavor's own attachItemInfo (bootstrap: a focus-triggered popover; jQuery: a
+  // title announced on focus). A blanket tabindex here would make every label a
+  // tab stop even when it has nothing to reveal.
   const $labelDiv = item.hasStyle('heading')
-    ? jquery(`<${headingElement} class="rdformsLabel" tabindex="0">`)
+    ? jquery(`<${headingElement} class="rdformsLabel">`)
         .text(label)
         .appendTo(rowNode)
-    : jquery('<div class="rdformsLabel" tabindex="0">')
-        .text(label)
-        .appendTo(rowNode);
+    : jquery('<div class="rdformsLabel">').text(label).appendTo(rowNode);
   if (binding) {
     $labelDiv.attr('id', context.view.createLabelIndex(binding));
   }
@@ -37,6 +42,13 @@ renderingContext.renderPresenterLabel = (
   }
   if (context) {
     context.labelNode = $labelDiv[0];
+  }
+  // Tag the label with its resolved language when it fell back to something
+  // other than the page locale (WCAG 3.1.2); no attribute when it matches or
+  // when the label is empty.
+  const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
+  if (labelLang && label) {
+    $labelDiv.attr('lang', labelLang);
   }
   const view = context.view;
   if (item.hasStyle('showDescriptionInPresent') || view.showDescription) {
@@ -51,13 +63,19 @@ renderingContext.renderPresenterLabel = (
           (view.parentView &&
             view.parentView.topLevel &&
             view.binding.getItem().hasStyle('heading'))));
-    const desc = utils.getLocalizedValue(
+    const descResolved = utils.getLocalizedValue(
       item.getDescriptionMap(),
-      context.view.getLocale()
-    ).value;
+      pageLocale
+    );
+    const desc = descResolved.value;
 
     if (!compactField && desc) {
-      jquery('<div class="rdformsDescription">').text(desc).appendTo(rowNode);
+      const $desc = jquery('<div class="rdformsDescription">').text(desc);
+      const descLang = utils.foreignLang(descResolved.lang, pageLocale);
+      if (descLang) {
+        $desc.attr('lang', descLang);
+      }
+      $desc.appendTo(rowNode);
     }
   }
 
@@ -72,5 +90,12 @@ renderingContext.attachItemInfo = function (item, aroundNode, context) {
     item.getDescriptionMap(),
     context.view.getLocale()
   ).value;
+  if (!desc) {
+    return;
+  }
   aroundNode.setAttribute('title', desc);
+  // Make the label focusable so screen readers announce the description (via the
+  // title) on Tab focus — in this flavor that is the only path to it (the title
+  // is otherwise mouse-hover only). Only when there is a description to reveal.
+  aroundNode.setAttribute('tabindex', '0');
 };

@@ -94,7 +94,6 @@ const addTableRow = (table, binding, context) => {
           addTableRow(table, nBinding, context);
         }
         cardTr.removeListener(cardConnect1);
-        removeConnect.remove();
         binding.remove();
         $trEl.remove();
       }

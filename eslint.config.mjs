@@ -12,7 +12,7 @@ export default [
   {
     // Node/CommonJS globals for the build tooling and the node entry point —
     // these files aren't covered by the shared config's browser default.
-    files: ['webpack.*.js', 'main.node.js', '**/*.cjs'],
+    files: ['webpack.*.js', 'main.node.js', 'html.assets.js', '**/*.cjs'],
     languageOptions: { globals: { ...globals.node } },
   },
   {

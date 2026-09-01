@@ -142,6 +142,7 @@
     "lint:staged": "scripts/eslint/pre-commit.sh",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "test:smoke": "node test/smoke/smoke.js",
     "prepare": "husky || true"
   },

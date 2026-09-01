@@ -1,6 +1,19 @@
 import { Graph } from '@entryscape/rdfjson';
-import { match, create, detectLevel } from './engine';
+import moment from 'moment';
+import {
+  match,
+  fuzzyMatch,
+  create,
+  detectLevel,
+  levelProfile,
+  constructTemplate,
+  findFirstValueBinding,
+  findPopularChoice,
+  matchPathBelowBinding,
+} from './engine';
 import GroupBinding from './GroupBinding';
+import ValueBinding from './ValueBinding';
+import Group from '../template/Group';
 import ItemStore from '../template/ItemStore';
 import { graph2 } from '../../test/fixtures/rdfjson';
 import template1 from '../../test/fixtures/template1';
@@ -202,5 +215,242 @@ describe('detectLevel', () => {
   test('an empty profile (no items) falls through to mixed_all', () => {
     // The `optional > 0` guard routes (0,0,0) past 'optional' into 'mixed_all'.
     expect(detectLevel(makeProfile(0, 0, 0))).toBe('mixed_all');
+  });
+});
+
+describe('levelProfile', () => {
+  test('summarizes item levels and keeps itemCount consistent', () => {
+    const profile = levelProfile(createStoreAndTemplate().template);
+    expect(typeof profile.mandatory).toBe('number');
+    expect(typeof profile.recommended).toBe('number');
+    expect(typeof profile.optional).toBe('number');
+    // template1 has a title with cardinality.min = 2, so at least one mandatory.
+    expect(profile.mandatory).toBeGreaterThanOrEqual(1);
+    expect(profile.itemCount).toBe(
+      profile.mandatory + profile.recommended + profile.optional
+    );
+  });
+});
+
+describe('fuzzyMatch', () => {
+  test('captures a wrong-nodetype value that the strict match rejects', () => {
+    // ONLY_LITERAL rejects a uri-typed object under strict matching, but the
+    // relaxed second pass in fuzzyMatch captures it (engine.js _matchTextItem).
+    const itemStore = new ItemStore();
+    const template = itemStore.createTemplate({
+      root: 'fuzzyRoot',
+      auxilliary: [
+        {
+          '@id': 'fuzzyRoot',
+          '@type': 'group',
+          nodetype: 'RESOURCE',
+          constraints: {
+            'http://www.w3.org/TR/rdf-schema/type': 'http://example.com/Doc',
+          },
+          content: [
+            {
+              '@type': 'text',
+              property: 'http://example.com/name',
+              nodetype: 'ONLY_LITERAL',
+            },
+          ],
+        },
+      ],
+    });
+    const graphSource = {
+      'http://example.com/res': {
+        'http://www.w3.org/TR/rdf-schema/type': [
+          { value: 'http://example.com/Doc', type: 'uri' },
+        ],
+        'http://example.com/name': [
+          { value: 'http://example.com/not-a-literal', type: 'uri' },
+        ],
+      },
+    };
+    const strict = match(
+      new Graph(graphSource),
+      'http://example.com/res',
+      template
+    );
+    const fuzzy = fuzzyMatch(
+      new Graph(graphSource),
+      'http://example.com/res',
+      template
+    );
+    expect(fuzzy).toBeInstanceOf(GroupBinding);
+    expect(strict.getItemGroupedChildBindings()[0]).toHaveLength(0);
+    expect(fuzzy.getItemGroupedChildBindings()[0]).toHaveLength(1);
+  });
+});
+
+describe('constructTemplate', () => {
+  const createDetectionContext = () => {
+    const itemStore = new ItemStore();
+    // Force lazy child creation so inline root items (e.g. the title text) are
+    // registered by property, which is what getItemByProperty relies on.
+    itemStore.createTemplate(template1).getChildren();
+    return { itemStore, graph: new Graph(graph2) };
+  };
+
+  test('auto-detects a template from the graph properties', () => {
+    const { itemStore, graph } = createDetectionContext();
+    const detected = constructTemplate(
+      graph,
+      'http://example.org/about',
+      itemStore
+    );
+    expect(detected).toBeInstanceOf(Group);
+    const properties = detected.getChildren().map((item) => item.getProperty());
+    expect(properties).toContain('http://purl.org/dc/terms/title');
+    expect(properties).toContain('http://purl.org/dc/terms/subject');
+  });
+
+  test('honors requiredItems even when the property is absent from the graph', () => {
+    const { itemStore, graph } = createDetectionContext();
+    const detected = constructTemplate(
+      graph,
+      'http://example.org/about',
+      itemStore,
+      ['publisheddate']
+    );
+    const properties = detected.getChildren().map((item) => item.getProperty());
+    // The published-date property is not in graph2 but is forced by requiredItems.
+    expect(properties).toContain('http://purl.org/dc/terms/date');
+  });
+
+  test('warns when a required item is neither a known id nor property', () => {
+    const { itemStore, graph } = createDetectionContext();
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    constructTemplate(graph, 'http://example.org/about', itemStore, [
+      'not-a-real-item',
+    ]);
+    expect(warnSpy).toHaveBeenCalled();
+  });
+});
+
+describe('findFirstValueBinding', () => {
+  test('returns the first value binding depth-first', () => {
+    const binding = matchAboutBinding();
+    const firstValueBinding = findFirstValueBinding(binding);
+    expect(firstValueBinding).toBeInstanceOf(ValueBinding);
+    // Depth-first descends into the first author group and returns its first name.
+    expect(firstValueBinding.getValue()).toBe('Anna');
+  });
+
+  test('picks the locale-matching language for LANGUAGE_LITERAL groups', () => {
+    const { template } = createStoreAndTemplate();
+    // A graph whose only values are two language-tagged titles.
+    const graph = new Graph({
+      'http://example.org/about': {
+        'http://www.w3.org/TR/rdf-schema/type': [
+          { value: 'http://xmlns.com/foaf/0.1/Document', type: 'uri' },
+        ],
+        'http://purl.org/dc/terms/title': [
+          { value: 'English title', type: 'literal', lang: 'en' },
+          { value: 'Svensk titel', type: 'literal', lang: 'sv' },
+        ],
+      },
+    });
+    const binding = match(graph, 'http://example.org/about', template);
+    const originalLocale = moment.locale();
+    try {
+      moment.locale('sv');
+      expect(findFirstValueBinding(binding).getValue()).toBe('Svensk titel');
+      moment.locale('en');
+      expect(findFirstValueBinding(binding).getValue()).toBe('English title');
+    } finally {
+      moment.locale(originalLocale);
+    }
+  });
+
+  test('createIfMissing lazily creates a value binding', () => {
+    const { template } = createStoreAndTemplate();
+    const graph = new Graph({});
+    const rootBinding = new GroupBinding({
+      item: template,
+      childrenRootUri: 'http://example.org/about',
+      graph,
+    });
+    const created = findFirstValueBinding(rootBinding, true);
+    expect(created).toBeInstanceOf(ValueBinding);
+  });
+});
+
+describe('matchPathBelowBinding', () => {
+  test('navigates to a binding by predicate path', () => {
+    const binding = matchAboutBinding();
+    const subjectBinding = matchPathBelowBinding(binding, [
+      'http://purl.org/dc/terms/subject',
+    ]);
+    expect(subjectBinding).toBeDefined();
+    expect(subjectBinding.getValue()).toBe('http://example.com/instance1');
+  });
+
+  test('a leading slash is stripped before matching', () => {
+    const binding = matchAboutBinding();
+    const subjectBinding = matchPathBelowBinding(binding, [
+      '/',
+      'http://purl.org/dc/terms/subject',
+    ]);
+    expect(subjectBinding).toBeDefined();
+    expect(subjectBinding.getValue()).toBe('http://example.com/instance1');
+  });
+
+  test('returns undefined for a path that matches nothing', () => {
+    const binding = matchAboutBinding();
+    expect(
+      matchPathBelowBinding(binding, ['http://example.com/does-not-exist'])
+    ).toBeUndefined();
+  });
+});
+
+describe('findPopularChoice', () => {
+  test('returns the choice most bindings depend on', () => {
+    const itemStore = new ItemStore();
+    const template = itemStore.createTemplate({
+      root: 'popularityRoot',
+      auxilliary: [
+        {
+          '@id': 'popularityRoot',
+          '@type': 'group',
+          nodetype: 'RESOURCE',
+          constraints: {
+            'http://www.w3.org/TR/rdf-schema/type': 'http://example.com/Doc',
+          },
+          content: [
+            {
+              '@id': 'kindChoice',
+              '@type': 'choice',
+              nodetype: 'RESOURCE',
+              property: 'http://example.com/kind',
+              choices: [
+                { value: 'http://example.com/alpha', label: { en: 'Alpha' } },
+                { value: 'http://example.com/beta', label: { en: 'Beta' } },
+              ],
+            },
+            {
+              '@type': 'text',
+              property: 'http://example.com/note',
+              nodetype: 'LITERAL',
+              deps: ['kindChoice', 'http://example.com/beta'],
+            },
+          ],
+        },
+      ],
+    });
+    const graph = new Graph({
+      'http://example.com/res': {
+        'http://www.w3.org/TR/rdf-schema/type': [
+          { value: 'http://example.com/Doc', type: 'uri' },
+        ],
+        'http://example.com/note': [{ value: 'a note', type: 'literal' }],
+      },
+    });
+    const rootBinding = match(graph, 'http://example.com/res', template);
+    const popular = findPopularChoice(
+      itemStore.getItem('kindChoice'),
+      rootBinding
+    );
+    expect(popular.value).toBe('http://example.com/beta');
   });
 });

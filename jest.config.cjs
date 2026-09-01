@@ -19,9 +19,20 @@ const shared = {
   transformIgnorePatterns: ['node_modules/(?!(\\.pnpm|lodash-es|@entryscape)/)'],
   // Flavor entries import their stylesheet; stub CSS out for tests.
   moduleNameMapper: { '\\.(css|scss)$': '<rootDir>/test/styleMock.cjs' },
+  // Restore spies/mocks after every test, even when an assertion throws, so a
+  // console spy can never leak its stub into a later suite.
+  restoreMocks: true,
 };
 
 module.exports = {
+  // Scoped to the core model/template classes that have unit-test suites; no
+  // coverage thresholds are enforced.
+  collectCoverageFrom: [
+    'src/model/Binding.js',
+    'src/model/engine.js',
+    'src/template/Item.js',
+    'src/template/ItemStore.js',
+  ],
   projects: [
     {
       ...shared,

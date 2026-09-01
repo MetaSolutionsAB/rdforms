@@ -4,7 +4,7 @@ const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 
 const path = require('path');
 const common = require('./webpack.common');
-const examples = [1, 2, 3, 4, 5, 6, 7, 8];
+const examples = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const getHTMLPlugins = (type) => {
   return [

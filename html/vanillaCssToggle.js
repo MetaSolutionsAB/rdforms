@@ -10,7 +10,9 @@
   link.href = '/vanilla-css/vanilla.css';
   document.head.appendChild(link);
 
+  // Its own block so the example's own layout can't reposition it.
   const controlBar = document.createElement('div');
+  controlBar.className = 'rdforms-vanilla-css-toggle';
   controlBar.style.margin = '0 0 1em';
 
   const label = document.createElement('label');
@@ -24,11 +26,18 @@
   label.appendChild(document.createTextNode(' Basic vanilla CSS'));
   controlBar.appendChild(label);
 
-  const main = document.querySelector('.main') || document.body;
-  const node = document.getElementById('node');
-  if (node && node.parentNode) {
-    node.parentNode.insertBefore(controlBar, node);
+  // Anchor the checkbox directly under the page's <h1> title, as its next
+  // sibling. This keeps it in the same (block) context as the heading — always
+  // just below the title — no matter how the example lays out its own content
+  // (flex two-column examples, nested .col1 wrappers, a deep #node, etc.).
+  // Inserting relative to #node instead pulled the control into the example's
+  // column/flex layout or above the title on the nested-layout examples.
+  const heading = document.querySelector('h1');
+  if (heading && heading.parentNode) {
+    heading.parentNode.insertBefore(controlBar, heading.nextSibling);
   } else {
-    main.insertBefore(controlBar, main.firstChild);
+    const fallback =
+      document.querySelector('.main, .container-fluid') || document.body;
+    fallback.insertBefore(controlBar, fallback.firstChild);
   }
 })();

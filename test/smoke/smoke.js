@@ -12,7 +12,7 @@ const devAllConfig = require('../../webpack.dev-all.js');
 
 const PORT = 8099;
 const flavors = ['bootstrap', 'react', 'jquery', 'vanilla'];
-const examples = [1, 2, 3, 4, 5, 6, 7, 8];
+const examples = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 /**
  * Load one flavor × example page and report whether it rendered a real value

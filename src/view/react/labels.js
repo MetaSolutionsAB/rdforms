@@ -10,8 +10,8 @@ import { Editor } from './Wrappers';
 import CODES from '../../model/CODES';
 
 const StyledTooltip = styled(
-  forwardRef(function StyledTooltipRender({ className, ...props }) {
-    return <Tooltip {...props} classes={{ popper: className }} />;
+  forwardRef(function StyledTooltipRender({ className, ...props }, ref) {
+    return <Tooltip {...props} ref={ref} classes={{ popper: className }} />;
   })
 )(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {

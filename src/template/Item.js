@@ -4,7 +4,12 @@ import utils from '../utils';
 let itemCount = 0;
 
 const setObjAttr = (obj, attr, value) => {
-  if (value === null || typeof value === 'undefined' || value === '' || (Array.isArray(value) && value.length === 0)) {
+  if (
+    value === null ||
+    typeof value === 'undefined' ||
+    value === '' ||
+    (Array.isArray(value) && value.length === 0)
+  ) {
     delete obj[attr];
   } else {
     obj[attr] = value;
@@ -14,6 +19,11 @@ const setObjAttr = (obj, attr, value) => {
 export default class Item {
   /**
    * Base functionality of Text, Group and Choice item classes.
+   *
+   * @param {object} config the configuration object.
+   * @param {object} config.source the raw item source definition.
+   * @param {import('./Bundle').default} config.bundle the bundle this item belongs to.
+   * @param {import('./ItemStore').default} config.itemStore the store used to resolve extended items.
    */
   constructor({ source = {}, bundle, itemStore }) {
     this._itemStore = itemStore;
@@ -75,7 +85,7 @@ export default class Item {
       'noTruncate',
       'card',
       'cardInPresent',
-      'cardInEdit'
+      'cardInEdit',
     ];
     this._getLocalizedValue = utils.getLocalizedValue;
   }
@@ -89,7 +99,8 @@ export default class Item {
   }
 
   setId(id) {
-    setObjAttr(this.getSource(true), 'id', id);
+    const s = this.getSource(true);
+    setObjAttr(s, 'id', id);
     delete s['@id'];
   }
 
@@ -99,7 +110,8 @@ export default class Item {
   }
 
   setType(typeStr) {
-    setObjAttr(this.getSource(true), 'type', typeStr);
+    const s = this.getSource(true);
+    setObjAttr(s, 'type', typeStr);
     delete s['@type'];
     this.refreshExtends();
   }
@@ -135,7 +147,9 @@ export default class Item {
 
   _getText(attr, returnDetails, original) {
     const s = this.getSource(original);
-    return returnDetails ? utils.getLocalizedValue(s[attr]) : utils.getLocalizedValue(s[attr]).value;
+    return returnDetails
+      ? utils.getLocalizedValue(s[attr])
+      : utils.getLocalizedValue(s[attr]).value;
   }
   _setText(attr, value, lang) {
     const s = this.getSource(true);
@@ -147,60 +161,126 @@ export default class Item {
     this.refreshExtends();
   }
 
-  getLabel(returnDetails, original) { return this._getText('label', returnDetails, original); }
-  setLabel(value, lang) { this._setText('label', value, lang); }
-  getLabelMap(original) { return this.getSource(original).label; }
-  setLabelMap(map) { this._setTextMap('label', map); }
+  getLabel(returnDetails, original) {
+    return this._getText('label', returnDetails, original);
+  }
+  setLabel(value, lang) {
+    this._setText('label', value, lang);
+  }
+  getLabelMap(original) {
+    return this.getSource(original).label;
+  }
+  setLabelMap(map) {
+    this._setTextMap('label', map);
+  }
 
-  getEditLabel(returnDetails, original) { return this._getText('editlabel', returnDetails, original); }
-  setEditLabel(value, lang) { this._setText('editlabel', value, lang); }
-  getEditLabelMap(original) { return this.getSource(original).editlabel; }
-  setEditLabelMap(map) { this._setTextMap('editlabel', map); }
+  getEditLabel(returnDetails, original) {
+    return this._getText('editlabel', returnDetails, original);
+  }
+  setEditLabel(value, lang) {
+    this._setText('editlabel', value, lang);
+  }
+  getEditLabelMap(original) {
+    return this.getSource(original).editlabel;
+  }
+  setEditLabelMap(map) {
+    this._setTextMap('editlabel', map);
+  }
 
-  getDescription(returnDetails, original) { return this._getText('description', returnDetails, original); }
-  setDescription(value, lang) { this._setText('description', value, lang); }
-  getDescriptionMap(original) { return this.getSource(original).description; }
-  setDescriptionMap(map) { this._setTextMap('description', map); }
+  getDescription(returnDetails, original) {
+    return this._getText('description', returnDetails, original);
+  }
+  setDescription(value, lang) {
+    this._setText('description', value, lang);
+  }
+  getDescriptionMap(original) {
+    return this.getSource(original).description;
+  }
+  setDescriptionMap(map) {
+    this._setTextMap('description', map);
+  }
 
-  getEditDescription(returnDetails, original) { return this._getText('editdescription', returnDetails, original); }
-  setEditDescription(value, lang) { this._setText('editdescription', value, lang); }
-  getEditDescriptionMap(original) { return this.getSource(original).editdescription; }
-  setEditDescriptionMap(map) { this._setTextMap('editdescription', map); }
+  getEditDescription(returnDetails, original) {
+    return this._getText('editdescription', returnDetails, original);
+  }
+  setEditDescription(value, lang) {
+    this._setText('editdescription', value, lang);
+  }
+  getEditDescriptionMap(original) {
+    return this.getSource(original).editdescription;
+  }
+  setEditDescriptionMap(map) {
+    this._setTextMap('editdescription', map);
+  }
 
-  getHelp(returnDetails, original) { return this._getText('help', returnDetails, original); }
-  setHelp(value, lang) { this._setText('help', value, lang); }
-  getHelpMap(original) { return this.getSource(original).help; }
-  setHelpMap(map) { this._setTextMap('help', map); }
+  getHelp(returnDetails, original) {
+    return this._getText('help', returnDetails, original);
+  }
+  setHelp(value, lang) {
+    this._setText('help', value, lang);
+  }
+  getHelpMap(original) {
+    return this.getSource(original).help;
+  }
+  setHelpMap(map) {
+    this._setTextMap('help', map);
+  }
 
-  getPlaceholder(returnDetails, original) { return this._getText('placeholder', returnDetails, original); }
-  setPlaceholder(value, lang) { this._setText('placeholder', value, lang); }
-  getPlaceholderMap(original) { return this.getSource(original).placeholder; }
-  setPlaceholderMap(map) { this._setTextMap('placeholder', map); }
+  getPlaceholder(returnDetails, original) {
+    return this._getText('placeholder', returnDetails, original);
+  }
+  setPlaceholder(value, lang) {
+    this._setText('placeholder', value, lang);
+  }
+  getPlaceholderMap(original) {
+    return this.getSource(original).placeholder;
+  }
+  setPlaceholderMap(map) {
+    this._setTextMap('placeholder', map);
+  }
 
-  getPurpose(returnDetails, original) { return this._getText('purpose', returnDetails, original); }
-  setPurpose(value, lang) { this._setText('purpose', value, lang); }
-  getPurposeMap(original) { return this.getSource(original).purpose; }
-  setPurposeMap(map) { this._setTextMap('purpose', map); }
+  getPurpose(returnDetails, original) {
+    return this._getText('purpose', returnDetails, original);
+  }
+  setPurpose(value, lang) {
+    this._setText('purpose', value, lang);
+  }
+  getPurposeMap(original) {
+    return this.getSource(original).purpose;
+  }
+  setPurposeMap(map) {
+    this._setTextMap('purpose', map);
+  }
 
-  getSpecification(returnDetails, original) { return this._getText('specification', returnDetails, original); }
-  setSpecification(value, lang) { this._setText('specification', value, lang); }
-  getSpecificationMap(original) { return this.getSource(original).specification; }
-  setSpecificationMap(map) { this._setTextMap('specification', map); }
+  getSpecification(returnDetails, original) {
+    return this._getText('specification', returnDetails, original);
+  }
+  setSpecification(value, lang) {
+    this._setText('specification', value, lang);
+  }
+  getSpecificationMap(original) {
+    return this.getSource(original).specification;
+  }
+  setSpecificationMap(map) {
+    this._setTextMap('specification', map);
+  }
 
   getText(attr, returnDetails, original) {
     const s = this.getSource(original);
     const t = s.text || {};
-    return returnDetails ? utils.getLocalizedValue(t[attr]) : utils.getLocalizedValue(t[attr]).value;
+    return returnDetails
+      ? utils.getLocalizedValue(t[attr])
+      : utils.getLocalizedValue(t[attr]).value;
   }
   setText(attr, value, lang) {
     const s = this.getSource(true);
-    const t = s.text = s.text || {};
+    const t = (s.text = s.text || {});
     t[attr] = this._setLangHash(t[attr], value, lang);
     this.refreshExtends();
   }
   setTextMap(attr, map) {
     const s = this.getSource(true);
-    const t = s.text = s.text || {};
+    const t = (s.text = s.text || {});
     setObjAttr(t, attr, map);
     this.refreshExtends();
   }
@@ -237,7 +317,8 @@ export default class Item {
   }
 
   /**
-   * @return {String|null} as a URI, may be null for Groups, never null for Text or choice
+   * @param {boolean} original if true the original (non-extended) source is used.
+   * @returns {string | null} as a URI, may be null for Groups, never null for Text or choice
    * item types.
    */
   getProperty(original) {
@@ -268,13 +349,14 @@ export default class Item {
    * were each should be tried in turn. In editing mode the first property should be used,
    * alternatively a dropdown can be used to select among the properties.
    *
-   * @return {Array} array of properties
+   * @param {boolean} original if true the original (non-extended) source is used.
+   * @returns {Array} array of properties
    * The property value pairs corresponds to predicate and objects in required tripples.
    */
   getURIValueLabelProperties(original) {
     const arr = this.getSource(original).uriValueLabelProperties;
     if (arr != null) {
-      return arr.map(uri => ns.expand(uri));
+      return arr.map((uri) => ns.expand(uri));
     }
     return arr;
   }
@@ -285,7 +367,8 @@ export default class Item {
   }
 
   /**
-   * @return {Object} never available for Text item type.
+   * @param {boolean} original if true the original (non-extended) source is used.
+   * @returns {object} never available for Text item type.
    * The property value pairs corresponds to predicate and objects in required triples.
    */
   getConstraints(original) {
@@ -295,7 +378,7 @@ export default class Item {
       Object.keys(constr).forEach((key) => {
         const val = constr[key];
         if (Array.isArray(val)) {
-          nc[ns.expand(key)] = val.map(v => ns.expand(v));
+          nc[ns.expand(key)] = val.map((v) => ns.expand(v));
         } else {
           nc[ns.expand(key)] = ns.expand(val);
         }
@@ -318,8 +401,8 @@ export default class Item {
    * If dependency path should start higher up it can be indicated by providing one or more
    * initial strings with value "..".
    *
-   * @return {Object} dependency path that must exist for this item to be visible.
-   *
+   * @param {boolean} original if true the original (non-extended) source is used.
+   * @returns {object} dependency path that must exist for this item to be visible.
    */
   getDeps(original) {
     const deps = this.getSource(original).deps;
@@ -340,12 +423,13 @@ export default class Item {
   }
 
   /**
-   * @return {String} a URI indicating the datatype, for example: "http://www.w3.org/2001/XMLSchema.xsd#date".
+   * @param {boolean} original if true the original (non-extended) source is used.
+   * @returns {string} a URI indicating the datatype, for example: "http://www.w3.org/2001/XMLSchema.xsd#date".
    */
   getDatatype(original) {
     const dt = this.getSource(original).datatype;
     if (dt != null && dt !== '') {
-      return Array.isArray(dt) ? dt.map(d => ns.expand(d)) : ns.expand(dt);
+      return Array.isArray(dt) ? dt.map((d) => ns.expand(d)) : ns.expand(dt);
     }
     return dt;
   }
@@ -365,7 +449,8 @@ export default class Item {
   }
 
   /**
-   * @return {String} a two character language code, only relevant if the item type is Text and the nodetype is
+   * @param {boolean} original if true the original (non-extended) source is used.
+   * @returns {string} a two character language code, only relevant if the item type is Text and the nodetype is
    * a LANGUAGE_LITERAL, indicating that all matching bindings should be set with this language.
    */
   getLanguage(original) {
@@ -389,6 +474,9 @@ export default class Item {
   /**
    * Allowed values are:
    * LITERAL, RESOURCE, URI, BLANK, PLAIN_LITERAL, ONLY_LITERAL, LANGUAGE_LITERAL, DATATYPE_LITERAL
+   *
+   * @param {boolean} original if true the original (non-extended) source is used.
+   * @returns {string} the nodetype of this item.
    */
   getNodetype(original) {
     const s = this.getSource(original);
@@ -419,7 +507,8 @@ export default class Item {
   }
 
   /**
-   * @return {Object} containing max, min, and preferred properties.
+   * @param {boolean} original if true the original (non-extended) source is used.
+   * @returns {object} containing max, min, and preferred properties.
    */
   getCardinality(original) {
     if (!this.getProperty() && this.getType() === 'text') {
@@ -427,7 +516,7 @@ export default class Item {
     }
 
     const source = this.getSource(original);
-    if (source && ('cardinality' in source)) {
+    if (source && 'cardinality' in source) {
       return source.cardinality;
     }
 
@@ -460,6 +549,8 @@ export default class Item {
 
   /**
    * Classes are exposed in CSS, allows external stylesheets to act on the form.
+   *
+   * @param {boolean} original if true the original (non-extended) source is used.
    * @returns {Array}
    */
   getClasses(original) {
@@ -477,7 +568,8 @@ export default class Item {
 
   /**
    * @deprecated only provided for backward compatability, use styles, classes
-   * @param cls
+   * @param {string} cls the class name to check for.
+   * @param {boolean} original if true the original (non-extended) source is used.
    * @returns {boolean}
    */
   hasClass(cls, original) {
@@ -488,20 +580,21 @@ export default class Item {
     if (s.cls == null) {
       return false;
     }
-    return s.cls.some(c => c.toLowerCase() === cls.toLowerCase());
+    return s.cls.some((c) => c.toLowerCase() === cls.toLowerCase());
   }
 
   /**
    * The available styles, see the _styles variable.
    *
-   * @return {Array} that contains strings with all available styles.
+   * @returns {Array} that contains strings with all available styles.
    */
   getAvailableStyles() {
     return this._styles;
   }
 
   /**
-   * @return {Array} that contains strings with the style, if no style is defined an empty array is returned
+   * @param {boolean} original if true the original (non-extended) source is used.
+   * @returns {Array} that contains strings with the style, if no style is defined an empty array is returned
    */
   getStyles(original) {
     return this.getSource(original).styles || [];
@@ -517,19 +610,21 @@ export default class Item {
     if (!source || !('styles' in source)) {
       return false;
     }
-    return source.styles.some(s => s.toLowerCase() === sty.toLowerCase());
+    return source.styles.some((s) => s.toLowerCase() === sty.toLowerCase());
   }
 
-  getSource(original, attribute) {
-    if (original === true) {  // Get the original source
+  getSource(original) {
+    if (original === true) {
+      // Get the original source
       return this._source._extendedSource || this._source;
-    } else if (original === false) {  // Get the extended source
+    } else if (original === false) {
+      // Get the extended source
       const entryItem = this._itemStore.getItem(this.getExtends());
       if (entryItem == null) {
         return this._source;
       }
       return entryItem.getSource();
-    }   // Get the merged source.
+    } // Get the merged source.
     return this._source;
   }
 
@@ -568,7 +663,6 @@ export default class Item {
   // Private methods
   //= ==================================================
 
-  // eslint-disable-next-line class-methods-use-this
   _setLangHash(hash, value, lang) {
     const _hash = hash || {};
     if (typeof value === 'string') {

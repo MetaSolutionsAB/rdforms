@@ -8,11 +8,19 @@ import { getNamedGraphId } from '../viewUtils';
  */
 export default class DateTimeBootstrapDatepicker extends DateTimeBase {
   buildUI() {
-    const disabledAttr = getNamedGraphId(this.binding, this.context) ? 'disabled' : '';
+    const disabledAttr = getNamedGraphId(this.binding, this.context)
+      ? 'disabled'
+      : '';
     const bundle = this.context.view.messages;
-    const yearOption = this.includeYearOption() ? `<option value="Year">${bundle.date_year}</option>` : '';
-    const dateOption = this.includeDateOption() ? `<option value="Date" selected="true">${bundle.date_date}</option>` : '';
-    const dateTimeOption = this.includeDateTimeOption() ? `<option value="DateTime">${bundle.date_date_and_time}</option>` : '';
+    const yearOption = this.includeYearOption()
+      ? `<option value="Year">${bundle.date_year}</option>`
+      : '';
+    const dateOption = this.includeDateOption()
+      ? `<option value="Date" selected="true">${bundle.date_date}</option>`
+      : '';
+    const dateTimeOption = this.includeDateTimeOption()
+      ? `<option value="DateTime">${bundle.date_date_and_time}</option>`
+      : '';
     this.domNode.innerHTML = `<div class="rdformsDateValue rdformsFieldInput" xmlns="http://www.w3.org/1999/html">
     <div class="rdformsDatepicker datepicker">
         <div class="input-group date">
@@ -42,7 +50,6 @@ export default class DateTimeBootstrapDatepicker extends DateTimeBase {
     this.dateControl = jquery(this.domNode).find('.dateControl')[0];
   }
 
-
   initDatePicker() {
     this.$datepicker = jquery(this.cal).datepicker({
       autoclose: true,
@@ -56,7 +63,7 @@ export default class DateTimeBootstrapDatepicker extends DateTimeBase {
         this._date.getHours(),
         this._date.getMinutes(),
         this._date.getSeconds(),
-        this._date.getMilliseconds(),
+        this._date.getMilliseconds()
       );
 
       this.setDateInBinding(newDate);

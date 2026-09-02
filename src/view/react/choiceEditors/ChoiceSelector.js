@@ -1,19 +1,27 @@
-/* eslint-disable no-unused-vars,quotes */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import renderingContext from '../../renderingContext';
-import { useLocalizedSortedChoices, useLocalizedChoice, useNamedGraphId } from '../hooks';
+import {
+  useLocalizedSortedChoices,
+  useLocalizedChoice,
+  useNamedGraphId,
+} from '../hooks';
+import labelledInputParams from './labelledInputParams';
+
+/**
+ * @typedef {import('../../../model/Binding').default} Binding
+ */
 
 /**
  * Autocomplete with fixed choices.
  *
- * @param props Component props
+ * @param {object} props Component props
  * @param {Binding} props.binding the binding for which to render an autocomplete
  * @example (<ChoiceSelector binding={binding}>)
- * @return {React.FunctionComponentElement}
+ * @returns {import('react').FunctionComponentElement}
  */
-export default (props) => {
+const ChoiceSelector = (props) => {
   const binding = props.binding;
   const choices = useLocalizedSortedChoices(binding, true);
   const [value, setValue] = useLocalizedChoice(binding, choices);
@@ -32,18 +40,14 @@ export default (props) => {
 
   const labelledBy = props.context.view.getLabelIndex(binding);
 
-  const renderInput = (params) => {
-    params.inputProps = params.inputProps || {};
-    params.inputProps['aria-labelledby'] = labelledBy;
-    return (
-      <TextField
-        placeholder={binding.getItem().getPlaceholder()}
-        {...params}
-        {...(value && value.mismatch ? { error: true } : {})}
-        variant={renderingContext.materialVariant}
-      />
-    );
-  };
+  const renderInput = (params) => (
+    <TextField
+      placeholder={binding.getItem().getPlaceholder()}
+      {...labelledInputParams(params, labelledBy)}
+      {...(value && value.mismatch ? { error: true } : {})}
+      variant={renderingContext.materialVariant}
+    />
+  );
   const handleChange = (event, newChoice) => {
     binding.setChoice(newChoice.original);
     setValue(newChoice);
@@ -61,8 +65,8 @@ export default (props) => {
         onChange={handleChange}
         disabled={!!ngId}
         isOptionEqualToValue={(option, choice) => option.value === choice.value}
-        getOptionLabel={choice => (choice === null ? '' : choice.label)}
-        getOptionDisabled={option => option.mismatch === true}
+        getOptionLabel={(choice) => (choice === null ? '' : choice.label)}
+        getOptionDisabled={(option) => option.mismatch === true}
         filterSelectedOptions
         renderInput={renderInput}
         disablePortal
@@ -76,3 +80,5 @@ export default (props) => {
     </>
   );
 };
+
+export default ChoiceSelector;

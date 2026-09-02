@@ -1,19 +1,18 @@
-/* eslint-disable no-unused-vars */
-import React, { Fragment, useState, useEffect, forwardRef } from 'react';
+import { Fragment, useState, useEffect, forwardRef } from 'react';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutlineOutlined';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
 import { Editor } from './Wrappers';
 import CODES from '../../model/CODES';
 
 const StyledTooltip = styled(
-  forwardRef(({ className, ...props }, ref) => (
-    <Tooltip {...props} classes={{ popper: className }} />
-  ))
+  forwardRef(function StyledTooltipRender({ className, ...props }, ref) {
+    return <Tooltip {...props} ref={ref} classes={{ popper: className }} />;
+  })
 )(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.background.default,
@@ -29,37 +28,59 @@ const StyledTooltip = styled(
 }));
 
 const getDescription = (item, view) => {
-  const descMap = view instanceof Editor
-    ? item.getEditDescriptionMap() || item.getDescriptionMap()
-    : item.getDescriptionMap();
-  return utils.getLocalizedValue(descMap, view.getLocale()).value;
+  const descMap =
+    view instanceof Editor
+      ? item.getEditDescriptionMap() || item.getDescriptionMap()
+      : item.getDescriptionMap();
+  const { value, lang } = utils.getLocalizedValue(descMap, view.getLocale());
+  return { value, lang };
 };
 
 const DescriptionIcon = ({ item, context }) => {
   const { view } = context;
-  const description = getDescription(item, view);
+  const { value: description, lang: descriptionLang } = getDescription(
+    item,
+    view
+  );
   const [pinned, setPinned] = useState(false);
   const [hovered, setHovered] = useState(false);
 
   const property = item.getProperty();
-  const fallbackDescription = !description && !property
-    ? view.messages.info_missing || ''
-    : '';
+  const fallbackDescription =
+    !description && !property ? view.messages.info_missing || '' : '';
   const shownDescription = description || fallbackDescription;
   if (!shownDescription && !property) return null;
 
-  const propinfo = property
-    ? <div className="rdformsProperty"><a target="_blank" href={property}>{property}</a></div>
-    : null;
+  const propinfo = property ? (
+    <div className="rdformsProperty">
+      <a target="_blank" href={property} rel="noreferrer">
+        {property}
+      </a>
+    </div>
+  ) : null;
 
   const tooltipContent = (
     <>
-      {shownDescription ? <p className="rdformsLinebreaks rdformsDescription">{shownDescription}</p> : null}
+      {shownDescription ? (
+        <p
+          className="rdformsLinebreaks rdformsDescription"
+          // Tag the resolved language when it fell back to something other than
+          // the page locale, so screen readers pronounce it right (WCAG 3.1.2).
+          // Only when the shown text IS the resolved description — never on the
+          // info_missing fallback, which is page-locale UI text, not the description.
+          lang={
+            description
+              ? utils.foreignLang(descriptionLang, view.getLocale())
+              : undefined
+          }
+        >
+          {shownDescription}
+        </p>
+      ) : null}
       {propinfo}
     </>
   );
 
-  
   const handleClick = () => setPinned(!pinned);
   const handleKeyDown = (e) => {
     if (e.key !== 'Escape' || !pinned) return;
@@ -94,14 +115,24 @@ const DescriptionIcon = ({ item, context }) => {
 };
 
 renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
-  let labelMap = context.view instanceof Editor ?
-    item.getEditLabelMap() || item.getLabelMap() : item.getLabelMap();
-  let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value
+  let labelMap =
+    context.view instanceof Editor
+      ? item.getEditLabelMap() || item.getLabelMap()
+      : item.getLabelMap();
+  const pageLocale = context.view.getLocale();
+  const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
+  let label = labelResolved.value;
   if (label != null && label !== '') {
     label = label.charAt(0).toUpperCase() + label.slice(1);
   } else {
     label = '';
   }
+  // Tag the resolved language when it fell back to something other than the
+  // page locale (WCAG 3.1.2); undefined → React omits the attribute. No tag on
+  // an empty label.
+  const labelLang = label
+    ? utils.foreignLang(labelResolved.lang, pageLocale)
+    : undefined;
 
   const view = context.view;
   let description;
@@ -109,41 +140,103 @@ renderingContext.renderPresenterLabel = (rowNode, binding, item, context) => {
     // An item is compact if it is exclicitly set as compact or
     // the view is set as compact and the item is not explicitly set as not compact AND
     // we are at the top
-    const compactField = item.hasStyle('compact') ||
-      (view.compact && !item.hasStyle('nonCompact') && (
-        (view.topLevel && item.getType() !== 'group') ||
-        (view.parentView && view.parentView.topLevel && view.binding.getItem().hasStyle('heading'))));
-    const descMap = view instanceof Editor ? item.getEditDescriptionMap() || item.getDescriptionMap() :
-      item.getDescriptionMap();
-    const desc = utils.getLocalizedValue(descMap, context.view.getLocale()).value;
+    const compactField =
+      item.hasStyle('compact') ||
+      (view.compact &&
+        !item.hasStyle('nonCompact') &&
+        ((view.topLevel && item.getType() !== 'group') ||
+          (view.parentView &&
+            view.parentView.topLevel &&
+            view.binding.getItem().hasStyle('heading'))));
+    const descMap =
+      view instanceof Editor
+        ? item.getEditDescriptionMap() || item.getDescriptionMap()
+        : item.getDescriptionMap();
+    const descResolved = utils.getLocalizedValue(descMap, pageLocale);
+    const desc = descResolved.value;
     if (!compactField && desc) {
-      description = <div className="rdformsDescription">{desc}</div>;
+      description = (
+        <div
+          className="rdformsDescription"
+          lang={utils.foreignLang(descResolved.lang, pageLocale)}
+        >
+          {desc}
+        </div>
+      );
     }
   }
 
   const labelId = binding ? context.view.createLabelIndex(binding) : undefined;
   const HeadingElement = `h${context.view.headingLevel}`;
-  const descriptionIcon = context.view.popupOnLabel ? <DescriptionIcon item={item} context={context} /> : null;
-  label = item.hasStyle('heading') ?
-    <HeadingElement tabIndex="0" id={labelId} className="rdformsLabelRow"><span className="rdformsLabel">{label}</span>{descriptionIcon}</HeadingElement> :
-    <span tabIndex="0" id={labelId} className="rdformsLabelRow"><span className="rdformsLabel">{label}</span>{descriptionIcon}</span>;
-  rowNode.appendChild(<Fragment key={`${binding ? binding.getHash() : item.getHash()}_label` }>{label}{description}</Fragment>);
+  const descriptionIcon = context.view.popupOnLabel ? (
+    <DescriptionIcon item={item} context={context} />
+  ) : null;
+  // tabIndex={-1}, not 0: the label wrapper has no action of its own (the
+  // keyboard-operable affordance is the DescriptionIcon button), so it must not
+  // be a tab stop. But it stays programmatically focusable so entryscape's form
+  // outline can focus() this label (by its id) to jump to the field — removing
+  // the attribute entirely makes focus() a silent no-op.
+  label = item.hasStyle('heading') ? (
+    <HeadingElement tabIndex={-1} id={labelId} className="rdformsLabelRow">
+      <span className="rdformsLabel" lang={labelLang}>
+        {label}
+      </span>
+      {descriptionIcon}
+    </HeadingElement>
+  ) : (
+    <span tabIndex={-1} id={labelId} className="rdformsLabelRow">
+      <span className="rdformsLabel" lang={labelLang}>
+        {label}
+      </span>
+      {descriptionIcon}
+    </span>
+  );
+  rowNode.appendChild(
+    <Fragment key={`${binding ? binding.getHash() : item.getHash()}_label`}>
+      {label}
+      {description}
+    </Fragment>
+  );
 };
 
 renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
   if (item.hasStyle('nonEditable') || item.hasStyle('heading')) {
-    renderingContext.renderPresenterLabel(rowNode, binding, item, context, true);
+    renderingContext.renderPresenterLabel(
+      rowNode,
+      binding,
+      item,
+      context,
+      true
+    );
   } else {
+    const pageLocale = context.view.getLocale();
     let labelMap = item.getEditLabelMap() || item.getLabelMap();
-    let label = utils.getLocalizedValue(labelMap, context.view.getLocale()).value
+    const labelResolved = utils.getLocalizedValue(labelMap, pageLocale);
+    let label = labelResolved.value;
     if (label != null && label !== '') {
       label = label.charAt(0).toUpperCase() + label.slice(1);
     } else {
       label = '';
     }
+    // Tag the resolved language when it fell back to something other than the
+    // page locale (WCAG 3.1.2); undefined → React omits the attribute. No tag
+    // on an empty label.
+    const labelLang = label
+      ? utils.foreignLang(labelResolved.lang, pageLocale)
+      : undefined;
     const HeadingElement = `h${context.view.headingLevel}`;
-    label = item.hasStyle('heading') ? <HeadingElement tabIndex="0" className="rdformsLabel">{label}</HeadingElement> :
-      <span tabIndex="0" className="rdformsLabel">{label}</span>;
+    // tabIndex={-1}: the label has no action (the DescriptionIcon button added
+    // below is the info affordance), so it is not a tab stop — but stays
+    // programmatically focusable for parity with the presenter label above.
+    label = item.hasStyle('heading') ? (
+      <HeadingElement tabIndex={-1} className="rdformsLabel" lang={labelLang}>
+        {label}
+      </HeadingElement>
+    ) : (
+      <span tabIndex={-1} className="rdformsLabel" lang={labelLang}>
+        {label}
+      </span>
+    );
 
     const card = item.getCardinality();
     const b = context.view.messages;
@@ -152,11 +245,23 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
     // Only show mark if there is a property that allows the item to have an expression on its own
     if (item.getProperty()) {
       if (card.min > 0) {
-        mark = <span className="rdformsMark rdformsMandatoryMark">{b.mandatoryMark}</span>;
+        mark = (
+          <span className="rdformsMark rdformsMandatoryMark">
+            {b.mandatoryMark}
+          </span>
+        );
       } else if (card.pref > 0) {
-        mark = <span className="rdformsMark rdformsRecommendedMark">{b.recommendedMark}</span>;
+        mark = (
+          <span className="rdformsMark rdformsRecommendedMark">
+            {b.recommendedMark}
+          </span>
+        );
       } else {
-        mark = <span className="rdformsMark rdformsOptionalMark">{b.optionalMark}</span>;
+        mark = (
+          <span className="rdformsMark rdformsOptionalMark">
+            {b.optionalMark}
+          </span>
+        );
       }
     }
     let Button;
@@ -174,37 +279,69 @@ renderingContext.renderEditorLabel = (rowNode, binding, item, context) => {
       // An item is compact if it is exclicitly set as compact or
       // the view is set as compact and the item is not explicitly set as not compact AND
       // we are at the top
-      const compactField = item.hasStyle('compact') ||
-        (view.compact && !item.hasStyle('nonCompact') && (
-          (view.topLevel && item.getType() !== 'group') ||
-          (view.parentView && view.parentView.topLevel && view.binding.getItem().hasStyle('heading'))));
-      const descMap = view instanceof Editor ? item.getEditDescriptionMap() || item.getDescriptionMap() :
-        item.getDescriptionMap();
-      const desc = utils.getLocalizedValue(descMap, context.view.getLocale()).value
+      const compactField =
+        item.hasStyle('compact') ||
+        (view.compact &&
+          !item.hasStyle('nonCompact') &&
+          ((view.topLevel && item.getType() !== 'group') ||
+            (view.parentView &&
+              view.parentView.topLevel &&
+              view.binding.getItem().hasStyle('heading'))));
+      const descMap =
+        view instanceof Editor
+          ? item.getEditDescriptionMap() || item.getDescriptionMap()
+          : item.getDescriptionMap();
+      const descResolved = utils.getLocalizedValue(descMap, pageLocale);
+      const desc = descResolved.value;
 
       if (!compactField && desc) {
-        description = <div className="rdformsDescription" tabIndex="0">{desc}</div>;
+        // Plain description text — not a tab stop, but tabIndex={-1} keeps it
+        // programmatically focusable for parity with develop's behavior.
+        description = (
+          <div
+            className="rdformsDescription"
+            tabIndex={-1}
+            lang={utils.foreignLang(descResolved.lang, pageLocale)}
+          >
+            {desc}
+          </div>
+        );
       }
     }
 
     const labelId = context.view.createLabelIndex(binding);
-    const descriptionIcon = context.view.popupOnLabel ? <DescriptionIcon item={item} context={context} /> : null;
-    rowNode.appendChild(<Fragment key={`${binding.getHash()}_label`}><div id={labelId} className="rdformsLabelRow">{
-      label}{mark}{descriptionIcon}{Button && <Button></Button>}</div>{description}</Fragment>);
+    const descriptionIcon = context.view.popupOnLabel ? (
+      <DescriptionIcon item={item} context={context} />
+    ) : null;
+    rowNode.appendChild(
+      <Fragment key={`${binding.getHash()}_label`}>
+        <div id={labelId} className="rdformsLabelRow">
+          {label}
+          {mark}
+          {descriptionIcon}
+          {Button && <Button></Button>}
+        </div>
+        {description}
+      </Fragment>
+    );
   }
 };
 
 const ERR = (props) => {
-  const { rowNode, binding, item, context } = props;
+  const { rowNode, binding, context } = props;
   const [code, setCode] = useState(binding.getCardinalityTracker().getCode());
   useEffect(() => {
     const cardTr = binding.getCardinalityTracker();
     const checkAndSetCode = () => {
       const newCode = cardTr.getCode();
-      renderingContext.domClassToggle(rowNode, 'rdformsError', newCode !== CODES.UNKNOWN);
+      renderingContext.domClassToggle(
+        rowNode,
+        'rdformsError',
+        newCode !== CODES.UNKNOWN
+      );
       setCode(newCode);
     };
-    checkAndSetCode();  // We call it here to be sure, not depending on a potential callback from cardTr
+    checkAndSetCode(); // We call it here to be sure, not depending on a potential callback from cardTr
     const listener = cardTr.addListener(checkAndSetCode);
     return () => cardTr.removeListener(listener);
   }, []);
@@ -230,19 +367,35 @@ const ERR = (props) => {
   return <div className="rdformsWarning">{message}</div>;
 };
 
-renderingContext.renderEditorLabelScopeEnd = (rowNode, binding, item, context) => {
+renderingContext.renderEditorLabelScopeEnd = (
+  rowNode,
+  binding,
+  item,
+  context
+) => {
   if (!item.hasStyle('nonEditable') && !item.hasStyle('heading')) {
     if (!context.view.isMultiValued(item)) {
       let Button;
       const card = item.getCardinality();
       if (binding == null) {
         Button = renderingContext.addExpandButton(rowNode, null, item, context);
-      } else if (binding.getPredicate() && !context.view.showAsTable(item) && card.max !== 1 &&
-        (card.max == null || card.max !== card.min)) {
-        Button = renderingContext.addCreateChildButton(rowNode, null, binding, context);
+      } else if (
+        binding.getPredicate() &&
+        !context.view.showAsTable(item) &&
+        card.max !== 1 &&
+        (card.max == null || card.max !== card.min)
+      ) {
+        Button = renderingContext.addCreateChildButton(
+          rowNode,
+          null,
+          binding,
+          context
+        );
       }
       if (Button) {
-        rowNode.appendChild(<Button key={`${binding.getHash()}_labelEnd`}></Button>);
+        rowNode.appendChild(
+          <Button key={`${binding.getHash()}_labelEnd`}></Button>
+        );
       }
     }
     // If the item is deprecated and there are at least one matching value (binding),
@@ -256,16 +409,33 @@ renderingContext.renderEditorLabelScopeEnd = (rowNode, binding, item, context) =
           rowNode.destroy();
         }
       });
-      rowNode.appendChild(<div key="deprecatedWarning"
-                               className="rdformsWarning">{context.view.messages.deprecatedField}</div>);
+      rowNode.appendChild(
+        <div key="deprecatedWarning" className="rdformsWarning">
+          {context.view.messages.deprecatedField}
+        </div>
+      );
     }
 
     // If there are dependencies that are not fulfilled, notify.
     if (item.getDeps()) {
-      rowNode.appendChild(<div key="dependencyWarning" className="rdformsWarning rdformsDependency">
-        {context.view.messages.dependencyField}</div>);
+      rowNode.appendChild(
+        <div
+          key="dependencyWarning"
+          className="rdformsWarning rdformsDependency"
+        >
+          {context.view.messages.dependencyField}
+        </div>
+      );
     }
 
-    rowNode.appendChild(<ERR key="errMessage" rowNode={rowNode} binding={binding} item={item} context={context}></ERR>);
+    rowNode.appendChild(
+      <ERR
+        key="errMessage"
+        rowNode={rowNode}
+        binding={binding}
+        item={item}
+        context={context}
+      ></ERR>
+    );
   }
 };

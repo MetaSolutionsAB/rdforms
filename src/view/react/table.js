@@ -1,6 +1,6 @@
+import jquery from 'jquery';
 import renderingContext from '../renderingContext';
 import utils from '../../utils';
-import jquery from 'jquery';
 
 renderingContext.addPresenterTable = (newRow, firstBinding, context) => {
   const item = firstBinding.getItem();
@@ -10,8 +10,19 @@ renderingContext.addPresenterTable = (newRow, firstBinding, context) => {
   const $tHeadRow = jquery('<tr>').appendTo($table);
   for (let colInd = 0; colInd < childItems.length; colInd++) {
     const $th = jquery('<th>').appendTo($tHeadRow);
-    let label = utils.getLocalizedValue(childItems[colInd].getLabelMap(), context.view.getLocale()).value
-    renderingContext.attachItemInfo(item, jquery('<span>').text(label).appendTo($th), context);
+    const pageLocale = context.view.getLocale();
+    const labelResolved = utils.getLocalizedValue(
+      childItems[colInd].getLabelMap(),
+      pageLocale
+    );
+    const $thLabel = jquery('<span>').text(labelResolved.value).appendTo($th);
+    // Tag the header language when it fell back to something other than the
+    // page locale (WCAG 3.1.2).
+    const labelLang = utils.foreignLang(labelResolved.lang, pageLocale);
+    if (labelLang) {
+      $thLabel.attr('lang', labelLang);
+    }
+    renderingContext.attachItemInfo(item, $thLabel, context);
   }
   return $table[0];
 };
@@ -33,10 +44,14 @@ renderingContext.fillPresenterTable = (table, bindings, context) => {
 
     for (colInd = 0; colInd < childBindingsGroups.length; colInd++) {
       if (childBindingsGroups[colInd].length > 0) {
-        renderingContext.renderPresenter(jquery('<td>').appendTo($trEl), childBindingsGroups[colInd][0], {
-          view: context.view,
-          noCardinalityButtons: true
-        });
+        renderingContext.renderPresenter(
+          jquery('<td>').appendTo($trEl),
+          childBindingsGroups[colInd][0],
+          {
+            view: context.view,
+            noCardinalityButtons: true,
+          }
+        );
       } else {
         jquery('<td>').appendTo($trEl);
       }

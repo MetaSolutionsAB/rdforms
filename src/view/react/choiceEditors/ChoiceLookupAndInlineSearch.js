@@ -1,16 +1,20 @@
-/* eslint-disable no-unused-vars,quotes */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import BuildIcon from '@mui/icons-material/Build';
 import IconButton from '@mui/material/IconButton';
 import renderingContext from '../../renderingContext';
-import { editLocalizedChoice, loadLocalizedChoice, useNamedGraphId } from '../hooks';
+import {
+  editLocalizedChoice,
+  loadLocalizedChoice,
+  useNamedGraphId,
+} from '../hooks';
 import ShowButton from './ShowButton';
+import labelledInputParams from './labelledInputParams';
 
 let globalChoiceQueryThrottle;
 
-export default (props) => {
+const ChoiceLookupAndInlineSearch = (props) => {
   const binding = props.binding;
   const [options, setOptions] = useState([]);
   const [value, setValue] = loadLocalizedChoice(binding, true);
@@ -49,11 +53,13 @@ export default (props) => {
       }
       globalChoiceQueryThrottle = setTimeout(() => {
         globalChoiceQueryThrottle = undefined;
-        props.context.chooser.search(binding, inputValue.trimStart()).then((results) => {
-          if (active) {
-            setOptions(results.map(editLocalizedChoice));
-          }
-        });
+        props.context.chooser
+          .search(binding, inputValue.trimStart())
+          .then((results) => {
+            if (active) {
+              setOptions(results.map(editLocalizedChoice));
+            }
+          });
       }, 200);
     }
 
@@ -64,12 +70,10 @@ export default (props) => {
 
   const labelledBy = props.context.view.getLabelIndex(binding);
   const renderInput = (params) => {
-    params.inputProps = params.inputProps || {};
-    params.inputProps['aria-labelledby'] = labelledBy;
     return (
       <TextField
         aria-labelledby={labelledBy}
-        {...params}
+        {...labelledInputParams(params, labelledBy)}
         {...(value && value.mismatch ? { error: true } : {})}
         placeholder={binding.getItem().getPlaceholder()}
         onKeyDown={({ key, keyCode }) => {
@@ -84,18 +88,26 @@ export default (props) => {
   };
 
   const showHandler = () => {
-    renderingContext.openChoiceSelector(props.binding, (selectedChoice) => {
-      binding.setChoice(selectedChoice);
-      setValue(editLocalizedChoice(selectedChoice));
-      setError(selectedChoice.mismatch === true);
-    }, props.field);
+    renderingContext.openChoiceSelector(
+      props.binding,
+      (selectedChoice) => {
+        binding.setChoice(selectedChoice);
+        setValue(editLocalizedChoice(selectedChoice));
+        setError(selectedChoice.mismatch === true);
+      },
+      props.field
+    );
   };
 
   const upgradeHandler = () => {
-    value.original.upgrade(props.binding, (upgradedChoice) => {
-      setValue(editLocalizedChoice(upgradedChoice));
-      setError(upgradedChoice.mismatch === true);
-    }, props.field);
+    value.original.upgrade(
+      props.binding,
+      (upgradedChoice) => {
+        setValue(editLocalizedChoice(upgradedChoice));
+        setError(upgradedChoice.mismatch === true);
+      },
+      props.field
+    );
   };
 
   const ngId = useNamedGraphId(binding, props.context);
@@ -108,7 +120,7 @@ export default (props) => {
         fullWidth={false}
         value={value}
         options={options}
-        filterOptions={fopts => fopts}
+        filterOptions={(fopts) => fopts}
         open={open}
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
@@ -116,15 +128,15 @@ export default (props) => {
         onChange={onChange}
         disabled={!!ngId}
         isOptionEqualToValue={(option, choice) => option.value === choice.value}
-        getOptionLabel={choice =>
+        getOptionLabel={(choice) =>
           choice === null ? '' : choice.label || choice.value
         }
-        getOptionDisabled={option => option.mismatch === true}
+        getOptionDisabled={(option) => option.mismatch === true}
         renderInput={renderInput}
         disablePortal
         {...props.context.view.renderingParams.ChoiceLookupAndInlineSearch}
       />
-      <ShowButton {...props} onClick={showHandler} disabled={!!ngId}/>
+      <ShowButton {...props} onClick={showHandler} disabled={!!ngId} />
       {value && value.original.upgrade && (
         <>
           <IconButton
@@ -137,7 +149,7 @@ export default (props) => {
           </IconButton>
           {UpgradeComponent}
         </>
-        )}
+      )}
       {error && (
         <div key="warning" className="rdformsWarning">
           {props.context.view.messages.wrongValueField}
@@ -146,3 +158,5 @@ export default (props) => {
     </>
   );
 };
+
+export default ChoiceLookupAndInlineSearch;

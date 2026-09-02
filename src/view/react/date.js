@@ -1,12 +1,10 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import { TextField } from '@mui/material';
 import Select from '@mui/material/Select';
 import moment from 'moment';
 import CODES from '../../model/CODES';
@@ -33,9 +31,9 @@ const getDatatypeFromBinding = (binding, alternatives) => {
 const datePresenter = (fieldDiv, binding, context) => {
   try {
     const pres = getDatePresentation(binding, context.view.getLocale());
-    fieldDiv.appendChild(<div key={binding.getHash()} >{pres}</div>);
-  } catch (e) {
-    console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01 
+    fieldDiv.appendChild(<div key={binding.getHash()}>{pres}</div>);
+  } catch {
+    console.warn(`Could not present date, expected ISO8601 format in the form 2001-01-01
       (potentially with time given after a 'T' character as well) but found '${binding.getValue()}' instead.`);
   }
 };
@@ -58,18 +56,10 @@ const datePickerConfig = {
     MonthDay: 'MM-DD',
     Time: 'YYYY-MM-DD', // Since datepicker is sometimes visible but disabled
   },
-  mask: {
-    Year: '____',
-    DateTime: '____-__-__',
-    Date: '____-__-__',
-    YearMonth: '____-__',
-    MonthDay: '__-__',
-    Time: '____-__-__', // Since datepicker is sometimes visible but disabled
-  },
   views: {
     Year: ['year'],
-    DateTime: ['day'],
-    Date: ['day'],
+    DateTime: ['year', 'day'],
+    Date: ['year', 'day'],
     YearMonth: ['year', 'month'],
     MonthDay: ['month', 'day'],
     Time: ['day'], // Since datepicker is sometimes visible but disabled
@@ -92,16 +82,55 @@ const datePickerConfig = {
   },
 };
 
+const settledInput = { cleared: false, partial: false };
 
 const dateEditor = (fieldDiv, binding, context) => {
   const bundle = context.view.messages;
   const DateComp = () => {
     const value = binding.getGist();
-    const alternatives = useMemo(() => getAllowedDateAlternatives(binding.getItem()), []);
-    const [selectedDate, setSelectedDate] = useState(value === '' ? null : getDate(value));
-    const [selectedDatatype, setDatatype] = useState(getDatatypeFromBinding(binding, alternatives));
+    const alternatives = useMemo(
+      () => getAllowedDateAlternatives(binding.getItem()),
+      []
+    );
+    const [selectedDate, setSelectedDate] = useState(
+      value === '' ? null : getDate(value)
+    );
+    const [selectedDatatype, setDatatype] = useState(
+      getDatatypeFromBinding(binding, alternatives)
+    );
     const onlyOneAlternative = Object.keys(alternatives).length === 1;
-    const [error, setError] = useState(binding.getMatchingCode() === CODES.WRONG_DATATYPE);
+    const [datatypeError, setDatatypeError] = useState(
+      binding.getMatchingCode() === CODES.WRONG_DATATYPE
+    );
+    // Picker validation is tracked apart from the datatype verdict, and per
+    // picker, so neither a datatype change nor the other picker's valid
+    // transition can erase an active error.
+    const [datePickerError, setDatePickerError] = useState(null);
+    const [timePickerError, setTimePickerError] = useState(null);
+    // A field with some but not all sections filled reports `null`, just like
+    // an emptied one, and raises no validation error. So each picker tracks
+    // whether it has emitted `null` (`cleared`) — its controlled value then
+    // follows suit, which keeps the typed sections in place without touching
+    // the other picker — and whether that turned out to be unfinished input
+    // on commit (`partial`), shown as invalid rather than silently clearing
+    // the value.
+    const [dateInput, setDateInput] = useState(settledInput);
+    const [timeInput, setTimeInput] = useState(settledInput);
+    const error =
+      datatypeError ||
+      Boolean(datePickerError) ||
+      Boolean(timePickerError) ||
+      dateInput.partial ||
+      timeInput.partial;
+    // A partial value can already parse as valid — the single-section 'YYYY'
+    // format pads '2' to '0002' — so the binding is only written once input
+    // settles, on blur or accept. `undefined` means nothing to commit.
+    const pendingDate = useRef(undefined);
+    const dateFieldRef = useRef(null);
+    const timeFieldRef = useRef(null);
+    // A field keeps its typed sections while its controlled value stays
+    // `null`, so a clear remounts the pickers to be sure they show empty.
+    const [resetKey, setResetKey] = useState(0);
 
     useEffect(() => {
       fieldDiv.toggleClass('mismatchReport', error);
@@ -109,128 +138,301 @@ const dateEditor = (fieldDiv, binding, context) => {
 
     useEffect(() => {
       context.clear = () => {
+        pendingDate.current = undefined;
         setSelectedDate(null);
         setDatatype(getDatatypeFromItem(binding.getItem()));
-        setError(false);
+        setDatatypeError(false);
+        setDatePickerError(null);
+        setTimePickerError(null);
+        setDateInput(settledInput);
+        setTimeInput(settledInput);
+        setResetKey((key) => key + 1);
       };
     }, []);
 
-    const onDateChange = (date) => {
+    const changeFrom = (setInput) => (date) => {
       if (date == null) {
-        binding.setValue('');
-        setSelectedDate(null);
+        pendingDate.current = null;
+        setInput((input) => ({ ...input, cleared: true }));
       } else if (date.isValid()) {
-        binding.setValue(getDateValue(date.toDate(), selectedDatatype));
+        pendingDate.current = date.toDate();
         setSelectedDate(date.toDate());
+        setInput(settledInput);
+      } else {
+        pendingDate.current = undefined;
       }
     };
 
+    // Only once the field has re-rendered with the `null` it emitted do its
+    // sections tell unfinished input (some still filled) from a clear (none).
+    const isPartiallyFilled = (fieldRef) =>
+      (fieldRef.current?.getSections() || []).some(
+        (section) => section.value !== ''
+      );
+
+    const commitFrom = (fieldRef, input, setInput) => () => {
+      if (pendingDate.current === undefined) {
+        return;
+      }
+      if (pendingDate.current === null) {
+        if (!input.cleared) {
+          // The other picker emitted this; it commits it on its own blur.
+          return;
+        }
+        if (isPartiallyFilled(fieldRef)) {
+          pendingDate.current = undefined;
+          setInput({ cleared: true, partial: true });
+          return;
+        }
+        setSelectedDate(null);
+        setInput(settledInput);
+      }
+      binding.setValue(getDateValue(pendingDate.current, selectedDatatype));
+      pendingDate.current = undefined;
+    };
+    const onDateChange = changeFrom(setDateInput);
+    const onTimeChange = changeFrom(setTimeInput);
+    const commitDate = commitFrom(dateFieldRef, dateInput, setDateInput);
+    const commitTime = commitFrom(timeFieldRef, timeInput, setTimeInput);
+
+    // min/maxDate bound the picker's navigation, not data validity, so range
+    // reasons are not errors. maxDate stays at its default — the year view
+    // renders a button per year, and a 9999 ceiling makes it crawl.
+    const onDatePickerError = (reason) =>
+      setDatePickerError(
+        reason === 'minDate' || reason === 'maxDate' ? null : reason
+      );
+
+    // Keep the controlled value's instance stable between renders: the picker
+    // detects external changes by reference, and a fresh moment mid-edit
+    // would reset the field and wipe in-progress input.
+    const selectedMoment = useMemo(
+      () => (selectedDate ? moment(selectedDate) : null),
+      [selectedDate]
+    );
+
     const onDatatypeChange = (event) => {
+      // Unfinished input is dropped in favour of the last complete value,
+      // which is what gets written in the new datatype.
+      pendingDate.current = undefined;
+      setDateInput(settledInput);
+      setTimeInput(settledInput);
       binding.setDatatype(getDatatypeURI(event.target.value));
       binding.setValue(getDateValue(selectedDate, event.target.value));
       setDatatype(event.target.value);
-      setError(alternatives[event.target.value] === 'error');
+      setDatatypeError(alternatives[event.target.value] === 'error');
     };
     const inputProps = {
       'aria-labelledby': context.view.getLabelIndex(binding),
       variant: renderingContext.materialVariant,
     };
+    // The picker field's sections container has a fixed intrinsic width; only
+    // a fullWidth field follows the column width set in CSS.
+    const pickerFieldProps = { ...inputProps, fullWidth: true };
     const ngId = useNamedGraphId(binding, context);
-    const visibleDatePicker = alternatives.Date || alternatives.DateTime || alternatives.Year
-      || alternatives.YearMonth || alternatives.MonthDay;
-    const enabledDatePicker = !ngId && (selectedDatatype === 'DateTime' || selectedDatatype === 'Date'
-      || selectedDatatype === 'Year' || selectedDatatype === 'YearMonth' || selectedDatatype === 'MonthDay');
+    const visibleDatePicker =
+      alternatives.Date ||
+      alternatives.DateTime ||
+      alternatives.Year ||
+      alternatives.YearMonth ||
+      alternatives.MonthDay;
+    const enabledDatePicker =
+      !ngId &&
+      (selectedDatatype === 'DateTime' ||
+        selectedDatatype === 'Date' ||
+        selectedDatatype === 'Year' ||
+        selectedDatatype === 'YearMonth' ||
+        selectedDatatype === 'MonthDay');
     return (
-      <>
-      <LocalizationProvider dateAdapter={AdapterMoment}>
-        <span className="rdformsDatePicker">
-          {visibleDatePicker && (
-            <DatePicker
-              renderInput={props => <TextField {...props} {...inputProps} />}
-              leftArrowButtonProps={{ 'aria-label': bundle.date_previousMonth }}
-              rightArrowButtonProps={{ 'aria-label': bundle.date_nextMonth }}
-              KeyboardButtonProps={{ 'aria-label': bundle[datePickerConfig.ariaLabelKey[selectedDatatype]] }}
-              label={bundle[datePickerConfig.labelKey[selectedDatatype]]}
-              {...(enabledDatePicker ? {} : { disabled: true })}
-              value={enabledDatePicker ? selectedDate : null}
-              minDate={moment(new Date('0000-01-01'))}
-              inputFormat={datePickerConfig.format[selectedDatatype]}
-              views={datePickerConfig.views[selectedDatatype]}
-              onChange={onDateChange}
-              autoOk={true}
-              mask={datePickerConfig.mask[selectedDatatype]}
-            />
-          )}
-          {(alternatives.DateTime || alternatives.Time) && (
-            <TimePicker
-              renderInput={props => <TextField {...props} {...inputProps} />}
-              label={bundle.date_time}
-              {...(!ngId && (selectedDatatype === 'DateTime' || selectedDatatype === 'Time') ? {} : { disabled: true })}
-              KeyboardButtonProps={{
-                'aria-label': bundle.date_openTimePicker,
-              }}
-              value={selectedDatatype === 'DateTime' || selectedDatatype === 'Time' ? selectedDate : null}
-              onChange={onDateChange}
-              ampm={false}
-              autoOk={true}
-            />
-          )}
-          {!onlyOneAlternative && (
-            <FormControl variant={renderingContext.materialVariant}>
-              <Select
-                value={selectedDatatype}
-                inputProps={inputProps}
-                error={alternatives[selectedDatatype] === 'error'}
-                onChange={onDatatypeChange}
-                disabled={!!ngId}
-              >
-                {alternatives.Year && (
-                  <MenuItem disabled={alternatives.Year === 'error'} className="rdformsDatatypeOption"
-                            value="Year">{bundle.date_year}</MenuItem>
-                )}
-                {alternatives.Date && (
-                  <MenuItem disabled={alternatives.Date === 'error'} className="rdformsDatatypeOption"
-                            value="Date">{bundle.date_date}</MenuItem>
-                )}
-                {alternatives.DateTime && (
-                  <MenuItem disabled={alternatives.DateTime === 'error'} className="rdformsDatatypeOption"
-                            value="DateTime">
-                    {bundle.date_date_and_time}
-                  </MenuItem>
-                )}
-                {alternatives.YearMonth && (
-                  <MenuItem disabled={alternatives.YearMonth === 'error'} className="rdformsDatatypeOption"
-                            value="YearMonth">{bundle.date_year_and_month}</MenuItem>
-                )}
-                {alternatives.MonthDay && (
-                  <MenuItem disabled={alternatives.MonthDay === 'error'} className="rdformsDatatypeOption"
-                            value="MonthDay">{bundle.date_month_and_day}</MenuItem>
-                )}
-                {alternatives.Time && (
-                  <MenuItem disabled={alternatives.Time === 'error'} className="rdformsDatatypeOption"
-                            value="Time">{bundle.date_time}</MenuItem>
-                )}
-              </Select>
-            </FormControl>
-          )}
-        </span>
-      </LocalizationProvider>
+      <div className="rdformsDateEditor">
+        <LocalizationProvider dateAdapter={AdapterMoment}>
+          <span className="rdformsDatePicker">
+            {visibleDatePicker && (
+              <DatePicker
+                key={`date-${resetKey}`}
+                label={bundle[datePickerConfig.labelKey[selectedDatatype]]}
+                {...(enabledDatePicker ? {} : { disabled: true })}
+                value={
+                  enabledDatePicker && !dateInput.cleared
+                    ? selectedMoment
+                    : null
+                }
+                minDate={moment(new Date('0000-01-01'))}
+                format={datePickerConfig.format[selectedDatatype]}
+                views={datePickerConfig.views[selectedDatatype]}
+                onChange={onDateChange}
+                onAccept={commitDate}
+                onError={onDatePickerError}
+                localeText={{ todayButtonLabel: bundle.today }}
+                slotProps={{
+                  field: { fieldRef: dateFieldRef },
+                  actionBar: {
+                    actions:
+                      selectedDatatype === 'Date' ||
+                      selectedDatatype === 'DateTime'
+                        ? ['today']
+                        : [],
+                  },
+                  // Without an explicit error prop the field colors itself from
+                  // MUI's internal validation, which still counts the ignored
+                  // range reasons.
+                  textField: {
+                    ...pickerFieldProps,
+                    onBlur: commitDate,
+                    error: Boolean(datePickerError) || dateInput.partial,
+                  },
+                  openPickerButton: {
+                    'aria-label':
+                      bundle[datePickerConfig.ariaLabelKey[selectedDatatype]],
+                  },
+                  previousIconButton: {
+                    'aria-label': bundle.date_previousMonth,
+                  },
+                  nextIconButton: { 'aria-label': bundle.date_nextMonth },
+                }}
+              />
+            )}
+            {(alternatives.DateTime || alternatives.Time) && (
+              <TimePicker
+                key={`time-${resetKey}`}
+                label={bundle.date_time}
+                {...(!ngId &&
+                (selectedDatatype === 'DateTime' || selectedDatatype === 'Time')
+                  ? {}
+                  : { disabled: true })}
+                value={
+                  (selectedDatatype === 'DateTime' ||
+                    selectedDatatype === 'Time') &&
+                  !timeInput.cleared
+                    ? selectedMoment
+                    : null
+                }
+                onChange={onTimeChange}
+                onAccept={commitTime}
+                onError={(reason) => setTimePickerError(reason)}
+                ampm={false}
+                localeText={{ todayButtonLabel: bundle.now }}
+                slotProps={{
+                  field: { fieldRef: timeFieldRef },
+                  actionBar: { actions: ['today'] },
+                  textField: {
+                    ...pickerFieldProps,
+                    onBlur: commitTime,
+                    error: Boolean(timePickerError) || timeInput.partial,
+                  },
+                  openPickerButton: {
+                    'aria-label': bundle.date_openTimePicker,
+                  },
+                }}
+              />
+            )}
+            {!onlyOneAlternative && (
+              <FormControl variant={renderingContext.materialVariant}>
+                <Select
+                  value={selectedDatatype}
+                  inputProps={inputProps}
+                  error={alternatives[selectedDatatype] === 'error'}
+                  onChange={onDatatypeChange}
+                  disabled={!!ngId}
+                >
+                  {alternatives.Year && (
+                    <MenuItem
+                      disabled={alternatives.Year === 'error'}
+                      className="rdformsDatatypeOption"
+                      value="Year"
+                    >
+                      {bundle.date_year}
+                    </MenuItem>
+                  )}
+                  {alternatives.Date && (
+                    <MenuItem
+                      disabled={alternatives.Date === 'error'}
+                      className="rdformsDatatypeOption"
+                      value="Date"
+                    >
+                      {bundle.date_date}
+                    </MenuItem>
+                  )}
+                  {alternatives.DateTime && (
+                    <MenuItem
+                      disabled={alternatives.DateTime === 'error'}
+                      className="rdformsDatatypeOption"
+                      value="DateTime"
+                    >
+                      {bundle.date_date_and_time}
+                    </MenuItem>
+                  )}
+                  {alternatives.YearMonth && (
+                    <MenuItem
+                      disabled={alternatives.YearMonth === 'error'}
+                      className="rdformsDatatypeOption"
+                      value="YearMonth"
+                    >
+                      {bundle.date_year_and_month}
+                    </MenuItem>
+                  )}
+                  {alternatives.MonthDay && (
+                    <MenuItem
+                      disabled={alternatives.MonthDay === 'error'}
+                      className="rdformsDatatypeOption"
+                      value="MonthDay"
+                    >
+                      {bundle.date_month_and_day}
+                    </MenuItem>
+                  )}
+                  {alternatives.Time && (
+                    <MenuItem
+                      disabled={alternatives.Time === 'error'}
+                      className="rdformsDatatypeOption"
+                      value="Time"
+                    >
+                      {bundle.date_time}
+                    </MenuItem>
+                  )}
+                </Select>
+              </FormControl>
+            )}
+          </span>
+        </LocalizationProvider>
         {error && (
           <div key="warning" className="rdformsWarning">
-            {context.view.messages.wrongDatatypeField}
+            {datatypeError
+              ? context.view.messages.wrongDatatypeField
+              : context.view.messages.wrongValueField}
           </div>
         )}
-        </>
+      </div>
     );
   };
   fieldDiv.appendChild(<DateComp key={binding.getHash()}></DateComp>);
 };
 
 const editors = renderingContext.editorRegistry;
-editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#date').register(dateEditor);
-editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#dateTime').register(dateEditor);
-editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#gYear').register(dateEditor);
-editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#gMonthDay').register(dateEditor);
-editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#gYearMonth').register(dateEditor);
-editors.itemtype('text').datatype('http://www.w3.org/2001/XMLSchema#time').register(dateEditor);
-editors.itemtype('text').datatype('http://purl.org/dc/terms/W3CDTF').register(dateEditor);
+editors
+  .itemtype('text')
+  .datatype('http://www.w3.org/2001/XMLSchema#date')
+  .register(dateEditor);
+editors
+  .itemtype('text')
+  .datatype('http://www.w3.org/2001/XMLSchema#dateTime')
+  .register(dateEditor);
+editors
+  .itemtype('text')
+  .datatype('http://www.w3.org/2001/XMLSchema#gYear')
+  .register(dateEditor);
+editors
+  .itemtype('text')
+  .datatype('http://www.w3.org/2001/XMLSchema#gMonthDay')
+  .register(dateEditor);
+editors
+  .itemtype('text')
+  .datatype('http://www.w3.org/2001/XMLSchema#gYearMonth')
+  .register(dateEditor);
+editors
+  .itemtype('text')
+  .datatype('http://www.w3.org/2001/XMLSchema#time')
+  .register(dateEditor);
+editors
+  .itemtype('text')
+  .datatype('http://purl.org/dc/terms/W3CDTF')
+  .register(dateEditor);

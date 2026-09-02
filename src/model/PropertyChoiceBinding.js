@@ -1,10 +1,11 @@
-/* eslint-disable class-methods-use-this */
 import ChoiceBinding from './ChoiceBinding';
 
 export default class PropertyChoiceBinding extends ChoiceBinding {
   /**
    * Are only used as the first child of a PropertyGroupBinding to capture
    * a variable predicate.
+   *
+   * @param {object} params the item and RDF context forwarded to the ChoiceBinding constructor.
    */
   constructor(params) {
     super(params);
@@ -15,14 +16,14 @@ export default class PropertyChoiceBinding extends ChoiceBinding {
    * Remove shold not be doubled, hence it is handled by the objectBinding
    * delegated from the parent PropertyGroupBinding.
    */
-  remove() {
-  }
+  remove() {}
 
   /**
    * The object binding handles the RDF statement, hence go through it to set
    * the predicate, note not the setValue function because that sets the object
    * rather than the predicate.
-   * @param {Object} value
+   *
+   * @param {object} value
    */
   setValue(value) {
     this._objectBinding.setPredicate(value);
@@ -38,6 +39,8 @@ export default class PropertyChoiceBinding extends ChoiceBinding {
    * enough to enable validity. Hence, this PropertyChoiceBinding can
    * be false all the time since it has no children and does not affect
    * the above hierarchy (and does not control assertment of statements).
+   *
+   * @returns {boolean} always false; see the description above.
    */
   isValid() {
     return false;
@@ -46,6 +49,5 @@ export default class PropertyChoiceBinding extends ChoiceBinding {
   /**
    * Does nothing, similar reason as for isValid.
    */
-  updateAssertions() {
-  }
+  updateAssertions() {}
 }

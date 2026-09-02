@@ -14,10 +14,14 @@ const createElement = (nodeStr, id) => {
 
 renderingContext.domQuery = (selector, node) => node.querySelector(selector);
 
-renderingContext.domCreate = (nodeStr, parent, id) => parent.appendChild(createElement(nodeStr, id));
+renderingContext.domCreate = (nodeStr, parent, id) =>
+  parent.appendChild(createElement(nodeStr, id));
 
 renderingContext.domCreateAfter = (nodeStr, sibling, id) =>
-  sibling.parentNode.insertBefore(createElement(nodeStr, id), sibling.nextSibling);
+  sibling.parentNode.insertBefore(
+    createElement(nodeStr, id),
+    sibling.nextSibling
+  );
 
 renderingContext.domSetAttr = (node, attr, value) => {
   if (value === '' || value === null) {
@@ -41,7 +45,8 @@ renderingContext.domClassToggle = (node, classStr, addOrRemove) => {
   });
 };
 
-renderingContext.prePresenterViewRenderer = renderingContext.preEditorViewRenderer;
+renderingContext.prePresenterViewRenderer =
+  renderingContext.preEditorViewRenderer;
 
 renderingContext.addTruncateControl = (fieldsDiv, context) => {
   const bundle = context.view.messages;
@@ -59,4 +64,4 @@ renderingContext.addTruncateControl = (fieldsDiv, context) => {
   showLess.onclick = () => {
     renderingContext.domClassToggle(fieldsDiv, 'rdformsTruncated', true);
   };
-}
+};

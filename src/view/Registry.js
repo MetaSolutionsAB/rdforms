@@ -6,12 +6,12 @@ const matchRdfType = (item, type) => {
 };
 
 const arrayCompare = (arr1, arr2) => {
-  const _arr1 = Array.isArray(arr1) ? arr1 : (arr1 != null ? [arr1] : []);
-  const _arr2 = Array.isArray(arr2) ? arr2 : (arr2 != null ? [arr2] : []);
+  const _arr1 = Array.isArray(arr1) ? arr1 : arr1 != null ? [arr1] : [];
+  const _arr2 = Array.isArray(arr2) ? arr2 : arr2 != null ? [arr2] : [];
   if (_arr1.length !== _arr2.length) {
     return false;
   }
-  return _arr1.every(v => _arr2.includes(v));
+  return _arr1.every((v) => _arr2.includes(v));
 };
 
 const matchConstraint = (item, constraints) => {
@@ -44,7 +44,8 @@ const filterMethods = [
   'predicate',
   'style',
   'item',
-  'check'];
+  'check',
+];
 const Filter = function (registry) {
   this.filterObj = {};
   this.registry = registry;
@@ -62,7 +63,7 @@ filterMethods.forEach((meth) => {
         Object.keys(value).forEach((key) => {
           const vv = value[key];
           if (Array.isArray(vv)) {
-            cstr[ns.expand(key)] = vv.map(v => ns.expand(v));
+            cstr[ns.expand(key)] = vv.map((v) => ns.expand(v));
           } else {
             cstr[ns.expand(key)] = ns.expand(vv);
           }
@@ -189,7 +190,10 @@ export default class Registry {
 
     if (filter.item) {
       prio += this.priorities.ITEM;
-      if (item !== filter.item && (!filter.item.getId || item.getId() !== filter.item.getId())) {
+      if (
+        item !== filter.item &&
+        (!filter.item.getId || item.getId() !== filter.item.getId())
+      ) {
         return -1;
       }
     }
@@ -228,7 +232,10 @@ export default class Registry {
     for (let i = 0; i < this.components.length; i++) {
       component = this.components[i];
       prio = this.calculatePriority(item, component.filter);
-      if (prio > bestPrio && (typeof limitPrio === 'undefined' || prio < limitPrio)) {
+      if (
+        prio > bestPrio &&
+        (typeof limitPrio === 'undefined' || prio < limitPrio)
+      ) {
         bestComponent = component;
         bestPrio = prio;
       }
@@ -244,42 +251,43 @@ export default class Registry {
   }
 
   itemtype(itemtype) {
-    return (new Filter(this)).itemtype(itemtype);
+    return new Filter(this).itemtype(itemtype);
   }
 
-  choices(kindOfChoicesRequired) { // 'none', 'static', 'dynamic' or 'any', 'any' is default.
-    return (new Filter(this)).choices(kindOfChoicesRequired);
+  choices(kindOfChoicesRequired) {
+    // 'none', 'static', 'dynamic' or 'any', 'any' is default.
+    return new Filter(this).choices(kindOfChoicesRequired);
   }
 
   nodetype(nodetype) {
-    return (new Filter(this)).nodetype(nodetype);
+    return new Filter(this).nodetype(nodetype);
   }
 
   datatype(datatype) {
-    return (new Filter(this)).datatype(datatype);
+    return new Filter(this).datatype(datatype);
   }
 
   rdftype(rdftype) {
-    return (new Filter(this)).rdftype(rdftype);
+    return new Filter(this).rdftype(rdftype);
   }
 
   constraint(constraint) {
-    return (new Filter(this)).constraint(constraint);
+    return new Filter(this).constraint(constraint);
   }
 
   predicate(predicate) {
-    return (new Filter(this)).predicate(predicate);
+    return new Filter(this).predicate(predicate);
   }
 
   style(style) {
-    return (new Filter(this)).style(style);
+    return new Filter(this).style(style);
   }
 
   item(item) {
-    return (new Filter(this)).item(item);
+    return new Filter(this).item(item);
   }
 
   check(func) {
-    return (new Filter(this)).check(func);
+    return new Filter(this).check(func);
   }
 }

@@ -2,10 +2,11 @@ import renderingContext from '../renderingContext';
 import * as engine from '../../model/engine';
 import { getNamedGraphId } from '../viewUtils';
 
-
 renderingContext.addRemoveButton = (fieldDiv, binding, context) => {
   const disabledAttr = getNamedGraphId(binding, context) ? 'disabled' : '';
-  const $remove = jquery(`<button ${disabledAttr} class="fas fa-times action rdformsActionButton">`)
+  const $remove = jquery(
+    `<button ${disabledAttr} class="fas fa-times action rdformsActionButton">`
+  )
     .attr('title', context.view.messages.edit_remove)
     .appendTo(context.controlDiv);
   const cardTr = binding.getCardinalityTracker();
@@ -15,7 +16,11 @@ renderingContext.addRemoveButton = (fieldDiv, binding, context) => {
   });
 
   $remove.click(() => {
-    if (!cardTr.isMin() || !cardTr.isDepsOk() || cardTr.getCardinality() === 1) {
+    if (
+      !cardTr.isMin() ||
+      !cardTr.isDepsOk() ||
+      cardTr.getCardinality() === 1
+    ) {
       if (cardTr.getCardinality() === 1) {
         if (binding.getItem().getType() === 'choice') {
           binding.setChoice(null);
@@ -42,7 +47,9 @@ renderingContext.addRemoveButton = (fieldDiv, binding, context) => {
 };
 
 renderingContext.addExpandButton = (rowDiv, labelDiv, item, context) => {
-  const $expand = jquery('<button class="fas fa-plus action rdformsActionButton">')
+  const $expand = jquery(
+    '<button class="fas fa-plus action rdformsActionButton">'
+  )
     .attr('title', context.view.messages.edit_expand)
     .appendTo(labelDiv)
     .click(() => {
@@ -76,7 +83,9 @@ renderingContext.addGroupButtons = (rowDiv, labelDiv, binding, context) => {
     });
   }
   const disabledAttr = getNamedGraphId(binding, context) ? 'disabled' : '';
-  const $remove = jquery(`<button ${disabledAttr} class="action fas fa-times rdformsActionButton">`)
+  const $remove = jquery(
+    `<button ${disabledAttr} class="action fas fa-times rdformsActionButton">`
+  )
     .attr('title', context.view.messages.edit_remove)
     .appendTo(labelDiv);
 
@@ -127,7 +136,12 @@ renderingContext.addGroupButtons = (rowDiv, labelDiv, binding, context) => {
   });
 };
 
-renderingContext.addCreateChildButton = (rowDiv, labelDiv, binding, context) => {
+renderingContext.addCreateChildButton = (
+  rowDiv,
+  labelDiv,
+  binding,
+  context
+) => {
   const parentBinding = binding.getParent();
   const item = binding.getItem();
   const cardTr = binding.getCardinalityTracker();

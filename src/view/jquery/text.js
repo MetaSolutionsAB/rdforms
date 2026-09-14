@@ -125,9 +125,6 @@ presenters
 // Presenter for text.
 presenters.itemtype('text').register((fieldDiv, binding, context) => {
   const language = binding.getLanguage();
-  if (context.view.showLanguage && language) {
-    jquery('<div class="rdformsLanguage">').text(language).appendTo(fieldDiv);
-  }
   const text = escape(
     binding.getItem().hasStyle('showValue')
       ? binding.getValue()
@@ -148,7 +145,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
     parentBinding.getStatement() != null &&
     parentBinding.getStatement().getType() === 'uri'
   ) {
-    const $a = jquery('<a class="rdformsUrl">')
+    const $a = jquery('<a class="rdformsUrl rdformsValue">')
       .attr('href', utils.sanitizeUrl(parentBinding.getStatement().getValue()))
       .html(text)
       .appendTo(fieldDiv);
@@ -157,10 +154,20 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
     }
     system.attachLinkBehaviour($a[0], parentBinding);
   } else {
-    const $t = jquery('<div>').html(text).appendTo(fieldDiv);
+    const $t = jquery('<div class="rdformsValue">')
+      .html(text)
+      .appendTo(fieldDiv);
     if (language) {
       $t.attr('lang', language);
     }
+  }
+
+  // Emit the language indicator after the value so DOM/reading order matches the
+  // visual order (value first, language to its right); a flex row on the field
+  // keeps the right-aligned look without floating the indicator ahead of the value.
+  if (context.view.showLanguage && language) {
+    jquery(fieldDiv).toggleClass('rdformsWithLanguage', true);
+    jquery('<div class="rdformsLanguage">').text(language).appendTo(fieldDiv);
   }
 
   if (binding.getItem().hasStyle('multiline')) {

@@ -338,8 +338,16 @@ a.rdformsUrl:hover {
 }
 
 
+.rdformsPresenter .rdformsWithLanguage {
+	display: flex;
+	align-items: flex-start;
+}
+.rdformsPresenter .rdformsWithLanguage > .rdformsValue {
+	flex: 1 1 auto;
+	min-width: 0;
+}
 .rdformsPresenter .rdformsLanguage {
- 	float: right;
+	flex: 0 0 auto;
 /*	border-left: 1px solid #E6E6E6;*/
 	padding-left: 0.7em;
  }

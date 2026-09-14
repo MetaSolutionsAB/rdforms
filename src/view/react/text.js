@@ -225,14 +225,6 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
     } else {
       renderingContext.domClassToggle(fieldDiv, 'rdformsSingleline', true);
     }
-
-    if (context.view.showLanguage && language) {
-      fieldDiv.appendChild(
-        <span className="rdformsLanguage" key={`lang_${binding.getHash()}`}>
-          {language}
-        </span>
-      );
-    }
   }
 
   // The text is shown as a link to the parents bindings URI if:
@@ -294,5 +286,16 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
     } else {
       fieldDiv.appendChild(<span key={binding.getHash()}>{lbl}</span>);
     }
+  }
+
+  // Emit the language indicator after the value so DOM/reading order matches the
+  // visual order (value first, language after) — the value node carries the
+  // native `lang` attribute, so only the ordering of the visible tag matters.
+  if (!item.hasStyle('inline') && context.view.showLanguage && language) {
+    fieldDiv.appendChild(
+      <span className="rdformsLanguage" key={`lang_${binding.getHash()}`}>
+        {language}
+      </span>
+    );
   }
 });

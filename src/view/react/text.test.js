@@ -21,11 +21,12 @@ const template = (...children) => ({
   auxilliary: [{ '@id': 'root', '@type': 'group', content: children }],
 });
 
-const languageItem = () => ({
+const languageItem = (extra = {}) => ({
   '@type': 'text',
   nodetype: 'LANGUAGE_LITERAL',
   property: TITLE,
   label: { en: 'Title' },
+  ...extra,
 });
 
 const GRAPH = {
@@ -37,8 +38,10 @@ const GRAPH = {
   },
 };
 
-const render = (viewParams = {}) => {
-  const root = new ItemStore().createTemplate(template(languageItem()));
+const render = (viewParams = {}, itemExtra = {}) => {
+  const root = new ItemStore().createTemplate(
+    template(languageItem(itemExtra))
+  );
   const binding = match(new Graph(GRAPH), RESOURCE, root);
   const node = document.createElement('div');
   document.body.appendChild(node);
@@ -80,5 +83,14 @@ describe('react text presenter language ordering', () => {
     const node = render({ showLanguage: false });
     expect(node.querySelector('.rdformsLanguage')).toBeNull();
     expect(node.querySelector('[lang="en"]')).not.toBeNull();
+  });
+
+  test('an inline item suppresses the indicator and its flex wrapper', () => {
+    const node = render({}, { styles: ['inline'] });
+    // The value still renders (and stays lang-tagged), but the visible language
+    // indicator and the flex wrapper are both gated on the item not being inline.
+    expect(node.querySelector('[lang="en"]')).not.toBeNull();
+    expect(node.querySelector('.rdformsLanguage')).toBeNull();
+    expect(node.querySelector('.rdformsWithLanguage')).toBeNull();
   });
 });

@@ -266,7 +266,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
       <a
         {...attrs}
         key={binding.getHash()}
-        className="rdformsUrl"
+        className="rdformsUrl rdformsValue"
         href={utils.sanitizeUrl(parentBinding.getStatement().getValue())}
       >
         <span lang={displayLang}>{displayLabel}</span>
@@ -279,19 +279,25 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
       : binding.getGist();
     if (language) {
       fieldDiv.appendChild(
-        <span lang={language} key={binding.getHash()}>
+        <span className="rdformsValue" lang={language} key={binding.getHash()}>
           {lbl}
         </span>
       );
     } else {
-      fieldDiv.appendChild(<span key={binding.getHash()}>{lbl}</span>);
+      fieldDiv.appendChild(
+        <span className="rdformsValue" key={binding.getHash()}>
+          {lbl}
+        </span>
+      );
     }
   }
 
   // Emit the language indicator after the value so DOM/reading order matches the
-  // visual order (value first, language after) — the value node carries the
-  // native `lang` attribute, so only the ordering of the visible tag matters.
+  // visual order (value first, language to its right); toggling the flex-row
+  // wrapper keeps the right-aligned look (the value node is the flexible child)
+  // without floating the indicator ahead of the value.
   if (!item.hasStyle('inline') && context.view.showLanguage && language) {
+    renderingContext.domClassToggle(fieldDiv, 'rdformsWithLanguage', true);
     fieldDiv.appendChild(
       <span className="rdformsLanguage" key={`lang_${binding.getHash()}`}>
         {language}

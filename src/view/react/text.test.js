@@ -67,6 +67,13 @@ describe('react text presenter language ordering', () => {
     expect(
       value.compareDocumentPosition(language) & Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
+    // Both live in the field container, which opts into the flex layout that
+    // keeps the indicator right-aligned (the value is the flexible child).
+    expect(value.classList.contains('rdformsValue')).toBe(true);
+    expect(value.parentNode).toBe(language.parentNode);
+    expect(value.parentNode.classList.contains('rdformsWithLanguage')).toBe(
+      true
+    );
   });
 
   test('showLanguage:false drops the indicator but keeps the lang attribute', () => {

@@ -109,11 +109,17 @@ describe('jquery text presenter language ordering', () => {
     expect(
       value.compareDocumentPosition(language) & Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
-    // Both live in the field container, which opts into the flex layout.
+    // Value and indicator share one flex-row wrapper.
     expect(value.parentNode).toBe(language.parentNode);
-    expect(value.parentNode.classList.contains('rdformsWithLanguage')).toBe(
-      true
-    );
+    const wrapper = value.parentNode;
+    expect(wrapper.classList.contains('rdformsWithLanguage')).toBe(true);
+    // The wrapper is a dedicated child of the field, not the field itself, so a
+    // validation message appended to the field stays a block below the row
+    // instead of joining it as a third flex item.
+    expect(wrapper.classList.contains('rdformsField')).toBe(false);
+    const field = node.querySelector('.rdformsField');
+    expect(field).not.toBeNull();
+    expect(field.contains(wrapper)).toBe(true);
   });
 
   test('showLanguage:false drops the indicator but keeps the lang attribute', () => {
@@ -141,8 +147,9 @@ describe('jquery text presenter language ordering', () => {
       anchor.compareDocumentPosition(language) &
         Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
-    expect(anchor.parentNode.classList.contains('rdformsWithLanguage')).toBe(
-      true
-    );
+    const wrapper = anchor.parentNode;
+    expect(wrapper.classList.contains('rdformsWithLanguage')).toBe(true);
+    // The wrapper is a dedicated element, not the field container itself.
+    expect(wrapper.classList.contains('rdformsField')).toBe(false);
   });
 });

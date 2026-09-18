@@ -227,6 +227,18 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
     }
   }
 
+  // When the language indicator is shown, the value and the indicator share a
+  // dedicated flex-row wrapper (a child of the field) so a validation message
+  // appended to the field stays a block below the row rather than joining it as
+  // a third flex item; without an indicator the value stays a direct child.
+  const showLanguageIndicator =
+    !item.hasStyle('inline') && context.view.showLanguage && language;
+  let valueParent = fieldDiv;
+  if (showLanguageIndicator) {
+    valueParent = renderingContext.domCreate('div', fieldDiv);
+    renderingContext.domClassToggle(valueParent, 'rdformsWithLanguage', true);
+  }
+
   // The text is shown as a link to the parents bindings URI if:
   // 1) The current item is indicated to be a label.
   // 2) The presenter is not at topLevel.
@@ -262,7 +274,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
         ? utils.foreignLang(resolved.lang, pageLocale)
         : undefined;
     }
-    fieldDiv.appendChild(
+    valueParent.appendChild(
       <a
         {...attrs}
         key={binding.getHash()}
@@ -278,13 +290,13 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
       ? binding.getValue()
       : binding.getGist();
     if (language) {
-      fieldDiv.appendChild(
+      valueParent.appendChild(
         <span className="rdformsValue" lang={language} key={binding.getHash()}>
           {lbl}
         </span>
       );
     } else {
-      fieldDiv.appendChild(
+      valueParent.appendChild(
         <span className="rdformsValue" key={binding.getHash()}>
           {lbl}
         </span>
@@ -293,12 +305,11 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
   }
 
   // Emit the language indicator after the value so DOM/reading order matches the
-  // visual order (value first, language to its right); toggling the flex-row
-  // wrapper keeps the right-aligned look (the value node is the flexible child)
-  // without floating the indicator ahead of the value.
-  if (!item.hasStyle('inline') && context.view.showLanguage && language) {
-    renderingContext.domClassToggle(fieldDiv, 'rdformsWithLanguage', true);
-    fieldDiv.appendChild(
+  // visual order (value first, language to its right); both live in the flex-row
+  // wrapper created above, which keeps the right-aligned look (the value node is
+  // the flexible child) without floating the indicator ahead of the value.
+  if (showLanguageIndicator) {
+    valueParent.appendChild(
       <span className="rdformsLanguage" key={`lang_${binding.getHash()}`}>
         {language}
       </span>

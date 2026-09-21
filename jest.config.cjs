@@ -12,7 +12,11 @@ const shared = {
         configFile: false,
         babelrc: false,
         presets: [['@babel/preset-env', { targets: { node: 'current' } }]],
-        plugins: ['@babel/plugin-transform-class-properties'],
+        // Mirror webpack's JSX transform so the react-flavor view tests render.
+        plugins: [
+          '@babel/plugin-transform-class-properties',
+          ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
+        ],
       },
     ],
   },

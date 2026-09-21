@@ -14,6 +14,10 @@ export default {
       'value': "Andreas Homepage",
       'type': 'literal',
       'lang': 'en',
+    }, {
+      'value': "Annas hemsida",
+      'type': 'literal',
+      'lang': 'sv',
     }],
     'http://purl.org/dc/terms/creator': [{ 'value': '_:person', 'type': 'bnode' }],
     'http://purl.org/dc/terms/subject': [{

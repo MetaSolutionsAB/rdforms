@@ -125,9 +125,6 @@ presenters
 // Presenter for text.
 presenters.itemtype('text').register((fieldDiv, binding, context) => {
   const language = binding.getLanguage();
-  if (context.view.showLanguage && language) {
-    jquery('<div class="rdformsLanguage">').text(language).appendTo(fieldDiv);
-  }
   const text = escape(
     binding.getItem().hasStyle('showValue')
       ? binding.getValue()
@@ -140,6 +137,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
   // 3) The current item is first in the parents list of children.
   // 4) The parent binding corresponds to a URI
   const parentBinding = binding.getParent();
+  let valueNode;
   if (
     binding.getItem().hasStyle('label') &&
     context.view.topLevel !== true &&
@@ -148,7 +146,7 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
     parentBinding.getStatement() != null &&
     parentBinding.getStatement().getType() === 'uri'
   ) {
-    const $a = jquery('<a class="rdformsUrl">')
+    const $a = jquery('<a class="rdformsUrl rdformsValue">')
       .attr('href', utils.sanitizeUrl(parentBinding.getStatement().getValue()))
       .html(text)
       .appendTo(fieldDiv);
@@ -156,11 +154,28 @@ presenters.itemtype('text').register((fieldDiv, binding, context) => {
       $a.attr('lang', language);
     }
     system.attachLinkBehaviour($a[0], parentBinding);
+    valueNode = $a;
   } else {
-    const $t = jquery('<div>').html(text).appendTo(fieldDiv);
+    const $t = jquery('<div class="rdformsValue">')
+      .html(text)
+      .appendTo(fieldDiv);
     if (language) {
       $t.attr('lang', language);
     }
+    valueNode = $t;
+  }
+
+  // Emit the language indicator after the value so DOM/reading order matches the
+  // visual order (value first, language to its right). The value and indicator
+  // share a dedicated flex row so a validation message appended to the field
+  // stays a block below the row rather than joining it as a third flex item.
+  if (context.view.showLanguage && language) {
+    const languageRow = jquery('<div class="rdformsWithLanguage">');
+    valueNode.appendTo(languageRow);
+    jquery('<div class="rdformsLanguage">')
+      .text(language)
+      .appendTo(languageRow);
+    languageRow.appendTo(fieldDiv);
   }
 
   if (binding.getItem().hasStyle('multiline')) {

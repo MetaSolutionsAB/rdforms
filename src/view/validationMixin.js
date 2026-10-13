@@ -1,7 +1,7 @@
 import renderingContext from './renderingContext';
 import CODES from '../model/CODES';
 import { create } from '../model/engine';
-import { bindingReport } from '../model/validate';
+import { bindingReport, isMissingDeps } from '../model/validate';
 
 /**
  * Type aliases for JSDoc references to types not imported as values in this file.
@@ -50,7 +50,7 @@ export default (Base) =>
       if (bindings.length > 0) {
         return true;
       }
-      if (item.hasStyle('deprecated')) {
+      if (item.hasStyle('deprecated') || isMissingDeps(this.binding, item)) {
         return false;
       }
       if (
@@ -79,16 +79,19 @@ export default (Base) =>
     }
 
     /**
-     * Has no effect on items that with node type different than LANGUAGE_LITERAL or if
-     * filterTranslations is set to false. Otherwise a single binding is returned with the best
-     * language match according to the locale.
+     * Pads the bindings up to the item's preferred (or else minimum) cardinality with
+     * placeholder bindings coded TOO_FEW_VALUES_MIN or TOO_FEW_VALUES_PREF, so missing
+     * values render with an error or warning marker.
      *
      * @param {Item} item the template item to prepare bindings for
      * @param {Binding[]} bindings the existing bindings for the item
-     * @returns {Binding[]} an array with a single value if the filtering has taken place,
-     * otherwise same as input bindings.
+     * @returns {Binding[]} the bindings, padded with placeholders when values are missing
      */
     prepareBindings(item, bindings) {
+      // Validation skips cardinality for items with unmatched deps, so no placeholders.
+      if (isMissingDeps(this.binding, item)) {
+        return bindings;
+      }
       let paddedBindings = bindings;
       const card = item.getCardinality();
       let target;

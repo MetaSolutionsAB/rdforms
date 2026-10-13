@@ -3,6 +3,16 @@
 All notable changes to the RDForms project will be documented in this file. This project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.19.0](https://bitbucket.org/metasolutions/rdforms/branches/compare/10.19.0%0D10.18.0) - 2026-10-13
+
+The build-only packages `circular-dependency-plugin` and `terser-webpack-plugin` are no longer runtime dependencies,
+so consumers no longer install them.
+
+### Bug
+
+- [RDFORMS-221](https://metasolutions.atlassian.net/browse/RDFORMS-221) Render the language indicator after its value in the jquery and react presenters so reading order matches visual order (WCAG 1.3.2)
+- [RDFORMS-223](https://metasolutions.atlassian.net/browse/RDFORMS-223) Validation presenter no longer reports missing mandatory values for fields whose dependencies are not fulfilled
+
 ## [10.18.0](https://bitbucket.org/metasolutions/rdforms/branches/compare/10.18.0%0D10.17.0) - 2026-09-02
 
 The React renderer now targets MUI 9 (`@mui/material`, `@mui/icons-material` and `@mui/x-date-pickers` `^9`) and

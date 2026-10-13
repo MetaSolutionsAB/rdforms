@@ -64,25 +64,27 @@ const updateViaCardinalityTracker = (bindings, code) => {
   }
 };
 
-const doNotProceedFurther = (groupBinding, childItem) => {
-  // Don't check further if the childItem is deprecated
-  if (childItem.hasStyle('deprecated')) {
-    return true;
+/**
+ * Cardinality is not validated for items whose deps path is unmatched, as the editor
+ * hides them when empty. Shared with the validation presenter so it doesn't flag what
+ * the report skips.
+ *
+ * @param {import('./GroupBinding').default} parentBinding the binding the item's
+ * deps path is resolved relative to
+ * @param {import('../template/Item').default} item
+ * @returns {boolean}
+ */
+const isMissingDeps = (parentBinding, item) => {
+  const path = item.getDeps();
+  if (!path) {
+    return false;
   }
-
-  // Don't check further if the binding is hidden due to missing dependencies
-  const childPath = childItem.getDeps();
-  if (childPath) {
-    const fromBinding = findBindingRelativeToParentBinding(
-      groupBinding,
-      childPath
-    );
-    if (!matchPathBelowBinding(fromBinding, childPath)) {
-      return true;
-    }
-  }
-  return false;
+  const fromBinding = findBindingRelativeToParentBinding(parentBinding, path);
+  return !matchPathBelowBinding(fromBinding, path);
 };
+
+const doNotProceedFurther = (groupBinding, childItem) =>
+  childItem.hasStyle('deprecated') || isMissingDeps(groupBinding, childItem);
 
 const _createReport = (groupbinding, report, firstLevel) => {
   if (groupbinding.getMatchingCode() !== CODES.OK) {
@@ -378,7 +380,7 @@ const _resourceReport = (resource, graph, template, ignoreResources) => {
   return report;
 };
 
-export { graphReport, bindingReport };
+export { graphReport, bindingReport, isMissingDeps };
 
 export default {
   // TODO @valentino don't export default. Used in EntryScape

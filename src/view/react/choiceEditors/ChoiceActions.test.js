@@ -20,6 +20,9 @@ const INLINE_SEARCH_PROPERTY = 'http://example.org/inlineSearch';
 
 let choices = {};
 let selectedInChooser;
+let searchResults = [];
+// The field the editor hands its chooser, to compare with the actions' field
+let chooserField;
 
 // A chooser without search gives ChoiceLookup, one with search gives
 // ChoiceLookupAndInlineSearch.
@@ -29,12 +32,15 @@ const registerChooser = (property, chooser) =>
     .predicate(property)
     .register({
       getChoice: (item, value) => choices[value] ?? { value },
-      show: (binding, onSelect) => onSelect(selectedInChooser),
+      show: (binding, onSelect, field) => {
+        chooserField = field;
+        if (selectedInChooser) onSelect(selectedInChooser);
+      },
       ...chooser,
     });
 
 registerChooser(LOOKUP_PROPERTY);
-registerChooser(INLINE_SEARCH_PROPERTY, { search: async () => [] });
+registerChooser(INLINE_SEARCH_PROPERTY, { search: async () => searchResults });
 
 const action = (label, extra = {}) => ({
   label,
@@ -92,6 +98,8 @@ const getSearchButton = (node) =>
 afterEach(() => {
   choices = {};
   selectedInChooser = undefined;
+  searchResults = [];
+  chooserField = undefined;
   document.body.innerHTML = '';
 });
 
@@ -115,10 +123,11 @@ describe.each([
 
     act(() => getButton(node, 'First').click());
     act(() => getButton(node, 'Second').click());
+    act(() => getSearchButton(node).click());
 
     const [binding, field] = first.onClick.mock.calls[0];
     expect(binding.getValue()).toBe(VALUE);
-    expect(field.appendChild).toEqual(expect.any(Function));
+    expect(field).toBe(chooserField);
     expect(second.onClick).toHaveBeenCalledWith(binding, field);
     expect(getButton(node, 'First').title).toBe('First');
   });
@@ -163,6 +172,37 @@ test('ChoiceLookup renders the actions of a value picked in the chooser', () => 
   act(() => getSearchButton(node).click());
 
   expect(getButton(node, 'First')).not.toBeNull();
+});
+
+test('ChoiceLookupAndInlineSearch renders the actions of a value picked in the inline search', async () => {
+  jest.useFakeTimers();
+  searchResults = [{ value: VALUE, actions: [action('First')] }];
+  const node = render(INLINE_SEARCH_PROPERTY);
+
+  act(() => getButton(node, 'Open').click());
+  // Past the search throttle, then let the search promise resolve
+  await act(async () => jest.advanceTimersByTime(200));
+  act(() => node.querySelector('[role="option"]').click());
+  jest.useRealTimers();
+
+  expect(getButton(node, 'First')).not.toBeNull();
+});
+
+test('ChoiceLookupAndInlineSearch renders the actions of the upgraded choice', () => {
+  choices[VALUE] = {
+    value: VALUE,
+    actions: [action('Before')],
+    upgrade: (binding, onUpgrade) =>
+      onUpgrade({ value: VALUE, actions: [action('After')] }),
+  };
+  const node = render(INLINE_SEARCH_PROPERTY, { type: 'uri', value: VALUE });
+
+  act(() =>
+    node.querySelector('[data-testid="BuildIcon"]').closest('button').click()
+  );
+
+  expect(getButton(node, 'Before')).toBeNull();
+  expect(getButton(node, 'After')).not.toBeNull();
 });
 
 test('ChoiceLookupAndInlineSearch renders the actions before the upgrade button', () => {

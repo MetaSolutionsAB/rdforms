@@ -5,18 +5,14 @@ import IconButton from '@mui/material/IconButton';
  * the chooserRegistry documentation in renderingContext.
  *
  * @param {object} props
- * @param {object} [props.choice] the original choice object, not a localized copy
+ * @param {object[]} [props.actions]
  * @param {import('../../../model/Binding').default} props.binding
  * @param {object} props.field
  * @param {boolean} props.readOnly true when the field is disabled by a named graph
- * @returns {import('react').ReactElement|null}
+ * @returns {import('react').ReactElement[]}
  */
-const ChoiceActions = ({ choice, binding, field, readOnly }) => {
-  const actions = choice?.actions;
-  if (!actions?.length) {
-    return null;
-  }
-  return actions.map((action, index) => (
+const ChoiceActions = ({ actions = [], binding, field, readOnly }) =>
+  actions.map((action, index) => (
     <IconButton
       key={action.id ?? index}
       aria-label={action.label}
@@ -27,6 +23,5 @@ const ChoiceActions = ({ choice, binding, field, readOnly }) => {
       {action.icon}
     </IconButton>
   ));
-};
 
 export default ChoiceActions;

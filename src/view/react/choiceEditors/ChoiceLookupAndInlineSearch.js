@@ -139,7 +139,7 @@ const ChoiceLookupAndInlineSearch = (props) => {
       />
       <ShowButton {...props} onClick={showHandler} disabled={!!ngId} />
       <ChoiceActions
-        choice={value?.original}
+        actions={value?.original.actions}
         binding={binding}
         field={props.field}
         readOnly={!!ngId}

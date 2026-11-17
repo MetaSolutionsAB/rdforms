@@ -86,6 +86,9 @@ const buttonNames = (node) =>
 const getButton = (node, label) =>
   node.querySelector(`button[aria-label="${label}"]`);
 
+const getSearchButton = (node) =>
+  node.querySelector('[data-testid="SearchIcon"]').closest('button');
+
 afterEach(() => {
   choices = {};
   selectedInChooser = undefined;
@@ -149,10 +152,7 @@ describe.each([
 
     expect(getButton(node, 'Inspect').disabled).toBe(false);
     expect(getButton(node, 'Edit').disabled).toBe(true);
-    expect(
-      node.querySelector('[data-testid="SearchIcon"]').closest('button')
-        .disabled
-    ).toBe(true);
+    expect(getSearchButton(node).disabled).toBe(true);
   });
 });
 
@@ -160,9 +160,7 @@ test('ChoiceLookup renders the actions of a value picked in the chooser', () => 
   selectedInChooser = { value: VALUE, actions: [action('First')] };
   const node = render(LOOKUP_PROPERTY);
 
-  act(() =>
-    node.querySelector('[data-testid="SearchIcon"]').closest('button').click()
-  );
+  act(() => getSearchButton(node).click());
 
   expect(getButton(node, 'First')).not.toBeNull();
 });

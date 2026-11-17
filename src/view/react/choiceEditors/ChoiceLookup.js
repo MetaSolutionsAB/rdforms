@@ -67,7 +67,7 @@ const ChoiceLookup = (props) => {
       />
       {/* Localized until a new value is picked, then the original choice */}
       <ChoiceActions
-        choice={choice?.original ?? choice}
+        actions={(choice?.original ?? choice)?.actions}
         binding={binding}
         field={props.field}
         readOnly={!!ngId}

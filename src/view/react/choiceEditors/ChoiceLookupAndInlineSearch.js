@@ -10,6 +10,7 @@ import {
   useNamedGraphId,
 } from '../hooks';
 import ShowButton from './ShowButton';
+import ChoiceActions from './ChoiceActions';
 import labelledInputParams from './labelledInputParams';
 
 let globalChoiceQueryThrottle;
@@ -137,6 +138,12 @@ const ChoiceLookupAndInlineSearch = (props) => {
         {...props.context.view.renderingParams.ChoiceLookupAndInlineSearch}
       />
       <ShowButton {...props} onClick={showHandler} disabled={!!ngId} />
+      <ChoiceActions
+        choice={value?.original}
+        binding={binding}
+        field={props.field}
+        readOnly={!!ngId}
+      />
       {value && value.original.upgrade && (
         <>
           <IconButton

@@ -4,6 +4,7 @@ import renderingContext from '../../renderingContext';
 import { loadLocalizedChoice, useNamedGraphId } from '../hooks';
 import utils from '../../../utils';
 import ShowButton from './ShowButton';
+import ChoiceActions from './ChoiceActions';
 
 const ChoiceLookup = (props) => {
   const binding = props.binding;
@@ -63,6 +64,13 @@ const ChoiceLookup = (props) => {
         {...props}
         disabled={!!ngId}
         onClick={choiceSelectorHandler}
+      />
+      {/* Localized until a new value is picked, then the original choice */}
+      <ChoiceActions
+        choice={choice?.original ?? choice}
+        binding={binding}
+        field={props.field}
+        readOnly={!!ngId}
       />
       {error && (
         <div key="warning" className="rdformsWarning">

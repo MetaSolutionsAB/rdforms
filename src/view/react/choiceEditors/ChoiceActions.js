@@ -20,7 +20,7 @@ const ChoiceActions = ({ actions = [], binding, field, readOnly }) =>
       disabled={readOnly && !action.enabledWhenReadOnly}
       onClick={() => action.onClick(binding, field)}
     >
-      {action.icon}
+      <span className="rdformsChoiceActionIcon">{action.icon}</span>
     </IconButton>
   ));
 

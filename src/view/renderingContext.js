@@ -100,8 +100,9 @@ const renderingContext = {
    * actions - array of {id, label, icon, onClick, enabledWhenReadOnly}
    *   (Renders one icon button per action, in order, after the search button and
    *   before any upgrade button. label is the button's accessible label and title,
-   *   icon a React element, and onClick is called with (binding, field) so the
-   *   application can mount a dialog in the field. id, if given, is the React key.
+   *   icon a React node such as an MUI icon or a text glyph, shown in a 1em
+   *   square, and onClick is called with (binding, field) so the application can
+   *   mount a dialog in the field. id, if given, is the React key.
    *   When the field is read-only because its value comes from a named graph, only
    *   actions with enabledWhenReadOnly stay enabled.)
    */

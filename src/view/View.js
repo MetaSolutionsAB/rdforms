@@ -293,6 +293,9 @@ export default class View {
     let fieldDiv;
     let newRow;
     const item = binding.getItem();
+    // Each row gets a context of its own: editors register callbacks such as
+    // clear on it, and the add and remove buttons add rows after rendering.
+    this.context = { view: this };
 
     if (this.skipBinding(binding)) {
       return undefined;

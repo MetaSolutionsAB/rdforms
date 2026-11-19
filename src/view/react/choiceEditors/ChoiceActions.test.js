@@ -174,6 +174,19 @@ test('ChoiceLookup renders the actions of a value picked in the chooser', () => 
   expect(getButton(node, 'First')).not.toBeNull();
 });
 
+test('ChoiceLookup shows the edit label of a value picked in the chooser', () => {
+  selectedInChooser = {
+    value: VALUE,
+    label: { en: 'Plain' },
+    editlabel: { en: 'Edit' },
+  };
+  const node = render(LOOKUP_PROPERTY);
+
+  act(() => getSearchButton(node).click());
+
+  expect(node.querySelector('.rdformsSearch input').value).toBe('Edit');
+});
+
 test('ChoiceLookupAndInlineSearch renders the actions of a value picked in the inline search', async () => {
   jest.useFakeTimers();
   searchResults = [{ value: VALUE, actions: [action('First')] }];

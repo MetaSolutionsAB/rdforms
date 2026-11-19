@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import renderingContext from '../../renderingContext';
-import { loadLocalizedChoice, useNamedGraphId } from '../hooks';
+import {
+  editLocalizedChoice,
+  loadLocalizedChoice,
+  useNamedGraphId,
+} from '../hooks';
 import utils from '../../../utils';
 import ShowButton from './ShowButton';
+import ChoiceActions from './ChoiceActions';
 
 const ChoiceLookup = (props) => {
   const binding = props.binding;
@@ -38,7 +43,7 @@ const ChoiceLookup = (props) => {
       props.binding,
       (newChoice) => {
         props.binding.setChoice(newChoice);
-        setChoice(newChoice);
+        setChoice(editLocalizedChoice(newChoice));
         setError(newChoice.mismatch === true);
       },
       props.field
@@ -63,6 +68,12 @@ const ChoiceLookup = (props) => {
         {...props}
         disabled={!!ngId}
         onClick={choiceSelectorHandler}
+      />
+      <ChoiceActions
+        actions={choice?.original.actions}
+        binding={binding}
+        field={props.field}
+        readOnly={!!ngId}
       />
       {error && (
         <div key="warning" className="rdformsWarning">

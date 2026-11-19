@@ -2,8 +2,18 @@
  * @see ./chooser.js
  */
 const { renderingContext, system } = rdforms;
+// Buttons rendered after the search button, see chooserRegistry in renderingContext.js
+const actions = [
+  {
+    id: 'info',
+    label: 'Show value',
+    icon: 'ⓘ',
+    onClick: (binding) => alert(binding.getValue()),
+    enabledWhenReadOnly: true,
+  },
+];
 const fixedChoices = [
-  { value: 'http://example.com/1', label: { en: 'Example 1' }, description: { en: 'hoppla' } },
+  { value: 'http://example.com/1', label: { en: 'Example 1' }, description: { en: 'hoppla' }, actions },
   { value: 'http://example.com/2', label: { en: 'Example 2' } },
 ];
 
@@ -20,6 +30,7 @@ export default () => {
             if (foundChoice) {
               choice.label = foundChoice.label;
               choice.description = foundChoice.description;
+              choice.actions = foundChoice.actions;
               onSuccess();
             } else {
               choice.label = { en: 'Upgradable choice' };

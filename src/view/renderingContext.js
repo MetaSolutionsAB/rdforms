@@ -90,6 +90,21 @@ const renderingContext = {
    * query - function(item, term) -> promise with choices
    *   (I.e. a function that given an item and a searchterm gives back a promise with
    *   matching choices.)
+   *
+   * A choice object may carry these hooks, which the react lookup editors act on:
+   * upgrade - function(binding, onUpgrade, field)
+   *   (Only in the editor for choosers with search. Renders an upgrade button for
+   *   the value. When clicked, the function is called and should call onUpgrade
+   *   with the updated choice. upgradeComponent, a React element, is rendered next
+   *   to the button.)
+   * actions - array of {id, label, icon, onClick, enabledWhenReadOnly}
+   *   (Renders one icon button per action, in order, after the search button and
+   *   before any upgrade button. label is the button's accessible label and title,
+   *   icon a React node such as an MUI icon or a text glyph, shown in a 1em
+   *   square, and onClick is called with (binding, field) so the application can
+   *   mount a dialog in the field. id, if given, is the React key.
+   *   When the field is read-only because its value comes from a named graph, only
+   *   actions with enabledWhenReadOnly stay enabled.)
    */
   chooserRegistry: new Registry(),
   renderPresenter(node, binding, context) {

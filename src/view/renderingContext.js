@@ -103,8 +103,7 @@ const renderingContext = {
    *   icon a React element, and onClick is called with (binding, field) so the
    *   application can mount a dialog in the field. id, if given, is the React key.
    *   When the field is read-only because its value comes from a named graph, only
-   *   actions with enabledWhenReadOnly stay enabled. Define actions as
-   *   non-enumerable if the choice object is copied or serialized.)
+   *   actions with enabledWhenReadOnly stay enabled.)
    */
   chooserRegistry: new Registry(),
   renderPresenter(node, binding, context) {

@@ -91,13 +91,14 @@ const renderingContext = {
    *   (I.e. a function that given an item and a searchterm gives back a promise with
    *   matching choices.)
    *
-   * A choice object may carry these hooks, which the react lookup editors act on
-   * (actions also the bootstrap one):
+   * A choice object may carry these hooks, which the react and bootstrap lookup
+   * editors act on:
    * upgrade - function(binding, onUpgrade, field)
-   *   (Only in the editor for choosers with search. Renders an upgrade button for
-   *   the value. When clicked, the function is called and should call onUpgrade
-   *   with the updated choice. upgradeComponent, a React element, is rendered next
-   *   to the button.)
+   *   (In react only in the editor for choosers with search, in bootstrap only for
+   *   a choice with load, and without field. Renders an upgrade button for the
+   *   value. When clicked, the function is called and should call onUpgrade with
+   *   the updated choice. In react, upgradeComponent, a React element, is
+   *   rendered next to the button.)
    * actions - array of {id, label, icon, onClick, enabledWhenReadOnly}
    *   (Renders one icon button per action, in order, after the search button and
    *   before any upgrade button. label is the button's accessible label and title,

@@ -6,6 +6,7 @@ import jquery from 'jquery';
 import { Graph } from '@entryscape/rdfjson';
 import ItemStore from '../../template/ItemStore';
 import { match } from '../../model/engine';
+import system from '../../model/system';
 import renderingContext from '../renderingContext';
 import Editor from '../Editor';
 // Side-effect imports: install the bootstrap renderingContext and register the
@@ -253,12 +254,46 @@ test('renders the actions before the upgrade button and replaces them on upgrade
   expect(node.querySelector('.fa-magic')).toBeNull();
 });
 
-test('removes the actions when the value is cleared', () => {
-  choices[VALUE] = { value: VALUE, actions: [action('First')] };
+test.each([
+  ['', {}],
+  [
+    ' while it can be upgraded',
+    { load: (onLoaded) => onLoaded(), upgrade: () => {} },
+  ],
+])('removes the actions when the value is cleared%s', (_case, extra) => {
+  choices[VALUE] = { value: VALUE, actions: [action('First')], ...extra };
   const node = render(uri(VALUE));
   expect(actionLabels(node)).toEqual(['First']);
 
   node.querySelector('.rdformsFieldControl .fa-times').click();
 
   expect(actionLabels(node)).toEqual([]);
+});
+
+test('removes the previous actions while a value picked in the chooser loads', () => {
+  let finishLoading;
+  choices[VALUE] = { value: VALUE, actions: [action('Before')] };
+  selectedInChooser = {
+    value: OTHER_VALUE,
+    actions: [action('After')],
+    load: (onLoaded) => {
+      finishLoading = onLoaded;
+    },
+  };
+  const node = render(uri(VALUE));
+
+  getSearchButton(node).click();
+  expect(actionLabels(node)).toEqual([]);
+
+  finishLoading();
+  expect(actionLabels(node)).toEqual(['After']);
+});
+
+test('lets drag and drop target the field', () => {
+  jest.spyOn(system, 'hasDnDSupport').mockReturnValue(true);
+  const addDnD = jest.spyOn(system, 'addDnD');
+  const node = render();
+
+  const [, dropNode] = addDnD.mock.calls[0];
+  expect(dropNode.contains(node.querySelector('select'))).toBe(true);
 });

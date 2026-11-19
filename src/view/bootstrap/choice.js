@@ -134,6 +134,8 @@ editors
         if (choice) {
           binding.setChoice(choice);
           if (choice.load != null) {
+            // The previous value's actions would act on the new binding value
+            showActions(null);
             choice.load(() => {
               setValue(choice);
             });
@@ -174,6 +176,11 @@ editors
           if (c.upgrade) {
             $actions.insertAfter($uri);
             showActions(c);
+            // There is no select to clear yet, renderSelect replaces this
+            context.clear = () => {
+              $uri.find('input').val('');
+              showActions(null);
+            };
             const $button = jquery(
               `<button ${disabledAttr} class="btn btn-default` +
                 ' browseChoices" type="button">'

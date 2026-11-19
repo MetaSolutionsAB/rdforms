@@ -91,7 +91,8 @@ const renderingContext = {
    *   (I.e. a function that given an item and a searchterm gives back a promise with
    *   matching choices.)
    *
-   * A choice object may carry these hooks, which the react lookup editors act on:
+   * A choice object may carry these hooks, which the react lookup editors act on
+   * (actions also the bootstrap one):
    * upgrade - function(binding, onUpgrade, field)
    *   (Only in the editor for choosers with search. Renders an upgrade button for
    *   the value. When clicked, the function is called and should call onUpgrade
@@ -100,9 +101,12 @@ const renderingContext = {
    * actions - array of {id, label, icon, onClick, enabledWhenReadOnly}
    *   (Renders one icon button per action, in order, after the search button and
    *   before any upgrade button. label is the button's accessible label and title,
-   *   icon a React node such as an MUI icon or a text glyph, shown in a 1em
-   *   square, and onClick is called with (binding, field) so the application can
-   *   mount a dialog in the field. id, if given, is the React key.
+   *   and onClick is called with (binding, field) so the application can mount a
+   *   dialog in the field. id, if given, is the React key.
+   *   In react, icon is a React node such as an MUI icon or a text glyph, shown
+   *   in a 1em square. In bootstrap, icon is a string, shown as text, or a DOM
+   *   node, such as <span class="fas fa-info-circle">, of which a copy is shown.
+   *   A text glyph works in both.
    *   When the field is read-only because its value comes from a named graph, only
    *   actions with enabledWhenReadOnly stay enabled.)
    */

@@ -5,6 +5,35 @@ import { getNamedGraphId } from '../viewUtils';
 
 const editors = renderingContext.editorRegistry;
 
+/**
+ * Replaces the buttons in $actions with one per action on the choice, see the
+ * chooserRegistry documentation in renderingContext.
+ *
+ * @param {object} $actions jquery wrapped container for the buttons
+ * @param {object} [choice]
+ * @param {import('../../model/Binding').default} binding
+ * @param {HTMLElement} fieldDiv
+ * @param {boolean} readOnly true when the field is disabled by a named graph
+ */
+const renderActions = ($actions, choice, binding, fieldDiv, readOnly) => {
+  $actions.empty();
+  (choice?.actions ?? []).forEach((action) => {
+    const $button = jquery(
+      '<button type="button" class="btn btn-default browseChoices rdformsChoiceAction">'
+    )
+      .attr({ 'aria-label': action.label, title: action.label })
+      .prop('disabled', readOnly && !action.enabledWhenReadOnly)
+      .click(() => action.onClick(binding, fieldDiv))
+      .appendTo($actions);
+    if (typeof action.icon === 'string') {
+      $button.text(action.icon);
+    } else if (action.icon instanceof Node) {
+      // Cloned since the same action may be rendered in several fields
+      $button.append(action.icon.cloneNode(true));
+    }
+  });
+};
+
 const radioCheck = (item) => {
   const choices = item.getChoices();
   const hierarchy = item.getHierarchyProperty() || item.hasStyle('tree');
@@ -70,7 +99,17 @@ editors
     );
     context.choices = undefined; // Reset choices so no bleeding over when reusing context between fields.
 
-    const disabledAttr = getNamedGraphId(binding, context) ? 'disabled' : '';
+    const readOnly = !!getNamedGraphId(binding, context);
+    const disabledAttr = readOnly ? 'disabled' : '';
+    const $actions = jquery('<span class="rdformsChoiceActions">');
+    const showActions = (choice) =>
+      renderActions($actions, choice, binding, fieldDiv, readOnly);
+    // Every way the select gets or loses a value ends in one of these events,
+    // after the select's own handler has updated the binding.
+    jquery(fieldDiv).on('select2:select change', 'select', (event) => {
+      showActions(jquery(event.target).val() ? binding.getChoice() : null);
+    });
+
     const renderSelect = () => {
       renderingContext.renderSelect(fieldDiv, binding, context);
       // remember the function since the context object is reused and may
@@ -99,6 +138,7 @@ editors
           $search
         );
       }
+      $actions.insertAfter($search);
 
       const setChoice = (choice) => {
         if (choice) {
@@ -122,7 +162,7 @@ editors
         $search.addClass('disabled');
       }
       if (system.hasDnDSupport(binding)) {
-        system.addDnD(binding, cNode, setChoice);
+        system.addDnD(binding, fieldDiv, setChoice);
       }
     };
 
@@ -142,6 +182,8 @@ editors
         c.load(() => {
           // If the value can be upgraded into its own entity.
           if (c.upgrade) {
+            $actions.insertAfter($uri);
+            showActions(c);
             const $button = jquery(
               `<button ${disabledAttr} class="btn btn-default` +
                 ' browseChoices" type="button">'
@@ -156,7 +198,7 @@ editors
                   binding.setChoice(updatedChoice);
                 });
               })
-              .insertAfter($uri);
+              .insertAfter($actions);
             jquery('<span class="fas fa-magic" aria-hidden="true">').appendTo(
               $button
             );

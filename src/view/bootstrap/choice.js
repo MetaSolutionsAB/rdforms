@@ -5,35 +5,6 @@ import { getNamedGraphId } from '../viewUtils';
 
 const editors = renderingContext.editorRegistry;
 
-/**
- * Replaces the buttons in $actions with one per action on the choice, see the
- * chooserRegistry documentation in renderingContext.
- *
- * @param {object} $actions jquery wrapped container for the buttons
- * @param {object} [choice]
- * @param {import('../../model/Binding').default} binding
- * @param {HTMLElement} fieldDiv
- * @param {boolean} readOnly true when the field is disabled by a named graph
- */
-const renderActions = ($actions, choice, binding, fieldDiv, readOnly) => {
-  $actions.empty();
-  (choice?.actions ?? []).forEach((action) => {
-    const $button = jquery(
-      '<button type="button" class="btn btn-default browseChoices rdformsChoiceAction">'
-    )
-      .attr({ 'aria-label': action.label, title: action.label })
-      .prop('disabled', readOnly && !action.enabledWhenReadOnly)
-      .click(() => action.onClick(binding, fieldDiv))
-      .appendTo($actions);
-    if (typeof action.icon === 'string') {
-      $button.text(action.icon);
-    } else if (action.icon instanceof Node) {
-      // Cloned since the same action may be rendered in several fields
-      $button.append(action.icon.cloneNode(true));
-    }
-  });
-};
-
 const radioCheck = (item) => {
   const choices = item.getChoices();
   const hierarchy = item.getHierarchyProperty() || item.hasStyle('tree');
@@ -101,11 +72,30 @@ editors
 
     const readOnly = !!getNamedGraphId(binding, context);
     const disabledAttr = readOnly ? 'disabled' : '';
+    // Buttons for the actions an application put on the current choice, see
+    // the chooserRegistry documentation in renderingContext.
     const $actions = jquery('<span class="rdformsChoiceActions">');
-    const showActions = (choice) =>
-      renderActions($actions, choice, binding, fieldDiv, readOnly);
-    // Every way the select gets or loses a value ends in one of these events,
-    // after the select's own handler has updated the binding.
+    const showActions = (choice) => {
+      $actions.empty();
+      (choice?.actions ?? []).forEach((action) => {
+        const $button = jquery(
+          '<button type="button" class="btn btn-default browseChoices rdformsChoiceAction">'
+        )
+          .attr({ 'aria-label': action.label, title: action.label })
+          .prop('disabled', readOnly && !action.enabledWhenReadOnly)
+          .click(() => action.onClick(binding, fieldDiv))
+          .appendTo($actions);
+        if (typeof action.icon === 'string') {
+          $button.text(action.icon);
+        } else if (action.icon instanceof Node) {
+          // Cloned since the same action may be rendered in several fields
+          $button.append(action.icon.cloneNode(true));
+        }
+      });
+    };
+    // Every way the select gets or loses a value ends in one of these events.
+    // A new value fires change before the binding is updated, so the
+    // select2:select that follows redraws with the right choice.
     jquery(fieldDiv).on('select2:select change', 'select', (event) => {
       showActions(jquery(event.target).val() ? binding.getChoice() : null);
     });
